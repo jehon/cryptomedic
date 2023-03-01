@@ -23,12 +23,14 @@ These should be mixin, but jsdoc does not understand it (or do I?).
 ### elements > widgets
 
 Widgets are the real build pieces of the applications. They add:
+
 - styling
 - unitar behavior
 - unit of data
 - ...
 
 Wigets also have sub-categories:
+
 - x-ff: they expect to have a 'folder'
 - x-fff: they expect to have a 'folder' and a 'file'
 
@@ -36,11 +38,12 @@ Wigets also have sub-categories:
 
 Pages organize widgets into unit of logic. They should not have any styling. They should coordinate the various widgets into more complex logic.
 
-
 # Legacy
 
 ## controllers
+
 Linked to angular 1.3
 
 ## models
+
 Unit of logic. But what to do with this?

@@ -1,5 +1,4 @@
-import { RequestCRUD } from './x-requestor.js';
-
+import { RequestCRUD } from "./x-requestor.js";
 
 /**
  * @param {number} entryyear to be checked
@@ -7,11 +6,10 @@ import { RequestCRUD } from './x-requestor.js';
  * @returns {object} options for request (see XRequestor#request)
  */
 export function checkReferenceBuilder(entryyear, entryorder) {
-    return {
-        url: 'reference/' + entryyear + '/' + entryorder
-    };
+  return {
+    url: "reference/" + entryyear + "/" + entryorder
+  };
 }
-
 
 /**
  * @param {number} entryyear to be checked
@@ -19,14 +17,14 @@ export function checkReferenceBuilder(entryyear, entryorder) {
  * @returns {object} options for request (see XRequestor#request)
  */
 export function createReferenceBuilder(entryyear, entryorder) {
-    return {
-        method: 'POST',
-        url: 'reference',
-        data: {
-            entryyear,
-            entryorder
-        }
-    };
+  return {
+    method: "POST",
+    url: "reference",
+    data: {
+      entryyear,
+      entryorder
+    }
+  };
 }
 
 /**
@@ -34,10 +32,10 @@ export function createReferenceBuilder(entryyear, entryorder) {
  * @returns {object} options for request (see XRequestor#request)
  */
 export function patientSearchBuilder(data) {
-    return {
-        url: 'folder',
-        data
-    };
+  return {
+    url: "folder",
+    data
+  };
 }
 
 //
@@ -85,7 +83,7 @@ export function patientSearchBuilder(data) {
  * @returns {RequestCRUD} for element
  */
 export function paymentsCrud() {
-    return new RequestCRUD('fiche/payments');
+  return new RequestCRUD("fiche/payments");
 }
 
 // /**

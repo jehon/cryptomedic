@@ -1,18 +1,23 @@
-
-import { spacing } from '../../config.js';
-import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import { getPanelStyles } from '../style/x-panel.js';
+import { spacing } from "../../config.js";
+import {
+  createElementWithTag,
+  defineCustomElement
+} from "../../js/custom-element.js";
+import { getPanelStyles } from "../style/x-panel.js";
 
 /**
  * Slot[]: content
  */
 export default class XButtons extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.append(
-            getPanelStyles(this, true),
-            createElementWithTag('style', {}, `
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.append(
+      getPanelStyles(this, true),
+      createElementWithTag(
+        "style",
+        {},
+        `
     :host(x-buttons) {
         width: 100%;
 
@@ -31,10 +36,11 @@ export default class XButtons extends HTMLElement {
     ::slotted(*) {
         flex-grow: 1;
     }
-`),
-            createElementWithTag('slot')
-        );
-    }
+`
+      ),
+      createElementWithTag("slot")
+    );
+  }
 }
 
 defineCustomElement(XButtons);

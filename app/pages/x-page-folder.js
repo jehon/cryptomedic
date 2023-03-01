@@ -1,12 +1,11 @@
+import { defineCustomElement } from "../js/custom-element.js";
 
-import { defineCustomElement } from '../js/custom-element.js';
-
-import './blocks/x-folder-bill.js';
+import "./blocks/x-folder-bill.js";
 
 export default class XPageFolder extends HTMLElement {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 }
 
 defineCustomElement(XPageFolder);

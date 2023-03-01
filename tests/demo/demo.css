@@ -1,36 +1,36 @@
 body {
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 body > * {
-	--box-width: 320px;
-	--margin-width: 10px;
+  --box-width: 320px;
+  --margin-width: 10px;
 
-	box-sizing: border-box;
-	width: var(--box-width);
-	margin: 10px;
-	border: dashed 1px blue;
+  box-sizing: border-box;
+  width: var(--box-width);
+  margin: 10px;
+  border: dashed 1px blue;
 }
 
 xx-test {
-	height: 500px;
+  height: 500px;
 }
 
 body > h1 {
-	background-color: lightgray;
+  background-color: lightgray;
 }
 
 [invisible] {
-	display: none;
+  display: none;
 }
 
 [double] {
-	width: calc(var(--box-width) * 2 + var(--margin-width) * 2);
+  width: calc(var(--box-width) * 2 + var(--margin-width) * 2);
 }
 
 [highlight] {
-	background-color: gray;
-	border: 1px solid green;
+  background-color: gray;
+  border: 1px solid green;
 }

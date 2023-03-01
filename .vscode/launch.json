@@ -21,17 +21,10 @@
       "type": "node",
       "request": "launch",
       "name": "test-e2e current file",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run-script",
-        "test-e2e",
-        "--test",
-        "${relativeFile}",
-      ],
+      "runtimeArgs": ["run-script", "test-e2e", "--test", "${relativeFile}"],
       "env": {
         "E2E_FULL": "1"
       },

@@ -1,19 +1,17 @@
-
-import '../../widgets/folder/x-graphic-height.js';
-import '../../widgets/folder/x-graphic-weight.js';
-import '../../widgets/folder/x-graphic-bmi.js';
-import '../../widgets/folder/x-graphic-wh.js';
-import { defineCustomElement } from '../../js/custom-element.js';
+import "../../widgets/folder/x-graphic-height.js";
+import "../../widgets/folder/x-graphic-weight.js";
+import "../../widgets/folder/x-graphic-bmi.js";
+import "../../widgets/folder/x-graphic-wh.js";
+import { defineCustomElement } from "../../js/custom-element.js";
 
 /**
  */
 export default class XFolderGraphics extends HTMLElement {
-    constructor() {
+  constructor() {
+    // TODO: use createElementWith
 
-        // TODO: use createElementWith
-
-        super();
-        this.innerHTML = `
+    super();
+    this.innerHTML = `
         <div id='headerContainer' class='headerContainer'></div>
         <div class='container-fluid' align='center'>
             <div class='row'>
@@ -28,7 +26,7 @@ export default class XFolderGraphics extends HTMLElement {
             </div>
         </div>
     `;
-    }
+  }
 }
 
 defineCustomElement(XFolderGraphics);

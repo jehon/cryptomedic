@@ -1,95 +1,102 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Cryptomedic</title>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <script>
-        /* Test if all necessary technologies are present */
-        (function () {
-            const shouldUpgrade = function () {
-                window.location.href = '/static/upgrade.html';
-            };
+      /* Test if all necessary technologies are present */
+      (function () {
+        const shouldUpgrade = function () {
+          window.location.href = "/static/upgrade.html";
+        };
 
-            // Test custom elements
-            // Ok since 2018 except Edge
-            if (!ShadowRoot || !customElements) {
-                shouldUpgrade();
-            }
+        // Test custom elements
+        // Ok since 2018 except Edge
+        if (!ShadowRoot || !customElements) {
+          shouldUpgrade();
+        }
 
-            // Test input[type=date]
-            // Ok since 2015 except Safari
-            // @See https://stackoverflow.com/a/10199306/1954789
-            var input = document.createElement('input');
-            input.setAttribute('type', 'date');
+        // Test input[type=date]
+        // Ok since 2015 except Safari
+        // @See https://stackoverflow.com/a/10199306/1954789
+        var input = document.createElement("input");
+        input.setAttribute("type", "date");
 
-            var notADateValue = 'not-a-date';
-            input.setAttribute('value', notADateValue);
+        var notADateValue = "not-a-date";
+        input.setAttribute("value", notADateValue);
 
-            if (input.value === notADateValue) {
-                shouldUpgrade('input[type=date]');
-            }
+        if (input.value === notADateValue) {
+          shouldUpgrade("input[type=date]");
+        }
 
-            // Test Object.fromEntries
-            // Ok since 2019-03 (android 2020-04)
-            if (!("fromEntries" in Object)) {
-                shouldUpgrade()
-            }
-        })();
-
+        // Test Object.fromEntries
+        // Ok since 2019-03 (android 2020-04)
+        if (!("fromEntries" in Object)) {
+          shouldUpgrade();
+        }
+      })();
     </script>
     <script nomodule>
-        /* Test if all necessary technologies are present */
-        // Ok since 2019 except Opera mini
-        // We need a browser that support modules
-        window.location.href = '/static/upgrade.html';
+      /* Test if all necessary technologies are present */
+      // Ok since 2019 except Opera mini
+      // We need a browser that support modules
+      window.location.href = "/static/upgrade.html";
     </script>
     <script>
-        // Test cookies
-        (function () {
-            var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+      // Test cookies
+      (function () {
+        var cookieEnabled = navigator.cookieEnabled ? true : false;
 
-            if (typeof (navigator.cookieEnabled) == 'undefined' && !cookieEnabled) {
-                document.cookie = 'testcookie';
-                cookieEnabled = (document.cookie.indexOf('testcookie') != -1) ? true : false;
-            }
-            if (!cookieEnabled) {
-                alert('Your cookie are disabled. Please enable them.\nVos cookies sont désactivés. Merci de les activer.');
-                console.error('Cookies are disabled');
-            }
-        })();
+        if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled) {
+          document.cookie = "testcookie";
+          cookieEnabled =
+            document.cookie.indexOf("testcookie") != -1 ? true : false;
+        }
+        if (!cookieEnabled) {
+          alert(
+            "Your cookie are disabled. Please enable them.\nVos cookies sont désactivés. Merci de les activer."
+          );
+          console.error("Cookies are disabled");
+        }
+      })();
     </script>
 
     <!-- Catch errors -->
     <script src="release_version.js"></script>
-</head>
+  </head>
 
-<body ng-app="app_main" ng-controller="ctrl">
+  <body ng-app="app_main" ng-controller="ctrl">
     <!--  Navigation bar -->
     <div id="menu">
-        <img src="/favicon.svg" height="30px">
-        <span style="flex-grow: 1"></span>
-        <a id="menu_home" href="#/home" class="navbar-link">
-            <x-restricted restricted-by="application.open" style="flex-direction: row;">
-                <img src="../static/img/home.gif" height="20px" />
-                Home
-            </x-restricted>
-        </a>
-        <x-user-status></x-user-status>
+      <img src="/favicon.svg" height="30px" />
+      <span style="flex-grow: 1"></span>
+      <a id="menu_home" href="#/home" class="navbar-link">
+        <x-restricted
+          restricted-by="application.open"
+          style="flex-direction: row"
+        >
+          <img src="../static/img/home.gif" height="20px" />
+          Home
+        </x-restricted>
+      </a>
+      <x-user-status></x-user-status>
     </div>
     <div class="container-fluid" id="main_content">
-        <!--  Pending screen -->
-        <cryptomedic-data-service id="dataService">
-            <div>
-                <div ng-view></div>
-            </div>
-        </cryptomedic-data-service>
+      <!--  Pending screen -->
+      <cryptomedic-data-service id="dataService">
+        <div>
+          <div ng-view></div>
+        </div>
+      </cryptomedic-data-service>
     </div>
-    <input id="no-caret" size="1" style="position: absolute; left: -100px; top: 0px;">
-</body>
-
+    <input
+      id="no-caret"
+      size="1"
+      style="position: absolute; left: -100px; top: 0px"
+    />
+  </body>
 </html>

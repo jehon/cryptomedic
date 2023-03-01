@@ -1,89 +1,98 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Compare screenshots</title>
-    <meta charset="utf-8">
-</head>
+    <meta charset="utf-8" />
+  </head>
 
-<body wide="normal">
+  <body wide="normal">
     <style>
-        body[wide=normal] {
-            width: 100%;
-        }
+      body[wide="normal"] {
+        width: 100%;
+      }
 
-        body[wide=wide] {
-            width: 150%;
-        }
+      body[wide="wide"] {
+        width: 150%;
+      }
 
-        #header {
-            position: sticky;
-            padding: 10px;
-            top: 0px;
-            background-color: lightgray;
-        }
+      #header {
+        position: sticky;
+        padding: 10px;
+        top: 0px;
+        background-color: lightgray;
+      }
 
-        div.compare {
-            width: 100%;
-        }
+      div.compare {
+        width: 100%;
+      }
 
-        div.compare>* {
-            display: inline-block;
-            box-sizing: border-box;
-            width: 32%;
-            border: solid 1px black;
-        }
+      div.compare > * {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 32%;
+        border: solid 1px black;
+      }
 
-        [status='empty'] {
-            border: solid gray 5px;
-        }
+      [status="empty"] {
+        border: solid gray 5px;
+      }
 
-        [status='running'] {
-            border: solid blue 5px;
-        }
+      [status="running"] {
+        border: solid blue 5px;
+      }
 
-        [status='running'] {
-            border: solid yellow 5px;
-        }
+      [status="running"] {
+        border: solid yellow 5px;
+      }
 
-        compare {
-            border-bottom: 1px solid black;
-            margin-bottom: 5px;
-        }
+      compare {
+        border-bottom: 1px solid black;
+        margin-bottom: 5px;
+      }
     </style>
     <script src="./styles-problems-list.js"></script>
 
     <div class="compare" id="header">
-        <span>Reference
-            <button onclick="document.querySelector('body').setAttribute('wide', 'wide');">wide</button>
-            <button onclick="document.querySelector('body').setAttribute('wide', 'normal');">normal</button>
-        </span>
-        <span>Test result</span>
-        <span>Comparison</span>
-        <span>Diff</span>
+      <span
+        >Reference
+        <button
+          onclick="document.querySelector('body').setAttribute('wide', 'wide');"
+        >
+          wide
+        </button>
+        <button
+          onclick="document.querySelector('body').setAttribute('wide', 'normal');"
+        >
+          normal
+        </button>
+      </span>
+      <span>Test result</span>
+      <span>Comparison</span>
+      <span>Diff</span>
     </div>
 
-    <div id="results"> </div>
+    <div id="results"></div>
 
     <script>
-        fetch("./styles-problems-list.json")
-            .then(response => response.json())
-            .then(problemsList => {
-                let id = 0;
-                for (let f of Object.keys(problemsList)) {
-                    const data = problemsList[f];
+      fetch("./styles-problems-list.json")
+        .then((response) => response.json())
+        .then((problemsList) => {
+          let id = 0;
+          for (let f of Object.keys(problemsList)) {
+            const data = problemsList[f];
 
-                    document.querySelector('#results').insertAdjacentHTML('beforeend',
-                        `<h3>${data.key}: ${data.problemText ?? data.warningText}</h3>
+            document.querySelector("#results").insertAdjacentHTML(
+              "beforeend",
+              `<h3>${data.key}: ${data.problemText ?? data.warningText}</h3>
                 <div class="compare">
                     <img ref src="${data.ref}"></img>
                     <img run src="${data.run}"></img>
                     <img diff src="${data.diff}"></img>
-                </div>`);
-                    id++;
-                }
-            })
+                </div>`
+            );
+            id++;
+          }
+        });
     </script>
-</body>
-
+  </body>
 </html>

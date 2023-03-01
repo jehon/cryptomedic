@@ -4,9 +4,7 @@
     "es6": true,
     "jasmine": true
   },
-  "plugins": [
-    "jasmine"
-  ],
+  "plugins": ["jasmine"],
   "extends": "plugin:jasmine/recommended",
   "globals": {
     "withHtml": true,

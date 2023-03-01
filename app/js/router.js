@@ -1,20 +1,18 @@
-
-import FolderPage from '../models/FolderPage.js';
+import FolderPage from "../models/FolderPage.js";
 
 /**
  * @param {string} pathname to be set
  * @returns {string} the same hash
  */
 export function setLocation(pathname) {
-    return document.location = pathname;
+  return (document.location = pathname);
 }
-
 
 /**
  * @returns {string} the current route
  */
 export function getCurrentRoute() {
-    return document.location.hash.substr(1);
+  return document.location.hash.substr(1);
 }
 
 /**
@@ -22,7 +20,7 @@ export function getCurrentRoute() {
  * @returns {string} the same hash
  */
 export function setRoute(hash) {
-    return document.location.hash = hash;
+  return (document.location.hash = hash);
 }
 
 /**
@@ -31,10 +29,10 @@ export function setRoute(hash) {
  * @param {string} redirect is the current route to redirect to when login complete
  */
 export function routeToLogin(redirect = getCurrentRoute()) {
-    if (redirect.startsWith('/login/')) {
-        return;
-    }
-    setRoute(`/login/${redirect}`);
+  if (redirect.startsWith("/login/")) {
+    return;
+  }
+  setRoute(`/login/${redirect}`);
 }
 
 /**
@@ -43,9 +41,9 @@ export function routeToLogin(redirect = getCurrentRoute()) {
  * @returns {object} the route parsed
  */
 export function parseRouteLogin(route = getCurrentRoute()) {
-    return {
-        redirect: route.replace(/^(\/+login)+\/+/, '/')
-    };
+  return {
+    redirect: route.replace(/^(\/+login)+\/+/, "/")
+  };
 }
 
 /**
@@ -54,7 +52,7 @@ export function parseRouteLogin(route = getCurrentRoute()) {
  * @returns {string} the route
  */
 export function getRouteToFolderPatient(folderId, edit = false) {
-    return '/folder/' + folderId + (edit ? '/edit' : '');
+  return "/folder/" + folderId + (edit ? "/edit" : "");
 }
 
 /**
@@ -62,7 +60,11 @@ export function getRouteToFolderPatient(folderId, edit = false) {
  * @returns {string} the route
  */
 export function getRouteToFolderFile(folderPage) {
-    return getRouteToFolderFileByParams(folderPage.patient_id, folderPage.getModel(), folderPage.id);
+  return getRouteToFolderFileByParams(
+    folderPage.patient_id,
+    folderPage.getModel(),
+    folderPage.id
+  );
 }
 
 /**
@@ -72,14 +74,14 @@ export function getRouteToFolderFile(folderPage) {
  * @returns {string} the route
  */
 export function getRouteToFolderFileByParams(folderId, fileName, fileId) {
-    return '/folder/' + folderId + '/file/' + fileName + '/' + fileId;
+  return "/folder/" + folderId + "/file/" + fileName + "/" + fileId;
 }
 
 /**
  * @param {number} folderId - the folder of wich to show the patient
  */
 export function routeToFolderPatient(folderId) {
-    setRoute(`/folder/${folderId}`);
+  setRoute(`/folder/${folderId}`);
 }
 /**
  * @param {number} folderId - the folder where to add
@@ -87,7 +89,7 @@ export function routeToFolderPatient(folderId) {
  * @returns {string} the route
  */
 export function getRouteToFolderAdd(folderId, type) {
-    return `/folder/${folderId}/file/${type}`;
+  return `/folder/${folderId}/file/${type}`;
 }
 
 /**
@@ -96,7 +98,7 @@ export function getRouteToFolderAdd(folderId, type) {
  * @returns {string} the route
  */
 export function getRouteToCreateReference() {
-    return '/folder/-1/edit';
+  return "/folder/-1/edit";
 }
 
 /**
@@ -104,7 +106,7 @@ export function getRouteToCreateReference() {
  * @returns {string} the route
  */
 export function getRouteToReport(reportName) {
-    return `/reports/${reportName}`;
+  return `/reports/${reportName}`;
 }
 
 /**
@@ -113,16 +115,16 @@ export function getRouteToReport(reportName) {
  * @returns { object } the route parsed
  */
 export function parseRouteReport(route = getCurrentRoute()) {
-    return {
-        report: route.replace(/^\/reports\//, '')
-    };
+  return {
+    report: route.replace(/^\/reports\//, "")
+  };
 }
 
 export const routes = {
-    users_list: '/users',
-    user_add: '/users/new',
-    user_edit: '/users/[uid]',
-    user_password: '/users/[uid]/password'
+  users_list: "/users",
+  user_add: "/users/new",
+  user_edit: "/users/[uid]",
+  user_password: "/users/[uid]/password"
 };
 
 /**
@@ -131,21 +133,30 @@ export const routes = {
  * @returns {string} the route
  */
 export function getRoute(route, data = {}) {
-    let newRoute = route;
-    Object.keys(data).reverse().forEach(k => {
-        newRoute = newRoute.split(`[${k}]`).join(data[k]);
+  let newRoute = route;
+  Object.keys(data)
+    .reverse()
+    .forEach((k) => {
+      newRoute = newRoute.split(`[${k}]`).join(data[k]);
     });
 
-    const up = new URLSearchParams();
-    Object.keys(data).filter(k => !route.includes(`[${k}]`)).map(k => up.append(k, data[k])).join('&');
-    if (up.toString()) {
-        newRoute = `${newRoute}?${up.toString()}`;
-    }
+  const up = new URLSearchParams();
+  Object.keys(data)
+    .filter((k) => !route.includes(`[${k}]`))
+    .map((k) => up.append(k, data[k]))
+    .join("&");
+  if (up.toString()) {
+    newRoute = `${newRoute}?${up.toString()}`;
+  }
 
-    if (newRoute.includes('[')) {
-        throw new Error(`Route not instanciated completely: ${newRoute} (basis: ${route}, data: ${JSON.stringify(data)})`);
-    }
-    return newRoute;
+  if (newRoute.includes("[")) {
+    throw new Error(
+      `Route not instanciated completely: ${newRoute} (basis: ${route}, data: ${JSON.stringify(
+        data
+      )})`
+    );
+  }
+  return newRoute;
 }
 
 /**
@@ -154,32 +165,28 @@ export function getRoute(route, data = {}) {
  * @returns {object} data to customize the route
  */
 export function getRouteParameters(routeTemplate, route) {
-    let n = route.indexOf('?');
+  let n = route.indexOf("?");
 
-    // Path with mandatory elements
-    let r = (n > 0 ? route.substr(0, n) : route);
-    let regexp = new RegExp(
-        '^'
-        + routeTemplate
-            .split('[').join('(?<')
-            .split(']').join('>[^/]*)')
-        + '$'
-    );
-    const params = regexp.exec(r)?.groups ?? {};
-    if (params === null) {
-        throw new Error('Route is not matching');
-    }
+  // Path with mandatory elements
+  let r = n > 0 ? route.substr(0, n) : route;
+  let regexp = new RegExp(
+    "^" + routeTemplate.split("[").join("(?<").split("]").join(">[^/]*)") + "$"
+  );
+  const params = regexp.exec(r)?.groups ?? {};
+  if (params === null) {
+    throw new Error("Route is not matching");
+  }
 
-    if (getRoute(routeTemplate, params) != r) {
-        throw new Error('Not correct route');
-    }
+  if (getRoute(routeTemplate, params) != r) {
+    throw new Error("Not correct route");
+  }
 
-    // Optional arguments
-    let s = (n > 0 ? route.substr(n + 1) : '');
-    const add = Object.fromEntries(Array.from(new URLSearchParams(s).entries()));
+  // Optional arguments
+  let s = n > 0 ? route.substr(n + 1) : "";
+  const add = Object.fromEntries(Array.from(new URLSearchParams(s).entries()));
 
-    return {
-        ...params,
-        ...add
-    };
+  return {
+    ...params,
+    ...add
+  };
 }

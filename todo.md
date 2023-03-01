@@ -1,18 +1,18 @@
+[ ] Remove webDescribe
 
-[     ] Remove webDescribe
 - Used in legacy components, depends on Angular removal?
 
-[     ] Remove Angular:
+[ ] Remove Angular:
 
-[     ] Remove Laravel
+[ ] Remove Laravel
+
 > build up the cache system
 
-
 Unify the objects (around "camelcase" plural ?):
+
 - PHP
 - REST api
 - Javascript
-
 
 Firefox 90: private fields
 
@@ -30,8 +30,8 @@ v x-patient-by-reference
 - patient_fiche
 - template-t
 
-+ remove css from x-label
-+ x-input-date
-+ x-input-list
-+ x-input-file
-+ ... ?
+* remove css from x-label
+* x-input-date
+* x-input-list
+* x-input-file
+* ... ?

@@ -1,22 +1,19 @@
 {
   "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#004f03",
+    "titleBar.activeBackground": "#004f03"
   },
-  "shellcheck.customArgs": [
-    "-x"
-  ],
+  "shellcheck.customArgs": ["-x"],
   "files.exclude": {
     "**/.git": true,
     "**/vendor": true,
     "**/node_modules": true,
     "**/tmp": true
   },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "javascript.preferences.importModuleSpecifierEnding": "js",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.preferences.importModuleSpecifier": "relative",
   "php.suggest.basic": false,
   "css.format.spaceAroundSelectorSeparator": true,
-  "github-actions.workflows.pinned.workflows": [
-    ".github/workflows/test.yml"
-  ]
+  "github-actions.workflows.pinned.workflows": [".github/workflows/test.yml"]
 }

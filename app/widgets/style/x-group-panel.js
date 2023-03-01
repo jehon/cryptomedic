@@ -1,22 +1,27 @@
-
-import { spacing } from '../../config.js';
-import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import { getPanelStyles } from './x-panel.js';
+import { spacing } from "../../config.js";
+import {
+  createElementWithTag,
+  defineCustomElement
+} from "../../js/custom-element.js";
+import { getPanelStyles } from "./x-panel.js";
 
 /**
  * Slot[]: content
  */
 export default class XGroupPanel extends HTMLElement {
-    static get observedAttributes() {
-        return ['title'];
-    }
+  static get observedAttributes() {
+    return ["title"];
+  }
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.append(
-            getPanelStyles(this),
-            createElementWithTag('style', {}, `
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.append(
+      getPanelStyles(this),
+      createElementWithTag(
+        "style",
+        {},
+        `
     fieldset {
         height: 100%;
         width: 100%;
@@ -80,27 +85,29 @@ export default class XGroupPanel extends HTMLElement {
     ::slotted(:not(hr):not([slot]):not([white]):nth-child(even)) {
         background-color: lightgray;
     }
-`),
+`
+      ),
 
-            createElementWithTag('fieldset', {}, [
-                this._legend = createElementWithTag('legend'),
-                createElementWithTag('slot', { name: 'versal' }),
-                createElementWithTag('slot')
-            ]));
+      createElementWithTag("fieldset", {}, [
+        (this._legend = createElementWithTag("legend")),
+        createElementWithTag("slot", { name: "versal" }),
+        createElementWithTag("slot")
+      ])
+    );
+  }
+
+  attributeChangedCallback(attributeName, _oldValue, newValue) {
+    switch (attributeName) {
+      case "title":
+        this._legend.innerHTML = newValue;
+        break;
     }
+  }
 
-    attributeChangedCallback(attributeName, _oldValue, newValue) {
-        switch (attributeName) {
-            case 'title':
-                this._legend.innerHTML = newValue;
-                break;
-        }
-    }
-
-    checkValidity() { // TODO: legacy, but used for bill_fiche.php
-        return true;
-    }
-
+  checkValidity() {
+    // TODO: legacy, but used for bill_fiche.php
+    return true;
+  }
 }
 
 defineCustomElement(XGroupPanel);

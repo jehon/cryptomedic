@@ -1,14 +1,15 @@
-
 /**
  * @param {string} text to be transformed
  * @returns {Array<string>} an array of words
  */
 export function _canonize(text) {
-    return text
-        // .split(/([ _-]|(?=[A-Z][a-z]))/g)
-        .split(/([ _-]|(?=[A-Z]))/g)
-        .filter(v => v && ![' ', '_', '-'].includes(v))
-        .map(v => v.toLowerCase());
+  return (
+    text
+      // .split(/([ _-]|(?=[A-Z][a-z]))/g)
+      .split(/([ _-]|(?=[A-Z]))/g)
+      .filter((v) => v && ![" ", "_", "-"].includes(v))
+      .map((v) => v.toLowerCase())
+  );
 }
 
 /**
@@ -16,7 +17,7 @@ export function _canonize(text) {
  * @returns {string} the same word with a first letter uppercase
  */
 function toUpperWordCase(text) {
-    return text.charAt(0).toUpperCase() + text.substring(1);
+  return text.charAt(0).toUpperCase() + text.substring(1);
 }
 
 /**
@@ -25,9 +26,9 @@ function toUpperWordCase(text) {
  * @returns {string} the test in title case (Abc def ghi)
  */
 export function toSentenceCase(text, middle = false) {
-    return _canonize(text)
-        .map((s, i) => ((i == 0 && !middle) ? toUpperWordCase(s) : s))
-        .join(' ');
+  return _canonize(text)
+    .map((s, i) => (i == 0 && !middle ? toUpperWordCase(s) : s))
+    .join(" ");
 }
 
 /**
@@ -35,9 +36,7 @@ export function toSentenceCase(text, middle = false) {
  * @returns {string} the test in title case (Abc Def Ghi)
  */
 export function toTitleCase(text) {
-    return _canonize(text)
-        .map(toUpperWordCase)
-        .join(' ');
+  return _canonize(text).map(toUpperWordCase).join(" ");
 }
 
 /**
@@ -49,9 +48,9 @@ export function toTitleCase(text) {
  * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
  */
 export function toPropertyCase(text, middle = false) {
-    return _canonize(text)
-        .map((s, i) => ((i > 0 || middle) ? toUpperWordCase(s) : s))
-        .join('');
+  return _canonize(text)
+    .map((s, i) => (i > 0 || middle ? toUpperWordCase(s) : s))
+    .join("");
 }
 
 /**
@@ -62,8 +61,7 @@ export function toPropertyCase(text, middle = false) {
  * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
  */
 export function toAttributeCase(text) {
-    return _canonize(text)
-        .join('-');
+  return _canonize(text).join("-");
 }
 
 /**
@@ -71,7 +69,9 @@ export function toAttributeCase(text) {
  * @returns {function(object): string} that can interplate the string
  */
 export function buildTemplate(template) {
-    // const names = Object.keys(params);
-    // const vals = Object.values(params);
-    return /** @type {function(object): string} */ (new Function('data', `return \`${template}\`;`));
+  // const names = Object.keys(params);
+  // const vals = Object.values(params);
+  return /** @type {function(object): string} */ (
+    new Function("data", `return \`${template}\`;`)
+  );
 }

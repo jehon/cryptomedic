@@ -1,7 +1,9 @@
-
-import { spacing, icons } from '../../config.js';
-import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import { setLocation, setRoute } from '../../js/router.js';
+import { spacing, icons } from "../../config.js";
+import {
+  createElementWithTag,
+  defineCustomElement
+} from "../../js/custom-element.js";
+import { setLocation, setRoute } from "../../js/router.js";
 
 /**
  * Slot[]: content
@@ -11,34 +13,53 @@ import { setLocation, setRoute } from '../../js/router.js';
  * to-location: the new location path (if set)
  */
 export default class XButton extends HTMLElement {
-    // Commit the form:
-    static get Default() { return 'Default'; }
-    static get Save() { return 'Save'; }
-    static get Search() { return 'Search'; }
+  // Commit the form:
+  static get Default() {
+    return "Default";
+  }
+  static get Save() {
+    return "Save";
+  }
+  static get Search() {
+    return "Search";
+  }
 
-    // Special actions in x-form
-    static get Reset() { return 'Reset'; }
-    static get Cancel() { return 'Cancel'; }
-    static get Delete() { return 'Delete'; }
+  // Special actions in x-form
+  static get Reset() {
+    return "Reset";
+  }
+  static get Cancel() {
+    return "Cancel";
+  }
+  static get Delete() {
+    return "Delete";
+  }
 
-    // Not managed by x-form
-    static get Edit() { return 'Edit'; }
-    static get Alternate() { return 'Alternate'; }
+  // Not managed by x-form
+  static get Edit() {
+    return "Edit";
+  }
+  static get Alternate() {
+    return "Alternate";
+  }
 
-    static get observedAttributes() {
-        return ['icon', 'action', 'timed'];
-    }
+  static get observedAttributes() {
+    return ["icon", "action", "timed"];
+  }
 
-    _disableCron = () => { };
+  _disableCron = () => {};
 
-    /** @type {HTMLButtonElement} */
-    _button;
+  /** @type {HTMLButtonElement} */
+  _button;
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.append(
-            createElementWithTag('style', { 'css-inherit-local': true }, `
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.append(
+      createElementWithTag(
+        "style",
+        { "css-inherit-local": true },
+        `
     :host {
         display: inline-block;
         background-color: rgba(0,0,0,0);
@@ -118,99 +139,110 @@ export default class XButton extends HTMLElement {
         vertical-align: middle;
         padding-right: ${spacing.element};
     }
-`),
+`
+      ),
 
-            this._button = /** @type {HTMLButtonElement} */ (createElementWithTag('button', {}, [
-                createElementWithTag('img'),
-                this._slot = createElementWithTag('slot')
-            ], element => element)));
+      (this._button = /** @type {HTMLButtonElement} */ (
+        createElementWithTag(
+          "button",
+          {},
+          [
+            createElementWithTag("img"),
+            (this._slot = createElementWithTag("slot"))
+          ],
+          (element) => element
+        )
+      ))
+    );
 
+    this.buttonText();
+    this.addEventListener("click", () => {
+      const toRoute = this.getAttribute("to-route");
+      if (toRoute) {
+        setRoute(toRoute);
+      } else {
+        const toLocation = this.getAttribute("to-location");
+        if (toLocation) {
+          setLocation(toLocation);
+        }
+      }
+    });
+  }
+
+  attributeChangedCallback(attributeName, _oldValue, newValue) {
+    switch (attributeName) {
+      case "icon":
+        if (!(newValue in icons)) {
+          console.error(`Icon ${newValue} is not found in config.icons`);
+        }
+        this.shadowRoot
+          .querySelector("img")
+          .setAttribute("src", icons[newValue]);
+        break;
+
+      case "action": {
         this.buttonText();
-        this.addEventListener('click', () => {
-            const toRoute = this.getAttribute('to-route');
-            if (toRoute) {
-                setRoute(toRoute);
-            } else {
-                const toLocation = this.getAttribute('to-location');
-                if (toLocation) {
-                    setLocation(toLocation);
-                }
-            }
-        });
+        break;
+      }
+      // TODO: timed x-button (x-confirmation)
+      // case 'timed': {
+      //     this._disableCron();
+      //     this._disableCron = () => { };
+      //     let t = parseInt(newValue);
+      //     if (t > 0) {
+      //         this._disableCron = cron(() => {
+      //             // https://css-tricks.com/timer-bars-in-css-with-custom-properties/
+      //             /* transition: width 5s ease; */
+      //         }, t);
+      //     }
+      //     break;
+      // }
+    }
+  }
+
+  click() {
+    this._button.click();
+  }
+
+  buttonText() {
+    // !! could not have any other class on button, otherwise it will be wiped out :-)
+    let action = this.getAttribute("action");
+    if (!action) {
+      action = XButton.Default;
+    } else if (!(action in XButton)) {
+      console.error("unknown action: ", action);
+      action = XButton.Default;
     }
 
-    attributeChangedCallback(attributeName, _oldValue, newValue) {
-        switch (attributeName) {
-            case 'icon':
-                if (!(newValue in icons)) {
-                    console.error(`Icon ${newValue} is not found in config.icons`);
-                }
-                this.shadowRoot.querySelector('img').setAttribute('src', icons[newValue]);
-                break;
+    switch (action) {
+      case XButton.Search:
+        this._slot.innerHTML = "Search";
+        break;
+      case XButton.Edit:
+        this._slot.innerHTML = "Edit";
+        break;
+      case XButton.Alternate:
+        this._slot.innerHTML = "Alternate";
+        break;
+      case XButton.Cancel:
+        this._slot.innerHTML = "Cancel";
+        break;
+      case XButton.Reset:
+        this._slot.innerHTML = "Reset";
+        break;
+      case XButton.Save:
+        this._slot.innerHTML = "Save";
+        break;
+      case XButton.Delete:
+        this._slot.innerHTML = "Delete";
+        break;
 
-            case 'action': {
-                this.buttonText();
-                break;
-            }
-            // TODO: timed x-button (x-confirmation)
-            // case 'timed': {
-            //     this._disableCron();
-            //     this._disableCron = () => { };
-            //     let t = parseInt(newValue);
-            //     if (t > 0) {
-            //         this._disableCron = cron(() => {
-            //             // https://css-tricks.com/timer-bars-in-css-with-custom-properties/
-            //             /* transition: width 5s ease; */
-            //         }, t);
-            //     }
-            //     break;
-            // }
-        }
+      case XButton.Default:
+      default:
+        this._slot.innerHTML = "Ok";
+        break;
     }
-
-    click() {
-        this._button.click();
-    }
-
-    buttonText() {
-        // !! could not have any other class on button, otherwise it will be wiped out :-)
-        let action = this.getAttribute('action');
-        if (!action) {
-            action = XButton.Default;
-        } else if (!(action in XButton)) {
-            console.error('unknown action: ', action);
-            action = XButton.Default;
-        }
-
-        switch (action) {
-            case XButton.Search:
-                this._slot.innerHTML = 'Search';
-                break;
-            case XButton.Edit:
-                this._slot.innerHTML = 'Edit';
-                break;
-            case XButton.Alternate:
-                this._slot.innerHTML = 'Alternate';
-                break;
-            case XButton.Cancel:
-                this._slot.innerHTML = 'Cancel';
-                break;
-            case XButton.Reset:
-                this._slot.innerHTML = 'Reset';
-                break;
-            case XButton.Save:
-                this._slot.innerHTML = 'Save';
-                break;
-            case XButton.Delete:
-                this._slot.innerHTML = 'Delete';
-                break;
-
-            case XButton.Default:
-            default:
-                this._slot.innerHTML = 'Ok';
-                break;
-        }
-    }
+  }
 }
 
 defineCustomElement(XButton);

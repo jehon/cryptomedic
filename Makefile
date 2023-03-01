@@ -137,6 +137,7 @@ reset:
 
 .PHONY: lint
 lint: lint-es lint-css lint-html
+	./node_modules/.bin/prettier --list-different .
 
 .PHONY: lint-es
 lint-es: $(TMP)/.dependencies-node

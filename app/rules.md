@@ -1,4 +1,3 @@
-
 # Summary
 
 |               | innerHTML | shadow/slots | Attributes | css dependant | functions | objective               |

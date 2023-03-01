@@ -1,15 +1,21 @@
-import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import { getPanelStyles } from './x-panel.js';
+import {
+  createElementWithTag,
+  defineCustomElement
+} from "../../js/custom-element.js";
+import { getPanelStyles } from "./x-panel.js";
 
 export default class XTwoColumns extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
 
-        this.shadowRoot.innerHTML = '';
-        this.shadowRoot.append(
-            getPanelStyles(this),
-            createElementWithTag('style', {}, `
+    this.shadowRoot.innerHTML = "";
+    this.shadowRoot.append(
+      getPanelStyles(this),
+      createElementWithTag(
+        "style",
+        {},
+        `
                 :host(x-two-columns) > div {
                     display: flex;
                     flex-direction: row;
@@ -40,12 +46,11 @@ export default class XTwoColumns extends HTMLElement {
                         width: 50%;
                     }
                 }
-            `),
-            createElementWithTag('div', {}, [
-                createElementWithTag('slot'),
-            ])
-        );
-    }
+            `
+      ),
+      createElementWithTag("div", {}, [createElementWithTag("slot")])
+    );
+  }
 }
 
 defineCustomElement(XTwoColumns);

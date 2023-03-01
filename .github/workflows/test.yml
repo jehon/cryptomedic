@@ -1,4 +1,3 @@
-
 on:
   push:
     # branches:
@@ -6,10 +5,10 @@ on:
     # - ci/*
   pull_request:
     branches:
-    - main
+      - main
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   ga-test:
@@ -17,21 +16,21 @@ jobs:
     timeout-minutes: 45
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - run: make dc-up
+      - run: make dc-up
 
-    - run: make dump
+      - run: make dump
 
-    - run: make dependencies
+      - run: make dependencies
 
-    - run: make build
+      - run: make build
 
-    - run: make reset
+      - run: make reset
 
-    - id: failed
-      name: I fail
-      run: /i_fail
+      - id: failed
+        name: I fail
+        run: /i_fail
 
     # - id: start
     #   name: dc start

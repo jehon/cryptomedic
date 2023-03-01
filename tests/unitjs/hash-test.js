@@ -1,10 +1,9 @@
-
-import { fn } from './athelpers.js';
-import hash from '../../app/js/hash.js';
+import { fn } from "./athelpers.js";
+import hash from "../../app/js/hash.js";
 
 describe(fn(import.meta.url), function () {
-    it('should calculate md5', function () {
-        expect(hash('abc')).toBe('900150983cd24fb0d6963f7d28e17f72');
-        expect(hash('')).toBe('d41d8cd98f00b204e9800998ecf8427e');
-    });
+  it("should calculate md5", function () {
+    expect(hash("abc")).toBe("900150983cd24fb0d6963f7d28e17f72");
+    expect(hash("")).toBe("d41d8cd98f00b204e9800998ecf8427e");
+  });
 });

@@ -14,4 +14,4 @@
 //
 // ***********************************************************
 
-import './compare-snapshot.js';
+import "./compare-snapshot.js";

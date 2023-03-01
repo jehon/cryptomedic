@@ -1,13 +1,13 @@
 {
-    "params": {
-        "period": "daily",
-        "day": "2014-05-20",
-        "when": "2014-05-20",
-        "whenFrom": "2014-05-20",
-        "whenTo": "2014-05-20",
-        "center": "",
-        "examiner": "",
-        "activity": "surgical"
-    },
-    "list": []
+  "params": {
+    "period": "daily",
+    "day": "2014-05-20",
+    "when": "2014-05-20",
+    "whenFrom": "2014-05-20",
+    "whenTo": "2014-05-20",
+    "center": "",
+    "examiner": "",
+    "activity": "surgical"
+  },
+  "list": []
 }

@@ -1,5 +1,4 @@
-
-import { toAttributeCase, toPropertyCase } from './string-utils.js';
+import { toAttributeCase, toPropertyCase } from "./string-utils.js";
 
 /**
  * @param {Element} root - the element to start with
@@ -8,29 +7,29 @@ import { toAttributeCase, toPropertyCase } from './string-utils.js';
  * @returns {Element} the root element
  */
 export default function setPropertyOn(root, name, value) {
-    const attr = toAttributeCase(name);
-    const prop = toPropertyCase(name);
+  const attr = toAttributeCase(name);
+  const prop = toPropertyCase(name);
 
-    if (root.hasAttribute('x-top')) {
-        // TODO (angular): workaround for ng-if
-        root[name] = value;
-        root.querySelectorAll(`[with-${attr}]`).forEach(el => {
-            try {
-                el[prop] = value;
-            } catch(_e) {
-                true;
-            }
-        });
-    }
+  if (root.hasAttribute("x-top")) {
+    // TODO (angular): workaround for ng-if
+    root[name] = value;
+    root.querySelectorAll(`[with-${attr}]`).forEach((el) => {
+      try {
+        el[prop] = value;
+      } catch (_e) {
+        true;
+      }
+    });
+  }
 
-    if (root.shadowRoot) {
-        root.shadowRoot.querySelectorAll(`[with-${attr}]`).forEach(el => {
-            try {
-                el[prop] = value;
-            } catch(_e) {
-                true;
-            }
-        });
-    }
-    return root;
+  if (root.shadowRoot) {
+    root.shadowRoot.querySelectorAll(`[with-${attr}]`).forEach((el) => {
+      try {
+        el[prop] = value;
+      } catch (_e) {
+        true;
+      }
+    });
+  }
+  return root;
 }

@@ -1,6 +1,9 @@
-
-import '../../../node_modules/css-inherit/css-inherit.js';
-import { createElementWithTag, defineCustomElement, getHTMLNameOfClass } from '../../js/custom-element.js';
+import "../../../node_modules/css-inherit/css-inherit.js";
+import {
+  createElementWithTag,
+  defineCustomElement,
+  getHTMLNameOfClass
+} from "../../js/custom-element.js";
 
 /**
  * @param {HTMLElement} element to be applied on
@@ -8,7 +11,11 @@ import { createElementWithTag, defineCustomElement, getHTMLNameOfClass } from '.
  * @returns {HTMLStyleElement} to be applied to each element
  */
 export function getPanelStyles(element, full = false) {
-    return /** @type {HTMLStyleElement} */ (createElementWithTag('style', {}, `
+  return /** @type {HTMLStyleElement} */ (
+    createElementWithTag(
+      "style",
+      {},
+      `
 
 :host(${getHTMLNameOfClass(element)}) {
     position: relative;
@@ -23,31 +30,37 @@ export function getPanelStyles(element, full = false) {
 
     box-sizing: border-box;
 
-${full ? `
+${
+  full
+    ? `
     height: 100%;
     width: 100%;
-` : ''}
+`
+    : ""
+}
 }
 
 :host([full]) {
     height: 100%;
     width: 100%;
 }
-    `));
+    `
+    )
+  );
 }
 
 /**
  * Slot[]: content to be shown in the pannel
  */
 export default class XPanel extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.append(
-            getPanelStyles(this, true),
-            createElementWithTag('slot')
-        );
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.append(
+      getPanelStyles(this, true),
+      createElementWithTag("slot")
+    );
+  }
 }
 
 defineCustomElement(XPanel);

@@ -1,14 +1,24 @@
-<table style='width: 100%'>
-	<tbody>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).NextAppointment}'>
-			<td>NextAppointment</td>
-			<td><span id='Appointment_NextAppointment' class='error'>Read: key is not in the database:
-					'Appointment.NextAppointment'</span></td>
-		</tr>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).NextCenter}'>
-			<td>NextCenter</td>
-			<td><span id='Appointment_NextCenter' name='NextCenter'>{{
-					folder.getFilesRelatedToPatient($index).NextCenter }}</span></td>
-		</tr>
-	</tbody>
+<table style="width: 100%">
+  <tbody>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).NextAppointment}'
+    >
+      <td>NextAppointment</td>
+      <td>
+        <span id="Appointment_NextAppointment" class="error"
+          >Read: key is not in the database: 'Appointment.NextAppointment'</span
+        >
+      </td>
+    </tr>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).NextCenter}'
+    >
+      <td>NextCenter</td>
+      <td>
+        <span id="Appointment_NextCenter" name="NextCenter"
+          >{{ folder.getFilesRelatedToPatient($index).NextCenter }}</span
+        >
+      </td>
+    </tr>
+  </tbody>
 </table>

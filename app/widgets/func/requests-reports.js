@@ -4,8 +4,8 @@
  * @returns {object} options for request (see XRequestor#request)
  */
 export function reportQueryBuilder(reportId, data) {
-    return {
-        url: 'reports/' + reportId,
-        data
-    };
+  return {
+    url: "reports/" + reportId,
+    data
+  };
 }

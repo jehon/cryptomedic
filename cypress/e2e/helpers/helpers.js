@@ -1,30 +1,34 @@
-
 const timestamp = new Date().toJSON();
 
-export function getTestTimestamp() { return timestamp + ''; }
+export function getTestTimestamp() {
+  return timestamp + "";
+}
 
 export function getTestName() {
-    if (!('mocha' in Cypress)) {
-        return '';
-    }
+  if (!("mocha" in Cypress)) {
+    return "";
+  }
 
-    let cypressContext = Cypress.mocha.getRunner().suite.ctx.test;
-    let testTitles = [];
+  let cypressContext = Cypress.mocha.getRunner().suite.ctx.test;
+  let testTitles = [];
 
-    while (cypressContext) {
-        testTitles.push(cypressContext.title);
-        cypressContext = cypressContext.parent;
-    }
-    // function extractTitles(obj) {
-    //     if (obj.hasOwnProperty('parent')) {
-    //         testTitles.push(obj.title);
-    //         let nextObj = obj.parent;
-    //         extractTitles(nextObj);
-    //     }
-    // }
+  while (cypressContext) {
+    testTitles.push(cypressContext.title);
+    cypressContext = cypressContext.parent;
+  }
+  // function extractTitles(obj) {
+  //     if (obj.hasOwnProperty('parent')) {
+  //         testTitles.push(obj.title);
+  //         let nextObj = obj.parent;
+  //         extractTitles(nextObj);
+  //     }
+  // }
 
-    // extractTitles(cypressContext);
-    let orderedTitles = testTitles.reverse();
-    let fileName = Cypress.spec.relative.replace('cypress/e2e/', '') + '-' + orderedTitles.join('-');
-    return fileName;
+  // extractTitles(cypressContext);
+  let orderedTitles = testTitles.reverse();
+  let fileName =
+    Cypress.spec.relative.replace("cypress/e2e/", "") +
+    "-" +
+    orderedTitles.join("-");
+  return fileName;
 }

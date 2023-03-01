@@ -1,24 +1,33 @@
-
-import XPanel, { getPanelStyles } from '../style/x-panel.js';
-import { createElementWithObject, createElementWithTag, defineCustomElement, isEventOutOfSlot } from '../../js/custom-element.js';
-import XForm from '../func/x-form.js';
+import XPanel, { getPanelStyles } from "../style/x-panel.js";
+import {
+  createElementWithObject,
+  createElementWithTag,
+  defineCustomElement,
+  isEventOutOfSlot
+} from "../../js/custom-element.js";
+import XForm from "../func/x-form.js";
 
 /**
  * Slot[]: content to be shown in the panel
  * Slot[overlay]: overlay to be put on top when blocked
  */
 export default class XOverlay extends HTMLElement {
-    static get ActionFree() { return 'x-overlay-free'; }
+  static get ActionFree() {
+    return "x-overlay-free";
+  }
 
-    /** @type {HTMLSlotElement} */
-    _overlaySlot;
+  /** @type {HTMLSlotElement} */
+  _overlaySlot;
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.append(
-            getPanelStyles(this, true),
-            createElementWithTag('style', { 'css-inherit-local': true }, `
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.append(
+      getPanelStyles(this, true),
+      createElementWithTag(
+        "style",
+        { "css-inherit-local": true },
+        `
     :host {
         padding: 0px;
     }
@@ -70,48 +79,52 @@ export default class XOverlay extends HTMLElement {
         }
     }
 `
-            ),
-            createElementWithObject(XPanel, { id: 'overlay' }, [
-                this._overlaySlot = /** @type {HTMLSlotElement} */ (createElementWithTag('slot', { name: 'overlay' }))
-            ]),
-            document.createElement('slot')
-        );
+      ),
+      createElementWithObject(XPanel, { id: "overlay" }, [
+        (this._overlaySlot = /** @type {HTMLSlotElement} */ (
+          createElementWithTag("slot", { name: "overlay" })
+        ))
+      ]),
+      document.createElement("slot")
+    );
 
-        this.addEventListener(XForm.ActionCancel, (evt) => this._freeOnEvent(evt));
-        this.addEventListener(XForm.ActionDelete, (evt) => this._freeOnEvent(evt));
-        this.addEventListener(XForm.ActionSubmit, (evt) => this._freeOnEvent(evt));
-    }
+    this.addEventListener(XForm.ActionCancel, (evt) => this._freeOnEvent(evt));
+    this.addEventListener(XForm.ActionDelete, (evt) => this._freeOnEvent(evt));
+    this.addEventListener(XForm.ActionSubmit, (evt) => this._freeOnEvent(evt));
+  }
 
-    /**
-     *
-     * @param {Event} evt - the source event
-     */
-    _freeOnEvent(evt) {
-        if (isEventOutOfSlot(evt, this._overlaySlot)) {
-            if (evt.target instanceof XForm) {
-                this.dispatchEvent(new CustomEvent(XOverlay.ActionFree, {
-                    bubbles: true,
-                    detail: {
-                        action: evt.type,
-                        data: evt['detail']
-                    }
-                }));
+  /**
+   *
+   * @param {Event} evt - the source event
+   */
+  _freeOnEvent(evt) {
+    if (isEventOutOfSlot(evt, this._overlaySlot)) {
+      if (evt.target instanceof XForm) {
+        this.dispatchEvent(
+          new CustomEvent(XOverlay.ActionFree, {
+            bubbles: true,
+            detail: {
+              action: evt.type,
+              data: evt["detail"]
             }
-            this.free();
-        }
+          })
+        );
+      }
+      this.free();
     }
+  }
 
-    block() {
-        this.setAttribute('blocked', 'blocked');
-    }
+  block() {
+    this.setAttribute("blocked", "blocked");
+  }
 
-    free() {
-        this.removeAttribute('blocked');
-    }
+  free() {
+    this.removeAttribute("blocked");
+  }
 
-    isBlocked() {
-        return this.hasAttribute('blocked');
-    }
+  isBlocked() {
+    return this.hasAttribute("blocked");
+  }
 }
 
 defineCustomElement(XOverlay);

@@ -1,10 +1,9 @@
-
 /* istanbul ignore file */
 
-import FolderPage from './FolderPage.js';
+import FolderPage from "./FolderPage.js";
 
 export default class Payment extends FolderPage {
-    getModel() {
-        return 'Payment';
-    }
+  getModel() {
+    return "Payment";
+  }
 }

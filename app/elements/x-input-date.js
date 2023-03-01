@@ -1,38 +1,37 @@
-
 /* istanbul ignore file */
 
-import JHElement from './jh-element.js';
-import date2Display from '../js/date2Display.js';
+import JHElement from "./jh-element.js";
+import date2Display from "../js/date2Display.js";
 
-const element = Symbol('element');
+const element = Symbol("element");
 
 const cleanUpDate = function (val) {
-    if (val instanceof Date) {
-        val = val.toISOString();
-    }
-    if (typeof (val) === 'string') {
-        val = val.substring(0, 10);
-    }
+  if (val instanceof Date) {
+    val = val.toISOString();
+  }
+  if (typeof val === "string") {
+    val = val.substring(0, 10);
+  }
 
-    if (!(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(val))) {
-        // Invalid date
-        val = '';
-    }
-    return val;
+  if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(val)) {
+    // Invalid date
+    val = "";
+  }
+  return val;
 };
 
 export default class XInputDate extends JHElement {
-    static get properties() {
-        return {
-            value: 'String'
-        };
-    }
+  static get properties() {
+    return {
+      value: "String"
+    };
+  }
 
-    render() {
-        super.render();
-        this._value = cleanUpDate(this._value);
-        // http://jsfiddle.net/g7mvaosL/3421/
-        this.innerHTML = `
+  render() {
+    super.render();
+    this._value = cleanUpDate(this._value);
+    // http://jsfiddle.net/g7mvaosL/3421/
+    this.innerHTML = `
 				<style>
 					x-input-date > input[type=date] {
 						position: relative;
@@ -52,34 +51,37 @@ export default class XInputDate extends JHElement {
 				</style>
 				<input type=date value='${this._value}'>
 			`;
-        this[element] = this.querySelector('input');
-        this[element].addEventListener('change', () => {
-            this[element].setAttribute('data-date', date2Display(this[element].value));
-        });
-        JHElement.fireOn(this[element], 'change');
+    this[element] = this.querySelector("input");
+    this[element].addEventListener("change", () => {
+      this[element].setAttribute(
+        "data-date",
+        date2Display(this[element].value)
+      );
+    });
+    JHElement.fireOn(this[element], "change");
 
-        this[element].addEventListener('blur', () => this.fire('blur'));
-        this.addEventListener('click', () => {
-            this[element].focus();
-        });
-    }
+    this[element].addEventListener("blur", () => this.fire("blur"));
+    this.addEventListener("click", () => {
+      this[element].focus();
+    });
+  }
 
-    onValueChanged() {
-        this.value = this._value;
-    }
+  onValueChanged() {
+    this.value = this._value;
+  }
 
-    set value(val) {
-        this._value = cleanUpDate(val);
-        this[element].value = this._value;
-        JHElement.fireOn(this[element], 'change');
-    }
+  set value(val) {
+    this._value = cleanUpDate(val);
+    this[element].value = this._value;
+    JHElement.fireOn(this[element], "change");
+  }
 
-    get value() {
-        if (!(element in this)) {
-            return null;
-        }
-        return this[element].value;
+  get value() {
+    if (!(element in this)) {
+      return null;
     }
+    return this[element].value;
+  }
 }
 
-window.customElements.define('x-input-date', XInputDate);
+window.customElements.define("x-input-date", XInputDate);

@@ -1,7 +1,6 @@
-
-import duix from '../../node_modules/duix/index.js';
-import { routeToLogin } from './router.js';
-const SESSION = 'session';
+import duix from "../../node_modules/duix/index.js";
+import { routeToLogin } from "./router.js";
+const SESSION = "session";
 
 // Thanks to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
 /**
@@ -10,16 +9,16 @@ const SESSION = 'session';
  * @returns {T} The object being freezed
  */
 export function deepFreeze(object) {
-    var propNames = Object.getOwnPropertyNames(object);
-    for (let name of propNames) {
-        let value = object[name];
+  var propNames = Object.getOwnPropertyNames(object);
+  for (let name of propNames) {
+    let value = object[name];
 
-        if (value && typeof value === 'object') {
-            deepFreeze(value);
-        }
+    if (value && typeof value === "object") {
+      deepFreeze(value);
     }
+  }
 
-    return Object.freeze(object);
+  return Object.freeze(object);
 }
 
 /**
@@ -30,7 +29,7 @@ export function deepFreeze(object) {
  * @returns {T} The object being copied
  */
 export function deepCopy(object) {
-    return JSON.parse(JSON.stringify(object));
+  return JSON.parse(JSON.stringify(object));
 }
 
 // /**
@@ -56,17 +55,17 @@ export function deepCopy(object) {
  * @param {object} session - the object to be stored
  */
 export function setSession(session = null) {
-    if (!session || Object.keys(session).length < 1) {
-        session = null;
-    } else {
-        deepFreeze(session);
-    }
+  if (!session || Object.keys(session).length < 1) {
+    session = null;
+  } else {
+    deepFreeze(session);
+  }
 
-    duix.set(SESSION, session);
+  duix.set(SESSION, session);
 
-    if (!session) {
-        setCurrentFolder();
-    }
+  if (!session) {
+    setCurrentFolder();
+  }
 }
 
 /**
@@ -79,23 +78,27 @@ export const getSession = () => duix.get(SESSION);
  * @param {function(object):any} cb - a callback that will be called on session change
  * @returns {function(void):void} unregistering function
  */
-export const onSession = (cb) => duix.subscribe(SESSION, cb, { fireImmediately: true }); /* TODO: legacy arg name */
+export const onSession = (cb) =>
+  duix.subscribe(SESSION, cb, {
+    fireImmediately: true
+  }); /* TODO: legacy arg name */
 
 /*
  * Functions
  */
 
 export const getUsername = (session = getSession()) => session?.username;
-export const getAuthorized = (key, session = getSession()) => session?.authorized?.includes(key) || false;
+export const getAuthorized = (key, session = getSession()) =>
+  session?.authorized?.includes(key) || false;
 
 /**
  * Current folder (TODO: legacy)
  */
-const FOLDER = 'FOLDER';
+const FOLDER = "FOLDER";
 export const setCurrentFolder = (value = null) => duix.set(FOLDER, value);
-/* TODO: temp function *//* istanbul ignore next */
+/* TODO: temp function */ /* istanbul ignore next */
 export const getCurrentFolder = () => duix.get(FOLDER);
-/* TODO: temp function *//* istanbul ignore next */
+/* TODO: temp function */ /* istanbul ignore next */
 export const onCurrentFolder = (cb) => duix.subscribe(FOLDER, cb);
 
 setSession();

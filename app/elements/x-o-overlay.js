@@ -1,23 +1,22 @@
-
 /* istanbul ignore file */
 
-import JHElement from './jh-element.js';
+import JHElement from "./jh-element.js";
 
-const overlayDiv = Symbol('overlayDiv');
+const overlayDiv = Symbol("overlayDiv");
 
 export default class XOverlay extends JHElement {
-    static get properties() {
-        return {
-            zIndex: 'Integer',
-            closable: 'Boolean'
-        };
-    }
+  static get properties() {
+    return {
+      zIndex: "Integer",
+      closable: "Boolean"
+    };
+  }
 
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = `
 			<style>
 				:host {
 					position: relative;
@@ -78,30 +77,32 @@ export default class XOverlay extends JHElement {
 				<slot></slot>
 			</div>
 			`;
-        this[overlayDiv] = this.shadowRoot.querySelector('#overlay');
-        this.shadowRoot.querySelector('#close').addEventListener('click', () => this.free());
-        this.free();
-    }
+    this[overlayDiv] = this.shadowRoot.querySelector("#overlay");
+    this.shadowRoot
+      .querySelector("#close")
+      .addEventListener("click", () => this.free());
+    this.free();
+  }
 
-    block() {
-        this[overlayDiv].removeAttribute('hidden');
-    }
+  block() {
+    this[overlayDiv].removeAttribute("hidden");
+  }
 
-    free() {
-        this[overlayDiv].setAttribute('hidden', 'hidden');
-    }
+  free() {
+    this[overlayDiv].setAttribute("hidden", "hidden");
+  }
 
-    isBlocked() {
-        return !this[overlayDiv].hasAttribute('hidden');
-    }
+  isBlocked() {
+    return !this[overlayDiv].hasAttribute("hidden");
+  }
 
-    aroundPromise(p) {
-        this.free();
-        return p.catch((error) => {
-            this.block();
-            throw error;
-        });
-    }
+  aroundPromise(p) {
+    this.free();
+    return p.catch((error) => {
+      this.block();
+      throw error;
+    });
+  }
 }
 
-window.customElements.define('x-o-overlay', XOverlay);
+window.customElements.define("x-o-overlay", XOverlay);

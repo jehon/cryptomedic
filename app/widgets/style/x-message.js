@@ -1,7 +1,10 @@
-
-import { spacing } from '../../config.js';
-import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import { messages } from '../../config.js';
+import { spacing } from "../../config.js";
+import {
+  createElementWithObject,
+  createElementWithTag,
+  defineCustomElement
+} from "../../js/custom-element.js";
+import { messages } from "../../config.js";
 
 /**
  * @typedef {object} Message a message for x-messages
@@ -19,32 +22,40 @@ import { messages } from '../../config.js';
  * - <default>: the message
  */
 export default class XMessage extends HTMLElement {
-    /**
-     * @param {string|Message} msg to be shown
-     * @returns {XMessage} messageId
-     */
-    static buildMessage(msg) {
-        if (typeof (msg) == 'string') {
-            msg = { text: msg };
-        }
-        msg = {
-            level: messages.error,
-            ...msg
-        };
-
-        return /** @type {XMessage} */ (createElementWithObject(XMessage, {
-            id: msg.id,
-            'msg-id': msg.id,
-            level: msg.level,
-
-        }, msg.text));
+  /**
+   * @param {string|Message} msg to be shown
+   * @returns {XMessage} messageId
+   */
+  static buildMessage(msg) {
+    if (typeof msg == "string") {
+      msg = { text: msg };
     }
+    msg = {
+      level: messages.error,
+      ...msg
+    };
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.append(
-            createElementWithTag('style', {}, `
+    return /** @type {XMessage} */ (
+      createElementWithObject(
+        XMessage,
+        {
+          id: msg.id,
+          "msg-id": msg.id,
+          level: msg.level
+        },
+        msg.text
+      )
+    );
+  }
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.append(
+      createElementWithTag(
+        "style",
+        {},
+        `
     :host {
         display: block;
         box-sizing: border-box;
@@ -87,14 +98,15 @@ export default class XMessage extends HTMLElement {
         border-color: #ebccd1;
     }
 
-`),
-            createElementWithTag('slot')
-        );
-    }
+`
+      ),
+      createElementWithTag("slot")
+    );
+  }
 
-    get msgId() {
-        return this.getAttribute('msg-id');
-    }
+  get msgId() {
+    return this.getAttribute("msg-id");
+  }
 }
 
 defineCustomElement(XMessage);

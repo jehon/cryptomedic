@@ -1,6 +1,9 @@
-
-import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import XI18n from '../func/x-i18n.js';
+import {
+  createElementWithObject,
+  createElementWithTag,
+  defineCustomElement
+} from "../../js/custom-element.js";
+import XI18n from "../func/x-i18n.js";
 
 /**
  * Attributes:
@@ -28,28 +31,33 @@ import XI18n from '../func/x-i18n.js';
  *
  */
 export default class XLabel extends HTMLElement {
-    // TODO: is this used ?
-    static get DISPLAY_MODE() { return 'flex'; }
+  // TODO: is this used ?
+  static get DISPLAY_MODE() {
+    return "flex";
+  }
 
-    static get observedAttributes() {
-        return ['label'];
+  static get observedAttributes() {
+    return ["label"];
+  }
+
+  attributeChangedCallback(attributeName, _oldValue, newValue) {
+    switch (attributeName) {
+      case "label":
+        this._label.setAttribute("value", newValue ?? "");
+        break;
     }
+  }
 
-    attributeChangedCallback(attributeName, _oldValue, newValue) {
-        switch (attributeName) {
-            case 'label':
-                this._label.setAttribute('value', newValue ?? '');
-                break;
-        }
-    }
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this.attachShadow({ mode: "open" });
 
-        this.attachShadow({ mode: 'open' });
-
-        this.shadowRoot.append(
-            createElementWithTag('style', {}, `
+    this.shadowRoot.append(
+      createElementWithTag(
+        "style",
+        {},
+        `
     :host {
         display: ${XLabel.DISPLAY_MODE};
         flex-direction: row;
@@ -133,36 +141,45 @@ export default class XLabel extends HTMLElement {
         border-left: 1px solid black;
         padding-left: 5px;
     }
-`),
-            this._label = createElementWithObject(XI18n, { id: 'label', value: this.getAttribute('label') ?? '' }),
-            createElementWithTag('slot'),
-            createElementWithTag('slot', { name: 'right' }),
-            createElementWithTag('slot', { name: 'left' }),
-            createElementWithTag('slot', { name: 'stat' }),
-        );
+`
+      ),
+      (this._label = createElementWithObject(XI18n, {
+        id: "label",
+        value: this.getAttribute("label") ?? ""
+      })),
+      createElementWithTag("slot"),
+      createElementWithTag("slot", { name: "right" }),
+      createElementWithTag("slot", { name: "left" }),
+      createElementWithTag("slot", { name: "stat" })
+    );
 
-        this.onChildChange();
-    }
+    this.onChildChange();
+  }
 
-    connectedCallback() {
-        ['change', 'mode'].forEach(evtName => this.addEventListener(evtName,
-            () => this.onChildChange())
-        );
-    }
+  connectedCallback() {
+    ["change", "mode"].forEach((evtName) =>
+      this.addEventListener(evtName, () => this.onChildChange())
+    );
+  }
 
-    onChildChange() {
-        /**
-         * If we have some "named" elements and that all of those are empty,
-         * then we hide usself
-         */
+  onChildChange() {
+    /**
+     * If we have some "named" elements and that all of those are empty,
+     * then we hide usself
+     */
 
-        const namedElements = this.querySelectorAll('[name]');
-        const notVisible = this.querySelectorAll('[name][empty]:not([input]), [name][unavailable]');
+    const namedElements = this.querySelectorAll("[name]");
+    const notVisible = this.querySelectorAll(
+      "[name][empty]:not([input]), [name][unavailable]"
+    );
 
-        // console.log({ label: this.getAttribute('label'), namedElements, notVisible });
+    // console.log({ label: this.getAttribute('label'), namedElements, notVisible });
 
-        this.toggleAttribute('empty', (namedElements.length > 0) && ((namedElements.length - notVisible.length) == 0));
-    }
+    this.toggleAttribute(
+      "empty",
+      namedElements.length > 0 && namedElements.length - notVisible.length == 0
+    );
+  }
 }
 
 defineCustomElement(XLabel);

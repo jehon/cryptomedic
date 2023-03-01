@@ -1,12 +1,11 @@
-
 /**
  * @param {number} nbr to be 'rounded'
  * @param {number} n of decimals
  * @returns {number} rounded
  */
 export function nround(nbr, n) {
-    const d = Math.pow(10, n);
-    return Math.round(nbr * d) / d;
+  const d = Math.pow(10, n);
+  return Math.round(nbr * d) / d;
 }
 
 /**
@@ -16,12 +15,12 @@ export function nround(nbr, n) {
  * @returns {number} parsed
  */
 export function getFloatFrom(s) {
-    if (s instanceof Number) {
-        return s;
-    }
-    const f = parseFloat(s);
-    if (isNaN(f)) {
-        return 0;
-    }
-    return f;
+  if (s instanceof Number) {
+    return s;
+  }
+  const f = parseFloat(s);
+  if (isNaN(f)) {
+    return 0;
+  }
+  return f;
 }

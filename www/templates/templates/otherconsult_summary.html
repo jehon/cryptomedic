@@ -1,46 +1,97 @@
-<table style='width: 100%'>
-	<tbody>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Date}'>
-			<td>Date</td>
-			<td><span id='OtherConsult_Date'>{{ folder.getFilesRelatedToPatient($index).Date }}</span></td>
-		</tr>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Physiotherapy61}'>
-			<td>Physiotherapy</td>
-			<td><span id='OtherConsult_Physiotherapy61' class='error'>Read: key is not in the database:
-					'OtherConsult.Physiotherapy61'</span></td>
-		</tr>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Plaster62}'>
-			<td>Plaster</td>
-			<td><span id='OtherConsult_Plaster62' class='error'>Read: key is not in the database:
-					'OtherConsult.Plaster62'</span></td>
-		</tr>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Orthopedicdevice65}'>
-			<td>Orthopedic Device</td>
-			<td><span id='OtherConsult_Orthopedicdevice65' class='error'>Read: key is not in the database:
-					'OtherConsult.Orthopedicdevice65'</span></td>
-		</tr>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Surgery66}'>
-			<td>Surgery</td>
-			<td><span id='OtherConsult_Surgery66' name='Surgery66'>{{ folder.getFilesRelatedToPatient($index).Surgery66
-					}}</span></td>
-		</tr>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Othertreatment68}'>
-			<td>Other Treatment</td>
-			<td><span id='OtherConsult_Othertreatment68' class='error'>Read: key is not in the database:
-					'OtherConsult.Othertreatment68'</span></td>
-		</tr>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Heightcm}'>
-			<td>Height (cm)</td>
-			<td><span id='OtherConsult_Heightcm'>{{ folder.getFilesRelatedToPatient($index).Heightcm }}</span></td>
-		</tr>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Weightkg}'>
-			<td>Weight (kg)</td>
-			<td><span id='OtherConsult_Weightkg'>{{ folder.getFilesRelatedToPatient($index).Weightkg }}</span></td>
-		</tr>
-		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Comment}'>
-			<td>Comment</td>
-			<td><span id='OtherConsult_Comment' class='error'>Read: key is not in the database:
-					'OtherConsult.Comment'</span></td>
-		</tr>
-	</tbody>
+<table style="width: 100%">
+  <tbody>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Date}'
+    >
+      <td>Date</td>
+      <td>
+        <span id="OtherConsult_Date"
+          >{{ folder.getFilesRelatedToPatient($index).Date }}</span
+        >
+      </td>
+    </tr>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Physiotherapy61}'
+    >
+      <td>Physiotherapy</td>
+      <td>
+        <span id="OtherConsult_Physiotherapy61" class="error"
+          >Read: key is not in the database:
+          'OtherConsult.Physiotherapy61'</span
+        >
+      </td>
+    </tr>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Plaster62}'
+    >
+      <td>Plaster</td>
+      <td>
+        <span id="OtherConsult_Plaster62" class="error"
+          >Read: key is not in the database: 'OtherConsult.Plaster62'</span
+        >
+      </td>
+    </tr>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Orthopedicdevice65}'
+    >
+      <td>Orthopedic Device</td>
+      <td>
+        <span id="OtherConsult_Orthopedicdevice65" class="error"
+          >Read: key is not in the database:
+          'OtherConsult.Orthopedicdevice65'</span
+        >
+      </td>
+    </tr>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Surgery66}'
+    >
+      <td>Surgery</td>
+      <td>
+        <span id="OtherConsult_Surgery66" name="Surgery66"
+          >{{ folder.getFilesRelatedToPatient($index).Surgery66 }}</span
+        >
+      </td>
+    </tr>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Othertreatment68}'
+    >
+      <td>Other Treatment</td>
+      <td>
+        <span id="OtherConsult_Othertreatment68" class="error"
+          >Read: key is not in the database:
+          'OtherConsult.Othertreatment68'</span
+        >
+      </td>
+    </tr>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Heightcm}'
+    >
+      <td>Height (cm)</td>
+      <td>
+        <span id="OtherConsult_Heightcm"
+          >{{ folder.getFilesRelatedToPatient($index).Heightcm }}</span
+        >
+      </td>
+    </tr>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Weightkg}'
+    >
+      <td>Weight (kg)</td>
+      <td>
+        <span id="OtherConsult_Weightkg"
+          >{{ folder.getFilesRelatedToPatient($index).Weightkg }}</span
+        >
+      </td>
+    </tr>
+    <tr
+      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Comment}'
+    >
+      <td>Comment</td>
+      <td>
+        <span id="OtherConsult_Comment" class="error"
+          >Read: key is not in the database: 'OtherConsult.Comment'</span
+        >
+      </td>
+    </tr>
+  </tbody>
 </table>

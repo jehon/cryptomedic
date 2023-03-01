@@ -1,5 +1,4 @@
-
-import { toAttributeCase } from './string-utils.js';
+import { toAttributeCase } from "./string-utils.js";
 
 /**
  * @typedef {Object<string,string|object>} Parameters
@@ -10,11 +9,11 @@ import { toAttributeCase } from './string-utils.js';
  * @returns {string} as the class name
  */
 export function getHTMLNameOfClass(cls) {
-    if (cls instanceof HTMLElement) {
-        cls = /** @type {new () => HTMLElement} */ (cls.constructor);
-    }
+  if (cls instanceof HTMLElement) {
+    cls = /** @type {new () => HTMLElement} */ (cls.constructor);
+  }
 
-    return toAttributeCase(cls.name);
+  return toAttributeCase(cls.name);
 }
 
 /**
@@ -23,8 +22,8 @@ export function getHTMLNameOfClass(cls) {
  * @returns {string} the calculated name
  */
 export function defineCustomElement(cls, name = getHTMLNameOfClass(cls)) {
-    customElements.define(name, cls);
-    return name;
+  customElements.define(name, cls);
+  return name;
 }
 
 /**
@@ -35,12 +34,17 @@ export function defineCustomElement(cls, name = getHTMLNameOfClass(cls)) {
  * @param {function(HTMLElement): void} js to modify the element
  * @returns {X} with all this set
  */
-export function createElementWithObject(tag, attributes = {}, inner = [], js = (_el) => { }) {
-    const el = new tag();
+export function createElementWithObject(
+  tag,
+  attributes = {},
+  inner = [],
+  js = (_el) => {}
+) {
+  const el = new tag();
 
-    enrichObject(el, attributes, inner, js);
+  enrichObject(el, attributes, inner, js);
 
-    return el;
+  return el;
 }
 
 /**
@@ -50,11 +54,16 @@ export function createElementWithObject(tag, attributes = {}, inner = [], js = (
  * @param {function(HTMLElement): void} js to modify the element
  * @returns {HTMLElement} with all this set
  */
-export function createElementWithTag(tag, attributes = {}, inner = [], js = (_el) => { }) {
-    const el = document.createElement(tag);
+export function createElementWithTag(
+  tag,
+  attributes = {},
+  inner = [],
+  js = (_el) => {}
+) {
+  const el = document.createElement(tag);
 
-    enrichObject(el, attributes, inner, js);
-    return el;
+  enrichObject(el, attributes, inner, js);
+  return el;
 }
 
 /**
@@ -62,10 +71,12 @@ export function createElementWithTag(tag, attributes = {}, inner = [], js = (_el
  * @returns {Array<HTMLElement>} parsed
  */
 export function createElementsFromHTML(html) {
-    var template = document.createElement('template');
-    template.innerHTML = html.trim();
+  var template = document.createElement("template");
+  template.innerHTML = html.trim();
 
-    return /** @type {Array<HTMLElement>} */ (Array.from(template.content.children));
+  return /** @type {Array<HTMLElement>} */ (
+    Array.from(template.content.children)
+  );
 }
 
 /**
@@ -74,53 +85,66 @@ export function createElementsFromHTML(html) {
  * @param {Array<Element | string>| string} inner to fill in
  * @param {function(Element): void} callback to modify the element
  */
-export function enrichObject(el, attributes = {}, inner = [], callback = (_el) => { }) {
-    if (typeof attributes != 'object' || Array.isArray(attributes)) {
-        console.error('Error in enrichObject ', el, ': attributes is not an object', attributes, { type: typeof attributes, array: Array.isArray(attributes) });
+export function enrichObject(
+  el,
+  attributes = {},
+  inner = [],
+  callback = (_el) => {}
+) {
+  if (typeof attributes != "object" || Array.isArray(attributes)) {
+    console.error(
+      "Error in enrichObject ",
+      el,
+      ": attributes is not an object",
+      attributes,
+      { type: typeof attributes, array: Array.isArray(attributes) }
+    );
+  }
+
+  for (const k of Object.keys(attributes)) {
+    let val = attributes[k];
+
+    if (val === null) {
+      val = "";
     }
 
-    for (const k of Object.keys(attributes)) {
-        let val = attributes[k];
-
-        if (val === null) {
-            val = '';
-        }
-
-        if (val === false) {
-            continue;
-        }
-
-        if (val === true) {
-            val = k;
-        }
-
-        if (Array.isArray(val)) {
-            val = JSON.stringify(val);
-        }
-
-        if (typeof (val) == 'object') {
-            val = Object.keys(val).map((k) => `${toAttributeCase(k)}: ${val[k]}`).join(';');
-        }
-        el.setAttribute(toAttributeCase(k), val);
+    if (val === false) {
+      continue;
     }
 
-    if (!Array.isArray(inner)) {
-        inner = [inner];
+    if (val === true) {
+      val = k;
     }
 
-    for (const k in inner) {
-        const v = inner[k];
-        if (v == null) {
-            continue;
-        }
-        if (typeof (v) == 'string' || typeof (v) == 'number') {
-            el.insertAdjacentText('beforeend', (v + '').trim());
-        } else {
-            el.insertAdjacentElement('beforeend', v);
-        }
+    if (Array.isArray(val)) {
+      val = JSON.stringify(val);
     }
 
-    callback(el);
+    if (typeof val == "object") {
+      val = Object.keys(val)
+        .map((k) => `${toAttributeCase(k)}: ${val[k]}`)
+        .join(";");
+    }
+    el.setAttribute(toAttributeCase(k), val);
+  }
+
+  if (!Array.isArray(inner)) {
+    inner = [inner];
+  }
+
+  for (const k in inner) {
+    const v = inner[k];
+    if (v == null) {
+      continue;
+    }
+    if (typeof v == "string" || typeof v == "number") {
+      el.insertAdjacentText("beforeend", (v + "").trim());
+    } else {
+      el.insertAdjacentElement("beforeend", v);
+    }
+  }
+
+  callback(el);
 }
 
 /**
@@ -129,9 +153,10 @@ export function enrichObject(el, attributes = {}, inner = [], callback = (_el) =
  * @returns {boolean} if it does
  */
 export function isEventOutOfSlot(event, slot) {
-    return slot.assignedNodes()
-        .map(e => e.contains(/** @type {Node} */(event.target)))
-        .reduce((prev, cur) => prev || cur, false);
+  return slot
+    .assignedNodes()
+    .map((e) => e.contains(/** @type {Node} */ (event.target)))
+    .reduce((prev, cur) => prev || cur, false);
 }
 
 /**
@@ -141,9 +166,9 @@ export function isEventOutOfSlot(event, slot) {
  * @param {Array<string>} list of attribute to be copied (with default value - empty mean no default)
  */
 export function copyAttributes(from, to, list) {
-    for (const k of list) {
-        if (from.hasAttribute(k)) {
-            to.setAttribute(k, from.getAttribute(k));
-        }
+  for (const k of list) {
+    if (from.hasAttribute(k)) {
+      to.setAttribute(k, from.getAttribute(k));
     }
+  }
 }

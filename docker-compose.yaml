@@ -1,12 +1,11 @@
-
-version: '3.9'
+version: "3.9"
 
 services:
-################################################################
-#
-# Prod like services
-#
-################################################################
+  ################################################################
+  #
+  # Prod like services
+  #
+  ################################################################
 
   proxy:
     image: traefik
@@ -72,27 +71,27 @@ services:
       # MYSQL_ROOT_PASSWORD: mysql_root_password
       MYSQL_DATABASE: cryptomedic
     healthcheck:
-        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-        timeout: 20s
-        retries: 10
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
     expose:
       - 3306
     volumes:
       - type: tmpfs
         target: /var/lib/mysql
 
-################################################################
-#
-# Dev services
-#
-################################################################
+  ################################################################
+  #
+  # Dev services
+  #
+  ################################################################
 
   dev:
     profiles:
       - tools
     # We can not set a profile here, because it need to start in DC
     # But it exit immediately, so no problems
-    build: 
+    build:
       context: conf/dev
 
   phpmyadmin:
@@ -105,31 +104,31 @@ services:
     expose:
       - 80
     labels:
-        - traefik.enable=true
-        - traefik.http.routers.phpmyadmin.rule=PathPrefix(`/phpmyadmin`)
-        - traefik.http.routers.phpmyadmin.middlewares=jhstriproot@docker
+      - traefik.enable=true
+      - traefik.http.routers.phpmyadmin.rule=PathPrefix(`/phpmyadmin`)
+      - traefik.http.routers.phpmyadmin.middlewares=jhstriproot@docker
 
   mail:
     # https://github.com/maildev/maildev
     image: maildev/maildev
     environment:
-        # Not working with healthcheck: - MAILDEV_BASE_PATHNAME=/maildev/
-        - MAILDEV_WEB_PORT=1080
+      # Not working with healthcheck: - MAILDEV_BASE_PATHNAME=/maildev/
+      - MAILDEV_WEB_PORT=1080
     expose:
       - 1025
       - 8025
     labels:
-        - traefik.enable=true
-        # https://github.com/maildev/maildev/issues/402
-        - traefik.http.routers.mail.rule=PathPrefix(`/mail`)
-        - traefik.http.routers.mail.middlewares=jhstriproot@docker
-        - traefik.http.services.mail.loadbalancer.server.port=1080
+      - traefik.enable=true
+      # https://github.com/maildev/maildev/issues/402
+      - traefik.http.routers.mail.rule=PathPrefix(`/mail`)
+      - traefik.http.routers.mail.middlewares=jhstriproot@docker
+      - traefik.http.services.mail.loadbalancer.server.port=1080
 
-################################################################
-#
-# Tools / commands
-#
-################################################################
+  ################################################################
+  #
+  # Tools / commands
+  #
+  ################################################################
   composer:
     profiles:
       - tool

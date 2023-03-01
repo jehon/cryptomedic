@@ -1,4 +1,3 @@
-
 /**
  * Calculate the birth date based on age and reference date
  *
@@ -8,11 +7,11 @@
  * @returns {string} representation of the date
  */
 export function toBirthDate(years, months, reference = new Date()) {
-    let dyears = reference.getFullYear() - years;
-    let dmonths = reference.getMonth() + 1 - months;
-    if (dmonths < 0) {
-        dyears--;
-        dmonths += 12;
-    }
-    return dyears + '-' + (dmonths + '').padStart(2, '0');
+  let dyears = reference.getFullYear() - years;
+  let dmonths = reference.getMonth() + 1 - months;
+  if (dmonths < 0) {
+    dyears--;
+    dmonths += 12;
+  }
+  return dyears + "-" + (dmonths + "").padStart(2, "0");
 }

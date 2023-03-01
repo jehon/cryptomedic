@@ -1,192 +1,233 @@
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <title>Cryptomedic local dev</title>
     <style>
-        body {
-            display: flex;
-            flex-wrap: wrap;
-        }
+      body {
+        display: flex;
+        flex-wrap: wrap;
+      }
 
-        body>* {
-            width: 30%;
-            border: 1px solid black;
-            margin: 5px;
-            padding: 15px;
-        }
+      body > * {
+        width: 30%;
+        border: 1px solid black;
+        margin: 5px;
+        padding: 15px;
+      }
 
-        a {
-            margin: 10px;
-        }
+      a {
+        margin: 10px;
+      }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border: 1px solid gray;
-        }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid gray;
+      }
 
-        table td,
-        table th {
-            padding: 5px;
-            border: 1px solid gray;
-        }
+      table td,
+      table th {
+        padding: 5px;
+        border: 1px solid gray;
+      }
 
-        table.prod_test>tbody>tr>td:nth-child(1),
-        [prod] {
-            background-color: lightcoral;
-        }
+      table.prod_test > tbody > tr > td:nth-child(1),
+      [prod] {
+        background-color: lightcoral;
+      }
 
-        table.prod_test>tbody>tr>td:nth-child(2),
-        [dev] {
-            background-color: lightgreen;
-        }
+      table.prod_test > tbody > tr > td:nth-child(2),
+      [dev] {
+        background-color: lightgreen;
+      }
 
-        table>tbody>tr[action]>td::before {
-            content: "!!action!!"
-        }
+      table > tbody > tr[action] > td::before {
+        content: "!!action!!";
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div>
-        <table class="prod_test">
-            <thead>
-                <tr>
-                    <th>Production</th>
-                    <th>Developpement</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="http://www.cryptomedic.org/">Cryptomedic</a></td>
-                    <td><a href="/">Cryptomedic</a></td>
-                </tr>
-                <tr>
-                    <td><a
-                            href="https://phpmyadmin.cluster003.hosting.ovh.net/index.php?pma_username=cryptomekpmain&pma_servername=cryptomekpmain.mysql.db">
-                            PhpMyAdmin OVH Database</a></td>
-                    <td><a href="/phpmyadmin/">PhpMyAdmin</a></td>
-                </tr>
-                <tr action>
-                    <td><a href="http://www.cryptomedic.org/maintenance/patch_db.php?pwd=">Patch DB</a></td>
-                    <td><a href="/maintenance/patch_db.php?pwd=secret">Patch DB</a></td>
-                </tr>
-                <tr action>
-                    <td><a href="http://www.cryptomedic.org/api/browsers/clean">browsers clean</a></td>
-                    <td><a href="/api/browsers/clean">browsers clean</a></td>
-                </tr>
-                <tr action>
-                    <td></td>
-                    <td><a href="/maintenance/reset.php?pwd=secret&env=dev">Reset data</a></td>
-                </tr>
-                <tr>
-                    <td><a href="http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote">md5sum remote</a></td>
-                    <td><a href="/maintenance/md5sum.php?filter=local">md5sum local</a></td>
-                </tr>
-            </tbody>
-        </table>
+      <table class="prod_test">
+        <thead>
+          <tr>
+            <th>Production</th>
+            <th>Developpement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="http://www.cryptomedic.org/">Cryptomedic</a></td>
+            <td><a href="/">Cryptomedic</a></td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="https://phpmyadmin.cluster003.hosting.ovh.net/index.php?pma_username=cryptomekpmain&pma_servername=cryptomekpmain.mysql.db"
+              >
+                PhpMyAdmin OVH Database</a
+              >
+            </td>
+            <td><a href="/phpmyadmin/">PhpMyAdmin</a></td>
+          </tr>
+          <tr action>
+            <td>
+              <a href="http://www.cryptomedic.org/maintenance/patch_db.php?pwd="
+                >Patch DB</a
+              >
+            </td>
+            <td><a href="/maintenance/patch_db.php?pwd=secret">Patch DB</a></td>
+          </tr>
+          <tr action>
+            <td>
+              <a href="http://www.cryptomedic.org/api/browsers/clean"
+                >browsers clean</a
+              >
+            </td>
+            <td><a href="/api/browsers/clean">browsers clean</a></td>
+          </tr>
+          <tr action>
+            <td></td>
+            <td>
+              <a href="/maintenance/reset.php?pwd=secret&env=dev">Reset data</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote"
+                >md5sum remote</a
+              >
+            </td>
+            <td>
+              <a href="/maintenance/md5sum.php?filter=local">md5sum local</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div prod>
-        <h2>Production</h2>
-        <ul>
-            <li><a href="https://github.com/jehon/">GitHub</a></li>
-            <!-- <li><a href="https://travis-ci.com/github/jehon/cryptomedic/branches"><img
+      <h2>Production</h2>
+      <ul>
+        <li><a href="https://github.com/jehon/">GitHub</a></li>
+        <!-- <li><a href="https://travis-ci.com/github/jehon/cryptomedic/branches"><img
                                 src="https://travis-ci.com/jehon/cryptomedic.svg?branch=master&amp;status=passed"
                                 alt="build:passed"></a></li> -->
-            <li>
-                <a
-                    href="https://www.ovh.com/manager/web/#/configuration/hosting/cryptomedic.org?tab=GENERAL_INFORMATIONS">OVH
-                    manager</a>
-            </li>
-        </ul>
+        <li>
+          <a
+            href="https://www.ovh.com/manager/web/#/configuration/hosting/cryptomedic.org?tab=GENERAL_INFORMATIONS"
+            >OVH manager</a
+          >
+        </li>
+      </ul>
     </div>
     <div dev>
-        <h2>Development environment</h2>
-        <ul>
-            <li>
-                <a href="/dev/tests/demo/demo.html">Demo</a>
-            </li>
-            <li>
-                <a href="/dev/tmp/styles/index.html">Style_comparison</a>
-            </li>
-            <li>
-                <a href=":9876/debug.html">Karma debug</a>
-            </li>
-        </ul>
-        <h2>Tests results</h2>
-        <ul>
-            <li><a href="/mail/">MailHog</a></li>
-            <li><a href="/dev/tmp/js/junit/">JUnit</a></li>
-            <li><a href="/dev/tmp/js/lcov-report/index.html">Coverage</a></li>
-            <li><a href="/dev/tmp/php/index.html">Coverage_php_laravel</a></li>
-        </ul>
+      <h2>Development environment</h2>
+      <ul>
+        <li>
+          <a href="/dev/tests/demo/demo.html">Demo</a>
+        </li>
+        <li>
+          <a href="/dev/tmp/styles/index.html">Style_comparison</a>
+        </li>
+        <li>
+          <a href=":9876/debug.html">Karma debug</a>
+        </li>
+      </ul>
+      <h2>Tests results</h2>
+      <ul>
+        <li><a href="/mail/">MailHog</a></li>
+        <li><a href="/dev/tmp/js/junit/">JUnit</a></li>
+        <li><a href="/dev/tmp/js/lcov-report/index.html">Coverage</a></li>
+        <li><a href="/dev/tmp/php/index.html">Coverage_php_laravel</a></li>
+      </ul>
     </div>
     <div>
-        <h2>E2E: tests/e2e/tests/ro/readPatientTest.js</h2>
+      <h2>E2E: tests/e2e/tests/ro/readPatientTest.js</h2>
+      <ul>
+        <li>
+          readPatient2000
+          <ul>
+            <li><a href="/built/index.html#/folder/1">patient 2000-1</a></li>
+            <li>
+              <a href="/built/index.html#/folder/1/file/RicketConsult/13"
+                >ricket consult 13</a
+              >
+            </li>
+            <li>
+              <a href="/built/index.html#/folder/1/file/Appointment/2"
+                >appointment 2</a
+              >
+            </li>
+            <li>
+              <a href="/built/index.html#/folder/1/file/Surgery/5">surgery 5</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          readPatient5
+          <ul>
+            <li><a href="/built/index.html#/folder/5">patient 2014-105</a></li>
+            <li>
+              <a href="/built/index.html#/folder/5/file/ClubFoot/1"
+                >club foot 1</a
+              >
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          readPatient6
+          <ul>
+            <li><a href="/built/index.html#/folder/6">patient 2001-1</a></li>
+          </ul>
+        </li>
+
+        <li>
+          readPatient3
+          <ul>
+            <li><a href="/built/index.html#/folder/3">patient 2014-103</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>E2E: tests/e2e/tests/modifyPatientTest.js</h2>
+      <div><a href="/built/index.html#/folder/7">patient 2001-4</a></div>
+    </div>
+
+    <div>
+      <h2>E2E: reports</h2>
+      <div>
+        <a href="/built/index.html#/reports/activity">activity</a>
         <ul>
-            <li>readPatient2000
-                <ul>
-                    <li><a href="/built/index.html#/folder/1">patient 2000-1</a></li>
-                    <li><a href="/built/index.html#/folder/1/file/RicketConsult/13">ricket consult 13</a></li>
-                    <li><a href="/built/index.html#/folder/1/file/Appointment/2">appointment 2</a></li>
-                    <li><a href="/built/index.html#/folder/1/file/Surgery/5">surgery 5</a></li>
-                </ul>
-            </li>
-
-            <li>readPatient5
-                <ul>
-                    <li><a href="/built/index.html#/folder/5">patient 2014-105</a></li>
-                    <li><a href="/built/index.html#/folder/5/file/ClubFoot/1">club foot 1</a></li>
-                </ul>
-            </li>
-
-            <li>readPatient6
-                <ul>
-                    <li><a href="/built/index.html#/folder/6">patient 2001-1</a></li>
-                </ul>
-            </li>
-
-            <li>readPatient3
-                <ul>
-                    <li><a href="/built/index.html#/folder/3">patient 2014-103</a></li>
-                </ul>
-            </li>
+          <li>month: 2014-05</li>
+          <li>daily: 2014-05-20</li>
         </ul>
+      </div>
+      <div>
+        <a href="/built/index.html#/reports/surgical">surgical</a>
+        <ul>
+          <li>month: 2014-01</li>
+        </ul>
+      </div>
+      <div>
+        <a href="/built/index.html#/reports/consultations">consultations</a>
+        <ul>
+          <li>day: 2015-04-28</li>
+        </ul>
+      </div>
+      <div>
+        <a href="/built/index.html#/reports/statistical">statistical</a>
+        <ul>
+          <li>month: 2014-05</li>
+        </ul>
+      </div>
     </div>
-
-    <div>
-        <h2>E2E: tests/e2e/tests/modifyPatientTest.js</h2>
-        <div><a href="/built/index.html#/folder/7">patient 2001-4</a></div>
-    </div>
-
-    <div>
-        <h2>E2E: reports</h2>
-        <div><a href="/built/index.html#/reports/activity">activity</a>
-            <ul>
-                <li>month: 2014-05</li>
-                <li>daily: 2014-05-20</li>
-            </ul>
-        </div>
-        <div><a href="/built/index.html#/reports/surgical">surgical</a>
-            <ul>
-                <li>month: 2014-01</li>
-            </ul>
-        </div>
-        <div><a href="/built/index.html#/reports/consultations">consultations</a>
-            <ul>
-                <li>day: 2015-04-28</li>
-            </ul>
-        </div>
-        <div><a href="/built/index.html#/reports/statistical">statistical</a>
-            <ul>
-                <li>month: 2014-05</li>
-            </ul>
-        </div>
-
-    </div>
-</body>
-
+  </body>
 </html>

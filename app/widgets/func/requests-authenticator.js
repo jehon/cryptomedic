@@ -1,5 +1,5 @@
-import { getBrowserDescription } from '../../js/browser.js';
-import { requestAndFilterBuilder } from './x-requestor.js';
+import { getBrowserDescription } from "../../js/browser.js";
+import { requestAndFilterBuilder } from "./x-requestor.js";
 
 /**
  * Build object for XRequestor#request
@@ -9,10 +9,14 @@ import { requestAndFilterBuilder } from './x-requestor.js';
  * @returns {object} options for request (see XRequestor#request)
  */
 export function loginRequestBuilder(username, password) {
-    return requestAndFilterBuilder({
-        url: 'auth/mylogin', method: 'POST',
-        data: { username, password, browser: getBrowserDescription() }
-    }, [404]);
+  return requestAndFilterBuilder(
+    {
+      url: "auth/mylogin",
+      method: "POST",
+      data: { username, password, browser: getBrowserDescription() }
+    },
+    [404]
+  );
 }
 
 /**
@@ -21,10 +25,14 @@ export function loginRequestBuilder(username, password) {
  * @returns {object} options for request (see XRequestor#request)
  */
 export function loginCheckRequestBuilder() {
-    return requestAndFilterBuilder({
-        url: 'auth/settings', method: 'POST',
-        data: { browser: getBrowserDescription() }
-    }, [401]);
+  return requestAndFilterBuilder(
+    {
+      url: "auth/settings",
+      method: "POST",
+      data: { browser: getBrowserDescription() }
+    },
+    [401]
+  );
 }
 
 /**
@@ -33,7 +41,7 @@ export function loginCheckRequestBuilder() {
  * @returns {object} options for request (see XRequestor#request)
  */
 export function logoutBuilder() {
-    return {
-        url: '/api/auth/logout'
-    };
+  return {
+    url: "/api/auth/logout"
+  };
 }

@@ -9,10 +9,10 @@
  * @see https://docs.cypress.io/api/commands/request
  */
 export function crApi(options = {}) {
-    return cy.request({
-        ...options,
-        url: options.url[0] == '/' ? options.url : `/api/${options.url}`
-    });
+  return cy.request({
+    ...options,
+    url: options.url[0] == "/" ? options.url : `/api/${options.url}`
+  });
 }
 
 /**
@@ -26,23 +26,25 @@ export function crApi(options = {}) {
  * @returns {string} the real user used
  */
 export function crApiLogin(username = null, password = null) {
-    const realUser = username ?? 'murshed';
-    const realPassword = password ?? 'p';
+  const realUser = username ?? "murshed";
+  const realPassword = password ?? "p";
 
-    cy.log(`Doing crApiLogin: ${realUser} / ${realPassword}`);
-    crApi({
-        url: 'auth/mylogin', method: 'POST', body: {
-            username: realUser,
-            password: realPassword
-        }
-    });
+  cy.log(`Doing crApiLogin: ${realUser} / ${realPassword}`);
+  crApi({
+    url: "auth/mylogin",
+    method: "POST",
+    body: {
+      username: realUser,
+      password: realPassword
+    }
+  });
 
-    cy.log(`Done crApiLogin: ${realUser}`);
-    return realUser;
+  cy.log(`Done crApiLogin: ${realUser}`);
+  return realUser;
 }
-crApiLogin.PHYSIO = 'murshed';
-crApiLogin.RO = 'readonly';
-crApiLogin.ADMIN = 'jehon';
+crApiLogin.PHYSIO = "murshed";
+crApiLogin.RO = "readonly";
+crApiLogin.ADMIN = "jehon";
 
 /**
  * Logout using api
@@ -50,10 +52,10 @@ crApiLogin.ADMIN = 'jehon';
  * Note that logout is automatically done through login.
  */
 export function crApiLogout() {
-    crApi({
-        url: 'auth/logout',
-    });
-    cy.log('Done crApiLogout');
+  crApi({
+    url: "auth/logout"
+  });
+  cy.log("Done crApiLogout");
 }
 
 /**
@@ -62,13 +64,10 @@ export function crApiLogout() {
  * @returns {Cypress.Chainable<*>} Promise to price list
  */
 export function crApiFolderGet(id) {
-    cy.log('Doing crApiFolderGet');
-    return crApi({ url: `folder/Patient/${id}` })
-        .then(response => response.body)
-        .then(data => cy
-            .log('Done crApiFolderGet: ', data)
-            .then(() => data)
-        );
+  cy.log("Doing crApiFolderGet");
+  return crApi({ url: `folder/Patient/${id}` })
+    .then((response) => response.body)
+    .then((data) => cy.log("Done crApiFolderGet: ", data).then(() => data));
 }
 
 /**
@@ -79,16 +78,16 @@ export function crApiFolderGet(id) {
  * @param {number} entrynumber to be deleted
  */
 export function crApiPatientDelete(entryyear, entrynumber = 1000) {
-    // Delete previously create user
-    cy.log(`Doing crApiPatientDelete: ${entryyear} / ${entrynumber}`);
-    crApi({ url: `reference/${entryyear}/${entrynumber}` })
-        .then(response => response.body)
-        .then(folder => {
-            if (folder?.id > 0) {
-                return crApi({ url: `fiche/patients/${folder.id}`, method: 'DELETE' });
-            }
-        });
-    cy.log(`Done crApiPatientDelete: ${entryyear} / ${entrynumber}`);
+  // Delete previously create user
+  cy.log(`Doing crApiPatientDelete: ${entryyear} / ${entrynumber}`);
+  crApi({ url: `reference/${entryyear}/${entrynumber}` })
+    .then((response) => response.body)
+    .then((folder) => {
+      if (folder?.id > 0) {
+        return crApi({ url: `fiche/patients/${folder.id}`, method: "DELETE" });
+      }
+    });
+  cy.log(`Done crApiPatientDelete: ${entryyear} / ${entrynumber}`);
 }
 
 /**
@@ -99,10 +98,10 @@ export function crApiPatientDelete(entryyear, entrynumber = 1000) {
  * @param {object} data to be set
  */
 export function crApiFicheModify(type, id, data) {
-    // Modify a file
-    cy.log(`Doing crApiFicheModify: ${type}#${id}`);
-    crApi({ url: `fiche/${type}/${id}`, method: 'PUT', data });
-    cy.log(`Done crApiFicheModify: ${type}#${id}`);
+  // Modify a file
+  cy.log(`Doing crApiFicheModify: ${type}#${id}`);
+  crApi({ url: `fiche/${type}/${id}`, method: "PUT", data });
+  cy.log(`Done crApiFicheModify: ${type}#${id}`);
 }
 
 /**
@@ -112,25 +111,25 @@ export function crApiFicheModify(type, id, data) {
  * @param {number} id to be updated
  */
 export function crApiFicheDelete(type, id) {
-    // Modify a file
-    cy.log(`Doing crApiFicheDelete: ${type}#${id}`);
-    const apiTypes = {
-        Appointment: 'appointments',
-        Bill: 'bills',
-        ClubFoot: 'clubfeet',
-        OtherConsult: 'otherconsults',
-        Payment: 'payments',
-        Picture: 'pictures',
-        RicketConsult: 'ricketconsults',
-        Surgery: 'surgeries',
-    };
+  // Modify a file
+  cy.log(`Doing crApiFicheDelete: ${type}#${id}`);
+  const apiTypes = {
+    Appointment: "appointments",
+    Bill: "bills",
+    ClubFoot: "clubfeet",
+    OtherConsult: "otherconsults",
+    Payment: "payments",
+    Picture: "pictures",
+    RicketConsult: "ricketconsults",
+    Surgery: "surgeries"
+  };
 
-    if (!apiTypes[type]) {
-        throw new Error(`No mapping found for ${type}`);
-    }
+  if (!apiTypes[type]) {
+    throw new Error(`No mapping found for ${type}`);
+  }
 
-    crApi({ url: `fiche/${apiTypes[type]}/${id}`, method: 'DELETE' });
-    cy.log(`Done crApiFicheDelete: ${type}#${id}`);
+  crApi({ url: `fiche/${apiTypes[type]}/${id}`, method: "DELETE" });
+  cy.log(`Done crApiFicheDelete: ${type}#${id}`);
 }
 
 /**
@@ -139,26 +138,26 @@ export function crApiFicheDelete(type, id) {
  * @returns {Cypress.Chainable<*>} Promise to price list
  */
 export function crApiPriceList() {
-    cy.log('Doing crApiPriceList');
-    return crApi({ url: 'admin/prices' })
-        .then(response => response.body)
-        .then(data => cy
-            .log('Done crApiPriceList: ', data)
-            .then(() => data)
-        );
+  cy.log("Doing crApiPriceList");
+  return crApi({ url: "admin/prices" })
+    .then((response) => response.body)
+    .then((data) => cy.log("Done crApiPriceList: ", data).then(() => data));
 }
 
 export function crApiPriceDelete(id) {
-    cy.log(`Doing crApiPriceDelete: ${id}`);
-    crApi({ url: `admin/prices/${id}`, method: 'DELETE' });
-    cy.log(`Done crApiPriceDelete: ${id}`);
+  cy.log(`Doing crApiPriceDelete: ${id}`);
+  crApi({ url: `admin/prices/${id}`, method: "DELETE" });
+  cy.log(`Done crApiPriceDelete: ${id}`);
 }
 
 export function crApiUserDelete(username) {
-    crApi({ url: 'users' })
-        .then(response => response.body)
-        .then(data => data.filter(l => l.username == username).map(l => l.id)
-            .forEach(id => crApi({ url: `users/${id}`, method: 'DELETE' }))
-        );
-    cy.log(`Done crApiUserDelete: ${crApiUserDelete}`);
+  crApi({ url: "users" })
+    .then((response) => response.body)
+    .then((data) =>
+      data
+        .filter((l) => l.username == username)
+        .map((l) => l.id)
+        .forEach((id) => crApi({ url: `users/${id}`, method: "DELETE" }))
+    );
+  cy.log(`Done crApiUserDelete: ${crApiUserDelete}`);
 }
