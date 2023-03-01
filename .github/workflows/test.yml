@@ -18,6 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # https://github.com/actions/setup-node
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+
       - run: make dc-up
 
       - run: make dump
