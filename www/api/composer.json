@@ -6,7 +6,7 @@
     "laravel/framework": "9.52.4"
   },
   "require-dev": {
-    "phpunit/phpunit": "9.6.4"
+    "phpunit/phpunit": "10.0.14"
   },
   "autoload": {
     "classmap": [
