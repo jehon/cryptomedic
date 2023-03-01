@@ -43,12 +43,12 @@ context("Actions", () => {
     cy.crCompareSnapshot("without-date");
   });
 
-  it.skip("try to set date in the future", () => {
-    setDate("2100-01-01");
-    cy.get("#errorDateFuture").should("be.visible");
-  });
+  // it.skip("try to set date in the future", () => {
+  //   setDate("2100-01-01");
+  //   cy.get("#errorDateFuture").should("be.visible");
+  // });
 
-  it.only("add a price normally", () => {
+  it("add a price normally", () => {
     setDate("2015-01-01");
 
     cy.get("[name=consult_give_appointment]").should("exist");
@@ -126,9 +126,9 @@ context("Actions", () => {
     // TODO: add payment and check
   });
 
-  it.skip("add a bill without a total is an error", () => {
-    setDate("2015-01-01");
-    cy.get("#top_menu #button_save").click();
-    // Error must be shown !
-  });
+  // it.skip("add a bill without a total is an error", () => {
+  //   setDate("2015-01-01");
+  //   cy.get("#top_menu #button_save").click();
+  //   // Error must be shown !
+  // });
 });
