@@ -445,28 +445,37 @@ x-button#export {
           return;
         }
 
+        this.data = data;
+
         //
         // Export button
         //    Calculate the filename
         //
-        let filename = `cryptomedic-${this.reportId}`;
-        for (const i in this.getReportDescription().params) {
-          const p = this.getReportDescription().params[i];
-          if (data.params[p]) {
-            if (p == "period") {
-              filename += "-" + data.params["when"];
-            } else if (typeof data.params[p] == "boolean") {
-              if (data.params[p]) {
-                filename += "-" + p;
-              }
-            } else {
-              filename += "-" + data.params[p].split(" ").join("_");
-            }
-          }
-        }
-        this._exportLink.setAttribute("download", filename + ".xls");
-        this._result.setData(data.list, data);
+        this._exportLink.setAttribute(
+          "download",
+          this.generateReportFilename()
+        );
+        this._result.setData(this.data.list, this.data);
       });
+  }
+
+  generateReportFilename(ext = "xls") {
+    let filename = `cryptomedic-${this.reportId}`;
+    for (const i in this.getReportDescription().params) {
+      const p = this.getReportDescription().params[i];
+      if (this.data.params[p]) {
+        if (p == "period") {
+          filename += "-" + this.data.params["when"];
+        } else if (typeof this.data.params[p] == "boolean") {
+          if (this.data.params[p]) {
+            filename += "-" + p;
+          }
+        } else {
+          filename += "-" + this.data.params[p].split(" ").join("_");
+        }
+      }
+    }
+    return filename + "." + ext;
   }
 
   generateXLS() {
@@ -503,6 +512,7 @@ x-button#export {
       );
 
     // bug fix here: https://github.com/jmaister/excellentexport/issues/54
+    // https://www.npmjs.com/package/excellentexport
     ExcellentExport.excel(
       this._exportLink,
       this._result.getElementsByTagName("table")[0],
