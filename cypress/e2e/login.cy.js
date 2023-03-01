@@ -5,7 +5,7 @@ import { crLoginInBackground, crPage } from "./helpers/cr.js";
 import { guiHashStartWith } from "./helpers/gui.js";
 
 context("Actions", () => {
-  it("initialize to login", () => {
+  it("login", () => {
     cy.visit("/built/");
     guiHashStartWith("/login");
     crPage().within(() => {
@@ -23,7 +23,7 @@ context("Actions", () => {
     });
   });
 
-  it("works also with crLoginInBackground", () => {
+  it("login in background", () => {
     crLoginInBackground(crApiLogin.RO);
     guiHashStartWith("/home");
     cy.get("x-user-status #user").should("have.text", crApiLogin.RO);

@@ -85,12 +85,10 @@ flavorFilter(flavorFilter.DESKTOP, () =>
       crGo("prices");
     });
 
-    it("go to the price page", () => {
+    it("create a new Price List", () => {
       assertTableInitial();
       cy.crCompareSnapshot();
-    });
 
-    it("create a new Price List", () => {
       // Button to create a new price list
       cy.get("#button_create").should("be.visible").click();
       cy.get("#button_create").should("be.visible");
