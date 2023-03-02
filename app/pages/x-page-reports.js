@@ -133,7 +133,7 @@ x-button#export {
             createElementWithObject(XGroupPanel, { title: "Parameters" }, [
               (this._form = createElementWithObject(
                 XForm,
-                {},
+                { id: "report_input" },
                 [
                   (this._params = createElementWithTag("span")),
                   (this._messages = createElementWithObject(XMessages)),

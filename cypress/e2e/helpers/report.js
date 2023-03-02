@@ -12,7 +12,7 @@ export function goReport(reportName, fillInFieldsCb, checkCb) {
     cy.get("x-page-reports")
       .should("be.visible")
       .within(() => {
-        cy.get("x-form")
+        cy.get("x-form#report_input")
           .should("be.visible")
           .within(() => {
             fillInFieldsCb();

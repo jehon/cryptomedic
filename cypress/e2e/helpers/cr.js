@@ -74,8 +74,6 @@ export function crFormFillIn(subject, fields) {
     .should("be.visible")
     .within(() => {
       for (const f in fields) {
-        cy.get(f).as("element");
-
         cy.get(f).should("be.visible");
 
         cy.get(f).invoke("focus");
