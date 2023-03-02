@@ -200,6 +200,14 @@ $(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find cypre
 
 # TODO
 cypress-open:
+#
+#  See https://stackoverflow.com/questions/50706128/no-version-of-cypress-is-installed-in-ci-travisci-and-circleci
+#
+# Sometimes, no version of Cypress is installed in: /home/user/.cache/Cypress/9.6.1/Cypress
+# Please reinstall Cypress by running: cypress install
+#
+#
+	node_modules/.bin/cypress install
 	node_modules/.bin/cypress open
 
 # TODO
@@ -267,15 +275,6 @@ update-dependencies: update-dependencies-node update-dependencies-api
 dependencies-node: $(TMP)/.dependencies-node
 $(TMP)/.dependencies-node: package.json package-lock.json
 	bin/cr-npm install
-
-#
-#  See https://stackoverflow.com/questions/50706128/no-version-of-cypress-is-installed-in-ci-travisci-and-circleci
-#
-# Sometimes, no version of Cypress is installed in: /home/user/.cache/Cypress/9.6.1/Cypress
-# Please reinstall Cypress by running: cypress install
-#
-#
-	node_modules/.bin/cypress install
 
 	touch package-lock.json
 
