@@ -145,16 +145,15 @@ services:
     volumes:
       - ./:/app
 
-  # cypress:
-  #   profiles:
-  #     - tool
-  #   # Adaptations:
-  #   # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/7.1.0/Dockerfile
-  #   image: cypress/included:11 # 8.7.0 is causing issue in github actions: https://stackoverflow.com/a/70519386/1954789
-  #   environment:
-  #     LANG: C.UTF-8
-  #     DBUS_SESSION_BUS_ADDRESS:
-  #     CYPRESS_BASE_URL: http://web/
-  #   working_dir: /app
-  #   volumes:
-  #     - .:/app
+  cypress:
+    profiles:
+      - tool
+    # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/12/Dockerfile
+    image: cypress/included:12.7.0
+    environment:
+      LANG: C.UTF-8
+      DBUS_SESSION_BUS_ADDRESS:
+      CYPRESS_BASE_URL: http://web/
+    working_dir: /app
+    volumes:
+      - .:/app
