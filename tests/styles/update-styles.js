@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-import { inStyles, referenceUpdateFolder, p_ko, stylesJSON } from "./lib.mjs";
+import { inStyles, referenceUpdateFolder, p_ko, stylesJSON } from "./lib.js";
 
 const problemsList = JSON.parse(fs.readFileSync(stylesJSON, "utf-8"));
 

@@ -216,7 +216,7 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 	find $(TMP)/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
 
 	@echo "Compare"
-	bin/cr-node tests/styles/test-styles.mjs
+	bin/cr-node node tests/styles/test-styles.js
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 	du -ksh "$(dir $@)"
 
@@ -224,7 +224,7 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 update-references-styles:
 	if [ ! -r $(TMP)/styles/styles-problems-list.json ]; then echo "No tmp/styles/styles-problems-list.json found!"; exit 1; fi
 	@echo "Compare"
-	bin/cr-node tests/styles/update-styles.mjs
+	bin/cr-node node tests/styles/update-styles.js
 
 #
 # Deploy command

@@ -16,7 +16,7 @@ import {
   p_warn,
   p_ko,
   stylesJSON
-} from "./lib.mjs";
+} from "./lib.js";
 
 fs.mkdirSync(stylesRoot, { recursive: true });
 fs.mkdirSync(inStyles(diffFolder), { recursive: true });
