@@ -23,7 +23,7 @@ FLAVOR="$1"
 shift
 
 echo "* Testing cypress for $FLAVOR"
-OUTPUT="$CR_TMP"/e2e/"$FLAVOR"
+OUTPUT=tmp/e2e/"$FLAVOR"
 
 header_begin "Setup $OUTPUT"
 
@@ -55,7 +55,7 @@ header_begin "Cypress run tests (${CYPRESS_ARGS[*]}) ($*)"
 
 # time "$CR_SCRIPT_DIR"/node node_modules/.bin/cypress run "${CYPRESS_ARGS[@]}" "$@"
 
-docker compose run --rm --quiet-pull -T \
+docker compose run --rm --quiet-pull \
     --volume "$(pwd):/workdir" \
     --workdir /workdir \
     --user "$(id -u)" \
