@@ -9,8 +9,8 @@ import { guiHashStartWith } from "./gui.js";
  * - no (visible) image loading
  */
 export function crReady() {
-  cy.document()
-    .its("body")
+  cy.root()
+    .closest("html")
     .within(() => {
       cy.get("x-requestor[running]", { includeShadowDom: true }).should(
         "not.exist"
