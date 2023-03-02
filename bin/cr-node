@@ -10,4 +10,5 @@ docker compose run --rm --quiet-pull -T \
     --workdir /workdir \
     --user "$(id -u)" \
     node \
+    node \
     "$@"
