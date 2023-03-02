@@ -20,11 +20,11 @@ export function crReady() {
       cy.get("img", { includeShadowDom: true })
         .filter("[src]")
         .filter(":visible")
-        // TODO: remove logs
-        .should((imgs) =>
-          imgs.map((i, /** @type {HTMLImageElement} */ img) =>
-            expect(img.naturalWidth).to.be.greaterThan(0, "loaded: ")
-          )
+        .each(
+          // https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/testing-dom__wait-for-resource/README.md#delayed-image
+          /** @type {HTMLImageElement} */
+          (img) => cy.wrap(img).should("be.visible")
+          // expect(img.naturalWidth, "loaded: ").to.be.greaterThan(0)
         );
     });
   cy.log("Done: crReady");
