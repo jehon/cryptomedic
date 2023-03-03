@@ -5,4 +5,4 @@ app.engine=php
 app.engine.version=8.1
 environment=production
 container.image=stable64
-http.firewall=none
+http.firewall=security
