@@ -98,6 +98,7 @@ sftp_rm() {
 
 echo ""
 header_begin "Updating md5sum.php script [for real]"
+set -x
 (
 	echo "version"
 	sftp_put www/maintenance/md5sum.php
