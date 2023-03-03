@@ -42,17 +42,21 @@ jh_color() {
     fi
 }
 
+header_message() {
+    if [ -n "$QUIET" ]; then
+        return
+    fi
+    jh_color 93
+    echo -n "$CR_HEADER_PREFIX $*"
+    jh_color
+    echo   
+}
+
 header_begin() {
     LASTMSG="$*"
-    jh_color 93
-    echo -n "$CR_HEADER_PREFIX $*..."
-    jh_color
-    echo
+    header_message "$*..."
 }
 
 header_end() {
-    jh_color 93
-    echo -n "$CR_HEADER_PREFIX $LASTMSG done"
-    jh_color
-    echo
+    header_message "$* done"
 }

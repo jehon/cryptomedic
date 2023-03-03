@@ -22,7 +22,7 @@ fi
 FLAVOR="$1"
 shift
 
-echo "* Testing cypress for $FLAVOR"
+header_message "Testing cypress for $FLAVOR"
 OUTPUT=tmp/e2e/"$FLAVOR"
 
 header_begin "Setup $OUTPUT"
