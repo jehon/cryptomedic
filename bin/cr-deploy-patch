@@ -123,53 +123,52 @@ header_end
 
 if diff -q "$CR_TMP"/deploy-remote.sorted.txt "$CR_TMP"/deploy-local.sorted.txt; then
 	echo "No diff found"
-	exit 0
-fi
-
-header_begin "Building the diff"
-{
-	diff -u "$CR_TMP"/deploy-remote.sorted.txt "$CR_TMP"/deploy-local.sorted.txt || true
-} | tee "$CR_TMP"/deploy-diff-1-raw.txt |
-	grep -e "^[+-]" | grep -v "^+++" | grep -v "^---" | tee "$CR_TMP"/deploy-diff-2-filtered.txt |
-	cut -c 1,13- | tee "$CR_TMP"/deploy-diff-3-changed.txt |
-	LC_ALL=POSIX sort -k1.2 -k1.1r | tee "$CR_TMP"/deploy-diff-4-sorted.txt |
+else
+	header_begin "Building the diff"
 	{
-		while read -r lfile; do
-			file="${lfile:1}"
-			if [ "${lfile:0:1}" == "+" ]; then
-				sftp_put "$file"
-			else
-				sftp_rm "$file"
-			fi
-		done
-	} >"$CR_TMP"/deploy-diff-5-sftp-commands.txt
-header_end
+		diff -u "$CR_TMP"/deploy-remote.sorted.txt "$CR_TMP"/deploy-local.sorted.txt || true
+	} | tee "$CR_TMP"/deploy-diff-1-raw.txt |
+		grep -e "^[+-]" | grep -v "^+++" | grep -v "^---" | tee "$CR_TMP"/deploy-diff-2-filtered.txt |
+		cut -c 1,13- | tee "$CR_TMP"/deploy-diff-3-changed.txt |
+		LC_ALL=POSIX sort -k1.2 -k1.1r | tee "$CR_TMP"/deploy-diff-4-sorted.txt |
+		{
+			while read -r lfile; do
+				file="${lfile:1}"
+				if [ "${lfile:0:1}" == "+" ]; then
+					sftp_put "$file"
+				else
+					sftp_rm "$file"
+				fi
+			done
+		} >"$CR_TMP"/deploy-diff-5-sftp-commands.txt
+	header_end
 
-if [ -r "$CR_TMP"/deploy-diff-4-sorted.txt ]; then
-	echo "-------------- Differences --------------"
-	echo "-------------- Differences --------------"
-	echo "-------------- Differences --------------"
-	cat "$CR_TMP"/deploy-diff-4-sorted.txt
-	echo "-------------- Differences --------------"
-	echo "-------------- Differences --------------"
-	echo "-------------- Differences --------------"
+	if [ -r "$CR_TMP"/deploy-diff-4-sorted.txt ]; then
+		echo "-------------- Differences --------------"
+		echo "-------------- Differences --------------"
+		echo "-------------- Differences --------------"
+		cat "$CR_TMP"/deploy-diff-4-sorted.txt
+		echo "-------------- Differences --------------"
+		echo "-------------- Differences --------------"
+		echo "-------------- Differences --------------"
 
-	if [ "$ACTION" == "commit" ]; then
-		header_begin "Commiting"
-		sftp_exec <"$CR_TMP"/deploy-diff-5-sftp-commands.txt
-		header_end
-	else
-		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-		cat "$CR_TMP"/deploy-diff-5-sftp-commands.txt
-		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-		echo ""
-		echo "To really commit, use:"
-		echo "$0 commit"
-		echo ""
+		if [ "$ACTION" == "commit" ]; then
+			header_begin "Commiting"
+			sftp_exec <"$CR_TMP"/deploy-diff-5-sftp-commands.txt
+			header_end
+		else
+			echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+			echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+			echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+			cat "$CR_TMP"/deploy-diff-5-sftp-commands.txt
+			echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+			echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+			echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+			echo ""
+			echo "To really commit, use:"
+			echo "$0 commit"
+			echo ""
+		fi
 	fi
 fi
 
