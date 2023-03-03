@@ -30,7 +30,7 @@ ok:
 #
 # Parameters
 #
-export CRYPTOMEDIC_PORT ?= 80
+export CRYPTOMEDIC_HTTP_PORT ?= 80
 export CYPRESS_CACHE_FOLDER := $(TMP)/cache/cypress
 
 BACKUP_DIR ?= $(TMP)/backup-online
@@ -67,22 +67,22 @@ define recursive-dependencies
 endef
 
 dump:
-	@echo "Who am i:         $(shell whoami) ($(shell id -u))"
-	@echo "HOME:             $(HOME)"
-	@echo "SHELL:            $(SHELL)"
-	@echo "PATH:             $(PATH)"
-	@echo "DISPLAY:          $(DISPLAY)"
-	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
+	@echo "Who am i:              $(shell whoami) ($(shell id -u))"
+	@echo "HOME:                  $(HOME)"
+	@echo "SHELL:                 $(SHELL)"
+	@echo "PATH:                  $(PATH)"
+	@echo "DISPLAY:               $(DISPLAY)"
+	@echo "CRYPTOMEDIC_HTTP_PORT: $(CRYPTOMEDIC_HTTP_PORT)"
 	@echo "------------------------------------------"
-	@echo "MySQL:            $(shell bin/cr-mysql --version 2>&1 )"
-	@echo "MySQL Server:     $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
-	@echo "MySQL user:       $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
-	@echo "PHP:              $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
-	@echo "PHP composer:     $(shell bin/cr-composer --version 2>&1 )"
-	@echo "NodeJS:           $(shell bin/cr-node --version 2>&1 )"
-	@echo "NPM:              $(shell bin/cr-npm --version 2>&1 )"
-#	@echo "Cypress:          $(shell node node_modules/.bin/cypress --version --component package 2>&1 )"
-#	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
+	@echo "MySQL:                 $(shell bin/cr-mysql --version 2>&1 )"
+	@echo "MySQL Server:          $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
+	@echo "MySQL user:            $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
+	@echo "PHP:                   $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
+	@echo "PHP composer:          $(shell bin/cr-composer --version 2>&1 )"
+	@echo "NodeJS:                $(shell bin/cr-node --version 2>&1 )"
+	@echo "NPM:                   $(shell bin/cr-npm --version 2>&1 )"
+#	@echo "Cypress:               $(shell node node_modules/.bin/cypress --version --component package 2>&1 )"
+#	@echo "Chrome:                $(shell google-chrome --version 2>&1 )"
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
@@ -115,8 +115,8 @@ clean-ports:
 
 .PHONY: start
 start: dc-up dependencies build reset
-	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
-	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
+	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_HTTP_PORT)/"
+	@echo "Test page: http://localhost:$(CRYPTOMEDIC_HTTP_PORT)/dev/"
 
 dc-up:
 	docker compose up -d --build
@@ -225,7 +225,7 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 
 	@echo "Compare"
 	bin/cr-node tests/styles/test-styles.js
-	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
+	@echo "Report is at http://localhost:$(CRYPTOMEDIC_HTTP_PORT)/xappx/tmp/style.html"
 	du -ksh "$(dir $@)"
 
 .PHONY: update-references-styles

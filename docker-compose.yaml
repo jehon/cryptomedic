@@ -16,7 +16,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
     ports:
-      # CRYPTOMEDIC_PORT
+      # CRYPTOMEDIC_HTTP_PORT
       # Using variable here does not work
       - published: 5555
         target: 80
