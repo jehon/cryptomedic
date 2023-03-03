@@ -55,10 +55,13 @@ header_begin "Cypress run tests (${CYPRESS_ARGS[*]}) ($*)"
 
 # time "$CR_SCRIPT_DIR"/node node_modules/.bin/cypress run "${CYPRESS_ARGS[@]}" "$@"
 
+#
+# https://github.com/cypress-io/cypress-docker-images/tree/master/included#default-user
+#
 docker compose run --rm --quiet-pull \
     --volume "$(pwd):/workdir" \
     --workdir /workdir \
-    --user "$(id -u)" \
+    --user "$(id -u)" --env HOME=/root \
     cypress \
     cypress run "${CYPRESS_ARGS[@]}" "$@"
 
