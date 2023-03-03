@@ -27,7 +27,7 @@ flavorFilter(flavorFilter.DESKTOP, () =>
             .assert("5")
 
             .section("tfoot")
-            .col(4)
+            .col(5)
             .assert(4)
             .nextCol(3)
             .assert(2)
