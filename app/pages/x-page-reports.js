@@ -754,6 +754,10 @@ reports[REPORT_FINANCIAL] = {
         headers: ["Age at first consult"],
         footers: [""]
       })
+      .addDetail("Sociallevel", {
+        headers: ["SL"],
+        footers: [""]
+      })
       .addDetail(XTable.MACROS.boolean("is_child"), {
         headers: ["Child?"],
         footers: [XTable.MACROS.countBoolean]

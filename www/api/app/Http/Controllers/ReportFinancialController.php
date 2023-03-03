@@ -16,6 +16,7 @@ class ReportFinancialController extends ReportController {
               patients.Name as patient_name,
               patients.yearofbirth,
               patients.Sex,
+              AVG(bills.Sociallevel) as Sociallevel,
               SUM(" . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . ") AS price_consult,
               SUM(" . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . ") AS price_medecine,
               SUM(" . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . ") AS price_workshop,
