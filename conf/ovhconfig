@@ -2,7 +2,9 @@
 ; https://docs.ovh.com/fr/hosting/configurer-fichier-ovhconfig/
 
 app.engine=php
-app.engine.version=8.1
 environment=production
 container.image=stable64
 http.firewall=security
+
+# Dynamic
+app.engine.version=$PHP_VERSION

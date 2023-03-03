@@ -16,6 +16,7 @@ commit.msg
 *.log
 .phpunit.result.cache
 core
+.ovhconfig
 
 /.buildpath
 /.externalToolBuilders/

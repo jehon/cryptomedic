@@ -98,6 +98,7 @@ clean: stop deploy-unmount
 	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "*.log" -delete
 
+	rm -f .ovhconfig
 	rm -fr live/
 	rm -fr www/built
 	rm -fr app/cjs2esm
@@ -315,9 +316,16 @@ package-lock.json: package.json
 
 .PHONY: build
 build: $(TMP)/.built
-$(TMP)/.built: www/built/index.html www/built/browsers.json
+$(TMP)/.built: \
+		www/built/index.html \
+		www/built/browsers.json \
+		.ovhconfig
+
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
+
+.ovhconfig: conf/ovhconfig .env Makefile
+	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
 
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild
 # due to the recursive-dependencies
