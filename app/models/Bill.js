@@ -40,13 +40,13 @@ export default class Bill extends PatientRelated {
 
   ratioSalary() {
     /**
-          From TC:
-          Level 0 is when the familial ration is < 300
-          Level 1 is when the familial ration is 300<  FR < 500
-          Level 2 is when the familial ration is 500< FR < 1500
-          Level 3 is when the familial ration is 1500< FR < 3000
-          Level 4 is when the familial ration is 3000< FR
-         */
+     From TC:
+     Level 0 is when the familial ration is < 300
+     Level 1 is when the familial ration is 300<  FR < 500
+     Level 2 is when the familial ration is 500< FR < 1500
+     Level 3 is when the familial ration is 1500< FR < 3000
+     Level 4 is when the familial ration is 3000< FR
+     */
     this.Sociallevel = 4;
     if (!this.isNotZero("sl_numberOfHouseholdMembers")) {
       throw new DataMissingException("sl_numberOfHouseholdMembers");
