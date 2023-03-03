@@ -25,6 +25,8 @@ jobs:
         with:
           node-version: lts/*
 
+      - run: sudo .devcontainer/root/setup.sh
+
       - run: make dc-up
 
       - run: make dump
