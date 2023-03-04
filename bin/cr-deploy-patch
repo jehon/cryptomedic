@@ -12,7 +12,7 @@ if [ -r /etc/jehon/restricted/cryptomedic.sh ]; then
 	. /etc/jehon/restricted/cryptomedic.sh
 fi
 
-LOG="$CR_TMP/sftp.log"
+LOG="$CR_TMP/deploy.log"
 mkdir -p "$CR_TMP"
 REMOTE_LISTING="$CR_TMP"/deploy-remote.txt
 truncate --size=0 "$LOG"
@@ -48,7 +48,7 @@ fi
 exec 3>&1
 
 ftp_exec_raw() {
-	ftp "ftp://${CRYPTOMEDIC_UPLOAD_USER}:${CRYPTOMEDIC_UPLOAD_PASSWORD}@${CRYPTOMEDIC_UPLOAD_HOST}" 2>&1 | tee -a "$LOG"
+	tee -a "$LOG" | ftp "ftp://${CRYPTOMEDIC_UPLOAD_USER}:${CRYPTOMEDIC_UPLOAD_PASSWORD}@${CRYPTOMEDIC_UPLOAD_HOST}" 2>&1 | tee -a "$LOG"
 }
 
 ftp_exec() {
