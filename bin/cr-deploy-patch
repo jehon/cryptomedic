@@ -13,6 +13,7 @@ if [ -r /etc/jehon/restricted/cryptomedic.sh ]; then
 fi
 
 LOG="$CR_TMP/sftp.log"
+mkdir -p "$CR_TMP"
 REMOTE_LISTING="$CR_TMP"/deploy-remote.txt
 truncate --size=0 "$LOG"
 # We use this file in lftp_mkdir
@@ -46,19 +47,12 @@ fi
 # while still letting passing through the messages "Success / failure / ..."
 exec 3>&1
 
-# lftp_connect() {
-# 	echo "open -u $CRYPTOMEDIC_UPLOAD_USER,$CRYPTOMEDIC_UPLOAD_PASSWORD $CRYPTOMEDIC_UPLOAD_HOST"
-# }
-
-sftp_exec_raw() {
-	SSHPASS="$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
-		sftp -z nossl -v "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST" \
-		2>&1 |
-		tee -a "$LOG"
+ftp_exec_raw() {
+	ftp "ftp://${CRYPTOMEDIC_UPLOAD_USER}:${CRYPTOMEDIC_UPLOAD_PASSWORD}@${CRYPTOMEDIC_UPLOAD_HOST}" 2>&1 | tee -a "$LOG"
 }
 
-sftp_exec() {
-	sftp_exec_raw |
+ftp_exec() {
+	ftp_exec_raw |
 		grep -v "SFTP protocol" |
 		grep -v "Connected to" |
 		grep -v "Couldn't create directory" |
@@ -74,7 +68,7 @@ sftp_exec() {
 	echo "**********" >>"$LOG"
 }
 
-sftp_mkdir() {
+ftp_mkdir() {
 	if [ "$1" = "." ]; then
 		return
 	fi
@@ -87,16 +81,16 @@ sftp_mkdir() {
 		fi
 	fi
 
-	sftp_mkdir "$(dirname "$1")"
+	ftp_mkdir "$(dirname "$1")"
 	echo "mkdir \"$1\""
 }
 
-sftp_put() {
-	sftp_mkdir "$(dirname "$1")"
+ftp_put() {
+	ftp_mkdir "$(dirname "$1")"
 	echo "put \"$1\" \"$1\""
 }
 
-sftp_rm() {
+ftp_rm() {
 	echo "rm \"$1\""
 }
 
@@ -106,22 +100,16 @@ echo "CRYPTOMEDIC_UPLOAD_USER: ${#CRYPTOMEDIC_UPLOAD_USER} characters"
 echo "CRYPTOMEDIC_UPLOAD_PASSWORD: ${#CRYPTOMEDIC_UPLOAD_PASSWORD} characters"
 header_end
 
-header_begin "Dump tools"
-type sftp
-sshpass -v
-header_end
-
 header_begin "Testing connectivity"
-echo "ls" |  sftp_exec_raw
+echo "ls" |  ftp_exec_raw
 header_end
 
 echo ""
 header_begin "Updating md5sum.php script [for real]"
 (
-	echo "version"
-	sftp_put www/maintenance/md5sum.php
-	sftp_put deploy-filter
-) | sftp_exec
+	ftp_put www/maintenance/md5sum.php
+	ftp_put deploy-filter
+) | ftp_exec
 header_end
 
 header_begin "Getting the md5 from local"
@@ -154,9 +142,9 @@ else
 			while read -r lfile; do
 				file="${lfile:1}"
 				if [ "${lfile:0:1}" == "+" ]; then
-					sftp_put "$file"
+					ftp_put "$file"
 				else
-					sftp_rm "$file"
+					ftp_rm "$file"
 				fi
 			done
 		} >"$CR_TMP"/deploy-diff-5-sftp-commands.txt
@@ -173,7 +161,7 @@ else
 
 		if [ "$ACTION" == "commit" ]; then
 			header_begin "Commiting"
-			sftp_exec <"$CR_TMP"/deploy-diff-5-sftp-commands.txt
+			ftp_exec <"$CR_TMP"/deploy-diff-5-sftp-commands.txt
 			header_end
 		else
 			echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
