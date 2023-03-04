@@ -121,7 +121,7 @@ sort --stable "$CR_TMP"/deploy-local.txt >"$CR_TMP"/deploy-local.sorted.txt
 header_end
 
 header_begin "Getting the md5 from remote"
-curl -fsSL "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" >"$REMOTE_LISTING"
+curl -fsSL --user-agent firefox "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" >"$REMOTE_LISTING"
 header_end
 
 header_begin "Sorting remote file"
