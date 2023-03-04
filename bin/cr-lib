@@ -35,6 +35,10 @@ export PATH="$CR_SCRIPT_DIR:$PATH"
 # For recursion
 export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
 
+cr_curl() {
+	curl -fsSL --user-agent firefox "$@"
+}
+
 jh_color() {
     COLOR=${1:-"0"}
     if [ -z "$JH_DAEMON" ]; then
