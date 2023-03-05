@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+# shellcheck source=./cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
+
+docker compose run --rm --quiet-pull \
+    --volume "$(pwd):/workdir" \
+    --workdir /workdir \
+    --user "$(id -u)" \
+    --env HOME=/root \
+    -e DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    --entrypoint "cypress" \
+    cypress \
+    open --project . "$@"
+
+header_end

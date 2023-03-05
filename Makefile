@@ -179,7 +179,6 @@ test-unit: $(TMP)/.dependencies-node \
 .PHONY: test-e2e
 test-e2e: test-e2e-desktop test-e2e-mobile
 
-# TODO
 .PHONY: test-e2e-desktop
 test-e2e-desktop: $(TMP)/.tested-e2e-desktop
 $(TMP)/.tested-e2e-desktop: $(TMP)/.built $(TMP)/.dependencies $(shell find cypress/ -name "*.js")
@@ -189,7 +188,6 @@ $(TMP)/.tested-e2e-desktop: $(TMP)/.built $(TMP)/.dependencies $(shell find cypr
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
-# TODO
 .PHONY: test-e2e-mobile
 test-e2e-mobile: $(TMP)/.tested-e2e-mobile
 $(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find cypress/ -name "*.js")
@@ -199,19 +197,9 @@ $(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find cypre
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
-# TODO
 cypress-open:
-#
-#  See https://stackoverflow.com/questions/50706128/no-version-of-cypress-is-installed-in-ci-travisci-and-circleci
-#
-# Sometimes, no version of Cypress is installed in: /home/user/.cache/Cypress/9.6.1/Cypress
-# Please reinstall Cypress by running: cypress install
-#
-#
-	node_modules/.bin/cypress install
-	node_modules/.bin/cypress open
+	./bin/cr-cypress-open
 
-# TODO
 .PHONY: test-styles
 test-styles: $(TMP)/styles/styles-problems-list.json
 $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop #$(TMP)/.tested-e2e-mobile
@@ -239,12 +227,10 @@ update-references-styles:
 # Deploy command
 #
 
-# TODO
 .PHONY: deploy
 deploy:
 	bin/cr-deploy-patch commit
 
-# TODO
 .PHONY: deploy-test
 deploy-test:
 	bin/cr-deploy-patch
