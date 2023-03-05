@@ -44,6 +44,7 @@ class ReportFinancialController extends ReportController {
       . " HAVING (1 = 1)
         " . ($this->getParam('is_complete', false) ? " AND ( nb_consults + nb_pictures > 0 )" : "") . "
         " . ($this->getParam('is_child', false) ? " AND ( age_at_first_consult < 18 )" : "") . "
+        " . ($this->getParam('is_poor', false) ? " AND ( Sociallevel <= 3 )" : "") . "
         ORDER BY patient_reference"
       ),
       [

@@ -350,6 +350,18 @@ x-button#export {
       );
     }
 
+    //
+    // Is poverty
+    //
+    if (this.isParam("is_poor")) {
+      this._params.insertAdjacentElement(
+        "beforeend",
+        createElementWithObject(XLabel, { label: "Poor only" }, [
+          createElementWithObject(XIoBoolean, { name: "is_poor", input: true })
+        ])
+      );
+    }
+
     this.reset();
   }
 
@@ -382,6 +394,7 @@ x-button#export {
       year: date2CanonicString(new Date()).substring(0, 4),
       is_complete: false,
       is_child: false,
+      is_poor: false,
       ...getPref("report")
     };
     this._form.setValues(prefs);
@@ -735,7 +748,7 @@ reports[REPORT_FINANCIAL] = {
   // test data: 2014
   name: "Financial",
   description: "Financial follow-up",
-  params: ["period", "is_child", "is_complete"],
+  params: ["period", "is_child", "is_complete", "is_poor"],
   generator: (xtable) =>
     xtable
       .addHeaders(2)
