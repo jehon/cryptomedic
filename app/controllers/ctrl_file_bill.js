@@ -85,6 +85,14 @@ export default function ctrl_file_bill($scope, $element) {
     } catch (e) {}
   });
 
+  $scope.$watch("currentFile().social_level_calculated()", function (newValue) {
+    if ($scope.mode != "read") {
+      $scope.currentFile().Sociallevel = $scope
+        .currentFile()
+        .social_level_calculated();
+    }
+  });
+
   // Used in bill_summary
   $scope.isEmpty = function (value) {
     if (
@@ -99,6 +107,12 @@ export default function ctrl_file_bill($scope, $element) {
     }
     return "";
   };
+
+  if ($scope.mode != "read") {
+    $scope.currentFile().Sociallevel = $scope
+      .currentFile()
+      .social_level_calculated();
+  }
 
   /**********************/
   /* Payment management */

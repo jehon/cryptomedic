@@ -39,6 +39,14 @@ export default class Bill extends PatientRelated {
   }
 
   ratioSalary() {
+    if (!this.isNotZero("sl_numberOfHouseholdMembers")) {
+      throw new DataMissingException("sl_numberOfHouseholdMembers");
+    }
+
+    return Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
+  }
+
+  social_level_calculated() {
     /**
      From TC:
      Level 0 is when the familial ration is < 300
@@ -47,31 +55,28 @@ export default class Bill extends PatientRelated {
      Level 3 is when the familial ration is 1500< FR < 3000
      Level 4 is when the familial ration is 3000< FR
      */
-    this.Sociallevel = 4;
-    if (!this.isNotZero("sl_numberOfHouseholdMembers")) {
-      throw new DataMissingException("sl_numberOfHouseholdMembers");
-    }
+    try {
+      const rs = this.ratioSalary();
 
-    var rs = Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
-
-    if (rs <= 300) {
-      this.Sociallevel = 0;
-    } else {
-      if (rs <= 500) {
-        this.Sociallevel = 1;
-      } else {
-        if (rs <= 1500) {
-          this.Sociallevel = 2;
-        } else {
-          if (rs <= 3000) {
-            this.Sociallevel = 3;
-          } else {
-            this.Sociallevel = 4;
-          }
-        }
+      if (rs <= 300) {
+        return 0;
       }
+
+      if (rs <= 500) {
+        return 1;
+      }
+
+      if (rs <= 1500) {
+        return 2;
+      }
+
+      if (rs <= 3000) {
+        return 3;
+      }
+    } catch (e) {
+      true;
     }
-    return rs;
+    return 4;
   }
 
   calculate_total_real() {

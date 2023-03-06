@@ -79,7 +79,7 @@ context("Actions", () => {
         cy.get("#Bill_sl_numberOfHouseholdMembers").clear().type("3");
 
         cy.get("x-fff-salary-ratio").should("contain.text", "1000");
-        cy.get("[field=Sociallevel]").should("contain.text", 2);
+        cy.get("#social_level_calculated").should("contain.text", 2);
       });
 
     cy.get("[title=Summary]")
@@ -107,7 +107,7 @@ context("Actions", () => {
         cy.get("#Bill_sl_numberOfHouseholdMembers").should("contain.text", "3");
 
         cy.get("x-fff-salary-ratio").should("contain.text", "1000");
-        cy.get("[field=Sociallevel]").should("contain.text", 2);
+        cy.get("#social_level_calculated").should("contain.text", 2);
       });
 
     cy.get("[title=Summary]")

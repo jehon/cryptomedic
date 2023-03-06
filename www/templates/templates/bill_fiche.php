@@ -92,7 +92,9 @@ EOD;
           <x-fff-field label='Salary Ratio'>
             <x-fff-salary-ratio></x-fff-salary-ratio>
           </x-fff-field>
-          <?php (new t("Bill.Sociallevel"))->id("calculated_social_level")->readOnly()->tr2("Calculated Social Level")->p(); ?>
+          <x-fff-field label='Calculated Social Level'>
+            <div id='social_level_calculated'>{{currentFile().social_level_calculated()}}</div>
+          </x--fff-field>
         </x-group-panel>
         <x-group-panel title='Summary'>
           <x-fff-field label='Raw Calculated total'>
