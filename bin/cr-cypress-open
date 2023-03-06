@@ -15,6 +15,6 @@ docker compose run --rm --quiet-pull \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     --entrypoint "cypress" \
     cypress \
-    open --project . "$@"
+    open --project . --e2e --browser=electron "$@"
 
 header_end
