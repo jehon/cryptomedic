@@ -311,7 +311,7 @@ $(TMP)/.built: \
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
-.ovhconfig: conf/ovhconfig .env Makefile
+.ovhconfig: conf/ovhconfig .env
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
 
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild
