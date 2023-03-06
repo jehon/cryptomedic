@@ -6,6 +6,8 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
+SWD="$(dirname "$( realpath "${BASH_SOURCE[0]}")")"
+
 ACTION="$1"
 
 if [ -r /etc/jehon/restricted/cryptomedic.sh ]; then
@@ -48,7 +50,12 @@ fi
 exec 3>&1
 
 ftp_exec_raw() {
-	tee -a "$LOG" | ftp "ftp://${CRYPTOMEDIC_UPLOAD_USER}:${CRYPTOMEDIC_UPLOAD_PASSWORD}@${CRYPTOMEDIC_UPLOAD_HOST}" 2>&1 | tee -a "$LOG"
+	# tee -a "$LOG" | ftp "ftp://${CRYPTOMEDIC_UPLOAD_USER}:${CRYPTOMEDIC_UPLOAD_PASSWORD}@${CRYPTOMEDIC_UPLOAD_HOST}" 2>&1 | tee -a "$LOG"
+
+	sshpass -p "${CRYPTOMEDIC_UPLOAD_PASSWORD}" \
+		sftp -o "UserKnownHostsFile=$SWD/../conf/ovh.key" \
+		"${CRYPTOMEDIC_UPLOAD_USER}@${CRYPTOMEDIC_UPLOAD_HOST}" \
+		2>&1 | tee -a "$LOG"
 }
 
 ftp_exec() {
@@ -101,7 +108,7 @@ echo "CRYPTOMEDIC_UPLOAD_PASSWORD: ${#CRYPTOMEDIC_UPLOAD_PASSWORD} characters"
 header_end
 
 header_begin "Testing connectivity"
-echo "ls" |  ftp_exec_raw
+echo "version" |  ftp_exec_raw
 header_end
 
 echo ""

@@ -12,6 +12,7 @@ apt update
 
 apt install -y openssh-client sshpass curl coreutils diffutils
 
-mkdir -p "$HOME/.ssh/"
-chmod 755 "$HOME/.ssh/"
-cat $SWD/setup/ovh.key >> "$HOME/.ssh/known_hosts"
+if [ ! -r $HOME/.ssh/id_rsa ]; then
+    echo "Generating a ssh key"
+    ssh-keygen -b 2048 -t rsa -f /$HOME/.ssh/id_rsa -q -N ""
+fi
