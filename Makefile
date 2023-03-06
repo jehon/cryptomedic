@@ -16,6 +16,9 @@ full: clear clean stop start dependencies lint update-dependencies build test ok
 .PHONY: pull-request
 pull-request: full
 
+.PHONY: update
+update: clear dependencies lint update-references-api update-references-styles update-references-browsers ok
+
 .PHONY: ok
 ok:
 	@echo "ok"
@@ -218,9 +221,7 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 	du -ksh "$(dir $@)"
 
 .PHONY: update-references-styles
-update-references-styles:
-	if [ ! -r $(TMP)/styles/styles-problems-list.json ]; then echo "No tmp/styles/styles-problems-list.json found!"; exit 1; fi
-	@echo "Compare"
+update-references-styles: $(TMP)/styles/styles-problems-list.json
 	bin/cr-node tests/styles/update-styles.js
 
 #
