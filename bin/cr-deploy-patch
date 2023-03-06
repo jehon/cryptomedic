@@ -52,7 +52,7 @@ exec 3>&1
 ftp_exec_raw() {
 	# tee -a "$LOG" | ftp "ftp://${CRYPTOMEDIC_UPLOAD_USER}:${CRYPTOMEDIC_UPLOAD_PASSWORD}@${CRYPTOMEDIC_UPLOAD_HOST}" 2>&1 | tee -a "$LOG"
 
-	sshpass -p "${CRYPTOMEDIC_UPLOAD_PASSWORD}" \
+	SSHPASS="${CRYPTOMEDIC_UPLOAD_PASSWORD}" sshpass -e \
 		sftp -o "UserKnownHostsFile=$SWD/../conf/ovh.key" \
 		"${CRYPTOMEDIC_UPLOAD_USER}@${CRYPTOMEDIC_UPLOAD_HOST}" \
 		2>&1 | tee -a "$LOG"
