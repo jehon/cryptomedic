@@ -68,7 +68,8 @@
     "stylelint-no-unsupported-browser-features": "6.1.0",
     "watch": "1.0.2",
     "webpack": "5.75.0",
-    "webpack-cli": "5.0.1"
+    "webpack-cli": "5.0.1",
+    "yargs": "17.7.1"
   },
   "scripts": {
     "postinstall": "touch node_modules/.dependencies && husky install",

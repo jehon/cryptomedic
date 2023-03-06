@@ -6,7 +6,7 @@ TMP := $(ROOT)/tmp
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
 # Default target
-# End by test, since test-styles may fail
+# End by test, since check-styles may fail
 .PHONY: dev
 dev: clear stop start dependencies lint build test ok
 
@@ -205,24 +205,25 @@ cypress-open:
 
 .PHONY: test-styles
 test-styles: $(TMP)/styles/styles-problems-list.json
-$(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop #$(TMP)/.tested-e2e-mobile
+
+$(TMP)/styles/styles-problems-list.json: $(TMP)/styles/.structure
+	bin/cr-node tests/styles/check-styles.js
+
+.PHONY: update-references-styles
+update-references-styles: $(TMP)/styles/.structure
+	bin/cr-node tests/styles/check-styles.js --update
+
+$(TMP)/styles/.structure: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop $(TMP)/.tested-e2e-mobile
 	@rm -fr "$(dir $@)"
 	@mkdir -p "$(dir $@)"
 	@mkdir -p "$(dir $@)/run/mobile"
 	@mkdir -p "$(dir $@)/run/desktop"
 
-	rsync -r tests/styles/ "$(dir $@)/"
+	rsync -r tests/styles/ "$(dir $@)"
 	find $(TMP)/e2e/mobile/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/mobile/" ";"
 	find $(TMP)/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
 
-	@echo "Compare"
-	bin/cr-node tests/styles/test-styles.js
-	@echo "Report is at http://localhost:$(CRYPTOMEDIC_HTTP_PORT)/xappx/tmp/style.html"
-	du -ksh "$(dir $@)"
-
-.PHONY: update-references-styles
-update-references-styles: $(TMP)/styles/styles-problems-list.json
-	bin/cr-node tests/styles/update-styles.js
+	@touch "$@"
 
 #
 # Deploy command

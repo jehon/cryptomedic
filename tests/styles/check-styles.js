@@ -5,6 +5,7 @@ import fs from "fs";
 import { globSync } from "glob";
 import pixelMatch from "pixelmatch";
 import { PNG } from "pngjs";
+import yargs from "yargs";
 
 import {
   stylesRoot,
@@ -15,7 +16,8 @@ import {
   p_ok,
   p_warn,
   p_ko,
-  stylesJSON
+  stylesJSON,
+  referenceUpdateFolder
 } from "./lib.js";
 
 fs.mkdirSync(stylesRoot, { recursive: true });
@@ -134,10 +136,29 @@ const problemsList = Object.values(
 console.info("---------------------");
 
 fs.writeFileSync(stylesJSON, JSON.stringify(problemsList, null, 2));
-if (problemsList.filter((fset) => fset.problem).length > 0) {
-  console.error(p_ko, "some tests did fail");
-  process.exit(1);
-}
 
-console.info(p_ok, "ok");
-process.exit(0);
+const args = yargs(process.argv.slice(2)).boolean("update").argv;
+if (args.update) {
+  for (const fset of problemsList) {
+    if (!fset.problem && !fset.warning) {
+      continue;
+    }
+    if (!fset.run) {
+      console.error(`${p_ko}: ${fset.key} does not have a run`);
+      continue;
+    }
+    process.stdout.write(`[update] ${fset.key}\n`);
+    fs.copyFileSync(
+      inStyles(fset.run),
+      path.join(referenceUpdateFolder, fset.key)
+    );
+  }
+} else {
+  if (problemsList.filter((fset) => fset.problem).length > 0) {
+    console.error(p_ko, "some tests did fail");
+    process.exit(1);
+  }
+
+  console.info(p_ok, "ok");
+  process.exit(0);
+}
