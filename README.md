@@ -70,3 +70,34 @@ https://github.com/cancerberoSgx/jsdoc-typeof-plugin
 All Components: https://github.com/material-components/material-components-web-components
 
 Text field: https://github.com/material-components/material-components-web-components/tree/master/packages/textfield
+
+React: https://mui.com/material-ui/getting-started/overview/
+
+## React
+
+### Inside WC:
+
+class XSearch extends HTMLElement {
+connectedCallback() {
+const mountPoint = document.createElement('span');
+this.attachShadow({ mode: 'open' }).appendChild(mountPoint);
+
+    const name = this.getAttribute('name');
+    const url = 'https://www.google.com/search?q=' + encodeURIComponent(name);
+    const root = ReactDOM.createRoot(mountPoint);
+    root.render(<a href={url}>{name}</a>);
+
+}
+}
+customElements.define('x-search', XSearch);
+
+### No JSX:
+
+class Hello extends React.Component {
+render() {
+return React.createElement('div', null, `Hello ${this.props.toWhat}`);
+}
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(Hello, {toWhat: 'World'}, null));
