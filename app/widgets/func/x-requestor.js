@@ -8,7 +8,8 @@ import {
   createElementsFromHTML,
   createElementWithObject,
   createElementWithTag,
-  defineCustomElement
+  defineCustomElement,
+  getHTMLNameOfClass
 } from "../../js/custom-element.js";
 import "../../../node_modules/css-inherit/css-inherit.js";
 import XLabel from "../style/x-label.js";
@@ -59,6 +60,23 @@ export class TransportRequestError extends WithDataError {
  *   < running, erroneous
  */
 export default class XRequestor extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.append(
+      createElementWithTag(
+        "style",
+        {},
+        `
+      :host(${getHTMLNameOfClass(this)}) {
+          display: flex;
+          flex-direction: column;
+      `
+      ),
+      document.createElement("slot")
+    );
+  }
+
   /** @type {function(void): void} */
   _stopWaiting = () => {};
 
