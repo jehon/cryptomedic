@@ -62,5 +62,5 @@ header_begin() {
 }
 
 header_end() {
-    header_message "$* done"
+    header_message "$LASTMSG done"
 }
