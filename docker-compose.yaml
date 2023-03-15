@@ -151,8 +151,8 @@ services:
   cypress:
     profiles:
       - tool
-    # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/12/Dockerfile
-    image: cypress/included:12.8.0
+    build:
+      context: conf/cypress
     environment:
       LANG: C.UTF-8
       DBUS_SESSION_BUS_ADDRESS:
