@@ -1,6 +1,6 @@
 
 # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/12/Dockerfile
-FROM cypress/included:12.7.0
+FROM cypress/included:12.8.1
 
 RUN chmod a+rwx /root/.npm
 
