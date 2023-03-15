@@ -50,7 +50,9 @@ try {
     ob_start();
     echo "\nRunning\n";
 
-    mkdir(__DIR__ . "/../api/bootstrap/cache/");
+    if (! is_dir(__DIR__ . "/../api/bootstrap/cache/")) {
+        mkdir(__DIR__ . "/../api/bootstrap/cache/");
+    }
 
     deleteFileFromGlob(__DIR__ . "/../api/bootstrap/cache/*");
 
