@@ -10,7 +10,6 @@ docker compose run --rm --quiet-pull \
     --volume "$(pwd):/workdir" \
     --workdir /workdir \
     --user "$(id -u)" \
-    --env HOME=/root \
     -e DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     --entrypoint "cypress" \
