@@ -2,6 +2,8 @@
 
 global $myconfig;
 
+define("CR_PRJ_ROOT", __DIR__);
+
 $myconfig = [
   'database' => [
     'host'       => 'mysql',
