@@ -4,8 +4,7 @@
 
 	echo "<pre>";
 
-require_once(__DIR__ . "/../../config.php");
-require_once(__DIR__ . "/Database.php");
+require_once(__DIR__ . "/lib/config.php");
 
 global $myconfig;
 
@@ -15,10 +14,6 @@ if (!$myconfig['security']['key']) {
 
 if ($_REQUEST['pwd'] != $myconfig['security']['key']) {
 	die("No correct pwd given (" . basename(__FILE__) . ")");
-}
-
-if (isset($_REQUEST['debug'])) {
-	\Jehon\Maintenance\Database::debug(true);
 }
 
 try {

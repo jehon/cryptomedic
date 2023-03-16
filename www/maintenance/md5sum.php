@@ -2,23 +2,12 @@
 
 namespace Jehon\Maintenance;
 
-function fatalError($code, $msg) {
-	http_response_code($code);
-	die($msg);
-}
-
 set_time_limit(5 * 60);
 
-require_once(__DIR__ . "/../../config.php");
-require_once(__DIR__ . "/Database.php");
-
-define("PRJ_ROOT", dirname(dirname(__DIR__)));
+require_once(__DIR__ . "/lib/config.php");
 
 const F_LOCAL = "local";
 const F_REMOTE = "remote";
-
-# verbosity: 1, 2, 3
-$debug = isset($_REQUEST['debug']) ? intval($_REQUEST['debug']) : 0;
 
 $filter = $_REQUEST['filter'];
 if (!$filter) {
@@ -28,7 +17,7 @@ if (!in_array($filter, [F_LOCAL, F_REMOTE])) {
 	fatalError(400, "Invalid filter: $filter");
 }
 
-$filterFile = PRJ_ROOT . "/deploy-filter";
+$filterFile = CR_PRJ_ROOT . "/deploy-filter";
 if (!file_exists($filterFile)) {
 	fatalError(500, "Filter file not found: $filterFile");
 }
@@ -96,7 +85,7 @@ function getFiles($absPath) {
 				continue;
 			}
 			$fabs = $absPath . DIRECTORY_SEPARATOR . $f;
-			$frel = substr($fabs, strlen(PRJ_ROOT));
+			$frel = substr($fabs, strlen(CR_PRJ_ROOT));
 
 			if ($debug > 0) {
 				echo ("\nTEST $frel: ");
@@ -142,7 +131,7 @@ function getFiles($absPath) {
 	}
 }
 
-getFiles(PRJ_ROOT);
+getFiles(CR_PRJ_ROOT);
 
 ?>
 # done
