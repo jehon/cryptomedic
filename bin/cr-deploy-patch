@@ -114,7 +114,9 @@ header_end
 echo ""
 header_begin "Updating md5sum.php script [for real]"
 (
-	ftp_put www/maintenance/md5sum.php
+	while read -r F ; do
+		ftp_put "$F" "$F"
+	done < <( find www/maintenance/ -type f  )
 	ftp_put deploy-filter
 ) | ftp_exec
 header_end

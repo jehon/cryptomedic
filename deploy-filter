@@ -31,7 +31,6 @@
 - /www/api/bootstrap/cache
 
 # Not very usefull
-- /www/maintenance/dev
 - /www/api/tests
 - /www/api/vendor/bin
 + /www
