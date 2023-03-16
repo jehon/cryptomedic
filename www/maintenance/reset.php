@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__ . "/../../config.php");
-require_once(__DIR__ . "/../../protect.php");
+require_once(__DIR__ . "./lib/config.php");
+require_once(__DIR__ . "./lib/protect.php");
 
 global $myconfig;
 
