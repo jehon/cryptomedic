@@ -1,18 +1,9 @@
 <?php
 
 require_once(__DIR__ . "/../../config.php");
+require_once(__DIR__ . "/../../protect.php");
 
 global $myconfig;
-
-if (!$myconfig['security']['key']) {
-    http_response_code(500);
-    die("No security.admin configured");
-}
-
-if ($_REQUEST['pwd'] != $myconfig['security']['key']) {
-    http_response_code(500);
-	die("No correct pwd given (" . basename(__FILE__) . ")");
-}
 
 function deleteRecursively($filepath) {
     if (is_dir($filepath)) {
