@@ -36,23 +36,23 @@ function deleteFileFromGlob($glob) {
     }
 }
 
+function ensureFolder($path) {
+    $target = __DIR__ . "/../" / $path;
+    if (! is_dir($target)) {
+        mkdir($target);
+    } else {
+        deleteFileFromGlob($target . "/*");
+    }
+}
+
 try {
     http_response_code(500);
     ob_start();
     echo "\nRunning\n";
 
-    if (! is_dir(__DIR__ . "/../api/bootstrap/cache/")) {
-        mkdir(__DIR__ . "/../api/bootstrap/cache/");
-    }
-
-    deleteFileFromGlob(__DIR__ . "/../api/bootstrap/cache/*");
-
-    if ($myconfig['dev']) {
-        // Clean up local structure
-        if (file_exists('/tmp/laravel')) {
-            deleteFileFromGlob('/tmp/laravel/*');
-        }
-    }
+    ensureFolderEmpty("api/bootstrap/cache/")
+    ensureFolderEmpty("api/bootstrap/sessions/")
+    ensureFolderEmpty("api/bootstrap/views/")
 
     echo "\n\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);
