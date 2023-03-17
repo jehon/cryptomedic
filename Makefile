@@ -130,6 +130,10 @@ dc-up:
 stop:
 	docker compose down
 
+.PHONY: logs
+logs:
+	docker compose logs -f
+
 reset: 
 	cr-data-reset
 
@@ -236,14 +240,6 @@ deploy:
 .PHONY: deploy-test
 deploy-test:
 	bin/cr-deploy-patch
-
-#
-# Other commands
-#
-
-.PHONY: logs
-logs:
-	/setup/bin/dc-logs
 
 #
 #
