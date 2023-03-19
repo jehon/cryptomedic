@@ -3,8 +3,9 @@ ob_start();
 http_response_code(500);
 
 try {
+	echo "<pre>";
 
-    echo "\nRunning\n";
+    echo "\nRunning...\n";
 
     require_once(__DIR__ . "/lib/config.php");
     require_once(__DIR__ . "/lib/protect.php");
@@ -42,7 +43,7 @@ try {
         }
     }
 
-    function ensureFolder($path) {
+    function ensureFolderEmpty($path) {
         $target = __DIR__ . "/../" / $path;
         if (! is_dir($target)) {
             mkdir($target);
