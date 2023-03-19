@@ -112,7 +112,7 @@ echo "version" |  ftp_exec_raw
 header_end
 
 echo ""
-header_begin "Updating md5sum.php script [for real]"
+header_begin "Updating maintenance scripts [for real]"
 (
 	while read -r F ; do
 		ftp_put "$F" "$F"
