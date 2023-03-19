@@ -4,7 +4,11 @@
 app.engine=php
 environment=production
 container.image=stable64
-http.firewall=security
+
+;
+; Enabling the firewall made all post fail (2023-03-19)
+;
+http.firewall=none
 
 # Dynamic
 app.engine.version=$PHP_VERSION
