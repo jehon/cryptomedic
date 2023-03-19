@@ -1,58 +1,59 @@
 <?php
+ob_start();
+http_response_code(500);
 
-require_once(__DIR__ . "/lib/config.php");
-require_once(__DIR__ . "/lib/protect.php");
+try {
 
-global $myconfig;
+    echo "\nRunning\n";
 
-function deleteRecursively($filepath) {
-    if (is_dir($filepath)) {
-        if (substr($filepath, strlen($filepath) - 1, 1) != '/') {
-            $filepath .= '/';
+    require_once(__DIR__ . "/lib/config.php");
+    require_once(__DIR__ . "/lib/protect.php");
+
+    global $myconfig;
+
+    function deleteRecursively($filepath) {
+        if (is_dir($filepath)) {
+            if (substr($filepath, strlen($filepath) - 1, 1) != '/') {
+                $filepath .= '/';
+            }
+            $files = glob($filepath . '*', GLOB_MARK);
+            foreach ($files as $file) {
+                if (is_dir($file)) {
+                    deleteRecursively($file);
+                } else {
+                    unlink($file);
+                }
+            }
         }
-        $files = glob($filepath . '*', GLOB_MARK);
+        rmdir($filepath);
+    }
+
+    function deleteFileFromGlob($glob) {
+        $files = glob($glob);
         foreach ($files as $file) {
             if (is_dir($file)) {
                 deleteRecursively($file);
-            } else {
+            }
+
+            if (is_file($file)) {
+                echo "Removing $file\n";
                 unlink($file);
             }
         }
     }
-    rmdir($filepath);
-}
 
-function deleteFileFromGlob($glob) {
-    $files = glob($glob);
-    foreach ($files as $file) {
-        if (is_dir($file)) {
-            deleteRecursively($file);
-        }
-
-        if (is_file($file)) {
-            echo "Removing $file\n";
-            unlink($file);
+    function ensureFolder($path) {
+        $target = __DIR__ . "/../" / $path;
+        if (! is_dir($target)) {
+            mkdir($target);
+        } else {
+            deleteFileFromGlob($target . "/*");
         }
     }
-}
 
-function ensureFolder($path) {
-    $target = __DIR__ . "/../" / $path;
-    if (! is_dir($target)) {
-        mkdir($target);
-    } else {
-        deleteFileFromGlob($target . "/*");
-    }
-}
-
-try {
-    http_response_code(500);
-    ob_start();
-    echo "\nRunning\n";
-
-    ensureFolderEmpty("api/bootstrap/cache/")
-    ensureFolderEmpty("api/bootstrap/sessions/")
-    ensureFolderEmpty("api/bootstrap/views/")
+    ensureFolderEmpty("api/bootstrap/cache/");
+    ensureFolderEmpty("api/bootstrap/sessions/");
+    ensureFolderEmpty("api/bootstrap/views/");
 
     echo "\n\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);

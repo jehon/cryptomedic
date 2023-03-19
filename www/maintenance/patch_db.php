@@ -3,14 +3,14 @@
 ob_start();
 http_response_code(500);
 
-echo "<pre>";
-
-require_once(__DIR__ . "/lib/config.php");
-require_once(__DIR__ . "/lib/protect.php");
-
-global $myconfig;
-
 try {
+	echo "<pre>";
+
+	require_once(__DIR__ . "/lib/config.php");
+	require_once(__DIR__ . "/lib/protect.php");
+
+	global $myconfig;
+
 	$db = new \Jehon\Maintenance\Database(
 		"mysql:dbname={$myconfig['database']['schema']};host={$myconfig['database']['host']}",
 		$myconfig['database']['username'],
@@ -32,6 +32,7 @@ try {
 
 	echo "\n\nDone " . basename(__FILE__) . "\n";
 	http_response_code(200);
+	
 } catch (Exception $e) {
 	echo "Upgrade failed: " . $e->getMessage();
 }
