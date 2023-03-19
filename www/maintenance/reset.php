@@ -44,10 +44,12 @@ try {
     }
 
     function ensureFolderEmpty($path) {
-        $target = __DIR__ . "/../" / $path;
-        if (! is_dir($target)) {
+        echo "ensureFolderEmpty: $path\n"; 
+        $target = __DIR__ . "/../" . $path;
+        if (!is_dir($target)) {
             mkdir($target);
         } else {
+            echo " - removing files in $target\n";
             deleteFileFromGlob($target . "/*");
         }
     }
@@ -56,7 +58,7 @@ try {
     ensureFolderEmpty("api/bootstrap/sessions/");
     ensureFolderEmpty("api/bootstrap/views/");
 
-    echo "\n\nDone " . basename(__FILE__) . "\n";
+    echo "\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);
     ob_end_flush();
 } catch (Exception $e) {
