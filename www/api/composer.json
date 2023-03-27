@@ -6,7 +6,7 @@
     "laravel/framework": "10.4.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "10.0.18"
+    "phpunit/phpunit": "10.0.19"
   },
   "minimum-stability": "stable",
   "autoload": {
