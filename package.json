@@ -25,7 +25,7 @@
     "@commitlint/cli": "17.5.1",
     "@commitlint/config-conventional": "17.4.4",
     "@jridgewell/source-map": "0.3.2",
-    "axios-mock-adapter": "1.21.2",
+    "axios-mock-adapter": "1.21.4",
     "babel-plugin-transform-commonjs": "1.1.6",
     "bluebird": "3.7.2",
     "browserslist": "4.21.5",
