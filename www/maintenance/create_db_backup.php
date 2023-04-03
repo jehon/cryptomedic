@@ -22,6 +22,23 @@ chmod($backup_file_name, 0666) || die("Could not chmod backup file");;
  */
 $result = $db->runPrepareSqlStatement("SHOW TABLES");
 $tables = array_map(fn($a) => array_pop($a), $result);
+usort($tables, function($a, $b) {
+    # a < b = -1
+    # a > b = 1
+
+    if ($a == $b) return 0;
+
+    # First one:
+    if ($a == "patients") return -1;
+    if ($b == "patients") return 1;
+
+    # Next one:
+    if ($a == "bills") return -1;
+    if ($b == "bills") return 1;
+
+    # Order naturally the rest
+    return ($a < $b) ? -1 : 1;
+});
 
 foreach ($tables as $table) {
     fwrite($fileHandler, "\n\n");
