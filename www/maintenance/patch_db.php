@@ -10,12 +10,8 @@ try {
 	require_once(__DIR__ . "/lib/protect.php");
 
 	global $myconfig;
+	global $db;
 
-	$db = new \Jehon\Maintenance\Database(
-		"mysql:dbname={$myconfig['database']['schema']};host={$myconfig['database']['host']}",
-		$myconfig['database']['username'],
-		$myconfig['database']['password']
-	);
 	echo "\nDetected version: ";
 	echo $db->getVersion() . "\n";
 

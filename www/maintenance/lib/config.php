@@ -27,3 +27,10 @@ function fatalError($code, $msg) {
 	http_response_code($code);
 	die($msg);
 }
+
+global $db;
+$db = new \Jehon\Maintenance\Database(
+	"mysql:dbname={$myconfig['database']['schema']};host={$myconfig['database']['host']}",
+	$myconfig['database']['username'],
+	$myconfig['database']['password']
+);
