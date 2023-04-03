@@ -9,10 +9,13 @@ set -o pipefail
 header_begin "cr-data-reset: reset folder structure"
 rsync -a --delete live-for-test/ live/
 
-chmod -R a+rX "live/"
-chmod -R a+rwX live/storage/uploadedPictures
+chmod -R a+rwX "live/"
+chmod -R a+rwX "live/storage"
+chmod -R a+rwX "live/storage/uploadedPictures"
 
 cr-ensure-folder-empty "www/api/bootstrap/cache/"
+cr-ensure-folder-empty "www/api/bootstrap/sessions/"
+cr-ensure-folder-empty "www/api/bootstrap/views/"
 cr-ensure-folder-empty "www/api/storage/framework/cache"
 cr-ensure-folder-empty "www/api/storage/framework/cache/data"
 cr-ensure-folder-empty "www/api/storage/framework/sessions"
