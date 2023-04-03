@@ -59,7 +59,7 @@ foreach ($tables as $table) {
         continue;
     }
     $result = array_pop($result);
-    fwrite($fileHandler, $result);
+    fwrite($fileHandler, $result . ";\n");
     fwrite($fileHandler, "\n");
   
     /**
