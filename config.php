@@ -29,6 +29,9 @@ $myconfig = [
     # Storage of persistent data (pdf, image, ...)
     'storage'    => __DIR__ . "/live/storage/",
 
+    # Storage of persistent data (pdf, image, ...)
+    'backups'    => __DIR__ . "/live/backups/",
+
     # Storage of temporary files
     'temporary'  => __DIR__ . "/tmp/webTemp/"
   ]
