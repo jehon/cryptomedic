@@ -42,11 +42,11 @@ usort($tables, function($a, $b) {
 
 foreach ($tables as $table) {
     fwrite($fileHandler, "\n\n");
-    fwrite($fileHandler, "-----------------------------------------\n");
+    fwrite($fileHandler, "-- ---------------------------------------\n");
     fwrite($fileHandler, "-- \n");
     fwrite($fileHandler, "-- $table\n");
     fwrite($fileHandler, "-- \n");
-    fwrite($fileHandler, "-----------------------------------------\n");
+    fwrite($fileHandler, "-- ---------------------------------------\n");
     fwrite($fileHandler, "\n");
 
     /**
