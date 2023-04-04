@@ -110,4 +110,5 @@ fclose($fileHandler);
 
 echo "\n";
 echo "Generating backup done\n";
-echo "Ok";
+echo "Ok\n";
+echo "\n";
