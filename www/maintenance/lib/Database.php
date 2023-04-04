@@ -57,7 +57,7 @@ class Database {
 		$this->runPrepareSqlStatement("SET CHARACTER SET 'utf8'");
 	}
 
-	public function runPrepareSqlStatement($sql, $data = array()) {
+	public function prepareStatement($sql, $data = array()) {
 		if (self::$_debug) {
 			echo "Running prepared statement: $sql [" . implode(",", $data) .  "]<br>";
 		}
@@ -69,14 +69,19 @@ class Database {
 
 		try {
 			$stmt = $this->pdo->prepare($sql);
+			$stmt->execute($params);
+
+			return $stmt;
 		} catch (Exception $e) {
 			if ($stmt) {
 				$stmt->closeCursor();
 			}
 			throw new Exception("[$dbgMsg] Invalid statement: " . $sql, $e);
 		}
+	}
 
-		$stmt->execute($params);
+	public function runPrepareSqlStatement($sql, $data = array()) {
+		$stmt = $this->prepareStatement($sql, $data);
 
 		if ($stmt->columnCount() > 0) {
 			$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
