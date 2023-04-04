@@ -82,8 +82,8 @@ foreach ($tables as $table) {
      * Table data
      */
     fwrite($fileHandler, "\n");
-    $result = $db->runPrepareSqlStatement("SELECT * FROM $table");
-    foreach($result as $row) {
+    $stmt = $db->prepareStatement("SELECT * FROM $table");
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $keys = "";
         $vals = "";
 
