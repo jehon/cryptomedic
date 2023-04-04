@@ -72,17 +72,22 @@ foreach ($tables as $table) {
     fwrite($fileHandler, "\n");
     $result = $db->runPrepareSqlStatement("SELECT * FROM $table");
     foreach($result as $row) {
-        $sqlScript = "INSERT INTO $table VALUES(";
+        $keys = "";
+        $vals = "";
+
         foreach($row as $key => $val) {
+            print_r($row);
             if ($val) {
-                $sqlScript .= '"' . $val . '"';
-            } else {
-                $sqlScript .= '""';
+                $keys .= '`' . $key . '`,';
+                $vals .= $db->pdo->quote($val) . ',';
             }
-            $sqlScript .= ',';
         }
-        $sqlScript = rtrim($sqlScript, ',');
-        $sqlScript .= ");\n";
+        $sqlScript = 
+            "INSERT INTO $table ("
+            . rtrim($keys, ',')
+            . ") VALUES ("
+            . rtrim($vals, ',')
+            . "); \n";
         fwrite($fileHandler, $sqlScript);
     }
 }
