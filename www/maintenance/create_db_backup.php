@@ -8,18 +8,26 @@ echo "<pre>";
 /**
  * Prepare the file
  */
+echo "Creating folder\n";
 $dir = $myconfig['folders']['backups'];
 if (! is_dir($dir)) {
     mkdir($dir, 0777) || die("Could not create backup folder");
-    chmod($dir, 0777) || die("Could not chmod backup folder");;
+    chmod($dir, 0777) || die("Could not chmod backup folder");
 }
-$backup_file_name = $dir . '/backup_' . time() . '.sql';
-$fileHandler = fopen($backup_file_name, 'w+');
-chmod($backup_file_name, 0666) || die("Could not chmod backup file");;
+$backup_file = 'backup_' . time() . '.sql';
+$backup_path = "$dir/$backup_file";
+echo "Creating file $backup_file\n";
+$fileHandler = fopen($backup_path, 'w+');
+chmod($backup_path, 0666) || die("Could not chmod backup file");
+
+echo "Writing headers\n";
+fwrite($fileHandler, "\n\n") || die("Could not write to file");
 
 /**
  * Get All Table Names From the Database
  */
+echo "\n";
+echo "Getting tables\n";
 $result = $db->runPrepareSqlStatement("SHOW TABLES");
 $tables = array_map(fn($a) => array_pop($a), $result);
 usort($tables, function($a, $b) {
@@ -43,8 +51,12 @@ usort($tables, function($a, $b) {
     # Order naturally the rest
     return ($a < $b) ? -1 : 1;
 });
+echo "Found: " . join(', ', $tables) . "\n";
 
+echo "\n";
+echo "Saving data:\n";
 foreach ($tables as $table) {
+    echo "- Saving $table\n";
     fwrite($fileHandler, "\n\n");
     fwrite($fileHandler, "-- ---------------------------------------\n");
     fwrite($fileHandler, "-- \n");
@@ -96,4 +108,6 @@ foreach ($tables as $table) {
  */
 fclose($fileHandler); 
 
+echo "\n";
+echo "Generating backup done\n";
 echo "Ok";
