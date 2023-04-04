@@ -362,13 +362,13 @@ $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 # TODO
 .PHONY: deploy-mount
 deploy-mount:
-	@if [ -z "$$CRYPTOMEDIC_UPLOAD_USER" ]; then \
-		echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2; \
+	@if [ -z "$$CRYPTOMEDIC_DEPLOY_USER" ]; then \
+		echo "Missing CRYPTOMEDIC_DEPLOY_USER" >&2; \
 		exit 255; \
 	fi
 
-	@if [ -z "$$CRYPTOMEDIC_UPLOAD_PASSWORD" ]; then \
-		echo "Missing CRYPTOMEDIC_UPLOAD_PASSWORD" >&2; \
+	@if [ -z "$$CRYPTOMEDIC_DEPLOY_PASSWORD" ]; then \
+		echo "Missing CRYPTOMEDIC_DEPLOY_PASSWORD" >&2; \
 		exit 255; \
 	fi
 
@@ -380,9 +380,9 @@ deploy-mount:
 
 	@mkdir -p $(DEPLOY_MOUNT)
 	if [ ! -r $(DEPLOY_MOUNT_TEST_FILE) ]; then \
-		SSHPASS="$$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
+		SSHPASS="$$CRYPTOMEDIC_DEPLOY_PASSWORD" sshpass -e \
 			sshfs -f -o uid=$(shell id -u) \
-				$(CRYPTOMEDIC_UPLOAD_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_UPLOAD_USER) $(DEPLOY_MOUNT) & \
+				$(CRYPTOMEDIC_DEPLOY_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_DEPLOY_USER) $(DEPLOY_MOUNT) & \
 	fi \
 
 # TODO

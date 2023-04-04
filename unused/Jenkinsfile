@@ -115,8 +115,8 @@ make ${MAKEOPT} ${STAGE_NAME}
       steps {
         lock(resource: 'cryptomedic_production') {
           sh '''
-            CRYPTOMEDIC_UPLOAD_USER=$CRYPTOMEDIC_UPLOAD_USR \
-              CRYPTOMEDIC_UPLOAD_PASSWORD=$CRYPTOMEDIC_UPLOAD_PSW \
+            CRYPTOMEDIC_DEPLOY_USER=$CRYPTOMEDIC_DEPLOY_USR \
+              CRYPTOMEDIC_DEPLOY_PASSWORD=$CRYPTOMEDIC_DEPLOY_PSW \
               make ${MAKEOPT} ${STAGE_NAME}
           '''
         }
