@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     CRYPTOMEDIC_UPLOAD = credentials('cryptomedic-upload')
-    CRYPTOMEDIC_DB_UPGRADE = credentials('cryptomedic-deploy')
+    CRYPTOMEDIC_WEB_TOKEN = credentials('cryptomedic-deploy')
 
     // Need a different port, to allow continue working in dev with normal port
     CRYPTOMEDIC_HTTP_PORT = "15080"

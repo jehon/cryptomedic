@@ -372,7 +372,7 @@ deploy-mount:
 		exit 255; \
 	fi
 
-	@if [ -z "$$CRYPTOMEDIC_DB_UPGRADE" ]; then \
+	@if [ -z "$$CRYPTOMEDIC_WEB_TOKEN" ]; then \
     	echo "Missing CRYPTOMEDIC_DB_UPGRADE" >&2; \
     	exit 255; \
 	fi

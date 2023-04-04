@@ -6,17 +6,17 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-if [ -z "$CRYPTOMEDIC_DB_UPGRADE" ]; then
-    echo "Initialize CRYPTOMEDIC_DB_UPGRADE"
-    CRYPTOMEDIC_DB_UPGRADE="secret"
+if [ -z "$CRYPTOMEDIC_WEB_TOKEN" ]; then
+    echo "Initialize CRYPTOMEDIC_WEB_TOKEN"
+    CRYPTOMEDIC_WEB_TOKEN="secret"
 fi
 
-echo "Deploying to ${CR_HTTP_HOST} with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
+echo "Deploying to ${CR_HTTP_HOST} with pwd of #${#CRYPTOMEDIC_WEB_TOKEN} char length"
 
 header_begin "Upgrading database"
-cr_curl "http://${CR_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+cr_curl "http://${CR_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_WEB_TOKEN}"
 header_end
 
 header_begin "Upgrading files"
-cr_curl "http://${CR_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+cr_curl "http://${CR_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_WEB_TOKEN}"
 header_end
