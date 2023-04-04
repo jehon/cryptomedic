@@ -5,6 +5,8 @@ require_once(__DIR__ . "/lib/protect.php");
 
 echo "<pre>";
 
+$date = date('Y-m-d_H-i-s');
+
 /**
  * Prepare the file
  */
@@ -14,14 +16,20 @@ if (! is_dir($dir)) {
     mkdir($dir, 0777) || die("Could not create backup folder");
     chmod($dir, 0777) || die("Could not chmod backup folder");
 }
-$backup_file = 'backup_' . date('Y-m-d_H-i-s') . '.sql';
+$backup_file = 'backup_' . $date . '.sql';
 $backup_path = "$dir/$backup_file";
 echo "Creating file $backup_file\n";
 $fileHandler = fopen($backup_path, 'w+');
 chmod($backup_path, 0666) || die("Could not chmod backup file");
 
 echo "Writing headers\n";
-fwrite($fileHandler, "\n\n") || die("Could not write to file");
+fwrite($fileHandler, "\n") || die("Could not write to file");
+fwrite($fileHandler, "-- \n");
+fwrite($fileHandler, "-- \n");
+fwrite($fileHandler, "-- Genereated at $date\n");
+fwrite($fileHandler, "-- \n");
+fwrite($fileHandler, "-- \n");
+fwrite($fileHandler, "\n\n");
 
 /**
  * Get All Table Names From the Database
@@ -81,31 +89,40 @@ foreach ($tables as $table) {
     /**
      * Table data
      */
-    fwrite($fileHandler, "\n");
-    $stmt = $db->prepareStatement("SELECT * FROM $table");
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $keys = "";
-        $vals = "";
+    try {
+        fwrite($fileHandler, "\n");
+        $stmt = $db->prepareStatement("SELECT * FROM $table");
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $keys = "";
+            $vals = "";
 
-        foreach($row as $key => $val) {
-            if ($val) {
-                $keys .= '`' . $key . '`,';
-                $vals .= $db->pdo->quote($val) . ',';
+            foreach($row as $key => $val) {
+                if ($val) {
+                    $keys .= '`' . $key . '`,';
+                    $vals .= $db->pdo->quote($val) . ',';
+                }
             }
+            $sqlScript = 
+                "INSERT INTO $table ("
+                . rtrim($keys, ',')
+                . ") VALUES ("
+                . rtrim($vals, ',')
+                . "); \n";
+            fwrite($fileHandler, $sqlScript);
         }
-        $sqlScript = 
-            "INSERT INTO $table ("
-            . rtrim($keys, ',')
-            . ") VALUES ("
-            . rtrim($vals, ',')
-            . "); \n";
-        fwrite($fileHandler, $sqlScript);
+    } finally {
+        if ($stmt) {
+            $stmt->closeCursor();
+        }
     }
 }
 
 /**
  * Close the file
  */
+fwrite($fileHandler, "\n");
+fwrite($fileHandler, "-- Generating backup done\n");
+fwrite($fileHandler, "\n");
 fclose($fileHandler); 
 
 echo "\n";
