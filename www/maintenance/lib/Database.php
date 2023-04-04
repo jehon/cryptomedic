@@ -53,8 +53,8 @@ class Database {
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 
-		$this->runPrepareSqlStatement("SET time_zone = '+00:00'");
-		$this->runPrepareSqlStatement("SET CHARACTER SET 'utf8'");
+		$this->runPrepareStatement("SET time_zone = '+00:00'");
+		$this->runPrepareStatement("SET CHARACTER SET 'utf8'");
 	}
 
 	public function prepareStatement($sql, $data = array()) {
@@ -80,7 +80,7 @@ class Database {
 		}
 	}
 
-	public function runPrepareSqlStatement($sql, $data = array()) {
+	public function runPrepareStatement($sql, $data = array()) {
 		$stmt = $this->prepareStatement($sql, $data);
 
 		if ($stmt->columnCount() > 0) {
@@ -93,7 +93,7 @@ class Database {
 	}
 
 	public function getCurrentDatabase() {
-		$db = $this->runPrepareSqlStatement("SELECT DATABASE();");
+		$db = $this->runPrepareStatement("SELECT DATABASE();");
 		$db = array_pop($db);
 		$db = array_pop($db);
 		return $db;
@@ -105,14 +105,14 @@ class Database {
 	 * @return mixed
 	 */
 	public function getVersion() {
-		$exists = $this->runPrepareSqlStatement(
+		$exists = $this->runPrepareStatement(
 			"SELECT table_name FROM information_schema.tables WHERE table_schema = :mydb AND table_name = 'settings';",
 			['mydb' => $this->getCurrentDatabase()]
 		);
 
 		if (count($exists) < 1) {
 			echo "!!! Creating the settings table !!!\n";
-			$this->runPrepareSqlStatement(
+			$this->runPrepareStatement(
 				"CREATE TABLE IF NOT EXISTS `settings` (
 					  `id` varchar(50) NOT NULL,
 					  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -122,10 +122,10 @@ class Database {
 			);
 		}
 
-		$v = $this->runPrepareSqlStatement("SELECT value FROM settings WHERE id = 'structure_version'");
+		$v = $this->runPrepareStatement("SELECT value FROM settings WHERE id = 'structure_version'");
 		if (count($v) < 1) {
 			echo "!! Forcing version to 0 !!";
-			$this->runPrepareSqlStatement("INSERT INTO `settings` (id, value) VALUE('structure_Version', 0)");
+			$this->runPrepareStatement("INSERT INTO `settings` (id, value) VALUE('structure_Version', 0)");
 			return 0;
 		}
 		$v = array_pop($v);
@@ -138,7 +138,7 @@ class Database {
 	 * @param unknown $nv
 	 */
 	public function setVersion($nv) {
-		$this->runPrepareSqlStatement("UPDATE settings SET value = :version WHERE id = 'structure_version'", array('version' => $nv));
+		$this->runPrepareStatement("UPDATE settings SET value = :version WHERE id = 'structure_version'", array('version' => $nv));
 	}
 
 	/**
@@ -182,7 +182,7 @@ class Database {
 				}
 				$query = str_replace('@@', ';', $query);
 
-				$this->runPrepareSqlStatement($query, array(), "running query $i");
+				$this->runPrepareStatement($query, array(), "running query $i");
 				if ($i % 50 == 0) {
 					echo "$i\n";
 				}

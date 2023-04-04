@@ -28,7 +28,7 @@ fwrite($fileHandler, "\n\n") || die("Could not write to file");
  */
 echo "\n";
 echo "Getting tables\n";
-$result = $db->runPrepareSqlStatement("SHOW TABLES");
+$result = $db->runPrepareStatement("SHOW TABLES");
 $tables = array_map(fn($a) => array_pop($a), $result);
 usort($tables, function($a, $b) {
     # a < b = -1
@@ -68,7 +68,7 @@ foreach ($tables as $table) {
     /**
      * Table structure
      */
-    $result = $db->runPrepareSqlStatement("SHOW CREATE TABLE $table");
+    $result = $db->runPrepareStatement("SHOW CREATE TABLE $table");
     $result = array_pop($result);
     if (isset($result["View"])) {
         # We don't save views
