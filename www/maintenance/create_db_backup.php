@@ -76,7 +76,6 @@ foreach ($tables as $table) {
         $vals = "";
 
         foreach($row as $key => $val) {
-            print_r($row);
             if ($val) {
                 $keys .= '`' . $key . '`,';
                 $vals .= $db->pdo->quote($val) . ',';
