@@ -14,7 +14,7 @@ if (! is_dir($dir)) {
     mkdir($dir, 0777) || die("Could not create backup folder");
     chmod($dir, 0777) || die("Could not chmod backup folder");
 }
-$backup_file = 'backup_' . time() . '.sql';
+$backup_file = 'backup_' . date('Y-m-d_H-i-s') . '.sql';
 $backup_path = "$dir/$backup_file";
 echo "Creating file $backup_file\n";
 $fileHandler = fopen($backup_path, 'w+');
