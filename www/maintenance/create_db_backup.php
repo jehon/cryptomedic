@@ -33,6 +33,10 @@ usort($tables, function($a, $b) {
     if ($b == "patients") return 1;
 
     # Next one:
+    if ($a == "prices") return -1;
+    if ($b == "prices") return 1;
+    
+    # Next one:
     if ($a == "bills") return -1;
     if ($b == "bills") return 1;
 
