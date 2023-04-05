@@ -7,7 +7,7 @@ use DB;
 use App\Http\Controllers\Controller;
 use App\Model\Browsers;
 
-define("BR_FILE", __DIR__ . "/../../../../../built/browsers.json");
+define("BR_FILE", __DIR__ . "/../../../../built/browsers.json");
 
 class BrowsersController extends Controller {
     static public function clean() {
