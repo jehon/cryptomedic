@@ -67,15 +67,9 @@ class Picture extends CryptomedicModel {
 			}
 		}
 
-		$this->file = "{$this->patient_id}_"
+		return "{$this->patient_id}_"
 			. ($this->Date == null ? "undated" : $this->Date)
 			. "_{$this->id}.{$ext}";
-
-		if (file_exists($this->getPhysicalPath($this->file))) {
-			abort(500, "Moving uploaded file to " . $this->getPhysicalPath($this->file) . ": already exists");
-		}
-
-		return $this->getPhysicalPath($this->file);
 	}
 
 	public static function create(array $attributes = array()) {
@@ -95,9 +89,13 @@ class Picture extends CryptomedicModel {
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$mimetype = finfo_file($finfo, $file['tmp_name']);
 
-			$model->calculateTargetName($mimetype);
+			$this->file = $model->calculateTargetName($mimetype);
 
-			 mkdirIf($model->getPhysicalPath($model->file));
+			if (file_exists($this->getPhysicalPath($this->file))) {
+				abort(500, "Moving uploaded file to " . $this->getPhysicalPath($this->file) . ": already exists");
+			}
+	
+			mkdirIf($model->getPhysicalPath($model->file));
 
 			if (!move_uploaded_file($_FILES['fileContent']['tmp_name'], $model->getPhysicalPath($model->file))) {
 				throw new \Error("Impossible to move the file to " . $model->getPhysicalPath($model->file));
@@ -113,12 +111,16 @@ class Picture extends CryptomedicModel {
 			$content64 = substr($v, strpos($v, ",") + 1);
 			$contentRaw = base64_decode($content64);
 
-			$model->calculateTargetName($mimetype);
-
 			if (!$contentRaw) {
 				abort(500, "Received data is empty");
 			}
 
+			$this->file = $model->calculateTargetName($mimetype);
+
+			if (file_exists($this->getPhysicalPath($this->file))) {
+				abort(500, "Moving uploaded file to " . $this->getPhysicalPath($this->file) . ": already exists");
+			}
+	
 			mkdirIf($model->getPhysicalPath($model->file));
 
 			if (!file_put_contents($model->getPhysicalPath($model->file), $contentRaw)) {
