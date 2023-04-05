@@ -88,7 +88,7 @@ class PicturesController extends FicheController {
     return "ok";
   }
 
-	public function _file($id) {
+	private function _file($id) {
 		$picture = Picture::findOrFail($id);
 		$file = $picture->getPhysicalPath($picture->file);
 		if (!file_exists($file)) {
@@ -104,7 +104,7 @@ class PicturesController extends FicheController {
 		return $file;
 	}
 
-	public function _buildResponse($file) {
+	private function _buildResponse($file) {
     return response()
     	->download($file)
   		->setLastModified((new \DateTime())->setTimestamp(filemtime($file)))
@@ -125,7 +125,7 @@ class PicturesController extends FicheController {
 		return $this->_buildResponse($file);
 	}
 
-	public function _buildThumbnail($file) {
+	private function _buildThumbnail($file) {
 		global $myconfig;
 
     // Constants
