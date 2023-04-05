@@ -4,6 +4,13 @@ namespace App\Model;
 
 use Illuminate\Support\Facades\Request;
 
+function mkdirIf($filename) {
+	$dir = dirname($filename);
+	if (!is_dir($dir)) {
+		mkdir($dir, 0777, true) || throw new Exception("Could not create folder $dir");
+	}
+}
+
 class Picture extends CryptomedicModel {
 	const DATA_PREFIX = "data:image/";
 
@@ -80,6 +87,8 @@ class Picture extends CryptomedicModel {
 
 			$model->calculateTargetName($mimetype);
 
+			 mkdirIf($model->getPhysicalPath($model->file));
+
 			if (!move_uploaded_file($_FILES['fileContent']['tmp_name'], $model->getPhysicalPath($model->file))) {
 				throw new \Error("Impossible to move the file to " . $model->getPhysicalPath($model->file));
 			}
@@ -99,6 +108,8 @@ class Picture extends CryptomedicModel {
 			if (!$contentRaw) {
 				abort(500, "Received data is empty");
 			}
+
+			mkdirIf($model->getPhysicalPath($model->file));
 
 			if (!file_put_contents($model->getPhysicalPath($model->file), $contentRaw)) {
 				abort(500, "Storing uploaded file to " . $model->getPhysicalPath($model->file));
