@@ -19,4 +19,9 @@ RUN install-php-extensions pdo_mysql xdebug intl gd
 
 ADD . /
 
+# All files created by the server will be ugo+rw and folders will be ugo+rwx
+#   default unlimited permissions for: files=0666 folders=0777
+# See: https://unix.stackexchange.com/a/337184/240487
+RUN echo "umask 0000" >> /etc/apache2/envvars
+
 WORKDIR /app
