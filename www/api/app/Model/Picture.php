@@ -38,7 +38,7 @@ class Picture extends CryptomedicModel {
 	    return $dir . $file;
 	}
 
-	public function calculateTargetName($mimetype) {
+	private function calculateTargetName($mimetype) {
 		switch ($mimetype) {
 			case "image/png":
 				$ext = "png";
