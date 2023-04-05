@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Request;
 class Picture extends CryptomedicModel {
 	const DATA_PREFIX = "data:image/";
 
+	/**
+	 * Used to check the filesystem
+	 */
 	public static function getPictureCountByPhysicalPath($file) {
 		return self::where('file', $file)->count();
 	}
