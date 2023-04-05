@@ -99,9 +99,9 @@ class BrowsersController extends Controller {
             $detected[$bn]["max"] = max($detected[$bn]['max'], $bv);
             if ($bv < $detected[$bn]["min"]) {
                 $detected[$bn]["min"] = min($detected[$bn]['min'], $bv);
-                $detected[$bn]["last_login"] = $b['last_login'];
+                $detected[$bn]["last_login"] = $b->last_login;
             } else if ($bv == $detected[$bn]["min"]) {
-                $detected[$bn]["last_login"] = min($detected[$bn]['last_login'], $b['last_login']);
+                $detected[$bn]["last_login"] = min($detected[$bn]['last_login'], $b->last_login);
             }
         }
         echo "<tr>";
