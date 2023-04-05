@@ -85,29 +85,6 @@ class Picture extends CryptomedicModel {
 			return $model;
 		}
 
-		// TODO SECURITY: Enforce file size limit
-		if (array_key_exists('fileContent', $_FILES)) {
-			$file = $_FILES['fileContent'];
-			if ($file['error']) {
-				var_dump($file);
-				abort(500, "Error in received file");
-			}
-			$finfo = finfo_open(FILEINFO_MIME_TYPE);
-			$mimetype = finfo_file($finfo, $file['tmp_name']);
-
-			$model->file = $model->calculateTargetName($mimetype);
-
-			if (file_exists($this->getPhysicalPath($this->file))) {
-				abort(500, "Moving uploaded file to " . $this->getPhysicalPath($this->file) . ": already exists");
-			}
-	
-			mkdirIf($model->getPhysicalPath($model->file));
-
-			if (!move_uploaded_file($_FILES['fileContent']['tmp_name'], $model->getPhysicalPath($model->file))) {
-				throw new \Error("Impossible to move the file to " . $model->getPhysicalPath($model->file));
-			}
-		}
-
 		if (Request::has('fileContent')) {
 			$dataURI = Request::input('fileContent');
 
