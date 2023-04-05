@@ -50,31 +50,30 @@ class PicturesController extends FicheController {
   // List all database pictures that does not exists on the file system
   public function checkFileSystem() {
     $i = 0;
-    $list = DB::table('pictures')->get();
-	$res = [];
-    echo "<pre>";
-    echo "Check database records\n";
-    foreach($list as $v) {
-		$picture = Picture::findOrFail($v->id);
-		if ($picture->file == null) {
-			echo $i++ . ": " . $v->id . " - null\n";
-		} else {
-			$file = $picture->getPhysicalPath($picture->file);
-			if (!file_exists($file)) {
-				echo $i++ . ": " . $v->id . " - " . $v->file . "\n";
-			}
-		}
+    $res = [];
+    echo "<table style='width: 100%;'>";
+    echo "<tr style='background-color: lightgray;'><td colspan='100'>Check database records</td></tr>\n";
+    foreach(Picture::all() as $picture) {
+      if ($picture->file == null) {
+        echo "<tr><td>" . $i++ . "</td><td>" . $picture->id . "</td><td>null</td></tr>";
+      } else {
+        $file = $picture->getPhysicalPath($picture->file);
+        if (!file_exists($file)) {
+          echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td></tr>";
+        }
+      }
     }
+    echo "<tr><td></td></tr>";
 
-    echo "\n";
-    echo "Check files present\n";
+    echo "<tr style='background-color: lightgray;'><td colspan='100'>Check files present</td></tr>";
     foreach(myglob(Picture::getPhysicalRoot() . "/*") as $file) {
       $file = substr($file, strlen(Picture::getPhysicalRoot()));
       if (!Picture::getPictureCountByPhysicalPath($file)) {
-        echo $i++ . ": " . $file . "\n";
+        echo "<tr><td>" . $i++ . "</td><td></td><td>{$file}</td></tr>";
       }
     }
-    echo "</pre>";
+  
+    echo "</table>";
 
     return "ok";
   }
@@ -107,14 +106,12 @@ class PicturesController extends FicheController {
 	public function getFile($id) {
 		$file = $this->_file($id);
 		return $this->_buildResponse($file);
-		// return response()->file($file);
 	}
 
 	// Entry point for thumbnail
 	public function getThumbnail($id) {
 		$file = $this->_file($id);
 		$file = $this->_buildThumbnail($file);
-		// var_dump($file);
 		return $this->_buildResponse($file);
 	}
 
