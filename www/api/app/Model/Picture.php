@@ -117,8 +117,8 @@ class Picture extends CryptomedicModel {
 
 			$model->file = $model->calculateTargetName($mimetype);
 
-			if (file_exists($this->getPhysicalPath($this->file))) {
-				abort(500, "Moving uploaded file to " . $this->getPhysicalPath($this->file) . ": already exists");
+			if (file_exists($model->getPhysicalPath($model->file))) {
+				abort(500, "Moving uploaded file to " . $model->getPhysicalPath($model->file) . ": already exists");
 			}
 	
 			mkdirIf($model->getPhysicalPath($model->file));

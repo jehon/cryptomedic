@@ -121,11 +121,11 @@ class PicturesController extends FicheController {
 	// Entry point for thumbnail
 	public function getThumbnail($id) {
 		$file = $this->_file($id);
-		$file = $this->_buildThumbnail($file);
+		$file = $this->_buildThumbnail($id, $file);
 		return $this->_buildResponse($file);
 	}
 
-	private function _buildThumbnail($file) {
+	private function _buildThumbnail($id, $file) {
 		global $myconfig;
 
     // Constants
@@ -157,7 +157,7 @@ class PicturesController extends FicheController {
     $outHeight = intval($srcHeight/ $ratio);
 
     // Compute name of cache image
-    $cacheName = basename($file) . '#' . $outWidth . 'x' . $outHeight;
+    $cacheName = $id . '#' . $outWidth . 'x' . $outHeight;
     $cacheFile = $CACHE_DIR . '/' . $cacheName;
 
     // If cache doesn't exist or too old, build it.
