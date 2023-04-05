@@ -57,6 +57,7 @@ try {
     ensureFolderEmpty("api/bootstrap/cache/");
     ensureFolderEmpty("api/bootstrap/sessions/");
     ensureFolderEmpty("api/bootstrap/views/");
+    ensureFolderEmpty("../tmp/webTemp/");
 
     echo "\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);
