@@ -89,7 +89,7 @@ class Picture extends CryptomedicModel {
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$mimetype = finfo_file($finfo, $file['tmp_name']);
 
-			$this->file = $model->calculateTargetName($mimetype);
+			$model->file = $model->calculateTargetName($mimetype);
 
 			if (file_exists($this->getPhysicalPath($this->file))) {
 				abort(500, "Moving uploaded file to " . $this->getPhysicalPath($this->file) . ": already exists");
@@ -115,7 +115,7 @@ class Picture extends CryptomedicModel {
 				abort(500, "Received data is empty");
 			}
 
-			$this->file = $model->calculateTargetName($mimetype);
+			$model->file = $model->calculateTargetName($mimetype);
 
 			if (file_exists($this->getPhysicalPath($this->file))) {
 				abort(500, "Moving uploaded file to " . $this->getPhysicalPath($this->file) . ": already exists");
