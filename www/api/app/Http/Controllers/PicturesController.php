@@ -72,9 +72,19 @@ class PicturesController extends FicheController {
         echo "<tr><td>" . $i++ . "</td><td></td><td>{$file}</td></tr>";
       }
     }
-  
-    echo "</table>";
+    echo "<tr><td></td></tr>";
 
+    echo "<tr style='background-color: lightgray;'><td colspan='100'>Check files are in correct location</td></tr>";
+    foreach(Picture::all() as $picture) {
+      $stored = $picture->file;
+      $calc = $picture->calculateTargetName("", pathinfo($stored)['extension']);
+
+      if ($calc != $stored) {
+        echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>$calc</td><td>$stored</td></tr>";
+      }
+    }
+    
+    echo "</table>";
     return "ok";
   }
 
