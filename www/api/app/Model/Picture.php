@@ -14,6 +14,11 @@ function mkdirIf($filename) {
 class Picture extends CryptomedicModel {
 	const DATA_PREFIX = "data:image/";
 
+	public static function getPhysicalRoot() {
+		global $myconfig;
+		return $myconfig['folders']['storage'] . DIRECTORY_SEPARATOR . "uploadedPictures" . DIRECTORY_SEPARATOR;
+	}
+
 	/**
 	 * Used to check the filesystem
 	 */
@@ -38,8 +43,7 @@ class Picture extends CryptomedicModel {
 			abort(500, "File is empty: $file");
 		}
 
-		global $myconfig;
-		$dir = $myconfig['folders']['storage'] . DIRECTORY_SEPARATOR . "uploadedPictures" . DIRECTORY_SEPARATOR;
+		$dir = self::getPhysicalRoot();
 
 		if (!is_dir($dir)) {
 	   	mkdir($dir, 0777, true);
