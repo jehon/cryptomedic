@@ -122,7 +122,7 @@ class PicturesController extends FicheController {
 		global $myconfig;
 
     // Constants
-    $CACHE_DIR = $myconfig['folders']['temporary'] . "/cache/";
+    $CACHE_DIR = $myconfig['folders']['temporary'] . "/thumbnails/";
     if (!is_dir($CACHE_DIR)) {
     	mkdir($CACHE_DIR, 0777, true);
     }
