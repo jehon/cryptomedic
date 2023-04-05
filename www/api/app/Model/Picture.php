@@ -30,6 +30,8 @@ class Picture extends CryptomedicModel {
 
 	/**
 	 * From the string in database, calculate the real path
+	 *
+	 * @param {strint} file: the record in the database
 	 */
 	public function getPhysicalPath($file) {
 		if (!$file) {
