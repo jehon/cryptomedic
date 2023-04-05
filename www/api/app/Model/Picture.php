@@ -7,11 +7,6 @@ use Illuminate\Support\Facades\Request;
 class Picture extends CryptomedicModel {
 	const DATA_PREFIX = "data:image/";
 
-	public static function getPhysicalRoot() {
-		global $myconfig;
-		return $myconfig['folders']['storage'] . DIRECTORY_SEPARATOR . "uploadedPictures" . DIRECTORY_SEPARATOR;
-	}
-
 	public static function getPictureCountByPhysicalPath($file) {
 		return self::where('file', $file)->count();
 	}
@@ -23,11 +18,17 @@ class Picture extends CryptomedicModel {
 	    return true;
 	}
 
+	/**
+	 * From the string in database, calculate the real path
+	 */
 	public function getPhysicalPath($file) {
 		if (!$file) {
 			abort(500, "File is empty: $file");
 		}
-		$dir = self::getPhysicalRoot();
+
+		global $myconfig;
+		$dir = $myconfig['folders']['storage'] . DIRECTORY_SEPARATOR . "uploadedPictures" . DIRECTORY_SEPARATOR;
+
 		if (!is_dir($dir)) {
 	   	mkdir($dir, 0777, true);
 		}
