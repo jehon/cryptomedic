@@ -51,16 +51,20 @@ class Picture extends CryptomedicModel {
 	    return $dir . $file;
 	}
 
-	private function calculateTargetName($mimetype) {
-		switch ($mimetype) {
-			case "image/png":
-				$ext = "png";
-				break;
-			case "image/jpeg":
-				$ext = "jpg";
-				break;
-			default:
-				throw new \Error("Invalid mimetype: " . $mimetype);
+	public function calculateTargetName($mimetype, $ext = "") {
+		if ($ext) {
+			$ext = strtolower($ext);
+		} else {
+			switch ($mimetype) {
+				case "image/png":
+					$ext = "png";
+					break;
+				case "image/jpeg":
+					$ext = "jpg";
+					break;
+				default:
+					throw new \Error("Invalid mimetype: " . $mimetype);
+			}
 		}
 
 		$this->file = "{$this->patient_id}_"
