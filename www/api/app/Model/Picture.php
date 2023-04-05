@@ -102,7 +102,6 @@ class Picture extends CryptomedicModel {
   			}
 		}
 
-		//chmod($model->getPhysicalPath($model->file), 0660);
 		$model->save();
 
 		return $model;
