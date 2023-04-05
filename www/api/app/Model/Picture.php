@@ -67,9 +67,15 @@ class Picture extends CryptomedicModel {
 			}
 		}
 
-		return "{$this->patient_id}_"
+		$patient = Patient::find($this->patient_id);
+		
+		return $patient->entryyear
+			. "/"
+			. str_pad($patient->entryorder % 100, 3, "0", STR_PAD_LEFT)
+			. "/"
+			. "{$patient->entryyear}-{$patient->entryorder}."
 			. ($this->Date == null ? "undated" : $this->Date)
-			. "_{$this->id}.{$ext}";
+			. ".{$this->id}.{$ext}";
 	}
 
 	public static function create(array $attributes = array()) {
