@@ -3,6 +3,8 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <script type="module" src="main.js"></script>
+
     <title>Cryptomedic local dev</title>
     <style>
       body {
@@ -51,84 +53,44 @@
 
   <body>
     <div>
-      <table class="prod_test">
-        <thead>
-          <tr>
-            <th>Production</th>
-            <th>Developpement</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><a href="http://www.cryptomedic.org/">Cryptomedic</a></td>
-            <td><a href="/">Cryptomedic</a></td>
-          </tr>
-          <tr>
-            <td>
-              <a
-                href="https://phpmyadmin.cluster003.hosting.ovh.net/index.php?pma_username=cryptomekpmain&pma_servername=cryptomekpmain.mysql.db"
-              >
-                PhpMyAdmin OVH Database</a
-              >
-            </td>
-            <td><a href="/phpmyadmin/">PhpMyAdmin</a></td>
-          </tr>
-          <tr>
-            <td>
-              <a href="http://www.cryptomedic.org/api/browsers/stats"
-                >Browsers</a
-              >
-            </td>
-            <td><a href="/api/browsers/stats">Browsers</a></td>
-          </tr>
-          <tr action>
-            <td>
-              <a href="http://www.cryptomedic.org/maintenance/patch_db.php?pwd="
-                >Patch DB</a
-              >
-            </td>
-            <td><a href="/maintenance/patch_db.php?pwd=secret">Patch DB</a></td>
-          </tr>
-          <tr action>
-            <td>
-              <a
-                href="http://www.cryptomedic.org/maintenance/create_db_backup.php?pwd="
-                >create_db_backup</a
-              >
-            </td>
-            <td>
-              <a href="/maintenance/create_db_backup.php?pwd=secret"
-                >create_db_backup</a
-              >
-            </td>
-          </tr>
-          <tr action>
-            <td>
-              <a href="http://www.cryptomedic.org/api/browsers/clean"
-                >browsers clean</a
-              >
-            </td>
-            <td><a href="/api/browsers/clean">browsers clean</a></td>
-          </tr>
-          <tr action>
-            <td></td>
-            <td>
-              <a href="/maintenance/reset.php?pwd=secret&env=dev">Reset data</a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a
-                href="http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote"
-                >md5sum remote</a
-              >
-            </td>
-            <td>
-              <a href="/maintenance/md5sum.php?filter=local">md5sum local</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <x-dev-prod></x-dev-prod>
+      <x-dev-prod title="Server" url="/"></x-dev-prod>
+      <x-dev-prod
+        title="phpmyadmin"
+        url="/phpmyadmin/"
+        remote-url="https://phpmyadmin.cluster003.hosting.ovh.net/index.php?pma_username=cryptomekpmain&pma_servername=cryptomekpmain.mysql.db"
+      ></x-dev-prod>
+      <x-dev-prod title="browsers stats" url="/api/browsers/stats"></x-dev-prod>
+      <x-dev-prod
+        action
+        title="patch db"
+        url="/maintenance/patch_db.php?pwd=secret"
+      ></x-dev-prod>
+      <x-dev-prod
+        action
+        title="Create db backup"
+        url="/maintenance/create_db_backup.php?pwd=secret"
+      ></x-dev-prod>
+      <x-dev-prod
+        action
+        title="browsers clean"
+        url="/api/browsers/clean"
+      ></x-dev-prod>
+      <x-dev-prod
+        action
+        title="reset (session/cache/...)"
+        url="/maintenance/reset.php?env=dev&pwd=secret"
+      ></x-dev-prod>
+      <x-dev-prod
+        action
+        title="md5sum"
+        url="/maintenance/md5sum.php?filter=local"
+        remote-url="/maintenance/md5sum.php?filter=remote"
+      ></x-dev-prod>
+      <x-dev-prod
+        title="checkFileSystem"
+        url="/api/admin/pictures/checkFileSystem"
+      ></x-dev-prod>
     </div>
     <div prod>
       <h2>Production</h2>
