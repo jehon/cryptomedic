@@ -56,22 +56,23 @@ class PicturesController extends FicheController {
     flush();
     foreach(Picture::all() as $picture) {
       if ($picture->file == null) {
-        echo "<tr><td>" . $i++ . "</td><td>" . $picture->id . "</td><td>no-file-in-database</td></tr>";
+        echo "<tr><td>#" . $i++ . "</td><td>" . $picture->id . "</td><td>no-file-in-database</td></tr>";
         flush();
       } else {
         $file = $picture->getPhysicalPath($picture->file);
         if (!file_exists($file)) {
-          echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td></td>No-file-on-filesystem<td></tr>";
+          echo "<tr><td>#" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td></td>No-file-on-filesystem<td></tr>";
           flush();
         } else {
-          if (property_exists(pathinfo($picture->file), 'extension')) {
-            $calc = $picture->calculateTargetName("", pathinfo($picture->file)['extension']);
+          $ext = pathinfo($picture->file, PATHINFO_EXTENSION);
+          if ($ext) {
+            $calc = $picture->calculateTargetName("", $ext);
             if ($calc != $picture->file) {
-              echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>$picture->file</td><td>$calc</td></tr>";
+              echo "<tr><td>#" . $i++ . "</td><td>{$picture->id}</td><td>$picture->file</td><td>$calc</td></tr>";
               flush();
             }
           } else {
-            echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>$picture->file</td><td>no-extension</td></tr>";
+            echo "<tr><td>#" . $i++ . "</td><td>{$picture->id}</td><td>$picture->file</td><td>no-extension</td></tr>";
             flush();
           }
         }
