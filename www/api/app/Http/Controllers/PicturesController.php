@@ -63,6 +63,12 @@ class PicturesController extends FicheController {
         if (!file_exists($file)) {
           echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td></td>No-file-on-filesystem<td></tr>";
           flush();
+        } else {
+          $calc = $picture->calculateTargetName("", pathinfo($picture->file)['extension']);
+          if ($calc != $picture->file) {
+            echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>$calc</td><td>$picture->file</td></tr>";
+            flush();
+          }
         }
       }
     }
@@ -76,21 +82,7 @@ class PicturesController extends FicheController {
         echo "<tr><td>" . $i++ . "</td><td>no-db-record</td><td>{$file}</td></tr>";
         flush();
       }
-    }
-    echo "<tr><td></td></tr>";
-
-    echo "<tr style='background-color: lightgray;'><td colspan='100'>Orthodoxie</td></tr>";
-    flush();
-    foreach(Picture::all() as $picture) {
-      $stored = $picture->file;
-      $calc = $picture->calculateTargetName("", pathinfo($stored)['extension']);
-
-      if ($calc != $stored) {
-        echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>$calc</td><td>$stored</td></tr>";
-        flush();
-      }
-    }
-    
+    }   
     echo "</table>";
     flush();
     return "ok";
