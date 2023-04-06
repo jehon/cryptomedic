@@ -14,8 +14,6 @@ chmod -R a+rwX "live/storage"
 chmod -R a+rwX "live/storage/uploadedPictures"
 
 cr-ensure-folder-empty "www/api/bootstrap/cache/"
-cr-ensure-folder-empty "www/api/bootstrap/sessions/"
-cr-ensure-folder-empty "www/api/bootstrap/views/"
 cr-ensure-folder-empty "www/api/storage/framework/cache"
 cr-ensure-folder-empty "www/api/storage/framework/cache/data"
 cr-ensure-folder-empty "www/api/storage/framework/sessions"
