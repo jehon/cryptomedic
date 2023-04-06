@@ -1,6 +1,7 @@
 # Generic filters
 - *.sh
 - *.log
+P *.log
 - bin
 - tests
 - test
@@ -9,39 +10,30 @@
 - Tmp
 - Temp
 
-# Required root files
+# Specific go/no-go
 + /.ovhconfig
 + /favicon.*
-+ /licenses*
 + /config.php
-+ /index.html
-+ /deploy-filter
-
-# Required config is only databases prod files
+P /config-site.php
 + /conf
 + /conf/database
 + /conf/database/versions
 + /conf/database/always
 - /conf/database/*
 - /conf/*
-
-- /www/api/storage
-
-# Is a cache
-- /www/api/bootstrap/cache
-
-# Not very usefull
-- /www/api/tests
-- /www/api/vendor/bin
-+ /www
-
-# Protect: server-side files
-P *.log
-P /config-site.php
++ /deploy-filter
++ /index.html
++ /licenses*
 - /live
 P /live
 - /tmp
 P /tmp
-P /www/api/*/storage
+- /www/api/bootstrap/cache
+- /www/api/storage
+P /www/api/storage
+- /www/api/tests
+- /www/api/vendor/bin
++ /www
 
+# Not the rest
 - /*
