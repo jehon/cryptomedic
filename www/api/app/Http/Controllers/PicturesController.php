@@ -64,9 +64,14 @@ class PicturesController extends FicheController {
           echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td></td>No-file-on-filesystem<td></tr>";
           flush();
         } else {
-          $calc = $picture->calculateTargetName("", pathinfo($picture->file)['extension']);
-          if ($calc != $picture->file) {
-            echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>$calc</td><td>$picture->file</td></tr>";
+          if (property_exists('extension', pathinfo($picture->file))) {
+            $calc = $picture->calculateTargetName("", pathinfo($picture->file)['extension']);
+            if ($calc != $picture->file) {
+              echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>$picture->file</td><td>$calc</td></tr>";
+              flush();
+            }
+          } else {
+            echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>$picture->file</td><td>no-extension</td></tr>";
             flush();
           }
         }
