@@ -52,39 +52,47 @@ class PicturesController extends FicheController {
     $i = 0;
     $res = [];
     echo "<table style='width: 100%;'>";
-    echo "<tr style='background-color: lightgray;'><td colspan='100'>Check database records</td></tr>\n";
+    echo "<tr style='background-color: lightgray;'><td colspan='100'>From database</td></tr>\n";
+    flush();
     foreach(Picture::all() as $picture) {
       if ($picture->file == null) {
-        echo "<tr><td>" . $i++ . "</td><td>" . $picture->id . "</td><td>null</td></tr>";
+        echo "<tr><td>" . $i++ . "</td><td>" . $picture->id . "</td><td>no-file-in-database</td></tr>";
+        flush();
       } else {
         $file = $picture->getPhysicalPath($picture->file);
         if (!file_exists($file)) {
-          echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td></tr>";
+          echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td></td>No-file-on-filesystem<td></tr>";
+          flush();
         }
       }
     }
     echo "<tr><td></td></tr>";
 
-    echo "<tr style='background-color: lightgray;'><td colspan='100'>Check files present</td></tr>";
+    echo "<tr style='background-color: lightgray;'><td colspan='100'>From filesystem</td></tr>";
+    flush();
     foreach(myglob(Picture::getPhysicalRoot() . "/*") as $file) {
       $file = substr($file, strlen(Picture::getPhysicalRoot()));
       if (!Picture::getPictureCountByPhysicalPath($file)) {
-        echo "<tr><td>" . $i++ . "</td><td></td><td>{$file}</td></tr>";
+        echo "<tr><td>" . $i++ . "</td><td>no-db-record</td><td>{$file}</td></tr>";
+        flush();
       }
     }
     echo "<tr><td></td></tr>";
 
-    echo "<tr style='background-color: lightgray;'><td colspan='100'>Check files are in correct location</td></tr>";
+    echo "<tr style='background-color: lightgray;'><td colspan='100'>Orthodoxie</td></tr>";
+    flush();
     foreach(Picture::all() as $picture) {
       $stored = $picture->file;
       $calc = $picture->calculateTargetName("", pathinfo($stored)['extension']);
 
       if ($calc != $stored) {
         echo "<tr><td>" . $i++ . "</td><td>{$picture->id}</td><td>$calc</td><td>$stored</td></tr>";
+        flush();
       }
     }
     
     echo "</table>";
+    flush();
     return "ok";
   }
 
