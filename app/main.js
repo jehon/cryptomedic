@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 // Styles
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap4/dist/css/bootstrap.min.css";
 import "./css/application.css";
 
 // Elements present on the index.html:
