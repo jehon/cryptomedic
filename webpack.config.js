@@ -50,17 +50,6 @@ module.exports = {
         test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
         type: "asset"
       }
-      // {
-      //     test: /\.js$/,
-      //     exclude: /node_modules/,
-      //     loader: 'babel-loader',
-      //     options: {
-      //         presets: [
-      //             ['@babel/preset-env']
-      //         ],
-      //         plugins: []
-      //     }
-      // }
     ]
   },
   optimization: {
