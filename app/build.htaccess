@@ -1,5 +1,6 @@
+<ifModule mod_expires.c>
+    ExpiresActive On
 
-ExpiresActive On
-
-ExpiresByType     application/json              "access plus 1 year"
-ExpiresByType     text/javascript				"access plus 1 year"
+    ExpiresByType     application/json              "access plus 1 year"
+    ExpiresByType     text/javascript				"access plus 1 year"
+</ifModule>

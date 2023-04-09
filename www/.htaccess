@@ -1,6 +1,4 @@
 
-ExpiresActive 	  On
-
 AddType text/css .css
 AddType text/javascript .js
 AddType image/gif .gif
@@ -8,10 +6,14 @@ AddType image/png .png
 AddType image/jpg .jpg
 AddType image/jpg .jpeg
 
-ExpiresByType 	  text/html                     "A0"
-ExpiresByType     application/json              "A0"
-ExpiresByType     text/javascript				"A0"
+<ifModule mod_expires.c>
+    ExpiresActive 	  On
 
-ExpiresByType	  text/css						"access plus 1 week"
+    ExpiresByType 	  text/html                     "A0"
+    ExpiresByType     application/json              "A0"
+    ExpiresByType     text/javascript				"A0"
 
-ExpiresDefault    "access plus 1 year"
+    ExpiresByType	  text/css						"access plus 1 week"
+
+    ExpiresDefault    "access plus 1 year"
+</ifModule>
