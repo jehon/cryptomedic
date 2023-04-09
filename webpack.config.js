@@ -26,17 +26,20 @@ if (isDebug) {
 
 module.exports = {
   mode: isDebug ? "development" : "production",
-  entry: path.join(__dirname, "/app/main.js"),
+  entry: {
+    ng1x: path.join(__dirname, "/app/main.js")
+  },
   output: {
     path: builtRoot,
     filename: "[name]-[fullhash].js"
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "app/index-template.html"),
-      filename: path.join(builtRoot, "index.html"),
+      template: path.join(__dirname, "app/index.html"),
+      filename: path.join(builtRoot, "ng1x.html"),
       inject: "head",
-      xhtml: true
+      xhtml: true,
+      chunks: ["ng1x"]
     })
   ],
   module: {
