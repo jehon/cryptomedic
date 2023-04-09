@@ -12,10 +12,6 @@ const builtRoot = path.join(__dirname, "/www/built");
 
 fse.emptyDirSync(builtRoot);
 fs.writeFileSync(path.join(builtRoot, "release_version.txt"), released_version);
-fs.writeFileSync(
-  path.join(builtRoot, "release_version.js"),
-  `window.application_version = '${released_version}';`
-);
 fse.copy(
   path.join(__dirname, "app/build.htaccess"),
   path.join(builtRoot, ".htaccess")
