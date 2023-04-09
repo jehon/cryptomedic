@@ -1,12 +1,12 @@
 import XUserStatus from "../../app/widgets/x-user-status.js";
 
-import { webDescribe, fireOn } from "./athelpers.js";
+import { webDescribe, fireOn, fn } from "./athelpers.js";
 import { mockResponseWithSuccess } from "./x-requestor-test.js";
 import { setSession } from "../../app/js/session.js";
 
 // TODO: use constructor instead of webDescribe
 
-describe("tests/unit/x-user-status-test.js", function () {
+describe(fn(import.meta.url), function () {
   const testLoggedIn = function (element, username) {
     expect(element().hasAttribute("requesting")).toBeFalsy();
     expect(element().querySelector("#logout").offsetHeight).toBeGreaterThan(0);
