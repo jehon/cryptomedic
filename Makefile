@@ -64,7 +64,7 @@ define recursive-dependencies
 		if [ -r "$(2)" ]; then \
 			find "$(1)" -name tests_data -prune -o -name tmp -prune -o -type f -newer "$(2)"; \
 		else \
-			echo "$(1)";\
+			find "$(1)" -name tests_data -prune -o -name tmp -prune -o -type f;\
 		fi \
 	)
 endef
@@ -301,7 +301,7 @@ package-lock.json: package.json
 .PHONY: build
 build: $(TMP)/.built
 $(TMP)/.built: \
-		www/built/index.html \
+		www/built/.webpack \
 		www/built/browsers.json \
 		.ovhconfig
 
@@ -316,14 +316,16 @@ build-on-change:
 
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild
 # due to the recursive-dependencies
-www/built/index.html: $(TMP)/.dependencies-node webpack.config.js  \
+www/built/.webpack: $(TMP)/.dependencies-node webpack.config.js  \
 		package.json package-lock.json \
-		$(call recursive-dependencies,app/,www/built/index.html) \
+		$(call recursive-dependencies,app/,$@) \
+		$(call recursive-dependencies,src/,$@) \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
 	bin/cr-node node_modules/.bin/webpack
+	touch "$@"
 
 www/built/browsers.json: .browserslistrc $(TMP)/.dependencies-node
 	bin/cr-node node_modules/.bin/browserslist --json > "$@"
