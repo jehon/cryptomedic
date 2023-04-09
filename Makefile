@@ -308,6 +308,9 @@ $(TMP)/.built: \
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
+build-on-change:
+	find src/ app/ | entr -a -c -c -d -n make build
+
 .ovhconfig: conf/ovhconfig .env
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
 
