@@ -9,9 +9,18 @@ body > #footer {
   display: flex;
   flex-grow: 0;
 
+  width: 100%;
+  margin-top: 20px;
   padding: 10px;
 
   background-color: gray;
   color: white;
+}
+
+body > #footer a {
   text-decoration: none;
+}
+
+body > #footer a:visited {
+  color: white;
 }
