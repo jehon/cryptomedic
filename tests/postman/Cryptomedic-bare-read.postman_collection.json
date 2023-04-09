@@ -77,7 +77,7 @@
           },
           {
             "key": "Referer",
-            "value": "http://localhost:5555/built/index.html"
+            "value": "http://localhost:5555/built/ng1x.html"
           },
           {
             "key": "Cookie",

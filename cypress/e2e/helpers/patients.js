@@ -11,9 +11,9 @@ import { guiHashStartWith } from "./gui.js";
  */
 export function patientgo(patient) {
   if (patient.id) {
-    cy.visit(`/built/index.html#/folder/${patient.id}`);
+    cy.visit(`/built/ng1x.html#/folder/${patient.id}`);
   } else {
-    cy.visit("/built/");
+    cy.visit("/built/ng1x.html");
 
     cy.get("#menu_home").click();
 

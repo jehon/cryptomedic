@@ -39,7 +39,7 @@ export function crReady() {
 export function crLoginInBackground(username = null, password = null) {
   cy.visit("/");
   const realUser = crApiLogin(username, password);
-  cy.visit("/built/");
+  cy.visit("/built/ng1x.html");
   cy.get("x-user-status #user").should("have.text", realUser);
   guiHashStartWith("/home");
 
@@ -54,7 +54,7 @@ export function crLoginInBackground(username = null, password = null) {
  * @param {string} route
  */
 export function crGo(route) {
-  cy.visit(`/built/#${route}`);
+  cy.visit(`/built/ng1x.html#${route}`);
   crReady();
   cy.log(`Done crGo: ${route}`);
 }
@@ -89,14 +89,12 @@ export function crFormFillIn(subject, fields) {
         } else if (f.substring(0, 6) == "select") {
           //         this.mySelect(fsel, fields[f]);
         } else {
-          cy.get(f)
-            .clear()
-            .type(fields[f])
-            .then((el) => {
-              el.value = fields[f];
-              // JHElement.fireOn(el, 'change');
-              // JHElement.fireOn(el, 'blur');
-            });
+          cy.get(f).clear();
+          cy.get(f).type(fields[f]);
+          cy.get(f).invoke("property", "value", fields[f]);
+          // .then((el) => {
+          //   el.value = fields[f];
+          // });
         }
 
         // client.Keys.TAB

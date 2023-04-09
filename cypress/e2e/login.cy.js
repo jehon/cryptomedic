@@ -6,7 +6,7 @@ import { guiHashStartWith } from "./helpers/gui.js";
 
 context("Actions", () => {
   it("login", () => {
-    cy.visit("/built/");
+    cy.visit("/built/ng1x.html");
     guiHashStartWith("/login");
     crPage().within(() => {
       cy.get("x-page-login").should("be.visible");

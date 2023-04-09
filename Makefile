@@ -103,6 +103,7 @@ clean: stop deploy-unmount
 
 	rm -f .ovhconfig
 	rm -fr live/
+	rm -f www/index.html
 	rm -fr www/built
 	rm -fr app/cjs2esm
 	rm -fr www/api/*/bootstrap/cache
