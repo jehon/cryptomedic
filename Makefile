@@ -150,7 +150,7 @@ lint: lint-es lint-css lint-html
 
 .PHONY: lint-es
 lint-es: $(TMP)/.dependencies-node
-	node node_modules/.bin/eslint
+	node node_modules/.bin/eslint .
 
 .PHONY: lint-css
 lint-css: $(TMP)/.dependencies-node

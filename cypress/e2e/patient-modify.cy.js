@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import {
   patientCrudCreateReference,
   patientCrudGenerateReference,
@@ -123,7 +121,8 @@ context("Actions", () => {
       cy.get("#Patient_Name").should("have.value", "crud patient");
 
       cy.get("[name=Pathology]").invoke("attr", "value", "ClubFoot");
-      cy.get("#Patient_Name").clear().type("rezaul");
+      cy.get("#Patient_Name").clear();
+      cy.get("#Patient_Name").type("rezaul");
 
       cy.get("#topsubmenu #patient_cancel").click();
       cy.get("#Patient_Name").should("contain.text", "crud patient");
@@ -137,7 +136,8 @@ context("Actions", () => {
       cy.get("#topsubmenu #patient_edit").click();
       cy.get("input#Patient_Name").should("be.visible");
       cy.get("#Patient_Name").should("have.value", "crud patient");
-      cy.get("#Patient_Name").clear().type("rezaul");
+      cy.get("#Patient_Name").clear();
+      cy.get("#Patient_Name").type("rezaul");
 
       cy.get("#topsubmenu #patient_save").click();
       crReady();

@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import {
   crApiFicheDelete,
   crApiFolderGet,
@@ -68,7 +66,8 @@ context("Actions", () => {
       "ricket_consult",
       () => {
         cy.get("#Date").invoke("attr", "value", "2003-01-01");
-        cy.get("#Weightkg").clear().type("13");
+        cy.get("#Weightkg").clear();
+        cy.get("#Weightkg").type("13");
       },
       () => {
         cy.get("#Date").should("contain.text", "2003-01-01");
@@ -82,7 +81,8 @@ context("Actions", () => {
       "other_consult",
       () => {
         cy.get("#Date").invoke("attr", "value", "2003-01-01");
-        cy.get("#Weightkg").clear().type("13");
+        cy.get("#Weightkg").clear();
+        cy.get("#Weightkg").type("13");
       },
       () => {
         cy.get("#Date").should("contain.text", "2003-01-01");
@@ -96,7 +96,8 @@ context("Actions", () => {
       "clubfoot",
       () => {
         cy.get("#Date").invoke("attr", "value", "2003-01-01");
-        cy.get("#Weightkg").clear().type("13");
+        cy.get("#Weightkg").clear();
+        cy.get("#Weightkg").type("13");
       },
       () => {
         cy.get("#Date").should("contain.text", "2003-01-01");
@@ -110,7 +111,8 @@ context("Actions", () => {
       "surgery",
       () => {
         cy.get("#Surgery_Date").invoke("attr", "value", "2003-01-01");
-        cy.get("#Surgery_ReportDiagnostic").clear().type("diagnostique");
+        cy.get("#Surgery_ReportDiagnostic").clear();
+        cy.get("#Surgery_ReportDiagnostic").type("diagnostique");
       },
       () => {
         cy.get("#Surgery_Date").should("contain.text", "2003-01-01");

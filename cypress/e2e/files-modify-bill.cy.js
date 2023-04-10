@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import {
   crApiFicheDelete,
   crApiFolderGet,
@@ -31,7 +29,8 @@ context("Actions", () => {
       .should("be.visible")
       .invoke("attr", "value", val)
       .within(() => {
-        cy.get("input").focus().blur();
+        cy.get("input").focus();
+        cy.get("input").blur();
       });
   }
 
@@ -55,10 +54,14 @@ context("Actions", () => {
     cy.get("#errorNoDate").should("not.exist");
     cy.get("#errorDateFuture").should("not.exist");
 
-    cy.get("#Bill_consult_home_visit").clear().type("1");
+    cy.get("#Bill_consult_home_visit").clear();
+    cy.get("#Bill_consult_home_visit").type("1");
+
     cy.get("#total_calculated_raw").should("contain.text", 150);
 
-    cy.get("#Bill_other_Other_consultation_care").clear().type("15");
+    cy.get("#Bill_other_Other_consultation_care").clear();
+    cy.get("#Bill_other_Other_consultation_care").type("15");
+
     cy.get("#total_calculated_raw").should("contain.text", 165);
 
     // Let's play with SocialLevel
@@ -75,8 +78,11 @@ context("Actions", () => {
     cy.get('[title="Social Data"]')
       .should("be.visible")
       .within(() => {
-        cy.get("#Bill_sl_familySalary").clear().type("3000");
-        cy.get("#Bill_sl_numberOfHouseholdMembers").clear().type("3");
+        cy.get("#Bill_sl_familySalary").clear();
+        cy.get("#Bill_sl_familySalary").type("3000");
+
+        cy.get("#Bill_sl_numberOfHouseholdMembers").clear();
+        cy.get("#Bill_sl_numberOfHouseholdMembers").type("3");
 
         cy.get("x-fff-salary-ratio").should("contain.text", "1000");
         cy.get("#social_level_calculated").should("contain.text", 2);

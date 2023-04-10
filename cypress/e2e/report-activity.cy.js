@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import flavorFilter from "./helpers/filter-tests.js";
 import { goReport } from "./helpers/report.js";
 
@@ -14,7 +12,8 @@ flavorFilter(flavorFilter.DESKTOP, () =>
             "value",
             "month"
           );
-          cy.get('input[name="month"]').clear().type("2014-05");
+          cy.get('input[name="month"]').clear();
+          cy.get('input[name="month"]').type("2014-05");
         },
         (tableIterator) =>
           tableIterator

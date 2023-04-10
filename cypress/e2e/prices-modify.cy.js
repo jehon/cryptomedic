@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import XButton from "../../app/widgets/style/x-button.js";
 import {
   crApiLogin,
@@ -93,24 +91,22 @@ flavorFilter(flavorFilter.DESKTOP, () =>
       cy.get("#button_create").should("be.visible").click();
       cy.get("#button_create").should("be.visible");
 
-      cy.get("x-overlay.pivot")
-        .should("be.visible")
-        .within(() => {
-          // with an invalic date, it fail
-          cy.get("[name=pivot]")
-            .should("be.visible")
-            .invoke("attr", "value", "2010-01-02");
-          cy.get(`x-button[action='${XButton.Save}']`).click();
-          cy.get("x-form").should("be.visible");
-          cy.get("x-form")
-            .shadow()
-            .find("x-messages x-message#custom-validation")
-            .should("be.visible");
+      cy.get("x-overlay.pivot").should("be.visible");
+      cy.get("x-overlay.pivot").within(() => {
+        // with an invalic date, it fail
+        cy.get("[name=pivot]").should("be.visible");
+        cy.get("[name=pivot]").invoke("attr", "value", "2010-01-02");
+        cy.get(`x-button[action='${XButton.Save}']`).click();
+        cy.get("x-form").should("be.visible");
+        cy.get("x-form")
+          .shadow()
+          .find("x-messages x-message#custom-validation")
+          .should("be.visible");
 
-          cy.get("[name=pivot]").invoke("attr", "value", "2130-01-01");
-          cy.get(`x-button[action='${XButton.Save}']`).click();
-        })
-        .should("not.exist");
+        cy.get("[name=pivot]").invoke("attr", "value", "2130-01-01");
+        cy.get(`x-button[action='${XButton.Save}']`).click();
+      });
+      cy.get("x-overlay.pivot").should("not.exist");
 
       // Creation ok
       cy.get("#button_create").should("not.to.be.visible");

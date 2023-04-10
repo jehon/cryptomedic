@@ -15,6 +15,7 @@ export default function createCallback(symbol = Symbol()) {
        * Set the value and trigger callbacks
        *
        * @param {any} data - the stored data
+       * @returns {void} nothing
        */
       (data) => duix.set(symbol, data),
     get:

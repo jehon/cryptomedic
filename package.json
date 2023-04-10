@@ -81,7 +81,7 @@
   "lint-staged": {
     "*.{js,jsx}": [
       "eslint",
-      " prettier --list-different"
+      "prettier --list-different"
     ],
     "*.css": [
       "stylelint",
