@@ -91,10 +91,9 @@ export function crFormFillIn(subject, fields) {
         } else {
           cy.get(f).clear();
           cy.get(f).type(fields[f]);
-          cy.get(f).invoke("property", "value", fields[f]);
-          // .then((el) => {
-          //   el.value = fields[f];
-          // });
+          cy.get(f).then((el) => {
+            el.value = fields[f];
+          });
         }
 
         // client.Keys.TAB
