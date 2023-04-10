@@ -1,12 +1,12 @@
 /// <reference types="Cypress" />
 
 import { crApiLogin } from "./helpers/cr-api.js";
-import { crLoginInBackground, crPage } from "./helpers/cr.js";
+import { crGo, crLoginInBackground, crPage } from "./helpers/cr.js";
 import { guiHashStartWith } from "./helpers/gui.js";
 
 context("Actions", () => {
   it("login", () => {
-    cy.visit("/built/ng1x.html");
+    crGo();
     guiHashStartWith("/login");
     crPage().within(() => {
       cy.get("x-page-login").should("be.visible");

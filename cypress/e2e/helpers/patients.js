@@ -1,5 +1,5 @@
 import XButton from "../../../app/widgets/style/x-button.js";
-import { crPage, crReady } from "./cr.js";
+import { crGo, crPage, crReady } from "./cr.js";
 import { guiHashStartWith } from "./gui.js";
 
 /**
@@ -11,9 +11,9 @@ import { guiHashStartWith } from "./gui.js";
  */
 export function patientgo(patient) {
   if (patient.id) {
-    cy.visit(`/built/ng1x.html#/folder/${patient.id}`);
+    crGo(`/folder/${patient.id}`);
   } else {
-    cy.visit("/built/ng1x.html");
+    crGo();
 
     cy.get("#menu_home").click();
 

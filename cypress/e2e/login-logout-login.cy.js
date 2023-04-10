@@ -1,11 +1,11 @@
 /// <reference types="Cypress" />
 
-import { crPage } from "./helpers/cr.js";
+import { crGo, crPage } from "./helpers/cr.js";
 import { guiHashStartWith } from "./helpers/gui.js";
 
 context("Actions", () => {
   it("login - logout - login", () => {
-    cy.visit("/built/ng1x.html");
+    crGo();
     guiHashStartWith("/login");
 
     crPage().within(() => {
