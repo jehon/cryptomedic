@@ -60,7 +60,7 @@ header_begin "Cypress run tests (${CYPRESS_ARGS[*]}) ($*)"
 #
 docker compose run --rm --quiet-pull \
     --volume "$(pwd):/workdir" \
-    --workdir /workdir \
+    --workdir /workdir/tests \
     --user "$(id -u)" --env HOME=/root \
     cypress \
     cypress run "${CYPRESS_ARGS[@]}" "$@"

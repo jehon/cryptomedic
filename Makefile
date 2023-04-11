@@ -189,7 +189,7 @@ test-e2e: test-e2e-desktop test-e2e-mobile
 
 .PHONY: test-e2e-desktop
 test-e2e-desktop: $(TMP)/.tested-e2e-desktop
-$(TMP)/.tested-e2e-desktop: $(TMP)/.built $(TMP)/.dependencies $(shell find cypress/ -name "*.js")
+$(TMP)/.tested-e2e-desktop: $(TMP)/.built $(TMP)/.dependencies $(shell find tests/cypress/ -name "*.js")
 	bin/cr-data-reset
 	bin/cr-cypress "desktop"
 
@@ -198,7 +198,7 @@ $(TMP)/.tested-e2e-desktop: $(TMP)/.built $(TMP)/.dependencies $(shell find cypr
 
 .PHONY: test-e2e-mobile
 test-e2e-mobile: $(TMP)/.tested-e2e-mobile
-$(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find cypress/ -name "*.js")
+$(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find tests/cypress/ -name "*.js")
 	bin/cr-data-reset
 	bin/cr-cypress "mobile"
 
