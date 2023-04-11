@@ -8,7 +8,7 @@ set -o pipefail
 
 docker compose run --rm --quiet-pull \
     --volume "$(pwd):/workdir" \
-    --workdir /workdir \
+    --workdir /workdir/tests \
     --user "$(id -u)" \
     -e DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \

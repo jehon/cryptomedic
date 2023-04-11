@@ -1,6 +1,4 @@
-/// <reference types="Cypress" />
-
-import XButton from "../../app/widgets/style/x-button.js";
+import XButton from "../../../app/widgets/style/x-button.js";
 import { crApiUserDelete, crApiLogin, crApiLogout } from "./helpers/cr-api.js";
 import { crGo, crLoginInBackground } from "./helpers/cr.js";
 import flavorFilter from "./helpers/filter-tests.js";

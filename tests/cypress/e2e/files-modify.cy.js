@@ -3,12 +3,17 @@ import {
   crApiFolderGet,
   crApiLogin
 } from "./helpers/cr-api.js";
-import { crLoginInBackground, crPage, crReady } from "./helpers/cr.js";
+import {
+  crFormFillIn,
+  crLoginInBackground,
+  crPage,
+  crReady
+} from "./helpers/cr.js";
 import { patientFilesCrud } from "./helpers/e2e-entrynumber-assigned.js";
 import { guiAcceptAlert, guiHashStartWith } from "./helpers/gui.js";
 import { patientgo } from "./helpers/patients.js";
 
-function checkFileAdd(type, inputCb, checkCb) {
+function checkFileAdd(type, inputData, checkCb) {
   crPage().within(() => {
     cy.get("#button_add").should("be.visible").click();
 
@@ -16,9 +21,9 @@ function checkFileAdd(type, inputCb, checkCb) {
 
     crReady();
 
-    cy.get("form#fileForm")
-      .should("be.visible")
-      .within(() => inputCb());
+    cy.get("form#fileForm").should("be.visible");
+
+    crFormFillIn("form#fileForm", inputData);
 
     cy.crCompareSnapshot(type + "-1-edit");
     cy.get("#topsubmenu #button_save").should("be.visible").click();
@@ -64,10 +69,9 @@ context("Actions", () => {
   it("should add a ricket_consult", () => {
     checkFileAdd(
       "ricket_consult",
-      () => {
-        cy.get("#Date").invoke("attr", "value", "2003-01-01");
-        cy.get("#Weightkg").clear();
-        cy.get("#Weightkg").type("13");
+      {
+        "#Date input": "2003-01-01",
+        "#Weightkg": "13"
       },
       () => {
         cy.get("#Date").should("contain.text", "2003-01-01");
@@ -79,10 +83,9 @@ context("Actions", () => {
   it("should add an other_consult", () => {
     checkFileAdd(
       "other_consult",
-      () => {
-        cy.get("#Date").invoke("attr", "value", "2003-01-01");
-        cy.get("#Weightkg").clear();
-        cy.get("#Weightkg").type("13");
+      {
+        "#Date input": "2003-01-01",
+        "#Weightkg": "13"
       },
       () => {
         cy.get("#Date").should("contain.text", "2003-01-01");
@@ -94,10 +97,9 @@ context("Actions", () => {
   it("should add a clubfoot", () => {
     checkFileAdd(
       "clubfoot",
-      () => {
-        cy.get("#Date").invoke("attr", "value", "2003-01-01");
-        cy.get("#Weightkg").clear();
-        cy.get("#Weightkg").type("13");
+      {
+        "#Date input": "2003-01-01",
+        "#Weightkg": "13"
       },
       () => {
         cy.get("#Date").should("contain.text", "2003-01-01");
@@ -109,10 +111,9 @@ context("Actions", () => {
   it("should add a surgery", () => {
     checkFileAdd(
       "surgery",
-      () => {
-        cy.get("#Surgery_Date").invoke("attr", "value", "2003-01-01");
-        cy.get("#Surgery_ReportDiagnostic").clear();
-        cy.get("#Surgery_ReportDiagnostic").type("diagnostique");
+      {
+        "#Surgery_Date input": "2003-01-01",
+        "#Surgery_ReportDiagnostic": "diagnostique"
       },
       () => {
         cy.get("#Surgery_Date").should("contain.text", "2003-01-01");
@@ -144,13 +145,9 @@ context("Actions", () => {
   it("should add an appointment", () => {
     checkFileAdd(
       "appointment",
-      () => {
-        cy.get("#Appointment_Nextappointment").invoke(
-          "attr",
-          "value",
-          "2100-01-01"
-        );
-        cy.get("[name=NextCenter]").invoke("attr", "value", "Ramu");
+      {
+        "#Appointment_Nextappointment input": "2100-01-01",
+        "[name=NextCenter]": "Ramu"
       },
       () => {
         cy.get("#Appointment_Nextappointment").should(

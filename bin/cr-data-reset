@@ -50,6 +50,8 @@ cr-mysql --database=mysql -e " \
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 header_end
 
+cr-mysql-wait
+
 header_begin "cr-data-reset - Mysql - restoring base.sql"
 cr-mysql --database=cryptomedic < "conf/database/base.sql"
 header_end

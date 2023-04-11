@@ -95,11 +95,7 @@ export function crFormFillIn(subject, fields) {
             el.value = fields[f];
           });
         }
-
-        // client.Keys.TAB
         // cy.get('@element').tab(); cypress-plugin-tab
-
-        // Loose focus on element
         // this.execute(function (fsel) { document.querySelector(fsel).blur(); }, [fsel]);
       }
     });
