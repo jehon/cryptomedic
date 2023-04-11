@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 /**
  * Make an api call
  *

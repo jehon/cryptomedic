@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 const activeConfig = Cypress.env("flavor");
 
 /**
