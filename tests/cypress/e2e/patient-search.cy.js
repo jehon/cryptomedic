@@ -1,6 +1,4 @@
-/// <reference types="Cypress" />
-
-import XButton from "../../app/widgets/style/x-button.js";
+import XButton from "../../../app/widgets/style/x-button.js";
 import { crApiLogin } from "./helpers/cr-api.js";
 import { crFormFillIn, crLoginInBackground } from "./helpers/cr.js";
 
