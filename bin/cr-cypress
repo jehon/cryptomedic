@@ -14,6 +14,8 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
+CYPRESS_ARGS=()
+
 if [[ -z "$1" ]]; then
     echo "Need flavor as [1]" >&2
     exit 255
@@ -27,7 +29,7 @@ OUTPUT=tmp/e2e/"$FLAVOR"
 
 header_begin "Setup $OUTPUT"
 
-CYPRESS_ARGS=("--env" "flavor=$FLAVOR")
+CYPRESS_ARGS+=("--env" "flavor=$FLAVOR")
 case "$FLAVOR" in
 "desktop")
     # Nothing to do - default flavor - use the config preset's
