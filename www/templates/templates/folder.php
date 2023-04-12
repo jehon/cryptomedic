@@ -1,4 +1,4 @@
-<x-folder-page>
+<x-page-folder>
   <?php
   t::setDefaultOption("baseExpression", "getCurrentFile().");
 
@@ -123,4 +123,4 @@
       </div>
     </div>
   </div>
-</x-folder-page>
+</x-page-folder>
