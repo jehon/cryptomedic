@@ -27,7 +27,6 @@ export function crReady() {
           // expect(img.naturalWidth, "loaded: ").to.be.greaterThan(0)
         );
     });
-  cy.log("Done: crReady");
 }
 
 /**
