@@ -4,13 +4,17 @@
  * @param {object} options
  * @property {string} url of the call (relative to version if relative)
  * @property {string?} method of the call
+ * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
+ *
  * @see https://docs.cypress.io/api/commands/request
  */
 export function crApi(options = {}) {
-  return cy.request({
-    ...options,
-    url: options.url[0] == "/" ? options.url : `/api/${options.url}`
-  });
+  return cy
+    .request({
+      ...options,
+      url: options.url[0] == "/" ? options.url : `/api/${options.url}`
+    })
+    .then((response) => response.body);
 }
 
 /**
@@ -27,7 +31,6 @@ export function crApiLogin(username = null, password = null) {
   const realUser = username ?? "murshed";
   const realPassword = password ?? "p";
 
-  cy.log(`Doing crApiLogin: ${realUser} / ${realPassword}`);
   crApi({
     url: "auth/mylogin",
     method: "POST",
@@ -37,7 +40,6 @@ export function crApiLogin(username = null, password = null) {
     }
   });
 
-  cy.log(`Done crApiLogin: ${realUser}`);
   return realUser;
 }
 crApiLogin.PHYSIO = "murshed";
@@ -47,25 +49,23 @@ crApiLogin.ADMIN = "jehon";
 /**
  * Logout using api
  *
- * Note that logout is automatically done through login.
+ *   Note that logout is automatically done through login.
+ *
+ * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
 export function crApiLogout() {
-  crApi({
+  return crApi({
     url: "auth/logout"
   });
-  cy.log("Done crApiLogout");
 }
 
 /**
  * Get the price list
  *
- * @returns {Cypress.Chainable<*>} Promise to price list
+ * @returns {Cypress.Chainable<*>} Cypress chain to price list
  */
 export function crApiFolderGet(id) {
-  cy.log("Doing crApiFolderGet");
-  return crApi({ url: `folder/Patient/${id}` })
-    .then((response) => response.body)
-    .then((data) => cy.log("Done crApiFolderGet: ", data).then(() => data));
+  return crApi({ url: `folder/Patient/${id}` });
 }
 
 /**
@@ -74,18 +74,17 @@ export function crApiFolderGet(id) {
  *
  * @param {number} entryyear  to be deleted
  * @param {number} entrynumber to be deleted
+ *
+ * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
 export function crApiPatientDelete(entryyear, entrynumber = 1000) {
-  // Delete previously create user
-  cy.log(`Doing crApiPatientDelete: ${entryyear} / ${entrynumber}`);
-  crApi({ url: `reference/${entryyear}/${entrynumber}` })
-    .then((response) => response.body)
-    .then((folder) => {
-      if (folder?.id > 0) {
-        return crApi({ url: `fiche/patients/${folder.id}`, method: "DELETE" });
-      }
-    });
-  cy.log(`Done crApiPatientDelete: ${entryyear} / ${entrynumber}`);
+  // Get the id:
+  return crApi({ url: `reference/${entryyear}/${entrynumber}` }).then(
+    (folder) =>
+      folder?.id > 0
+        ? crApi({ url: `fiche/patients/${folder.id}`, method: "DELETE" })
+        : true
+  );
 }
 
 /**
@@ -94,12 +93,11 @@ export function crApiPatientDelete(entryyear, entrynumber = 1000) {
  * @param {string} type to be updated
  * @param {number|string} id to be updated
  * @param {object} data to be set
+ *
+ * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
 export function crApiFicheModify(type, id, data) {
-  // Modify a file
-  cy.log(`Doing crApiFicheModify: ${type}#${id}`);
-  crApi({ url: `fiche/${type}/${id}`, method: "PUT", data });
-  cy.log(`Done crApiFicheModify: ${type}#${id}`);
+  return crApi({ url: `fiche/${type}/${id}`, method: "PUT", data });
 }
 
 /**
@@ -107,10 +105,11 @@ export function crApiFicheModify(type, id, data) {
  *
  * @param {string} type to be updated
  * @param {number} id to be updated
+ *
+ * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
 export function crApiFicheDelete(type, id) {
   // Modify a file
-  cy.log(`Doing crApiFicheDelete: ${type}#${id}`);
   const apiTypes = {
     Appointment: "appointments",
     Bill: "bills",
@@ -126,36 +125,41 @@ export function crApiFicheDelete(type, id) {
     throw new Error(`No mapping found for ${type}`);
   }
 
-  crApi({ url: `fiche/${apiTypes[type]}/${id}`, method: "DELETE" });
-  cy.log(`Done crApiFicheDelete: ${type}#${id}`);
+  return crApi({ url: `fiche/${apiTypes[type]}/${id}`, method: "DELETE" });
 }
 
 /**
  * Get the price list
  *
- * @returns {Cypress.Chainable<*>} Promise to price list
+ * @returns {Cypress.Chainable<*>} Cypress chain to the price list
  */
 export function crApiPriceList() {
-  cy.log("Doing crApiPriceList");
-  return crApi({ url: "admin/prices" })
-    .then((response) => response.body)
-    .then((data) => cy.log("Done crApiPriceList: ", data).then(() => data));
+  return crApi({ url: "admin/prices" });
 }
 
+/**
+ * Delete a price
+ *
+ * @param {string} id of the price to be deleted
+ *
+ * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
+ */
 export function crApiPriceDelete(id) {
-  cy.log(`Doing crApiPriceDelete: ${id}`);
-  crApi({ url: `admin/prices/${id}`, method: "DELETE" });
-  cy.log(`Done crApiPriceDelete: ${id}`);
+  return crApi({ url: `admin/prices/${id}`, method: "DELETE" });
 }
 
+/**
+ * Delete a user by username
+ *
+ * @param {string} username to be deleted
+ *
+ * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
+ */
 export function crApiUserDelete(username) {
-  crApi({ url: "users" })
-    .then((response) => response.body)
-    .then((data) =>
-      data
-        .filter((l) => l.username == username)
-        .map((l) => l.id)
-        .forEach((id) => crApi({ url: `users/${id}`, method: "DELETE" }))
-    );
-  cy.log(`Done crApiUserDelete: ${crApiUserDelete}`);
+  return crApi({ url: "users" }).then((data) =>
+    data
+      .filter((l) => l.username == username)
+      .map((l) => l.id)
+      .forEach((id) => crApi({ url: `users/${id}`, method: "DELETE" }))
+  );
 }

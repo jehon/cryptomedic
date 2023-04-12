@@ -31,6 +31,7 @@ function checkFileAdd(type, inputData, checkCb) {
     cy.get("#folder_files .folder_file:nth-child(1) x-button")
       .should("be.visible")
       .click();
+
     checkCb();
     cy.crCompareSnapshot(type + "-2-read");
 
@@ -38,7 +39,6 @@ function checkFileAdd(type, inputData, checkCb) {
     crReady();
 
     cy.get("form#fileForm").should("be.visible");
-
     cy.get("form#fileForm input").should("be.visible");
 
     cy.get("#topsubmenu #button_delete").should("be.visible").click();
