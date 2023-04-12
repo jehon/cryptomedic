@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import { crApiLogin } from "./cr-api.js";
 import { guiHashStartWith } from "./gui.js";
 
