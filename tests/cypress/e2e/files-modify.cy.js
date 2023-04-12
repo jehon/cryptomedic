@@ -57,11 +57,10 @@ context("Actions", () => {
   beforeEach(() => {
     crLoginInBackground(crApiLogin.PHYSIO);
 
-    crApiFolderGet(patientFilesCrud.id).then((data) => {
-      data.folder
-        .filter((r) => r.type != "Patient")
-        .map((r) => crApiFicheDelete(r.type, r.id));
-    });
+    crApiFolderGet(patientFilesCrud.id)
+      .then((data) => data.folder)
+      .then((files) => files.filter((r) => r.type != "Patient"))
+      .each((f) => crApiFicheDelete(f.type, f.id));
 
     patientgo(patientFilesCrud);
   });
