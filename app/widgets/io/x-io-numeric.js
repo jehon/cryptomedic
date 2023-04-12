@@ -11,13 +11,7 @@ import XIoString from "./x-io-string.js";
  */
 export default class XIoNumeric extends XIoString {
   static get transmissibleAttributesWithDefaultValues() {
-    return [
-      ...super.transmissibleAttributesWithDefaultValues,
-      "type",
-      "required",
-      "autofocus",
-      "placeholder"
-    ];
+    return super.transmissibleAttributesWithDefaultValues;
   }
 
   constructor() {
