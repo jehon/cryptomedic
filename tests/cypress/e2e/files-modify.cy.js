@@ -69,7 +69,7 @@ context("Actions", () => {
     checkFileAdd(
       "ricket_consult",
       {
-        "#Date input": "2003-01-01",
+        "#Date": { value: "2003-01-01" },
         "#Weightkg": "13"
       },
       () => {
@@ -83,7 +83,7 @@ context("Actions", () => {
     checkFileAdd(
       "other_consult",
       {
-        "#Date input": "2003-01-01",
+        "#Date": { value: "2003-01-01" },
         "#Weightkg": "13"
       },
       () => {
@@ -97,7 +97,7 @@ context("Actions", () => {
     checkFileAdd(
       "clubfoot",
       {
-        "#Date input": "2003-01-01",
+        "#Date": { value: "2003-01-01" },
         "#Weightkg": "13"
       },
       () => {
@@ -111,7 +111,7 @@ context("Actions", () => {
     checkFileAdd(
       "surgery",
       {
-        "#Surgery_Date input": "2003-01-01",
+        "#Surgery_Date": { value: "2003-01-01" },
         "#Surgery_ReportDiagnostic": "diagnostique"
       },
       () => {
@@ -145,8 +145,8 @@ context("Actions", () => {
     checkFileAdd(
       "appointment",
       {
-        "#Appointment_Nextappointment input": "2100-01-01",
-        "[name=NextCenter]": "Ramu"
+        "#Appointment_Nextappointment": { value: "2100-01-01" },
+        "[name=NextCenter]": { value: "Ramu" }
       },
       () => {
         cy.get("#Appointment_Nextappointment").should(
