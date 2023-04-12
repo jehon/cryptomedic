@@ -35,7 +35,7 @@ case "$FLAVOR" in
 "mobile")
     # Mobile: 360 x 480
     CYPRESS_ARGS+=(
-        --config "videosFolder=$OUTPUT/videos,screenshotsFolder=$OUTPUT/screenshots,viewportWidth=360,viewportHeight=640"
+        --config "videosFolder=../$OUTPUT/videos,screenshotsFolder=../$OUTPUT/screenshots,viewportWidth=360,viewportHeight=640"
     )
     ;;
 *)
