@@ -5,7 +5,6 @@
  * @property {string} url of the call (relative to version if relative)
  * @property {string?} method of the call
  * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
- *
  * @see https://docs.cypress.io/api/commands/request
  */
 export function crApi(options = {}) {
@@ -74,7 +73,6 @@ export function crApiFolderGet(id) {
  *
  * @param {number} entryyear  to be deleted
  * @param {number} entrynumber to be deleted
- *
  * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
 export function crApiPatientDelete(entryyear, entrynumber = 1000) {
@@ -93,7 +91,6 @@ export function crApiPatientDelete(entryyear, entrynumber = 1000) {
  * @param {string} type to be updated
  * @param {number|string} id to be updated
  * @param {object} data to be set
- *
  * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
 export function crApiFicheModify(type, id, data) {
@@ -105,7 +102,6 @@ export function crApiFicheModify(type, id, data) {
  *
  * @param {string} type to be updated
  * @param {number} id to be updated
- *
  * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
 export function crApiFicheDelete(type, id) {
@@ -141,7 +137,6 @@ export function crApiPriceList() {
  * Delete a price
  *
  * @param {string} id of the price to be deleted
- *
  * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
 export function crApiPriceDelete(id) {
@@ -152,7 +147,6 @@ export function crApiPriceDelete(id) {
  * Delete a user by username
  *
  * @param {string} username to be deleted
- *
  * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
 export function crApiUserDelete(username) {
