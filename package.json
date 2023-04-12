@@ -40,7 +40,7 @@
     "eslint-plugin-jsdoc": "40.1.2",
     "fs-extra": "latest",
     "geckodriver": "latest",
-    "glob": "9.3.4",
+    "glob": "9.3.5",
     "html-webpack-plugin": "5.5.0",
     "htmlhint": "1.1.4",
     "husky": "8.0.3",
