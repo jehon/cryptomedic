@@ -3,5 +3,12 @@
   "automerge": true,
   "major": {
     "automerge": false
-  }
+  },
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^bootstrap"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    }
+  ]
 }
