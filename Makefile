@@ -206,7 +206,7 @@ $(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find tests
 	@touch "$@"
 
 cypress-open:
-	./bin/cr-cypress-open
+	./bin/cr-cypress open desktop
 
 .PHONY: test-styles
 test-styles: $(TMP)/styles/styles-problems-list.json

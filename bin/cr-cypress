@@ -16,7 +16,12 @@ set -o pipefail
 
 CYPRESS_ARGS=()
 
-CYPRESS_ARGS+=( "run" )
+if [[ "$1" == "open" ]]; then
+    CYPRESS_ARGS+=( "open" "--project" "." "--e2e" "--browser=electron" )
+    shift
+else 
+    CYPRESS_ARGS+=( "run" )
+fi
 
 if [[ -z "$1" ]]; then
     echo "Need flavor as [1]" >&2
