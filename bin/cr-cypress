@@ -16,6 +16,8 @@ set -o pipefail
 
 CYPRESS_ARGS=()
 
+CYPRESS_ARGS+=( "run" )
+
 if [[ -z "$1" ]]; then
     echo "Need flavor as [1]" >&2
     exit 255
@@ -64,8 +66,11 @@ docker compose run --rm --quiet-pull \
     --volume "$(pwd):/workdir" \
     --workdir /workdir/tests \
     --user "$(id -u)" --env HOME=/root \
+    -e DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    --entrypoint "cypress" \
     cypress \
-    cypress run "${CYPRESS_ARGS[@]}" "$@"
+    "${CYPRESS_ARGS[@]}" "$@"
 
 # "$(npm root)"/.bin/cypress \
 #     run "${CYPRESS_ARGS[@]}" "$@"
