@@ -46,5 +46,7 @@ class Kernel extends HttpKernel
     protected $middlewareAliases = [
         'authenticated'   => \App\Http\Middleware\Authenticated::class,
         'hasPermission'   => \App\Http\Middleware\HasPermission::class,
+        'markHeader'      => \App\Http\Middleware\MarkHeader::class,
+        'stats'           => \App\Http\Middleware\Stats::class,
   ];
 }
