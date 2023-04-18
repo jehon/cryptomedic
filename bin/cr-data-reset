@@ -28,11 +28,11 @@ header_end
 # Reset database
 header_begin "cr-data-reset - Mysql - configuring"
 
-## The user may already exists
-## In mysql 7+, there is an "IF NOT EXISTS"
 echo "* Create user"
-cr-mysql --database=mysql -e "DROP USER 'mysql_cryptomedic_username'" 2>/dev/null || true
-cr-mysql --database=mysql -e "CREATE USER 'mysql_cryptomedic_username' IDENTIFIED BY 'password'; FLUSH PRIVILEGES;"
+cr-mysql --database=mysql -e "CREATE USER IF NOT EXISTS 'mysql_cryptomedic_username' IDENTIFIED BY 'password'"
+cr-mysql --database=mysql -e "FLUSH PRIVILEGES"
+
+cr-mysql-wait
 
 echo "* Create schema"
 cr-mysql --database=mysql -e " \
