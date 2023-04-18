@@ -30,9 +30,13 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
+        // Add some handlers from web: AddQueuedCookiesToResponse, StartSession, ShareErrorsFromSession
         'api' => [
-            'throttle:60,1',
-            'bindings',
+            // \Illuminate\Routing\Middleware\ThrottleRequests::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class
         ],
     ];
 
