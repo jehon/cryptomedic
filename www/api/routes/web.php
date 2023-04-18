@@ -22,10 +22,6 @@ Route::pattern('id', '[0-9]+');
  * For anybody
  */
 Route::group([ 'prefix' => '/api/' ], function() {
-  Route::get('/', function () {
-      return view('welcome');
-  });
-
   // Public public
   Route::get('templates/{category?}/{name?}', "TemplatesController@render");
   Route::post('auth/mylogin', "AuthController@postMylogin");
