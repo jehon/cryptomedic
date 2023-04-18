@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Helpers;
 
 define("NORMALIZE_SQL_BOOLEAN", "boolean");
 

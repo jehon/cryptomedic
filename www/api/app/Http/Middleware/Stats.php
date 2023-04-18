@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use DB;
 
 class Counters {
 	/**
@@ -22,6 +23,8 @@ class Counters {
 	 * @return mixed
 	 */
 	public function handle(Request $request, Closure $next) {
+		DB::select("SELECT 1");
+		
 		return $next($request);
 	}
 }

@@ -7,7 +7,7 @@ use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Hash;
-use App\User;
+use App\Model\User;
 
 class UsersController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers

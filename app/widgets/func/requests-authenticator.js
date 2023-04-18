@@ -28,7 +28,7 @@ export function loginCheckRequestBuilder() {
   return requestAndFilterBuilder(
     {
       url: "auth/settings",
-      method: "POST",
+      method: "GET",
       data: { browser: getBrowserDescription() }
     },
     [401]

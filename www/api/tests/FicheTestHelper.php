@@ -2,7 +2,7 @@
 
 require_once("RouteReferenceTestCase.php");
 
-use App\User;
+use App\Model\User;
 
 class FicheTestHelper extends RouteReferenceTestCase {
   protected function getRowIndex($list, $type, $id = false, $data = false) {

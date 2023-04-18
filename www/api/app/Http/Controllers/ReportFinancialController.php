@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\SQL;
+use App\Helpers\SQL;
 use App\Model\Bill;
 
 class ReportFinancialController extends ReportController {

@@ -1,6 +1,6 @@
 <?php
 
-use App\User;
+use App\Model\User;
 
 require_once("RequestOptionsBuilder.php");
 

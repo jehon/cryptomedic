@@ -11,16 +11,12 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\FolderController;
+use App\Helpers\CRSecurity;
 
 Route::pattern('id', '[0-9]+');
-
-// Check permissions
-if (!function_exists('hasPermission')) {
-  function hasPermission($permission, $fn) {
-    return Route::group([ 'middleware' => 'hasPermission:' . $permission ], $fn);
-  }
-}
 
 /**
  * For anybody
@@ -45,24 +41,24 @@ Route::group([ 'prefix' => '/api/' ], function() {
   // Private
   Route::group(array('middleware' => 'authenticated'), function()
   {
-    Route::post('auth/settings', "AuthController@getSettings");
+    Route::get('auth/settings', "AuthController@getSettings");
 
-    hasPermission('users.manage', function() {
+    CRSecurity::ifHasPersmission('users.manage', function() {
       Route::get('users/emails', 'UsersController@emails');
       Route::resource('users', 'UsersController');
       Route::post('users/password/{id}', 'UsersController@password');
     });
 
-    hasPermission('admin.securityMatrix', function() {
+    CRSecurity::ifHasPersmission('admin.securityMatrix', function() {
       Route::get('admin/securityMatrix', 'AuthController@matrix');
     });
 
-    hasPermission('admin.checkPictures', function() {
+    CRSecurity::ifHasPersmission('admin.checkPictures', function() {
       Route::get('admin/pictures/checkFileSystem', 'PicturesController@checkFileSystem');
     });
 
 
-    hasPermission('reports.execute', function() {
+    CRSecurity::ifHasPersmission('reports.execute', function() {
       Route::get('reports/consultations', [
         "uses" => "ReportConsultationsController@index"
       ]);
@@ -84,7 +80,7 @@ Route::group([ 'prefix' => '/api/' ], function() {
       ]);
     });
 
-    hasPermission('folder.read', function() {
+    CRSecurity::ifHasPersmission('folder.read', function() {
       Route::resource('folder', "FolderController", [ "only" => [ "index" ]]);
 
       Route::get('folder/{model}/{id}', [
@@ -104,12 +100,12 @@ Route::group([ 'prefix' => '/api/' ], function() {
       ]);
     });
 
-    hasPermission('folder.edit', function() {
+    CRSecurity::ifHasPersmission('folder.edit', function() {
       Route::POST('reference', 'FolderController@createfile');
     });
 
     Route::group([ 'prefix' => '/fiche/' ], function() {
-      hasPermission('folder.edit', function() {
+      CRSecurity::ifHasPersmission('folder.edit', function() {
         Route::resource('appointments',          'AppointmentsController');
         Route::resource('bills',                 'BillsController');
         Route::resource('clubfeet' ,             'ClubFeetController');
@@ -120,7 +116,7 @@ Route::group([ 'prefix' => '/api/' ], function() {
         Route::resource('ricketconsults',        'RicketConsultsController');
         Route::resource('surgeries',             'SurgeriesController');
       });
-      hasPermission('folder.unlock', function() {
+      CRSecurity::ifHasPersmission('folder.unlock', function() {
         Route::get('appointments/unlock/{id}',   'AppointmentsController@unlock');
         Route::get('bills/unlock/{id}',          'BillsController@unlock');
         Route::get('clubfeet/unlock/{id}',       'ClubFeetController@unlock');
@@ -132,7 +128,7 @@ Route::group([ 'prefix' => '/api/' ], function() {
       });
     });
 
-    hasPermission('price.edit', function() {
+    CRSecurity::ifHasPersmission('price.edit', function() {
       Route::resource('admin/prices',      'PricesController');
     });
   });
