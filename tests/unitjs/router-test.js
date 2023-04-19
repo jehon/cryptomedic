@@ -1,5 +1,5 @@
-import { getRoute, getRouteParameters } from "../../app/js/router.js";
-import * as router from "../../app/js/router.js";
+import { getRoute, getRouteParameters } from "../../src/app-old/js/router.js";
+import * as router from "../../src/app-old/js/router.js";
 
 import { fn } from "./athelpers.js";
 

@@ -14,7 +14,7 @@ const builtRoot = path.join(webRoot, "/built");
 fse.emptyDirSync(builtRoot);
 fs.writeFileSync(path.join(builtRoot, "release_version.txt"), released_version);
 fse.copy(
-  path.join(__dirname, "app/build.htaccess"),
+  path.join(__dirname, "src/app-old/build.htaccess"),
   path.join(builtRoot, ".htaccess")
 );
 
@@ -28,7 +28,7 @@ if (isDebug) {
 module.exports = {
   mode: isDebug ? "development" : "production",
   entry: {
-    ng1x: path.join(__dirname, "/app/main.js"),
+    ng1x: path.join(__dirname, "/src/app-old/main.js"),
     static: path.join(__dirname, "/src/app-static/main.js")
   },
   output: {
@@ -37,7 +37,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "app/index.html"),
+      template: path.join(__dirname, "src/app-old/index.html"),
       filename: path.join(builtRoot, "ng1x.html"),
       inject: "head",
       xhtml: true,

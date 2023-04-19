@@ -154,11 +154,11 @@ lint-es: $(TMP)/.dependencies-node
 
 .PHONY: lint-css
 lint-css: $(TMP)/.dependencies-node
-	node node_modules/.bin/stylelint app/**/*.css
+	node node_modules/.bin/stylelint src/**/*.css
 
 .PHONY: lint-html
 lint-html: $(TMP)/.dependencies-node
-	node node_modules/.bin/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
+	node node_modules/.bin/htmlhint src/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
 .PHONY: test # In Jenkinfile, each step is separated:
 test: $(TMP)/.dependencies $(TMP)/.built test-api test-unit test-e2e test-styles
@@ -310,7 +310,7 @@ $(TMP)/.built: \
 	@touch "$@"
 
 build-on-change:
-	find src/ app/ | entr -a -c -c -d -n make build
+	find src/ | entr -a -c -c -d -n make build
 
 .ovhconfig: conf/ovhconfig .env
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
@@ -319,7 +319,6 @@ build-on-change:
 # due to the recursive-dependencies
 www/built/.webpack: $(TMP)/.dependencies-node webpack.config.js  \
 		package.json package-lock.json \
-		$(call recursive-dependencies,app/,$@) \
 		$(call recursive-dependencies,src/,$@) \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \

@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import JHElement from "./jh-element.js";
-import he from "../../node_modules/he/he.js";
+import he from "../../../node_modules/he/he.js";
 
 const alreadyRun = Symbol("alreadyRun");
 

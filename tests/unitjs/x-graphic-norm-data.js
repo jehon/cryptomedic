@@ -1,5 +1,5 @@
-import Folder from "../../app/models/Folder.js";
-import amd_stats from "../../app/js/amd_stats.js";
+import Folder from "../../src/app-old/models/Folder.js";
+import amd_stats from "../../src/app-old/js/amd_stats.js";
 
 export let male = new Folder([
   {

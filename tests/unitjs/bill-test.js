@@ -1,4 +1,4 @@
-import Bill from "../../app/models/Bill.js";
+import Bill from "../../src/app-old/models/Bill.js";
 
 describe("Bill", function () {
   it("should give the correct model", function () {

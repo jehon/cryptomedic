@@ -1,7 +1,7 @@
 import hash from "./hash.js";
 
 /* global platform */
-import platform from "../../src/cjs2esm/platform.js";
+import platform from "../../cjs2esm/platform.js";
 
 /* istanbul ignore else: impossible to test */
 if (!("browserUUID" in localStorage)) {

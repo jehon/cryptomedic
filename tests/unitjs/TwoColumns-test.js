@@ -1,6 +1,6 @@
-import TwoColumns from "../../app/js/twoColumns.js";
+import TwoColumns from "../../src/app-old/js/twoColumns.js";
 
-import XFile from "../../app/elements/x-file.js";
+import XFile from "../../src/app-old/elements/x-file.js";
 
 describe("twoColumns", function () {
   beforeEach(function () {

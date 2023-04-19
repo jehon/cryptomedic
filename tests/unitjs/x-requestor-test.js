@@ -4,15 +4,15 @@ import XRequestor, {
   requestAndFilterBuilder,
   ServerRequestError,
   TransportRequestError
-} from "../../app/widgets/func/x-requestor.js";
+} from "../../src/app-old/widgets/func/x-requestor.js";
 
 import axios from "../../src/cjs2esm/axios.js";
 import MockAdapter from "../../src/cjs2esm/axios-mock-adapter.js";
-import { getSession } from "../../app/js/session.js";
+import { getSession } from "../../src/app-old/js/session.js";
 import {
   loginCheckRequestBuilder,
   loginRequestBuilder
-} from "../../app/widgets/func/requests-authenticator.js";
+} from "../../src/app-old/widgets/func/requests-authenticator.js";
 
 const buildResponse = function (ok = true, status = 200, statusText = "") {
   return {

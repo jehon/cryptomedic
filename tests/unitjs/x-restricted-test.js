@@ -1,5 +1,5 @@
-import XRestricted from "../../app/widgets/func/x-restricted.js";
-import { deepCopy, setSession } from "../../app/js/session.js";
+import XRestricted from "../../src/app-old/widgets/func/x-restricted.js";
+import { deepCopy, setSession } from "../../src/app-old/js/session.js";
 import { fn, loadReference } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {

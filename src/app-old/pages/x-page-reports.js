@@ -1,4 +1,4 @@
-import ExcellentExport from "../../node_modules/excellentexport/dist/excellentexport.js";
+import ExcellentExport from "../../../node_modules/excellentexport/dist/excellentexport.js";
 import { messages } from "../config.js";
 import {
   createElementsFromHTML,

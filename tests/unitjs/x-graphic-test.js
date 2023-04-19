@@ -1,6 +1,6 @@
 import { fn, loadReference, RefFolder1 } from "./athelpers.js";
-import Folder from "../../app/models/Folder.js";
-import XGraphic from "../../app/widgets/folder/x-graphic.js";
+import Folder from "../../src/app-old/models/Folder.js";
+import XGraphic from "../../src/app-old/widgets/folder/x-graphic.js";
 
 describe(fn(import.meta.url), function () {
   describe("without folder", function () {

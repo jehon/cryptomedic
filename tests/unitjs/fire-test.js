@@ -1,5 +1,5 @@
 import { fn } from "./athelpers.js";
-import fireOn from "../../app/js/fire.js";
+import fireOn from "../../src/app-old/js/fire.js";
 
 describe(fn(import.meta.url), function () {
   it("with default behavior", function () {

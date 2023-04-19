@@ -1,4 +1,4 @@
-import _fireOn from "../../app/js/fire.js";
+import _fireOn from "../../src/app-old/js/fire.js";
 
 export const fireOn = _fireOn;
 

@@ -1,4 +1,4 @@
-import XButton from "../../../app/widgets/style/x-button.js";
+import XButton from "../../../src/app-old/widgets/style/x-button.js";
 import {
   crApiLogin,
   crApiPriceDelete,

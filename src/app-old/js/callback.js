@@ -1,4 +1,4 @@
-import duix from "../../node_modules/duix/index.js";
+import duix from "../../../node_modules/duix/index.js";
 
 /**
  * @param {symbol|string} symbol - the associated symbol for debug purpose

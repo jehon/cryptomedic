@@ -1,4 +1,4 @@
-import cloneDeep from "../../node_modules/lodash-es/cloneDeep.js";
+import cloneDeep from "../../../node_modules/lodash-es/cloneDeep.js";
 
 let cache = new WeakMap();
 

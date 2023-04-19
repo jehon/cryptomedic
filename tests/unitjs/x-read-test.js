@@ -1,7 +1,7 @@
-import "../../app/elements/x-read.js";
+import "../../src/app-old/elements/x-read.js";
 
 import { webDescribe } from "./athelpers.js";
-// import JHElement from '../../app/elements/jh-element.js';
+// import JHElement from '../../src/app-old/elements/jh-element.js';
 
 // TODO: use constructor instead of webDescribe
 

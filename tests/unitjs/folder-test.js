@@ -1,13 +1,13 @@
-import Folder from "../../app/models/Folder.js";
-import Appointment from "../../app/models/Appointment.js";
-import Bill from "../../app/models/Bill.js";
-import ClubFoot from "../../app/models/ClubFoot.js";
-import OtherConsult from "../../app/models/OtherConsult.js";
-import Patient from "../../app/models/Patient.js";
-import Payment from "../../app/models/Payment.js";
-import Picture from "../../app/models/Picture.js";
-import RicketConsult from "../../app/models/RicketConsult.js";
-import Surgery from "../../app/models/Surgery.js";
+import Folder from "../../src/app-old/models/Folder.js";
+import Appointment from "../../src/app-old/models/Appointment.js";
+import Bill from "../../src/app-old/models/Bill.js";
+import ClubFoot from "../../src/app-old/models/ClubFoot.js";
+import OtherConsult from "../../src/app-old/models/OtherConsult.js";
+import Patient from "../../src/app-old/models/Patient.js";
+import Payment from "../../src/app-old/models/Payment.js";
+import Picture from "../../src/app-old/models/Picture.js";
+import RicketConsult from "../../src/app-old/models/RicketConsult.js";
+import Surgery from "../../src/app-old/models/Surgery.js";
 
 import { loadReference, RefFolder1 } from "./athelpers.js";
 

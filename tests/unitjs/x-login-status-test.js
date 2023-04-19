@@ -1,8 +1,8 @@
-import XUserStatus from "../../app/widgets/x-user-status.js";
+import XUserStatus from "../../src/app-old/widgets/x-user-status.js";
 
 import { webDescribe, fireOn, fn } from "./athelpers.js";
 import { mockResponseWithSuccess } from "./x-requestor-test.js";
-import { setSession } from "../../app/js/session.js";
+import { setSession } from "../../src/app-old/js/session.js";
 
 // TODO: use constructor instead of webDescribe
 

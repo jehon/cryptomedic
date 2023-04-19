@@ -1,6 +1,6 @@
 import { webDescribe } from "./athelpers.js";
 
-import JHElement from "../../app/elements/jh-element.js";
+import JHElement from "../../src/app-old/elements/jh-element.js";
 
 describe("jh-element-test", function () {
   // Instanciate a real element to test properties...

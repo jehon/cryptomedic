@@ -1,4 +1,4 @@
-import axios from "../../../src/cjs2esm/axios.js";
+import axios from "../../../cjs2esm/axios.js";
 axios.defaults.timeout = 30 * 1000;
 
 import { setSession } from "../../js/session.js";
@@ -11,7 +11,7 @@ import {
   defineCustomElement,
   getHTMLNameOfClass
 } from "../../js/custom-element.js";
-import "../../../node_modules/css-inherit/css-inherit.js";
+import "../../../../node_modules/css-inherit/css-inherit.js";
 import XLabel from "../style/x-label.js";
 import { WithDataError } from "../../js/exceptions.js";
 import nullify from "../../js/nullify.js";

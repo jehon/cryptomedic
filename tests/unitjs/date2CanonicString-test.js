@@ -1,4 +1,4 @@
-import date2CanonicString from "../../app/js/date2CanonicString.js";
+import date2CanonicString from "../../src/app-old/js/date2CanonicString.js";
 
 describe("date2CanonicString-test", function () {
   it("should return null", function () {

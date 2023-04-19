@@ -4,7 +4,7 @@ import {
   ConfigurationMissingException,
   DataInvalidException,
   DataOutOfBoundException
-} from "../../app/js/exceptions.js";
+} from "../../src/app-old/js/exceptions.js";
 
 describe("ApplicationException", function () {
   it("should inherit from Error", function () {

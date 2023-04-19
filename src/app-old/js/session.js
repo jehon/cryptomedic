@@ -1,4 +1,4 @@
-import duix from "../../node_modules/duix/index.js";
+import duix from "../../../node_modules/duix/index.js";
 import { routeToLogin } from "./router.js";
 const SESSION = "session";
 

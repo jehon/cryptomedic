@@ -1,14 +1,14 @@
-import XPageLogin from "../../app/pages/x-page-login.js";
+import XPageLogin from "../../src/app-old/pages/x-page-login.js";
 
 import { fn } from "./athelpers.js";
 
-import * as router from "../../app/js/router.js";
-import { setSession, getUsername } from "../../app/js/session.js";
+import * as router from "../../src/app-old/js/router.js";
+import { setSession, getUsername } from "../../src/app-old/js/session.js";
 
 import { mockNoResponse, mockResponseWithSuccess } from "./x-requestor-test.js";
 
 /**
- * @typedef {import('../../app/widgets/func/x-form.js').default} XForm
+ * @typedef {import('../../src/app-old/widgets/func/x-form.js').default} XForm
  */
 describe(fn(import.meta.url), function () {
   let element;

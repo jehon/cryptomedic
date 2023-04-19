@@ -1,4 +1,4 @@
-import "../../app/elements/x-read.js";
+import "../../src/app-old/elements/x-read.js";
 
 import { webDescribe } from "./athelpers.js";
 

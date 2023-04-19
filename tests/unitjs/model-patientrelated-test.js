@@ -1,8 +1,8 @@
-import PatientRelated from "../../app/models/PatientRelated.js";
-import Patient from "../../app/models/Patient.js";
-import Folder from "../../app/models/Folder.js";
-import RicketConsult from "../../app/models/RicketConsult.js";
-import { DataMissingException } from "../../app/js/exceptions.js";
+import PatientRelated from "../../src/app-old/models/PatientRelated.js";
+import Patient from "../../src/app-old/models/Patient.js";
+import Folder from "../../src/app-old/models/Folder.js";
+import RicketConsult from "../../src/app-old/models/RicketConsult.js";
+import { DataMissingException } from "../../src/app-old/js/exceptions.js";
 
 import { loadReference, RefFolder1 } from "./athelpers.js";
 

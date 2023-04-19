@@ -1,4 +1,4 @@
-import "../../app/elements/x-file.js";
+import "../../src/app-old/elements/x-file.js";
 
 import { webDescribe } from "./athelpers.js";
 

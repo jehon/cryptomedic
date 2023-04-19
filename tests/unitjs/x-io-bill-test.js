@@ -1,4 +1,4 @@
-import XIoBill from "../../app/widgets/io/x-io-bill.js";
+import XIoBill from "../../src/app-old/widgets/io/x-io-bill.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {
