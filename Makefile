@@ -53,7 +53,7 @@ export DBUPDATEPWD := secret
 #
 # Fixed
 #
-CJS2ESM_DIR := app/cjs2esm
+CJS2ESM_DIR := src/cjs2esm
 
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
@@ -105,7 +105,7 @@ clean: stop deploy-unmount
 	rm -fr live/
 	rm -f www/index.html
 	rm -fr www/built
-	rm -fr app/cjs2esm
+	rm -fr $(CJS2ESM_DIR)
 	rm -fr www/api/*/bootstrap/cache
 	rm -fr www/api/*/storage
 	rm -fr $(TMP)

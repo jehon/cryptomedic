@@ -1,4 +1,4 @@
-import axios from "../../cjs2esm/axios.js";
+import axios from "../../../src/cjs2esm/axios.js";
 axios.defaults.timeout = 30 * 1000;
 
 import { setSession } from "../../js/session.js";

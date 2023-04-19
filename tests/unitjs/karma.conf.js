@@ -67,7 +67,9 @@ module.exports = function (config) {
 
     preprocessors: {
       "app/*.js": ["coverage"],
-      "app/!(cjs2esm)/**/*.js": ["coverage"]
+      "app/!(cjs2esm)/**/*.js": ["coverage"],
+      "src/*.js": ["coverage"],
+      "src/!(cjs2esm)/**/*.js": ["coverage"]
     },
 
     coverageReporter: {

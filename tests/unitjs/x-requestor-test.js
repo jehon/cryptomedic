@@ -6,8 +6,8 @@ import XRequestor, {
   TransportRequestError
 } from "../../app/widgets/func/x-requestor.js";
 
-import axios from "../../app/cjs2esm/axios.js";
-import MockAdapter from "../../app/cjs2esm/axios-mock-adapter.js";
+import axios from "../../src/cjs2esm/axios.js";
+import MockAdapter from "../../src/cjs2esm/axios-mock-adapter.js";
 import { getSession } from "../../app/js/session.js";
 import {
   loginCheckRequestBuilder,

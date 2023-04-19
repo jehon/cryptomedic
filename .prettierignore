@@ -9,7 +9,7 @@ vendor/
 www/index.html
 www/api/
 
-app/cjs2esm
+src/cjs2esm
 www/api/tests/references/*.json
 package.json
 package-lock.json
