@@ -9,4 +9,4 @@ import "./widgets/x-user-status.js";
 import "./widgets/func/x-restricted.js";
 
 // Application
-import "./controllers/mainApp.js";
+import "./v1/mainApp.js";

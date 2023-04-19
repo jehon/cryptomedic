@@ -1,4 +1,4 @@
-import "../../src/app-old/elements/x-file-bill.js";
+import "../../src/app-old/v1/elements/x-file-bill.js";
 
 import { webDescribe, loadReference, RefFolder1 } from "./athelpers.js";
 import Folder from "../../src/app-old/models/Folder.js";

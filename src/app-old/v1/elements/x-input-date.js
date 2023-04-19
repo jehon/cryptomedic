@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import JHElement from "./jh-element.js";
-import date2Display from "../js/date2Display.js";
+import date2Display from "../../js/date2Display.js";
 
 const element = Symbol("element");
 

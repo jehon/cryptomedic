@@ -4,9 +4,9 @@ import {
   createElementWithTag,
   enrichObject
 } from "../js/custom-element.js";
-import XOverlay from "../widgets/func/x-overlay.js";
-import XPanel from "../widgets/style/x-panel.js";
-import XIoBoolean from "../widgets/io/x-io-boolean.js";
+import XOverlay from "./func/x-overlay.js";
+import XPanel from "./style/x-panel.js";
+import XIoBoolean from "./io/x-io-boolean.js";
 import { getFloatFrom } from "../js/number-utils.js";
 
 //

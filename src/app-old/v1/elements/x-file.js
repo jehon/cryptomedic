@@ -4,7 +4,7 @@ import JHElement from "./jh-element.js";
 import {
   ApplicationException,
   DataMissingException
-} from "../js/exceptions.js";
+} from "../../js/exceptions.js";
 
 export default class XFile extends JHElement {
   static get properties() {

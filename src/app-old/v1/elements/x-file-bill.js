@@ -4,8 +4,8 @@ import XFile from "./x-file.js";
 import {
   DataMissingException,
   ConfigurationMissingException
-} from "../js/exceptions.js";
-import { onSession, getSession } from "../js/session.js";
+} from "../../js/exceptions.js";
+import { onSession, getSession } from "../../js/session.js";
 
 export default class XFileBill extends XFile {
   get categoriesList() {

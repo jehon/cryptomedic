@@ -7,12 +7,12 @@ import {
 import { getRouteToFolderPatient, setRoute } from "../js/router.js";
 import XForm from "../widgets/func/x-form.js";
 import XRequestor from "../widgets/func/x-requestor.js";
-import XTable from "../elements/x-table.js";
+import XTable from "../widgets/x-table.js";
 import XButton from "../widgets/style/x-button.js";
 import XButtons from "../widgets/func/x-buttons.js";
 import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XPanel from "../widgets/style/x-panel.js";
-import "../elements/x-write-list.js";
+import "../v1/elements/x-write-list.js";
 import pageStyles from "./page-helper.js";
 import { patientSearchBuilder } from "../widgets/func/requests-folder.js";
 

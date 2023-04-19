@@ -4,11 +4,11 @@ import {
 } from "../js/custom-element.js";
 import { getRoute, routes } from "../js/router.js";
 import XRequestor from "../widgets/func/x-requestor.js";
-import XTable from "../elements/x-table.js";
+import XTable from "../widgets/x-table.js";
 import XButton from "../widgets/style/x-button.js";
 import XButtons from "../widgets/func/x-buttons.js";
 import XPanel from "../widgets/style/x-panel.js";
-import XReadBoolean from "../elements/x-read-boolean.js";
+import XReadBoolean from "../v1/elements/x-read-boolean.js";
 import pageStyles from "./page-helper.js";
 import { usersCrud } from "../widgets/func/requests-admin.js";
 

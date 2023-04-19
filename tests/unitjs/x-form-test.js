@@ -1,6 +1,6 @@
 import XForm from "../../src/app-old/widgets/func/x-form.js";
-import "../../src/app-old/elements/x-write.js";
-import "../../src/app-old/elements/x-write-list.js";
+import "../../src/app-old/v1/elements/x-write.js";
+import "../../src/app-old/v1/elements/x-write-list.js";
 import {
   createElementWithTag,
   createElementWithObject
@@ -9,8 +9,8 @@ import { fn } from "./athelpers.js";
 import XButton from "../../src/app-old/widgets/style/x-button.js";
 import XButtons from "../../src/app-old/widgets/func/x-buttons.js";
 
-// import XWrite from '../../src/app-old/elements/x-write.js';
-// import XWriteList from '../../src/app-old/elements/x-write-list.js';
+// import XWrite from '../../src/app-old/v1/elements/x-write.js';
+// import XWriteList from '../../src/app-old/v1/elements/x-write-list.js';
 
 describe(fn(import.meta.url), function () {
   it("should work with HTML Element", function () {

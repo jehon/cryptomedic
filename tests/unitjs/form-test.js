@@ -1,9 +1,9 @@
 import { formGetContent } from "../../src/app-old/js/form.js";
-import "../../src/app-old/elements/x-write.js";
-import "../../src/app-old/elements/x-write-list.js";
+import "../../src/app-old/v1/elements/x-write.js";
+import "../../src/app-old/v1/elements/x-write-list.js";
 import { createElementWithTag } from "../../src/app-old/js/custom-element.js";
-// import XWrite from '../../src/app-old/elements/x-write.js';
-// import XWriteList from '../../src/app-old/elements/x-write-list.js';
+// import XWrite from '../../src/app-old/v1/elements/x-write.js';
+// import XWriteList from '../../src/app-old/v1/elements/x-write-list.js';
 
 export function mockFormSubmit(form) {
   form.dispatchEvent(

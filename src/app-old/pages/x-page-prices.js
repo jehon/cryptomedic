@@ -14,7 +14,7 @@ import XMessage from "../widgets/style/x-message.js";
 import XMessages from "../widgets/func/x-messages.js";
 import "../widgets/x-price-item-edit.js";
 import XPriceItemEdit from "../widgets/x-price-item-edit.js";
-import XInputDate from "../elements/x-input-date.js";
+import XInputDate from "../v1/elements/x-input-date.js";
 import { createOverlay, overlayAcknowledge } from "../js/overlay-builder.js";
 import pageStyles from "./page-helper.js";
 import { pricesCrud } from "../widgets/func/requests-admin.js";

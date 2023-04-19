@@ -1,4 +1,4 @@
-import XInputPicture from "../../src/app-old/elements/x-input-picture.js";
+import XInputPicture from "../../src/app-old/v1/elements/x-input-picture.js";
 
 import { webDescribe } from "./athelpers.js";
 
