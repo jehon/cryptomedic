@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* eslint-disable */
 
-import Folder from "../models/Folder.js";
+import Folder from "../v2/models/Folder.js";
 import { formGetContent } from "../js/form.js";
 import { extractPrefsFile } from "../js/prefs.js";
 import getDataService from "../js/getDataService.js";

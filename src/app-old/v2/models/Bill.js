@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import PatientRelated from "./PatientRelated.js";
-import { DataMissingException } from "../js/exceptions.js";
+import { DataMissingException } from "../../js/exceptions.js";
 
 export default class Bill extends PatientRelated {
   getModel() {

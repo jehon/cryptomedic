@@ -1,4 +1,4 @@
-import Folder from "../../src/app-old/models/Folder.js";
+import Folder from "../../src/app-old/v2/models/Folder.js";
 
 const folder = new Folder([
   {

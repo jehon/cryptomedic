@@ -2,7 +2,7 @@
 
 import XRequestor from "./x-o-requestor.js";
 import TimedMap from "../../js/timedMap.js";
-import Folder from "../../models/Folder.js";
+import Folder from "../../v2/models/Folder.js";
 import nullify from "../../js/nullify.js";
 import { setCurrentFolder } from "../../js/session.js";
 

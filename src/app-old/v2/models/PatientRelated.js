@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import FolderPage from "./FolderPage.js";
-import { DataMissingException } from "../js/exceptions.js";
+import { DataMissingException } from "../../js/exceptions.js";
 
 export default class PatientRelated extends FolderPage {
   constructor(data, folder = null) {

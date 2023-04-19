@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import nullify from "../js/nullify.js";
+import nullify from "../../js/nullify.js";
 
 export default class CRUD {
   static getBaseUrl() {

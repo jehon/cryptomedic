@@ -1,8 +1,8 @@
 import { fn, loadReference, RefFolder1 } from "./athelpers.js";
 
-import Folder from "../../src/app-old/models/Folder.js";
+import Folder from "../../src/app-old/v2/models/Folder.js";
 import XFfNextAppointment from "../../src/app-old/widgets/folder/x-ff-next-appointment.js";
-import Appointment from "../../src/app-old/models/Appointment.js";
+import Appointment from "../../src/app-old/v2/models/Appointment.js";
 
 let testFolder;
 
