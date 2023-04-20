@@ -2,7 +2,7 @@ import { spacing } from "../../../config.js";
 import {
   createElementWithTag,
   defineCustomElement
-} from "../../../js/custom-element.js";
+} from "../../../v2/js/custom-element.js";
 import { getPanelStyles } from "../style/x-panel.js";
 
 /**

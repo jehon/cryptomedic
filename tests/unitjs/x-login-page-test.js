@@ -2,8 +2,8 @@ import XPageLogin from "../../src/app-old/v2/pages/x-page-login.js";
 
 import { fn } from "./athelpers.js";
 
-import * as router from "../../src/app-old/js/router.js";
-import { setSession, getUsername } from "../../src/app-old/js/session.js";
+import * as router from "../../src/app-old/v2/js/router.js";
+import { setSession, getUsername } from "../../src/app-old/v2/js/session.js";
 
 import { mockNoResponse, mockResponseWithSuccess } from "./x-requestor-test.js";
 

@@ -2,10 +2,10 @@
 /* eslint-disable */
 
 import Payment from "../v2/models/Payment.js";
-import { formGetContent } from "../js/form.js";
-import { extractPrefsFile } from "../js/prefs.js";
-import getDataService from "../js/getDataService.js";
-import { getSession, onSession } from "../js/session.js";
+import { formGetContent } from "../v2/js/form.js";
+import { extractPrefsFile } from "../v2/js/prefs.js";
+import getDataService from "../v2/js/getDataService.js";
+import { getSession, onSession } from "../v2/js/session.js";
 import XFffSalaryRatio from "../v2/widgets/file/x-fff-salary-ratio.js";
 
 import XFolderBill from "../v2/pages/blocks/x-folder-bill.js";

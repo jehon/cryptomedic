@@ -1,5 +1,5 @@
-import { defineCustomElement } from "../../../js/custom-element.js";
-import date2Display from "../../../js/date2Display.js";
+import { defineCustomElement } from "../../../v2/js/custom-element.js";
+import date2Display from "../../../v2/js/date2Display.js";
 
 export default class XDisplayDate extends HTMLElement {
   static get observedAttributes() {

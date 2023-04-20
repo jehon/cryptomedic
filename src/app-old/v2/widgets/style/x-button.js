@@ -2,8 +2,8 @@ import { spacing, icons } from "../../../config.js";
 import {
   createElementWithTag,
   defineCustomElement
-} from "../../../js/custom-element.js";
-import { setLocation, setRoute } from "../../../js/router.js";
+} from "../../../v2/js/custom-element.js";
+import { setLocation, setRoute } from "../../../v2/js/router.js";
 
 /**
  * Slot[]: content

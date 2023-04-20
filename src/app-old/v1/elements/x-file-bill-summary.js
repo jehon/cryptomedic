@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import XFileBill from "./x-file-bill.js";
-import TwoColumns from "../../js/twoColumns.js";
+import TwoColumns from "../../v2/js/twoColumns.js";
 
 export default class XFileBillSummary extends XFileBill {
   adapt() {

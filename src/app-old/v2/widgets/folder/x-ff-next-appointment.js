@@ -1,6 +1,6 @@
-import { defineCustomElement } from "../../../js/custom-element.js";
-import date2CanonicString from "../../../js/date2CanonicString.js";
-import { getRouteToFolderAdd, setRoute } from "../../../js/router.js";
+import { defineCustomElement } from "../../../v2/js/custom-element.js";
+import date2CanonicString from "../../../v2/js/date2CanonicString.js";
+import { getRouteToFolderAdd, setRoute } from "../../../v2/js/router.js";
 import Appointment from "../../models/Appointment.js";
 import XWithFolder from "./x-with-folder.js";
 import "../style/x-group-panel.js";

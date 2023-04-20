@@ -5,8 +5,8 @@ import "./x-waiting.js";
 import "./x-o-overlay.js";
 
 import axios from "../../../cjs2esm/axios.js";
-import { routeToLogin } from "../../js/router.js";
-import { setSession } from "../../js/session.js";
+import { routeToLogin } from "../../v2/js/router.js";
+import { setSession } from "../../v2/js/session.js";
 
 const error = Symbol("error");
 const waiting = Symbol("waiting");

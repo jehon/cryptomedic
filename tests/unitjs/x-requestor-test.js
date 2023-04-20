@@ -8,7 +8,7 @@ import XRequestor, {
 
 import axios from "../../src/cjs2esm/axios.js";
 import MockAdapter from "../../src/cjs2esm/axios-mock-adapter.js";
-import { getSession } from "../../src/app-old/js/session.js";
+import { getSession } from "../../src/app-old/v2/js/session.js";
 import {
   loginCheckRequestBuilder,
   loginRequestBuilder

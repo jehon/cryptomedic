@@ -6,7 +6,7 @@ import {
   toPropertyCase,
   _canonize,
   buildTemplate
-} from "../../src/app-old/js/string-utils.js";
+} from "../../src/app-old/v2/js/string-utils.js";
 
 describe(fn(import.meta.url), function () {
   it("should canonize", function () {

@@ -4,7 +4,7 @@ import { mockResponseWithSuccess } from "./x-requestor-test.js";
 import {
   getCurrentRoute,
   getRouteToFolderPatient
-} from "../../src/app-old/js/router.js";
+} from "../../src/app-old/v2/js/router.js";
 
 describe(fn(import.meta.url), function () {
   let element;

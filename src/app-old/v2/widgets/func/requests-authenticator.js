@@ -1,4 +1,4 @@
-import { getBrowserDescription } from "../../../js/browser.js";
+import { getBrowserDescription } from "../../../v2/js/browser.js";
 import { requestAndFilterBuilder } from "./x-requestor.js";
 
 /**

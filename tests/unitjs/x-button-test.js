@@ -1,6 +1,6 @@
 import XForm from "../../src/app-old/v2/widgets/func/x-form.js";
 import XButton from "../../src/app-old/v2/widgets/style/x-button.js";
-import { getCurrentRoute, setRoute } from "../../src/app-old/js/router.js";
+import { getCurrentRoute, setRoute } from "../../src/app-old/v2/js/router.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {

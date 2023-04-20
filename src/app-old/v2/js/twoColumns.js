@@ -1,5 +1,3 @@
-// import { ApplicationException } from './exceptions.js';
-
 export default class TwoColumns {
   constructor(about, options = {}) {
     this.closed = false;

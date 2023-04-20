@@ -3,7 +3,7 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../../js/custom-element.js";
+} from "../../../v2/js/custom-element.js";
 import XMessages from "../func/x-messages.js";
 import "../style/x-button.js";
 import { getPanelStyles } from "../style/x-panel.js";

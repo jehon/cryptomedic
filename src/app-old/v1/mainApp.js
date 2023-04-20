@@ -10,8 +10,8 @@ window.jQuery = jQuery;
 import angular from "angular";
 import "angular-route";
 
-import template from "../js/template.js";
-import goThere from "../js/goThere.js";
+import template from "../v2/js/template.js";
+import goThere from "../v2/js/goThere.js";
 
 import JHElement from "../v1/elements/jh-element.js";
 window.JHElement = JHElement;
@@ -83,7 +83,7 @@ mainApp.controller("ctrl_folder", ctrl_folder);
 // *** Legacy End ***
 
 // Routing
-import { createElementWithObject } from "../js/custom-element.js";
+import { createElementWithObject } from "../v2/js/custom-element.js";
 import XPageLogin from "../v2/pages/x-page-login.js";
 import XPageHome from "../v2/pages/x-page-home.js";
 import XPagePrices from "../v2/pages/x-page-prices.js";

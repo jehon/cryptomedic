@@ -1,5 +1,5 @@
-import { createElementWithTag } from "../../../js/custom-element.js";
-import { onSession, getAuthorized } from "../../../js/session.js";
+import { createElementWithTag } from "../../../v2/js/custom-element.js";
+import { onSession, getAuthorized } from "../../../v2/js/session.js";
 import { getPanelStyles } from "../style/x-panel.js";
 
 /**

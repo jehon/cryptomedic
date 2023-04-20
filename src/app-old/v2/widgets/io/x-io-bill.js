@@ -2,7 +2,7 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../../js/custom-element.js";
+} from "../../../v2/js/custom-element.js";
 import XIoNumeric from "./x-io-numeric.js";
 import XIoString from "./x-io-string.js";
 

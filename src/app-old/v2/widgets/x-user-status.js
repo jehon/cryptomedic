@@ -1,13 +1,13 @@
 import "./style/x-button.js";
-import { routeToLogin } from "../../js/router.js";
-import { onSession, getUsername, setSession } from "../../js/session.js";
+import { routeToLogin } from "../../v2/js/router.js";
+import { onSession, getUsername, setSession } from "../../v2/js/session.js";
 import XRequestor from "./func/x-requestor.js";
 import { getPanelStyles } from "./style/x-panel.js";
 import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../js/custom-element.js";
+} from "../../v2/js/custom-element.js";
 import XButton from "./style/x-button.js";
 import { logoutBuilder } from "./func/requests-authenticator.js";
 

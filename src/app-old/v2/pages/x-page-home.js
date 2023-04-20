@@ -5,8 +5,8 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../js/custom-element.js";
-import { toAttributeCase } from "../../js/string-utils.js";
+} from "../../v2/js/custom-element.js";
+import { toAttributeCase } from "../../v2/js/string-utils.js";
 import { icons } from "../../config.js";
 
 import XPatientByReference from "./blocks/x-patient-by-reference.js";
@@ -19,7 +19,7 @@ import XRestricted from "../widgets/func/x-restricted.js";
 import {
   getRouteToCreateReference,
   getRouteToReport
-} from "../../js/router.js";
+} from "../../v2/js/router.js";
 import {
   REPORT_ACTIVITY,
   REPORT_CONSULTATIONS,

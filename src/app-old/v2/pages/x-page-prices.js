@@ -3,7 +3,7 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../js/custom-element.js";
+} from "../../v2/js/custom-element.js";
 import XForm from "../widgets/func/x-form.js";
 import XRequestor from "../widgets/func/x-requestor.js";
 import XButton from "../widgets/style/x-button.js";
@@ -15,7 +15,10 @@ import XMessages from "../widgets/func/x-messages.js";
 import "../widgets/x-price-item-edit.js";
 import XPriceItemEdit from "../widgets/x-price-item-edit.js";
 import XInputDate from "../../v1/elements/x-input-date.js";
-import { createOverlay, overlayAcknowledge } from "../../js/overlay-builder.js";
+import {
+  createOverlay,
+  overlayAcknowledge
+} from "../../v2/js/overlay-builder.js";
 import pageStyles from "./page-helper.js";
 import { pricesCrud } from "../widgets/func/requests-admin.js";
 

@@ -1,4 +1,4 @@
-import TwoColumns from "../../src/app-old/js/twoColumns.js";
+import TwoColumns from "../../src/app-old/v2/js/twoColumns.js";
 
 import XFile from "../../src/app-old/v1/elements/x-file.js";
 

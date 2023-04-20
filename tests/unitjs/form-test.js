@@ -1,7 +1,7 @@
-import { formGetContent } from "../../src/app-old/js/form.js";
+import { formGetContent } from "../../src/app-old/v2/js/form.js";
 import "../../src/app-old/v1/elements/x-write.js";
 import "../../src/app-old/v1/elements/x-write-list.js";
-import { createElementWithTag } from "../../src/app-old/js/custom-element.js";
+import { createElementWithTag } from "../../src/app-old/v2/js/custom-element.js";
 // import XWrite from '../../src/app-old/v1/elements/x-write.js';
 // import XWriteList from '../../src/app-old/v1/elements/x-write-list.js';
 

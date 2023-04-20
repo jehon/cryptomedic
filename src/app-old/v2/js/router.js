@@ -1,4 +1,4 @@
-import FolderPage from "../v2/models/FolderPage.js";
+import FolderPage from "../models/FolderPage.js";
 
 /**
  * @param {string} pathname to be set

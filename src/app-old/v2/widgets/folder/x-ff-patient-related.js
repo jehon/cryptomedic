@@ -2,8 +2,8 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../../js/custom-element.js";
-import { routeToFolderPatient } from "../../../js/router.js";
+} from "../../../v2/js/custom-element.js";
+import { routeToFolderPatient } from "../../../v2/js/router.js";
 import XWithFolder from "./x-with-folder.js";
 import XGroupPanel from "../style/x-group-panel.js";
 import XLabel from "../style/x-label.js";

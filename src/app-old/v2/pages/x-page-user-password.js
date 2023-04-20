@@ -2,8 +2,8 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../js/custom-element.js";
-import { getRoute, routes, setRoute } from "../../js/router.js";
+} from "../../v2/js/custom-element.js";
+import { getRoute, routes, setRoute } from "../../v2/js/router.js";
 import XForm from "../widgets/func/x-form.js";
 import XRequestor from "../widgets/func/x-requestor.js";
 import XButton from "../widgets/style/x-button.js";
@@ -11,7 +11,7 @@ import XButtons from "../widgets/func/x-buttons.js";
 import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XLabel from "../widgets/style/x-label.js";
 import XPanel, { getPanelStyles } from "../widgets/style/x-panel.js";
-import { overlayAcknowledge } from "../../js/overlay-builder.js";
+import { overlayAcknowledge } from "../../v2/js/overlay-builder.js";
 import pageStyles from "./page-helper.js";
 import { usersCrud } from "../widgets/func/requests-admin.js";
 

@@ -4,7 +4,7 @@ import "../../src/app-old/v1/elements/x-write-list.js";
 import {
   createElementWithTag,
   createElementWithObject
-} from "../../src/app-old/js/custom-element.js";
+} from "../../src/app-old/v2/js/custom-element.js";
 import { fn } from "./athelpers.js";
 import XButton from "../../src/app-old/v2/widgets/style/x-button.js";
 import XButtons from "../../src/app-old/v2/widgets/func/x-buttons.js";

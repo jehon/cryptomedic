@@ -1,8 +1,8 @@
 import {
   copyAttributes,
   defineCustomElement
-} from "../../../js/custom-element.js";
-import { nround } from "../../../js/number-utils.js";
+} from "../../../v2/js/custom-element.js";
+import { nround } from "../../../v2/js/number-utils.js";
 import XIoString from "./x-io-string.js";
 /**
  * Attributes:

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 /* eslint-disable */
-import date2CanonicString from "../js/date2CanonicString.js";
+import date2CanonicString from "../v2/js/date2CanonicString.js";
 
 export default function ctrl_file_appointment($scope) {
   $scope.today = date2CanonicString(new Date(), true);

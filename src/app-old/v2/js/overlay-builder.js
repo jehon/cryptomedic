@@ -2,11 +2,11 @@ import {
   createElementWithObject,
   createElementWithTag
 } from "./custom-element.js";
-import XForm from "../v2/widgets/func/x-form.js";
-import XButton from "../v2/widgets/style/x-button.js";
-import XButtons from "../v2/widgets/func/x-buttons.js";
-import XOverlay from "../v2/widgets/func/x-overlay.js";
-import XPanel from "../v2/widgets/style/x-panel.js";
+import XForm from "../../v2/widgets/func/x-form.js";
+import XButton from "../../v2/widgets/style/x-button.js";
+import XButtons from "../../v2/widgets/func/x-buttons.js";
+import XOverlay from "../../v2/widgets/func/x-overlay.js";
+import XPanel from "../../v2/widgets/style/x-panel.js";
 
 // TODO: x-overlay should not have a 'inline' content, only a 'popup' content
 /**

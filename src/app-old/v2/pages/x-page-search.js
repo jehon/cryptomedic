@@ -3,8 +3,8 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../js/custom-element.js";
-import { getRouteToFolderPatient, setRoute } from "../../js/router.js";
+} from "../../v2/js/custom-element.js";
+import { getRouteToFolderPatient, setRoute } from "../../v2/js/router.js";
 import XForm from "../widgets/func/x-form.js";
 import XRequestor from "../widgets/func/x-requestor.js";
 import XTable from "../widgets/x-table.js";

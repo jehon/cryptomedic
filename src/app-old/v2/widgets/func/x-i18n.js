@@ -1,4 +1,4 @@
-import { defineCustomElement } from "../../../js/custom-element.js";
+import { defineCustomElement } from "../../../v2/js/custom-element.js";
 
 export default class XI18n extends HTMLElement {
   static get observedAttributes() {

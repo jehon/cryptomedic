@@ -36,13 +36,12 @@ module.exports = function (config) {
     ],
 
     files: [
-      { pattern: "node_modules/bluebird/js/browser/bluebird.min.js" },
+      "node_modules/bluebird/js/browser/bluebird.min.js",
       "tests/unitjs/_global.js",
       "node_modules/karma-read-json/karma-read-json.js",
       "node_modules/bootstrap4/dist/css/bootstrap.min.css",
       { pattern: "tests/unitjs/*-test.js", type: "module" },
       { pattern: "tests/unitjs/**", included: false },
-      { pattern: "app/**/*", included: false },
       { pattern: "**/*", included: false, watched: false }
     ],
 
@@ -85,11 +84,11 @@ module.exports = function (config) {
     },
 
     htmlReporter: {
-      outputDir: path.join(root, "/tmp/js/html/")
+      outputDir: path.join(root, "/tmp/v2/js/html/")
     },
 
     junitReporter: {
-      outputDir: "tmp/js/junit",
+      outputDir: "tmp/v2/js/junit",
       useBrowserName: false,
       xmlVersion: 1
     },

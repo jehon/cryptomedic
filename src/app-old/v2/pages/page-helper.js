@@ -1,7 +1,7 @@
 import {
   createElementWithTag,
   getHTMLNameOfClass
-} from "../../js/custom-element.js";
+} from "../../v2/js/custom-element.js";
 
 /**
  * @param {HTMLElement} el as the basis of the styling

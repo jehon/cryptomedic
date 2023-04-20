@@ -1,4 +1,4 @@
-import { browserUUID, isProduction } from "../../src/app-old/js/browser.js";
+import { browserUUID, isProduction } from "../../src/app-old/v2/js/browser.js";
 
 describe("The browser", function () {
   it("should have a uuid", function () {

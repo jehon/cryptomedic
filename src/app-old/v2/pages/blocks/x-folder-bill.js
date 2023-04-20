@@ -1,4 +1,4 @@
-import { defineCustomElement } from "../../../js/custom-element.js";
+import { defineCustomElement } from "../../../v2/js/custom-element.js";
 import XFolderFile from "./x-folder-file.js";
 
 import "./x-folder-payments.js";

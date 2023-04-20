@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
 import CRUD from "./CRUD.js";
-import { getPref } from "../../js/prefs.js";
-import { toAttributeCase } from "../../js/string-utils.js";
+import { getPref } from "../../v2/js/prefs.js";
+import { toAttributeCase } from "../../v2/js/string-utils.js";
 
 export default class FolderPage extends CRUD {
   /**

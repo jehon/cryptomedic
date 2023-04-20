@@ -1,8 +1,8 @@
 import XInputList from "../../src/app-old/v2/widgets/data/x-input-list.js";
 
-import { setSession } from "../../src/app-old/js/session.js";
-import { createElementWithObject } from "../../src/app-old/js/custom-element.js";
-import fireOn from "../../src/app-old/js/fire.js";
+import { setSession } from "../../src/app-old/v2/js/session.js";
+import { createElementWithObject } from "../../src/app-old/v2/js/custom-element.js";
+import fireOn from "../../src/app-old/v2/js/fire.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {

@@ -5,7 +5,7 @@ import { fn } from "./athelpers.js";
 import {
   createElementWithObject,
   createElementWithTag
-} from "../../src/app-old/js/custom-element.js";
+} from "../../src/app-old/v2/js/custom-element.js";
 
 describe(fn(import.meta.url), function () {
   let element;
