@@ -5,14 +5,14 @@ import {
 } from "../js/custom-element.js";
 import { setRoute, getRoute, routes } from "../js/router.js";
 import getInputObject, { TYPES } from "../js/getInput.js";
-import { usersCrud } from "../widgets/func/requests-admin.js";
-import XForm from "../widgets/func/x-form.js";
-import XRequestor from "../widgets/func/x-requestor.js";
-import XButton from "../widgets/style/x-button.js";
-import XButtons from "../widgets/func/x-buttons.js";
-import XGroupPanel from "../widgets/style/x-group-panel.js";
-import XLabel from "../widgets/style/x-label.js";
-import XPanel from "../widgets/style/x-panel.js";
+import { usersCrud } from "../v2/widgets/func/requests-admin.js";
+import XForm from "../v2/widgets/func/x-form.js";
+import XRequestor from "../v2/widgets/func/x-requestor.js";
+import XButton from "../v2/widgets/style/x-button.js";
+import XButtons from "../v2/widgets/func/x-buttons.js";
+import XGroupPanel from "../v2/widgets/style/x-group-panel.js";
+import XLabel from "../v2/widgets/style/x-label.js";
+import XPanel from "../v2/widgets/style/x-panel.js";
 import { overlayAcknowledge } from "../js/overlay-builder.js";
 import pageStyles from "./page-helper.js";
 

@@ -1,4 +1,4 @@
-import XUserStatus from "../../src/app-old/widgets/x-user-status.js";
+import XUserStatus from "../../src/app-old/v2/widgets/x-user-status.js";
 
 import { webDescribe, fireOn, fn } from "./athelpers.js";
 import { mockResponseWithSuccess } from "./x-requestor-test.js";

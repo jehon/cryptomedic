@@ -1,7 +1,7 @@
-import "../../widgets/folder/x-graphic-height.js";
-import "../../widgets/folder/x-graphic-weight.js";
-import "../../widgets/folder/x-graphic-bmi.js";
-import "../../widgets/folder/x-graphic-wh.js";
+import "../../v2/widgets/folder/x-graphic-height.js";
+import "../../v2/widgets/folder/x-graphic-weight.js";
+import "../../v2/widgets/folder/x-graphic-bmi.js";
+import "../../v2/widgets/folder/x-graphic-wh.js";
 import { defineCustomElement } from "../../js/custom-element.js";
 
 /**

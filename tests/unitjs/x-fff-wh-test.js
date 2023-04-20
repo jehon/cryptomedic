@@ -6,7 +6,7 @@ import {
 } from "./athelpers.js";
 
 import Folder from "../../src/app-old/v2/models/Folder.js";
-import XFffWh from "../../src/app-old/widgets/file/x-fff-wh.js";
+import XFffWh from "../../src/app-old/v2/widgets/file/x-fff-wh.js";
 
 let testFolder;
 

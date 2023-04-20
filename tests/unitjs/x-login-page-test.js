@@ -8,7 +8,7 @@ import { setSession, getUsername } from "../../src/app-old/js/session.js";
 import { mockNoResponse, mockResponseWithSuccess } from "./x-requestor-test.js";
 
 /**
- * @typedef {import('../../src/app-old/widgets/func/x-form.js').default} XForm
+ * @typedef {import('../../src/app-old/v2/widgets/func/x-form.js').default} XForm
  */
 describe(fn(import.meta.url), function () {
   let element;

@@ -1,5 +1,5 @@
-import "../../src/app-old/widgets/x-price-item-edit.js";
-import XPriceItemEdit from "../../src/app-old/widgets/x-price-item-edit.js";
+import "../../src/app-old/v2/widgets/x-price-item-edit.js";
+import XPriceItemEdit from "../../src/app-old/v2/widgets/x-price-item-edit.js";
 import { createElementWithObject } from "../../src/app-old/js/custom-element.js";
 import { fn } from "./athelpers.js";
 

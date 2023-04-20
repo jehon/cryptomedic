@@ -6,7 +6,7 @@ import {
 } from "./athelpers.js";
 
 import Folder from "../../src/app-old/v2/models/Folder.js";
-import XFffBmiSd from "../../src/app-old/widgets/file/x-fff-bmi-sd.js";
+import XFffBmiSd from "../../src/app-old/v2/widgets/file/x-fff-bmi-sd.js";
 
 let testFolder;
 

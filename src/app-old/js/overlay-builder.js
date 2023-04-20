@@ -2,15 +2,15 @@ import {
   createElementWithObject,
   createElementWithTag
 } from "./custom-element.js";
-import XForm from "../widgets/func/x-form.js";
-import XButton from "../widgets/style/x-button.js";
-import XButtons from "../widgets/func/x-buttons.js";
-import XOverlay from "../widgets/func/x-overlay.js";
-import XPanel from "../widgets/style/x-panel.js";
+import XForm from "../v2/widgets/func/x-form.js";
+import XButton from "../v2/widgets/style/x-button.js";
+import XButtons from "../v2/widgets/func/x-buttons.js";
+import XOverlay from "../v2/widgets/func/x-overlay.js";
+import XPanel from "../v2/widgets/style/x-panel.js";
 
 // TODO: x-overlay should not have a 'inline' content, only a 'popup' content
 /**
- * @typedef {import('../widgets/func/x-form.js').FormValidator} FormValidator
+ * @typedef {import('../v2/widgets/func/x-form.js').FormValidator} FormValidator
  */
 
 class OverlayBuilder {

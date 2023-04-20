@@ -5,7 +5,7 @@ import Folder from "../v2/models/Folder.js";
 import { formGetContent } from "../js/form.js";
 import { extractPrefsFile } from "../js/prefs.js";
 import getDataService from "../js/getDataService.js";
-import { fromBirthDate } from "../widgets/file/x-fff-age.js";
+import { fromBirthDate } from "../v2/widgets/file/x-fff-age.js";
 import template from "../js/template.js";
 import goThere from "../js/goThere.js";
 import date2CanonicString from "../js/date2CanonicString.js";
@@ -14,15 +14,15 @@ import setPropertyOn from "../js/set-property.js";
 import XPageFolder from "../pages/x-page-folder.js";
 
 import "../pages/blocks/x-folder-graphics.js";
-import "../widgets/style/x-button.js";
-import "../widgets/file/x-fff-bmi.js";
-import "../widgets/file/x-fff-bmi-sd.js";
-import "../widgets/file/x-fff-height-sd.js";
-import "../widgets/file/x-fff-weight-sd.js";
-import "../widgets/file/x-fff-wh.js";
-import "../widgets/file/x-fff-wh-sd.js";
-import "../widgets/folder/x-ff-patient-related.js";
-import "../widgets/folder/x-ff-next-appointment.js";
+import "../v2/widgets/style/x-button.js";
+import "../v2/widgets/file/x-fff-bmi.js";
+import "../v2/widgets/file/x-fff-bmi-sd.js";
+import "../v2/widgets/file/x-fff-height-sd.js";
+import "../v2/widgets/file/x-fff-weight-sd.js";
+import "../v2/widgets/file/x-fff-wh.js";
+import "../v2/widgets/file/x-fff-wh-sd.js";
+import "../v2/widgets/folder/x-ff-patient-related.js";
+import "../v2/widgets/folder/x-ff-next-appointment.js";
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise

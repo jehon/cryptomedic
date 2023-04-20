@@ -1,8 +1,8 @@
 import { fn } from "./athelpers.js";
 
-import "../../src/app-old/widgets/func/x-codage.js";
+import "../../src/app-old/v2/widgets/func/x-codage.js";
 import { setSession } from "../../src/app-old/js/session.js";
-import XCodage from "../../src/app-old/widgets/func/x-codage.js";
+import XCodage from "../../src/app-old/v2/widgets/func/x-codage.js";
 
 describe(fn(import.meta.url), function () {
   let el;

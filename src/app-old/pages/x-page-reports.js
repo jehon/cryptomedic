@@ -14,23 +14,23 @@ import {
 } from "../js/router.js";
 import { getSession } from "../js/session.js";
 import { toSentenceCase } from "../js/string-utils.js";
-import XCodage from "../widgets/func/x-codage.js";
-import XForm from "../widgets/func/x-form.js";
-import XInputList from "../widgets/data/x-input-list.js";
-import XIoBoolean from "../widgets/io/x-io-boolean.js";
-import XRequestor from "../widgets/func/x-requestor.js";
-import XTable from "../widgets/x-table.js";
-import XButton from "../widgets/style/x-button.js";
-import XButtons from "../widgets/func/x-buttons.js";
-import XDisplayDate from "../widgets/style/x-display-date.js";
-import XGroupPanel from "../widgets/style/x-group-panel.js";
-import XLabel from "../widgets/style/x-label.js";
-import XMessages from "../widgets/func/x-messages.js";
-import XAge from "../widgets/func/x-age.js";
+import XCodage from "../v2/widgets/func/x-codage.js";
+import XForm from "../v2/widgets/func/x-form.js";
+import XInputList from "../v2/widgets/data/x-input-list.js";
+import XIoBoolean from "../v2/widgets/io/x-io-boolean.js";
+import XRequestor from "../v2/widgets/func/x-requestor.js";
+import XTable from "../v2/widgets/x-table.js";
+import XButton from "../v2/widgets/style/x-button.js";
+import XButtons from "../v2/widgets/func/x-buttons.js";
+import XDisplayDate from "../v2/widgets/style/x-display-date.js";
+import XGroupPanel from "../v2/widgets/style/x-group-panel.js";
+import XLabel from "../v2/widgets/style/x-label.js";
+import XMessages from "../v2/widgets/func/x-messages.js";
+import XAge from "../v2/widgets/func/x-age.js";
 import XInputDate from "../v1/elements/x-input-date.js";
 import pageStyles from "./page-helper.js";
-import "../widgets/func/x-i18n.js";
-import { reportQueryBuilder } from "../widgets/func/requests-reports.js";
+import "../v2/widgets/func/x-i18n.js";
+import { reportQueryBuilder } from "../v2/widgets/func/requests-reports.js";
 
 /**
  * Two parts here:

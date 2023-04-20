@@ -1,4 +1,4 @@
-import XOverlay from "../../src/app-old/widgets/func/x-overlay.js";
+import XOverlay from "../../src/app-old/v2/widgets/func/x-overlay.js";
 
 import { fn } from "./athelpers.js";
 

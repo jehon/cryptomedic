@@ -1,7 +1,7 @@
 import XFffAge, {
   fromBirthDate,
   fromBirthDateTo
-} from "../../src/app-old/widgets/file/x-fff-age.js";
+} from "../../src/app-old/v2/widgets/file/x-fff-age.js";
 
 import {
   fn,

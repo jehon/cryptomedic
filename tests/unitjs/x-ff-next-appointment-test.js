@@ -1,7 +1,7 @@
 import { fn, loadReference, RefFolder1 } from "./athelpers.js";
 
 import Folder from "../../src/app-old/v2/models/Folder.js";
-import XFfNextAppointment from "../../src/app-old/widgets/folder/x-ff-next-appointment.js";
+import XFfNextAppointment from "../../src/app-old/v2/widgets/folder/x-ff-next-appointment.js";
 import Appointment from "../../src/app-old/v2/models/Appointment.js";
 
 let testFolder;
@@ -100,7 +100,7 @@ describe(fn(import.meta.url), function () {
     el.folder = testFolder;
     location.hash = "#/";
 
-    /** @type {import('../../src/app-old/widgets/style/x-button.js').default} */
+    /** @type {import('../../src/app-old/v2/widgets/style/x-button.js').default} */
     (el.shadowRoot.querySelector("x-button#add-appointment")).click();
     expect(location.hash).toBe("#/folder/1/file/Appointment");
   });

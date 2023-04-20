@@ -17,8 +17,8 @@ import JHElement from "../v1/elements/jh-element.js";
 window.JHElement = JHElement;
 import "../v1/elements/x-o-overlay.js";
 import "../v1/elements/cryptomedic-data-service.js";
-import "../widgets/file/x-fff-field.js";
-import "../widgets/style/x-two-columns.js";
+import "../v2/widgets/file/x-fff-field.js";
+import "../v2/widgets/style/x-two-columns.js";
 import "../v1/elements/jh-script.js";
 import "../v1/elements/x-input-date.js";
 import XInputPicture from "../v1/elements/x-input-picture.js";
@@ -31,9 +31,9 @@ import XFile from "../v1/elements/x-file.js";
 window.XFile = XFile;
 import "../v1/elements/x-file-bill.js";
 import "../v1/elements/x-file-bill-summary.js";
-import "../widgets/file/x-fff-age.js";
-import "../widgets/style/x-group-panel.js";
-import "../widgets/style/x-label.js";
+import "../v2/widgets/file/x-fff-age.js";
+import "../v2/widgets/style/x-group-panel.js";
+import "../v2/widgets/style/x-label.js";
 
 let mainApp = angular.module("app_main", ["ngRoute"]).config([
   "$locationProvider",

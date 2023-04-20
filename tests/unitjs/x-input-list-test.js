@@ -1,4 +1,4 @@
-import XInputList from "../../src/app-old/widgets/data/x-input-list.js";
+import XInputList from "../../src/app-old/v2/widgets/data/x-input-list.js";
 
 import { setSession } from "../../src/app-old/js/session.js";
 import { createElementWithObject } from "../../src/app-old/js/custom-element.js";
