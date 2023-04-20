@@ -1,4 +1,4 @@
-import XPageLogin from "../../src/app-old/pages/x-page-login.js";
+import XPageLogin from "../../src/app-old/v2/pages/x-page-login.js";
 
 import { fn } from "./athelpers.js";
 

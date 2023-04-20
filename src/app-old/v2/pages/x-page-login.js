@@ -1,25 +1,25 @@
-import { messages } from "../config.js";
-import { setRoute, parseRouteLogin } from "../js/router.js";
-import { setSession } from "../js/session.js";
+import { messages } from "../../config.js";
+import { setRoute, parseRouteLogin } from "../../js/router.js";
+import { setSession } from "../../js/session.js";
 
-import XRequestor from "../v2/widgets/func/x-requestor.js";
+import XRequestor from "../widgets/func/x-requestor.js";
 import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../js/custom-element.js";
-import XForm from "../v2/widgets/func/x-form.js";
-import XPanel from "../v2/widgets/style/x-panel.js";
-import XLabel from "../v2/widgets/style/x-label.js";
-import XButtons from "../v2/widgets/func/x-buttons.js";
-import XButton from "../v2/widgets/style/x-button.js";
-import XGroupPanel from "../v2/widgets/style/x-group-panel.js";
+} from "../../js/custom-element.js";
+import XForm from "../widgets/func/x-form.js";
+import XPanel from "../widgets/style/x-panel.js";
+import XLabel from "../widgets/style/x-label.js";
+import XButtons from "../widgets/func/x-buttons.js";
+import XButton from "../widgets/style/x-button.js";
+import XGroupPanel from "../widgets/style/x-group-panel.js";
 import pageStyles from "./page-helper.js";
-import XIoString from "../v2/widgets/io/x-io-string.js";
+import XIoString from "../widgets/io/x-io-string.js";
 import {
   loginCheckRequestBuilder,
   loginRequestBuilder
-} from "../v2/widgets/func/requests-authenticator.js";
+} from "../widgets/func/requests-authenticator.js";
 
 /**
  * attribute redirect - Where to redirect on login

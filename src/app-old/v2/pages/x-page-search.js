@@ -3,18 +3,18 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../js/custom-element.js";
-import { getRouteToFolderPatient, setRoute } from "../js/router.js";
-import XForm from "../v2/widgets/func/x-form.js";
-import XRequestor from "../v2/widgets/func/x-requestor.js";
-import XTable from "../v2/widgets/x-table.js";
-import XButton from "../v2/widgets/style/x-button.js";
-import XButtons from "../v2/widgets/func/x-buttons.js";
-import XGroupPanel from "../v2/widgets/style/x-group-panel.js";
-import XPanel from "../v2/widgets/style/x-panel.js";
-import "../v1/elements/x-write-list.js";
+} from "../../js/custom-element.js";
+import { getRouteToFolderPatient, setRoute } from "../../js/router.js";
+import XForm from "../widgets/func/x-form.js";
+import XRequestor from "../widgets/func/x-requestor.js";
+import XTable from "../widgets/x-table.js";
+import XButton from "../widgets/style/x-button.js";
+import XButtons from "../widgets/func/x-buttons.js";
+import XGroupPanel from "../widgets/style/x-group-panel.js";
+import XPanel from "../widgets/style/x-panel.js";
+import "../../v1/elements/x-write-list.js";
 import pageStyles from "./page-helper.js";
-import { patientSearchBuilder } from "../v2/widgets/func/requests-folder.js";
+import { patientSearchBuilder } from "../widgets/func/requests-folder.js";
 
 export default class XPageSearch extends HTMLElement {
   constructor() {

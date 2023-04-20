@@ -2,20 +2,20 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../js/custom-element.js";
-import { getRouteToFolderPatient, setRoute } from "../../js/router.js";
-import XForm from "../../v2/widgets/func/x-form.js";
-import XRequestor from "../../v2/widgets/func/x-requestor.js";
-import XButton from "../../v2/widgets/style/x-button.js";
-import XButtons from "../../v2/widgets/func/x-buttons.js";
-import XGroupPanel from "../../v2/widgets/style/x-group-panel.js";
-import XLabel from "../../v2/widgets/style/x-label.js";
-import XPanel from "../../v2/widgets/style/x-panel.js";
-import XIoNumeric from "../../v2/widgets/io/x-io-numeric.js";
+} from "../../../js/custom-element.js";
+import { getRouteToFolderPatient, setRoute } from "../../../js/router.js";
+import XForm from "../../widgets/func/x-form.js";
+import XRequestor from "../../widgets/func/x-requestor.js";
+import XButton from "../../widgets/style/x-button.js";
+import XButtons from "../../widgets/func/x-buttons.js";
+import XGroupPanel from "../../widgets/style/x-group-panel.js";
+import XLabel from "../../widgets/style/x-label.js";
+import XPanel from "../../widgets/style/x-panel.js";
+import XIoNumeric from "../../widgets/io/x-io-numeric.js";
 import {
   checkReferenceBuilder,
   createReferenceBuilder
-} from "../../v2/widgets/func/requests-folder.js";
+} from "../../widgets/func/requests-folder.js";
 
 /**
  * Slot: none

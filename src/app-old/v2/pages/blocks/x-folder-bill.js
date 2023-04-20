@@ -1,9 +1,9 @@
-import { defineCustomElement } from "../../js/custom-element.js";
+import { defineCustomElement } from "../../../js/custom-element.js";
 import XFolderFile from "./x-folder-file.js";
 
 import "./x-folder-payments.js";
-import "../../v2/widgets/io/x-io-bill.js";
-import "../../v2/widgets/style/x-label.js";
+import "../../widgets/io/x-io-bill.js";
+import "../../widgets/style/x-label.js";
 
 /**
  * @param {Array<Object<string,(number|Date)>>} prices as the reference

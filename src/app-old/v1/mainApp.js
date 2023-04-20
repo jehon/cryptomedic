@@ -84,14 +84,14 @@ mainApp.controller("ctrl_folder", ctrl_folder);
 
 // Routing
 import { createElementWithObject } from "../js/custom-element.js";
-import XPageLogin from "../pages/x-page-login.js";
-import XPageHome from "../pages/x-page-home.js";
-import XPagePrices from "../pages/x-page-prices.js";
-import XPageSearch from "../pages/x-page-search.js";
-import XPageReports from "../pages/x-page-reports.js";
-import XPageUserEdit from "../pages/x-page-user-edit.js";
-import XPageUserPassword from "../pages/x-page-user-password.js";
-import XPageUsersList from "../pages/x-page-users-list.js";
+import XPageLogin from "../v2/pages/x-page-login.js";
+import XPageHome from "../v2/pages/x-page-home.js";
+import XPagePrices from "../v2/pages/x-page-prices.js";
+import XPageSearch from "../v2/pages/x-page-search.js";
+import XPageReports from "../v2/pages/x-page-reports.js";
+import XPageUserEdit from "../v2/pages/x-page-user-edit.js";
+import XPageUserPassword from "../v2/pages/x-page-user-password.js";
+import XPageUsersList from "../v2/pages/x-page-users-list.js";
 
 // template: function (_params) {
 //     // Thanks to https://stackoverflow.com/a/34217927/1954789

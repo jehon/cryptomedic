@@ -1,23 +1,23 @@
-import { messages } from "../config.js";
+import { messages } from "../../config.js";
 import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../js/custom-element.js";
-import XForm from "../v2/widgets/func/x-form.js";
-import XRequestor from "../v2/widgets/func/x-requestor.js";
-import XButton from "../v2/widgets/style/x-button.js";
-import XButtons from "../v2/widgets/func/x-buttons.js";
-import XGroupPanel from "../v2/widgets/style/x-group-panel.js";
-import XLabel from "../v2/widgets/style/x-label.js";
-import XMessage from "../v2/widgets/style/x-message.js";
-import XMessages from "../v2/widgets/func/x-messages.js";
-import "../v2/widgets/x-price-item-edit.js";
-import XPriceItemEdit from "../v2/widgets/x-price-item-edit.js";
-import XInputDate from "../v1/elements/x-input-date.js";
-import { createOverlay, overlayAcknowledge } from "../js/overlay-builder.js";
+} from "../../js/custom-element.js";
+import XForm from "../widgets/func/x-form.js";
+import XRequestor from "../widgets/func/x-requestor.js";
+import XButton from "../widgets/style/x-button.js";
+import XButtons from "../widgets/func/x-buttons.js";
+import XGroupPanel from "../widgets/style/x-group-panel.js";
+import XLabel from "../widgets/style/x-label.js";
+import XMessage from "../widgets/style/x-message.js";
+import XMessages from "../widgets/func/x-messages.js";
+import "../widgets/x-price-item-edit.js";
+import XPriceItemEdit from "../widgets/x-price-item-edit.js";
+import XInputDate from "../../v1/elements/x-input-date.js";
+import { createOverlay, overlayAcknowledge } from "../../js/overlay-builder.js";
 import pageStyles from "./page-helper.js";
-import { pricesCrud } from "../v2/widgets/func/requests-admin.js";
+import { pricesCrud } from "../widgets/func/requests-admin.js";
 
 /**
  * Sort !in place!
