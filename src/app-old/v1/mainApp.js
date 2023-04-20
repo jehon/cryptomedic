@@ -13,27 +13,22 @@ import "angular-route";
 import template from "../v2/js/template.js";
 import goThere from "../v2/js/goThere.js";
 
-import JHElement from "../v1/elements/jh-element.js";
+import JHElement from "./elements/jh-element.js";
 window.JHElement = JHElement;
-import "../v1/elements/x-o-overlay.js";
-import "../v1/elements/cryptomedic-data-service.js";
-import "../v2/widgets/file/x-fff-field.js";
-import "../v2/widgets/style/x-two-columns.js";
-import "../v1/elements/jh-script.js";
-import "../v1/elements/x-input-date.js";
-import XInputPicture from "../v1/elements/x-input-picture.js";
+import "./elements/x-o-overlay.js";
+import "./elements/cryptomedic-data-service.js";
+import "./elements/jh-script.js";
+import "./elements/x-input-date.js";
+import XInputPicture from "./elements/x-input-picture.js";
 window.XInputPicture = XInputPicture;
-import "../v1/elements/x-read.js";
-import "../v1/elements/x-read-boolean.js";
-import "../v1/elements/x-write.js";
-import "../v1/elements/x-write-list.js";
-import XFile from "../v1/elements/x-file.js";
+import "./elements/x-read.js";
+import "./elements/x-read-boolean.js";
+import "./elements/x-write.js";
+import "./elements/x-write-list.js";
+import XFile from "./elements/x-file.js";
 window.XFile = XFile;
-import "../v1/elements/x-file-bill.js";
-import "../v1/elements/x-file-bill-summary.js";
-import "../v2/widgets/file/x-fff-age.js";
-import "../v2/widgets/style/x-group-panel.js";
-import "../v2/widgets/style/x-label.js";
+import "./elements/x-file-bill.js";
+import "./elements/x-file-bill-summary.js";
 
 let mainApp = angular.module("app_main", ["ngRoute"]).config([
   "$locationProvider",
