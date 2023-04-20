@@ -18,5 +18,12 @@
   "github-actions.workflows.pinned.workflows": [
     ".github/workflows/test.yml"
   ],
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "prettier.documentSelectors": [
+    "*.js",
+    "*.ts",
+    "*.tsx",
+    "*.html",
+    "*.json"
+  ]
 }
