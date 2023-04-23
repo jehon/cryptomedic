@@ -1,8 +1,8 @@
 import axios from "../../../../cjs2esm/axios.js";
 axios.defaults.timeout = 30 * 1000;
 
-import { setSession } from "../../../v2/js/session.js";
-import { routeToLogin } from "../../../v2/js/router.js";
+import { setSession } from "../../js/session.js";
+import { routeToLogin } from "../../js/router.js";
 
 import {
   createElementsFromHTML,
@@ -10,15 +10,15 @@ import {
   createElementWithTag,
   defineCustomElement,
   getHTMLNameOfClass
-} from "../../../v2/js/custom-element.js";
+} from "../../js/custom-element.js";
 import "../../../../../node_modules/css-inherit/css-inherit.js";
 import XLabel from "../style/x-label.js";
-import { WithDataError } from "../../../v2/js/exceptions.js";
-import nullify from "../../../v2/js/nullify.js";
+import { WithDataError } from "../../js/exceptions.js";
+import nullify from "../../js/nullify.js";
 import {
   overlayAcknowledge,
   overlayWaiting
-} from "../../../v2/js/overlay-builder.js";
+} from "../../js/overlay-builder.js";
 
 /**
  * @param {number} code - http code

@@ -1,13 +1,13 @@
 import { messages } from "../../config.js";
-import { setRoute, parseRouteLogin } from "../../v2/js/router.js";
-import { setSession } from "../../v2/js/session.js";
+import { setRoute, parseRouteLogin } from "../js/router.js";
+import { setSession } from "../js/session.js";
 
 import XRequestor from "../widgets/func/x-requestor.js";
 import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../v2/js/custom-element.js";
+} from "../js/custom-element.js";
 import XForm from "../widgets/func/x-form.js";
 import XPanel from "../widgets/style/x-panel.js";
 import XLabel from "../widgets/style/x-label.js";

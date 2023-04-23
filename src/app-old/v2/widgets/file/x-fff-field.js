@@ -2,8 +2,8 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../../v2/js/custom-element.js";
-import { toSentenceCase } from "../../../v2/js/string-utils.js";
+} from "../../js/custom-element.js";
+import { toSentenceCase } from "../../js/string-utils.js";
 import XLabel from "../style/x-label.js";
 import { getPanelStyles } from "../style/x-panel.js";
 import XWithFile from "./x-with-file.js";

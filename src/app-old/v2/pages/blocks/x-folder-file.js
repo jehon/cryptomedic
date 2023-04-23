@@ -1,4 +1,4 @@
-import { defineCustomElement } from "../../../v2/js/custom-element.js";
+import { defineCustomElement } from "../../js/custom-element.js";
 
 export default class XFolderFile extends HTMLElement {
   _edit = false;

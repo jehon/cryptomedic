@@ -3,7 +3,7 @@ import {
   createElementWithTag,
   defineCustomElement,
   getHTMLNameOfClass
-} from "../../../v2/js/custom-element.js";
+} from "../../js/custom-element.js";
 
 /**
  * @param {HTMLElement} element to be applied on

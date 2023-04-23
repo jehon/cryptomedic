@@ -2,7 +2,7 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../../v2/js/custom-element.js";
+} from "../../js/custom-element.js";
 import { messages, spacing } from "../../../config.js";
 
 /**

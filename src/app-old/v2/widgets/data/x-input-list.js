@@ -3,9 +3,9 @@
 import {
   createElementWithTag,
   defineCustomElement
-} from "../../../v2/js/custom-element.js";
-import fireOn from "../../../v2/js/fire.js";
-import { getSession } from "../../../v2/js/session.js";
+} from "../../js/custom-element.js";
+import fireOn from "../../js/fire.js";
+import { getSession } from "../../js/session.js";
 
 let uuid = 1;
 

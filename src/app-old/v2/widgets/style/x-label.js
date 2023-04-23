@@ -2,7 +2,7 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../../v2/js/custom-element.js";
+} from "../../js/custom-element.js";
 import XI18n from "../func/x-i18n.js";
 
 /**

@@ -3,11 +3,11 @@ import {
   createElementWithObject,
   createElementWithTag,
   enrichObject
-} from "../../v2/js/custom-element.js";
+} from "../js/custom-element.js";
 import XOverlay from "./func/x-overlay.js";
 import XPanel from "./style/x-panel.js";
 import XIoBoolean from "./io/x-io-boolean.js";
-import { getFloatFrom } from "../../v2/js/number-utils.js";
+import { getFloatFrom } from "../js/number-utils.js";
 
 //
 // Idea to reverse it (statistical report): https://stackoverflow.com/a/44092580/1954789

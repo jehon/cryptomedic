@@ -5,15 +5,15 @@ import {
   createElementWithObject,
   createElementWithTag,
   defineCustomElement
-} from "../../v2/js/custom-element.js";
-import date2CanonicString from "../../v2/js/date2CanonicString.js";
-import { getPref, setPref } from "../../v2/js/prefs.js";
+} from "../js/custom-element.js";
+import date2CanonicString from "../js/date2CanonicString.js";
+import { getPref, setPref } from "../js/prefs.js";
 import {
   getRouteToFolderFileByParams,
   getRouteToFolderPatient
-} from "../../v2/js/router.js";
-import { getSession } from "../../v2/js/session.js";
-import { toSentenceCase } from "../../v2/js/string-utils.js";
+} from "../js/router.js";
+import { getSession } from "../js/session.js";
+import { toSentenceCase } from "../js/string-utils.js";
 import XCodage from "../widgets/func/x-codage.js";
 import XForm from "../widgets/func/x-form.js";
 import XInputList from "../widgets/data/x-input-list.js";

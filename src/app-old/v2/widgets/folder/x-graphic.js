@@ -1,9 +1,9 @@
 /* istanbul ignore file: TODO */
 
 import { fromBirthDateTo } from "../file/x-fff-age.js";
-import { getRouteToFolderFile, setRoute } from "../../../v2/js/router.js";
+import { getRouteToFolderFile, setRoute } from "../../js/router.js";
 
-import createCallback from "../../../v2/js/callback.js";
+import createCallback from "../../js/callback.js";
 import XWithFolder from "./x-with-folder.js";
 import "../style/x-group-panel.js";
 

@@ -1,7 +1,7 @@
 import {
   createElementWithTag,
   defineCustomElement
-} from "../../v2/js/custom-element.js";
+} from "../js/custom-element.js";
 
 /**
  * Attributes:

@@ -4,7 +4,7 @@ import {
   createElementWithTag,
   defineCustomElement,
   isEventOutOfSlot
-} from "../../../v2/js/custom-element.js";
+} from "../../js/custom-element.js";
 import XForm from "../func/x-form.js";
 
 /**

@@ -1,8 +1,8 @@
 import {
   createElementWithObject,
   defineCustomElement
-} from "../../v2/js/custom-element.js";
-import { getRoute, routes } from "../../v2/js/router.js";
+} from "../js/custom-element.js";
+import { getRoute, routes } from "../js/router.js";
 import XRequestor from "../widgets/func/x-requestor.js";
 import XTable from "../widgets/x-table.js";
 import XButton from "../widgets/style/x-button.js";

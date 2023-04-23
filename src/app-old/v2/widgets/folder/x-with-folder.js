@@ -1,5 +1,5 @@
-import { defineCustomElement } from "../../../v2/js/custom-element.js";
-import setPropertyOn from "../../../v2/js/set-property.js";
+import { defineCustomElement } from "../../js/custom-element.js";
+import setPropertyOn from "../../js/set-property.js";
 
 const folder = Symbol("folder");
 
@@ -72,7 +72,7 @@ export default class XWithFolder extends HTMLElement {
 
   /**
    * @returns {string|number} as the result of the calcul
-   * @throws {import('../../../../v2/js/exceptions.js').ApplicationException} when the calcul is not possible
+   * @throws {import('../../../js/exceptions.js').ApplicationException} when the calcul is not possible
    */
   formula() {
     return "ok";
