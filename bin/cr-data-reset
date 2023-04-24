@@ -28,24 +28,11 @@ header_end
 # Reset database
 header_begin "cr-data-reset - Mysql - configuring"
 
-echo "* Create user"
-cr-mysql --database=mysql -e "CREATE USER IF NOT EXISTS 'mysql_cryptomedic_username' IDENTIFIED BY 'password'"
-cr-mysql --database=mysql -e "FLUSH PRIVILEGES"
-
 echo "* Create schema"
 cr-mysql --database=mysql -e " \
-        USE mysql; \
         DROP SCHEMA IF EXISTS cryptomedic ; \
         CREATE SCHEMA cryptomedic; \
-        USE cryptomedic; \
-        GRANT ALL PRIVILEGES ON cryptomedic   TO mysql_cryptomedic_username; \
-        GRANT ALL PRIVILEGES ON cryptomedic.* TO mysql_cryptomedic_username; \
-        SET PASSWORD FOR mysql_cryptomedic_username = PASSWORD('mysql_cryptomedic_password'); 
-        FLUSH privileges; \
     "
-# Mysql 5.7, 7.0:
-# 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
-# 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 header_end
 
 header_begin "cr-data-reset - Mysql - restoring base.sql"
