@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use DB;
 
-class Counters {
+class ServerStats {
 	/**
 	 * Create a new filter instance.
 	 *

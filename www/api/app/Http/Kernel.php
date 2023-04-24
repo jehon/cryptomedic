@@ -28,6 +28,7 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\ServerStats::class,
         ],
 
         // Add some handlers from web: AddQueuedCookiesToResponse, StartSession, ShareErrorsFromSession
@@ -36,21 +37,21 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\ServerStats::class,
+            \App\Http\Middleware\MarkHeader::class
         ],
     ];
 
     /**
      * The application's route middleware.
      *
-     * These middleware may be assigned to groups or used individually.
+     * These middleware are ON DEMAND in api.php etc...
      *
      * @var array
      */
     protected $middlewareAliases = [
         'authenticated'   => \App\Http\Middleware\Authenticated::class,
-        'hasPermission'   => \App\Http\Middleware\HasPermission::class,
-        'markHeader'      => \App\Http\Middleware\MarkHeader::class,
-        'stats'           => \App\Http\Middleware\Stats::class,
+        'hasPermission'   => \App\Http\Middleware\HasPermission::class
   ];
 }
