@@ -3,12 +3,6 @@
     "titleBar.activeBackground": "#004f03"
   },
   "shellcheck.customArgs": ["-x"],
-  "files.exclude": {
-    "**/.git": true,
-    "**/vendor": true,
-    "**/node_modules": true,
-    "**/tmp": true
-  },
   "javascript.preferences.importModuleSpecifierEnding": "js",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.preferences.importModuleSpecifier": "relative",
