@@ -11,5 +11,10 @@ set -o pipefail
 # So, nobody can listen to stdin before the real "mysql" call!
 #
 
+#
+# We always wait... that does not take that much time
+#
+cr-mysql-wait
+
 # -T is necessary for <file.sql
 docker compose exec -T mysql mysql "$@"

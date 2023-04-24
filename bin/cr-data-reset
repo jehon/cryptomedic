@@ -32,8 +32,6 @@ echo "* Create user"
 cr-mysql --database=mysql -e "CREATE USER IF NOT EXISTS 'mysql_cryptomedic_username' IDENTIFIED BY 'password'"
 cr-mysql --database=mysql -e "FLUSH PRIVILEGES"
 
-cr-mysql-wait
-
 echo "* Create schema"
 cr-mysql --database=mysql -e " \
         USE mysql; \
@@ -50,10 +48,8 @@ cr-mysql --database=mysql -e " \
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 header_end
 
-cr-mysql-wait
-
 header_begin "cr-data-reset - Mysql - restoring base.sql"
-cr-mysql --database=cryptomedic < "conf/database/base.sql"
+cr-mysql --database=cryptomedic <"conf/database/base.sql"
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"
