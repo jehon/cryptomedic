@@ -23,8 +23,32 @@ class ServerStats {
 	 * @return mixed
 	 */
 	public function handle(Request $request, Closure $next) {
-		DB::select("SELECT 1");
-		
+		$path = $request->path();
+		$method = $request->method();
+		$paramStr = $method;
+		if ($method != 'POST') {
+			$param = array_keys($request->all());
+			sort($param);
+			$paramStr = join("|", $param);
+		}
+
+		$res = DB::table('server_stats')->upsert(
+			[
+				"key" => $path,
+				"params" => $paramStr
+			],
+			[
+				"key", "params"
+			],
+			[
+				"counter" => DB::raw('counter + 1')
+			]
+		);
+
+		if (!$res) {
+			die("Could not store stats");
+		}
+
 		return $next($request);
 	}
 }
