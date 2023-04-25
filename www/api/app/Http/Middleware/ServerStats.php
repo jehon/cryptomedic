@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use DB;
+use Route;
 
 class ServerStats {
 	/**
@@ -23,14 +24,16 @@ class ServerStats {
 	 * @return mixed
 	 */
 	public function handle(Request $request, Closure $next) {
-		$path = $request->path();
+		// $path = $request->path();
+		$path = Route::getRoutes()->match($request)->uri;
 		$method = $request->method();
 		$paramStr = $method;
-		if ($method != 'POST') {
-			$param = array_keys($request->all());
-			sort($param);
-			$paramStr = join("|", $param);
-		}
+		if (!$request->isMethod('post')) {
+			$params = array_keys($request->all());
+
+			natcasesort($params);
+			$paramStr = join("|", $params);
+		}	
 
 		$res = DB::table('server_stats')->upsert(
 			[
