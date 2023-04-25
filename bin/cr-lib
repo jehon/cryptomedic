@@ -23,7 +23,8 @@ CR_TMP="$CR_PRJ_DIR/tmp"
 if [ -z "$CRYPTOMEDIC_HTTP_HOST" ]; then
     # Loading dev env
     #    We don't load it everytime, because deploy would fail
-    . $CR_PRJ_DIR/.env
+    # shellcheck source=/dev/null
+    . "$CR_PRJ_DIR"/.env
 fi
 
 CR_HTTP_PORT="${CRYPTOMEDIC_HTTP_PORT:-80}"
@@ -36,7 +37,7 @@ export PATH="$CR_SCRIPT_DIR:$PATH"
 export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
 
 cr_curl() {
-	curl -fsSL --user-agent firefox "$@"
+    curl -fsSL --user-agent firefox "$@"
 }
 
 jh_color() {
@@ -53,7 +54,7 @@ header_message() {
     jh_color 93
     echo -n "$CR_HEADER_PREFIX $*"
     jh_color
-    echo   
+    echo
 }
 
 header_begin() {
