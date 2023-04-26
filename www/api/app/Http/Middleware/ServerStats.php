@@ -41,13 +41,17 @@ class ServerStats {
 
 		$res = DB::table('server_stats')->upsert(
 			[
+				// Insert data
 				"key" => $path,
-				"params" => $paramStr
+				"params" => $paramStr,
+				"counter" => 1
 			],
 			[
+				// Key that identify the unique records - ignored for mysql
 				"key", "params"
 			],
 			[
+				// Update data
 				"counter" => DB::raw('counter + 1')
 			]
 		);
