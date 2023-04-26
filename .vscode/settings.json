@@ -6,7 +6,6 @@
   "javascript.preferences.importModuleSpecifierEnding": "js",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.preferences.importModuleSpecifier": "relative",
-  "php.suggest.basic": false,
   "github-actions.workflows.pinned.workflows": [
     ".github/workflows/test.yml"
   ],
