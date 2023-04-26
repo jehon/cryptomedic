@@ -30,6 +30,10 @@ class ServerStats {
 		$paramStr = $method;
 		if (!$request->isMethod('post')) {
 			$params = array_keys($request->all());
+			if (in_array("period", $params)) {
+				$params = array_diff($params, [ 'period', 'day', 'month', 'year' ]);
+				$params[] = $request->input("period");
+			}
 
 			natcasesort($params);
 			$paramStr = join("|", $params);
