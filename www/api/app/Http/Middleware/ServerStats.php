@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use DB;
 use Route;
+use Detection\MobileDetect;
 
 class ServerStats {
 	/**
@@ -24,7 +25,10 @@ class ServerStats {
 	 * @return mixed
 	 */
 	public function handle(Request $request, Closure $next) {
-		// $path = $request->path();
+		
+		$detect = new MobileDetect();
+		$device = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'mobile') : 'computer');
+
 		$path = Route::getRoutes()->match($request)->uri;
 		$method = $request->method();
 		$paramStr = $method;
@@ -42,13 +46,14 @@ class ServerStats {
 		$res = DB::table('server_stats')->upsert(
 			[
 				// Insert data
+				"device" => $device,
 				"key" => $path,
 				"params" => $paramStr,
 				"counter" => 1
 			],
 			[
 				// Key that identify the unique records - ignored for mysql
-				"key", "params"
+				// "device", "key", "params"
 			],
 			[
 				// Update data
