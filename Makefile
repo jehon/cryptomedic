@@ -11,7 +11,7 @@ GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 dev: clear stop start dependencies lint build test ok
 
 .PHONY: full
-full: clear clean stop start dependencies lint update-dependencies build test ok
+full: clear clean stop dc-build start dependencies lint update-dependencies build test ok
 
 .PHONY: pull-request
 pull-request: full
@@ -118,14 +118,17 @@ clean-ports:
 	pkill chromedriver || true
 	jh-kill-by-port 9515 || true
 
+dc-build:
+	docker compose build
+	docker compose --profile=tool build
+
 .PHONY: start
 start: dc-up dependencies build reset
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_HTTP_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_HTTP_PORT)/dev/"
 
 dc-up:
-	docker compose up -d --build
-	docker compose --profile=tool build
+	docker compose up -d
 	bin/cr-dc-init
 
 stop:

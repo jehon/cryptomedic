@@ -27,6 +27,8 @@ jobs:
 
       - run: sudo .devcontainer/root/setup.sh
 
+      - run: make dc-build
+
       - run: make dc-up
 
       - run: make dump
