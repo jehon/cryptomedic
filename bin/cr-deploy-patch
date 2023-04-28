@@ -6,13 +6,12 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-SWD="$(dirname "$( realpath "${BASH_SOURCE[0]}")")"
+SWD="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 ACTION="$1"
 
-if [ -r /etc/jehon/restricted/cryptomedic.sh ]; then
-	. /etc/jehon/restricted/cryptomedic.sh
-fi
+# shellcheck source-path=SCRIPTDIR/../
+. "$CR_SCRIPT_DIR/cr-with-live-data" /etc/jehon/restricted/cryptomedic.sh
 
 LOG="$CR_TMP/deploy.log"
 mkdir -p "$CR_TMP"
@@ -20,34 +19,6 @@ REMOTE_LISTING="$CR_TMP"/deploy-remote.txt
 truncate --size=0 "$LOG"
 # We use this file in lftp_mkdir
 truncate --size=0 "$REMOTE_LISTING"
-
-export CRYPTOMEDIC_DEPLOY_HOST="${CRYPTOMEDIC_DEPLOY_HOST:-$JH_CRYPTOMEDIC_DEPLOY_HOST}"
-export CRYPTOMEDIC_HTTP_HOST="www.cryptomedic.org"
-export CRYPTOMEDIC_HTTP_PORT=80
-
-export CRYPTOMEDIC_DEPLOY_USER="${CRYPTOMEDIC_DEPLOY_USER:-$JH_CRYPTOMEDIC_DEPLOY_USER}"
-export CRYPTOMEDIC_DEPLOY_PASSWORD="${CRYPTOMEDIC_DEPLOY_PASSWORD:-$JH_CRYPTOMEDIC_DEPLOY_PASSWORD}"
-export CRYPTOMEDIC_WEB_TOKEN="${CRYPTOMEDIC_WEB_TOKEN:-$JH_CRYPTOMEDIC_WEB_TOKEN}"
-
-if [ -z "$CRYPTOMEDIC_DEPLOY_HOST" ]; then
-	echo "Missing CRYPTOMEDIC_DEPLOY_HOST" >&2
-	exit 255
-fi
-
-if [ -z "$CRYPTOMEDIC_DEPLOY_USER" ]; then
-	echo "Missing CRYPTOMEDIC_DEPLOY_USER" >&2
-	exit 255
-fi
-
-if [ -z "$CRYPTOMEDIC_DEPLOY_PASSWORD" ]; then
-	echo "Missing CRYPTOMEDIC_DEPLOY_PASSWORD" >&2
-	exit 255
-fi
-
-if [ -z "$CRYPTOMEDIC_WEB_TOKEN" ]; then
-	echo "Missing CRYPTOMEDIC_WEB_TOKEN" >&2
-	exit 255
-fi
 
 # Create a "3"rd out where all structured messages will go
 # This allow us to capture stdout and stderr everywhere,
@@ -113,15 +84,15 @@ echo "CRYPTOMEDIC_DEPLOY_PASSWORD: ${#CRYPTOMEDIC_DEPLOY_PASSWORD} characters"
 header_end
 
 header_begin "Testing connectivity"
-echo "version" |  ftp_exec_raw
+echo "version" | ftp_exec_raw
 header_end
 
 echo ""
 header_begin "Updating maintenance scripts [for real]"
 (
-	while read -r F ; do
+	while read -r F; do
 		ftp_put "$F" "$F"
-	done < <( find www/maintenance/ -type f  )
+	done < <(find www/maintenance/ -type f)
 	ftp_put deploy-filter
 ) | ftp_exec
 header_end

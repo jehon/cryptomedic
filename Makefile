@@ -143,6 +143,19 @@ reset:
 
 #
 #
+# Acceptance
+#
+#
+acceptance: $(TMP)/backup
+
+acceptance-download: $(TMP)/backup
+
+$(TMP)/backup:
+	mkdir -p "$@"
+	bin/cr-live-backup.sh "$@"
+
+#
+#
 # Tests
 #
 #
