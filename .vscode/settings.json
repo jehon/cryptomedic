@@ -2,7 +2,6 @@
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#004f03"
   },
-  "shellcheck.customArgs": ["-x"],
   "javascript.preferences.importModuleSpecifierEnding": "js",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.preferences.importModuleSpecifier": "relative",
