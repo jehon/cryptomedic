@@ -4,7 +4,9 @@ set -o errexit
 set -o pipefail
 
 # shellcheck source=/dev/null
-. "$1"
+if [ -x "$1" ]; then
+    . "$1"
+fi
 shift
 
 export CRYPTOMEDIC_DEPLOY_HOST="${CRYPTOMEDIC_DEPLOY_HOST:-$JH_CRYPTOMEDIC_DEPLOY_HOST}"
