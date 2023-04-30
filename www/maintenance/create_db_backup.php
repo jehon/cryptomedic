@@ -31,6 +31,14 @@ fwrite($fileHandler, "-- \n");
 fwrite($fileHandler, "-- \n");
 fwrite($fileHandler, "\n\n");
 
+#
+# Disable strict mode
+#    Some data are not perfectly ok, so let's do our best...
+#
+#    https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html#sql-mode-strict
+#
+fwrite($fileHandler, "SET sql_mode = '';\n");
+
 /**
  * Get All Table Names From the Database
  */
