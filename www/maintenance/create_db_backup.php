@@ -97,8 +97,10 @@ foreach ($tables as $table) {
             $vals = "";
 
             foreach($row as $key => $val) {
-                if ($val) {
-                    $keys .= '`' . $key . '`,';
+                $keys .= '`' . $key . '`,';
+                if ($val === null) {
+                    $vals .= 'NULL,';
+                } else {
                     $vals .= $db->pdo->quote($val) . ',';
                 }
             }
