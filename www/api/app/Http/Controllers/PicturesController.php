@@ -61,7 +61,7 @@ class PicturesController extends FicheController {
       } else {
         $file = $picture->getPhysicalPath($picture->file);
         if (!file_exists($file)) {
-          echo "<tr><td>#" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td></td>No-file-on-filesystem<td></tr>";
+          echo "<tr><td>#" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td><td>No-file-on-filesystem</td></tr>";
           flush();
         } else {
           $ext = pathinfo($picture->file, PATHINFO_EXTENSION);
