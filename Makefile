@@ -146,7 +146,10 @@ reset:
 # Acceptance
 #
 #
-acceptance: $(TMP)/backup
+acceptance: $(TMP)/backup dc-up
+	cr-mysql -e "DROP DATABASE cryptomedic;CREATE DATABASE cryptomedic"
+	cr-mysql --database=cryptomedic < $$( ls tmp/backup/backups/*.sql | sort | tail -n 1 )
+	rsync -itr --delete tmp/backup/storage/ live/storage
 
 acceptance-download: $(TMP)/backup
 
