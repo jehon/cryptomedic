@@ -12,11 +12,12 @@ rsync -a --delete live-for-test/ live/
 chmod -R a+rwX "live/"
 chmod -R a+rwX "live/storage"
 chmod -R a+rwX "live/storage/uploadedPictures"
+mkdir -p "www/api/storage/framework/sessions"
+chmod a+rwX "www/api/storage/framework/sessions"
 
 cr-ensure-folder-empty "www/api/bootstrap/cache/"
 cr-ensure-folder-empty "www/api/storage/framework/cache"
 cr-ensure-folder-empty "www/api/storage/framework/cache/data"
-cr-ensure-folder-empty "www/api/storage/framework/sessions"
 cr-ensure-folder-empty "www/api/storage/framework/views"
 cr-ensure-folder-empty "www/api/storage/logs/"
 cr-ensure-folder-empty "tmp/webTemp"
