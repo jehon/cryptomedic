@@ -159,11 +159,12 @@ acceptance: $(TMP)/backup dc-up
 	cr-mysql --database=cryptomedic < $$( ls tmp/backup/backups/*.sql | sort | tail -n 1 )
 	rsync -itr --delete tmp/backup/storage/ live/storage
 
-acceptance-download: $(TMP)/backup
+acceptance-download: $(TMP)/backup/.done
 
-$(TMP)/backup:
-	mkdir -p "$@"
+$(TMP)/backup/.done:
+	mkdir -p "$(dir $@)"
 	bin/cr-live-backup.sh "$@"
+	touch "$@"
 
 #
 #
