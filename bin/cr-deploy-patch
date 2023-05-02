@@ -10,11 +10,6 @@ SWD="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 ACTION="$1"
 
-# shellcheck source-path=SCRIPTDIR/../
-if [ -x /etc/jehon/restricted/cryptomedic.sh ]; then
-	. /etc/jehon/restricted/cryptomedic.sh
-fi
-
 LOG="$CR_TMP/deploy.log"
 mkdir -p "$CR_TMP"
 REMOTE_LISTING="$CR_TMP"/deploy-remote.txt
@@ -81,6 +76,7 @@ header_begin "Dump infos"
 echo "CRYPTOMEDIC_DEPLOY_HOST:     '${CRYPTOMEDIC_DEPLOY_HOST}'"
 echo "CRYPTOMEDIC_DEPLOY_USER:     ${#CRYPTOMEDIC_DEPLOY_USER} characters"
 echo "CRYPTOMEDIC_DEPLOY_PASSWORD: ${#CRYPTOMEDIC_DEPLOY_PASSWORD} characters"
+echo "CRYPTOMEDIC_HTTP_LOCAL_PORT: ${CRYPTOMEDIC_HTTP_LOCAL_PORT}"
 header_end
 
 header_begin "Testing connectivity"

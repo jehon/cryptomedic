@@ -44,10 +44,10 @@ SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 DISPLAY ?= ":0"
 
 # Defaults value for Dev:
-CRYPTOMEDIC_HTTP_HOST ?= localhost
-CRYPTOMEDIC_HTTP_PORT ?= 5555
-CRYPTOMEDIC_HTTP_TOKEN ?= secret
-CRYPTOMEDIC_HTTP_LOCAL_PORT := 5555
+export CRYPTOMEDIC_HTTP_HOST ?= localhost
+export CRYPTOMEDIC_HTTP_PORT ?= 5555
+export CRYPTOMEDIC_HTTP_TOKEN ?= secret
+export CRYPTOMEDIC_HTTP_LOCAL_PORT=5555
 
 #
 # Dev env fixed
@@ -104,7 +104,6 @@ clear:
 	@echo "**"
 
 clean: stop
-	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
 	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "*.log" -delete
