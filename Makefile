@@ -44,10 +44,10 @@ SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 DISPLAY ?= ":0"
 
 # Defaults value for Dev:
-JH_CRYPTOMEDIC_HTTP_HOST ?= localhost
-JH_CRYPTOMEDIC_HTTP_PORT ?= 5555
-JH_CRYPTOMEDIC_HTTP_TOKEN ?= secret
-JH_CRYPTOMEDIC_HTTP_LOCAL_PORT := 5555
+CRYPTOMEDIC_HTTP_HOST ?= localhost
+CRYPTOMEDIC_HTTP_PORT ?= 5555
+CRYPTOMEDIC_HTTP_TOKEN ?= secret
+CRYPTOMEDIC_HTTP_LOCAL_PORT := 5555
 
 #
 # Dev env fixed
@@ -80,10 +80,10 @@ dump:
 	@echo "SHELL:                          $(SHELL)"
 	@echo "PATH:                           $(PATH)"
 	@echo "DISPLAY:                        $(DISPLAY)"
-	@echo "JH_CRYPTOMEDIC_HTTP_HOST:       $(JH_CRYPTOMEDIC_HTTP_HOST)"
-	@echo "JH_CRYPTOMEDIC_HTTP_PORT:       $(JH_CRYPTOMEDIC_HTTP_PORT)"
-	@echo "JH_CRYPTOMEDIC_HTTP_LOCAL_PORT: $(JH_CRYPTOMEDIC_HTTP_LOCAL_PORT)"
-	@echo "JH_CRYPTOMEDIC_DEPLOY_HOST:     $(JH_CRYPTOMEDIC_DEPLOY_HOST)"
+	@echo "CRYPTOMEDIC_HTTP_HOST:          $(CRYPTOMEDIC_HTTP_HOST)"
+	@echo "CRYPTOMEDIC_HTTP_PORT:          $(CRYPTOMEDIC_HTTP_PORT)"
+	@echo "CRYPTOMEDIC_HTTP_LOCAL_PORT:    $(CRYPTOMEDIC_HTTP_LOCAL_PORT)"
+	@echo "CRYPTOMEDIC_DEPLOY_HOST:        $(CRYPTOMEDIC_DEPLOY_HOST)"
 	@echo "------------------------------------------"
 	@echo "MySQL:                          $(shell bin/cr-mysql --version 2>&1 )"
 	@echo "MySQL Server:                   $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
@@ -132,8 +132,8 @@ dc-build:
 
 .PHONY: start
 start: dc-up dependencies build reset
-	@echo "Open browser: http://localhost:$(JH_CRYPTOMEDIC_HTTP_LOCAL_PORT)/"
-	@echo "Test page: http://localhost:$(JH_CRYPTOMEDIC_HTTP_LOCAL_PORT)/dev/"
+	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/"
+	@echo "Test page: http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/dev/"
 
 dc-up:
 	docker compose up -d

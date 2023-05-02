@@ -17,13 +17,6 @@ CR_SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 CR_PRJ_DIR="$(dirname "$CR_SCRIPT_DIR")"
 CR_TMP="$CR_PRJ_DIR/tmp"
 
-if [ -z "$JH_CRYPTOMEDIC_DEPLOY_HOST" ]; then
-    # Loading dev env
-    #    We don't load it everytime, because deploy would fail
-    # shellcheck source=/dev/null
-    . "$CR_PRJ_DIR"/.env
-fi
-
 export PATH="$CR_SCRIPT_DIR:$PATH"
 
 # For recursion
