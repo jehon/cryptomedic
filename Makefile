@@ -6,6 +6,7 @@ export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 TMP := $(ROOT)/tmp
 CJS2ESM_DIR := src/cjs2esm
+ACCEPTANCE := $(TMP)/backup/
 
 # Defaults value for Dev:
 export CRYPTOMEDIC_HTTP_HOST ?= localhost
@@ -57,7 +58,7 @@ dump:
 	@echo "HOME:                           $(HOME)"
 	@echo "SHELL:                          $(SHELL)"
 	@echo "PATH:                           $(PATH)"
-	@echo "DISPLAY:                        $(DISPLAY)"
+	@echo "ACCEPTANCE:                     $(ACCEPTANCE)"
 	@echo "CRYPTOMEDIC_HTTP_HOST:          $(CRYPTOMEDIC_HTTP_HOST)"
 	@echo "CRYPTOMEDIC_HTTP_PORT:          $(CRYPTOMEDIC_HTTP_PORT)"
 	@echo "CRYPTOMEDIC_HTTP_LOCAL_PORT:    $(CRYPTOMEDIC_HTTP_LOCAL_PORT)"
@@ -131,19 +132,19 @@ reset:
 # Acceptance
 #
 #
-acceptance: $(TMP)/backup/.done dc-up
+acceptance: $(ACCEPTANCE)/.done dc-up
 	cr-mysql -e "DROP DATABASE cryptomedic;CREATE DATABASE cryptomedic"
-	cr-mysql --database=cryptomedic < $$( ls tmp/backup/backups/*.sql | sort | tail -n 1 )
-	rsync -itr --delete tmp/backup/storage/ live/storage
+	cr-mysql --database=cryptomedic < $$( ls "$(ACCEPTANCE)"/backups/*.sql | sort | tail -n 1 )
+	rsync -itr --delete "$(ACCEPTANCE)"/storage/ live/storage
 
-$(TMP)/backup/.done:
-	bin/cr-live-backup.sh "$(TMP)/backup/"
+$(ACCEPTANCE)/.done:
+	bin/cr-live-backup.sh "$(dir $@)"
 	touch "$@"
 
 acceptance-refresh:
-	rm -f $(TMP)/backup/.done
+	rm -f "$(ACCEPTANCE)/.done"
 # Do not depend but force running
-	make $(TMP)/backup/.done
+	make "$(ACCEPTANCE)/.done"
 
 #
 #
