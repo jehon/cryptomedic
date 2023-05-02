@@ -19,7 +19,7 @@ fi
 
 mkdir -p "$BACKUP_DIR"
 
-echo "Getting storage"
+echo "Getting storage from $JH_CRYPTOMEDIC_DEPLOY_HOST"
 lftp "$JH_CRYPTOMEDIC_DEPLOY_USER:$JH_CRYPTOMEDIC_DEPLOY_PASSWORD@$JH_CRYPTOMEDIC_DEPLOY_HOST" \
     -e "mirror live/storage '$BACKUP_DIR/storage'; bye"
 echo "...done"
