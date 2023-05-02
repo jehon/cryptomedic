@@ -47,10 +47,13 @@ $myLogFix = 0;
 function mylog($picture, $msg, $fix = null) {
   global $myLogI;
   global $myLogFix;
+  $myLogI++;
   echo "<tr>";
-  echo "<td>#" . $myLogI++ . "</td>";
-  echo "<td>" . ($picture ? $picture->id : '-'). "</td>";
-  echo "<td>" . ($picture ? $picture->file : '-') . "</td>";
+  echo "<td>#" . $myLogI . "</td>";
+  if ($picture) {
+    echo "<td><a href='/built/ng1x.html#/folder/" . $picture->patient_id . "/file/Picture/" . $picture->id . "'>" . $picture->id . "</a></td>";
+    echo "<td>" . $picture->file . "</td>";
+  }
   echo "<td>$msg</td>";
 
   if ($myLogFix < Request::input('n')) {
