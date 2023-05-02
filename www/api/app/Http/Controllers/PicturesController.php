@@ -77,7 +77,7 @@ class PicturesController extends FicheController {
 
     echo "<tr style='background-color: lightgray;'><td colspan='100'>From filesystem</td></tr>";
     flush();
-    foreach(FS::glob(Picture::getPhysicalRoot() . "/*") as $file) {
+    foreach(FS::glob(Picture::getPhysicalRoot() . "/*", true) as $file) {
       $file = substr($file, strlen(Picture::getPhysicalRoot()));
       if (!Picture::getPictureCountByPhysicalPath($file)) {
         mylog(null, "no-db-record: " . $file);
