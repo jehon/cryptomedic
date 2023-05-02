@@ -5,16 +5,16 @@ set -o pipefail
 
 mysql_test() {
     # Do not capture stdin!
-    bin/cr-mysqladmin ping -h "localhost" --silent > /dev/null < /dev/null
+    bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null </dev/null
 }
 
 sleep 1s
-if ! mysql_test ; then
+if ! mysql_test; then
     echo -n "Waiting for mysql"
     sleep 0.5s
-    while ! mysql_test ; do
+    while ! mysql_test; do
         echo -n "."
         sleep 0.5s
     done
-    echo
+    echo " ✓"
 fi
