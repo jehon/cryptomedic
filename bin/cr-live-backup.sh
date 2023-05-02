@@ -7,11 +7,6 @@ shopt -s nullglob
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-# shellcheck source-path=SCRIPTDIR/../
-if [ -x /etc/jehon/restricted/cryptomedic.sh ]; then
-    . /etc/jehon/restricted/cryptomedic.sh
-fi
-
 BACKUP_DIR="."
 if [ -n "$1" ]; then
     BACKUP_DIR="$1"

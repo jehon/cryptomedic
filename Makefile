@@ -160,12 +160,13 @@ acceptance: $(TMP)/backup/.done dc-up
 	rsync -itr --delete tmp/backup/storage/ live/storage
 
 $(TMP)/backup/.done:
-# Do not depend but force running
-	make acceptance-refresh
+	bin/cr-live-backup.sh "$(TMP)/backup/"
 	touch "$@"
 
 acceptance-refresh:
-	bin/cr-live-backup.sh "$(TMP)/backup/"
+	rm -f $(TMP)/backup/.done
+# Do not depend but force running
+	make $(TMP)/backup/.done
 
 #
 #
