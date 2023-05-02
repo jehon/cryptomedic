@@ -6,7 +6,7 @@ export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 TMP := $(ROOT)/tmp
 CJS2ESM_DIR := src/cjs2esm
-ACCEPTANCE := $(TMP)/backup/
+ACCEPTANCE := $(ROOT)/live-from-production/
 
 # Defaults value for Dev:
 export CRYPTOMEDIC_HTTP_HOST ?= localhost
@@ -146,6 +146,8 @@ acceptance-refresh:
 # Do not depend but force running
 	make "$(ACCEPTANCE)/.done"
 
+acceptance-clean:
+	rm -f "$(ACCEPTANCE)/"
 #
 #
 # Tests
