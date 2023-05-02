@@ -42,6 +42,29 @@ function myglob($glob, $recursive = false) {
   return $list;
 }
 
+$myLogI = 0;
+$myLogFix = 0;
+function mylog($picture, $msg, $fix = null) {
+  global $myLogI;
+  global $myLogFix;
+  echo "<tr>";
+  echo "<td>#" . $myLogI++ . "</td>";
+  echo "<td>" . ($picture ? $picture->id : '-'). "</td>";
+  echo "<td>" . ($picture ? $picture->file : '-') . "</td>";
+  echo "<td>$msg</td>";
+
+  if ($myLogFix < Request::input('n')) {
+    if ($fix) {
+      $myLogFix++;
+      echo "<td>!$myLogFix</td>";
+      $fix($picture);
+    }
+  }
+
+  echo "</tr>";
+  flush();
+}
+
 class PicturesController extends FicheController {
   static public function getModelClass() {
     return "App\\Model\\Picture";
@@ -49,31 +72,33 @@ class PicturesController extends FicheController {
 
   // List all database pictures that does not exists on the file system
   public function checkFileSystem() {
-    $i = 0;
     $res = [];
     echo "<table style='width: 100%;'>";
     echo "<tr style='background-color: lightgray;'><td colspan='100'>From database</td></tr>\n";
     flush();
     foreach(Picture::all() as $picture) {
       if ($picture->file == null) {
-        echo "<tr><td>#" . $i++ . "</td><td>" . $picture->id . "</td><td>no-file-in-database</td></tr>";
-        flush();
+        mylog($picture, "no-file-in-database", function($picture) {
+          $picture->delete();
+        });
       } else {
         $file = $picture->getPhysicalPath($picture->file);
         if (!file_exists($file)) {
-          echo "<tr><td>#" . $i++ . "</td><td>{$picture->id}</td><td>{$picture->file}</td><td>No-file-on-filesystem</td></tr>";
-          flush();
+          mylog($picture, "no-file-on-filesystem");
         } else {
           $ext = pathinfo($picture->file, PATHINFO_EXTENSION);
           if ($ext) {
             $calc = $picture->calculateTargetName("", $ext);
             if ($calc != $picture->file) {
-              echo "<tr><td>#" . $i++ . "</td><td>{$picture->id}</td><td>$picture->file</td><td>$calc</td></tr>";
-              flush();
+              mylog($picture, $calc, function($picture) use($calc) {
+                \App\Model\mkdirIf($picture->getPhysicalPath($calc));
+                rename($picture->getPhysicalPath($picture->file), $picture->getPhysicalPath($calc));
+                $picture->file = $calc;
+                $picture->save();
+              });
             }
           } else {
-            echo "<tr><td>#" . $i++ . "</td><td>{$picture->id}</td><td>$picture->file</td><td>no-extension</td></tr>";
-            flush();
+            mylog($picture, "no-extension");
           }
         }
       }
@@ -85,10 +110,9 @@ class PicturesController extends FicheController {
     foreach(myglob(Picture::getPhysicalRoot() . "/*") as $file) {
       $file = substr($file, strlen(Picture::getPhysicalRoot()));
       if (!Picture::getPictureCountByPhysicalPath($file)) {
-        echo "<tr><td>" . $i++ . "</td><td>no-db-record</td><td>{$file}</td></tr>";
-        flush();
+        mylog(null, "no-db-record: " . $file);
       }
-    }   
+    }
     echo "</table>";
     flush();
     return "ok";
