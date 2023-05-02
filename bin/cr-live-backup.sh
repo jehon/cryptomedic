@@ -8,7 +8,9 @@ shopt -s nullglob
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 # shellcheck source-path=SCRIPTDIR/../
-. "$CR_SCRIPT_DIR/cr-with-live-data" /etc/jehon/restricted/cryptomedic.sh
+if [ -x /etc/jehon/restricted/cryptomedic.sh ]; then
+    . /etc/jehon/restricted/cryptomedic.sh
+fi
 
 BACKUP_DIR="."
 if [ -n "$1" ]; then
@@ -23,7 +25,7 @@ lftp "$JH_CRYPTOMEDIC_DEPLOY_USER:$JH_CRYPTOMEDIC_DEPLOY_PASSWORD@$JH_CRYPTOMEDI
 echo "...done"
 
 echo "Generating a new backup on remote"
-curl -fsSL --user-agent firefox "http://$JH_CRYPTOMEDIC_WEB_HOST/maintenance/create_db_backup.php?pwd=$JH_CRYPTOMEDIC_WEB_TOKEN"
+curl -fsSL --user-agent firefox "http://$JH_CRYPTOMEDIC_HTTP_HOST/maintenance/create_db_backup.php?pwd=$JH_CRYPTOMEDIC_HTTP_TOKEN"
 echo "- Sleeping a bit to allow the file to become visible"
 sleep 10s
 echo "...done"

@@ -5,11 +5,9 @@
 
 ## Local links
 
-Devcontainers: http://localhost:9001
+Application: http://localhost:5555/
 
-Application: http://localhost
-
-Debug: http://localhost/xappx
+Debug: http://localhost:5555/dev/
 
 ## Local requirements
 
@@ -29,17 +27,17 @@ sudo apt install docker.io make curl nodejs
 To start quickly:
 make start dependencies build data-reset
 
-| Command           | What does it does?                                                                                      |
-| ----------------- | ------------------------------------------------------------------------------------------------------- |
-| make start        | will install and start the whole stack. Open localhost:${CRYPTOMEDIC_HTTP_PORT:-80} to view cryptomedic |
-| make dependencies | install dependencies                                                                                    |
-| make data-reset   | install data                                                                                            |
-| make stop         | stop the server                                                                                         |
-| make test         | launch the tests                                                                                        |
-| make clean        | clean up generated files                                                                                |
-| make clean-hard   | make clean + remove dependencies                                                                        |
-| make deploy       | deploy the stack to the production server (env config necessary)                                        |
-| make data-reset   | To reset the database and files                                                                         |
+| Command           | What does it does?                                               |
+| ----------------- | ---------------------------------------------------------------- |
+| make start        | will install and start the whole stack                           |
+| make dependencies | install dependencies                                             |
+| make data-reset   | install data                                                     |
+| make stop         | stop the server                                                  |
+| make test         | launch the tests                                                 |
+| make clean        | clean up generated files                                         |
+| make clean-hard   | make clean + remove dependencies                                 |
+| make deploy       | deploy the stack to the production server (env config necessary) |
+| make data-reset   | To reset the database and files                                  |
 
 Notes:
 

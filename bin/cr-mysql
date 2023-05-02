@@ -11,6 +11,8 @@ set -o pipefail
 # So, nobody can listen to stdin before the real "mysql" call!
 #
 
+. "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
+
 #
 # We always wait... that does not take that much time
 #

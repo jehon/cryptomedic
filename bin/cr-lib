@@ -6,9 +6,6 @@ set -o pipefail
 export CR_SCRIPT_DIR
 export CR_PRJ_DIR
 export CR_TMP
-export CR_HTTP_PORT
-export CR_HTTP_HOST
-export CR_DEPLOY_HOST
 export SSH_KNOWN_HOSTS="$HOME/.ssh/known_hosts"
 
 export DEBIAN_FRONTEND=noninteractive
@@ -20,16 +17,12 @@ CR_SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 CR_PRJ_DIR="$(dirname "$CR_SCRIPT_DIR")"
 CR_TMP="$CR_PRJ_DIR/tmp"
 
-if [ -z "$CRYPTOMEDIC_HTTP_HOST" ]; then
+if [ -z "$JH_CRYPTOMEDIC_DEPLOY_HOST" ]; then
     # Loading dev env
     #    We don't load it everytime, because deploy would fail
     # shellcheck source=/dev/null
     . "$CR_PRJ_DIR"/.env
 fi
-
-CR_HTTP_PORT="${CRYPTOMEDIC_HTTP_PORT:-80}"
-CR_HTTP_HOST="${CRYPTOMEDIC_HTTP_HOST:-"localhost"}:$CR_HTTP_PORT"
-CR_DEPLOY_HOST="ftp.cluster003.ovh.net"
 
 export PATH="$CR_SCRIPT_DIR:$PATH"
 

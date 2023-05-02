@@ -54,10 +54,13 @@ jobs:
       - name: make deploy
         if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
         env:
-          CRYPTOMEDIC_DEPLOY_HOST: ${{ secrets.CRYPTOMEDIC_DEPLOY_HOST }}
-          CRYPTOMEDIC_DEPLOY_PASSWORD: ${{ secrets.CRYPTOMEDIC_DEPLOY_PASSWORD }}
-          CRYPTOMEDIC_DEPLOY_USER: ${{ secrets.CRYPTOMEDIC_DEPLOY_USER }}
-          CRYPTOMEDIC_WEB_TOKEN: ${{ secrets.CRYPTOMEDIC_WEB_TOKEN }}
+          JH_CRYPTOMEDIC_HTTP_HOST: ${{ secrets.JH_CRYPTOMEDIC_HTTP_HOST }}
+          JH_CRYPTOMEDIC_HTTP_PORT: ${{ secrets.JH_CRYPTOMEDIC_HTTP_PORT }}
+          JH_CRYPTOMEDIC_HTTP_TOKEN: ${{ secrets.JH_CRYPTOMEDIC_HTTP_TOKEN }}
+
+          JH_CRYPTOMEDIC_DEPLOY_HOST: ${{ secrets.JH_CRYPTOMEDIC_DEPLOY_HOST }}
+          JH_CRYPTOMEDIC_DEPLOY_USER: ${{ secrets.JH_CRYPTOMEDIC_DEPLOY_USER }}
+          JH_CRYPTOMEDIC_DEPLOY_PASSWORD: ${{ secrets.JH_CRYPTOMEDIC_DEPLOY_PASSWORD }}
         run:  make deploy
 
       - name: 'Artifacts test-styles'

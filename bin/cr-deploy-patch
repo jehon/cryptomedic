@@ -11,7 +11,9 @@ SWD="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 ACTION="$1"
 
 # shellcheck source-path=SCRIPTDIR/../
-. "$CR_SCRIPT_DIR/cr-with-live-data" /etc/jehon/restricted/cryptomedic.sh
+if [ -x /etc/jehon/restricted/cryptomedic.sh ]; then
+	. /etc/jehon/restricted/cryptomedic.sh
+fi
 
 LOG="$CR_TMP/deploy.log"
 mkdir -p "$CR_TMP"
@@ -26,11 +28,9 @@ truncate --size=0 "$REMOTE_LISTING"
 exec 3>&1
 
 ftp_exec_raw() {
-	# tee -a "$LOG" | ftp "ftp://${CRYPTOMEDIC_DEPLOY_USER}:${CRYPTOMEDIC_DEPLOY_PASSWORD}@${CRYPTOMEDIC_DEPLOY_HOST}" 2>&1 | tee -a "$LOG"
-
-	SSHPASS="${CRYPTOMEDIC_DEPLOY_PASSWORD}" sshpass -e \
+	SSHPASS="${JH_CRYPTOMEDIC_DEPLOY_PASSWORD}" sshpass -e \
 		sftp -o "UserKnownHostsFile=$SWD/../conf/ovh.key" \
-		"${CRYPTOMEDIC_DEPLOY_USER}@${CRYPTOMEDIC_DEPLOY_HOST}" \
+		"${JH_CRYPTOMEDIC_DEPLOY_USER}@${JH_CRYPTOMEDIC_DEPLOY_HOST}" \
 		2>&1 | tee -a "$LOG"
 }
 
@@ -78,9 +78,9 @@ ftp_rm() {
 }
 
 header_begin "Dump infos"
-echo "CRYPTOMEDIC_DEPLOY_HOST: '${CRYPTOMEDIC_DEPLOY_HOST}'"
-echo "CRYPTOMEDIC_DEPLOY_USER: ${#CRYPTOMEDIC_DEPLOY_USER} characters"
-echo "CRYPTOMEDIC_DEPLOY_PASSWORD: ${#CRYPTOMEDIC_DEPLOY_PASSWORD} characters"
+echo "JH_CRYPTOMEDIC_DEPLOY_HOST:     '${JH_CRYPTOMEDIC_DEPLOY_HOST}'"
+echo "JH_CRYPTOMEDIC_DEPLOY_USER:     ${#JH_CRYPTOMEDIC_DEPLOY_USER} characters"
+echo "JH_CRYPTOMEDIC_DEPLOY_PASSWORD: ${#JH_CRYPTOMEDIC_DEPLOY_PASSWORD} characters"
 header_end
 
 header_begin "Testing connectivity"
@@ -98,7 +98,7 @@ header_begin "Updating maintenance scripts [for real]"
 header_end
 
 header_begin "Getting the md5 from local"
-cr_curl "http://localhost:$CR_HTTP_PORT/maintenance/md5sum.php?filter=local" >"$CR_TMP"/deploy-local.txt
+cr_curl "http://localhost:$JH_CRYPTOMEDIC_HTTP_PORT/maintenance/md5sum.php?filter=local" >"$CR_TMP"/deploy-local.txt
 header_end
 
 header_begin "Sorting local file"
@@ -167,7 +167,7 @@ fi
 sleep 2
 
 header_begin "Refreshing structure"
-"$CR_SCRIPT_DIR/"cr-refresh-structure
+"$CR_SCRIPT_DIR/"cr-refresh-structure "http://${JH_CRYPTOMEDIC_HTTP_HOST}:${JH_CRYPTOMEDIC_HTTP_PORT}" "${JH_CRYPTOMEDIC_HTTP_TOKEN}"
 header_end
 
 echo "*** End ***"

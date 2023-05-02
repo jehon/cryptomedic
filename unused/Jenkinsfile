@@ -2,10 +2,10 @@ pipeline {
   agent any
   environment {
     CRYPTOMEDIC_UPLOAD = credentials('cryptomedic-upload')
-    CRYPTOMEDIC_WEB_TOKEN = credentials('cryptomedic-deploy')
+    JH_CRYPTOMEDIC_HTTP_TOKEN = credentials('cryptomedic-deploy')
 
     // Need a different port, to allow continue working in dev with normal port
-    CRYPTOMEDIC_HTTP_PORT = "15080"
+    JH_CRYPTOMEDIC_HTTP_PORT = "15080"
 
     // To have the same docker-compose to all, to allow killing previous one
     //   See https://docs.docker.com/compose/reference/envvars/#compose_project_name
@@ -15,7 +15,7 @@ pipeline {
   }
   options {
     ansiColor('xterm')
-    lock resource: 'port_${CRYPTOMEDIC_HTTP_PORT}'
+    lock resource: 'port_${JH_CRYPTOMEDIC_HTTP_PORT}'
     skipStagesAfterUnstable()
     disableConcurrentBuilds()
     timeout(time: 60, unit: 'MINUTES')
@@ -29,7 +29,7 @@ pipeline {
     stage('stop previous') {
       steps {
         sh 'make ${MAKEOPT} stop'
-        sh 'nc -v -w 1 localhost ${CRYPTOMEDIC_HTTP_PORT} || true'
+        sh 'nc -v -w 1 localhost ${JH_CRYPTOMEDIC_HTTP_PORT} || true'
       }
     }
     stage('clean') {
@@ -115,8 +115,8 @@ make ${MAKEOPT} ${STAGE_NAME}
       steps {
         lock(resource: 'cryptomedic_production') {
           sh '''
-            CRYPTOMEDIC_DEPLOY_USER=$CRYPTOMEDIC_DEPLOY_USR \
-              CRYPTOMEDIC_DEPLOY_PASSWORD=$CRYPTOMEDIC_DEPLOY_PSW \
+            JH_CRYPTOMEDIC_DEPLOY_USER=$CRYPTOMEDIC_DEPLOY_USR \
+              JH_CRYPTOMEDIC_DEPLOY_PASSWORD=$CRYPTOMEDIC_DEPLOY_PSW \
               make ${MAKEOPT} ${STAGE_NAME}
           '''
         }

@@ -33,7 +33,6 @@ ok:
 #
 # Parameters
 #
-export CRYPTOMEDIC_HTTP_PORT ?= 80
 export CYPRESS_CACHE_FOLDER := $(TMP)/cache/cypress
 
 BACKUP_DIR ?= $(TMP)/backup-online
@@ -43,6 +42,11 @@ DEPLOY_MOUNT_TEST_FILE := $(DEPLOY_MOUNT)/.ovhconfig
 DEPLOY_TEST_DIR ?= $(TMP)/deploy-test-dir
 SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 DISPLAY ?= ":0"
+
+# Defaults value for Dev:
+JH_CRYPTOMEDIC_HTTP_HOST ?= localhost
+JH_CRYPTOMEDIC_HTTP_PORT ?= 5555
+JH_CRYPTOMEDIC_HTTP_TOKEN ?= secret
 
 #
 # Dev env fixed
@@ -70,22 +74,24 @@ define recursive-dependencies
 endef
 
 dump:
-	@echo "Who am i:              $(shell whoami) ($(shell id -u))"
-	@echo "HOME:                  $(HOME)"
-	@echo "SHELL:                 $(SHELL)"
-	@echo "PATH:                  $(PATH)"
-	@echo "DISPLAY:               $(DISPLAY)"
-	@echo "CRYPTOMEDIC_HTTP_PORT: $(CRYPTOMEDIC_HTTP_PORT)"
+	@echo "Who am i:                    $(shell whoami) ($(shell id -u))"
+	@echo "HOME:                        $(HOME)"
+	@echo "SHELL:                       $(SHELL)"
+	@echo "PATH:                        $(PATH)"
+	@echo "DISPLAY:                     $(DISPLAY)"
+	@echo "JH_CRYPTOMEDIC_HTTP_HOST:    $(JH_CRYPTOMEDIC_HTTP_HOST)"
+	@echo "JH_CRYPTOMEDIC_HTTP_PORT:    $(JH_CRYPTOMEDIC_HTTP_PORT)"
+	@echo "JH_CRYPTOMEDIC_DEPLOY_HOST:  $(JH_CRYPTOMEDIC_DEPLOY_HOST)"
 	@echo "------------------------------------------"
-	@echo "MySQL:                 $(shell bin/cr-mysql --version 2>&1 )"
-	@echo "MySQL Server:          $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
-	@echo "MySQL user:            $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
-	@echo "PHP:                   $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
-	@echo "PHP composer:          $(shell bin/cr-composer --version 2>&1 )"
-	@echo "NodeJS:                $(shell bin/cr-node --version 2>&1 )"
-	@echo "NPM:                   $(shell bin/cr-npm --version 2>&1 )"
-	@echo "Cypress:               $(shell QUIET=y bin/cr-cypress desktop --version --component package )"
-#	@echo "Chrome:                $(shell google-chrome --version 2>&1 )"
+	@echo "MySQL:                       $(shell bin/cr-mysql --version 2>&1 )"
+	@echo "MySQL Server:                $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
+	@echo "MySQL user:                  $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
+	@echo "PHP:                         $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
+	@echo "PHP composer:                $(shell bin/cr-composer --version 2>&1 )"
+	@echo "NodeJS:                      $(shell bin/cr-node --version 2>&1 )"
+	@echo "NPM:                         $(shell bin/cr-npm --version 2>&1 )"
+	@echo "Cypress:                     $(shell QUIET=y bin/cr-cypress desktop --version --component package )"
+#	@echo "Chrome:                      $(shell google-chrome --version 2>&1 )"
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
@@ -95,7 +101,7 @@ clear:
 	@echo "**"
 	@echo "**"
 
-clean: stop deploy-unmount
+clean: stop
 	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
 	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
@@ -124,8 +130,8 @@ dc-build:
 
 .PHONY: start
 start: dc-up dependencies build reset
-	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_HTTP_PORT)/"
-	@echo "Test page: http://localhost:$(CRYPTOMEDIC_HTTP_PORT)/dev/"
+	@echo "Open browser: http://localhost:$(JH_CRYPTOMEDIC_HTTP_PORT)/"
+	@echo "Test page: http://localhost:$(JH_CRYPTOMEDIC_HTTP_PORT)/dev/"
 
 dc-up:
 	docker compose up -d
@@ -364,77 +370,3 @@ $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
-
-#
-#
-# Deploy
-#
-#
-
-# .PHONY: deploy-backup
-# deploy-backup: deploy-mount
-# 	rsync --progress --recursive --times --delete \
-# 		--exclude $(TMP)/ \
-# 		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
-
-# .PHONY: deploy-rsync
-# deploy-rsync: | deploy-mount deploy-rsync-act deploy-unmount
-
-# .PHONY: deploy-rsync-test
-# deploy-rsync-test: | deploy-mount deploy-rsync-noact deploy-unmount
-
-# TODO
-.PHONY: deploy-mount
-deploy-mount:
-	@if [ -z "$$CRYPTOMEDIC_DEPLOY_USER" ]; then \
-		echo "Missing CRYPTOMEDIC_DEPLOY_USER" >&2; \
-		exit 255; \
-	fi
-
-	@if [ -z "$$CRYPTOMEDIC_DEPLOY_PASSWORD" ]; then \
-		echo "Missing CRYPTOMEDIC_DEPLOY_PASSWORD" >&2; \
-		exit 255; \
-	fi
-
-	@if [ -z "$$CRYPTOMEDIC_WEB_TOKEN" ]; then \
-    	echo "Missing CRYPTOMEDIC_DB_UPGRADE" >&2; \
-    	exit 255; \
-	fi
-	@echo "Deploy config ok"
-
-	@mkdir -p $(DEPLOY_MOUNT)
-	if [ ! -r $(DEPLOY_MOUNT_TEST_FILE) ]; then \
-		SSHPASS="$$CRYPTOMEDIC_DEPLOY_PASSWORD" sshpass -e \
-			sshfs -f -o uid=$(shell id -u) \
-				$(CRYPTOMEDIC_DEPLOY_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_DEPLOY_USER) $(DEPLOY_MOUNT) & \
-	fi \
-
-# TODO
-.PHONY: deploy-unmount
-deploy-unmount:
-	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then \
-		fusermount -u $(DEPLOY_MOUNT); \
-	fi
-
-# .PHONY: deploy-rsync-act
-# deploy-rsync-act: setup-structure \
-# 		$(TMP)/.dependencies \
-# 		$(TMP)/.built \
-# 		deploy-mount
-
-# 	rsync --recursive --itemize-changes --times \
-# 		--filter='dir-merge /deploy-filter' \
-# 		--delete --delete-excluded \
-# 		. $(DEPLOY_MOUNT)
-
-# .PHONY: deploy-rsync-noact
-# deploy-rsync-noact: setup-structure \
-# 		$(TMP)/.dependencies \
-# 		$(TMP)/.built \
-# 		deploy-mount
-
-# 	rsync --recursive --itemize-changes --times \
-# 		--dry-run \
-# 		--filter='dir-merge /deploy-filter' \
-# 		--delete --delete-excluded \
-# 		. $(DEPLOY_MOUNT)
