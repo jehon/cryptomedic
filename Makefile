@@ -92,7 +92,7 @@ dump:
 	@echo "PHP composer:                   $(shell bin/cr-composer --version 2>&1 )"
 	@echo "NodeJS:                         $(shell bin/cr-node --version 2>&1 )"
 	@echo "NPM:                            $(shell bin/cr-npm --version 2>&1 )"
-# @echo "Cypress:                        $(shell QUIET=y bin/cr-cypress version )"
+	@echo "Cypress:                        $(shell QUIET=y bin/cr-cypress version )"
 # @echo "Chrome:                         $(shell google-chrome --version 2>&1 )"
 
 clear:
