@@ -1,9 +1,18 @@
 
+#
+# Parameters
+#
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 TMP := $(ROOT)/tmp
+CJS2ESM_DIR := src/cjs2esm
 
-GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+# Defaults value for Dev:
+export CRYPTOMEDIC_HTTP_HOST ?= localhost
+export CRYPTOMEDIC_HTTP_PORT ?= 5555
+export CRYPTOMEDIC_HTTP_TOKEN ?= secret
+export CRYPTOMEDIC_HTTP_LOCAL_PORT=5555
+export DBUPDATEPWD := secret # From config.php
 
 # Default target
 # End by test, since check-styles may fail
@@ -29,37 +38,6 @@ ok:
 #   --warn-undefined-variables
 #   --debug=basic
 #
-
-#
-# Parameters
-#
-export CYPRESS_CACHE_FOLDER := $(TMP)/cache/cypress
-
-BACKUP_DIR ?= $(TMP)/backup-online
-DEPLOY_HOST := ftp.cluster003.ovh.net
-DEPLOY_MOUNT := $(TMP)/remote
-DEPLOY_MOUNT_TEST_FILE := $(DEPLOY_MOUNT)/.ovhconfig
-DEPLOY_TEST_DIR ?= $(TMP)/deploy-test-dir
-SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
-DISPLAY ?= ":0"
-
-# Defaults value for Dev:
-export CRYPTOMEDIC_HTTP_HOST ?= localhost
-export CRYPTOMEDIC_HTTP_PORT ?= 5555
-export CRYPTOMEDIC_HTTP_TOKEN ?= secret
-export CRYPTOMEDIC_HTTP_LOCAL_PORT=5555
-
-#
-# Dev env fixed
-#
-# From config.php
-export DBUPDATEPWD := secret
-
-#
-# Fixed
-#
-CJS2ESM_DIR := src/cjs2esm
-
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
 # 1: folder where to look
