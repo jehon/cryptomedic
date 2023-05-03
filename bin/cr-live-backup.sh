@@ -4,8 +4,10 @@ set -o errexit
 set -o pipefail
 shopt -s nullglob
 
-# shellcheck source=./cr-lib
-. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
+if [ -z "$CRYPTOMEDIC_DEPLOY_PASSWORD" ]; then
+    echo "$0 Need parameters" >&2
+    exit 1
+fi
 
 BACKUP_DIR="."
 if [ -n "$1" ]; then

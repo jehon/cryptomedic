@@ -10,23 +10,26 @@ $date = date('Y-m-d_H-i-s');
 /**
  * Prepare the file
  */
-echo "Creating folder\n";
 $dir = $myconfig['folders']['backups'];
+echo "Creating folder $dir\n";
 if (! is_dir($dir)) {
-    mkdir($dir, 0777) || die("Could not create backup folder");
-    chmod($dir, 0777) || die("Could not chmod backup folder");
+    mkdir($dir, 0777) || die("Could not create backup folder $dir");
+    chmod($dir, 0777) || die("Could not chmod backup folder $dir");
 }
-$backup_file = 'backup_' . $date . '.sql';
-$backup_path = "$dir/$backup_file";
+
+$backup_file = "$dir/backup.sql";
 echo "Creating file $backup_file\n";
-$fileHandler = fopen($backup_path, 'w+');
-chmod($backup_path, 0666) || die("Could not chmod backup file");
+if (file_exists($backup_file)) {
+    unlink($backup_file);
+}
+$fileHandler = fopen($backup_file, 'w+');
+chmod($backup_file, 0666) || die("Could not chmod backup file $backup_file");
 
 echo "Writing headers\n";
 fwrite($fileHandler, "\n") || die("Could not write to file");
 fwrite($fileHandler, "-- \n");
 fwrite($fileHandler, "-- \n");
-fwrite($fileHandler, "-- Genereated at $date\n");
+fwrite($fileHandler, "-- Backup generated at $date\n");
 fwrite($fileHandler, "-- \n");
 fwrite($fileHandler, "-- \n");
 fwrite($fileHandler, "\n\n");
