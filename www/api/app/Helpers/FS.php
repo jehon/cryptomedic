@@ -26,7 +26,7 @@ class FS {
         $list[] = $path . DIRECTORY_SEPARATOR . $file;
       }
       if (is_dir(dirname($glob) . DIRECTORY_SEPARATOR . $file) && $recursive) {
-        $res = myglob(dirname($glob) . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . basename($glob), $recursive);
+        $res = FS::glob(dirname($glob) . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . basename($glob), $recursive);
         $list = array_merge($list, $res);
       }
     }
