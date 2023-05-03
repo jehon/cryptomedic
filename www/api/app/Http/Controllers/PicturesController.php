@@ -42,6 +42,7 @@ class PicturesController extends FicheController {
 
   // List all database pictures that does not exists on the file system
   public function checkFileSystem() {
+    echo "Running with fix: <a href='?n=100'>Fix with n=100</a>";
     $res = [];
     echo "<table style='width: 100%;'>";
     echo "<tr style='background-color: lightgray;'><td colspan='100'>From database</td></tr>\n";
