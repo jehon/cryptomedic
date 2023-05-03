@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+
+set -o errexit
+
+clear
+
+rm -f tmp/backup/backups/*.sql
+
+make reset
+wget http://localhost:5555/maintenance/create_db_backup.php?pwd=secret
+
+rsync -a live/ live-from-production/
+
+make acceptance
+
+echo "Ok, all done"
