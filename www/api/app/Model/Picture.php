@@ -26,19 +26,12 @@ class Picture extends CryptomedicModel {
 		return self::where('file', $file)->count();
 	}
 
-	public function validate() {
-	    if (!$this->patient_id) {
-	    	abort(400, "No patient_id on the file");
-	    }
-	    return true;
-	}
-
 	/**
-	 * From the string in database, calculate the real path
+	 * From the string (should be the string from the database), calculate the real path
 	 *
 	 * @param {strint} file: the record in the database
 	 */
-	public function getPhysicalPath($file) {
+	static public function getPhysicalPath($file) {
 		if (!$file) {
 			abort(500, "File is empty: $file");
 		}
@@ -49,6 +42,13 @@ class Picture extends CryptomedicModel {
 	   	mkdir($dir, 0777, true);
 		}
 	    return $dir . $file;
+	}
+
+	public function validate() {
+	    if (!$this->patient_id) {
+	    	abort(400, "No patient_id on the file");
+	    }
+	    return true;
 	}
 
 	public function calculateTargetName($mimetype, $ext = "") {

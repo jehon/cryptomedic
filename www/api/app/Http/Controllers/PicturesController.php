@@ -81,7 +81,9 @@ class PicturesController extends FicheController {
     foreach(FS::glob(Picture::getPhysicalRoot() . "/*", true) as $file) {
       $file = substr($file, strlen(Picture::getPhysicalRoot()));
       if (!Picture::getPictureCountByPhysicalPath($file)) {
-        mylog(null, "no-db-record: " . $file);
+        mylog(null, "no-db-record: " . $file, function($picture) use($file) {
+          unlink(Picture::getPhysicalPath($file));
+        });
       }
     }
     echo "</table>";
