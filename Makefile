@@ -314,6 +314,7 @@ build: $(TMP)/.built
 $(TMP)/.built: \
 		www/built/.webpack \
 		www/built/browsers.json \
+		www/built/backup.sh \
 		.ovhconfig
 
 	@mkdir -p "$(dir $@)"
@@ -324,6 +325,9 @@ build-on-change:
 
 .ovhconfig: conf/ovhconfig .env
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
+
+www/built/backup.sh: bin/cr-live-backup.sh
+	cp -f "$<" "$@"
 
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild
 # due to the recursive-dependencies

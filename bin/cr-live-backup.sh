@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+#
+# This script should be standalone
+#
+#     because it is used on server to make the remote backup.
+#
+
 set -o errexit
 set -o pipefail
 
