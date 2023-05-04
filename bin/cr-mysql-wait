@@ -9,12 +9,10 @@ mysql_test() {
 }
 
 sleep 1s
-if ! mysql_test; then
-    echo -n "Waiting for mysql"
+echo -n "Waiting for mysql"
+sleep 0.5s
+while ! mysql_test; do
+    echo -n "."
     sleep 0.5s
-    while ! mysql_test; do
-        echo -n "."
-        sleep 0.5s
-    done
-    echo " ✓"
-fi
+done
+echo " ✓"
