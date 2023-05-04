@@ -23,8 +23,8 @@
   "devDependencies": {
     "@adobe/es-modules-middleware": "1.1.0",
     "@babel/cli": "7.21.5",
-    "@commitlint/cli": "17.6.1",
-    "@commitlint/config-conventional": "17.6.1",
+    "@commitlint/cli": "17.6.3",
+    "@commitlint/config-conventional": "17.6.3",
     "@jridgewell/source-map": "0.3.3",
     "axios-mock-adapter": "1.21.4",
     "babel-plugin-transform-commonjs": "1.1.6",
