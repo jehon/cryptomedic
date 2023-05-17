@@ -19,4 +19,6 @@ set -o pipefail
 cr-mysql-wait
 
 # -T is necessary for <file.sql
+echo "Mysql: running $* ..."
 docker compose exec -T mysql mysql "$@"
+echo "Mysql: running $* done"
