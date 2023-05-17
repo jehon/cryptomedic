@@ -6,13 +6,13 @@ module.exports = {
     es6: true,
     browser: true
   },
-  // parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
     requireConfigFile: false
   },
-  plugins: ["jsdoc"],
+  plugins: ["jsdoc", "@typescript-eslint"],
   settings: {
     jsdoc: {
       mode: "typescript"
