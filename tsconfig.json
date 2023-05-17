@@ -3,6 +3,7 @@
     "target": "ES6",
     "module": "ESNext",
     "esModuleInterop": true,
+    "sourceMap": true,
     "strict": true
   },
   "include": ["src/**/*"],
