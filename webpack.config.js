@@ -35,6 +35,9 @@ module.exports = {
     path: builtRoot,
     filename: "[name]-[fullhash].js"
   },
+  resolve: {
+    extensions: [".ts", ".js"]
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src/app-old/index.html"),
@@ -53,6 +56,11 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.ts$/,
+        use: "ts-loader",
+        exclude: /node_modules/
+      },
       { test: /\.css/, use: ["style-loader", "css-loader"] },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
