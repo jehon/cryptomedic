@@ -189,7 +189,6 @@ test-unit: $(TMP)/.dependencies-node \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-# TODO: reenable coverage
 	mkdir -p $(TMP)/js
 	bin/cr-node ./node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
 # node tests/report.js
