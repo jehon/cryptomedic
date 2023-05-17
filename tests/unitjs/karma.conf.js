@@ -14,26 +14,7 @@ module.exports = function (config) {
 
     frameworks: ["jasmine", "jasmine-html"],
 
-    /** import bare - begin */
-    plugins: [require("@adobe/es-modules-middleware"), "karma-*"],
-
-    middleware: ["es-modules"],
-
-    esModulesMiddleware: {
-      baseDir: "node_modules",
-      paths: {
-        "/": path.join(__dirname, "../../node_modules")
-      }
-    },
-    /** import bare - end */
-
-    reporters: [
-      "progress",
-      "coverage",
-      "html",
-      "junit",
-      "kjhtml" // allow output in debug.html page
-    ],
+    plugins: ["karma-*"],
 
     files: [
       "node_modules/karma-read-json/karma-read-json.js",
@@ -62,33 +43,10 @@ module.exports = function (config) {
       }
     },
 
-    preprocessors: {
-      "app/*.js": ["coverage"],
-      "app/!(cjs2esm)/**/*.js": ["coverage"],
-      "src/*.js": ["coverage"],
-      "src/!(cjs2esm)/**/*.js": ["coverage"]
-    },
-
-    coverageReporter: {
-      dir: path.join(root, "tmp"),
-      includeAllSources: true,
-      reporters: [
-        {
-          type: "lcov",
-          subdir: "js/"
-        }
-        /* { type: 'text-summary' } */
-      ]
-    },
+    preprocessors: {},
 
     htmlReporter: {
       outputDir: path.join(root, "/tmp/v2/js/html/")
-    },
-
-    junitReporter: {
-      outputDir: "tmp/v2/js/junit",
-      useBrowserName: false,
-      xmlVersion: 1
     },
 
     proxies: {
@@ -96,17 +54,6 @@ module.exports = function (config) {
       "/resources/": "/base/resources/"
     }
   };
-
-  if (process.env.NOCOV) {
-    console.info("*** NOCOV: disable coverage ***");
-    for (const i in configuration.preprocessors) {
-      configuration.preprocessors[i] = configuration.preprocessors[i].filter(
-        (v) => v != "coverage"
-      );
-    }
-  } else {
-    console.info("*** Coverage enabled - disable it with NOCOV");
-  }
 
   config.set(configuration);
 };
