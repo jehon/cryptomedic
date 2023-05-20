@@ -8,7 +8,7 @@ module.exports = {
   },
   // parser: '@babel/eslint-parser',
   parserOptions: {
-    ecmaVersion: new Date().getFullYear(),
+    ecmaVersion: "latest",
     sourceType: "module",
     requireConfigFile: false
   },
@@ -34,6 +34,7 @@ module.exports = {
       }
     ],
     "no-warning-comments": "off",
-    "quote-props": ["warn", "as-needed"]
+    "quote-props": ["warn", "as-needed"],
+    "jsdoc/tag-lines": "off"
   }
 };
