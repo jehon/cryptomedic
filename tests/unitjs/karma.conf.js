@@ -14,7 +14,21 @@ module.exports = function (config) {
 
     frameworks: ["jasmine", "jasmine-html"],
 
-    plugins: ["karma-*"],
+    /**
+     * import bare - begin
+     * @see https://www.npmjs.com/package/@adobe/es-modules-middleware
+     */
+    plugins: ["karma-*", require("@adobe/es-modules-middleware")],
+
+    middleware: ["es-modules"],
+
+    esModulesMiddleware: {
+      baseDir: "node_modules",
+      paths: {
+        "/": path.join(__dirname, "../../node_modules")
+      }
+    },
+    /** import bare - end */
 
     files: [
       "node_modules/karma-read-json/karma-read-json.js",
