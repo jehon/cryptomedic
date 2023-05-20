@@ -12,3 +12,5 @@ docker compose run --rm --quiet-pull -T \
     node \
     node \
     "$@"
+
+#    node --max-old-space-size=4096 \
