@@ -272,8 +272,6 @@ dependencies-node: $(TMP)/.dependencies-node
 $(TMP)/.dependencies-node: package.json package-lock.json
 	bin/cr-npm install
 
-	touch package-lock.json
-
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
@@ -308,6 +306,7 @@ update-dependencies-api:
 
 package-lock.json: package.json
 	bin/cr-npm install
+	touch "$@"
 
 .PHONY: build
 build: $(TMP)/.built
@@ -332,7 +331,7 @@ www/built/backup: bin/cr-live-backup.sh
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild
 # due to the recursive-dependencies
 www/built/.webpack: $(TMP)/.dependencies-node webpack.config.js  \
-		package.json package-lock.json \
+		$(TMP)/.dependencies-node \
 		$(call recursive-dependencies,src/,$@) \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
