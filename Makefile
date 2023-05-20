@@ -310,6 +310,7 @@ package-lock.json: package.json
 .PHONY: build
 build: $(TMP)/.built
 $(TMP)/.built: \
+		src/common/.built \
 		www/built/.webpack \
 		www/built/browsers.json \
 		www/built/backup \
@@ -319,10 +320,23 @@ $(TMP)/.built: \
 	@touch "$@"
 
 build-on-change:
-	find src/ | entr -a -c -c -d -n make build
+	multitail \
+		-cT ANSI \
+		--mark-interval "60" \
+		-l "bin/cr-node node_modules/.bin/tsc --watch" \
+		-l "bin/cr-node node_modules/.bin/webpack --watch"
+
+		# -s 2 -sn 2,1 : two columns
 
 .ovhconfig: conf/ovhconfig .env
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
+
+src/common/.built: 
+src/common/.built: $(shell find src/common -name *.ts | sed -e 's/\.ts$$/.js/' )
+	touch "$@"
+
+%.js: %.ts
+	bin/cr-node node_modules/.bin/tsc "$<"
 
 www/built/backup: bin/cr-live-backup.sh
 	cp -f "$<" "$@"

@@ -56,11 +56,6 @@ module.exports = {
   ],
   module: {
     rules: [
-      {
-        test: /\.ts$/,
-        use: "ts-loader",
-        exclude: /node_modules/
-      },
       { test: /\.css/, use: ["style-loader", "css-loader"] },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
