@@ -191,7 +191,7 @@ test-unit: $(TMP)/.dependencies-node \
 
 # TODO: reenable coverage
 	mkdir -p $(TMP)/js
-	NOCOV=1 bin/cr-npm run test-unit-continuously-withcov -- --single-run
+	bin/cr-node ./node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
 # node tests/report.js
 
 .PHONY: test-e2e
