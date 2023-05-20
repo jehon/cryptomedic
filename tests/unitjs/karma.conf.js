@@ -45,10 +45,6 @@ module.exports = function (config) {
 
     preprocessors: {},
 
-    htmlReporter: {
-      outputDir: path.join(root, "/tmp/v2/js/html/")
-    },
-
     proxies: {
       "/static/": "/base/www/static/",
       "/resources/": "/base/resources/"
