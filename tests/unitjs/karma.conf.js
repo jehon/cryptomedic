@@ -36,8 +36,6 @@ module.exports = function (config) {
     ],
 
     files: [
-      "node_modules/bluebird/js/browser/bluebird.min.js",
-      "tests/unitjs/_global.js",
       "node_modules/karma-read-json/karma-read-json.js",
       "node_modules/bootstrap4/dist/css/bootstrap.min.css",
       { pattern: "tests/unitjs/*-test.js", type: "module" },
