@@ -332,11 +332,16 @@ build-on-change:
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
 
 src/common/.built: 
-src/common/.built: $(shell find src/common -name *.ts | sed -e 's/\.ts$$/.js/' )
+src/common/.built: tsconfig.json\
+		$(shell find src/common -name *.ts )
+
+	bin/cr-node node_modules/.bin/tsc
 	touch "$@"
 
-%.js: %.ts
-	bin/cr-node node_modules/.bin/tsc "$<"
+
+# This does not works, because when building one file, tsc ignore the tsconfig.json configuration file
+# %.js: %.ts tsconfig.json
+# 	bin/cr-node node_modules/.bin/tsc "$<"
 
 www/built/backup: bin/cr-live-backup.sh
 	cp -f "$<" "$@"
