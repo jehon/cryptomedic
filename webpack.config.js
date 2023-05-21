@@ -35,6 +35,9 @@ module.exports = {
     path: builtRoot,
     filename: "[name]-[fullhash].js"
   },
+  resolve: {
+    extensions: [".ts", ".js"]
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src/app-old/index.html"),

@@ -189,7 +189,6 @@ test-unit: $(TMP)/.dependencies-node \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-# TODO: reenable coverage
 	mkdir -p $(TMP)/js
 	bin/cr-node ./node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
 # node tests/report.js
@@ -311,6 +310,7 @@ package-lock.json: package.json
 .PHONY: build
 build: $(TMP)/.built
 $(TMP)/.built: \
+		src/common/.built \
 		www/built/.webpack \
 		www/built/browsers.json \
 		www/built/backup \
@@ -320,10 +320,28 @@ $(TMP)/.built: \
 	@touch "$@"
 
 build-on-change:
-	find src/ | entr -a -c -c -d -n make build
+	multitail \
+		-cT ANSI \
+		--mark-interval "60" \
+		-l "bin/cr-node node_modules/.bin/tsc --watch" \
+		-l "bin/cr-node node_modules/.bin/webpack --watch"
+
+		# -s 2 -sn 2,1 : two columns
 
 .ovhconfig: conf/ovhconfig .env
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
+
+src/common/.built: 
+src/common/.built: tsconfig.json\
+		$(shell find src/common -name *.ts )
+
+	bin/cr-node node_modules/.bin/tsc
+	touch "$@"
+
+
+# This does not works, because when building one file, tsc ignore the tsconfig.json configuration file
+# %.js: %.ts tsconfig.json
+# 	bin/cr-node node_modules/.bin/tsc "$<"
 
 www/built/backup: bin/cr-live-backup.sh
 	cp -f "$<" "$@"

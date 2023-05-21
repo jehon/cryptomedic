@@ -10,10 +10,15 @@ import {
 } from "../js/custom-element.js";
 import XButton from "./style/x-button.js";
 import { logoutBuilder } from "./func/requests-authenticator.js";
+import { getSessionData } from "../../../common/session.js";
 
 const user = Symbol("user");
 const logout = Symbol("logout");
 const requestor = Symbol("requestor");
+
+// TODO: test typescript
+// eslint-disable-next-line no-console
+console.log(getSessionData());
 
 export default class XUserStatus extends HTMLElement {
   connectedCallback() {
