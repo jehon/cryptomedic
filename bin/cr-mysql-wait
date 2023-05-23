@@ -10,9 +10,7 @@ mysql_test() {
     bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null </dev/null
 }
 
-sleep 1s
 log_progress "Waiting for mysql"
-sleep 0.5s
 while ! mysql_test; do
     log_progress
     sleep 0.5s
