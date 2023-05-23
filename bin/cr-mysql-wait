@@ -10,9 +10,9 @@ mysql_test() {
     bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null </dev/null
 }
 
-log_progress "Waiting for mysql"
+progress "Waiting for mysql"
 while ! mysql_test; do
-    log_progress
+    progress
     sleep 0.5s
 done
-log_progress " ✓\n"
+progress " ✓\n"

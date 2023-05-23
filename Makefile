@@ -16,15 +16,12 @@ export CRYPTOMEDIC_HTTP_LOCAL_PORT=5555
 export DBUPDATEPWD := secret # From config.php
 
 # Default target
+.PHONY: full
+full: clear clean stop dc-build start dependencies lint build test ok
+
 # End by test, since check-styles may fail
 .PHONY: dev
-dev: clear stop start dependencies lint build test ok
-
-.PHONY: full
-full: clear clean stop dc-build start dependencies lint update-dependencies build test ok
-
-.PHONY: pull-request
-pull-request: full
+dev: clear clean-files dc-build dc-up dependencies lint build test ok
 
 .PHONY: update
 update: clear dependencies lint update-references-api update-references-styles update-references-browsers ok
@@ -64,13 +61,13 @@ dump:
 	@echo "CRYPTOMEDIC_HTTP_LOCAL_PORT:    $(CRYPTOMEDIC_HTTP_LOCAL_PORT)"
 	@echo "CRYPTOMEDIC_DEPLOY_HOST:        $(CRYPTOMEDIC_DEPLOY_HOST)"
 	@echo "------------------------------------------"
-	@echo "MySQL:                          $(shell bin/cr-mysql --version 2>&1 )"
-	@echo "MySQL Server:                   $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
-	@echo "MySQL user:                     $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
-	@echo "PHP:                            $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
-	@echo "PHP composer:                   $(shell bin/cr-composer --version 2>&1 )"
-	@echo "NodeJS:                         $(shell bin/cr-node --version 2>&1 )"
-	@echo "NPM:                            $(shell bin/cr-npm --version 2>&1 )"
+	@echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
+	@echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
+	@echo "MySQL user:                     $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
+	@echo "PHP:                            $(shell QUIET=y bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
+	@echo "PHP composer:                   $(shell QUIET=y bin/cr-composer --version 2>&1 )"
+	@echo "NodeJS:                         $(shell QUIET=y bin/cr-node --version 2>&1 )"
+	@echo "NPM:                            $(shell QUIET=y bin/cr-npm --version 2>&1 )"
 	@echo "Cypress:                        $(shell QUIET=y bin/cr-cypress version )"
 # @echo "Chrome:                         $(shell google-chrome --version 2>&1 )"
 
@@ -82,7 +79,9 @@ clear:
 	@echo "**"
 	@echo "**"
 
-clean: stop
+clean: stop clean-files
+
+clean-files:
 	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "*.log" -delete
@@ -136,8 +135,8 @@ reset:
 #
 #
 acceptance: $(ACCEPTANCE)/.done dc-up
-	cr-mysql -e "DROP DATABASE cryptomedic;CREATE DATABASE cryptomedic"
-	cr-mysql --database=cryptomedic < "$(ACCEPTANCE)"/backups/backup.sql
+	cr-mysql -e "DROP DATABASE cryptomedic; CREATE DATABASE cryptomedic"
+	cr-mysql < "$(ACCEPTANCE)"/backups/backup.sql
 	rsync -itr --delete "$(ACCEPTANCE)"/storage/ live/storage
 
 $(ACCEPTANCE)/.done:

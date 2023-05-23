@@ -30,10 +30,10 @@ header_end
 header_begin "cr-data-reset - Mysql - configuring"
 
 echo "* Create schema"
-cr-mysql --database=mysql -e " \
-        DROP SCHEMA IF EXISTS cryptomedic ; \
-        CREATE SCHEMA cryptomedic; \
-    "
+cr-mysql --database=mysql <<EOS
+    DROP SCHEMA IF EXISTS cryptomedic;
+    CREATE SCHEMA cryptomedic;
+EOS
 header_end
 
 header_begin "cr-data-reset - Mysql - restoring base.sql"

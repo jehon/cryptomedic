@@ -18,7 +18,7 @@ set -o pipefail
 #
 # We always wait... that does not take that much time
 #
-cr-mysql-wait
+QUIET=y cr-mysql-wait
 
 # -T is necessary for <file.sql
 header_begin "Mysql: running $* ..."

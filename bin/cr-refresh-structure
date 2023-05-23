@@ -16,10 +16,8 @@ fi
 
 echo "Deploying to ${BASE_HOST} with pwd of #${#TOKEN} char length"
 
-header_begin "Upgrading database"
-cr_curl "${BASE_HOST}/maintenance/patch_db.php?pwd=${TOKEN}"
-header_end
+cr_curl_with_headers "Upgrading database" \
+    "${BASE_HOST}/maintenance/patch_db.php?pwd=${TOKEN}"
 
-header_begin "Upgrading files"
-cr_curl "${BASE_HOST}/maintenance/reset.php?pwd=${TOKEN}"
-header_end
+cr_curl_with_headers "Upgrading files" \
+    "${BASE_HOST}/maintenance/reset.php?pwd=${TOKEN}"
