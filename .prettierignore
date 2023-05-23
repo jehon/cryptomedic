@@ -16,5 +16,5 @@ package-lock.json
 composer.lock
 composer.json
 
-src/common/**/*.js
-src/common/**/*.js.map
+src/app-ts/**/*.js
+src/app-ts/**/*.js.map
