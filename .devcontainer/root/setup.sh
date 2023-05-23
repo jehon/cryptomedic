@@ -4,15 +4,13 @@ set -o errexit
 set -o pipefail
 shopt -s nullglob
 
-SWD="$(dirname "$( realpath "${BASH_SOURCE[0]}")")"
-
 export DEBIAN_FRONTEND=noninteractive
 
 apt update
 
 apt install -y openssh-client sshpass curl coreutils diffutils
 
-if [ ! -r $HOME/.ssh/id_rsa ]; then
+if [ ! -r "$HOME"/.ssh/id_rsa ]; then
     echo "Generating a ssh key"
-    ssh-keygen -b 2048 -t rsa -f /$HOME/.ssh/id_rsa -q -N ""
+    ssh-keygen -b 2048 -t rsa -f "$HOME"/.ssh/id_rsa -q -N ""
 fi
