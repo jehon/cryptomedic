@@ -86,6 +86,9 @@ clean: stop
 	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "*.log" -delete
+	find src/app-ts -name "*.js" -delete
+	find src/app-ts -name "*.js.map" -delete
+	find . -name .built -delete
 
 	rm -f .ovhconfig
 	rm -fr live/
@@ -310,7 +313,7 @@ package-lock.json: package.json
 .PHONY: build
 build: $(TMP)/.built
 $(TMP)/.built: \
-		src/common/.built \
+		src/app-ts/.built \
 		www/built/.webpack \
 		www/built/browsers.json \
 		www/built/backup \
@@ -331,8 +334,7 @@ build-on-change:
 .ovhconfig: conf/ovhconfig .env
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
 
-src/common/.built: 
-src/common/.built: tsconfig.json\
+src/app-ts/.built: tsconfig.json\
 		$(shell find src/common -name *.ts )
 
 	bin/cr-node node_modules/.bin/tsc
