@@ -335,7 +335,7 @@ build-on-change:
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
 
 src/app-ts/.built: tsconfig.json\
-		$(shell find src/common -name *.ts )
+		$(shell find src/app-ts -name *.ts )
 
 	bin/cr-node node_modules/.bin/tsc
 	touch "$@"
