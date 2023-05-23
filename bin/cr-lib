@@ -51,3 +51,14 @@ header_begin() {
 header_end() {
     header_message "$LASTMSG done"
 }
+
+log_progress() {
+    if [ -n "$QUIET" ]; then
+        return
+    fi
+    if [ -n "$1" ]; then
+        echo -n "$1"
+    else
+        echo -n "."
+    fi
+}

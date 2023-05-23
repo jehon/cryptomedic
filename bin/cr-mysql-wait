@@ -3,16 +3,18 @@
 set -o errexit
 set -o pipefail
 
+. "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
+
 mysql_test() {
     # Do not capture stdin!
     bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null </dev/null
 }
 
 sleep 1s
-echo -n "Waiting for mysql"
+log_progress "Waiting for mysql"
 sleep 0.5s
 while ! mysql_test; do
-    echo -n "."
+    log_progress
     sleep 0.5s
 done
-echo " ✓"
+log_progress " ✓\n"

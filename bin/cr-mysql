@@ -3,6 +3,8 @@
 set -o errexit
 set -o pipefail
 
+. "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
+
 #
 # Caution:
 #
@@ -19,6 +21,6 @@ set -o pipefail
 cr-mysql-wait
 
 # -T is necessary for <file.sql
-echo "Mysql: running $* ..."
+header_begin "Mysql: running $* ..."
 docker compose exec -T mysql mysql "$@"
-echo "Mysql: running $* done"
+header_end
