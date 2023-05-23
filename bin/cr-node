@@ -10,7 +10,5 @@ docker compose run --rm --quiet-pull -T \
     --workdir /workdir \
     --user "$(id -u)" \
     node \
-    node \
+    node --max-old-space-size=4096 \
     "$@"
-
-#    node --max-old-space-size=4096 \
