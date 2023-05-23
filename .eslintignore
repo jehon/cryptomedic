@@ -2,6 +2,5 @@ vendor/**
 **/tmp/**
 **/documentation/**
 **/built/**
-src/cjs2esm
 **/unused/**
 tmp/

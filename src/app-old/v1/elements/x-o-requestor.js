@@ -4,7 +4,7 @@ import JHElement from "./jh-element.js";
 import "./x-waiting.js";
 import "./x-o-overlay.js";
 
-import axios from "../../../cjs2esm/axios.js";
+import axios from "../../../built/axios.js";
 import { routeToLogin } from "../../v2/js/router.js";
 import { setSession } from "../../v2/js/session.js";
 

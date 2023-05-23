@@ -5,7 +5,7 @@
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 TMP := $(ROOT)/tmp
-CJS2ESM_DIR := src/cjs2esm
+CJS2ESM_DIR := src/built
 ACCEPTANCE := $(ROOT)/live-from-production/
 
 # Defaults value for Dev:
