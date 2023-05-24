@@ -22,11 +22,8 @@ export PATH="$CR_SCRIPT_DIR:$PATH"
 # For recursion
 export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
 
-cr_curl_with_headers() {
-    header_begin "$1 ($2)"
-    shift
+cr_curl() {
     curl -fsSL --user-agent firefox "$@"
-    header_end
 }
 
 jh_color() {
@@ -53,6 +50,14 @@ header_begin() {
 
 header_end() {
     header_message "$LASTMSG done"
+}
+
+with_header() {
+    H="$1"
+    shift
+    header_begin "$H ($*)"
+    "$@"
+    header_end
 }
 
 progress() {

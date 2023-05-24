@@ -93,15 +93,17 @@ header_begin "Updating maintenance scripts [for real]"
 ) | ftp_exec
 header_end
 
-cr_curl_with_headers "Getting the md5 from local" \
-	"http://localhost:$CRYPTOMEDIC_HTTP_LOCAL_PORT/maintenance/md5sum.php?filter=local" >"$CR_TMP"/deploy-local.txt
+header_begin "Getting the md5 from local"
+cr_curl "Getting the md5 from local" "http://localhost:$CRYPTOMEDIC_HTTP_LOCAL_PORT/maintenance/md5sum.php?filter=local" >"$CR_TMP"/deploy-local.txt
+header_end
 
 header_begin "Sorting local file"
 sort --stable "$CR_TMP"/deploy-local.txt >"$CR_TMP"/deploy-local.sorted.txt
 header_end
 
-cr_curl_with_headers "Getting the md5 from remote" \
-	"http://${CRYPTOMEDIC_HTTP_HOST}:${CRYPTOMEDIC_HTTP_PORT}/maintenance/md5sum.php?filter=remote" >"$REMOTE_LISTING"
+header_begin "Getting the md5 from remote"
+cr_curl "http://${CRYPTOMEDIC_HTTP_HOST}:${CRYPTOMEDIC_HTTP_PORT}/maintenance/md5sum.php?filter=remote" >"$REMOTE_LISTING"
+header_end
 
 header_begin "Sorting remote file"
 sort --stable "$REMOTE_LISTING" >"$CR_TMP"/deploy-remote.sorted.txt
