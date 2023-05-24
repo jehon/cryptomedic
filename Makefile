@@ -12,7 +12,7 @@ ACCEPTANCE := $(ROOT)/live-from-production/
 export CRYPTOMEDIC_HTTP_HOST ?= localhost
 export CRYPTOMEDIC_HTTP_PORT ?= 5555
 export CRYPTOMEDIC_HTTP_TOKEN ?= secret
-export CRYPTOMEDIC_HTTP_LOCAL_PORT=5555
+export CRYPTOMEDIC_HTTP_LOCAL_PORT = 5555
 export DBUPDATEPWD := secret # From config.php
 
 # Default target
@@ -28,8 +28,8 @@ update: clear dependencies lint update-references-api update-references-styles u
 
 .PHONY: ok
 ok:
-	@echo "ok"
-	date
+	@echo -n "✓ ok at "
+	@date +"%H:%M:%S"
 
 #
 # Debug options:
@@ -51,6 +51,10 @@ define recursive-dependencies
 endef
 
 dump:
+	@echo ""
+	@echo "***************"
+	@echo "*** generic ***"
+	@echo ""
 	@echo "Who am i:                       $(shell whoami) ($(shell id -u))"
 	@echo "HOME:                           $(HOME)"
 	@echo "SHELL:                          $(SHELL)"
@@ -64,11 +68,6 @@ dump:
 	@echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
 	@echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
 	@echo "MySQL user:                     $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
-	@echo "PHP:                            $(shell QUIET=y bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
-	@echo "PHP composer:                   $(shell QUIET=y bin/cr-composer --version 2>&1 )"
-	@echo "NodeJS:                         $(shell QUIET=y bin/cr-node --version 2>&1 )"
-	@echo "NPM:                            $(shell QUIET=y bin/cr-npm --version 2>&1 )"
-	@echo "Cypress:                        $(shell QUIET=y bin/cr-cypress version )"
 # @echo "Chrome:                         $(shell google-chrome --version 2>&1 )"
 
 clear:
