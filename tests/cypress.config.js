@@ -6,8 +6,8 @@ module.exports = defineConfig({
   viewportWidth: 1280,
   viewportHeight: 800,
   video: false,
-  videosFolder: "../tmp/e2e/desktop/videos/",
-  screenshotsFolder: "../tmp/e2e/desktop/screenshots/",
+  videosFolder: "../tmp/integration/desktop/videos/",
+  screenshotsFolder: "../tmp/integration/desktop/screenshots/",
   e2e: {
     baseUrl: "http://localhost:5555",
     supportFile: "cypress/support/e2e.js",

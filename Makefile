@@ -5,7 +5,6 @@
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 TMP := $(ROOT)/tmp
-CJS2ESM_DIR := src/built
 ACCEPTANCE := $(ROOT)/live-from-production/
 
 # Defaults value for Dev:
@@ -23,32 +22,24 @@ full: clear clean stop dc-build start dependencies lint build test ok
 .PHONY: dev
 dev: clear clean-files dc-build dc-up dependencies lint build test ok
 
-.PHONY: update
-update: clear dependencies lint update-references-api update-references-styles update-references-browsers ok
-
 .PHONY: ok
 ok:
 	@echo -n "✓ ok at "
 	@date +"%H:%M:%S"
+
+.PHONY: clean
+.PHONY: dump
+.PHONY: dependencies
+.PHONY: lint
+.PHONY: build
+.PHONY: test
+.PHONY: update
 
 #
 # Debug options:
 #   --warn-undefined-variables
 #   --debug=basic
 #
-
-# See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
-# 1: folder where to look
-# 2: base file to have files newer than, to limit the length of the output
-define recursive-dependencies
-	$(shell \
-		if [ -r "$(2)" ]; then \
-			find "$(1)" -name tests_data -prune -o -name tmp -prune -o -type f -newer "$(2)"; \
-		else \
-			find "$(1)" -name tests_data -prune -o -name tmp -prune -o -type f;\
-		fi \
-	)
-endef
 
 dump:
 	@echo ""
@@ -79,31 +70,15 @@ clear:
 	@echo "**"
 
 clean: stop clean-files
+#	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
+	rm -fr tmp
 
 clean-files:
-	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
-	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "*.log" -delete
-	find src/app-ts -name "*.js" -delete
-	find src/app-ts -name "*.js.map" -delete
-	find . -name .built -delete
 
 	rm -f .ovhconfig
-	rm -fr live/
-	rm -f www/index.html
-	rm -fr www/built
-	rm -fr $(CJS2ESM_DIR)
-	rm -fr www/api/*/bootstrap/cache
-	rm -fr www/api/*/storage
-	rm -fr $(TMP)
-
-	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
-
-# Kill all ports
-.PHONY: clean-ports
-clean-ports:
-	pkill chromedriver || true
-	jh-kill-by-port 9515 || true
+	rm -f www/built/backup
+	rm -f www/built/browsers.json
 
 dc-build:
 	docker compose build
@@ -149,96 +124,6 @@ acceptance-refresh:
 
 acceptance-clean:
 	rm -f "$(ACCEPTANCE)/"
-#
-#
-# Tests
-#
-#
-
-.PHONY: lint
-lint: lint-es lint-css lint-html
-	./node_modules/.bin/prettier --list-different .
-
-.PHONY: lint-es
-lint-es: $(TMP)/.dependencies-node
-	node node_modules/.bin/eslint .
-
-.PHONY: lint-css
-lint-css: $(TMP)/.dependencies-node
-	node node_modules/.bin/stylelint src/**/*.css
-
-.PHONY: lint-html
-lint-html: $(TMP)/.dependencies-node
-	node node_modules/.bin/htmlhint src/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
-
-.PHONY: test # In Jenkinfile, each step is separated:
-test: $(TMP)/.dependencies $(TMP)/.built test-api test-unit test-e2e test-styles
-
-.PHONY: test-api
-test-api: $(TMP)/.dependencies-api
-	cr-data-reset
-	bin/cr-phpunit
-
-.PHONY: update-references-api
-update-references-api: $(TMP)/.dependencies-api
-	cr-data-reset
-	COMMIT=1 bin/cr-phpunit
-
-.PHONY: test-unit
-test-unit: $(TMP)/.dependencies-node \
-		$(CJS2ESM_DIR)/axios.js \
-		$(CJS2ESM_DIR)/axios-mock-adapter.js \
-		$(CJS2ESM_DIR)/platform.js
-
-	mkdir -p $(TMP)/js
-	bin/cr-node ./node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
-# node tests/report.js
-
-.PHONY: test-e2e
-test-e2e: test-e2e-desktop test-e2e-mobile
-
-.PHONY: test-e2e-desktop
-test-e2e-desktop: $(TMP)/.tested-e2e-desktop
-$(TMP)/.tested-e2e-desktop: $(TMP)/.built $(TMP)/.dependencies $(shell find tests/cypress/ -name "*.js")
-	bin/cr-data-reset
-	bin/cr-cypress "desktop"
-
-	@mkdir -p "$(dir $@)"
-	@touch "$@"
-
-.PHONY: test-e2e-mobile
-test-e2e-mobile: $(TMP)/.tested-e2e-mobile
-$(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find tests/cypress/ -name "*.js")
-	bin/cr-data-reset
-	bin/cr-cypress "mobile"
-
-	@mkdir -p "$(dir $@)"
-	@touch "$@"
-
-cypress-open:
-	./bin/cr-cypress open desktop
-
-.PHONY: test-styles
-test-styles: $(TMP)/styles/styles-problems-list.json
-
-$(TMP)/styles/styles-problems-list.json: $(TMP)/styles/.structure
-	bin/cr-node tests/styles/check-styles.js
-
-.PHONY: update-references-styles
-update-references-styles: $(TMP)/styles/.structure
-	bin/cr-node tests/styles/check-styles.js --update
-
-$(TMP)/styles/.structure: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop $(TMP)/.tested-e2e-mobile
-	@rm -fr "$(dir $@)"
-	@mkdir -p "$(dir $@)"
-	@mkdir -p "$(dir $@)/run/mobile"
-	@mkdir -p "$(dir $@)/run/desktop"
-
-	rsync -r tests/styles/ "$(dir $@)"
-	find $(TMP)/e2e/mobile/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/mobile/" ";"
-	find $(TMP)/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
-
-	@touch "$@"
 
 #
 # Deploy command
@@ -252,127 +137,28 @@ deploy:
 deploy-test:
 	bin/cr-deploy-patch
 
-#
-#
-# Install > dependencies
-#
-#
-
-.PHONY: dependencies
-dependencies: $(TMP)/.dependencies
-$(TMP)/.dependencies: $(TMP)/.dependencies-node $(TMP)/.dependencies-api
-
-	@mkdir -p "$(dir $@)"
-	@touch "$@"
-
-update-dependencies: update-dependencies-node update-dependencies-api
-
-.PHONY: dependencies-node
-dependencies-node: $(TMP)/.dependencies-node
-$(TMP)/.dependencies-node: package.json package-lock.json
-	bin/cr-npm install
-
-	@mkdir -p "$(dir $@)"
-	@touch "$@"
-
-update-dependencies-node: dependencies-node
-
-# %/composer.lock: %/composer.json
-# 	bin/composer install --working-dir "$(dir $@)"
-# 	touch "$@"
-
-.PHONY: dependencies-api
-dependencies-api: $(TMP)/.dependencies-api
-$(TMP)/.dependencies-api: \
-		www/api/composer.json \
-		www/api/composer.lock
-
-	cr-ensure-folder-empty www/api//bootstrap/cache
-	bin/cr-composer install --working-dir "www/api/"
-
-	@mkdir -p "$(dir $@)"
-	@touch "$@"
-
-.PHONY: update-dependencies-api
-update-dependencies-api:
-	mkdir -m 777 -p www/api/bootstrap/cache
-	bin/cr-composer update --working-dir "www/api/"
-
-#
-#
-# Build
-#
-#
-
-package-lock.json: package.json
-	bin/cr-npm install
-	touch "$@"
-
 .PHONY: build
-build: $(TMP)/.built
-$(TMP)/.built: \
-		src/app-ts/.built \
-		www/built/.webpack \
+build: \
 		www/built/browsers.json \
 		www/built/backup \
 		.ovhconfig
 
-	@mkdir -p "$(dir $@)"
-	@touch "$@"
-
-build-on-change:
-	multitail \
-		-cT ANSI \
-		--mark-interval "60" \
-		-l "bin/cr-node node_modules/.bin/tsc --watch" \
-		-l "bin/cr-node node_modules/.bin/webpack --watch"
-
-		# -s 2 -sn 2,1 : two columns
-
 .ovhconfig: conf/ovhconfig .env
 	bash -c "set -o allexport; source .env; envsubst < conf/ovhconfig > $@"
 
-src/app-ts/.built: tsconfig.json\
-		$(shell find src/app-ts -name *.ts )
-
-	bin/cr-node node_modules/.bin/tsc
-	touch "$@"
-
-
-# This does not works, because when building one file, tsc ignore the tsconfig.json configuration file
-# %.js: %.ts tsconfig.json
-# 	bin/cr-node node_modules/.bin/tsc "$<"
-
 www/built/backup: bin/cr-live-backup.sh
+# Make the backup script available to web
 	cp -f "$<" "$@"
 
-# We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild
-# due to the recursive-dependencies
-www/built/.webpack: $(TMP)/.dependencies-node webpack.config.js  \
-		$(TMP)/.dependencies-node \
-		$(call recursive-dependencies,src/,$@) \
-		$(CJS2ESM_DIR)/axios.js \
-		$(CJS2ESM_DIR)/axios-mock-adapter.js \
-		$(CJS2ESM_DIR)/platform.js
-
-	bin/cr-node node_modules/.bin/webpack
-	touch "$@"
-
-www/built/browsers.json: .browserslistrc $(TMP)/.dependencies-node
+www/built/browsers.json: .browserslistrc $(FRONTEND_DEPENDENCIES_MARK)
+	@mkdir -p "$(dir $@)"
 	bin/cr-node node_modules/.bin/browserslist --json > "$@"
 
+.PHONY: update-references-browsers
+update: update-references-browsers
 update-references-browsers:
 	bin/cr-node node_modules/.bin/browserslist --update-db
 
-# Dependencies are used in the build !
-$(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
-	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
-
-# Dependencies are used in the build !
-$(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
-	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
-	sed -i 's/from "axios";/from ".\/axios.js";/' $@
-
-# Dependencies are used in the build !
-$(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
-	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+include Makefile-backend
+include Makefile-frontend
+include Makefile-integration

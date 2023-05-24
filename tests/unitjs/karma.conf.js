@@ -4,7 +4,7 @@
 const path = require("path");
 const fse = require("fs-extra");
 const root = path.dirname(path.dirname(__dirname));
-fse.emptyDirSync(path.join(root, "/tmp/js"));
+fse.emptyDirSync(path.join(root, "/tmp/frontend"));
 
 // https://blog.cepharum.de/en/post/natively-unit-testing-es6-modules-in-browser-including-coverage.html
 

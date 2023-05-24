@@ -33,7 +33,7 @@ $myconfig = [
     'backups'    => __DIR__ . "/live/backups/",
 
     # Storage of temporary files
-    'temporary'  => __DIR__ . "/tmp/webTemp/"
+    'temporary'  => __DIR__ . "/tmp/integration/webTemp/"
   ]
 ];
 

@@ -19,7 +19,7 @@ set -o pipefail
 mkdir -m 777 -p "tmp"
 
 FOLDER="www/api/"
-REPORTS="tmp/php/"
+REPORTS="tmp/backend/reports/"
 
 mkdir -p "$REPORTS"
 chmod a+rwx "$REPORTS"

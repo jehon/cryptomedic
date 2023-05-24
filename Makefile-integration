@@ -1,0 +1,87 @@
+
+INTEGRATION_TEST_TMP=$(TMP)/integration
+
+integration: clean-files dc-build dc-up integration-dump integration-test ok
+
+.PHONY: integration-dump
+dump: integration-dump
+integration-dump:
+	@echo ""
+	@echo "*******************"
+	@echo "*** integration ***"
+	@echo ""
+	@echo "INTEGRATION_TEST_TMP:           $(INTEGRATION_TEST_TMP)"
+	@echo "Cypress:                        $(shell QUIET=y bin/cr-cypress version )"
+
+.PHONY: integration-clean
+clean: integration-clean
+integration-clean: integration-clean-files
+	rm -fr $(TMP)/integration
+
+.PHONY: integration-clean-files
+clean: integration-clean-files
+integration-clean-files:
+	rm -fr live/
+	jh-kill-by-port 9515 || true
+# pkill chromedriver || true
+
+.PHONY: integration-test
+test: integration-test
+integration-test: integration-test-desktop integration-test-mobile integration-test-styles
+
+.PHONY: integration-test-desktop
+integration-test-desktop: $(INTEGRATION_TEST_TMP)/.tested-desktop
+$(INTEGRATION_TEST_TMP)/.tested-desktop: \
+		$(BACKEND_BUILT_MARK) \
+		$(FRONTEND_BUILT_MARK) \
+		$(shell find tests/cypress/ -name "*.js")
+
+	bin/cr-data-reset
+	bin/cr-cypress "desktop"
+
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
+.PHONY: integration-test-mobile
+integration-test-mobile: $(INTEGRATION_TEST_TMP)/.tested-mobile
+$(INTEGRATION_TEST_TMP)/.tested-mobile: \
+		$(BACKEND_BUILT_MARK) \
+		$(FRONTEND_BUILT_MARK) \
+		$(shell find tests/cypress/ -name "*.js")
+
+	bin/cr-data-reset
+	bin/cr-cypress "mobile"
+
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
+cypress-open:
+	./bin/cr-cypress open desktop
+
+.PHONY: test-styles
+integration-test-styles: $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json
+
+$(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json: $(INTEGRATION_TEST_TMP)/styles/.structure
+	bin/cr-node tests/styles/check-styles.js
+
+$(INTEGRATION_TEST_TMP)/styles/.structure: \
+		tests/styles \
+		tests/styles/references \
+		$(INTEGRATION_TEST_TMP)/.tested-desktop \
+		$(INTEGRATION_TEST_TMP)/.tested-mobile
+
+	@rm -fr "$(dir $@)"
+	@mkdir -p "$(dir $@)"
+	@mkdir -p "$(dir $@)/run/mobile"
+	@mkdir -p "$(dir $@)/run/desktop"
+
+	rsync -r tests/styles/ "$(dir $@)"
+	find $(INTEGRATION_TEST_TMP)/mobile/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/mobile/" ";"
+	find $(INTEGRATION_TEST_TMP)/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
+
+	@touch "$@"
+
+.PHONY: integration-update-references-styles
+update: integration-update-references-styles
+integration-update-references-styles: $(INTEGRATION_TEST_TMP)/styles/.structure
+	bin/cr-node tests/styles/check-styles.js --update

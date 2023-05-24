@@ -20,7 +20,7 @@ cr-ensure-folder-empty "www/api/storage/framework/cache"
 cr-ensure-folder-empty "www/api/storage/framework/cache/data"
 cr-ensure-folder-empty "www/api/storage/framework/views"
 cr-ensure-folder-empty "www/api/storage/logs/"
-cr-ensure-folder-empty "tmp/webTemp"
+cr-ensure-folder-empty "tmp/integration/webTemp"
 cr-ensure-folder-empty "live/backups"
 # touch www/api/storage/logs/laravel.log
 

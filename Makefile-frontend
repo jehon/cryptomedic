@@ -1,0 +1,145 @@
+
+FRONTEND_ROOT = src
+FRONTEND_DEPENDENCIES_MARK = node_modules/.built
+FRONTEND_PUBLISHED = www/built
+FRONTEND_BUILT_MARK = $(FRONTEND_PUBLISHED)/.built
+FRONTEND_BUILD_TMP = $(FRONTEND_ROOT)/built
+
+frontend: clean-files dc-build dc-up frontend-dump frontend-dependencies frontend-lint frontend-build frontend-test ok
+
+.PHONY: frontend-clean
+clean: frontend-clean
+frontend-clean: frontend-clean-files
+	rm -fr node_modules
+	rm -fr $(FRONTEND_DEPENDENCIES_MARK)
+
+	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
+
+.PHONY: frontend-clean-files
+clean-files: frontend-clean-files
+frontend-clean-files:
+	find $(FRONTEND_ROOT)/app-ts -name "*.js" -delete
+	find $(FRONTEND_ROOT)/app-ts -name "*.js.map" -delete
+	rm -fr $(FRONTEND_ROOT)/app-ts/.built
+	rm -fr $(TMP)/frontend
+
+	rm -f www/index.html
+	rm -fr $(FRONTEND_PUBLISHED)
+	rm -fr $(FRONTEND_BUILD_TMP)
+
+	rm -fr $(FRONTEND_BUILT_MARK)
+
+.PHONY: frontend-dump
+dump: frontend-dump
+frontend-dump:
+	@echo ""
+	@echo "****************"
+	@echo "*** Frontend ***"
+	@echo ""
+	@echo "FRONTEND_ROOT:                  $(FRONTEND_ROOT)"
+	@echo "FRONTEND_DEPENDENCIES_MARK:     $(FRONTEND_DEPENDENCIES_MARK)"
+	@echo "FRONTEND_PUBLISHED:             $(FRONTEND_PUBLISHED)"
+	@echo "FRONTEND_BUILT_MARK:            $(FRONTEND_BUILT_MARK)"
+	@echo "FRONTEND_BUILD_TMP:             $(FRONTEND_BUILD_TMP)"
+	@echo "NodeJS:                         $(shell bin/cr-node --version 2>&1 )"
+	@echo "NPM:                            $(shell bin/cr-npm --version 2>&1 )"
+
+.PHONY: frontend-dependencies
+dependencies: frontend-dependencies
+frontend-dependencies: $(FRONTEND_DEPENDENCIES_MARK)
+$(FRONTEND_DEPENDENCIES_MARK): package.json package-lock.json
+
+	bin/cr-npm ci
+
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
+package-lock.json: package.json
+
+	bin/cr-npm install
+	touch "$@"
+
+.PHONY: frontend-lint
+lint: frontend-lint
+frontend-lint: frontend-lint-es frontend-lint-css frontend-lint-html
+	./node_modules/.bin/prettier --list-different .
+
+.PHONY: frontend-lint-es
+frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
+	node node_modules/.bin/eslint .
+
+.PHONY: frontend-lint-css
+frontend-lint-css: $(FRONTEND_DEPENDENCIES_MARK)
+	node node_modules/.bin/stylelint src/**/*.css
+
+.PHONY: frontend-lint-html
+frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
+	node node_modules/.bin/htmlhint src/**/*.html tests/**/*.html --format=compact
+
+.PHONY: frontend-build
+build: frontend-build
+frontend-build: $(FRONTEND_BUILT_MARK)
+# We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild due to the recursive dependencies
+$(FRONTEND_BUILT_MARK): \
+		$(FRONTEND_DEPENDENCIES_MARK) \
+		$(shell find src/app-old/ ) \
+		$(shell find src/app-static/ ) \
+		$(shell find src/app-ts/ -name "*.ts" ) \
+		webpack.config.js  \
+		$(FRONTEND_BUILD_TMP)/axios.js \
+		$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js \
+		$(FRONTEND_BUILD_TMP)/platform.js \
+		$(FRONTEND_ROOT)/app-ts/.built \
+
+	bin/cr-node node_modules/.bin/webpack
+
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
+# Dependencies are used in the build !
+$(FRONTEND_BUILD_TMP)/axios.js: node_modules/axios/dist/axios.js $(FRONTEND_DEPENDENCIES_MARK)
+# --source-maps inline 
+	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
+
+# Dependencies are used in the build !
+$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js $(FRONTEND_DEPENDENCIES_MARK)
+# --source-maps inline 
+	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
+	sed -i 's/from "axios";/from ".\/axios.js";/' $@
+
+# Dependencies are used in the build !
+$(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_DEPENDENCIES_MARK)
+# --source-maps inline 
+	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
+
+$(FRONTEND_ROOT)/app-ts/.built: tsconfig.json \
+		$(shell find src/app-ts -name *.ts ) \
+		$(FRONTEND_DEPENDENCIES_MARK)
+
+	bin/cr-node node_modules/.bin/tsc
+	touch "$@"
+# This does not works, because when building one file, tsc ignore the tsconfig.json configuration file
+# %.js: %.ts tsconfig.json
+# 	bin/cr-node node_modules/.bin/tsc "$<"
+
+.PHONY: build-on-change
+build-on-change: $(FRONTEND_DEPENDENCIES_MARK)
+	multitail \
+		-cT ANSI \
+		--mark-interval "60" \
+		-l "bin/cr-node node_modules/.bin/tsc --watch" \
+		-l "bin/cr-node node_modules/.bin/webpack --watch"
+
+		# -s 2 -sn 2,1 : two columns
+
+.PHONY: frontend-test
+test: frontend-test
+frontend-test: $(FRONTEND_BUILT_MARK)
+
+	mkdir -p $(FRONTEND_BUILD_TMP)/js
+	bin/cr-node ./node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
+# node tests/report.js
+
+.PHONY: frontend-update-references
+update: frontend-update-references
+frontend-update-references: $(FRONTEND_BUILT_MARK)

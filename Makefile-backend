@@ -1,0 +1,65 @@
+
+BACKEND_ROOT = www/api
+BACKEND_DEPENDENCIES_MARK = $(BACKEND_ROOT)/vendor/.built
+BACKEND_BUILT_MARK = $(BACKEND_DEPENDENCIES_MARK)
+
+backend: clean-files dc-build dc-up backend-dump backend-dependencies backend-test ok
+
+.PHONY: backend-clean
+backend-clean: backend-clean-files
+	rm -fr $(BACKEND_ROOT)/vendor
+	rm -fr $(BACKEND_DEPENDENCIES_MARK)
+
+.PHONY: backend-clean-files
+clean-files: backend-clean-files
+backend-clean-files:
+	rm -fr $(BACKEND_ROOT)/bootstrap/cache
+	rm -fr $(BACKEND_ROOT)/storage
+	rm -fr $(TMP)/backend
+
+.PHONY: backend-dump
+dump: backend-dump
+backend-dump:
+	@echo ""
+	@echo "***************"
+	@echo "*** Backend ***"
+	@echo ""
+	@echo "BACKEND_ROOT:                   $(BACKEND_ROOT)"
+	@echo "BACKEND_DEPENDENCIES_MARK:      $(BACKEND_DEPENDENCIES_MARK)"
+	@echo "PHP:                            $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
+	@echo "PHP composer:                   $(shell bin/cr-composer --version 2>&1 )"
+
+# %/composer.lock: %/composer.json
+# 	bin/composer install --working-dir "$(dir $@)"
+# 	touch "$@"
+
+.PHONY: backend-dependencies
+dependencies: backend-dependencies
+backend-dependencies: $(BACKEND_DEPENDENCIES_MARK)
+$(BACKEND_DEPENDENCIES_MARK): \
+		$(BACKEND_ROOT)/composer.json \
+		$(BACKEND_ROOT)/composer.lock
+
+	cr-ensure-folder-empty $(BACKEND_ROOT)/bootstrap/cache
+	bin/cr-composer install --working-dir "$(BACKEND_ROOT)"
+
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
+.PHONY: backend-update-dependencies
+update: backend-update-dependencies
+backend-update-dependencies:
+	cr-ensure-folder-empty $(BACKEND_ROOT)/bootstrap/cache
+	bin/cr-composer update --working-dir "$(BACKEND_ROOT)"
+
+.PHONY: backend-test
+test: backend-test
+backend-test: $(BACKEND_DEPENDENCIES_MARK)
+	cr-data-reset
+	bin/cr-phpunit
+
+.PHONY: backend-update-references
+update: backend-update-references
+backend-update-references: $(BACKEND_DEPENDENCIES_MARK)
+	cr-data-reset
+	COMMIT=1 bin/cr-phpunit

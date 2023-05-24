@@ -5,7 +5,7 @@
 #   1: desktop / mobile
 #
 # Folders:
-#   OUTPUT: tmp/e2e/$1
+#   OUTPUT: tmp/integration/$1
 #
 
 set -o errexit
@@ -51,14 +51,14 @@ case "$1" in
     ;;
 "desktop")
     # Nothing to do - default flavor - use the config preset's
-    OUTPUT="tmp/e2e/$1"
+    OUTPUT="tmp/integration/$1"
     setup_folders "$OUTPUT"
     run_cypress "run" "--env" "flavor=desktop"
     shift
     ;;
 "mobile")
     # Mobile: 360 x 480
-    OUTPUT="tmp/e2e/$1"
+    OUTPUT="tmp/integration/$1"
     setup_folders "$OUTPUT"
 
     run_cypress "run" \

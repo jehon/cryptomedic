@@ -39,17 +39,15 @@ jobs:
 
       - run: make lint
 
-      - run: make reset
+      - run: make backend-test
 
-      - run: make test-api
+      - run: make frontend-test
 
-      - run: make test-unit
+      - run: make integration-test-desktop
 
-      - run: make test-e2e-desktop
+      - run: make integration-test-mobile
 
-      - run: make test-e2e-mobile
-
-      - run: make test-styles
+      - run: make integration-test-styles
 
       - name: make deploy
         if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
@@ -63,14 +61,15 @@ jobs:
           CRYPTOMEDIC_DEPLOY_PASSWORD: ${{ secrets.CRYPTOMEDIC_DEPLOY_PASSWORD }}
         run:  make deploy
 
-      - name: 'Artifacts test-styles'
+      - name: Upload styles
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: styles
           path: tmp/styles/
 
-      - if: always()
+      - name: Upload deploy.log
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: deploy.log

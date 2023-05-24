@@ -3,16 +3,12 @@
 set -o errexit
 set -o pipefail
 
-. "$(realpath "$( dirname "${BASH_SOURCE[0]}")")"/cr-lib
+. "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
-FOLDER="$(realpath --relative-to="$CR_PRJ_DIR" "$(pwd)" )"
-
-# docker compose exec -T \
-#    php \
-#    /composer.phar
+FOLDER="$(realpath --relative-to="$CR_PRJ_DIR" "$(pwd)")"
 
 docker compose run --rm --quiet-pull -T \
-    --workdir /app/$FOLDER \
+    --workdir "/app/$FOLDER" \
     --user "$(id -u)" \
     composer \
     --no-interaction \

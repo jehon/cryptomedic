@@ -3,7 +3,7 @@
 const path = require("path");
 const parse = require("lcov-parse");
 
-const filename = path.join(__dirname, "../tmp/js/lcov.info");
+const filename = path.join(__dirname, "../tmp/frontend/lcov.info");
 
 if (process.env["NOCOV"] ?? false) {
   console.info("!!! Required not to have coverage, no reporting it !!!");

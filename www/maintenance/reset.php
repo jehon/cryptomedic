@@ -55,7 +55,7 @@ try {
     }
 
     ensureFolderEmpty("api/bootstrap/cache/");
-    ensureFolderEmpty("../tmp/webTemp/");
+    ensureFolderEmpty("../tmp/integration/webTemp/");
 
     echo "\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);
