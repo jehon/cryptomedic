@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/*eslint-env node */
+
 const platform = require("platform");
 
 console.info(

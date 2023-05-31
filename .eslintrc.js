@@ -1,8 +1,9 @@
+/*eslint-env node */
+
 module.exports = {
   root: true,
   extends: ["eslint:recommended", "plugin:jsdoc/recommended"],
   env: {
-    node: true,
     es6: true,
     browser: true
   },

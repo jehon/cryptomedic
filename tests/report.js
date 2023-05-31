@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/*eslint-env node */
+
 const path = require("path");
 const parse = require("lcov-parse");
 
