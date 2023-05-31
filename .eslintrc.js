@@ -13,7 +13,7 @@ module.exports = {
     sourceType: "module",
     requireConfigFile: false
   },
-  plugins: ["jsdoc", "@typescript-eslint"],
+  plugins: ["jsdoc"],
   settings: {
     jsdoc: {
       mode: "typescript"
