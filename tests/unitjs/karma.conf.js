@@ -33,7 +33,7 @@ module.exports = function (config) {
     files: [
       "node_modules/karma-read-json/karma-read-json.js",
       "node_modules/bootstrap4/dist/css/bootstrap.min.css",
-      { pattern: "tests/unitjs/*-test.js", type: "module" },
+      { pattern: "tests/unitjs/**/*-test.js", type: "module" },
       { pattern: "tests/unitjs/**", included: false },
       { pattern: "**/*", included: false, watched: false }
     ],
