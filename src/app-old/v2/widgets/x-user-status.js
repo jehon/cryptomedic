@@ -10,7 +10,7 @@ import {
 } from "../js/custom-element.js";
 import XButton from "./style/x-button.js";
 import { logoutBuilder } from "./func/requests-authenticator.js";
-import { getSessionData } from "../../../app-ts/session.js";
+import { getSessionData } from "../../../app-ts/services/session.js";
 
 const user = Symbol("user");
 const logout = Symbol("logout");
