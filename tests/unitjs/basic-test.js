@@ -1,4 +1,4 @@
-import { fn, loadReference, extractPath, RefFolder1 } from "./athelpers.js";
+import { fn, loadReference, extractPath, RefFolder1 } from "./test-lib.js";
 
 describe(fn(import.meta.url), function () {
   it("should be true", () => {
