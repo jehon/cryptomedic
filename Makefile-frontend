@@ -138,7 +138,6 @@ frontend-test: $(FRONTEND_BUILT_MARK)
 
 	mkdir -p $(FRONTEND_BUILD_TMP)/js
 	bin/cr-node ./node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
-# node tests/report.js
 
 .PHONY: frontend-update-references
 update: frontend-update-references
