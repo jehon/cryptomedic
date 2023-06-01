@@ -12,7 +12,7 @@ export function setLocation(pathname) {
  * @returns {string} the current route
  */
 export function getCurrentRoute() {
-  return document.location.hash.substr(1);
+  return document.location.hash.substring(1);
 }
 
 /**
