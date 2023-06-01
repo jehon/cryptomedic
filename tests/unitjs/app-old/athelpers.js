@@ -1,4 +1,11 @@
-export * from "../test-lib.js";
+export {
+  fn,
+  fireOn,
+  RefFolder1,
+  RefFolder1RicketConsult13,
+  extractPath,
+  loadReference
+} from "../test-lib.js";
 
 /* TODO: DEPRECATED */
 /* map old version to new one */
