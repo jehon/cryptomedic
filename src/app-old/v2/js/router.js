@@ -182,7 +182,7 @@ export function getRouteParameters(routeTemplate, route) {
   }
 
   // Optional arguments
-  let s = n > 0 ? route.substr(n + 1) : "";
+  let s = n > 0 ? route.substring(n + 1) : "";
   const add = Object.fromEntries(Array.from(new URLSearchParams(s).entries()));
 
   return {
