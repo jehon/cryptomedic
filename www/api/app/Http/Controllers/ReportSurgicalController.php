@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Model\Bill;
 
-class ReportSurgicalController extends ReportController {
-  public function buildData() {
-    $this->result['list'] = $this->runSqlWithNamedParameter("SELECT
+class ReportSurgicalController extends ReportController
+{
+  public function buildData()
+  {
+    $this->result['list'] = $this->runSqlWithNamedParameter(
+      "SELECT
         bills.id as bid,
         patients.id as pid,
         bills.Date as Date,
@@ -34,11 +37,11 @@ class ReportSurgicalController extends ReportController {
         consults.Date AS last_seen,
         consults.TreatmentEvaluation AS last_treat_result,
         consults.TreatmentFinished AS last_treat_finished
-      FROM bills
-          JOIN patients ON bills.patient_id = patients.id
-          JOIN prices ON bills.price_id = prices.id
-          LEFT OUTER JOIN consults ON (patients.id = consults.patient_id)
-          LEFT OUTER JOIN consults AS consults2 ON (patients.id = consults2.patient_id AND consults2.Date > consults.Date)
+      FROM patients
+          JOIN bills ON bills.patient_id = patients.id
+          JOIN prices ON prices.id = bills.price_id
+          LEFT OUTER JOIN consults ON (consults.patient_id = patients.id)
+          LEFT OUTER JOIN consults AS consults2 ON (consults2.patient_id = patients.id AND consults2.Date > consults.Date)
       WHERE (1 = 1)
         AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
         AND " . Bill::getActivityFilter("surgical") . "
