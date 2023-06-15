@@ -279,7 +279,7 @@
                 "updated_at": "<timestamp>",
                 "lastuser": "jehon",
                 "patient_id": 1,
-                "Date": null,
+                "Date": "2014-01-02",
                 "ReportDiagnostic": "test",
                 "ReportSurgeon": "someone",
                 "ReportSideR": null,
