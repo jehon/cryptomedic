@@ -36,7 +36,7 @@ cr-mysql --database=mysql <<EOS
 EOS
 header_end
 
-header_begin "cr-data-reset - Mysql - restoring base.sql"
+header_begin "cr-data-reset - Mysql - restoring initial base"
 cr-mysql --database=cryptomedic <"conf/database/base.sql"
 header_end
 
