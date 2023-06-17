@@ -45,7 +45,7 @@
     "htmlhint": "1.1.4",
     "husky": "8.0.3",
     "imports-loader": "4.0.1",
-    "jasmine": "5.0.1",
+    "jasmine": "5.0.2",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "jsdoc-typeof-plugin": "1.0.0",
     "karma": "6.4.2",
