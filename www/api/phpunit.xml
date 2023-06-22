@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit 
+<phpunit
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd"
       backupGlobals="false"
+      backupStaticProperties="false"
       bootstrap="bootstrap/autoload.php"
+      cacheDirectory="../../tmp/backend/phpunit.cache"
       colors="true"
       processIsolation="false"
       stopOnFailure="false"
-      xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
-      cacheDirectory="../../tmp/backend/phpunit.cache"
-      backupStaticProperties="false"
     >
-  <coverage>
-    <include>
-      <directory suffix=".php">./app</directory>
-    </include>
-  </coverage>
+  <coverage/>
   <testsuites>
     <testsuite name="Application Test Suite">
       <directory suffix="Test.php">./tests</directory>
@@ -26,4 +22,9 @@
     <env name="SESSION_DRIVER" value="array"/>
     <env name="QUEUE_DRIVER" value="sync"/>
   </php>
+  <source>
+    <include>
+      <directory suffix=".php">./app</directory>
+    </include>
+  </source>
 </phpunit>
