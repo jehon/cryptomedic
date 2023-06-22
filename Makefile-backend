@@ -56,10 +56,10 @@ backend-update-dependencies:
 test: backend-test
 backend-test: $(BACKEND_DEPENDENCIES_MARK)
 	cr-data-reset
-	bin/cr-phpunit
+	cd "$(BACKEND_ROOT)" && $(ROOT)/bin/cr-phpunit
 
 .PHONY: backend-update-references
 update: backend-update-references
 backend-update-references: $(BACKEND_DEPENDENCIES_MARK)
 	cr-data-reset
-	COMMIT=1 bin/cr-phpunit
+	cd "$(BACKEND_ROOT)" && COMMIT=1 $(ROOT)/bin/cr-phpunit
