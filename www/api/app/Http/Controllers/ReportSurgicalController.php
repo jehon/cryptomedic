@@ -43,9 +43,12 @@ class ReportSurgicalController extends ReportController
           LEFT OUTER JOIN consults ON (consults.patient_id = patients.id)
           LEFT OUTER JOIN consults AS consults2 ON (consults2.patient_id = patients.id AND consults2.Date > consults.Date)
       WHERE (1 = 1)
-        AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
-        AND " . Bill::getActivityFilter("surgical") . "
-        AND consults2.Date IS NULL
+        AND (
+          (" . $this->getParamAsSqlFilter("when", "bills.Date")
+            . " AND " . Bill::getActivityFilter("surgical")
+            . " AND consults2.Date IS NULL "
+          . ")
+        )
       ORDER BY bills.Date, bills.id"
     );
   }
