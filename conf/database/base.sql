@@ -803,4 +803,4 @@ UNLOCK TABLES;
 
 
 
-UPDATE `surgeries` SET `Date` = '2014-01-02' WHERE `surgeries`.`id` = 5
+UPDATE `surgeries` SET `Date` = '2014-01-02' WHERE `surgeries`.`id` = 5;
