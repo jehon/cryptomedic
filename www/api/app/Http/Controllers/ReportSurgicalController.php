@@ -10,19 +10,20 @@ class ReportSurgicalController extends ReportController
   {
     $this->result['list'] = $this->runSqlWithNamedParameter(
       "SELECT
-        bills.id as bid,
         patients.id as pid,
-        bills.Date as Date,
 
-        bills.Center as Center,
         CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
         patients.Name as patient_name,
         patients.yearofbirth,
         patients.Sex,
+        patients.Pathology,
+        bills.id as bid,
+        bills.Date as Date,
+        bills.Center as Center,
         bills.sl_familySalary,
         bills.sl_numberOfHouseholdMembers,
         bills.Sociallevel,
-        patients.Pathology,
+
         " . Bill::getSQLAct() . " as act,
         " . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . " AS price_consult,
               " . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . " AS price_medecine,
