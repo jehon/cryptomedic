@@ -5,7 +5,7 @@
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 TMP := $(ROOT)/tmp
-ACCEPTANCE := $(ROOT)/live-from-production/
+ACCEPTANCE := $(ROOT)/live-from-production
 
 # Defaults value for Dev:
 export CRYPTOMEDIC_HTTP_HOST ?= localhost
@@ -100,7 +100,7 @@ stop:
 logs:
 	docker compose logs -f
 
-reset: 
+reset:
 	cr-data-reset
 
 #
@@ -110,7 +110,7 @@ reset:
 #
 acceptance: $(ACCEPTANCE)/.done dc-up
 	cr-mysql -e "DROP DATABASE cryptomedic; CREATE DATABASE cryptomedic"
-	cr-mysql < "$(ACCEPTANCE)"/backups/backup.sql
+	cr-mysql --database=cryptomedic < "$(ACCEPTANCE)"/backups/backup.sql
 	rsync -itr --delete "$(ACCEPTANCE)"/storage/ live/storage
 
 $(ACCEPTANCE)/.done:
