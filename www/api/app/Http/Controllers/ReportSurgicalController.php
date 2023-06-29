@@ -17,26 +17,24 @@ class ReportSurgicalController extends ReportController
         patients.yearofbirth,
         patients.Sex,
         patients.Pathology,
-        bills.id as bid,
-        bills.Date as Date,
-        bills.Center as Center,
-        bills.sl_familySalary,
-        bills.sl_numberOfHouseholdMembers,
-        bills.Sociallevel,
-
-        " . Bill::getSQLAct() . " as act,
-        " . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . " AS price_consult,
-              " . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . " AS price_medecine,
-        " . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . " AS price_workshop,
-              " . Bill::getSQLFieldsSum(Bill::CAT_SURGICAL) . " AS price_surgical,
-              " . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . " AS price_other,
-              bills.total_real as total_real,
-              bills.total_asked as total_asked,
-              (select sum(amount) from payments where bill_id = bills.id) as total_paid,
-        exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < " . $this->getParamAsSqlNamed("whenFrom") . ") as oldPatient,
-        consults.Date AS last_seen,
-        consults.TreatmentEvaluation AS last_treat_result,
-        consults.TreatmentFinished AS last_treat_finished
+        '[' + IFNULL(GROUP_CONCAT(bills.id SEPARATOR ','), '') + ']' as bids,
+        COUNT(bills.id) as bills,
+        MAX(bills.Date) as Date,
+        ANY_VALUE(bills.Center) as Center,
+        MAX(bills.sl_familySalary) AS sl_familySalary,
+        MAX(bills.sl_numberOfHouseholdMembers) AS sl_numberOfHouseholdMembers,
+        MAX(bills.Sociallevel) AS Sociallevel,
+        SUM(" . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . ") AS price_consult,
+        SUM(" . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . ") AS price_medecine,
+        SUM(" . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . ") AS price_workshop,
+        SUM(" . Bill::getSQLFieldsSum(Bill::CAT_SURGICAL) . ") AS price_surgical,
+        SUM(" . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . ") AS price_other,
+        SUM(bills.total_real) as total_real,
+        SUM(bills.total_asked) as total_asked,
+        SUM((select sum(amount) from payments where bill_id = bills.id)) as total_paid,
+        MAX(consults.Date) AS last_seen,
+        GROUP_CONCAT(consults.TreatmentEvaluation SEPARATOR '###') AS last_treat_result,
+        ANY_VALUE(consults.TreatmentFinished) AS last_treat_finished
       FROM patients
           JOIN bills ON bills.patient_id = patients.id
           JOIN prices ON prices.id = bills.price_id
@@ -53,3 +51,6 @@ class ReportSurgicalController extends ReportController
     );
   }
 }
+
+// LEFT OUTER JOIN surgeries ON (surgeries.patient_id = patients.id)
+//       GROUP BY patients.id
