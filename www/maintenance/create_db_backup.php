@@ -50,25 +50,29 @@ echo "Getting tables\n";
 $result = $db->runPrepareStatement("SHOW TABLES");
 $tables = array_map(fn($a) => array_pop($a), $result);
 usort($tables, function($a, $b) {
-    # a < b = -1
-    # a > b = 1
+    $A_BEFORE_B = -1; # a < b = -1
+    $A_AFTER_B = 1; # a > b = 1
 
     if ($a == $b) return 0;
 
     # First one:
-    if ($a == "patients") return -1;
-    if ($b == "patients") return 1;
+    if ($a == "patients") return $A_BEFORE_B;
+    if ($b == "patients") return $A_AFTER_B;
 
     # Next one:
-    if ($a == "prices") return -1;
-    if ($b == "prices") return 1;
-    
+    if ($a == "prices") return $A_BEFORE_B;
+    if ($b == "prices") return $A_AFTER_B;
+
     # Next one:
-    if ($a == "bills") return -1;
-    if ($b == "bills") return 1;
+    if ($a == "bills") return $A_BEFORE_B;
+    if ($b == "bills") return $A_AFTER_B;
+
+    # Last one:
+    if ($a == "consults") return $A_AFTER_B;
+    if ($b == "consults") return $A_BEFORE_B;
 
     # Order naturally the rest
-    return ($a < $b) ? -1 : 1;
+    return ($a < $b) ? $A_BEFORE_B : $A_AFTER_B;
 });
 echo "Found: " . join(', ', $tables) . "\n";
 
@@ -96,7 +100,7 @@ foreach ($tables as $table) {
     $result = array_pop($result);
     fwrite($fileHandler, $result . ";\n");
     fwrite($fileHandler, "\n");
-  
+
     /**
      * Table data
      */
@@ -115,7 +119,7 @@ foreach ($tables as $table) {
                     $vals .= $db->pdo->quote($val) . ',';
                 }
             }
-            $sqlScript = 
+            $sqlScript =
                 "INSERT INTO $table ("
                 . rtrim($keys, ',')
                 . ") VALUES ("
@@ -136,7 +140,7 @@ foreach ($tables as $table) {
 fwrite($fileHandler, "\n");
 fwrite($fileHandler, "-- Generating backup done\n");
 fwrite($fileHandler, "\n");
-fclose($fileHandler); 
+fclose($fileHandler);
 
 echo "\n";
 echo "Generating backup done\n";
