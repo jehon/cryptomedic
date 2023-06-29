@@ -849,7 +849,6 @@ reports[REPORT_SURGICAL] = {
         }
       )
       .addDetail("Date", { headers: ["Date"] })
-      .addDetail("ExaminerName", { headers: [""] })
       .addDetail("Center", { headers: ["Place"] })
       .addDetail("patient_reference", { headers: ["Record n#"] })
       .addDetail("patient_name", {
@@ -868,16 +867,6 @@ reports[REPORT_SURGICAL] = {
         }
       )
       .addDetail("Sex", { headers: ["M/F"] })
-      .addDetail(
-        (data, _i, context) =>
-          data.oldPatient == 1
-            ? "Old"
-            : data.patient_reference.substr(0, 4) <
-              ("" + context.params.when).substr(0, 4)
-            ? "Old(EN)"
-            : "New",
-        { headers: ["Old/New"] }
-      )
       .addDetail("sl_familySalary", {
         headers: [
           "Tk income",
@@ -900,8 +889,9 @@ reports[REPORT_SURGICAL] = {
         { headers: ["Diagno", "Medical", "501-1500", 2] }
       )
       .addDetail("act", { headers: ["Act"] })
-      .addDetail("treatment", { headers: ["Trt", null, "1501-3000", 3] })
-      .addDetail("last_seen", { headers: ["Last seen", "Surgical"] })
+      .addDetail("last_seen", {
+        headers: ["Last seen", "Surgical", "1501-3000", 3]
+      })
       .addDetail("last_treat_result", {
         headers: ["Result", null, "3001-...", 4]
       })

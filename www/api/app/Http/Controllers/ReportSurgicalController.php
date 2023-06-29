@@ -24,7 +24,6 @@ class ReportSurgicalController extends ReportController
         bills.Sociallevel,
         patients.Pathology,
         " . Bill::getSQLAct() . " as act,
-        " . Bill::getSQLTreatment() . " as treatment,
         " . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . " AS price_consult,
               " . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . " AS price_medecine,
         " . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . " AS price_workshop,
