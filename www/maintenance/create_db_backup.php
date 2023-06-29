@@ -77,9 +77,10 @@ usort($tables, function($a, $b) {
 echo "Found: " . join(', ', $tables) . "\n";
 
 echo "\n";
-echo "Saving data:\n";
+echo "Saving data:"; # newline added in for loop
 foreach ($tables as $table) {
-    echo "- Saving $table\n";
+    echo "\n";
+    echo "- Saving $table";
     fwrite($fileHandler, "\n\n");
     fwrite($fileHandler, "-- ---------------------------------------\n");
     fwrite($fileHandler, "-- \n");
@@ -91,15 +92,19 @@ foreach ($tables as $table) {
     /**
      * Table structure
      */
-    $result = $db->runPrepareStatement("SHOW CREATE TABLE $table");
-    $result = array_pop($result);
+    $results = $db->runPrepareStatement("SHOW CREATE TABLE $table");
+    # First line (the only one present)
+    $result = array_pop($results);
+
+    $create_sql = array_pop($result);
+    fwrite($fileHandler, $create_sql . ";\n");
+    fwrite($fileHandler, "\n");
+
     if (isset($result["View"])) {
+        echo(" (view)");
         # We don't save views
         continue;
     }
-    $result = array_pop($result);
-    fwrite($fileHandler, $result . ";\n");
-    fwrite($fileHandler, "\n");
 
     /**
      * Table data
@@ -142,6 +147,7 @@ fwrite($fileHandler, "-- Generating backup done\n");
 fwrite($fileHandler, "\n");
 fclose($fileHandler);
 
+echo "\n";
 echo "\n";
 echo "Generating backup done\n";
 echo "Ok\n";
