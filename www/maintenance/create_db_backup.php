@@ -96,7 +96,21 @@ foreach ($tables as $table) {
     # First line (the only one present)
     $result = array_pop($results);
 
-    $create_sql = array_pop($result);
+    /*
+    $result =
+        Table:
+            ["Table"] => "users"
+            ["Create Table"] => "CREATE TABLE ...
+
+        View:
+            ["View"] => "consults"
+            ["Create View"] => string(2045) "CREATE ...
+            ["character_set_client"] => "utf8mb4"
+            ["collation_connection"] =>"utf8mb4_unicode_ci"
+
+    */
+
+    $create_sql = array_values($result)[1];
     fwrite($fileHandler, $create_sql . ";\n");
     fwrite($fileHandler, "\n");
 
