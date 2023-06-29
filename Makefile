@@ -111,6 +111,7 @@ reset:
 acceptance: $(ACCEPTANCE)/.done dc-up
 	cr-mysql -e "DROP DATABASE cryptomedic; CREATE DATABASE cryptomedic"
 	cr-mysql --database=cryptomedic < "$(ACCEPTANCE)"/backups/backup.sql
+	cr-refresh-structure "http://localhost:5555/" "secret"
 	rsync -itr --delete "$(ACCEPTANCE)"/storage/ live/storage
 
 $(ACCEPTANCE)/.done:
