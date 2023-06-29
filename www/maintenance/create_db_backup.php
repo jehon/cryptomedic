@@ -111,14 +111,20 @@ foreach ($tables as $table) {
     */
 
     $create_sql = array_values($result)[1];
-    fwrite($fileHandler, $create_sql . ";\n");
-    fwrite($fileHandler, "\n");
 
     if (isset($result["View"])) {
         echo(" (view)");
+
+        # CREATE ALGORITHM=UNDEFINED DEFINER=`cryptomekpmain`@`%` SQL SECURITY DEFINER VIEW => CREATE VIEW
+        fwrite($fileHandler, preg_replace('/CREATE .* VIEW/','CREATE VIEW', $create_sql) . ";\n");
+        fwrite($fileHandler, "\n");
+
         # We don't save views
         continue;
     }
+
+    fwrite($fileHandler, $create_sql . ";\n");
+    fwrite($fileHandler, "\n");
 
     /**
      * Table data
