@@ -47,6 +47,7 @@ class ReportSurgicalController extends ReportController
             . " AND consults2.Date IS NULL "
           . ")
         )
+      GROUP BY patients.id
       ORDER BY bills.Date, bills.id"
     );
   }
