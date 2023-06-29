@@ -139,6 +139,7 @@ fs.writeFileSync(stylesJSON, JSON.stringify(problemsList, null, 2));
 
 const args = yargs(process.argv.slice(2)).boolean("update").argv;
 if (args.update) {
+  console.info("Updating references...");
   for (const fset of problemsList) {
     if (!fset.problem && !fset.warning) {
       continue;
