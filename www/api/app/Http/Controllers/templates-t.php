@@ -174,7 +174,7 @@ class t {
         $this->res .= "<input type='number' $inline />";
         break;
       case DatabaseStructure::TYPE_TEXT:
-        $this->res .= "<textarea cols=40 rows=4 $inline></textarea>";
+        $this->res .= "<textarea cols=40 rows=4 onkeyup='textareaAdjust(this)' $inline></textarea>";
         break;
       case DatabaseStructure::TYPE_CHAR:
         $this->res .= "<input $inline />";
