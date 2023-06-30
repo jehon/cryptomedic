@@ -41,24 +41,24 @@ class ReportSurgicalController extends ReportController
           MAX(consults.Date) AS last_seen,
           GROUP_CONCAT(consults.TreatmentEvaluation SEPARATOR '###') AS last_treat_result,
           ANY_VALUE(consults.TreatmentFinished) AS last_treat_finished
-        FROM patients
 
+        FROM patients
           LEFT OUTER JOIN bills ON (
             bills.patient_id = patients.id
+            AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
+            AND " . Bill::getActivityFilter("surgical") . "
           )
           JOIN prices ON prices.id = bills.price_id
-          LEFT OUTER JOIN surgeries ON (surgeries.patient_id = patients.id)
+          LEFT OUTER JOIN surgeries ON (
+            surgeries.patient_id = patients.id
+            AND " . $this->getParamAsSqlFilter("when", "surgeries.Date") . "
+          )
           LEFT OUTER JOIN consults ON (consults.patient_id = patients.id)
           LEFT OUTER JOIN consults AS consults2 ON (consults2.patient_id = patients.id AND consults2.Date > consults.Date)
+
         WHERE (1 = 1)
-          AND (
-            (" . $this->getParamAsSqlFilter("when", "bills.Date") . "
-              AND " . Bill::getActivityFilter("surgical") . "
-              AND consults2.Date IS NULL "
-            . ") OR (
-              1 = 0
-            )
-          )
+          AND (consults2.Date IS NULL)
+
         GROUP BY patients.id
         ORDER BY bills.Date, bills.id"
       ),
@@ -68,5 +68,3 @@ class ReportSurgicalController extends ReportController
     ]);
   }
 }
-
-// LEFT OUTER JOIN surgeries ON (surgeries.patient_id = patients.id)
