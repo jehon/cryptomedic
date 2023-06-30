@@ -19,7 +19,7 @@ class ReportSurgicalController extends ReportController
           patients.yearofbirth,
           patients.Sex,
           patients.Pathology,
-          '[' + IFNULL(GROUP_CONCAT(bills.id SEPARATOR ','), '') + ']' as bids,
+          IFNULL(GROUP_CONCAT(bills.id SEPARATOR '|'), '') as bids,
           COUNT(bills.id) as bills,
           MAX(bills.Date) as Date,
           ANY_VALUE(bills.Center) as Center,
@@ -39,13 +39,15 @@ class ReportSurgicalController extends ReportController
           ANY_VALUE(consults.TreatmentFinished) AS last_treat_finished
         FROM patients
 
-            LEFT OUTER JOIN bills ON bills.patient_id = patients.id
-            JOIN prices ON prices.id = bills.price_id
+          LEFT OUTER JOIN bills ON (
+            bills.patient_id = patients.id
+          )
+          JOIN prices ON prices.id = bills.price_id
 
             LEFT OUTER JOIN surgeries ON (surgeries.patient_id = patients.id)
 
-            LEFT OUTER JOIN consults ON (consults.patient_id = patients.id)
-            LEFT OUTER JOIN consults AS consults2 ON (consults2.patient_id = patients.id AND consults2.Date > consults.Date)
+          LEFT OUTER JOIN consults ON (consults.patient_id = patients.id)
+          LEFT OUTER JOIN consults AS consults2 ON (consults2.patient_id = patients.id AND consults2.Date > consults.Date)
         WHERE (1 = 1)
           AND (
             (" . $this->getParamAsSqlFilter("when", "bills.Date") . "
@@ -57,12 +59,11 @@ class ReportSurgicalController extends ReportController
           )
         GROUP BY patients.id
         ORDER BY bills.Date, bills.id"
-            ),
-        [
-          "bids" => SQL::LIST,
-          "cids" => SQL::LIST
-        ]
-    );
+      ),
+    [
+      "bids" => SQL::LIST,
+      "cids" => SQL::LIST
+    ]);
   }
 }
 
