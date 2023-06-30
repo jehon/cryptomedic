@@ -14,7 +14,9 @@
             "yearofbirth": 2007,
             "Sex": "Male",
             "Pathology": "ClubFoot",
-            "bids": 8,
+            "bids": [
+                8
+            ],
             "bills": 1,
             "Date": "2014-01-25",
             "Center": "Ukhia",

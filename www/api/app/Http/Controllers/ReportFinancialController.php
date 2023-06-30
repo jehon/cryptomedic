@@ -37,7 +37,7 @@ class ReportFinancialController extends ReportController {
             GROUP BY patients.id
             HAVING (1 = 1)
       ",
-      [ 
+      [
         "is_child" => "age_at_first_consult < 18",
         "is_complete" => "(nb_consults + nb_pictures) > 0"
       ])
