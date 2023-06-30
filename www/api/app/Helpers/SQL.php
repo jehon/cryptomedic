@@ -21,7 +21,11 @@ class SQL {
                     $data[$key] = $data[$key] > 0;
                     break;
                 case SQL::LIST:
-                    $data[$key] = explode("|", $data[$key]);
+                    if ($data[$key] == "") {
+                        $data[$key] = [];
+                    } else {
+                        $data[$key] = explode("|", $data[$key]);
+                    }
                     break;
                 }
         }

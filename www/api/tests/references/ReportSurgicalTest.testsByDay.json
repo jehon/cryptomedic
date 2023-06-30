@@ -31,6 +31,8 @@
             "total_real": 20500,
             "total_asked": 8200,
             "total_paid": 7000,
+            "cids": [],
+            "consults": 0,
             "last_seen": null,
             "last_treat_result": null,
             "last_treat_finished": null

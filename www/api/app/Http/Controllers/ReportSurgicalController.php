@@ -13,12 +13,12 @@ class ReportSurgicalController extends ReportController
       $this->runSqlWithNamedParameter(
         "SELECT
           patients.id as pid,
-
           CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
           patients.Name as patient_name,
           patients.yearofbirth,
           patients.Sex,
           patients.Pathology,
+
           IFNULL(GROUP_CONCAT(bills.id SEPARATOR '|'), '') as bids,
           COUNT(bills.id) as bills,
           MAX(bills.Date) as Date,
@@ -34,6 +34,10 @@ class ReportSurgicalController extends ReportController
           SUM(bills.total_real) as total_real,
           SUM(bills.total_asked) as total_asked,
           SUM((select sum(amount) from payments where bill_id = bills.id)) as total_paid,
+
+          IFNULL(GROUP_CONCAT(surgeries.id SEPARATOR '|'), '') as cids,
+          COUNT(surgeries.id) as consults,
+
           MAX(consults.Date) AS last_seen,
           GROUP_CONCAT(consults.TreatmentEvaluation SEPARATOR '###') AS last_treat_result,
           ANY_VALUE(consults.TreatmentFinished) AS last_treat_finished
@@ -43,9 +47,7 @@ class ReportSurgicalController extends ReportController
             bills.patient_id = patients.id
           )
           JOIN prices ON prices.id = bills.price_id
-
-            LEFT OUTER JOIN surgeries ON (surgeries.patient_id = patients.id)
-
+          LEFT OUTER JOIN surgeries ON (surgeries.patient_id = patients.id)
           LEFT OUTER JOIN consults ON (consults.patient_id = patients.id)
           LEFT OUTER JOIN consults AS consults2 ON (consults2.patient_id = patients.id AND consults2.Date > consults.Date)
         WHERE (1 = 1)
