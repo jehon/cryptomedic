@@ -48,7 +48,7 @@ class ReportSurgicalController extends ReportController
             AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
             AND " . Bill::getActivityFilter("surgical") . "
           )
-          JOIN prices ON prices.id = bills.price_id
+          LEFT OUTER JOIN prices ON prices.id = bills.price_id
           LEFT OUTER JOIN surgeries ON (
             surgeries.patient_id = patients.id
             AND " . $this->getParamAsSqlFilter("when", "surgeries.Date") . "
@@ -58,6 +58,7 @@ class ReportSurgicalController extends ReportController
 
         WHERE (1 = 1)
           AND (consults2.Date IS NULL)
+          AND (bills.id IS NOT NULL OR surgeries.id IS NOT NULL)
 
         GROUP BY patients.id
         ORDER BY bills.Date, bills.id"

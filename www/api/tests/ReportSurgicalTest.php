@@ -20,11 +20,13 @@ class ReportSurgicalTest extends RouteReferenceTestCase {
 		$json = $this->myRunAssertQueryForRoles($opt);
 		$this->assertArrayHasKey('params', $json);
 		$this->assertArrayHasKey('list', $json);
-		$this->assertEquals(1, count($json['list']));
 
-		$this->assertEquals(1, count($json['list']));
+		$this->assertEquals(2, count($json['list']));
 		foreach ($json['list'] as $k => $v) {
-			$this->assertEquals(substr($v['Date'], 0, 7), self::$month);
+			if ($v['Date'] > "") {
+				// Otherwise, we have a surgical consultation
+				$this->assertEquals(substr($v['Date'], 0, 7), self::$month);
+			}
 		}
 	}
 
@@ -34,10 +36,13 @@ class ReportSurgicalTest extends RouteReferenceTestCase {
 
 		$json = $this->myRunAssertQueryForRoles($opt);
 
-		$this->assertEquals(1, count($json['list']));
+		$this->assertEquals(2, count($json['list']));
 		foreach ($json['list'] as $k => $v) {
-			$this->assertEquals(substr($v['Date'], 0, 7), self::$month);
-			$this->assertEquals($v['Center'], "Ukhia");
+			if ($v['Date'] > "") {
+				// Otherwise, we have a surgical consultation
+				$this->assertEquals(substr($v['Date'], 0, 7), self::$month);
+				$this->assertEquals($v['Center'], "Ukhia");
+			}
 		}
 	}
 }

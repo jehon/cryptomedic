@@ -24,3 +24,10 @@ export function getFloatFrom(s) {
   }
   return f;
 }
+
+export function ifError(x, y) {
+  if (isFinite(x)) {
+    return x;
+  }
+  return y;
+}

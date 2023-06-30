@@ -16,7 +16,12 @@ flavorFilter(flavorFilter.DESKTOP, () =>
           cy.get('input[name="month"]').type("2014-01");
         },
         (tableIterator) =>
-          tableIterator.col(3).assert("Ukhia").nextCol().assert("2014-104")
+          tableIterator
+            .row(2)
+            .col(3)
+            .assert("Ukhia")
+            .nextCol()
+            .assert("2014-104")
       );
     });
   })

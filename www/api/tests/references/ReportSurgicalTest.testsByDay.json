@@ -8,6 +8,36 @@
     },
     "list": [
         {
+            "pid": 1,
+            "patient_reference": "2000-1",
+            "patient_name": "rezaul islam",
+            "yearofbirth": 1998,
+            "Sex": "Male",
+            "Pathology": "ClubFoot",
+            "bids": [],
+            "bills": 0,
+            "Date": null,
+            "Center": null,
+            "sl_familySalary": null,
+            "sl_numberOfHouseholdMembers": null,
+            "Sociallevel": null,
+            "price_consult": null,
+            "price_medecine": null,
+            "price_workshop": null,
+            "price_surgical": null,
+            "price_other": null,
+            "total_real": null,
+            "total_asked": null,
+            "total_paid": null,
+            "cids": [
+                5
+            ],
+            "consults": 1,
+            "last_seen": "2014-01-04",
+            "last_treat_result": null,
+            "last_treat_finished": null
+        },
+        {
             "pid": 4,
             "patient_reference": "2014-104",
             "patient_name": "RAHAMAN MOHAMED",

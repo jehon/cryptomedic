@@ -31,6 +31,7 @@ import XInputDate from "../../v1/elements/x-input-date.js";
 import pageStyles from "./page-helper.js";
 import "../widgets/func/x-i18n.js";
 import { reportQueryBuilder } from "../widgets/func/requests-reports.js";
+import { ifError } from "../js/number-utils.js";
 
 /**
  * Two parts here:
@@ -646,7 +647,10 @@ reports[REPORT_ACTIVITY] = {
       .addDetail("sl_numberOfHouseholdMembers", { headers: ["Nb pers"] })
       .addDetail(
         (data) =>
-          Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers),
+          ifError(
+            Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers),
+            ""
+          ),
         { headers: ["Tk per pers", null, "301-500", 1] }
       )
       .addDetail("Sociallevel", { headers: ["SL"] })
@@ -879,7 +883,10 @@ reports[REPORT_SURGICAL] = {
       .addDetail("sl_numberOfHouseholdMembers", { headers: ["Nb pers"] })
       .addDetail(
         (data) =>
-          Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers),
+          ifError(
+            Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers),
+            ""
+          ),
         { headers: ["Tk per pers", null, "301-500", 1] }
       )
       .addDetail("Sociallevel", { headers: ["SL"] })
