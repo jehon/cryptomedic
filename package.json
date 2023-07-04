@@ -22,7 +22,7 @@
     "pngjs": "7.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.22.5",
+    "@babel/cli": "7.22.6",
     "@commitlint/cli": "17.6.6",
     "@commitlint/config-conventional": "17.6.6",
     "@typescript-eslint/eslint-plugin": "5.61.0",
