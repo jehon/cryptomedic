@@ -895,7 +895,6 @@ reports[REPORT_SURGICAL] = {
         (data) => createElementWithObject(XCodage, { value: data.Pathology }),
         { headers: ["Diagno", "Medical", "501-1500", 2] }
       )
-      .addDetail("act", { headers: ["Act"] })
       .addDetail("last_seen", {
         headers: ["Last seen", "Surgical", "1501-3000", 3]
       })
