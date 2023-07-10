@@ -64,7 +64,10 @@ services:
       # - traefik.http.routers.static.middlewares=jhstriproot@docker
 
   mysql:
-    image: mysql:${MYSQL_VERSION}
+    build:
+      context: conf/mysql
+      args:
+        MYSQL_VERSION: ${MYSQL_VERSION}
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
       # MYSQL_ROOT_PASSWORD: mysql_root_password
