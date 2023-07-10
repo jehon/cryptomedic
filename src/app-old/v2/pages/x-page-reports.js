@@ -485,7 +485,7 @@ x-button#export {
             filename += "-" + p;
           }
         } else {
-          filename += "-" + this.data.params[p].split(" ").join("_");
+          filename += "-" + ("" + this.data.params[p]).split(" ").join("_");
         }
       }
     }
