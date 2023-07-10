@@ -67,6 +67,10 @@ Route::group(array('middleware' => 'authenticated'), function() {
       "uses" => "ReportActivityController@index"
     ]);
 
+    Route::get('reports/cash-register', [
+      "uses" => "ReportCashRegisterController@index"
+    ]);
+
     Route::get('reports/financial', [
       "uses" => "ReportFinancialController@index"
     ]);

@@ -1,0 +1,23 @@
+{
+    "params": {
+        "period": "year",
+        "year": 2014,
+        "when": 2014
+    },
+    "list": [
+        {
+            "year": 2014,
+            "month": 1,
+            "total_real": 23000,
+            "total_asked": 9000,
+            "paid": 7138
+        },
+        {
+            "year": 2014,
+            "month": 5,
+            "total_real": 4200,
+            "total_asked": 1560,
+            "paid": 300
+        }
+    ]
+}
