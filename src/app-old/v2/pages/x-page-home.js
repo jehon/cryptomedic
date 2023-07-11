@@ -19,6 +19,7 @@ import XRestricted from "../widgets/func/x-restricted.js";
 import { getRouteToCreateReference, getRouteToReport } from "../js/router.js";
 import {
   REPORT_ACTIVITY,
+  REPORT_CASH_REGISTER,
   REPORT_CONSULTATIONS,
   REPORT_FINANCIAL,
   REPORT_STATISTICAL,
@@ -195,6 +196,16 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
             versalIcon: "/static/img/reports.gif",
             html: "If you want to know the activity of the SARPV CDC on a period.",
             toRoute: getRouteToReport(REPORT_STATISTICAL)
+          }),
+
+          // @ts-ignore
+          createMenu({
+            title: "Cash Register Report",
+            restrictedBy: "reports.execute",
+            id: "report_cash_register_menu",
+            versalIcon: "/static/img/reports.gif",
+            html: "If you want to know what is paid according to what is asked.",
+            toRoute: getRouteToReport(REPORT_CASH_REGISTER)
           }),
 
           // @ts-ignore

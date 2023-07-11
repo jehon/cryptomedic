@@ -558,6 +558,7 @@ x-button#export {
 defineCustomElement(XPageReports);
 
 export const REPORT_ACTIVITY = "activity";
+export const REPORT_CASH_REGISTER = "cash-register";
 export const REPORT_CONSULTATIONS = "consultations";
 export const REPORT_FINANCIAL = "financial";
 export const REPORT_SURGICAL = "surgical";
@@ -711,6 +712,27 @@ reports[REPORT_ACTIVITY] = {
       })
       .end();
   }
+};
+
+reports[REPORT_CASH_REGISTER] = {
+  // test data: 2014
+  name: "Cash Regsiter",
+  description:
+    "What is paid relative to what is asked.<br>" +
+    "Options: the day and the center.",
+  params: ["year"],
+  fixedParams: {
+    period: "year"
+  },
+  generator: (xtable) =>
+    xtable
+      .addHeaders(1)
+      .addDetail("year", { headers: ["Year"] })
+      .addDetail("month", { headers: ["Month"] })
+      .addDetail("total_real", { headers: ["Total"] })
+      .addDetail("total_asked", { headers: ["Asked"] })
+      .addDetail("paid", { headers: ["Paid"] })
+      .end()
 };
 
 reports[REPORT_CONSULTATIONS] = {
