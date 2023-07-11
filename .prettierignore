@@ -16,6 +16,3 @@ package.json
 package-lock.json
 composer.lock
 composer.json
-
-src/app-ts/**/*.js
-src/app-ts/**/*.js.map

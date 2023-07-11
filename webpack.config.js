@@ -36,7 +36,7 @@ module.exports = {
     filename: "[name]-[fullhash].js"
   },
   resolve: {
-    extensions: [".ts", ".js"]
+    extensions: [".ts", ".js", ".tsx"]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -60,6 +60,10 @@ module.exports = {
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
         type: "asset"
+      },
+      {
+        test: /\.tsx?/,
+        use: ["ts-loader"]
       }
     ]
   },
