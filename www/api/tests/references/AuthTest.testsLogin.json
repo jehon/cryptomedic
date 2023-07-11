@@ -621,6 +621,11 @@
             3,
             4
         ],
+        "PictureType": [
+            "x-ray",
+            "picture",
+            "other"
+        ],
         "Examiner": [
             "Thierry Craviari",
             "Morshedul Alam",

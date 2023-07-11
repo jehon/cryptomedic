@@ -235,14 +235,14 @@ buildValueList("LegAnalysis", ["Valgus", "Varus"]);
 buildValueList("Side",        ["Right", "Left", "Bi"]);
 buildValueList("CPTreatment", ["plaster", "tenotomy", "DB splint", "surgery"]);
 
-buildValueList("SocialLevel", [0, 1, 2, 3, 4]);
-buildValueList("Pirani",      [0, 0.5, 1]);
-buildValueList("0-10",        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-buildValueList("Eval01",      [0, 1]);
-buildValueList("Eval02",      [0, 1, 2]);
-buildValueList("Eval03",      [0, 1, 2, 3]);
-buildValueList("Eval14",      [1, 2, 3, 4]);
-
+buildValueList("SocialLevel",  [0, 1, 2, 3, 4]);
+buildValueList("Pirani",       [0, 0.5, 1]);
+buildValueList("0-10",         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+buildValueList("Eval01",       [0, 1]);
+buildValueList("Eval02",       [0, 1, 2]);
+buildValueList("Eval03",       [0, 1, 2, 3]);
+buildValueList("Eval14",       [1, 2, 3, 4]);
+buildValueList("PictureType",  ["x-ray", "picture", "other"]);
 
 /*****************************/
 /*****************************/

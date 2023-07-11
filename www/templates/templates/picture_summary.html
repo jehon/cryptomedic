@@ -14,5 +14,11 @@
         >
       </td>
     </tr>
+    <tr ng-class='{ "empty-value": !folder.getPatient().Name}'>
+      <td>Type</td>
+      <td>
+        <span>{{ folder.getFilesRelatedToPatient($index).type }}</span>
+      </td>
+    </tr>
   </tbody>
 </table>

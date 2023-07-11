@@ -13,6 +13,7 @@ t::setDefaultOption("baseExpression", "currentFile().");
 	<div>
 		<x-group-panel title='Picture informations'>
 			<?php (new t("Picture.Date"))->tr2()->p(); ?>
+			<?php (new t("Picture.type"))->tr2()->p(); ?>
 			<?php (new t("Picture.comment"))->tr2()->p(); ?>
 			<?php (new t("Picture.file"))->readOnly()->tr2("File")->p(); ?>
 			<x-fff-field class='not-mode-read' label='Upload a file' ng-if="!currentFile().file" ng-class="{ error: errors.pictureRequired }">

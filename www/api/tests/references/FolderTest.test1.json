@@ -225,6 +225,7 @@
                 "updated_at": "<timestamp>",
                 "lastuser": "thierry",
                 "patient_id": 1,
+                "type": "",
                 "file": "10_2014-11-06_15-32-45.JPG",
                 "Date": "2014-11-04",
                 "comment": ""

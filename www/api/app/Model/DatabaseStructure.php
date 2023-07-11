@@ -66,6 +66,9 @@ define("HARDCODED_LISTINGS", [
         "Union_"                   => "Unions",
         "Upazilla"                 => "Upazilla"
     ],
+    "pictures" => [
+        "type"                     => "PictureType"
+    ],
     "ricket_consults" => [
         "Brace"                    => "Device",
         "LeftLeg"                  => "LegAnalysis",
