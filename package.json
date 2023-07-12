@@ -22,7 +22,7 @@
     "pngjs": "7.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.22.6",
+    "@babel/cli": "7.22.9",
     "@commitlint/cli": "17.6.6",
     "@commitlint/config-conventional": "17.6.6",
     "@types/react": "^18.2.14",
