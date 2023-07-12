@@ -8,6 +8,6 @@
     "sourceMap": true,
     "strict": true
   },
-  "include": ["src/app-ts/*"],
+  "include": ["src/app-2023/*"],
   "exclude": ["node_modules"]
 }
