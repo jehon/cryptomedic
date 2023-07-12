@@ -15,7 +15,7 @@ import "../../app/widgets/func/x-messages.js";
 import "../../app/widgets/func/x-form.js";
 import "../../app/widgets/func/x-i18n.js";
 import "../../app/widgets/data/x-input-list.js";
-import XTable from "../../app/widgets/x-table.js";
+import "../../app/widgets/x-table.js";
 
 const filtersMenu = document.querySelector("xx-test#filters");
 

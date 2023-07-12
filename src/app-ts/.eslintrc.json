@@ -1,0 +1,8 @@
+{
+  "env": {
+    "node": false,
+    "es6": true,
+    "browser": true
+    },
+  "plugins": ["@typescript-eslint"]
+}

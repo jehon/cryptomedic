@@ -11,10 +11,7 @@
     "readJSON": true
   },
   "rules": {
-    "jasmine/new-line-before-expect": "off",
-    "jasmine/no-expect-in-setup-teardown": "off",
     "jasmine/no-spec-dupes": "off",
-    "jasmine/prefer-toHaveBeenCalledWith": "off",
-    "jasmine/no-disabled-tests": "off"
+    "jasmine/new-line-before-expect": "off"
   }
 }
