@@ -36,7 +36,7 @@
     "chromedriver": "114.0.2",
     "css-loader": "6.8.1",
     "escape-string-regexp": "5.0.0",
-    "eslint": "8.44.0",
+    "eslint": "8.45.0",
     "eslint-config-react-app": "7.0.1",
     "eslint-plugin-cypress": "2.13.3",
     "eslint-plugin-jasmine": "4.1.3",
