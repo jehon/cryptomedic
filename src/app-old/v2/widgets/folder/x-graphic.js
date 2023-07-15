@@ -218,8 +218,8 @@ export default class XGraphic extends XWithFolder {
       `
             <div class='mark-container'>
                 <img id='graph' src="/static/img/stats_${this.getImageName()}-${this.folder
-        .getPatient()
-        .sexStr()}.jpg" width='100%'></img>
+                  .getPatient()
+                  .sexStr()}.jpg" width='100%'></img>
             </div>
             <table class='colorize datalegend'>
                 <thead>
