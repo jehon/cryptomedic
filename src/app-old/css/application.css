@@ -361,7 +361,7 @@ table.datalegend > thead > tr > th {
 /*
  * Affix and center
  */
-@media (width >= 768px) {
+@media (min-width: 768px) {
   /* Pull out the header and footer */
   .masthead {
     position: fixed;
@@ -388,7 +388,7 @@ table.datalegend > thead > tr > th {
   }
 }
 
-@media (width >= 992px) {
+@media (min-width: 992px) {
   .masthead,
   .mastfoot,
   .cover-container {

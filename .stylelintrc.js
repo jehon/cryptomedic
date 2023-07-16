@@ -6,6 +6,7 @@ module.exports = {
     "selector-type-no-unknown": [true, { ignore: "custom-elements" }],
     "no-descending-specificity": null,
     "declaration-empty-line-before": null,
-    "plugin/no-unsupported-browser-features": true
+    "plugin/no-unsupported-browser-features": true,
+    "media-feature-range-notation": [ "prefix" ]
   }
 };
