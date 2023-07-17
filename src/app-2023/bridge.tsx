@@ -11,8 +11,8 @@ export function bridgeTo(
   customElements.define(
     tag,
     class extends HTMLElement {
-      #element: any
-      #root: Root
+      #element: any;
+      #root: Root;
 
       static get observedAttributes() {
         return attributes;
@@ -32,7 +32,11 @@ export function bridgeTo(
         this.render();
       }
 
-      attributeChangedCallback(attributeName: string, oldValue: string, newValue: string) {
+      attributeChangedCallback(
+        attributeName: string,
+        oldValue: string,
+        newValue: string
+      ) {
         this.render();
       }
 
