@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Root, createRoot } from "react-dom/client";
+import { ObjectMap } from "./generic-types";
 
 export function bridgeTo(
   tag: string,
@@ -13,6 +14,7 @@ export function bridgeTo(
     class extends HTMLElement {
       #element: any;
       #root: Root;
+      #props: ObjectMap<any> = {};
 
       static get observedAttributes() {
         return attributes;
@@ -40,13 +42,35 @@ export function bridgeTo(
         this.render();
       }
 
+      set(attr: string, value: any) {
+        this.#props[attr] = value;
+        this.render();
+      }
+
       render() {
         const attrs: any = {};
         for (const k of attributes) {
           attrs[k] = this.getAttribute(k) || "";
         }
-        this.#element = React.createElement(reactComponent, attrs);
+        this.#element = React.createElement(reactComponent, {
+          ...attrs,
+          ...this.#props
+        });
         this.#root.render(this.#element);
+      }
+
+      //
+      // For ctrl_folder
+      //
+
+      set folder(f: any) {
+        this.set("folder", f);
+        this.render();
+      }
+
+      set file(f: any) {
+        this.set("file", f);
+        this.render();
       }
     }
   );

@@ -1,8 +1,8 @@
 /**
  * To simplify all parameters
  */
-export interface ObjectMap {
-  [key: string]: string;
+export interface ObjectMap<T> {
+  [key: string]: T;
 }
 
-export interface Config extends ObjectMap {}
+export interface Config extends ObjectMap<string> {}
