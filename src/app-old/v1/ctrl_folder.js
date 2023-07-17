@@ -29,10 +29,11 @@ import "../v2/widgets/folder/x-ff-next-appointment.js";
  * @param {object} file the uid of the file currently selected
  */
 function newRefresh(folder = null, file = null) {
-  const mc = document.querySelector("#main_content");
-  mc.setAttribute("x-top", "x-top");
-  setPropertyOn(mc, "folder", folder);
-  setPropertyOn(mc, "file", file);
+  for (const mc of document.querySelectorAll("#main_content")) {
+    mc.setAttribute("x-top", "x-top");
+    setPropertyOn(mc, "folder", folder);
+    setPropertyOn(mc, "file", file);
+  }
 }
 
 /**
