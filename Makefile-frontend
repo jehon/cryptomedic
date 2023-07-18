@@ -44,17 +44,16 @@ frontend-dump:
 .PHONY: frontend-dependencies
 dependencies: frontend-dependencies
 frontend-dependencies: $(FRONTEND_DEPENDENCIES_MARK)
-$(FRONTEND_DEPENDENCIES_MARK): package.json package-lock.json
-
+$(FRONTEND_DEPENDENCIES_MARK): package-lock.json
 	bin/cr-npm ci
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 package-lock.json: package.json
-
 	bin/cr-npm install
-	touch "$@"
+
+	@touch "$@"
 
 .PHONY: frontend-lint
 lint: frontend-lint
