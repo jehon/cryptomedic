@@ -123,7 +123,7 @@ test: frontend-test
 frontend-test: frontend-test-legacy
 
 frontend-test-new: $(FRONTEND_DEPENDENCIES_MARK)
-	node_modules/.bin/jest --passWithNoTests
+	node_modules/.bin/jest
 
 frontend-test-legacy: $(FRONTEND_BUILT_MARK)
 	mkdir -p $(FRONTEND_BUILD_TMP)/js
