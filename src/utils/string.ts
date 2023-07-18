@@ -1,4 +1,4 @@
-export function padLeft(
+export function padLeftTrim(
   what: string | number,
   l: number,
   char: string = "0"
