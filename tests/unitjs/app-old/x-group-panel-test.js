@@ -1,4 +1,4 @@
-import XGroupPanel from "../../../src/app-old/v2/widgets/style/x-group-panel.js";
+import XGroupPanel from "../../../legacy/app-old/v2/widgets/style/x-group-panel.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {

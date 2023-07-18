@@ -1,4 +1,4 @@
-import Price from "../../../src/app-old/v2/models/Price.js";
+import Price from "../../../legacy/app-old/v2/models/Price.js";
 
 describe("Price", function () {
   describe("with empty loader", function () {

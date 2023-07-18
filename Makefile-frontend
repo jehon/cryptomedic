@@ -3,7 +3,7 @@ FRONTEND_ROOT = src
 FRONTEND_DEPENDENCIES_MARK = node_modules/.built
 FRONTEND_PUBLISHED = www/built
 FRONTEND_BUILT_MARK = $(FRONTEND_PUBLISHED)/.built
-FRONTEND_BUILD_TMP = $(FRONTEND_ROOT)/built
+FRONTEND_BUILD_TMP = legacy/built
 
 frontend: clean-files dc-build dc-up frontend-dump frontend-dependencies frontend-lint frontend-build frontend-test ok
 
@@ -67,11 +67,11 @@ frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
 
 .PHONY: frontend-lint-css
 frontend-lint-css: $(FRONTEND_DEPENDENCIES_MARK)
-	node node_modules/.bin/stylelint src/**/*.css
+	node node_modules/.bin/stylelint src/**/*.css legacy/**/*.css
 
 .PHONY: frontend-lint-html
 frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
-	node node_modules/.bin/htmlhint src/**/*.html tests/**/*.html --format=compact
+	node node_modules/.bin/htmlhint src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
 
 .PHONY: frontend-build
 build: frontend-build
@@ -79,9 +79,9 @@ frontend-build: $(FRONTEND_BUILT_MARK)
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild due to the recursive dependencies
 $(FRONTEND_BUILT_MARK): \
 		$(FRONTEND_DEPENDENCIES_MARK) \
-		$(shell find src/app-old/ ) \
-		$(shell find src/app-static/ ) \
-		$(shell find src/app-2023/ ) \
+		$(shell find legacy/app-old/ ) \
+		$(shell find legacy/app-static/ ) \
+		$(shell find src/ ) \
 		webpack.config.js  \
 		$(FRONTEND_BUILD_TMP)/axios.js \
 		$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js \

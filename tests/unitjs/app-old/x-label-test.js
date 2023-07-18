@@ -1,4 +1,4 @@
-import XLabel from "../../../src/app-old/v2/widgets/style/x-label.js";
+import XLabel from "../../../legacy/app-old/v2/widgets/style/x-label.js";
 
 import { fn } from "./athelpers.js";
 

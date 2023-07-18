@@ -1,7 +1,7 @@
 import { fn, loadReference, RefFolder1 } from "./athelpers.js";
 
-import Folder from "../../../src/app-old/v2/models/Folder.js";
-import XFffSalaryRatio from "../../../src/app-old/v2/widgets/file/x-fff-salary-ratio.js";
+import Folder from "../../../legacy/app-old/v2/models/Folder.js";
+import XFffSalaryRatio from "../../../legacy/app-old/v2/widgets/file/x-fff-salary-ratio.js";
 
 let testFolder;
 const fuid = "bill-1";

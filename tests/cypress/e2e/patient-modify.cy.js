@@ -11,7 +11,7 @@ import {
 import { crLoginInBackground, crPage, crReady } from "./helpers/cr.js";
 import { guiAcceptAlert, guiHashStartWith } from "./helpers/gui.js";
 import { patientgo } from "./helpers/patients.js";
-import XButton from "../../../src/app-old/v2/widgets/style/x-button.js";
+import XButton from "../../../legacy/app-old/v2/widgets/style/x-button.js";
 
 context("Actions", () => {
   beforeEach(() => {

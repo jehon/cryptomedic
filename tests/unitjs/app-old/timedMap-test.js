@@ -1,4 +1,4 @@
-import TimedMap from "../../../src/app-old/v2/js/timedMap.js";
+import TimedMap from "../../../legacy/app-old/v2/js/timedMap.js";
 
 describe("timedMap-test", function () {
   it("should exists a timeCache class", () => {

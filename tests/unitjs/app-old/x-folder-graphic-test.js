@@ -1,4 +1,4 @@
-import "../../../src/app-old/v2/pages/blocks/x-folder-graphics.js";
+import "../../../legacy/app-old/v2/pages/blocks/x-folder-graphics.js";
 
 import { fn, webDescribe } from "./athelpers.js";
 

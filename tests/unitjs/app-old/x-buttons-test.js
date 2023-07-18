@@ -1,4 +1,4 @@
-import XButtons from "../../../src/app-old/v2/widgets/func/x-buttons.js";
+import XButtons from "../../../legacy/app-old/v2/widgets/func/x-buttons.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {

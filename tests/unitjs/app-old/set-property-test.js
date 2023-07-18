@@ -1,5 +1,5 @@
 import { fn } from "./athelpers.js";
-import setPropertyOn from "../../../src/app-old/v2/js/set-property.js";
+import setPropertyOn from "../../../legacy/app-old/v2/js/set-property.js";
 
 describe(fn(import.meta.url), function () {
   const pattr = "folder";

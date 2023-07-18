@@ -1,5 +1,5 @@
-import { messages } from "../../../src/app-old/config.js";
-import XMessages from "../../../src/app-old/v2/widgets/func/x-messages.js";
+import { messages } from "../../../legacy/app-old/config.js";
+import XMessages from "../../../legacy/app-old/v2/widgets/func/x-messages.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {

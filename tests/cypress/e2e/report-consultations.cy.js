@@ -1,4 +1,4 @@
-import XButton from "../../../src/app-old/v2/widgets/style/x-button.js";
+import XButton from "../../../legacy/app-old/v2/widgets/style/x-button.js";
 import flavorFilter from "./helpers/filter-tests.js";
 import { goReport } from "./helpers/report.js";
 

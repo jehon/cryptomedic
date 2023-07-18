@@ -5,8 +5,8 @@ import {
   RefFolder1RicketConsult13
 } from "./athelpers.js";
 
-import XWithFile from "../../../src/app-old/v2/widgets/file/x-with-file.js";
-import Folder from "../../../src/app-old/v2/models/Folder.js";
+import XWithFile from "../../../legacy/app-old/v2/widgets/file/x-with-file.js";
+import Folder from "../../../legacy/app-old/v2/models/Folder.js";
 
 let testFolder;
 let file;

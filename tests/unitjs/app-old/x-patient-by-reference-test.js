@@ -1,10 +1,10 @@
 import { fn } from "./athelpers.js";
-import XPatientByReference from "../../../src/app-old/v2/pages/blocks/x-patient-by-reference.js";
+import XPatientByReference from "../../../legacy/app-old/v2/pages/blocks/x-patient-by-reference.js";
 import { mockResponseWithSuccess } from "./x-requestor-test.js";
 import {
   getCurrentRoute,
   getRouteToFolderPatient
-} from "../../../src/app-old/v2/js/router.js";
+} from "../../../legacy/app-old/v2/js/router.js";
 
 describe(fn(import.meta.url), function () {
   let element;

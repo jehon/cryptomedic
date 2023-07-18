@@ -1,5 +1,5 @@
-import { fromBirthDateTo } from "../../../src/app-old/v2/widgets/file/x-fff-age.js";
-import { toBirthDate } from "../../../src/app-old/v2/js/age.js";
+import { fromBirthDateTo } from "../../../legacy/app-old/v2/widgets/file/x-fff-age.js";
+import { toBirthDate } from "../../../legacy/app-old/v2/js/age.js";
 
 describe("calculations.age", function () {
   describe("age and birth", function () {

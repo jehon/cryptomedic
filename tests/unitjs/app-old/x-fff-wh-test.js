@@ -5,8 +5,8 @@ import {
   RefFolder1RicketConsult13
 } from "./athelpers.js";
 
-import Folder from "../../../src/app-old/v2/models/Folder.js";
-import XFffWh from "../../../src/app-old/v2/widgets/file/x-fff-wh.js";
+import Folder from "../../../legacy/app-old/v2/models/Folder.js";
+import XFffWh from "../../../legacy/app-old/v2/widgets/file/x-fff-wh.js";
 
 let testFolder;
 

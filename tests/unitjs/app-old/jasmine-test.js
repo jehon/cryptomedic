@@ -1,5 +1,5 @@
 import { loadReference, RefFolder1 } from "./athelpers.js";
-import { DataMissingException } from "../../../src/app-old/v2/js/exceptions.js";
+import { DataMissingException } from "../../../legacy/app-old/v2/js/exceptions.js";
 
 describe("Jasmine", function () {
   it("should work as 'expect'", function () {

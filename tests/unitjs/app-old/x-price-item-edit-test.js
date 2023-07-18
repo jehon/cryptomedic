@@ -1,6 +1,6 @@
-import "../../../src/app-old/v2/widgets/x-price-item-edit.js";
-import XPriceItemEdit from "../../../src/app-old/v2/widgets/x-price-item-edit.js";
-import { createElementWithObject } from "../../../src/app-old/v2/js/custom-element.js";
+import "../../../legacy/app-old/v2/widgets/x-price-item-edit.js";
+import XPriceItemEdit from "../../../legacy/app-old/v2/widgets/x-price-item-edit.js";
+import { createElementWithObject } from "../../../legacy/app-old/v2/js/custom-element.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {

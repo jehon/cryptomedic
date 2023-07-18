@@ -4,7 +4,7 @@ import {
   getSession,
   getUsername,
   getAuthorized
-} from "../../../src/app-old/v2/js/session.js";
+} from "../../../legacy/app-old/v2/js/session.js";
 
 import { fn, loadReference } from "./athelpers.js";
 

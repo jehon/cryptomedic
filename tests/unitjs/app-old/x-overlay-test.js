@@ -1,11 +1,11 @@
-import XOverlay from "../../../src/app-old/v2/widgets/func/x-overlay.js";
+import XOverlay from "../../../legacy/app-old/v2/widgets/func/x-overlay.js";
 
 import { fn } from "./athelpers.js";
 
 import {
   createElementWithObject,
   createElementWithTag
-} from "../../../src/app-old/v2/js/custom-element.js";
+} from "../../../legacy/app-old/v2/js/custom-element.js";
 
 describe(fn(import.meta.url), function () {
   let element;

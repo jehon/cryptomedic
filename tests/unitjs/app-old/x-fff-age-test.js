@@ -1,7 +1,7 @@
 import XFffAge, {
   fromBirthDate,
   fromBirthDateTo
-} from "../../../src/app-old/v2/widgets/file/x-fff-age.js";
+} from "../../../legacy/app-old/v2/widgets/file/x-fff-age.js";
 
 import {
   fn,
@@ -9,7 +9,7 @@ import {
   RefFolder1,
   RefFolder1RicketConsult13
 } from "./athelpers.js";
-import Folder from "../../../src/app-old/v2/models/Folder.js";
+import Folder from "../../../legacy/app-old/v2/models/Folder.js";
 
 describe(fn(import.meta.url), function () {
   describe("fromBirthDateTo", function () {

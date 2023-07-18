@@ -1,5 +1,5 @@
 import { fn } from "./athelpers.js";
-import XI18n from "../../../src/app-old/v2/widgets/func/x-i18n.js";
+import XI18n from "../../../legacy/app-old/v2/widgets/func/x-i18n.js";
 
 describe(fn(import.meta.url), function () {
   it("without value", function () {

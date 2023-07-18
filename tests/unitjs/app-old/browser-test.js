@@ -1,7 +1,7 @@
 import {
   browserUUID,
   isProduction
-} from "../../../src/app-old/v2/js/browser.js";
+} from "../../../legacy/app-old/v2/js/browser.js";
 
 describe("The browser", function () {
   it("should have a uuid", function () {

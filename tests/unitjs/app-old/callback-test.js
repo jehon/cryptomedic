@@ -1,5 +1,5 @@
 import { fn } from "./athelpers.js";
-import createCallback from "../../../src/app-old/v2/js/callback.js";
+import createCallback from "../../../legacy/app-old/v2/js/callback.js";
 
 describe(fn(import.meta.url), function () {
   it("with default behavior", function () {

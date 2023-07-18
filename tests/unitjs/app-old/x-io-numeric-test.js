@@ -1,4 +1,4 @@
-import XIoNumeric from "../../../src/app-old/v2/widgets/io/x-io-numeric.js";
+import XIoNumeric from "../../../legacy/app-old/v2/widgets/io/x-io-numeric.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {

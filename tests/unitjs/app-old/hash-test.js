@@ -1,5 +1,5 @@
 import { fn } from "./athelpers.js";
-import hash from "../../../src/app-old/v2/js/hash.js";
+import hash from "../../../legacy/app-old/v2/js/hash.js";
 
 describe(fn(import.meta.url), function () {
   it("should calculate md5", function () {

@@ -4,12 +4,12 @@ import {
   _stdDeviation,
   stdDeviationFor,
   sigma
-} from "../../../src/app-old/v2/js/standard-deviation.js";
+} from "../../../legacy/app-old/v2/js/standard-deviation.js";
 import {
   DataInvalidException,
   DataOutOfBoundException,
   ConfigurationMissingException
-} from "../../../src/app-old/v2/js/exceptions.js";
+} from "../../../legacy/app-old/v2/js/exceptions.js";
 
 describe(fn(import.meta.url), function () {
   const poly = {

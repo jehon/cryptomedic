@@ -1,13 +1,13 @@
-import Folder from "../../../src/app-old/v2/models/Folder.js";
-import Appointment from "../../../src/app-old/v2/models/Appointment.js";
-import Bill from "../../../src/app-old/v2/models/Bill.js";
-import ClubFoot from "../../../src/app-old/v2/models/ClubFoot.js";
-import OtherConsult from "../../../src/app-old/v2/models/OtherConsult.js";
-import Patient from "../../../src/app-old/v2/models/Patient.js";
-import Payment from "../../../src/app-old/v2/models/Payment.js";
-import Picture from "../../../src/app-old/v2/models/Picture.js";
-import RicketConsult from "../../../src/app-old/v2/models/RicketConsult.js";
-import Surgery from "../../../src/app-old/v2/models/Surgery.js";
+import Folder from "../../../legacy/app-old/v2/models/Folder.js";
+import Appointment from "../../../legacy/app-old/v2/models/Appointment.js";
+import Bill from "../../../legacy/app-old/v2/models/Bill.js";
+import ClubFoot from "../../../legacy/app-old/v2/models/ClubFoot.js";
+import OtherConsult from "../../../legacy/app-old/v2/models/OtherConsult.js";
+import Patient from "../../../legacy/app-old/v2/models/Patient.js";
+import Payment from "../../../legacy/app-old/v2/models/Payment.js";
+import Picture from "../../../legacy/app-old/v2/models/Picture.js";
+import RicketConsult from "../../../legacy/app-old/v2/models/RicketConsult.js";
+import Surgery from "../../../legacy/app-old/v2/models/Surgery.js";
 
 import { loadReference, RefFolder1 } from "./athelpers.js";
 

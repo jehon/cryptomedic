@@ -1,16 +1,16 @@
-import XForm from "../../../src/app-old/v2/widgets/func/x-form.js";
-import "../../../src/app-old/v1/elements/x-write.js";
-import "../../../src/app-old/v1/elements/x-write-list.js";
+import XForm from "../../../legacy/app-old/v2/widgets/func/x-form.js";
+import "../../../legacy/app-old/v1/elements/x-write.js";
+import "../../../legacy/app-old/v1/elements/x-write-list.js";
 import {
   createElementWithTag,
   createElementWithObject
-} from "../../../src/app-old/v2/js/custom-element.js";
+} from "../../../legacy/app-old/v2/js/custom-element.js";
 import { fn } from "./athelpers.js";
-import XButton from "../../../src/app-old/v2/widgets/style/x-button.js";
-import XButtons from "../../../src/app-old/v2/widgets/func/x-buttons.js";
+import XButton from "../../../legacy/app-old/v2/widgets/style/x-button.js";
+import XButtons from "../../../legacy/app-old/v2/widgets/func/x-buttons.js";
 
-// import XWrite from '../../src/app-old/v1/elements/x-write.js';
-// import XWriteList from '../../src/app-old/v1/elements/x-write-list.js';
+// import XWrite from '../../legacy/app-old/v1/elements/x-write.js';
+// import XWriteList from '../../legacy/app-old/v1/elements/x-write-list.js';
 
 describe(fn(import.meta.url), function () {
   it("should work with HTML Element", function () {

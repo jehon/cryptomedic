@@ -1,4 +1,4 @@
-import XDisplayDate from "../../../src/app-old/v2/widgets/style/x-display-date.js";
+import XDisplayDate from "../../../legacy/app-old/v2/widgets/style/x-display-date.js";
 
 import { fn } from "./athelpers.js";
 

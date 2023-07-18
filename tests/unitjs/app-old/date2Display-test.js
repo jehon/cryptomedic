@@ -1,6 +1,6 @@
 import date2Display, {
   Invalid
-} from "../../../src/app-old/v2/js/date2Display.js";
+} from "../../../legacy/app-old/v2/js/date2Display.js";
 
 describe("date2Display-test", function () {
   it("should treat empty", function () {

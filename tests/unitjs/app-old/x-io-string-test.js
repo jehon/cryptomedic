@@ -1,4 +1,4 @@
-import XIoString from "../../../src/app-old/v2/widgets/io/x-io-string.js";
+import XIoString from "../../../legacy/app-old/v2/widgets/io/x-io-string.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {

@@ -8,6 +8,6 @@
     "sourceMap": true,
     "strict": true
   },
-  "include": ["src/app-2023/*"],
+  "include": ["src/*", "legacy/built", "legacy/app-old"],
   "exclude": ["node_modules"]
 }
