@@ -120,8 +120,12 @@ build-on-change: $(FRONTEND_DEPENDENCIES_MARK)
 
 .PHONY: frontend-test
 test: frontend-test
-frontend-test: $(FRONTEND_BUILT_MARK)
+frontend-test: frontend-test-legacy
 
+frontend-test-new: $(FRONTEND_DEPENDENCIES_MARK)
+	node_modules/.bin/jest --passWithNoTests
+
+frontend-test-legacy: $(FRONTEND_BUILT_MARK)
 	mkdir -p $(FRONTEND_BUILD_TMP)/js
 	bin/cr-node ./node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
 
