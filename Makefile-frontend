@@ -59,19 +59,19 @@ package-lock.json: package.json
 .PHONY: frontend-lint
 lint: frontend-lint
 frontend-lint: frontend-lint-es frontend-lint-css frontend-lint-html
-	./node_modules/.bin/prettier --list-different .
+	bin/cr-node node_modules/.bin/prettier --list-different .
 
 .PHONY: frontend-lint-es
 frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
-	node node_modules/.bin/eslint --ext .js,.ts,.tsx .
+	bin/cr-node node_modules/.bin/eslint --ext .js,.ts,.tsx .
 
 .PHONY: frontend-lint-css
 frontend-lint-css: $(FRONTEND_DEPENDENCIES_MARK)
-	node node_modules/.bin/stylelint src/**/*.css legacy/**/*.css
+	bin/cr-node node_modules/.bin/stylelint src/**/*.css legacy/**/*.css
 
 .PHONY: frontend-lint-html
 frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
-	node node_modules/.bin/htmlhint src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
+	bin/cr-node node_modules/.bin/htmlhint src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
 
 .PHONY: frontend-build
 build: frontend-build
@@ -123,11 +123,11 @@ test: frontend-test
 frontend-test: frontend-test-legacy
 
 frontend-test-new: $(FRONTEND_DEPENDENCIES_MARK)
-	node_modules/.bin/jest
+	bin/cr-node node_modules/.bin/jest
 
 frontend-test-legacy: $(FRONTEND_BUILT_MARK)
 	mkdir -p $(FRONTEND_BUILD_TMP)/js
-	bin/cr-node ./node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
+	bin/cr-node node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
 
 .PHONY: frontend-update-references
 update: frontend-update-references
