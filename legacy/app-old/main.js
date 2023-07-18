@@ -17,4 +17,4 @@ import "./v2/widgets/style/x-two-columns.js";
 import "./v1/mainApp.js";
 
 // React components and application
-import "../../src/app-2023/react.js";
+import "../../src/react.js";
