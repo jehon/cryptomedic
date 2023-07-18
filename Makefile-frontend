@@ -1,6 +1,6 @@
 
 FRONTEND_ROOT = src
-FRONTEND_DEPENDENCIES_MARK = node_modules/.built
+FRONTEND_DEPENDENCIES_MARK = node_modules/.dependencies
 FRONTEND_PUBLISHED = www/built
 FRONTEND_BUILT_MARK = $(FRONTEND_PUBLISHED)/.built
 FRONTEND_BUILD_TMP = legacy/built
