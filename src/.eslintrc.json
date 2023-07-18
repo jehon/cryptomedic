@@ -1,5 +1,7 @@
 {
-  "extends": "react-app",
+  // https://github.com/testing-library/eslint-plugin-jest-dom
+  "plugins": ["jest-dom"],
+  "extends": ["react-app", "plugin:jest-dom/recommended"],
   "env": {
     "node": false,
     "browser": true
