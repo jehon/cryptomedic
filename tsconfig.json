@@ -6,7 +6,8 @@
     "jsx": "react",
     "esModuleInterop": true,
     "sourceMap": true,
-    "strict": true
+    "strict": true,
+    "allowJs": true
   },
   "include": ["src/*", "legacy/built", "legacy/app-old"],
   "exclude": ["node_modules"]
