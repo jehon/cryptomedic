@@ -72,7 +72,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "style-loader": "3.3.3",
-    "stylelint": "15.10.1",
+    "stylelint": "15.10.2",
     "stylelint-config-standard": "34.0.0",
     "stylelint-no-unsupported-browser-features": "7.0.0",
     "ts-jest": "29.1.1",
