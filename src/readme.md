@@ -1,5 +1,9 @@
 # Jest assertions:
 
+## Queries
+
+https://testing-library.com/docs/queries/about/
+
 ## Assertions
 
 ### Basic assertions (vanilla-js)
