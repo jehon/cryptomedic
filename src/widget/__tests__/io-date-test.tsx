@@ -12,5 +12,11 @@ import IODate from "../io-date";
 // https://jestjs.io/fr/docs/expect
 test('io-date', () => {
     render(<IODate value={new Date(2023, 0, 2)}/>)
-    // expect(screen.getByText('2023')).toBeInTheDocument();
+    expect(screen.getByText('02-01-2023')).toBeInTheDocument();
 });
+
+test('empty', () => {
+    const { container } = render(<IODate />)
+    expect(container).toBeEmptyDOMElement();
+});
+
