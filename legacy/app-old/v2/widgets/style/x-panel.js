@@ -1,4 +1,4 @@
-import "../../../../../node_modules/css-inherit/css-inherit.js";
+import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
 import {
   createElementWithTag,
   defineCustomElement,
