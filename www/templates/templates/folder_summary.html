@@ -7,29 +7,33 @@
       <th>Details</th>
     </tr>
   </thead>
-  <tr id="summary_patient">
-    <td></td>
-    <td>
-      <x-button to-route="#/folder/{{folder.getId()}}/" style="width: 100%">
-        Patient
-      </x-button>
-    </td>
-    <td></td>
-    <td ng-include="template('patient', 'summary')"></td>
-  </tr>
-  <tr ng-repeat="f in folder.getFilesRelatedToPatient()">
-    <td>#{{$index}}</td>
-    <td>
-      <x-button
-        href="#/folder/{{folder.getId()}}/file/{{f.getModel()}}/{{f.id}}"
-        style="width: 100%"
-      >
-        {{f.getModel()}}
-      </x-button>
-    </td>
-    <td>{{f.Date | date:'longDate' }}</td>
-    <td>
-      <span ng-include="template(f.getModel().toLowerCase(), 'summary')"></span>
-    </td>
-  </tr>
+  <tbody>
+    <tr id="summary_patient">
+      <td></td>
+      <td>
+        <x-button to-route="#/folder/{{folder.getId()}}/" style="width: 100%">
+          Patient
+        </x-button>
+      </td>
+      <td></td>
+      <td ng-include="template('patient', 'summary')"></td>
+    </tr>
+    <tr ng-repeat="f in folder.getFilesRelatedToPatient()">
+      <td>#{{$index}}</td>
+      <td>
+        <x-button
+          href="#/folder/{{folder.getId()}}/file/{{f.getModel()}}/{{f.id}}"
+          style="width: 100%"
+        >
+          {{f.getModel()}}
+        </x-button>
+      </td>
+      <td>{{f.Date | date:'longDate' }}</td>
+      <td>
+        <span
+          ng-include="template(f.getModel().toLowerCase(), 'summary')"
+        ></span>
+      </td>
+    </tr>
+  </tbody>
 </table>
