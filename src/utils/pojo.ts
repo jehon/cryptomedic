@@ -2,7 +2,7 @@ import { ObjectMap } from "../utils/generic-types";
 import S from "string";
 
 export default class Pojo implements ObjectMap<any> {
-  id: number = 0;
+  constructor(public id: number = 0) {}
 
   get model(): string {
     return this.constructor.name;
