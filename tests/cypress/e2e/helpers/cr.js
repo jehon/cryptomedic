@@ -51,7 +51,7 @@ export function crLoginInBackground(username = null, password = null) {
  * @param {string} route
  */
 export function crGo(route = "") {
-  cy.visit(`/built/ng1x.html#${route}`);
+  cy.visit(`/static/#${route}`);
   crReady();
   cy.log(`Done crGo: ${route}`);
 }
