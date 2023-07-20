@@ -25,6 +25,10 @@ jobs:
         with:
           node-version: lts/*
 
+      # https://github.com/marketplace/actions/setup-chrome
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
       - run: sudo .devcontainer/root/setup.sh
 
       - run: make dc-build
