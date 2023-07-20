@@ -1,3 +1,17 @@
+# Structure
+
+
+| what     | business ? | gui ? | use what ?       | objectives                     |
+| -------- | ---------- | ----- | ---------------- | ------------------------------ |
+|          | no         |       |                  |                                |
+| utils    | no         | no    | -                | pure javascript helpers        |
+| widget   | no         | yes   | utils            | pure gui widgets               |
+|          |            |       |                  |                                |
+| business | yes        | no    | utils            | pojo representing the business |
+| blocs    | yes        | yes   | widget, business | functionnal gui                |
+| pages    | no         | yes   | blocs            | navigation oriented            |
+|          |            |       |                  |                                |
+
 # Jest assertions:
 
 ## Queries
