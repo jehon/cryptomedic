@@ -28,6 +28,5 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "json.format.enable": false,
-  "editor.defaultFormatter": "vscode.markdown-language-features"
+  "json.format.enable": false
 }
