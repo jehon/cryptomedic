@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+# shellcheck source=./cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
+
+SWD="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# Create a "3"rd out where all structured messages will go
+# This allow us to capture stdout and stderr everywhere,
+# while still letting passing through the messages "Success / failure / ..."
+exec 3>&1
+
+mkdir -p "$CR_TMP"
+LOG="$CR_TMP/deploy.log"
+truncate --size=0 "$LOG"
+
+ftp_exec_raw() {
+    SSHPASS="${CRYPTOMEDIC_DEPLOY_PASSWORD}" sshpass -e \
+        sftp -o "UserKnownHostsFile=$SWD/../conf/ovh.key" \
+        "${CRYPTOMEDIC_DEPLOY_USER}@${CRYPTOMEDIC_DEPLOY_HOST}" \
+        2>&1 | tee -a "$LOG"
+}
+
+ftp_exec() {
+    ftp_exec_raw |
+        grep -v "SFTP protocol" |
+        grep -v "Connected to" |
+        grep -v "Couldn't create directory" |
+        grep -v "remote mkdir .*: Failure" |
+        (grep -v "^sftp" || [[ $? == 1 ]]) |
+        while read -r R; do
+            echo "$R"
+            if [[ "$R" =~ "No such file or directory" ]]; then
+                echo "Problem uploading file" >&2
+                return 1
+            fi
+        done
+    echo "**********" >>"$LOG"
+}
+
+ftp_mkdir() {
+    if [ "$1" = "." ]; then
+        return
+    fi
+
+    if [ -r "$REMOTE_LISTING" ]; then
+        if grep ": /$1" "$REMOTE_LISTING" >/dev/null 2>&1; then
+            echo "# mkdir $1: already exists"
+            # It already exists (there is a file in it)
+            return
+        fi
+    fi
+
+    ftp_mkdir "$(dirname "$1")"
+    echo "mkdir \"$1\""
+}
+
+ftp_put() {
+    ftp_mkdir "$(dirname "$1")"
+    echo "put \"$1\" \"$1\""
+}
+
+ftp_rm() {
+    echo "rm \"$1\""
+}
+
+header_begin "Dump infos"
+echo "CRYPTOMEDIC_DEPLOY_HOST:     '${CRYPTOMEDIC_DEPLOY_HOST}'"
+echo "CRYPTOMEDIC_DEPLOY_USER:     ${#CRYPTOMEDIC_DEPLOY_USER} characters"
+echo "CRYPTOMEDIC_DEPLOY_PASSWORD: ${#CRYPTOMEDIC_DEPLOY_PASSWORD} characters"
+echo "CRYPTOMEDIC_HTTP_LOCAL_PORT: ${CRYPTOMEDIC_HTTP_LOCAL_PORT}"
+header_end
+
+if [ -z "$CRYPTOMEDIC_DEPLOY_USER" ]; then
+    echo "No CRYPTOMEDIC_DEPLOY_USER. Did you forget something?" >&2
+    exit 1
+fi
+
+header_begin "Testing connectivity"
+echo "version" | ftp_exec_raw
+header_end

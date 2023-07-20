@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+# shellcheck source=./cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-deploy-lib
+
+FILE="$1"
+echo "FILE: $FILE"
+
+PFILE="$(realpath --relative-to "$CR_PRJ_DIR" "$FILE")"
+
+echo "PFILE: $PFILE"
+
+ftp_put "$PFILE" | ftp_exec
