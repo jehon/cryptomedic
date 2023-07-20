@@ -726,12 +726,62 @@ reports[REPORT_CASH_REGISTER] = {
   },
   generator: (xtable) =>
     xtable
-      .addHeaders(1)
-      .addDetail("year", { headers: ["Year"] })
-      .addDetail("month", { headers: ["Month"] })
-      .addDetail("total_real", { headers: ["Total"] })
-      .addDetail("total_asked", { headers: ["Asked"] })
-      .addDetail("paid", { headers: ["Paid"] })
+      .addHeaders(2)
+      .addFooters(1)
+      .addDetail("year", { headers: ["Year", "Period"], footers: [""] })
+      .addDetail("month", { headers: ["Month"], footers: [""] })
+
+      .addDetail("total_real", {
+        headers: ["Total", "Complete"],
+        footers: [XTable.MACROS.sum]
+      })
+      .addDetail("total_asked", {
+        headers: ["Asked"],
+        footers: [XTable.MACROS.sum]
+      })
+      .addDetail("paid", {
+        headers: ["Paid"],
+        footers: [XTable.MACROS.sum]
+      })
+      .addDetail((data) => data.total_asked - data.paid, {
+        headers: ["Unpaid"],
+        footers: [XTable.MACROS.sum]
+      })
+
+      .addDetail("child_total_real", {
+        headers: ["Total", "Child"],
+        footers: [XTable.MACROS.sum]
+      })
+      .addDetail("child_total_asked", {
+        headers: ["Asked"],
+        footers: [XTable.MACROS.sum]
+      })
+      .addDetail("child_paid", {
+        headers: ["Paid"],
+        footers: [XTable.MACROS.sum]
+      })
+      .addDetail((data) => data.child_total_asked - data.child_paid, {
+        headers: ["Unpaid"],
+        footers: [XTable.MACROS.sum]
+      })
+
+      .addDetail("poor_child_total_real", {
+        headers: ["Total", "Poor and Child"],
+        footers: [XTable.MACROS.sum]
+      })
+      .addDetail("poor_child_total_asked", {
+        headers: ["Asked"],
+        footers: [XTable.MACROS.sum]
+      })
+      .addDetail("poor_child_paid", {
+        headers: ["Paid"],
+        footers: [XTable.MACROS.sum]
+      })
+      .addDetail((data) => data.poor_child_total_asked - data.poor_child_paid, {
+        headers: ["Unpaid"],
+        footers: [XTable.MACROS.sum]
+      })
+
       .end()
 };
 
