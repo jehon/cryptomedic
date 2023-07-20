@@ -6,13 +6,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const fse = require("fs-extra");
 
 const webRoot = path.join(__dirname, "/www/");
-const builtRoot = path.join(webRoot, "/built");
+const builtRoot = path.join(webRoot, "/built/frontend/");
 
 fse.emptyDirSync(builtRoot);
-fse.copy(
-  path.join(__dirname, "legacy/app-old/build.htaccess"),
-  path.join(builtRoot, ".htaccess")
-);
 
 const isDebug = !process.env.CRYPTOMEDIC_PROD ?? true;
 if (isDebug) {

@@ -1,0 +1,12 @@
+<ifModule mod_expires.c>
+    ExpiresActive On
+
+    ExpiresByType     application/json              "access plus 1 year"
+    ExpiresByType     text/javascript				"access plus 1 year"
+</ifModule>
+
+# 2023-07-20: Temporary - to avoid cache effect loading ng1x.html from /index.html
+# TODO: remove hack after 2024-08-01
+RewriteEngine On
+RewriteBase /built/
+RewriteRule ^ng1x.html frontend/ng1x.html [qsappend,redirect]

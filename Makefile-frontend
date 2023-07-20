@@ -85,10 +85,16 @@ $(FRONTEND_BUILT_MARK): \
 		$(FRONTEND_BUILD_TMP)/axios.js \
 		$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js \
 		$(FRONTEND_BUILD_TMP)/platform.js \
+		$(FRONTEND_PUBLISHED)/.htaccess
 
 	bin/cr-node node_modules/.bin/webpack
 
 	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
+$(FRONTEND_PUBLISHED)/.htaccess: src/build.htaccess
+	@mkdir -p "$(dir $@)"
+	cp "$<" "$@"
 	@touch "$@"
 
 # Dependencies are used in the build !

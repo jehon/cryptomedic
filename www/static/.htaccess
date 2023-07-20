@@ -1,6 +1,13 @@
 
+ExpiresByType application/json "access plus 1 year"
+ExpiresByType text/javascript "access plus 1 year"
+
 # Redirect from old location to new build location
 # /static/index.html => /built/ng1x.html
 
+# https://httpd.apache.org/docs/trunk/en/mod/mod_rewrite.html
+# passthrough: even if a file exists, use it accessible url
+
 RewriteEngine On
-RewriteRule ^index.html /built/ng1x.html [QSA,R,L]
+RewriteRule ^$ index.html [qsappend]
+RewriteRule ^index.html$ /built/frontend/ng1x.html [qsappend,redirect]
