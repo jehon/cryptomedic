@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Root, createRoot } from "react-dom/client";
-import { ObjectMap } from "./generic-types";
+import { ObjectMap } from "./utils/generic-types";
 
 export function bridgeTo(
   tag: string,

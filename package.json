@@ -22,7 +22,8 @@
     "lodash-es": "4.17.21",
     "platform": "1.3.6",
     "pngjs": "7.0.0",
-    "react-bootstrap": "2.8.0"
+    "react-bootstrap": "2.8.0",
+    "string": "3.3.3"
   },
   "devDependencies": {
     "@babel/cli": "7.22.9",
@@ -32,6 +33,7 @@
     "@testing-library/react": "14.0.0",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "@types/string": "0.0.31",
     "@typescript-eslint/eslint-plugin": "6.1.0",
     "@typescript-eslint/parser": "6.1.0",
     "axios-mock-adapter": "1.21.5",
