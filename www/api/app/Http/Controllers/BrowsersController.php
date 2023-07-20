@@ -54,6 +54,7 @@ class BrowsersController extends Controller {
 
         $screenWidth = [];
         $detected = [];
+        $os = [];
 ?>
 <style>
     table,
@@ -134,15 +135,20 @@ class BrowsersController extends Controller {
 
         // echo "<td>{$b['browser_uuid']}</td>";
 
-        $sw = $b->screen_width;
-        if (!array_key_exists($sw, $screenWidth)) {
-            $screenWidth[$sw] = $b;
+        if (array_key_exists($b->screen_width, $screenWidth)) {
+            if ($screenWidth[$b->screen_width]->last_login < $b->last_login) {
+                $screenWidth[$b->screen_width] = $b;
+            }
+        } else {
+            $screenWidth[$b->screen_width] = $b;
         }
 
-        if (array_key_exists($sw, $screenWidth) 
-                && property_exists($b, $sw)
-                && $screenWidth[$sw]['last_login'] < $b[$sw]['last_login']) {
-            $screenWidth[$sw] = $b;
+        if (array_key_exists($b->os, $os)) {
+            if ($os[$b->os]->screen_width > $b->screen_width) {
+                $os[$b->os] = $b;
+            }
+        } else {
+            $os[$b->os] = $b;
         }
 
         echo "</tr>";
@@ -182,6 +188,28 @@ class BrowsersController extends Controller {
     <?php
     foreach ($screenWidth as $sw => $b) {
         echo "<tr>";
+        echo "<td>{$b->screen_width}</td>";
+        echo "<td>{$b->screen_height}</td>";
+        echo "<td>" . substr($b->last_login, 0, 7) . "</td>";
+        echo "<td>{$b->last_login_name}</td>";
+        echo "</tr>";
+    }
+    ?>
+</table>
+
+<h3>Minimal screen sizes by OS</h3>
+<table>
+    <thead>
+        <th>OS</th>
+        <th>Width</th>
+        <th>Height</th>
+        <th>Last usage</th>
+        <th>Who</th>
+    </thead>
+    <?php
+    foreach ($os as $sw => $b) {
+        echo "<tr>";
+        echo "<td>{$sw}</td>";
         echo "<td>{$b->screen_width}</td>";
         echo "<td>{$b->screen_height}</td>";
         echo "<td>" . substr($b->last_login, 0, 7) . "</td>";
