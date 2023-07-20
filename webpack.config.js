@@ -1,18 +1,14 @@
 /* eslint-env node */
 
 const path = require("path");
-const fs = require("fs");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const fse = require("fs-extra");
-
-const released_version = new Date().toISOString();
 
 const webRoot = path.join(__dirname, "/www/");
 const builtRoot = path.join(webRoot, "/built");
 
 fse.emptyDirSync(builtRoot);
-fs.writeFileSync(path.join(builtRoot, "release_version.txt"), released_version);
 fse.copy(
   path.join(__dirname, "legacy/app-old/build.htaccess"),
   path.join(builtRoot, ".htaccess")
