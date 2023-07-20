@@ -4,12 +4,13 @@ import S from "string";
 export default class Pojo implements ObjectMap<any> {
   constructor(public id: number = 0) {}
 
-  get model(): string {
+  // This allow to be overriden
+  getModel(): string {
     return this.constructor.name;
   }
 
   get uid() {
-    return `${S(this.model).slugify().s}-${this.id}`;
+    return `${S(this.getModel()).slugify().s}-${this.id}`;
   }
 
   // isSet(field: string): boolean {
