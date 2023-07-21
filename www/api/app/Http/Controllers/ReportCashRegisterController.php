@@ -9,7 +9,8 @@ class ReportCashRegisterController extends ReportController
 {
   public function buildData()
   {
-    $poorFilter = "  ";
+    $childFilter = "1 = 1";
+    $poorFilter = "bills.Sociallevel <= 3";
     
     $this->result['list'] = 
       $this->runSqlWithNamedParameter(
@@ -21,13 +22,13 @@ class ReportCashRegisterController extends ReportController
             SUM(bills.total_asked) as total_asked,
             SUM((SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id)) as paid,
 
-            SUM(IF(false, bills.total_real, 0)) as child_total_real,
-            SUM(IF(false, bills.total_asked, 0)) as child_total_asked,
-            SUM(IF(false, (SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as child_paid,
+            SUM(IF($childFilter, bills.total_real, 0)) as child_total_real,
+            SUM(IF($childFilter, bills.total_asked, 0)) as child_total_asked,
+            SUM(IF($childFilter, (SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as child_paid,
 
-            SUM(IF(bills.Sociallevel <= 3, bills.total_real, 0)) as poor_child_total_real,
-            SUM(IF(bills.Sociallevel <= 3, bills.total_asked, 0)) as poor_child_total_asked,
-            SUM(IF(bills.Sociallevel <= 3, (SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as poor_child_paid
+            SUM(IF($childFilter AND $poorFilter, bills.total_real, 0)) as poor_child_total_real,
+            SUM(IF($childFilter AND $poorFilter, bills.total_asked, 0)) as poor_child_total_asked,
+            SUM(IF($childFilter AND $poorFilter, (SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as poor_child_paid
 
         FROM 
           bills
@@ -38,3 +39,5 @@ class ReportCashRegisterController extends ReportController
         ");
   }
 }
+
+// (SELECT min(year(Date)) - patients.yearofbirth from bills where patient_id = patients.id) as age_at_first_consult,
