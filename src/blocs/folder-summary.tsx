@@ -3,10 +3,11 @@ import Button from "react-bootstrap/Button";
 
 import { bridgeTo } from "../bridge";
 import IODate from "../widget/io-date";
-import PatientRelated from "../business/PatientRelated";
+import Folder from "../business/folder";
+import PatientRelated from "../business/patientRelated";
 
 class FolderSummary extends React.Component<
-  { folderId: string; folder: any },
+  { folderId: string; folder: Folder },
   {}
 > {
   render() {
@@ -36,7 +37,7 @@ class FolderSummary extends React.Component<
                     href="#/folder/{folder.getId()}/file/{f.getModel()}/{f.id}"
                     style={{ width: "100%" }}
                   >
-                    {file.model}
+                    {file.getModel()}
                   </Button>
                 </td>
                 <td></td>
