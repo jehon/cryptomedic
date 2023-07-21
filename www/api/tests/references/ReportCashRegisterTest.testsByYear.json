@@ -10,14 +10,26 @@
             "month": 1,
             "total_real": 23000,
             "total_asked": 9000,
-            "paid": 7138
+            "paid": 7138,
+            "child_total_real": 23000,
+            "child_total_asked": 9000,
+            "child_paid": 7138,
+            "poor_child_total_real": 23000,
+            "poor_child_total_asked": 9000,
+            "poor_child_paid": 7138
         },
         {
             "year": 2014,
             "month": 5,
             "total_real": 4200,
             "total_asked": 1560,
-            "paid": 300
+            "paid": 300,
+            "child_total_real": 4200,
+            "child_total_asked": 1560,
+            "child_paid": 300,
+            "poor_child_total_real": 4200,
+            "poor_child_total_asked": 1560,
+            "poor_child_paid": 300
         }
     ]
 }

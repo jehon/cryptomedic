@@ -9,7 +9,8 @@ class ReportCashRegisterController extends ReportController
 {
   public function buildData()
   {
-    $childFilter = "1 = 1";
+    // (SELECT min(year(bills.Date)) - patients.yearofbirth FROM bills WHERE patient_id = patients.id) as age_at_first_consult,
+    $childFilter = "(SELECT min(year(bills.Date)) - patients.yearofbirth FROM bills WHERE patient_id = patients.id) < 18";
     $poorFilter = "bills.Sociallevel <= 3";
     
     $this->result['list'] = 
@@ -39,5 +40,3 @@ class ReportCashRegisterController extends ReportController
         ");
   }
 }
-
-// (SELECT min(year(Date)) - patients.yearofbirth from bills where patient_id = patients.id) as age_at_first_consult,
