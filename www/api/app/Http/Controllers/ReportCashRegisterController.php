@@ -17,17 +17,17 @@ class ReportCashRegisterController extends ReportController
             YEAR(bills.Date) as year,
             MONTH(bills.Date) as month,
 
-            SUM(total_real) as total_real,
-            SUM(total_asked) as total_asked,
+            SUM(bills.total_real) as total_real,
+            SUM(bills.total_asked) as total_asked,
             SUM((SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id)) as paid,
 
-            SUM(IF(false, total_real, 0)) as child_total_real,
-            SUM(IF(false, total_asked, 0)) as child_total_asked,
+            SUM(IF(false, bills.total_real, 0)) as child_total_real,
+            SUM(IF(false, bills.total_asked, 0)) as child_total_asked,
             SUM(IF(false, (SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as child_paid,
 
-            SUM(IF(false, total_real, 0)) as poor_child_total_real,
-            SUM(IF(false, total_asked, 0)) as poor_child_total_asked,
-            SUM(IF(false, (SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as poor_child_paid
+            SUM(IF(bills.Sociallevel <= 3, bills.total_real, 0)) as poor_child_total_real,
+            SUM(IF(bills.Sociallevel <= 3, bills.total_asked, 0)) as poor_child_total_asked,
+            SUM(IF(bills.Sociallevel <= 3, (SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as poor_child_paid
 
         FROM 
           bills
