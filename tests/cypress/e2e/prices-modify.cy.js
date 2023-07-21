@@ -91,7 +91,9 @@ flavorFilter(flavorFilter.DESKTOP, () =>
       cy.get("#button_create").should("be.visible").click();
       cy.get("#button_create").should("be.visible");
 
-      cy.get("x-overlay.pivot").should("be.visible");
+      cy.get("x-overlay.pivot x-panel", { timeout: 10000 }).should(
+        "be.visible"
+      );
       cy.get("x-overlay.pivot").within(() => {
         // with an invalic date, it fail
         cy.get("[name=pivot]").should("be.visible");
