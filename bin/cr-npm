@@ -3,11 +3,13 @@
 set -o errexit
 set -o pipefail
 
-. "$(realpath "$( dirname "${BASH_SOURCE[0]}")")"/cr-lib
+. "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
-docker compose run --rm -T \
-    --volume "$(pwd):/workdir" \
-    --workdir /workdir \
-    --user "$(id -u)" \
-    node \
-    npm "$@"
+# docker compose run --rm -T \
+#     --volume "$(pwd):/workdir" \
+#     --workdir /workdir \
+#     --user "$(id -u)" \
+#     node \
+#     npm "$@"
+
+npm "$@"
