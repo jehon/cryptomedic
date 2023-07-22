@@ -743,7 +743,7 @@ reports[REPORT_CASH_REGISTER] = {
         headers: ["Paid"],
         footers: [XTable.MACROS.sum]
       })
-      .addDetail((data) => data.total_asked - data.paid, {
+      .addDetail((data) => data.total_real - data.paid, {
         headers: ["Unpaid"],
         footers: [XTable.MACROS.sum]
       })
@@ -760,7 +760,7 @@ reports[REPORT_CASH_REGISTER] = {
         headers: ["Paid"],
         footers: [XTable.MACROS.sum]
       })
-      .addDetail((data) => data.child_total_asked - data.child_paid, {
+      .addDetail((data) => data.child_total_real - data.child_paid, {
         headers: ["Unpaid"],
         footers: [XTable.MACROS.sum]
       })
@@ -777,7 +777,7 @@ reports[REPORT_CASH_REGISTER] = {
         headers: ["Paid"],
         footers: [XTable.MACROS.sum]
       })
-      .addDetail((data) => data.poor_child_total_asked - data.poor_child_paid, {
+      .addDetail((data) => data.poor_child_total_real - data.poor_child_paid, {
         headers: ["Unpaid"],
         footers: [XTable.MACROS.sum]
       })

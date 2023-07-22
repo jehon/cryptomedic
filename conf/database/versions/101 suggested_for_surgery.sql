@@ -11,7 +11,4 @@ ALTER TABLE `ricket_consults`
 
 UPDATE `ricket_consults` 
     SET suggestedForSurgery = 1
-    WHERE Surgery is not null and surgery > ""
-
-ALTER TABLE `ricket_consults` 
-    DROP `Surgery`;
+    WHERE Surgery is not null and surgery > "";
