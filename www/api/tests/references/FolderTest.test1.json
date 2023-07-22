@@ -212,6 +212,7 @@
                 "NotPerformed": null,
                 "Surgery66": "Postero-medial release",
                 "Comments": "",
+                "suggestedForSurgery": 0,
                 "TreatmentEvaluation": null,
                 "TreatmentFinished": null
             }
@@ -264,6 +265,7 @@
                 "Brachialcircumferencecm": 0,
                 "WalkingDifficulties": "Level 1",
                 "Comments": "",
+                "suggestedForSurgery": 0,
                 "TreatmentEvaluation": null,
                 "TreatmentFinished": null,
                 "conclusion_medical_calcium500": 0,

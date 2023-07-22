@@ -37,7 +37,6 @@ t::setDefaultOption("model", "RicketConsult");
 			<?php (new t("RicketConsult.conclusion_medical_calcium500"))->tr2()->p(); ?>
 			<?php (new t("RicketConsult.conclusion_medical_calcium1000"))->tr2()->p(); ?>
 			<?php (new t("RicketConsult.conclusion_medical_vitaminD"))->tr2()->p(); ?>
-			<?php (new t("RicketConsult.Surgery"))->tr2()->p(); ?>
 			<?php (new t("RicketConsult.Brace"))->tr2()->p(); ?>
 
 			<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
