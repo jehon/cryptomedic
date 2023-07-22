@@ -56,7 +56,7 @@
     "htmlhint": "1.1.4",
     "husky": "8.0.3",
     "imports-loader": "4.0.1",
-    "jasmine": "5.0.2",
+    "jasmine": "5.1.0",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "jest": "29.6.1",
     "jest-environment-jsdom": "29.6.1",
