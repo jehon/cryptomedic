@@ -1,4 +1,4 @@
-import S from "string";
+import S from "../../node_modules/string/dist/string.js";
 
 export default class Pojo {
   id;

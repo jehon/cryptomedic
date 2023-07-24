@@ -1,5 +1,5 @@
-import Pojo from "./pojo";
-import nullify from "./nullify";
+import Pojo from "./pojo.js";
+import nullify from "./nullify.js";
 
 export default class CRUD extends Pojo {
   static getBaseUrl() {
