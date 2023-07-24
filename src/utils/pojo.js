@@ -3,7 +3,7 @@ import { toAttributeCase } from "../../legacy/app-old/v2/js/string-utils.js";
 export default class Pojo {
   id;
 
-  constructor({ id }) {
+  constructor({ id } = {}) {
     this.id = id ?? 0;
   }
 
