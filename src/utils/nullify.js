@@ -21,7 +21,9 @@ export default function nullify(what) {
       if (what == null) {
         return what;
       }
-      return Object.fromEntries(Object.entries(what).map((v, k) => nullify(v)));
+      return Object.fromEntries(
+        Object.entries(what).map(([v, k]) => [nullify(v), k])
+      );
     default:
   }
   return what;
