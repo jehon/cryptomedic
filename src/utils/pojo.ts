@@ -1,4 +1,4 @@
-import { toAttributeCase } from "../../legacy/app-old/v2/js/string-utils.js";
+import { toAttributeCase } from "./strings";
 
 export default class Pojo {
   id;
