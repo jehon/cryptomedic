@@ -73,9 +73,7 @@ export default class Bill extends PatientRelated {
       if (rs <= 3000) {
         return 3;
       }
-    } catch (e) {
-      true;
-    }
+    } catch (e) {}
     return 4;
   }
 

@@ -2,7 +2,7 @@ import "../../../legacy/app-old/v1/elements/x-file-bill.js";
 
 import { webDescribe, loadReference, RefFolder1 } from "./athelpers.js";
 import Folder from "../../../legacy/app-old/v2/models/Folder.js";
-import Bill from "../../../legacy/app-old/v2/models/Bill.js";
+import Bill from "../../../src/app-folder/business/bill.js";
 import { setSession } from "../../../legacy/app-old/v2/js/session.js";
 
 // TODO: use constructor instead of webDescribe

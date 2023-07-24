@@ -1,6 +1,6 @@
 import Folder from "../../../legacy/app-old/v2/models/Folder.js";
 import Appointment from "../../../legacy/app-old/v2/models/Appointment.js";
-import Bill from "../../../legacy/app-old/v2/models/Bill.js";
+import Bill from "../../../src/app-folder/business/bill.js";
 import ClubFoot from "../../../legacy/app-old/v2/models/ClubFoot.js";
 import OtherConsult from "../../../legacy/app-old/v2/models/OtherConsult.js";
 import Patient from "../../../legacy/app-old/v2/models/Patient.js";
