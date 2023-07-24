@@ -3,7 +3,7 @@
 import XRequestor from "./x-o-requestor.js";
 import TimedMap from "../../v2/js/timedMap.js";
 import Folder from "../../v2/models/Folder.js";
-import nullify from "../../v2/js/nullify.js";
+import nullify from "../../../../src/utils/nullify.js";
 import { setCurrentFolder } from "../../v2/js/session.js";
 
 let patientFolderCache = new TimedMap(15 * 60);

@@ -1,22 +1,9 @@
 /* istanbul ignore file */
 
-import CRUD from "./CRUD.js";
+import CRUD from "../../../../src/utils/crud.js";
 import { getPref } from "../js/prefs.js";
-import { toAttributeCase } from "../js/string-utils.js";
 
 export default class FolderPage extends CRUD {
-  /**
-   * Return an unique id for this file
-   * based on file type and id
-   *
-   * TODO: should include patient_id ?
-   *
-   * @returns {string} an unique id
-   */
-  uid() {
-    return `${toAttributeCase(this.getModel())}-${this.id}`;
-  }
-
   initFromCachedPreferences() {
     var c = getPref("file", {
       examinerName: "",
