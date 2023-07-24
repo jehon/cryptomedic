@@ -66,7 +66,7 @@ dump:
 # @echo "Chrome:                         $(shell google-chrome --version 2>&1 )"
 
 clear:
-	@if [ -z "$$NO_CLEAR" ]; then clear; fi
+	@if [ -z "$$NO_CLEAR" ]; then clear; fi || true
 	@echo "**"
 	@echo "**"
 	@echo "** Tests starting at $$(date) **"

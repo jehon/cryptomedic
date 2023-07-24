@@ -16,6 +16,8 @@ jobs:
     timeout-minutes: 45
     concurrency:
       group: release-${{ github.ref }}
+    env:
+      NO_CLEAR: yes
 
     steps:
       - uses: actions/checkout@v3
