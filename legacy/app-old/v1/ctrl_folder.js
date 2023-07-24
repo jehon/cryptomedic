@@ -29,14 +29,15 @@ import "../v2/widgets/folder/x-ff-next-appointment.js";
  * @param {object} file the uid of the file currently selected
  */
 function newRefresh(folder = null, file = null) {
-  for (const mc of document.querySelectorAll("#main_content")) {
+  const mc = document.querySelector("#main_content");
+  if (mc) {
     mc.setAttribute("x-top", "x-top");
     setPropertyOn(mc, "folder", folder);
     setPropertyOn(mc, "file", file);
   }
 
-  for (const mc of document.querySelectorAll("[inject=patient]")) {
-    setPropertyOn(mc, "patient", folder.getPatient());
+  for (const reactEl of document.querySelectorAll("[inject=patient]")) {
+    setPropertyOn(reactEl, "patient", folder.getPatient());
   }
 }
 
