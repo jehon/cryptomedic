@@ -13,7 +13,7 @@ test('empty', () => {
 });
 
 test('with data', () => {
-    const p = new Pojo(12);
+    const p = new Pojo({ id: 12 });
 
     expect(p.getModel()).toBe('Pojo');
     expect(p.id).toBe(12);

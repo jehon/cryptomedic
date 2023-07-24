@@ -1,6 +1,5 @@
 import React from "react";
-// import { padLeftTrim } from "../utils/string";
-import S from "string";
+import { padLeftTrim } from "../utils/strings";
 
 export default class IODate extends React.Component<{ value?: Date }, {}> {
   static Invalid = "Invalid date";
@@ -20,8 +19,9 @@ export default class IODate extends React.Component<{ value?: Date }, {}> {
       return IODate.Invalid;
     }
 
-    return `${S(date.getDate()).padLeft(2, "0")}-${S(
-      date.getMonth() + 1
-    ).padLeft(2, "0")}-${S(date.getFullYear()).padLeft(4, "0")}`;
+    return `${(padLeftTrim(date.getDate()), 2)}-${padLeftTrim(
+      date.getMonth() + 1,
+      2
+    )}-${padLeftTrim(date.getFullYear(), 4)}`;
   }
 }

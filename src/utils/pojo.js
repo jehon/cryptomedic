@@ -1,4 +1,4 @@
-import S from "../../node_modules/string/dist/string.js";
+import { toAttributeCase } from "../../legacy/app-old/v2/js/string-utils.js";
 
 export default class Pojo {
   id;
@@ -13,6 +13,6 @@ export default class Pojo {
   }
 
   get uid() {
-    return `${S(this.getModel()).slugify().s}-${this.id}`;
+    return `${toAttributeCase(this.getModel()).slugify().s}-${this.id}`;
   }
 }
