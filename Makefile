@@ -1,9 +1,4 @@
 #
-# Header
-#
-*: clear
-
-#
 # Parameters
 #
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
