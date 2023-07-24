@@ -139,14 +139,14 @@ update: frontend-update-references
 frontend-update-references: $(FRONTEND_BUILT_MARK)
 
 migration-status:
-	@echo "*** New system but in javascript"
 	find src -name "*.js" | jh-tag-stdin "js"
 	@echo ""
 
-	@echo "*** Old system using new code (ok)"
 	@grep --recursive --fixed-strings "/../src/" legacy/ | jh-tag-stdin "ok"
 	@echo ""
 
-	@echo "*** New system pointing to old system (ko)"
-	@grep --recursive --fixed-strings "/../legacy/" src/ | jh-tag-stdin "!ko!"
+	@grep --recursive --include "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "warn"
+	@echo ""
+
+	@grep --recursive --exclude "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "!ko!"
 	@echo ""
