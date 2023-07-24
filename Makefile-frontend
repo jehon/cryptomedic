@@ -139,7 +139,7 @@ update: frontend-update-references
 frontend-update-references: $(FRONTEND_BUILT_MARK)
 
 migration-status:
-	find src -name "*.js" | jh-tag-stdin "js"
+	@find src -name "*.js" | jh-tag-stdin "js"
 	@echo ""
 
 	@grep --recursive --fixed-strings "/../src/" legacy/ | jh-tag-stdin "ok"
