@@ -34,6 +34,10 @@ function newRefresh(folder = null, file = null) {
     setPropertyOn(mc, "folder", folder);
     setPropertyOn(mc, "file", file);
   }
+
+  for (const mc of document.querySelectorAll("[inject=patient]")) {
+    setPropertyOn(mc, "patient", folder.getPatient());
+  }
 }
 
 /**
