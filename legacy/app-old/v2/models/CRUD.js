@@ -1,9 +1,10 @@
-import Pojo from "./pojo.js";
-import nullify from "./nullify.js";
+/* istanbul ignore file */
 
-export default class CRUD extends Pojo {
+import nullify from "../../../../src/utils/nullify.js";
+
+export default class CRUD {
   static getBaseUrl() {
-    throw new Error("getBaseUrl is not implemented");
+    throw "getBaseUrl is not implemented";
   }
 
   static list(network) {
@@ -18,16 +19,14 @@ export default class CRUD extends Pojo {
       .requestWithData(nullify(data));
   }
 
-  createdAt;
-  updatedAt;
-
-  constructor({ id, created_at, updated_at }) {
-    super(id);
-    this.createdAt = created_at ?? null;
-    this.updatedAt = updated_at ?? null;
+  static remove(network, id) {
+    return network
+      .start()
+      .requestWithDelete()
+      .requestToUrl(this.getBaseUrl() + "/" + id);
   }
 
-  save(network, data) {
+  static save(network, data) {
     return network
       .start()
       .requestWithPut()
@@ -35,11 +34,10 @@ export default class CRUD extends Pojo {
       .requestWithData(data);
   }
 
-  remove(network, id) {
-    return network
-      .start()
-      .requestWithDelete()
-      .requestToUrl(this.getBaseUrl() + "/" + id);
+  constructor(data = {}) {
+    if (data) {
+      Object.assign(this, data);
+    }
   }
 
   validate(res) {

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import CRUD from "../../../../src/utils/crud.js";
+import CRUD from "./CRUD.js";
 import { getPref } from "../js/prefs.js";
 
 export default class FolderPage extends CRUD {
