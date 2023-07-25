@@ -35,9 +35,18 @@ export default class CRUD {
       .requestWithData(data);
   }
 
-  constructor(data = {}) {
-    if (data) {
-      Object.assign(this, data);
+  id;
+  created_at;
+  updated_at;
+
+  constructor({ id, created_at, updated_at, ...others } = {}) {
+    this.id = id;
+    this.created_at = created_at;
+    this.updated_at = updated_at;
+
+    // TODO: legacy
+    if (others) {
+      Object.assign(this, others);
     }
   }
 

@@ -7,6 +7,34 @@ export default class Patient extends FolderPage {
     return "Patient";
   }
 
+  entryyear;
+  entryorder;
+  Name;
+  Yearofbirth;
+  Sex;
+  Pathology;
+  other_comments;
+
+  constructor({
+    entryyear,
+    entryorder,
+    Name,
+    Yearofbirth,
+    Sex,
+    Pathology,
+    other_comments,
+    ...other
+  } = {}) {
+    super(other);
+    this.entryyear = entryyear;
+    this.entryorder = entryorder;
+    this.Name = Name;
+    this.Yearofbirth = Yearofbirth;
+    this.Sex = Sex;
+    this.Pathology = Pathology;
+    this.other_comments = other_comments;
+  }
+
   getRelated() {
     return {
       Appointment: "patient_id",

@@ -62,7 +62,7 @@ export default class Folder extends FolderPage {
 
   getId() {
     const patient = this.getPatient();
-    if ("id" in patient) {
+    if (patient.id) {
       return patient.id + "";
     }
     return -1;
@@ -147,7 +147,7 @@ export default class Folder extends FolderPage {
       }
       return null;
     }
-    if (!("id" in this.getPatient())) {
+    if (!this.getPatient().id) {
       return [];
     }
     return this.getByFieldValue("patient_id", this.getPatient().id).sort(
