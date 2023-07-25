@@ -1,0 +1,14 @@
+/* On mobile */
+@media (max-width: 992px) {
+  .no-mobile {
+    display: none;
+  }
+}
+
+.row-spread {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
