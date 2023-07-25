@@ -16,7 +16,7 @@ export default class Bill extends PatientRelated {
 
   constructor(data, folder = null) {
     super(data, folder);
-    if (!data || Object.keys(data).length == 0) {
+    if (!data || Object.keys(data).length === 0) {
       // Initialize social level from last bill (if any)
       var last_bill = null;
       if (folder) {
@@ -85,55 +85,55 @@ export default class Bill extends PatientRelated {
     }
     var total = 0;
     for (var i in this.price) {
-      if (i[0] == "_") {
+      if (i[0] === "_") {
         continue;
       }
-      if (i == "id") {
+      if (i === "id") {
         continue;
       }
-      if (i == "created_at") {
+      if (i === "created_at") {
         continue;
       }
-      if (i == "updated_at") {
+      if (i === "updated_at") {
         continue;
       }
-      if (i == "lastuser") {
+      if (i === "lastuser") {
         continue;
       }
-      if (i == "datefrom") {
+      if (i === "datefrom") {
         continue;
       }
-      if (i == "dateto") {
+      if (i === "dateto") {
         continue;
       }
-      if (i == "controller") {
+      if (i === "controller") {
         continue;
       }
-      if (i == "locked") {
+      if (i === "locked") {
         continue;
       }
-      if (i == "dlocked") {
+      if (i === "dlocked") {
         continue;
       }
-      if (i == "socialLevelPercentage_0") {
+      if (i === "socialLevelPercentage_0") {
         continue;
       }
-      if (i == "socialLevelPercentage_1") {
+      if (i === "socialLevelPercentage_1") {
         continue;
       }
-      if (i == "socialLevelPercentage_2") {
+      if (i === "socialLevelPercentage_2") {
         continue;
       }
-      if (i == "socialLevelPercentage_3") {
+      if (i === "socialLevelPercentage_3") {
         continue;
       }
-      if (i == "socialLevelPercentage_4") {
+      if (i === "socialLevelPercentage_4") {
         continue;
       }
       if (this.price[i] < 0) {
         continue;
       }
-      if (typeof this[i] == "undefined") {
+      if (typeof this[i] === "undefined") {
         continue;
       }
       if (this[i] <= 0) {
