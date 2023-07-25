@@ -37,7 +37,8 @@ function newRefresh(folder = null, file = null) {
   }
 
   for (const reactEl of document.querySelectorAll('[inject="patient"]')) {
-    setPropertyOn(reactEl, "patient", folder.getPatient());
+    console.log(reactEl, folder.getPatient());
+    reactEl.set("patient", folder.getPatient());
   }
 }
 
