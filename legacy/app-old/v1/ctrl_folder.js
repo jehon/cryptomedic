@@ -36,9 +36,16 @@ function newRefresh(folder = null, file = null) {
     setPropertyOn(mc, "file", file);
   }
 
-  for (const reactEl of document.querySelectorAll('[inject="patient"]')) {
-    console.log(reactEl, folder.getPatient());
+  for (const reactEl of document.querySelectorAll("[x-react-inject-folder]")) {
+    reactEl.set("folder", folder);
+  }
+
+  for (const reactEl of document.querySelectorAll("[x-react-inject-patient]")) {
     reactEl.set("patient", folder.getPatient());
+  }
+
+  for (const reactEl of document.querySelectorAll("[x-react-inject-file]")) {
+    reactEl.set("file", file);
   }
 }
 
