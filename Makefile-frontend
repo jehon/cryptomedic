@@ -130,9 +130,16 @@ frontend-test: frontend-test-legacy
 frontend-test-new: $(FRONTEND_DEPENDENCIES_MARK)
 	bin/cr-node node_modules/.bin/jest
 
-frontend-test-legacy: $(FRONTEND_BUILT_MARK)
+frontend-test-legacy: $(FRONTEND_DEPENDENCIES_MARK) \
+		$(FRONTEND_BUILD_TMP)/axios.js \
+		$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js \
+		$(FRONTEND_BUILD_TMP)/platform.js \
+
 	mkdir -p $(FRONTEND_BUILD_TMP)/js
 	bin/cr-node node_modules/.bin/karma start tests/unitjs/karma.conf.js --single-run
+
+frontend-test-legacy-continuously:
+	bin/cr-node node_modules/.bin/karma start tests/unitjs/karma.conf.js
 
 .PHONY: frontend-update-references
 update: frontend-update-references
