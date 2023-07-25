@@ -6,7 +6,7 @@
   },
   "packageRules": [
     {
-      "matchPackagePatterns": ["^bootstrap"],
+      "matchPackagePatterns": ["^bootstrap", "^react-bootstrap"],
       "matchUpdateTypes": ["major"],
       "enabled": false
     }
