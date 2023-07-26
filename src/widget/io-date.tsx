@@ -1,27 +1,33 @@
 import React from "react";
+import IOAbstract from "./io-abstract";
 import { padLeftTrim } from "../utils/strings";
 
-export default class IODate extends React.Component<{ value?: Date }, {}> {
+export default class IODate extends IOAbstract<Date | null> {
   static Invalid = "Invalid date";
 
-  render() {
-    return this.renderRead();
-  }
-
-  renderRead() {
-    const date = this.props.value;
-
-    if (date == null) {
+  renderOutput(value) {
+    if (value == null) {
       return "";
     }
 
-    if (isNaN(date.getFullYear())) {
+    if (isNaN(value.getFullYear())) {
       return IODate.Invalid;
     }
 
-    return `${(padLeftTrim(date.getDate()), 2)}-${padLeftTrim(
-      date.getMonth() + 1,
-      2
-    )}-${padLeftTrim(date.getFullYear(), 4)}`;
+    return (
+      <div>
+        `${padLeftTrim(value.getDate(), 2)}-$
+        {padLeftTrim(value.getMonth() + 1, 2)}-$
+        {padLeftTrim(value.getFullYear(), 4)}`
+      </div>
+    );
+  }
+
+  renderInput(value: Date | null, required: boolean): React.ReactNode {
+    return this.renderOutput(value);
+  }
+
+  getInputValue(): Date | null {
+    return this.props.value;
   }
 }

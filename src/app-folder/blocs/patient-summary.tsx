@@ -4,9 +4,10 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 
 import { bridgeTo } from "../../bridge";
-import Labelled from "../../widget/labelled";
-
 import Patient from "../../../legacy/app-old/v2/models/Patient";
+import IONumber from "../../widget/io-number";
+import IOString from "../../widget/io-string";
+import IOText from "../../widget/io-text";
 
 export default function PatientSummary({
   patient
@@ -38,13 +39,15 @@ export default function PatientSummary({
             >
               View the Patient
             </Button>
-            <Labelled label="Entry Year">{patient.entryyear}</Labelled>
-            <Labelled label="Entry Order">{patient.entryorder}</Labelled>
-            <Labelled label="Name">{patient.Name}</Labelled>
-            <Labelled label="Year of birth">{patient.Yearofbirth}</Labelled>
-            <Labelled label="Sex">{patient.Sex}</Labelled>
-            <Labelled label="Pathology">{patient.Pathology}</Labelled>
-            <Labelled label="Other Comments">{patient.other_comments}</Labelled>
+            <div className="maybe-two-columns">
+              <IONumber label="Entry Year" value={patient.entryyear} />
+              <IONumber label="Entry Order" value={patient.entryorder} />
+            </div>
+            <IOString label="Name" value={patient.Name} />
+            <IONumber label="Year of birth" value={patient.Yearofbirth} />
+            <IOString label="Sex" value={patient.Sex} />
+            <IOString label="Pathology" value={patient.Pathology} />
+            <IOText label="Other Comments" value={patient.other_comments} />
           </Card.Body>
         </Accordion.Collapse>
       </Card>

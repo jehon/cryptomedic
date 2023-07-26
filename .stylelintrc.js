@@ -3,10 +3,11 @@ module.exports = {
   ignoreFiles: ["www/api/**/*"],
   plugins: ["stylelint-no-unsupported-browser-features"],
   rules: {
-    "selector-type-no-unknown": [true, { ignore: "custom-elements" }],
-    "no-descending-specificity": null,
+    "declaration-block-no-redundant-longhand-properties": null,
     "declaration-empty-line-before": null,
-    "plugin/no-unsupported-browser-features": true,
-    "media-feature-range-notation": [ "prefix" ]
+    "media-feature-range-notation": [ "prefix" ],
+    "no-descending-specificity": null,
+    "selector-type-no-unknown": [true, { ignore: "custom-elements" }],
+    "plugin/no-unsupported-browser-features": true
   }
 };

@@ -1,9 +1,8 @@
-/* On mobile */
-@media (max-width: 992px) {
-  .no-mobile {
-    display: none;
-  }
-}
+/** 
+ * On Mobile
+ * 
+ * From 360 to 990
+ */
 
 .row-spread {
   width: 100%;
@@ -11,4 +10,36 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.maybe-two-columns {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.io-line {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.io-line > label {
+  width: 100%;
+  font-size: smaller;
+  border: green 1px solid;
+}
+
+.io-line > *:not(label) {
+  /* full width for 300px - aside starting at 5600px */
+  min-width: 100px;
+  flex-grow: 1;
+
+  text-align: right;
+  border: red 1px solid;
 }

@@ -1,0 +1,21 @@
+/** 
+ * On laptop 
+ * 
+ * From 990 to 1600
+ */
+
+@media (max-width: 992px) {
+  .no-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .io-line {
+    width: 50%;
+  }
+
+  .io-line > label {
+    min-width: 100px;
+  }
+}
