@@ -59,7 +59,7 @@ class AuthController extends Controller {
         self::$permissions[$profile][$header] = $value;
     }
 
-    public function storeStatistics() {
+    public function storeStatistics(): array {
         $data = Request::all();
 
         if (array_key_exists('browser', $data)) {
@@ -71,6 +71,7 @@ class AuthController extends Controller {
 
             Browsers::storeStatistics($uuid, Auth::user()->username, $browserData);
         }
+        return $browserData;
     }
 
     /**
@@ -85,7 +86,7 @@ class AuthController extends Controller {
         if (!Auth::user()) {
             abort(401);
         }
-        $this->storeStatistics();
+        $browserData = $this->storeStatistics();
 
         $data = array();
         $data['username'] = Auth::user()->username;
@@ -108,6 +109,8 @@ class AuthController extends Controller {
         $data['associations'] = Lists::getAssociations();
 
         $data['authorized'] = array_keys(self::$permissions[$data['group']]);
+
+        $data['supported'] = $browserData['browser_supported'];
 
         // Update last_login timestamp
         $user = Auth::user();
