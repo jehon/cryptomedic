@@ -118,7 +118,6 @@ build-on-change: $(FRONTEND_DEPENDENCIES_MARK)
 	multitail \
 		-cT ANSI \
 		--mark-interval "60" \
-		-l "bin/cr-node node_modules/.bin/tsc --watch" \
 		-l "bin/cr-node node_modules/.bin/webpack --watch"
 
 		# -s 2 -sn 2,1 : two columns
