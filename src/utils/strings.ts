@@ -35,8 +35,6 @@ export function toPropertyCase(
 /**
  * Transform into kebab case (abc-def-ghi - to use in html)
  *
- * @param {string} text to be transformed (abcDefGhi)
- * @returns {string} transformed into kebab case (AbcDefGhi)
  * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
  */
 export function toAttributeCase(text) {
