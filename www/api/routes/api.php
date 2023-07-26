@@ -82,6 +82,10 @@ Route::group(array('middleware' => 'authenticated'), function() {
     Route::get('reports/surgical', [
       "uses" => "ReportSurgicalController@index"
     ]);
+
+    Route::get('reports/surgical-suggested', [
+      "uses" => "ReportSurgicalSuggestedController@index"
+    ]);
   });
 
   CRSecurity::ifHasPersmission('folder.read', function() {
