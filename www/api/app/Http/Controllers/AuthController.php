@@ -62,6 +62,11 @@ class AuthController extends Controller {
     public function storeStatistics(): array {
         $data = Request::all();
 
+        // Default values
+        $browserData = [
+            "browser_supported" => "Unknown"
+        ];
+
         if (array_key_exists('browser', $data)) {
             $browserData = $data['browser'];
             $uuid = $browserData['browser_uuid'];

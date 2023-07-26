@@ -778,5 +778,6 @@
         "planning.execute",
         "folder.edit",
         "folder.delete"
-    ]
+    ],
+    "supported": "Unknown"
 }
