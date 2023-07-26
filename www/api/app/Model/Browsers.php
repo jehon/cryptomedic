@@ -5,7 +5,26 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
+define("BR_FILE", __DIR__ . "/../../../built/browsers.json");
+
 class Browsers extends Model {
+    static $supported = [];
+
+    static function isSupported(string $browser, string $version): string {
+        $browser = strtolower($browser);
+        $version  =strtolower($version);
+
+        if (!array_key_exists($browser, static::$supported)) {
+            return "Unsupported browser: $browser";
+        }
+
+        if (!in_array($version, static::$supported[$browser])) {
+            return "Unsupported version: $version";
+        }
+
+        return "Ok";
+    }
+
     public static function clean(): array {
         return [
             "features" => DB::delete("
@@ -42,3 +61,19 @@ class Browsers extends Model {
             ->update($features);
     }
 }
+
+/**
+ * 
+ * Initialize
+ * 
+ */
+foreach (json_decode(file_get_contents(constant("BR_FILE")), true)["browsers"] as $line) {
+    $b = strtolower(explode(" ", $line)[0]);
+    $v = explode(" ", $line)[1];
+
+    if (!\array_key_exists($b, Browsers::$supported)) {
+        Browsers::$supported[$b] = [];
+    }
+    Browsers::$supported[$b][] = $v;
+}
+

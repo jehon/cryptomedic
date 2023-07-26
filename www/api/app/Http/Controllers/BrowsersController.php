@@ -7,8 +7,6 @@ use DB;
 use App\Http\Controllers\Controller;
 use App\Model\Browsers;
 
-define("BR_FILE", __DIR__ . "/../../../../built/browsers.json");
-
 class BrowsersController extends Controller {
     static public function clean() {
         $stats = Browsers::clean();
@@ -40,17 +38,6 @@ class BrowsersController extends Controller {
         }
 
         $k0 = array_keys($browsers)[0];
-
-        $supported = [];
-        foreach (json_decode(file_get_contents(constant("BR_FILE")), true)["browsers"] as $v) {
-            $b = explode(" ", $v)[0];
-            $v = explode(" ", $v)[1];
-            if (!\array_key_exists($b, $supported)) {
-                $supported[$b] = ["max" => 0];
-            }
-            $supported[$b]["max"] = max($supported[$b]["max"], $v);
-            $supported[$b][] = $v;
-        };
 
         $screenWidth = [];
         $detected = [];
@@ -84,6 +71,8 @@ class BrowsersController extends Controller {
             }
         }
         ?>
+        <th>Supported at time</th>
+        <th>Supported tody</th>
     </thead>
     <?php
     foreach ($browsers as $b) {
@@ -119,18 +108,8 @@ class BrowsersController extends Controller {
                 echo "<td>{$v}</td>";
             }
         }
-        $support = "not supported $bn - $bv";
-        if (array_key_exists($bn, $supported)) {
-            if (in_array($bv, $supported[$bn])) {
-                $support = "yes";
-            } else if (max($bv, $supported[$bn]["max"]) == $bv) {
-                $support = "yes (newer)";
-            } else {
-                $support = "!! not supported version ($bv) !!";
-            }
-        } else {
-            $support = "support unknown: $bn ($bv)";
-        }
+        echo "<td>{$b->browser_supported}</td>";
+        $support = Browsers::isSupported($bn, $bv);
         echo "<td>$support</td>";
 
         // echo "<td>{$b['browser_uuid']}</td>";

@@ -63,10 +63,13 @@ class AuthController extends Controller {
         $data = Request::all();
 
         if (array_key_exists('browser', $data)) {
-            $uuid = $data['browser']['browser_uuid'];
-            unset($data['browser']['browser_uuid']);
+            $browserData = $data['browser'];
+            $uuid = $browserData['browser_uuid'];
+            unset($browserData['browser_uuid']);
 
-            Browsers::storeStatistics($uuid, Auth::user()->username, $data['browser']);
+            $browserData["browser_supported"] = Browsers::isSupported($browserData['browser_name'], $browserData['browser_version']);
+
+            Browsers::storeStatistics($uuid, Auth::user()->username, $browserData);
         }
     }
 
