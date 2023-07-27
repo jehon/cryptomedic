@@ -1,11 +1,12 @@
 import React from "react";
 import IOAbstract from "./io-abstract";
 import { padLeftTrim } from "../utils/strings";
+import { Optional } from "../utils/generic-types";
 
-export default class IODate extends IOAbstract<Date | null> {
+export default class IODate extends IOAbstract<Optional<Date>> {
   static Invalid = "Invalid date";
 
-  renderOutput(value) {
+  renderOutput(value: Optional<Date>) {
     if (value == null) {
       return "";
     }
@@ -23,11 +24,11 @@ export default class IODate extends IOAbstract<Date | null> {
     );
   }
 
-  renderInput(value: Date | null, required: boolean): React.ReactNode {
+  renderInput(value: Optional<Date>, required: boolean): React.ReactNode {
     return this.renderOutput(value);
   }
 
-  getInputValue(): Date | null {
+  getInputValue(): Optional<Date> {
     return this.props.value;
   }
 }

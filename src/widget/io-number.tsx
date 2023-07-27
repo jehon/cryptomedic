@@ -1,16 +1,17 @@
 import React from "react";
 import IOAbstract from "./io-abstract";
+import { Optional } from "../utils/generic-types";
 
-export default class IOString extends IOAbstract<number> {
-  renderOutput(value: number) {
+export default class IOString extends IOAbstract<Optional<number>> {
+  renderOutput(value: Optional<number>) {
     return <div>{value}</div>;
   }
 
-  renderInput(value: number, required: boolean): React.ReactNode {
+  renderInput(value: Optional<number>, required: boolean): React.ReactNode {
     return this.renderOutput(value);
   }
 
-  getInputValue(): number {
+  getInputValue(): Optional<number> {
     return this.props.value;
   }
 }

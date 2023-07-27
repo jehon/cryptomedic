@@ -6,3 +6,5 @@ export interface ObjectMap<T> {
 }
 
 export interface Config extends ObjectMap<string> {}
+
+export type Optional<T> = T | null;
