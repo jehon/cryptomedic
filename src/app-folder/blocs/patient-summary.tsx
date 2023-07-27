@@ -22,6 +22,11 @@ export default function PatientSummary({
       <Card>
         <Accordion.Toggle as={Card.Header} eventKey="0">
           <div className="row-spread">
+            <img
+              src="/static/img/patient.gif"
+              alt="Patient"
+              style={{ height: "1.5em" }}
+            />
             <span className="no-mobile">Patient</span>
             <span>
               {patient.entryyear}-{patient.entryorder}
