@@ -34,7 +34,7 @@ export default function PatientSummary({
           <Card.Body>
             <div className="form-flexible">
               <Button
-                href="#/folder/{patient.getId()}/"
+                href={"#/folder/" + patient.getId() + "/"}
                 variant="outline-info"
                 style={{ width: "100%" }}
               >
