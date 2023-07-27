@@ -43,10 +43,14 @@ export default function PatientSummary({
               <IONumber label="Entry Year" value={patient.entryyear} />
               <IONumber label="Entry Order" value={patient.entryorder} />
             </div>
-            <IOString label="Name" value={patient.Name} />
-            <IONumber label="Year of birth" value={patient.Yearofbirth} />
-            <IOString label="Sex" value={patient.Sex} />
-            <IOString label="Pathology" value={patient.Pathology} />
+            <div className="maybe-two-columns">
+              <IOString label="Name" value={patient.Name} />
+              <IOString label="Sex" value={patient.Sex} />
+            </div>
+            <div className="maybe-two-columns">
+              <IONumber label="Year of birth" value={patient.Yearofbirth} />
+              <IOString label="Pathology" value={patient.Pathology} />
+            </div>
             <IOText label="Other Comments" value={patient.other_comments} />
           </Card.Body>
         </Accordion.Collapse>
