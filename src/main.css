@@ -32,7 +32,6 @@
 .io-line > label {
   width: 100%;
   font-size: smaller;
-  border: green 1px solid;
 }
 
 .io-line > *:not(label) {
@@ -41,5 +40,4 @@
   flex-grow: 1;
 
   text-align: right;
-  border: red 1px solid;
 }
