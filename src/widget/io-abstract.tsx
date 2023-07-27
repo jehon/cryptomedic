@@ -4,6 +4,7 @@ export default abstract class IOAbstract<T> extends React.Component<
   {
     label: string;
     value: T;
+    width?: number;
     edit?: boolean;
     required?: boolean;
   },
@@ -13,11 +14,15 @@ export default abstract class IOAbstract<T> extends React.Component<
     const {
       label = "Label",
       value,
+      width = 1,
       edit = false,
       required = false
     } = this.props;
     return (
-      <div className="io-line">
+      <div
+        className="io-line"
+        style={{ width: `calc(min(100%,max(300px,${width * 100 * 0.9}%)))` }}
+      >
         <label>
           <span dangerouslySetInnerHTML={{ __html: label }}></span>
           {required ? <span className="required">*</span> : null}

@@ -32,26 +32,39 @@ export default function PatientSummary({
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="0">
           <Card.Body>
-            <Button
-              href="#/folder/{patient.getId()}/"
-              variant="outline-info"
-              style={{ width: "100%" }}
-            >
-              View the Patient
-            </Button>
-            <div className="maybe-two-columns">
-              <IONumber label="Entry Year" value={patient.entryyear} />
-              <IONumber label="Entry Order" value={patient.entryorder} />
+            <div className="form-flexible">
+              <Button
+                href="#/folder/{patient.getId()}/"
+                variant="outline-info"
+                style={{ width: "100%" }}
+              >
+                View the Patient
+              </Button>
+              <IONumber
+                width={0.5}
+                label="Entry Year"
+                value={patient.entryyear}
+              />
+              <IONumber
+                width={0.5}
+                label="Entry Order"
+                value={patient.entryorder}
+              />
+              <IOString width={0.5} label="Name" value={patient.Name} />
+              <IOString width={0.5} label="Sex" value={patient.Sex} />
+              <IONumber
+                width={0.5}
+                label="Year of birth"
+                value={patient.Yearofbirth}
+              />
+              <IOString
+                width={0.5}
+                label="Pathology"
+                value={patient.Pathology}
+              />
+              <IOText label="Other Comments" value={patient.other_comments} />
+              <IOText label="Other Comments" value={patient.other_comments} />
             </div>
-            <div className="maybe-two-columns">
-              <IOString label="Name" value={patient.Name} />
-              <IOString label="Sex" value={patient.Sex} />
-            </div>
-            <div className="maybe-two-columns">
-              <IONumber label="Year of birth" value={patient.Yearofbirth} />
-              <IOString label="Pathology" value={patient.Pathology} />
-            </div>
-            <IOText label="Other Comments" value={patient.other_comments} />
           </Card.Body>
         </Accordion.Collapse>
       </Card>
