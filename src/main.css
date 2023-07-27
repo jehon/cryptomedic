@@ -23,25 +23,24 @@
 }
 
 .io-line {
-  /* width is set by io-abstract */
+  /* width is also set by io-abstract */
+  width: 100%;
 
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
 
   padding: 5px;
 }
 
 .io-line > * {
   width: 100%;
+
+  color: green;
+  text-align: right;
 }
 
 .io-line > label {
-  font-size: smaller;
   color: gray;
-}
-
-.io-line > *:not(label) {
-  text-align: right;
-  color: green;
+  text-align: left;
+  font-size: smaller;
 }
