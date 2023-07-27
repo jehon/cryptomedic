@@ -50,6 +50,10 @@ export default class CRUD {
     }
   }
 
+  getId() {
+    return this.id;
+  }
+
   uid() {
     return `${toAttributeCase(this.getModel())}-${this.id}`;
   }
