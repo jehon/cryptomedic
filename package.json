@@ -47,7 +47,7 @@
     "eslint-plugin-cypress": "2.13.3",
     "eslint-plugin-jasmine": "4.1.3",
     "eslint-plugin-jest-dom": "5.0.1",
-    "eslint-plugin-jsdoc": "46.4.4",
+    "eslint-plugin-jsdoc": "46.4.5",
     "fs-extra": "latest",
     "geckodriver": "latest",
     "glob": "10.3.3",
