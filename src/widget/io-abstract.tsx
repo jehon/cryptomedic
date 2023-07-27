@@ -21,7 +21,20 @@ export default abstract class IOAbstract<T> extends React.Component<
     return (
       <div
         className="io-line"
-        style={{ width: `calc(min(100%,max(300px,${width * 100 * 0.9}%)))` }}
+        // width will be  --min-width < w=width % -gap < 100%
+        //  --min-width = minimum for it to be visible
+        //  100% = the whole larger
+        style={{
+          width: `calc( 
+              min(
+                100%,
+                max(
+                  var(--min-width),
+                  ${width * 100}% - var(--column-gap) / 2
+                )
+              )
+            )`
+        }}
       >
         <label>
           <span dangerouslySetInnerHTML={{ __html: label }}></span>
