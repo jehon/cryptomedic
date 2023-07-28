@@ -139,7 +139,6 @@ deploy-test:
 
 .PHONY: build
 build: \
-		www/built/browsers.json \
 		www/built/backup \
 		www/built/release_version.txt \
 		.ovhconfig
@@ -149,11 +148,8 @@ build: \
 
 www/built/backup: bin/cr-live-backup.sh
 # Make the backup script available to web
-	cp -f "$<" "$@"
-
-www/built/browsers.json: .browserslistrc $(FRONTEND_DEPENDENCIES_MARK)
 	@mkdir -p "$(dir $@)"
-	bin/cr-node node_modules/.bin/browserslist --json > "$@"
+	cp -f "$<" "$@"
 
 www/built/release_version.txt:
 	@mkdir -p "$(dir $@)"

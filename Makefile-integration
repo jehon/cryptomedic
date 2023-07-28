@@ -1,5 +1,6 @@
 
 INTEGRATION_TEST_TMP=$(TMP)/integration
+INTEGRATION_BUILT_MARK=$(INTEGRATION_TEST_TMP)/.built
 
 integration: clean-files dc-build dc-up integration-dump integration-test ok
 
@@ -25,6 +26,20 @@ integration-clean-files:
 	jh-kill-by-port 9515 || true
 # pkill chromedriver || true
 
+.PHONY: integration-build
+build: integration-build
+integration-build: $(INTEGRATION_BUILT_MARK)
+
+$(INTEGRATION_BUILT_MARK): \
+		$(BACKEND_BUILT_MARK) \
+		$(FRONTEND_BUILT_MARK) \
+		www/built/browsers.json
+
+www/built/browsers.json: .browserslistrc $(FRONTEND_DEPENDENCIES_MARK)
+	@mkdir -p "$(dir $@)"
+	bin/cr-node node_modules/.bin/browserslist --json > "$@"
+	@touch "$@"
+
 .PHONY: integration-test
 test: integration-test
 integration-test: integration-test-desktop integration-test-mobile integration-test-styles
@@ -32,8 +47,7 @@ integration-test: integration-test-desktop integration-test-mobile integration-t
 .PHONY: integration-test-desktop
 integration-test-desktop: $(INTEGRATION_TEST_TMP)/.tested-desktop
 $(INTEGRATION_TEST_TMP)/.tested-desktop: \
-		$(BACKEND_BUILT_MARK) \
-		$(FRONTEND_BUILT_MARK) \
+		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/cypress/ -name "*.js")
 
 	bin/cr-data-reset
@@ -45,8 +59,7 @@ $(INTEGRATION_TEST_TMP)/.tested-desktop: \
 .PHONY: integration-test-mobile
 integration-test-mobile: $(INTEGRATION_TEST_TMP)/.tested-mobile
 $(INTEGRATION_TEST_TMP)/.tested-mobile: \
-		$(BACKEND_BUILT_MARK) \
-		$(FRONTEND_BUILT_MARK) \
+		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/cypress/ -name "*.js")
 
 	bin/cr-data-reset
@@ -55,7 +68,7 @@ $(INTEGRATION_TEST_TMP)/.tested-mobile: \
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
-cypress-open:
+cypress-open: $(INTEGRATION_BUILT_MARK)
 	./bin/cr-cypress open desktop
 
 .PHONY: test-styles
