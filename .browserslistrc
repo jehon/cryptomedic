@@ -3,12 +3,6 @@
 
 # Default: > 0.5%, last 2 versions, Firefox ESR, not dead => less browser supported!
 
-last 1 years
-last 2 Firefox versions
-last 2 Chrome versions
+last 10 Firefox versions
+last 10 Chrome versions
 Firefox ESR
-
-not dead
-not edge > 1
-not samsung > 1
-not safari > 1

@@ -19,7 +19,9 @@ img.inline {
 .form-flexible {
   --column-gap: 20px;
 
-  width: 100%;
+  /* TODO put this on top parent */
+  width: min(800px, 100%);
+  margin: 0 auto;
 
   display: flex;
   flex-direction: row;
