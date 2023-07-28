@@ -1,47 +1,49 @@
 <table style="width: 100%">
-  <tr ng-class='{ "empty-value": !folder.getPatient().entryyear}'>
+  <tr ng-class='{ "empty-value": !folder.getPatient().entry_year}'>
     <td>Entry Year</td>
     <td>
-      <span id="Patient_entryyear">{{ folder.getPatient().entryyear }}</span>
+      <span id="Patient_entry_year">{{ folder.getPatient().entry_year }}</span>
     </td>
   </tr>
-  <tr ng-class='{ "empty-value": !folder.getPatient().entryorder}'>
+  <tr ng-class='{ "empty-value": !folder.getPatient().entry_order}'>
     <td>Entry Order</td>
     <td>
-      <span id="Patient_entryorder">{{ folder.getPatient().entryorder }}</span>
+      <span id="Patient_entry_order"
+        >{{ folder.getPatient().entry_order }}</span
+      >
     </td>
   </tr>
-  <tr ng-class='{ "empty-value": !folder.getPatient().Name}'>
+  <tr ng-class='{ "empty-value": !folder.getPatient().name}'>
     <td>Name</td>
-    <td><span id="Patient_Name">{{ folder.getPatient().Name }}</span></td>
+    <td><span id="Patient_Name">{{ folder.getPatient().name }}</span></td>
   </tr>
-  <tr ng-class='{ "empty-value": !folder.getPatient().Yearofbirth}'>
+  <tr ng-class='{ "empty-value": !folder.getPatient().year_of_birth}'>
     <td>Year of birth</td>
     <td>
       <span id="Patient_Yearofbirth"
-        >{{ folder.getPatient().Yearofbirth }}</span
+        >{{ folder.getPatient().year_of_birth }}</span
       >
     </td>
   </tr>
-  <tr ng-class='{ "empty-value": !folder.getPatient().Sex}'>
-    <td>Sex</td>
+  <tr ng-class='{ "empty-value": !folder.getPatient().sex}'>
+    <td>sex</td>
     <td>
-      <span id="Patient_Sex" name="Sex">{{ folder.getPatient().Sex }}</span>
+      <span id="Patient_Sex" name="sex">{{ folder.getPatient().sex }}</span>
     </td>
   </tr>
-  <tr ng-class='{ "empty-value": !folder.getPatient().Pathology}'>
-    <td>Main Pathology</td>
+  <tr ng-class='{ "empty-value": !folder.getPatient().pathology}'>
+    <td>Main pathology</td>
     <td>
-      <span id="Patient_Pathology" name="Pathology"
-        >{{ folder.getPatient().Pathology }}</span
+      <span id="Patient_Pathology" name="pathology"
+        >{{ folder.getPatient().pathology }}</span
       >
     </td>
   </tr>
-  <tr ng-class='{ "empty-value": !folder.getPatient().other_comments}'>
+  <tr ng-class='{ "empty-value": !folder.getPatient().comments}'>
     <td>Comments</td>
     <td>
-      <span id="Patient_other_comments" style="white-space: pre"
-        >{{ folder.getPatient().other_comments }}</span
+      <span id="Patient_comments" style="white-space: pre"
+        >{{ folder.getPatient().comments }}</span
       >
     </td>
   </tr>

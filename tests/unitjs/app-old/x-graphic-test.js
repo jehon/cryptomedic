@@ -14,7 +14,7 @@ describe(fn(import.meta.url), function () {
       it("should initialize", function () {
         const el = new XGraphic();
         const folder = new Folder(loadReference(RefFolder1).folder);
-        folder.getPatient().Sex = 0;
+        folder.getPatient().sex = 0;
         el.folder = folder;
         expect(el.innerHTML).toContain("Sex of the patient is unknown");
       });

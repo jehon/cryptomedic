@@ -5,22 +5,22 @@ t::setDefaultOption("baseExpression", "folder.getPatient().");
 	<div>
 		<x-group-panel title='General data'>
 			<x-fff-field ng-if="patient_id > -1" label='Entry Number'>
-				<div><?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?></div>
+				<div><?php (new t("Patient.entry_year"))->read()->p(); ?>-<?php (new t("Patient.entry_order"))->read()->p(); ?></div>
 			</x-fff-field>
 			<x-fff-field ng-if="patient_id == -1" label='Entry Year'>
 				<div>
 					<x-message level='info'>
 						You asked the system to generate a reference for you. This reference will be generated
 						when you will save this file. I just need the year to build up the reference.
-						<?php (new t("Patient.entryyear", ["required" => "required"]))->write()->p(); ?>
+						<?php (new t("Patient.entry_year", ["required" => "required"]))->write()->p(); ?>
 					</x-message>
 				</div>
 			</x-fff-field>
-			<?php (new t("Patient.Name"))->tr2("Name")->p(); ?>
-			<?php (new t("Patient.Sex"))->tr2()->p(); ?>
+			<?php (new t("Patient.name"))->tr2("Name")->p(); ?>
+			<?php (new t("Patient.sex"))->tr2()->p(); ?>
 			<x-fff-field label='Year of birth'>
 				<div>
-					{{folder.getPatient().Yearofbirth}}
+					{{folder.getPatient().year_of_birth}}
 					<div class='not-mode-read'>
 						<h5>Calculate year of birth</h5>
 						<div><input ng-model='age.years' type='number' min='0' max='100'> years</div>
@@ -34,52 +34,52 @@ t::setDefaultOption("baseExpression", "folder.getPatient().");
 					<x-fff-age></x-fff-age> old
 				</div>
 			</x-fff-field>
-			<x-fff-field field='District'>
+			<x-fff-field field='address_district'>
 				<div>
 					<span class='not-mode-read'>
-						<x-write-list value='{{folder.getPatient().District}}' name='District' list-name='Districts' nullable></x-write-list>
+						<x-write-list value='{{folder.getPatient().address_district}}' name='address_district' list-name='Districts' nullable></x-write-list>
 					</span>
 					<span class='not-mode-write'>
-						<?php (new t("Patient.District"))->read()->p(); ?>
+						<?php (new t("Patient.address_district"))->read()->p(); ?>
 					</span>
 				</div>
 			</x-fff-field>
-			<x-fff-field field='Upazilla'>
+			<x-fff-field field='address_upazilla'>
 				<div>
 					<span class='not-mode-read'>
-						<x-write-list value='{{folder.getPatient().Upazilla}}' name='Upazilla' nullable></x-write-list>
+						<x-write-list value='{{folder.getPatient().address_upazilla}}' name='address_upazilla' nullable></x-write-list>
 					</span>
 					<span class='not-mode-write'>
-						<?php (new t("Patient.Upazilla"))->read()->p(); ?>
+						<?php (new t("Patient.address_upazilla"))->read()->p(); ?>
 					</span>
 				</div>
 			</x-fff-field>
 			<x-fff-field field='Union'>
 				<div>
 					<span class='not-mode-read'>
-						<x-write-list value='{{folder.getPatient().Union_}}' name='Union_' nullable></x-write-list>
+						<x-write-list value='{{folder.getPatient().address_union}}' name='address_union' nullable></x-write-list>
 					</span>
 					<span class='not-mode-write'>
-						<?php (new t("Patient.Union_"))->read()->p(); ?>
+						<?php (new t("Patient.address_union"))->read()->p(); ?>
 					</span>
 				</div>
 			</x-fff-field>
-			<?php (new t("Patient.Telephone"))->tr2()->p(); ?>
-			<?php (new t("Patient.AddressNotes"))->tr2("Adress Notes")->p(); ?>
+			<?php (new t("Patient.phone"))->tr2()->p(); ?>
+			<?php (new t("Patient.address_notes"))->tr2("Adress Notes")->p(); ?>
 		</x-group-panel>
 	</div>
 	<div>
-		<x-group-panel id='PatientPathology' ng-class='{ jserror: errors.noPathology }' title='Pathology'>
-			<?php (new t("Patient.Pathology"))->tr2("Main pathology")->p(); ?>
-			<?php (new t("Patient.other_comments"))->tr2("Other comments")->p(); ?>
+		<x-group-panel id='PatientPathology' ng-class='{ jserror: errors.noPathology }' title='pathology'>
+			<?php (new t("Patient.pathology"))->tr2("Main pathology")->p(); ?>
+			<?php (new t("Patient.comments"))->tr2("Comments")->p(); ?>
 		</x-group-panel>
 		<br />
 	</div>
 </x-two-columns>
 <jh-script>
-	document.querySelector("x-write-list[name=Upazilla]")
-	.follow(document.querySelector("x-write-list[name=District]"), "district");
+	document.querySelector("x-write-list[name=address_upazilla]")
+	.follow(document.querySelector("x-write-list[name=address_district]"), "district");
 
-	document.querySelector("x-write-list[name=Union_]")
-	.follow(document.querySelector("x-write-list[name=Upazilla]"), "upazilla");
+	document.querySelector("x-write-list[name=address_union]")
+	.follow(document.querySelector("x-write-list[name=address_upazilla]"), "upazilla");
 </jh-script>

@@ -66,7 +66,7 @@ export default class XGraphic extends XWithFolder {
     //     return NaN;
     // }
     try {
-      return fromBirthDateTo(this.folder.getPatient().Yearofbirth, file.Date);
+      return fromBirthDateTo(this.folder.getPatient().year_of_birth, file.Date);
     } catch (e) {
       return NaN;
     }

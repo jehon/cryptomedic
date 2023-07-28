@@ -45,7 +45,7 @@ context("Actions", () => {
     testSearch(
       "entryYear",
       {
-        '[name="entryyear"]': "2000"
+        '[name="entry_year"]': "2000"
       },
       ["2000-1"]
     );
@@ -55,7 +55,7 @@ context("Actions", () => {
     testSearch(
       "entryYear2001",
       {
-        '[name="entryyear"]': "2001"
+        '[name="entry_year"]': "2001"
       },
       ["2001-1", "2001-4"]
     );
@@ -65,7 +65,7 @@ context("Actions", () => {
     testSearch(
       "entryOrder",
       {
-        '[name="entryorder"]': "104"
+        '[name="entry_order"]': "104"
       },
       ["2014-104"]
     );
@@ -75,28 +75,28 @@ context("Actions", () => {
     testSearch(
       "nameUp",
       {
-        '[name="Name"]': "OSMAN"
+        '[name="name"]': "OSMAN"
       },
       ["2014-103"]
     );
     testSearch(
       "nameDown",
       {
-        '[name="Name"]': "osman"
+        '[name="name"]': "osman"
       },
       ["2014-103"]
     );
     testSearch(
       "surname",
       {
-        '[name="Name"]': "Islam"
+        '[name="name"]': "Islam"
       },
       ["2000-1"]
     );
     testSearch(
       "name-partial",
       {
-        '[name="Name"]': "OSM"
+        '[name="name"]': "OSM"
       },
       ["2014-103"]
     );
@@ -106,7 +106,7 @@ context("Actions", () => {
     testSearch(
       "yearOfBirth",
       {
-        '[name="Yearofbirth"]': 2002
+        '[name="year_of_birth"]': 2002
       },
       ["2014-107"]
     );
@@ -116,7 +116,7 @@ context("Actions", () => {
     testSearch(
       "phone",
       {
-        '[name="Telephone"]': "1813247984"
+        '[name="phone"]': "1813247984"
       },
       ["2014-105"]
     );
@@ -126,7 +126,7 @@ context("Actions", () => {
     testSearch(
       "pathology",
       {
-        'x-write-list[name="Pathology"]': {
+        'x-write-list[name="pathology"]': {
           value: "ClubFoot"
         }
       },

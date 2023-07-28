@@ -10,11 +10,11 @@ class ReportStatisticalController extends ReportController {
 	protected $filter = "(1=1)";
 
 	protected function billsByPathology($header, $pathology) {
-		$thisfilter = "(patients.Pathology = '$pathology')";
+		$thisfilter = "(patients.pathology = '$pathology')";
 		if (!$pathology) {
-			$thisfilter = "(patients.Pathology is NULL or patients.Pathology = 'Other')";
+			$thisfilter = "(patients.pathology is NULL or patients.pathology = 'Other')";
 		}
-		$newPatients = " (patients.entryyear >= YEAR(bills.Date)) AND (ADDDATE(patients.created_at, INTERVAL 1 MONTH) >= bills.Date) ";
+		$newPatients = " (patients.entry_year >= YEAR(bills.Date)) AND (ADDDATE(patients.created_at, INTERVAL 1 MONTH) >= bills.Date) ";
 		$sql = "SELECT count(*) as res FROM bills JOIN patients ON (bills.patient_id = patients.id)"
 			. " WHERE {$this->filter} AND $thisfilter";
 		$all = $this->getOneBySQL($sql);

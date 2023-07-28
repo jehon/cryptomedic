@@ -84,7 +84,7 @@ buildValueList('Pathologies', [
 buildValueList("Districts", ["Chittagong", "Cox's Bazar", "Bandarban", "~ Other ~"]);
 
 buildValueList(
-    "Upazilla",
+    "Upazillas",
     array_merge(
         sortNatural([
             associate("Chakaria", "district.Cox's Bazar"),
@@ -193,7 +193,7 @@ buildValueList(
     )
 );
 
-buildValueList("Sex", ["Male", "Female"]);
+buildValueList("sex", ["Male", "Female"]);
 
 buildValueList("Centers", [
     withCode("Chakaria Disability Center", "CDC"),

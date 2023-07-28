@@ -613,7 +613,7 @@ reports[REPORT_ACTIVITY] = {
       .addDetail(
         (data) =>
           createElementWithObject(XAge, {
-            value: data.yearofbirth,
+            value: data.year_of_birth,
             ref: data.Date
           }),
         {
@@ -626,7 +626,7 @@ reports[REPORT_ACTIVITY] = {
           ]
         }
       )
-      .addDetail("Sex", { headers: ["M/F"] })
+      .addDetail("sex", { headers: ["M/F"] })
       .addDetail(
         (val, _i, context) =>
           val.oldPatient == 1
@@ -658,7 +658,7 @@ reports[REPORT_ACTIVITY] = {
       .addDetail("Sociallevel", { headers: ["SL"] })
 
       .addDetail(
-        (data) => createElementWithObject(XCodage, { value: data.Pathology }),
+        (data) => createElementWithObject(XCodage, { value: data.pathology }),
         { headers: ["Diagno", "Medical", "501-1500", 2] }
       )
       .addDetail("act", { headers: ["Act"] })
@@ -806,12 +806,12 @@ reports[REPORT_CONSULTATIONS] = {
           createElementWithTag(
             "a",
             { href: "#" + getRouteToFolderPatient(data.patient_id) },
-            `${data.entryyear}-${data.entryorder}`
+            `${data.entry_year}-${data.entry_order}`
           ),
         { headers: ["Patient"] }
       )
-      .addDetail("Name", { headers: ["Name"] })
-      .addDetail("Telephone", { headers: ["Phone"] })
+      .addDetail("name", { headers: ["Name"] })
+      .addDetail("phone", { headers: ["Phone"] })
       .addDetail("ExaminerName", { headers: ["Appointment from"] })
       .addDetail("purpose", { headers: ["Purpose"] })
       .addDetail(
@@ -932,7 +932,7 @@ reports[REPORT_SURGICAL] = {
         headers: ["Patient Name", "Identity", "Where", "When", "Who"]
       })
       .addDetail(
-        (data) => createElementWithObject(XAge, { value: data.yearofbirth }),
+        (data) => createElementWithObject(XAge, { value: data.year_of_birth }),
         {
           headers: [
             "Age",
@@ -943,7 +943,7 @@ reports[REPORT_SURGICAL] = {
           ]
         }
       )
-      .addDetail("Sex", { headers: ["M/F"] })
+      .addDetail("sex", { headers: ["M/F"] })
       .addDetail("sl_familySalary", {
         headers: [
           "Tk income",
@@ -965,7 +965,7 @@ reports[REPORT_SURGICAL] = {
       .addDetail("Sociallevel", { headers: ["SL"] })
 
       .addDetail(
-        (data) => createElementWithObject(XCodage, { value: data.Pathology }),
+        (data) => createElementWithObject(XCodage, { value: data.pathology }),
         { headers: ["Diagno", "Medical", "501-1500", 2] }
       )
       .addDetail("last_seen", {
@@ -1036,9 +1036,9 @@ reports[REPORT_SURGICAL_SUGGESTED] = {
       )
       .addDetail("patient_reference", { headers: ["Ref"] })
       .addDetail("patient_name", { headers: ["Name"] })
-      .addDetail("yearofbirth", { headers: ["Birth"] })
-      .addDetail("Sex", { headers: ["Sex"] })
-      .addDetail("Pathology", { headers: ["Pathology"] })
+      .addDetail("year_of_birth", { headers: ["Birth"] })
+      .addDetail("sex", { headers: ["sex"] })
+      .addDetail("pathology", { headers: ["pathology"] })
       .addDetail("amount_surgeries", { headers: ["# surgeries"] })
       .addDetail("last_surgery", { headers: ["Last Surgery"] })
       .addDetail("suggested_from", { headers: ["Suggested from"] })

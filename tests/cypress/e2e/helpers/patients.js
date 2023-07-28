@@ -4,8 +4,8 @@ import { guiHashStartWith } from "./gui.js";
 
 /**
  * @param {object} patient
- * @property {number} entryyear of the patient
- * @property {number} entryorder of the patient
+ * @property {number} entry_year of the patient
+ * @property {number} entry_order of the patient
  * @property {number} [id] of the patient
  * @returns {Cypress.Chainable} with the Page element
  */
@@ -18,8 +18,12 @@ export function patientgo(patient) {
     cy.get("#menu_home").click();
 
     cy.get("x-patient-by-reference").within(() => {
-      cy.get('[name="entryyear"]').invoke("attr", "value", patient.entryyear);
-      cy.get('[name="entryorder"]').invoke("attr", "value", patient.entryorder);
+      cy.get('[name="entry_year"]').invoke("attr", "value", patient.entry_year);
+      cy.get('[name="entry_order"]').invoke(
+        "attr",
+        "value",
+        patient.entry_order
+      );
       cy.get(`x-button[action="${XButton.Search}"]`).click();
     });
   }
@@ -32,11 +36,11 @@ export function patientgo(patient) {
   cy.get("#folderpage").should("be.visible");
 
   crReady();
-  cy.get("#Patient_entryyear").should("contain.text", patient.entryyear);
-  cy.get("#Patient_entryorder").should("contain.text", patient.entryorder);
+  cy.get("#Patient_entry_year").should("contain.text", patient.entry_year);
+  cy.get("#Patient_entry_order").should("contain.text", patient.entry_order);
 
   cy.log(
-    `Gone to patient ${patient.entryyear}-${patient.entryorder} successfully`
+    `Gone to patient ${patient.entry_year}-${patient.entry_order} successfully`
   );
 
   crReady();

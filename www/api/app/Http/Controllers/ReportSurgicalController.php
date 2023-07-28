@@ -13,11 +13,11 @@ class ReportSurgicalController extends ReportController
       $this->runSqlWithNamedParameter(
         "SELECT
           patients.id as pid,
-          CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
-          patients.Name as patient_name,
-          patients.yearofbirth,
-          patients.Sex,
-          patients.Pathology,
+          CONCAT(patients.entry_year, '-', patients.entry_order) as patient_reference,
+          patients.name as patient_name,
+          patients.year_of_birth,
+          patients.sex,
+          patients.pathology,
 
           IFNULL(GROUP_CONCAT(bills.id SEPARATOR '|'), '') as bids,
           COUNT(bills.id) as bills,

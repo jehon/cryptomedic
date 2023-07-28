@@ -6,10 +6,10 @@ const folder = new Folder([
     id: 1,
     record: {
       id: 1,
-      entryyear: 2000,
-      entryorder: 1,
-      Sex: "Male",
-      Yearofbirth: "1998"
+      entry_year: 2000,
+      entry_order: 1,
+      sex: "Male",
+      year_of_birth: "1998"
     }
   },
   {

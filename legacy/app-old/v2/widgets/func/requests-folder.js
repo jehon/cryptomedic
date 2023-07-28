@@ -1,28 +1,28 @@
 import { RequestCRUD } from "./x-requestor.js";
 
 /**
- * @param {number} entryyear to be checked
- * @param {number} entryorder to be checked
+ * @param {number} entry_year to be checked
+ * @param {number} entry_order to be checked
  * @returns {object} options for request (see XRequestor#request)
  */
-export function checkReferenceBuilder(entryyear, entryorder) {
+export function checkReferenceBuilder(entry_year, entry_order) {
   return {
-    url: "reference/" + entryyear + "/" + entryorder
+    url: "reference/" + entry_year + "/" + entry_order
   };
 }
 
 /**
- * @param {number} entryyear to be checked
- * @param {number} entryorder to be checked
+ * @param {number} entry_year to be checked
+ * @param {number} entry_order to be checked
  * @returns {object} options for request (see XRequestor#request)
  */
-export function createReferenceBuilder(entryyear, entryorder) {
+export function createReferenceBuilder(entry_year, entry_order) {
   return {
     method: "POST",
     url: "reference",
     data: {
-      entryyear,
-      entryorder
+      entry_year,
+      entry_order
     }
   };
 }

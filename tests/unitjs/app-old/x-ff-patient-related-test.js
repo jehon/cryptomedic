@@ -16,12 +16,12 @@ describe(fn(import.meta.url), function () {
   it("should show", function () {
     expect(el.hasAttribute("blocked")).toBeFalse();
     expect(el.getAttribute("patient-entry-number")).toBe("2000-1");
-    expect(el.shadowRoot.querySelector("[name=entryyear]").value).toBe(2000);
-    expect(el.shadowRoot.querySelector("[name=entryorder]").value).toBe(1);
-    expect(el.shadowRoot.querySelector("[name=Name]").value).toBe(
+    expect(el.shadowRoot.querySelector("[name=entry_year]").value).toBe(2000);
+    expect(el.shadowRoot.querySelector("[name=entry_order]").value).toBe(1);
+    expect(el.shadowRoot.querySelector("[name=name]").value).toBe(
       "rezaul islam"
     );
-    expect(el.shadowRoot.querySelector("[name=Sex]").value).toBe("Male");
+    expect(el.shadowRoot.querySelector("[name=sex]").value).toBe("Male");
   });
 
   it("should click", function () {

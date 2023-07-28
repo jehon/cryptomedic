@@ -20,35 +20,35 @@ class FolderController extends Controller {
 		// Search through them
 		$req = DB::table('patients');
 
-		if (Request::input("entryyear", false)) {
-			$req->where('entryyear', '=', Request::input("entryyear"));
+		if (Request::input("entry_year", false)) {
+			$req->where('entry_year', '=', Request::input("entry_year"));
 		}
 
-		if (Request::input("entryorder", false)) {
-			$req->where('entryorder', '=', Request::input("entryorder"));
+		if (Request::input("entry_order", false)) {
+			$req->where('entry_order', '=', Request::input("entry_order"));
 		}
 
-		if (Request::input("Name", false)) {
-			$req->where("Name", 'like', '%' . str_replace("j", "z", Request::input("Name")) .'%');
+		if (Request::input("name", false)) {
+			$req->where("name", 'like', '%' . str_replace("j", "z", Request::input("name")) .'%');
 		}
 
-		if (Request::input("Sex", false)) {
-			$req->where('Sex', '=', Request::input("Sex"));
+		if (Request::input("sex", false)) {
+			$req->where('sex', '=', Request::input("sex"));
 		}
 
-		if (Request::input("Yearofbirth", false)) {
-			$req->where('Yearofbirth', '=', Request::input("Yearofbirth"));
+		if (Request::input("year_of_birth", false)) {
+			$req->where('year_of_birth', '=', Request::input("year_of_birth"));
 		}
 
-		if (Request::input("Telephone", false)) {
-			$req->where('Telephone', 'like', '%' . Request::input("Telephone") . '%');
+		if (Request::input("phone", false)) {
+			$req->where('phone', 'like', '%' . Request::input("phone") . '%');
 		}
 
-		if (Request::input("Pathology", false)) {
-			$req->where('Pathology', '=', Request::input("Pathology"));
+		if (Request::input("pathology", false)) {
+			$req->where('pathology', '=', Request::input("pathology"));
 		}
 
-		$req->orderBy('entryyear', 'DESC')->take(100);
+		$req->orderBy('entry_year', 'DESC')->take(100);
 
 		$listing = $req->get();
 		foreach($listing as $k => $v) {
@@ -64,8 +64,8 @@ class FolderController extends Controller {
 		]);
 	}
 
-	public function reference($entryyear, $entryorder) {
-		$r = DB::select("SELECT * FROM patients WHERE entryyear = ? and entryorder = ?", array($entryyear, $entryorder));
+	public function reference($entry_year, $entry_order) {
+		$r = DB::select("SELECT * FROM patients WHERE entry_year = ? and entry_order = ?", array($entry_year, $entry_order));
 		if (count($r) != 1) {
 			return response()->json(null);
 		}

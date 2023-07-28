@@ -95,7 +95,7 @@ Route::group(array('middleware' => 'authenticated'), function() {
       "uses" => "FolderController@show"
     ]);
 
-    Route::get('reference/{entryyear}/{entryorder}', [
+    Route::get('reference/{entry_year}/{entry_order}', [
       "uses" => "FolderController@reference"
     ]);
 

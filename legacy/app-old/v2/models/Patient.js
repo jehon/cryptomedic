@@ -7,32 +7,32 @@ export default class Patient extends FolderPage {
     return "Patient";
   }
 
-  entryyear;
-  entryorder;
-  Name;
-  Yearofbirth;
-  Sex;
-  Pathology;
-  other_comments;
+  entry_year;
+  entry_order;
+  name;
+  year_of_birth;
+  sex;
+  pathology;
+  comments;
 
   constructor({
-    entryyear,
-    entryorder,
-    Name,
-    Yearofbirth,
-    Sex,
-    Pathology,
-    other_comments,
+    entry_year,
+    entry_order,
+    name,
+    year_of_birth,
+    sex,
+    pathology,
+    comments,
     ...other
   } = {}) {
     super(other);
-    this.entryyear = entryyear;
-    this.entryorder = entryorder;
-    this.Name = Name;
-    this.Yearofbirth = Yearofbirth;
-    this.Sex = Sex;
-    this.Pathology = Pathology;
-    this.other_comments = other_comments;
+    this.entry_year = entry_year;
+    this.entry_order = entry_order;
+    this.name = name;
+    this.year_of_birth = year_of_birth;
+    this.sex = sex;
+    this.pathology = pathology;
+    this.comments = comments;
   }
 
   getRelated() {
@@ -48,23 +48,23 @@ export default class Patient extends FolderPage {
   }
 
   sexStr() {
-    if (!this.isNotZero("Sex")) {
+    if (!this.isNotZero("sex")) {
       return null;
     }
-    if (this.Sex == "Male") {
+    if (this.sex == "Male") {
       return "m";
     }
-    if (this.Sex == "Female") {
+    if (this.sex == "Female") {
       return "f";
     }
     return null;
   }
 
   actualAge(reference) {
-    if (!this.isSet("Yearofbirth")) {
+    if (!this.isSet("year_of_birth")) {
       return null;
     }
-    var birth = this.Yearofbirth;
+    var birth = this.year_of_birth;
     var options = Object.assign(
       {},
       {

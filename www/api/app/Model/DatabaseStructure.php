@@ -60,11 +60,11 @@ define("HARDCODED_LISTINGS", [
         "Walk"                     => "WalkingCapacities"
     ],
     "patients" => [
-        "Pathology"                => "Pathologies",
-        "District"                 => "Districts",
-        "Sex"                      => "Sex",
-        "Union_"                   => "Unions",
-        "Upazilla"                 => "Upazilla"
+        "address_district"         => "Districts",
+        "address_union"            => "Unions",
+        "address_upazilla"         => "Upazillas",
+        "pathology"                => "Pathologies",
+        "sex"                      => "sex"
     ],
     "pictures" => [
         "type"                     => "PictureType"

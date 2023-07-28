@@ -7,10 +7,10 @@ export let male = new Folder([
     id: 1,
     record: {
       id: 1,
-      entryyear: 2000,
-      entryorder: 1,
-      Sex: "Male",
-      Yearofbirth: "2000"
+      entry_year: 2000,
+      entry_order: 1,
+      sex: "Male",
+      year_of_birth: "2000"
     }
   },
   {
@@ -56,10 +56,10 @@ export let female = new Folder([
     id: 1,
     record: {
       id: 1,
-      entryyear: 2000,
-      entryorder: 1,
-      Sex: "Female",
-      Yearofbirth: "2000"
+      entry_year: 2000,
+      entry_order: 1,
+      sex: "Female",
+      year_of_birth: "2000"
     }
   },
   {

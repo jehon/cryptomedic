@@ -12,7 +12,7 @@ proc: BEGIN
 
   SELECT id INTO patientId
     FROM patients
-    WHERE entryyear = pEntryYear AND entryorder = pEntryOrder  @@
+    WHERE entry_year = pEntryYear AND entry_order = pEntryOrder  @@
 
   IF patientId IS NULL THEN
     LEAVE proc  @@

@@ -13,11 +13,11 @@ class ReportSurgicalSuggestedController extends ReportController
       $this->runSqlWithNamedParameter(
         "SELECT
           patients.id as pid,
-          CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
-          patients.Name as patient_name,
-          patients.yearofbirth,
-          patients.Sex,
-          patients.Pathology,
+          CONCAT(patients.entry_year, '-', patients.entry_order) as patient_reference,
+          patients.name as patient_name,
+          patients.year_of_birth,
+          patients.sex,
+          patients.pathology,
 
           COUNT(surgeries.id) as amount_surgeries,
           MAX(surgeries.Date) AS last_surgery,
@@ -31,7 +31,7 @@ class ReportSurgicalSuggestedController extends ReportController
           AND " . $this->getParamAsSqlFilter("year", "YEAR(consults.Date)") . "
 
         GROUP BY patients.id
-        ORDER BY patients.entryyear, patients.entryorder"
+        ORDER BY patients.entry_year, patients.entry_order"
           );
   }
 }

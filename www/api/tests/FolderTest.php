@@ -41,16 +41,16 @@ class FolderTest extends RouteReferenceTestCase {
 	public function testSearchAllowed() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Name=md&entryyear=2009&pathology_Ricket=1&Telephone=1")
+          ->setUrl("folder?name=md&entry_year=2009&pathology_Ricket=1&phone=1")
       );
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder")
           ->setParams([
-              "Name" => "md",
-              "entryyear" => 2009,
+              "name" => "md",
+              "entry_year" => 2009,
               "pathology_Ricket" => 1,
-              "Telephone" => 1
+              "phone" => 1
             ])
       );
 	}
@@ -58,112 +58,112 @@ class FolderTest extends RouteReferenceTestCase {
 	public function testSearchEntryYear() {
 		$json = $this->myRunAssertQuery(
 			$this->getNewRequestOptionsBuilder()
-				->setUrl("folder?entryyear=2010")
+				->setUrl("folder?entry_year=2010")
 			);
 		foreach($json as $k => $v) {
-			$this->assertEquals(2010, $v['entryyear']);
+			$this->assertEquals(2010, $v['entry_year']);
 		}
 	}
 
 	public function testSearchEntryOrder() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?entryorder=10")
+          ->setUrl("folder?entry_order=10")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals(10, $v['entryorder']);
+			$this->assertEquals(10, $v['entry_order']);
 		}
 	}
 
 	public function testSearchName() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Name=md")
+          ->setUrl("folder?name=md")
       );
 		foreach($json as $k => $v) {
-			$this->assertTrue(stripos($v['Name'], 'md') !== false, "Name " . $v['Name'] . " does not match criteria");
+			$this->assertTrue(stripos($v['name'], 'md') !== false, "name " . $v['name'] . " does not match criteria");
 		}
 	}
 
 	public function testSearchNameWithJ() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Name=j")
+          ->setUrl("folder?name=j")
       );
 		foreach($json as $k => $v) {
-			$this->assertTrue(stripos($v['Name'], 'j') !== false || stripos($v['Name'], 'z') !== false, "Name " . $v['Name'] . " does not match criteria");
+			$this->assertTrue(stripos($v['name'], 'j') !== false || stripos($v['name'], 'z') !== false, "name " . $v['name'] . " does not match criteria");
 		}
 	}
 
 	public function testSearchSexBoy() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Sex=206")
+          ->setUrl("folder?sex=206")
       );
 
 		foreach($json as $k => $v) {
-			$this->assertEquals(206, $v['Sex']);
+			$this->assertEquals(206, $v['sex']);
 		}
 	}
 
 	public function testSearchSexGirl() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Sex=207")
+          ->setUrl("folder?sex=207")
       );
 
 		foreach($json as $k => $v) {
-			$this->assertEquals(207, $v['Sex']);
+			$this->assertEquals(207, $v['sex']);
 		}
 	}
 
 	public function testSearchYearofbirth() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Yearofbirth=2000")
+          ->setUrl("folder?year_of_birth=2000")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals(2000, $v['Yearofbirth']);
+			$this->assertEquals(2000, $v['year_of_birth']);
 		}
 	}
 
-	public function testSearchTelephone() {
+	public function testSearchphone() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Telephone=2")
+          ->setUrl("folder?phone=2")
       );
 		foreach($json as $k => $v) {
-			$this->assertTrue(strpos($v['Telephone'], "2") !== false);
+			$this->assertTrue(strpos($v['phone'], "2") !== false);
 		}
 	}
 
 	public function testSearchRicket() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Pathology=Ricket")
+          ->setUrl("folder?pathology=Ricket")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals("Ricket", $v['Pathology']);
+			$this->assertEquals("Ricket", $v['pathology']);
 		}
 	}
 
 	public function testSearchClubFoot() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Pathology=ClubFoot")
+          ->setUrl("folder?pathology=ClubFoot")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals("ClubFoot", $v['Pathology']);
+			$this->assertEquals("ClubFoot", $v['pathology']);
 		}
 	}
 
 	public function testSearchOther() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?Pathology=Other")
+          ->setUrl("folder?pathology=Other")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals("Other", $v['Pathology']);
+			$this->assertEquals("Other", $v['pathology']);
 		}
 	}
 }

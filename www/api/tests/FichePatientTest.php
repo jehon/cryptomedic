@@ -12,7 +12,7 @@ class FichePatientTest extends FicheTestHelper {
 
 	public function testCreate() {
 		// Create it
-    	$id = $this->doCreate([ "Name" => 'a name', 'entryyear' => '1000', 'entryorder' => '1' ])['id'];
+    	$id = $this->doCreate([ "name" => 'a name', 'entry_year' => '1000', 'entry_order' => '1' ])['id'];
 
 		return $id;
 	}
@@ -22,10 +22,10 @@ class FichePatientTest extends FicheTestHelper {
 	 */
 	public function testUpdate($id) {
 		// Modify it
-    	$this->doUpdate($id, [ "Telephone" => "phone" ]);
+    	$this->doUpdate($id, [ "phone" => "phone" ]);
 
 		// Remove the value
-		$result = $this->doUpdate($id, [ "Telephone" => "" ]);
+		$result = $this->doUpdate($id, [ "phone" => "" ]);
 		
 		return $result;
 	}
@@ -39,10 +39,10 @@ class FichePatientTest extends FicheTestHelper {
 		$original = $fromUpdate["folder"][0]["record"];
 
 		$id = $original["id"];
-		$originalPhone = $original["Telephone"];
+		$originalPhone = $original["phone"];
 
 		$file1 = JSON_decode(JSON_encode($original), true);
-		$file1["Telephone"] = $newPhone;
+		$file1["phone"] = $newPhone;
 		sleep(1);
 
 		// Modify it
@@ -50,7 +50,7 @@ class FichePatientTest extends FicheTestHelper {
 
 		// And it did works:
 		$this->assertGreaterThan($file1["updated_at"], $updated1["updated_at"]);
-		$this->assertEquals($newPhone, $updated1["Telephone"]);
+		$this->assertEquals($newPhone, $updated1["phone"]);
 
 		// To have updated_at not conflicting...
 		sleep(1);
@@ -70,17 +70,17 @@ class FichePatientTest extends FicheTestHelper {
 
 		// We should still have the "updated1" form
 		$this->assertEquals($updated1["updated_at"], $updated2["updated_at"]);
-		$this->assertEquals($newPhone, $updated2["Telephone"]);
+		$this->assertEquals($newPhone, $updated2["phone"]);
 
 		// Revert the change
 		$file3 = JSON_decode(JSON_encode($updated2), true);
-		$file3["Telephone"] = $originalPhone;
+		$file3["phone"] = $originalPhone;
 
 		$updated3 = $this->doUpdate($id, $file3, false)["folder"][0]["record"];
 
 		// Change should have been commited
 		$this->assertGreaterThanOrEqual($updated1["updated_at"], $updated3["updated_at"]);
-		$this->assertEquals($originalPhone, $updated3["Telephone"]);
+		$this->assertEquals($originalPhone, $updated3["phone"]);
 	}
 
 	/**

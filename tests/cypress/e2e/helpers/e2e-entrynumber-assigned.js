@@ -1,39 +1,39 @@
 export const patientCrudCreateReference = {
-  entryyear: 1991,
-  entrynumber: 199
+  entry_year: 1991,
+  entry_order: 199
 };
 
 export const patientCrudGenerateReference = {
-  entryyear: 1992,
-  entryorder: 10000
+  entry_year: 1992,
+  entry_order: 10000
 };
 
 export const patientFilesRead2000_1 = {
-  entryyear: 2000,
-  entryorder: 1,
+  entry_year: 2000,
+  entry_order: 1,
   id: 1
 };
 
 export const patientFilesRead2001_1 = {
-  entryyear: 2001,
-  entryorder: 1,
+  entry_year: 2001,
+  entry_order: 1,
   id: 6
 };
 
 export const patientFilesRead2014_105 = {
-  entryyear: 2014,
-  entryorder: 105,
+  entry_year: 2014,
+  entry_order: 105,
   id: 5
 };
 
 export const patientFilesRead2014_103 = {
-  entryyear: 2014,
-  entryorder: 103,
+  entry_year: 2014,
+  entry_order: 103,
   id: 3
 };
 
 export const patientFilesCrud = {
-  entryyear: 1991,
-  entryorder: 299,
+  entry_year: 1991,
+  entry_order: 299,
   id: 8
 };

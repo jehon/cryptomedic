@@ -71,13 +71,13 @@ export function crApiFolderGet(id) {
  * Delete a patient using the API
  *   !! It need to log as Admin to do that
  *
- * @param {number} entryyear  to be deleted
- * @param {number} entrynumber to be deleted
+ * @param {number} entry_year  to be deleted
+ * @param {number} entry_order to be deleted
  * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  */
-export function crApiPatientDelete(entryyear, entrynumber = 1000) {
+export function crApiPatientDelete(entry_year, entry_order = 1000) {
   // Get the id:
-  return crApi({ url: `reference/${entryyear}/${entrynumber}` }).then(
+  return crApi({ url: `reference/${entry_year}/${entry_order}` }).then(
     (folder) =>
       folder?.id > 0
         ? crApi({ url: `fiche/patients/${folder.id}`, method: "DELETE" })

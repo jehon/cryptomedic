@@ -47,34 +47,34 @@ export default class XPageSearch extends HTMLElement {
 						<table>
 							<tr>
 								<td>Entry Year</td>
-								<td><input type='number' name='entryyear' class='form-control' /></td>
+								<td><input type='number' name='entry_year' class='form-control' /></td>
 							</tr>
 							<tr>
 								<td>Entry Order</td>
-								<td><input type='number' name='entryorder' class='form-control' /></td>
+								<td><input type='number' name='entry_order' class='form-control' /></td>
 							</tr>
 							<tr>
 								<td>Name</td>
-								<td><input name='Name' class='form-control' /></td>
+								<td><input name='name' class='form-control' /></td>
 							</tr>
 							<tr>
-								<td>Sex</td>
+								<td>sex</td>
 								<td>
-									<x-write-list name='Sex' list-name='Sex' list='' nullable></x-write-list>
+									<x-write-list name='sex' list-name='sex' list='' nullable></x-write-list>
 								</td>
 							</tr>
 							<tr>
 								<td>Year of birth</td>
-								<td><input name='Yearofbirth' class='form-control' /></td>
+								<td><input name='year_of_birth' class='form-control' /></td>
 							</tr>
 							<tr>
 								<td>Telephone</td>
-								<td><input name='Telephone' class='form-control' /></td>
+								<td><input name='phone' class='form-control' /></td>
 							</tr>
 							<tr>
-								<td>Main Pathology</td>
+								<td>Main pathology</td>
 								<td>
-									<x-write-list name='Pathology' list-name='Pathologies' list='' nullable></x-write-list>
+									<x-write-list name='pathology' list-name='Pathologies' list='' nullable></x-write-list>
 								</td>
 							</tr>
 						</table>
@@ -121,14 +121,14 @@ export default class XPageSearch extends HTMLElement {
                     createElementWithTag("img", { src: "/static/img/go.gif" }),
                   { headers: [""] }
                 )
-                .addDetail((data) => data.entryyear + "-" + data.entryorder, {
+                .addDetail((data) => data.entry_year + "-" + data.entry_order, {
                   headers: ["Reference"]
                 })
-                .addDetail("Name", { headers: ["Name"] })
-                .addDetail("Sex", { headers: ["Sex"] })
-                .addDetail("Yearofbirth", { headers: ["Year of Birth"] })
-                .addDetail("Telephone", { headers: ["Telephone"] })
-                .addDetail("Pathology", { headers: ["Pathology"] })
+                .addDetail("name", { headers: ["Name"] })
+                .addDetail("sex", { headers: ["Sex"] })
+                .addDetail("year_of_birth", { headers: ["Year of Birth"] })
+                .addDetail("phone", { headers: ["Phone"] })
+                .addDetail("pathology", { headers: ["Pathology"] })
           ))
         ])
       ]))

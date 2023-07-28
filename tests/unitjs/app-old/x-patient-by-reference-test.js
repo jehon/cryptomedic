@@ -16,8 +16,8 @@ describe(fn(import.meta.url), function () {
     expect(true).toBeTrue();
     mockResponseWithSuccess({ id: 123 });
 
-    element.querySelector("[name=entryyear]").value = "2000";
-    element.querySelector("[name=entryorder]").value = "2100";
+    element.querySelector("[name=entry_year]").value = "2000";
+    element.querySelector("[name=entry_order]").value = "2100";
     await element.search();
     expect(element.getAttribute("status")).toBe("found");
     expect(getCurrentRoute()).toBe(getRouteToFolderPatient(123));
@@ -27,8 +27,8 @@ describe(fn(import.meta.url), function () {
     expect(true).toBeTrue();
     mockResponseWithSuccess({});
 
-    element.querySelector("[name=entryyear]").value = "2000";
-    element.querySelector("[name=entryorder]").value = "2100";
+    element.querySelector("[name=entry_year]").value = "2000";
+    element.querySelector("[name=entry_order]").value = "2100";
     await element.search();
     expect(element.getAttribute("status")).toBe("creation-proposed");
 

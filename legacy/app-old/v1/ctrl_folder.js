@@ -185,8 +185,8 @@ export default function ctrl_folder($scope, $routeParams) {
 
     // Date
     $scope.age = {};
-    if (cachedCurrentFile && cachedCurrentFile.Yearofbirth) {
-      var age = fromBirthDate(cachedCurrentFile.Yearofbirth);
+    if (cachedCurrentFile && cachedCurrentFile.year_of_birth) {
+      var age = fromBirthDate(cachedCurrentFile.year_of_birth);
       var r = RegExp("([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?").exec(age);
       if (r != null && r.length > 3) {
         $scope.age.years = parseInt(r[1]);
@@ -521,9 +521,9 @@ export default function ctrl_folder($scope, $routeParams) {
           level: "success",
           text:
             "The patient " +
-            $scope.currentFile().entryyear +
+            $scope.currentFile().entry_year +
             "-" +
-            $scope.currentFile().entryorder +
+            $scope.currentFile().entry_order +
             " has been deleted"
         });
 
@@ -547,10 +547,9 @@ export default function ctrl_folder($scope, $routeParams) {
         d.getMonth() - $scope.age.months,
         10
       );
-      $scope.folder.getPatient().Yearofbirth = date2CanonicString(d2).substring(
-        0,
-        7
-      );
+      $scope.folder.getPatient().year_of_birth = date2CanonicString(
+        d2
+      ).substring(0, 7);
     }
   }
 

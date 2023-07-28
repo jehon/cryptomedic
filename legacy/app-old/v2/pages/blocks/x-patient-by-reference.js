@@ -56,7 +56,7 @@ export default class XPatientByReference extends HTMLElement {
                 { label: "Entry Year" },
                 [
                   createElementWithObject(XIoNumeric, {
-                    name: "entryyear",
+                    name: "entry_year",
                     input: true,
                     required: true,
                     min: "1990",
@@ -71,7 +71,7 @@ export default class XPatientByReference extends HTMLElement {
                 { label: "Entry Order" },
                 [
                   createElementWithObject(XIoNumeric, {
-                    name: "entryorder",
+                    name: "entry_order",
                     input: true,
                     required: true,
                     autofocus: true
@@ -119,7 +119,7 @@ export default class XPatientByReference extends HTMLElement {
     this.setAttribute("status", "searching");
 
     return this._requestor
-      .request(checkReferenceBuilder(data.entryyear, data.entryorder))
+      .request(checkReferenceBuilder(data.entry_year, data.entry_order))
       .then((response) => response.data)
       .then((data) => {
         if (data.id) {
@@ -136,7 +136,7 @@ export default class XPatientByReference extends HTMLElement {
     this.setAttribute("status", "creation-requesting");
 
     return this._requestor
-      .request(createReferenceBuilder(data.entryyear, data.entryorder))
+      .request(createReferenceBuilder(data.entry_year, data.entry_order))
       .then((response) => response.data)
       .then((data) => {
         this.setAttribute("status", "creation-requested");

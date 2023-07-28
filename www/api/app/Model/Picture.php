@@ -69,11 +69,11 @@ class Picture extends CryptomedicModel {
 
 		$patient = Patient::find($this->patient_id);
 		
-		return $patient->entryyear
+		return $patient->entry_year
 			. "/"
-			. str_pad($patient->entryorder % 100, 3, "0", STR_PAD_LEFT)
+			. str_pad($patient->entry_order % 100, 3, "0", STR_PAD_LEFT)
 			. "/"
-			. "{$patient->entryyear}-{$patient->entryorder}."
+			. "{$patient->entry_year}-{$patient->entry_order}."
 			. ($this->Date == null ? "undated" : $this->Date)
 			. ".{$this->id}.{$ext}";
 	}

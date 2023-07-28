@@ -12,10 +12,10 @@ class ReportFinancialController extends ReportController {
         SQL::withCalculated("
             SELECT
               patients.id as pid,
-              CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
-              patients.Name as patient_name,
-              patients.yearofbirth,
-              patients.Sex,
+              CONCAT(patients.entry_year, '-', patients.entry_order) as patient_reference,
+              patients.name as patient_name,
+              patients.year_of_birth,
+              patients.sex,
               AVG(bills.Sociallevel) as Sociallevel,
               SUM(" . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . ") AS price_consult,
               SUM(" . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . ") AS price_medecine,
@@ -25,7 +25,7 @@ class ReportFinancialController extends ReportController {
               SUM(bills.total_real) AS total_real,
               SUM(bills.total_asked) AS total_asked,
               COALESCE(SUM((SELECT SUM(amount) FROM payments WHERE bill_id = bills.id)), 0) AS total_paid,
-              (SELECT min(year(Date)) - patients.yearofbirth from bills where patient_id = patients.id) as age_at_first_consult,
+              (SELECT min(year(Date)) - patients.year_of_birth from bills where patient_id = patients.id) as age_at_first_consult,
               (SELECT count(*) from consults WHERE consults.patient_id = patients.id) as nb_consults,
               (SELECT count(*) from pictures WHERE pictures.patient_id = patients.id) as nb_pictures,
               COUNT(*) as nb_bills

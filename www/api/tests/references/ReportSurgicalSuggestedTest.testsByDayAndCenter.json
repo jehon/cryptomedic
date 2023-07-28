@@ -9,9 +9,9 @@
             "pid": 1,
             "patient_reference": "2000-1",
             "patient_name": "rezaul islam",
-            "yearofbirth": 1998,
-            "Sex": "Male",
-            "Pathology": "ClubFoot",
+            "year_of_birth": 1998,
+            "sex": "Male",
+            "pathology": "ClubFoot",
             "amount_surgeries": 1,
             "last_surgery": "2014-01-02",
             "suggested_from": "2014-01-04"

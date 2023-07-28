@@ -32,24 +32,24 @@ export default class XFfPatientRelated extends XWithFolder {
             createElementWithObject(XLabel, { label: "Reference" }, [
               createElementWithTag("div", {}, [
                 createElementWithObject(XIoNumeric, {
-                  name: "entryorder",
+                  name: "entry_order",
                   style: { display: "inline-block" }
                 }),
                 "-",
                 createElementWithObject(XIoNumeric, {
-                  name: "entryyear",
+                  name: "entry_year",
                   style: { display: "inline-block" }
                 })
               ])
             ]),
             createElementWithObject(XLabel, { label: "Name" }, [
-              createElementWithObject(XIoString, { name: "Name" })
+              createElementWithObject(XIoString, { name: "name" })
             ]),
             createElementWithObject(XLabel, { label: "Year of Birth" }, [
-              createElementWithObject(XIoString, { name: "Yearofbirth" })
+              createElementWithObject(XIoString, { name: "year_of_birth" })
             ]),
             createElementWithObject(XLabel, { label: "Sex" }, [
-              createElementWithObject(XIoString, { name: "Sex" })
+              createElementWithObject(XIoString, { name: "sex" })
             ])
           ]))
         ]
@@ -63,7 +63,7 @@ export default class XFfPatientRelated extends XWithFolder {
   adapt() {
     const patient = this.folder.getPatient();
     this._form.setValues(patient);
-    const pen = `${patient.entryyear}-${patient.entryorder}`;
+    const pen = `${patient.entry_year}-${patient.entry_order}`;
     this.setAttribute("patient-entry-number", pen);
   }
 }

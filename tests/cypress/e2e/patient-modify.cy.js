@@ -18,29 +18,29 @@ context("Actions", () => {
     crLoginInBackground(crApiLogin.PHYSIO);
 
     crApiFicheModify("patients", patientFilesCrud.id, {
-      entryyear: patientFilesCrud.entryyear,
-      entryorder: patientFilesCrud.entryorder,
-      Name: "crud patient",
-      Pathology: "ClubFoot"
+      entry_year: patientFilesCrud.entry_year,
+      entry_order: patientFilesCrud.entry_order,
+      name: "crud patient",
+      pathology: "ClubFoot"
     });
   });
 
   it("create a reference", () => {
     crApiPatientDelete(
-      patientCrudCreateReference.entryyear,
-      patientCrudCreateReference.entrynumber
+      patientCrudCreateReference.entry_year,
+      patientCrudCreateReference.entry_order
     );
 
     cy.get("x-patient-by-reference").within((el) => {
-      cy.get("[name=entryyear]").invoke(
+      cy.get("[name=entry_year]").invoke(
         "attr",
         "value",
-        patientCrudCreateReference.entryyear
+        patientCrudCreateReference.entry_year
       );
-      cy.get("[name=entryorder]").invoke(
+      cy.get("[name=entry_order]").invoke(
         "attr",
         "value",
-        patientCrudCreateReference.entrynumber
+        patientCrudCreateReference.entry_order
       );
 
       cy.get(`x-button[action="${XButton.Search}"]`).click();
@@ -53,25 +53,25 @@ context("Actions", () => {
     });
 
     crPage().within(() => {
-      cy.get("#Patient_entryyear").should(
+      cy.get("#Patient_entry_year").should(
         "contain.text",
-        patientCrudCreateReference.entryyear
+        patientCrudCreateReference.entry_year
       );
-      cy.get("#Patient_entryorder").should(
+      cy.get("#Patient_entry_order").should(
         "contain.text",
-        patientCrudCreateReference.entrynumber
+        patientCrudCreateReference.entry_order
       );
 
-      cy.get("#Patient_Name").type("rezaul");
+      cy.get("#Patient_name").type("rezaul");
       cy.get("#topsubmenu #patient_save").click();
     });
   });
 
   it("generate a reference", () => {
-    // entrynumber will be set automatically to 10.000
+    // entry_order will be set automatically to 10.000
     crApiPatientDelete(
-      patientCrudGenerateReference.entryyear,
-      patientCrudGenerateReference.entrynumber
+      patientCrudGenerateReference.entry_year,
+      patientCrudGenerateReference.entry_order
     );
 
     cy.get("#autogenerate-reference")
@@ -82,24 +82,26 @@ context("Actions", () => {
       });
 
     crPage().within(() => {
-      cy.get("#Patient_Name").should("be.visible");
+      cy.get("#Patient_name").should("be.visible");
 
       // Edit and save
-      cy.get("#Patient_entryyear").type(patientCrudGenerateReference.entryyear);
-      cy.get("#Patient_Name").type("rezaul");
+      cy.get("#Patient_entry_year").type(
+        patientCrudGenerateReference.entry_year
+      );
+      cy.get("#Patient_name").type("rezaul");
       cy.crCompareSnapshot("generate-2-complete");
 
       cy.get("#bottomsubmenu #patient_create").click();
 
       // Check readonly mode
-      cy.get("span#Patient_entryyear").should(
+      cy.get("span#Patient_entry_year").should(
         "contain.text",
-        patientCrudGenerateReference.entryyear
+        patientCrudGenerateReference.entry_year
       );
-      cy.get("#Patient_Name").should("contain.text", "rezaul");
-      cy.get("#Patient_entryorder").should(
+      cy.get("#Patient_name").should("contain.text", "rezaul");
+      cy.get("#Patient_entry_order").should(
         "contain.text",
-        patientCrudGenerateReference.entryorder
+        patientCrudGenerateReference.entry_order
       ); // Should be above 10000 as automatically generated
 
       cy.get("#topsubmenu #patient_edit").click();
@@ -117,15 +119,15 @@ context("Actions", () => {
     crPage().within(() => {
       cy.get("#button_patient").click();
       cy.get("#topsubmenu #patient_edit").click();
-      cy.get("input#Patient_Name").should("be.visible");
-      cy.get("#Patient_Name").should("have.value", "crud patient");
+      cy.get("input#Patient_name").should("be.visible");
+      cy.get("#Patient_name").should("have.value", "crud patient");
 
-      cy.get("[name=Pathology]").invoke("attr", "value", "ClubFoot");
-      cy.get("#Patient_Name").clear();
-      cy.get("#Patient_Name").type("rezaul");
+      cy.get("[name=pathology]").invoke("attr", "value", "ClubFoot");
+      cy.get("#Patient_name").clear();
+      cy.get("#Patient_name").type("rezaul");
 
       cy.get("#topsubmenu #patient_cancel").click();
-      cy.get("#Patient_Name").should("contain.text", "crud patient");
+      cy.get("#Patient_name").should("contain.text", "crud patient");
     });
   });
 
@@ -134,14 +136,14 @@ context("Actions", () => {
     crPage().within(() => {
       cy.get("#button_patient").click();
       cy.get("#topsubmenu #patient_edit").click();
-      cy.get("input#Patient_Name").should("be.visible");
-      cy.get("#Patient_Name").should("have.value", "crud patient");
-      cy.get("#Patient_Name").clear();
-      cy.get("#Patient_Name").type("rezaul");
+      cy.get("input#Patient_name").should("be.visible");
+      cy.get("#Patient_name").should("have.value", "crud patient");
+      cy.get("#Patient_name").clear();
+      cy.get("#Patient_name").type("rezaul");
 
       cy.get("#topsubmenu #patient_save").click();
       crReady();
-      cy.get("#Patient_Name").should("contain.text", "rezaul");
+      cy.get("#Patient_name").should("contain.text", "rezaul");
     });
   });
 });

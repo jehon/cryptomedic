@@ -13,8 +13,8 @@ describe("PatientRelated", function () {
       let folder = new Folder(loadReference(RefFolder1).folder);
 
       expect(folder.getPatient()).toEqual(jasmine.any(Patient));
-      expect(folder.getPatient().Sex).toBe("Male");
-      expect(folder.getPatient().Yearofbirth).toBe("1998");
+      expect(folder.getPatient().sex).toBe("Male");
+      expect(folder.getPatient().year_of_birth).toBe("1998");
       expect(folder.getPatient().actualAge(new Date("2014-01-01"))).toBe(
         "16y0m"
       );
@@ -45,7 +45,7 @@ describe("PatientRelated", function () {
 
   describe("with patient with sex", function () {
     it("should throw error everytime", function () {
-      let p = new Patient({ Sex: "Male" });
+      let p = new Patient({ sex: "Male" });
       var o = new PatientRelated({});
       o.linkPatient(p);
 

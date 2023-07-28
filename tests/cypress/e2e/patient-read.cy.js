@@ -19,10 +19,10 @@ context("Actions", () => {
   it("read patient 2000-1", () => {
     // id: 1
     patientgo(patientFilesRead2000_1).within(() => {
-      cy.get("#Patient_Name").should("contain.text", "rezaul islam");
-      cy.get("#Patient_Sex").should("contain.text", "Male");
-      cy.get("#Patient_District").should("contain.text", "Chittagong");
-      cy.get("#Patient_Pathology").should("contain.text", "ClubFoot");
+      cy.get("#Patient_name").should("contain.text", "rezaul islam");
+      cy.get("#Patient_sex").should("contain.text", "Male");
+      cy.get("#Patient_address_district").should("contain.text", "Chittagong");
+      cy.get("#Patient_pathology").should("contain.text", "ClubFoot");
       cy.get("#button_edit").should("not.exist");
 
       cy.crCompareSnapshot("patient_2000_1");
@@ -89,9 +89,9 @@ context("Actions", () => {
   it("read patient 2014-105", () => {
     // id: 5
     patientgo(patientFilesRead2014_105).within(() => {
-      cy.get("#Patient_Upazilla").should("contain.text", "Ukhia");
-      cy.get("#Patient_Union_").should("contain.text", "Jalia palong");
-      cy.get("#Patient_Telephone").should("contain.text", "1813247984");
+      cy.get("#Patient_phone").should("contain.text", "1813247984");
+      cy.get("#Patient_address_upazilla").should("contain.text", "Ukhia");
+      cy.get("#Patient_address_union").should("contain.text", "Jalia palong");
 
       patientSelectFile("ClubFoot", 1);
       cy.get("#ageAtConsultationTime").should("be.visible");

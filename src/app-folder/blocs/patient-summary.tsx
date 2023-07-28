@@ -29,10 +29,10 @@ export default function PatientSummary({
             />
             <span className="no-mobile">Patient</span>
             <span>
-              {patient.entryyear}-{patient.entryorder}
+              {patient.entry_year}-{patient.entry_order}
             </span>
             <span className="no-mobile">{patient.Name}</span>
-            <span className="no-mobile">{patient.Yearofbirth}</span>
+            <span className="no-mobile">{patient.year_of_birth}</span>
             <img src="/static/img/view.svg" alt="View" className="inline" />
           </div>
         </Accordion.Toggle>
@@ -49,27 +49,26 @@ export default function PatientSummary({
               <IONumber
                 width={0.5}
                 label="Entry Year"
-                value={patient.entryyear}
+                value={patient.entry_year}
               />
               <IONumber
                 width={0.5}
                 label="Entry Order"
-                value={patient.entryorder}
+                value={patient.entry_order}
               />
-              <IOString width={0.5} label="Name" value={patient.Name} />
-              <IOString width={0.5} label="Sex" value={patient.Sex} />
+              <IOString width={0.5} label="Name" value={patient.name} />
+              <IOString width={0.5} label="sex" value={patient.sex} />
               <IONumber
                 width={0.5}
                 label="Year of birth"
-                value={patient.Yearofbirth}
+                value={patient.year_of_birth}
               />
               <IOString
                 width={0.5}
-                label="Pathology"
-                value={patient.Pathology}
+                label="pathology"
+                value={patient.pathology}
               />
-              <IOText label="Other Comments" value={patient.other_comments} />
-              <IOText label="Other Comments" value={patient.other_comments} />
+              <IOText label="Other Comments" value={patient.comments} />
             </div>
           </Card.Body>
         </Accordion.Collapse>

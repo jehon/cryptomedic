@@ -66,7 +66,7 @@ export function _stdDeviation(statLines, x, y) {
  */
 export function stdDeviationFor(sex, graphName, x, y) {
   if (!(sex in amd_stats)) {
-    throw new DataInvalidException("Sex");
+    throw new DataInvalidException("sex");
   }
   if (!(graphName in amd_stats[sex])) {
     throw new ConfigurationMissingException("invalid graph name");
