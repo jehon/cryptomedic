@@ -562,6 +562,7 @@ export const REPORT_CASH_REGISTER = "cash-register";
 export const REPORT_CONSULTATIONS = "consultations";
 export const REPORT_FINANCIAL = "financial";
 export const REPORT_SURGICAL = "surgical";
+export const REPORT_SURGICAL_SUGGESTED = "surgical-suggested";
 export const REPORT_STATISTICAL = "statistical";
 
 const reports = {};
@@ -1007,6 +1008,40 @@ reports[REPORT_SURGICAL] = {
         headers: ["Paid"],
         footers: [null, XTable.MACROS.sum]
       })
+      .end();
+  }
+};
+
+reports[REPORT_SURGICAL_SUGGESTED] = {
+  // test data: 2014
+  name: "Surgical Suggestions",
+  description: "List the suggestions for surgeries.",
+  params: ["year"],
+  fixedParams: {
+    period: "year"
+  },
+  generator: (xtable) => {
+    xtable
+      .addHeaders(1)
+      .addDetail(
+        (data, i) =>
+          createElementWithTag(
+            "a",
+            { href: "#" + getRouteToFolderPatient(data.pid) },
+            `#${i + 1}`
+          ),
+        {
+          headers: ["#"]
+        }
+      )
+      .addDetail("patient_reference", { headers: ["Ref"] })
+      .addDetail("patient_name", { headers: ["Name"] })
+      .addDetail("yearofbirth", { headers: ["Birth"] })
+      .addDetail("Sex", { headers: ["Sex"] })
+      .addDetail("Pathology", { headers: ["Pathology"] })
+      .addDetail("amount_surgeries", { headers: ["# surgeries"] })
+      .addDetail("last_surgery", { headers: ["Last Surgery"] })
+      .addDetail("suggested_from", { headers: ["Suggested from"] })
       .end();
   }
 };

@@ -23,7 +23,8 @@ import {
   REPORT_CONSULTATIONS,
   REPORT_FINANCIAL,
   REPORT_STATISTICAL,
-  REPORT_SURGICAL
+  REPORT_SURGICAL,
+  REPORT_SURGICAL_SUGGESTED
 } from "./x-page-reports.js";
 import pageStyles from "./page-helper.js";
 
@@ -216,6 +217,16 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
             versalIcon: "/static/img/reports.gif",
             html: "Follow up of the surgical activity of the period.",
             toRoute: getRouteToReport(REPORT_SURGICAL)
+          }),
+
+          // @ts-ignore
+          createMenu({
+            title: "Surgical Suggestions Report",
+            restrictedBy: "reports.execute",
+            id: "report_surgical_suggested_menu",
+            versalIcon: "/static/img/reports.gif",
+            html: "List the suggestions for surgeries.",
+            toRoute: getRouteToReport(REPORT_SURGICAL_SUGGESTED)
           }),
 
           // @ts-ignore
