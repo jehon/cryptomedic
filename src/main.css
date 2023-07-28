@@ -4,6 +4,10 @@
  * From 360 to 990
  */
 
+img.inline {
+  height: 1.5em;
+}
+
 .row-spread {
   width: 100%;
 

@@ -99,3 +99,7 @@ return React.createElement('div', null, `Hello ${this.props.toWhat}`);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(Hello, {toWhat: 'World'}, null));
+
+# Attributions
+
+www/static/img/view.svg: Font Awesome by Dave Gandy - https://fortawesome.github.com/Font-Awesome

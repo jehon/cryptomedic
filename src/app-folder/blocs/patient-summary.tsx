@@ -25,7 +25,7 @@ export default function PatientSummary({
             <img
               src="/static/img/patient.gif"
               alt="Patient"
-              style={{ height: "1.5em" }}
+              className="inline"
             />
             <span className="no-mobile">Patient</span>
             <span>
@@ -33,6 +33,7 @@ export default function PatientSummary({
             </span>
             <span className="no-mobile">{patient.Name}</span>
             <span className="no-mobile">{patient.Yearofbirth}</span>
+            <img src="/static/img/view.svg" alt="View" className="inline" />
           </div>
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="0">
