@@ -112,11 +112,11 @@ context("Actions", () => {
       "surgery",
       {
         "#Surgery_Date": { value: "2003-01-01" },
-        "#Surgery_ReportDiagnostic": "diagnostique"
+        "#Surgery_report_diagnostic": "diagnostique"
       },
       () => {
         cy.get("#Surgery_Date").should("contain.text", "2003-01-01");
-        cy.get("#Surgery_ReportDiagnostic").should(
+        cy.get("#Surgery_report_diagnostic").should(
           "contain.text",
           "diagnostique"
         );

@@ -80,8 +80,11 @@ context("Actions", () => {
       cy.crCompareSnapshot("patient_2000_1_bill");
 
       patientSelectFile("Surgery", 5);
-      cy.get("#Surgery_ReportDiagnostic").should("contain.text", "test");
-      cy.get("#Surgery_FollowUpComplication").should("contain.text", "nothing");
+      cy.get("#Surgery_report_diagnostic").should("contain.text", "test");
+      cy.get("#Surgery_follow_up_complication").should(
+        "contain.text",
+        "nothing"
+      );
       cy.crCompareSnapshot("patient_2000_1_surgery");
     });
   });

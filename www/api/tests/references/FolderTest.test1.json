@@ -283,12 +283,12 @@
                 "lastuser": "jehon",
                 "patient_id": 1,
                 "Date": "2014-01-02",
-                "ReportDiagnostic": "test",
-                "ReportSurgeon": "someone",
+                "report_diagnostic": "test",
+                "report_surgeon": "someone",
                 "ReportSideR": null,
                 "ReportSideL": null,
                 "report_procedure": null,
-                "FollowUpComplication": "nothing"
+                "follow_up_complication": "nothing"
             }
         }
     ],
