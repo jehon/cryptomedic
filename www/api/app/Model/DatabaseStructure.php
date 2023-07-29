@@ -21,7 +21,7 @@ define("HARDCODED_LISTINGS", [
     "all" => [
         "Center"                   => "Centers",
         "NextCenter"               => "Centers",
-        "TreatmentEvaluation"      => "Eval14",
+        "treatment_evaluation"     => "Eval14",
         "ExaminerName"             => "Examiner"
     ],
     "bills" => [
