@@ -57,7 +57,7 @@ export default class XPageUsersList extends HTMLElement {
               .addDetail(
                 (data) =>
                   createElementWithObject(XReadBoolean, {
-                    value: data.inExaminerList
+                    value: data.in_examiner_list
                   }),
                 { headers: ["In Examiner List"] }
               )

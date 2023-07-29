@@ -73,7 +73,7 @@ export default class XPageUserEdit extends HTMLElement {
                   getInputObject(TYPES.TEXT, "codage")
                 ]),
                 createElementWithObject(XLabel, { label: "In examiner list" }, [
-                  getInputObject(TYPES.BOOLEAN, "inExaminerList")
+                  getInputObject(TYPES.BOOLEAN, "in_examiner_list")
                 ]),
                 createElementWithObject(XLabel, { label: "Notes" }, [
                   getInputObject(TYPES.NOTES, "notes")

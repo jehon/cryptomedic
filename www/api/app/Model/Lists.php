@@ -251,7 +251,7 @@ buildValueList("PictureType",  ["x-ray", "picture", "other"]);
 /*****************************/
 
 $examinersList = [];
-$examiners = DB::select("SELECT username, `name`, codage, inExaminerList FROM users");
+$examiners = DB::select("SELECT username, `name`, codage, in_examiner_list FROM users");
 // TODO: regroup around "username"
 foreach ($examiners as $examiner) {
     if ($examiner->codage > '') {
@@ -259,7 +259,7 @@ foreach ($examiners as $examiner) {
         // This will modify $dataListings
         withCode($examiner->name, $examiner->codage);
     }
-    if ($examiner->inExaminerList > 0) {
+    if ($examiner->in_examiner_list > 0) {
         $examinersList[] = $examiner->name;
     }
 }
