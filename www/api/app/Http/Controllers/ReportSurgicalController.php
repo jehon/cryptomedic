@@ -38,9 +38,9 @@ class ReportSurgicalController extends ReportController
           IFNULL(GROUP_CONCAT(surgeries.id SEPARATOR '|'), '') as cids,
           COUNT(surgeries.id) as consults,
 
-          MAX(consults.Date) AS last_seen,
-          GROUP_CONCAT(consults.TreatmentEvaluation SEPARATOR '###') AS last_treat_result,
-          ANY_VALUE(consults.TreatmentFinished) AS last_treat_finished
+          MAX(consults.date) AS last_seen,
+          GROUP_CONCAT(consults.treatment_evaluation SEPARATOR '###') AS last_treat_result,
+          ANY_VALUE(consults.treatment_finished) AS last_treat_finished
 
         FROM patients
           LEFT OUTER JOIN bills ON (
@@ -54,10 +54,10 @@ class ReportSurgicalController extends ReportController
             AND " . $this->getParamAsSqlFilter("when", "surgeries.Date") . "
           )
           LEFT OUTER JOIN consults ON (consults.patient_id = patients.id)
-          LEFT OUTER JOIN consults AS consults2 ON (consults2.patient_id = patients.id AND consults2.Date > consults.Date)
+          LEFT OUTER JOIN consults AS consults2 ON (consults2.patient_id = patients.id AND consults2.date > consults.date)
 
         WHERE (1 = 1)
-          AND (consults2.Date IS NULL)
+          AND (consults2.date IS NULL)
           AND (bills.id IS NOT NULL OR surgeries.id IS NOT NULL)
 
         GROUP BY patients.id

@@ -21,14 +21,14 @@ class ReportSurgicalSuggestedController extends ReportController
 
           COUNT(surgeries.id) as amount_surgeries,
           MAX(surgeries.Date) AS last_surgery,
-          MAX(consults.Date) AS suggested_from
+          MAX(consults.date) AS suggested_from
 
         FROM patients
           LEFT OUTER JOIN surgeries ON (surgeries.patient_id = patients.id)
-          LEFT OUTER JOIN consults ON (consults.patient_id = patients.id AND consults.suggestedForSurgery = 1)
+          LEFT OUTER JOIN consults ON (consults.patient_id = patients.id AND consults.suggested_for_surgery = 1)
 
         WHERE (1 = 1)
-          AND " . $this->getParamAsSqlFilter("year", "YEAR(consults.Date)") . "
+          AND " . $this->getParamAsSqlFilter("year", "YEAR(consults.date)") . "
 
         GROUP BY patients.id
         ORDER BY patients.entry_year, patients.entry_order"
