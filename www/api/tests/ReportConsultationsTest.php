@@ -35,7 +35,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->assertEquals(count($json['list']), 1);
 		foreach ($json['list'] as $k => $v) {
 			$this->assertEquals($v['c_nextAppointment'], self::$day);
-			$this->assertEquals($v['c_Center'], "Chakaria Disability Center");
+			$this->assertEquals($v['c_center'], "Chakaria Disability Center");
 		}
 	}
 }

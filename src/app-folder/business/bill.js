@@ -97,7 +97,7 @@ export default class Bill extends PatientRelated {
       if (i === "updated_at") {
         continue;
       }
-      if (i === "lastuser") {
+      if (i === "last_user") {
         continue;
       }
       if (i === "datefrom") {

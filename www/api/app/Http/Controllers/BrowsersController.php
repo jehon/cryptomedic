@@ -26,7 +26,7 @@ class BrowsersController extends Controller {
         $browsers = DB::select("
                 SELECT
                     bf.*,
-                    bl.updated_at AS last_login, bl.lastuser AS last_login_name
+                    bl.updated_at AS last_login, bl.last_user AS last_login_name
                 FROM browser_features AS bf
                 LEFT OUTER JOIN browser_login AS bl ON bf.browser_uuid = bl.browser_uuid
                 ORDER BY browser_name ASC, browser_version ASC, last_login ASC

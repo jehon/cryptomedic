@@ -176,7 +176,7 @@ class DatabaseStructure {
         $name = $sqlData->COLUMN_NAME;
         $res = new \stdClass;
 
-        $res->protected = in_array($name, ['id', 'created_at', 'updated_at', 'lastuser']);
+        $res->protected = in_array($name, ['id', 'created_at', 'updated_at', 'last_user']);
 
         if (!$res->protected) {
             $res->optional = ($sqlData->IS_NULLABLE == "YES");

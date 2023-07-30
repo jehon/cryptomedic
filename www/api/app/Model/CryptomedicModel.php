@@ -205,7 +205,7 @@ class CryptomedicModel extends Model {
 		$this->attributes = self::filterData($this->attributes, false);
 		if ($this->isDirty()) {
 			$this->validate();
-			$this->lastuser = Auth::user()->username;
+			$this->last_user = Auth::user()->username;
 			return parent::save($options);
 		}
 		return $this;

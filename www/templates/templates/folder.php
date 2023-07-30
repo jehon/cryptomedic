@@ -98,7 +98,7 @@
             <div class="col-sm-4 text-left" style="font-size: x-small">
               <span variable>
                 Modified on {{currentFile().updated_at | date:'yyyy-MM-dd HH:mm:ss' }}
-                by {{currentFile().lastuser}}
+                by {{currentFile().last_user}}
               </span>
               <br>
               Patient #<span id='folder_id'>{{folder.getPatient().id}}</span> @{{page}}

@@ -43,12 +43,12 @@ class Browsers extends Model {
             INSERT INTO browser_login SET
                 created_at = NOW(),
                 updated_at = NOW(),
-                lastuser = '$login',
+                last_user = '$login',
                 browser_uuid = '$browserUUID',
                 login = '$login'
             ON DUPLICATE KEY UPDATE
                 updated_at = NOW(),
-                lastuser = '$login' ");
+                last_user = '$login' ");
 
         // Insert or update features in the browser_features table
         DB::table('browser_features')

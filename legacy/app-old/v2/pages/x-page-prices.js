@@ -173,7 +173,7 @@ export default class XPagePrices extends HTMLElement {
             createElementWithTag("tr", {}, [
               createElementWithTag("th", {}, "Modified by"),
               ...this.prices.map((p) =>
-                createElementWithTag("th", {}, p.lastuser)
+                createElementWithTag("th", {}, p.last_user)
               )
             ]),
             createElementWithTag("tr", {}, [
@@ -282,7 +282,7 @@ export default class XPagePrices extends HTMLElement {
       if (v == "dateto") {
         return false;
       }
-      if (v == "lastuser") {
+      if (v == "last_user") {
         return false;
       }
       if (v == "id") {
