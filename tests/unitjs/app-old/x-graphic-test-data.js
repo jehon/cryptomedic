@@ -43,7 +43,7 @@ const folder = new Folder([
       id: 13,
       patient_id: 1,
       Date: "2014-01-04",
-      ExaminerName: "AMD doctor",
+      examiner: "AMD doctor",
       Weightkg: 37,
       Heightcm: 110,
       Y: 90

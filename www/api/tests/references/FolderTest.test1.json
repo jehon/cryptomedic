@@ -32,7 +32,7 @@
                 "lastuser": "Thierry",
                 "patient_id": 1,
                 "Date": "2007-01-10",
-                "ExaminerName": "Ershad",
+                "examiner": "Ershad",
                 "purpose": null,
                 "Nextappointment": "2015-04-28",
                 "NextCenter": null
@@ -51,8 +51,8 @@
                 "sl_numberOfHouseholdMembers": 7,
                 "Date": "2011-06-09",
                 "price_id": 1,
-                "Center": null,
-                "ExaminerName": "",
+                "center": null,
+                "examiner": "",
                 "total_real": 22400,
                 "Sociallevel": 2,
                 "total_asked": 6720,
@@ -180,9 +180,9 @@
                 "lastuser": "Thierry",
                 "bill_id": 1,
                 "Date": "2011-06-09",
-                "ExaminerName": "",
+                "examiner": "",
                 "Amount": 1500,
-                "Notes": "automatically generated from previous system"
+                "comments": "automatically generated from previous system"
             }
         },
         {
@@ -195,8 +195,8 @@
                 "lastuser": "Thierry",
                 "patient_id": 1,
                 "Date": "2007-01-10",
-                "ExaminerName": "Ershad",
-                "Center": null,
+                "examiner": "Ershad",
+                "center": null,
                 "Weightkg": 29,
                 "Heightcm": 134,
                 "Brachialcircumferencecm": 0,
@@ -211,7 +211,7 @@
                 "Performed": null,
                 "NotPerformed": null,
                 "Surgery66": "Postero-medial release",
-                "Comments": "",
+                "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null
@@ -229,7 +229,7 @@
                 "type": "",
                 "file": "10_2014-11-06_15-32-45.JPG",
                 "Date": "2014-11-04",
-                "comment": ""
+                "comments": ""
             }
         },
         {
@@ -242,8 +242,8 @@
                 "lastuser": "Thierry",
                 "patient_id": 1,
                 "Date": "2014-01-04",
-                "ExaminerName": "AMD doctor",
-                "Center": "Chakaria Disability Center",
+                "examiner": "AMD doctor",
+                "center": "Chakaria Disability Center",
                 "Weightkg": 37,
                 "Heightcm": 110,
                 "CrossLeftT": "0",
@@ -264,7 +264,7 @@
                 "Nutrisupport": 0,
                 "Brachialcircumferencecm": 0,
                 "WalkingDifficulties": "Level 1",
-                "Comments": "",
+                "comments": "",
                 "suggested_for_surgery": 1,
                 "treatment_evaluation": null,
                 "treatment_finished": null,

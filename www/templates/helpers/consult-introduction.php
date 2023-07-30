@@ -1,7 +1,7 @@
 <?php ?><x-group-panel title='General Data'>
 	<?php (new t("Date"))->tr2("Date")->p(); ?>
-	<?php (new t("ExaminerName"))->tr2("Examiner Name")->p(); ?>
-	<?php (new t("Center"))->tr2("Center")->p(); ?>
+	<?php (new t("examiner"))->tr2("Examiner Name")->p(); ?>
+	<?php (new t("center"))->tr2("Center")->p(); ?>
 	<x-fff-field label='Age at consultation' not-write>
 		<div id='ageAtConsultationTime'>
 			<x-fff-age></x-fff-age> old at consultation time

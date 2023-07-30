@@ -36,7 +36,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 
 		$json = $this->myRunAssertQueryForRoles($opt);
 		foreach ($json['list'] as $k => $v) {
-			$this->assertEquals("Chakaria Disability Center", $v['Center']);
+			$this->assertEquals("Chakaria Disability Center", $v['center']);
 		}
 		$this->thisAssertResponse($json, [3, 5]);
 
@@ -54,7 +54,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 
 		$json = $this->myRunAssertQueryForRoles($opt);
 		foreach ($json['list'] as $k => $v) {
-			$this->assertEquals("Ershad", $v['ExaminerName']);
+			$this->assertEquals("Ershad", $v['examiner']);
 		}
 		$this->thisAssertResponse($json, [4, 5]);
 	}
@@ -66,8 +66,8 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 
 		$json = $this->myRunAssertQueryForRoles($opt);
 		foreach ($json['list'] as $k => $v) {
-			$this->assertEquals("Ershad", $v['ExaminerName']);
-			$this->assertEquals("Chakaria Disability Center", $v['Center']);
+			$this->assertEquals("Ershad", $v['examiner']);
+			$this->assertEquals("Chakaria Disability Center", $v['center']);
 		}
 		$this->thisAssertResponse($json, [3, 4]);
 	}

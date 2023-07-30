@@ -41,7 +41,7 @@ class ReportSurgicalTest extends RouteReferenceTestCase {
 			if ($v['Date'] > "") {
 				// Otherwise, we have a surgical consultation
 				$this->assertEquals(substr($v['Date'], 0, 7), self::$month);
-				$this->assertEquals($v['Center'], "Ukhia");
+				$this->assertEquals($v['center'], "Ukhia");
 			}
 		}
 	}

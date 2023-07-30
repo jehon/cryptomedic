@@ -56,8 +56,8 @@ EOD;
       <div>
         <x-group-panel title='General data'>
           <?php (new t("Bill.Date"))->tr2()->p(); ?>
-          <?php (new t("Bill.ExaminerName"))->tr2("Examiner")->p(); ?>
-          <?php (new t("Bill.Center"))->tr2("Center where consultation took place")->p(); ?>
+          <?php (new t("Bill.examiner"))->tr2("Examiner")->p(); ?>
+          <?php (new t("Bill.center"))->tr2("Center where consultation took place")->p(); ?>
           <div class='debug-infos'>
             price_id <?php (new t("Bill.price_id"))->read()->p(); ?>
           </div>
@@ -142,7 +142,7 @@ EOD;
       <tbody>
         <tr ng-repeat="p in paymentsList()">
           <td>{{p.Date}}</td>
-          <td>{{p.ExaminerName}}</td>
+          <td>{{p.examiner}}</td>
           <td>{{p.Amount}}</td>
           <td>{{p.Notes}}</td>
           <td>
@@ -162,7 +162,7 @@ EOD;
     </table>
     <x-group-panel id='paymentForm' title='Add / modify a payment' form-boundary>
       <?php (new t("Payment.Date"))->tr2("Date of receipt")->p(); ?>
-      <?php (new t("Payment.ExaminerName"))->tr2("Receiver")->p(); ?>
+      <?php (new t("Payment.examiner"))->tr2("Receiver")->p(); ?>
       <?php (new t("Payment.Amount"))->tr2("Amount")->p(); ?>
       <?php (new t("Payment.Notes"))->tr2("Notes")->p(); ?>
       <x-button id='button_payment_create' ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>Create</x-button>

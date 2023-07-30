@@ -23,7 +23,7 @@
             "address_union": "",
             "pathology": "Other",
             "comments": "",
-            "ExaminerName": null,
+            "examiner": null,
             "c_id": 1,
             "c_Date": "2003-05-11",
             "c_Center": "Chakaria Disability Center",

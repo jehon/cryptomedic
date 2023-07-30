@@ -186,12 +186,12 @@ x-button#export {
     );
 
     //
-    // Center
+    // center
     //
     if (this.isParam("center")) {
       this._params.insertAdjacentElement(
         "beforeend",
-        createElementWithObject(XLabel, { label: "Center" }, [
+        createElementWithObject(XLabel, { label: "center" }, [
           createElementWithObject(XInputList, {
             name: "center",
             nullable: true,
@@ -211,7 +211,7 @@ x-button#export {
           createElementWithObject(XInputList, {
             name: "examiner",
             nullable: true,
-            listName: "Examiner"
+            listName: "Examiners"
           })
         ])
       );
@@ -601,9 +601,9 @@ reports[REPORT_ACTIVITY] = {
         }
       )
       .addDetail("Date", { headers: ["Date"] })
-      .addDetail("ExaminerName", { headers: ["Examiner"] })
+      .addDetail("examiner", { headers: ["Examiner"] })
       .addDetail(
-        (data) => createElementWithObject(XCodage, { value: data.Center }),
+        (data) => createElementWithObject(XCodage, { value: data.center }),
         { headers: ["Place"] }
       )
       .addDetail("patient_reference", { headers: ["Record n#"] })
@@ -800,7 +800,7 @@ reports[REPORT_CONSULTATIONS] = {
   generator: (xtable) =>
     xtable
       .addHeaders(1)
-      .addDetail("c_Center", { headers: ["Center"] })
+      .addDetail("c_center", { headers: ["center"] })
       .addDetail(
         (data) =>
           createElementWithTag(
@@ -812,10 +812,10 @@ reports[REPORT_CONSULTATIONS] = {
       )
       .addDetail("name", { headers: ["Name"] })
       .addDetail("phone", { headers: ["Phone"] })
-      .addDetail("ExaminerName", { headers: ["Appointment from"] })
+      .addDetail("examiner", { headers: ["Appointment from"] })
       .addDetail("purpose", { headers: ["Purpose"] })
       .addDetail(
-        (data) => createElementWithObject(XDisplayDate, { value: data.c_Date }),
+        (data) => createElementWithObject(XDisplayDate, { value: data.c_date }),
         { headers: ["Appointment from"] }
       )
       .end()
@@ -926,7 +926,7 @@ reports[REPORT_SURGICAL] = {
         }
       )
       .addDetail("Date", { headers: ["Date"] })
-      .addDetail("Center", { headers: ["Place"] })
+      .addDetail("center", { headers: ["Place"] })
       .addDetail("patient_reference", { headers: ["Record n#"] })
       .addDetail("patient_name", {
         headers: ["Patient Name", "Identity", "Where", "When", "Who"]
@@ -1328,7 +1328,7 @@ reports[REPORT_STATISTICAL] = {
     //         l('All social level together', (_row) => dataList.summary.sociallevel.total),
 
     //         t('Where'),
-    //         // ...listings.Centers.map(v => `<tr><td>@<x-i18n value="${v}"></x-i18n>', (row, ctx) =>   ctx.summary.centers[v] ?? 0),
+    //         // ...listings.centers.map(v => `<tr><td>@<x-i18n value="${v}"></x-i18n>', (row, ctx) =>   ctx.summary.centers[v] ?? 0),
     //         l('center unspecified', (_row) => dataList.summary.centers.unspecified),
 
     //         t('Surgical activity'),

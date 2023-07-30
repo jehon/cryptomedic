@@ -33,7 +33,7 @@ class FicheBillTest extends FicheTestHelper {
   public function testUpdate1($file) {
     // Modify it
     $json = $this->doUpdate($file['id'], [
-      "ExaminerName" => "Ershad",
+      "examiner" => "Ershad",
       "Date" => "2017-01-20"
     ], false);
   }

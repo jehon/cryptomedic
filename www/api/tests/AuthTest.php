@@ -27,8 +27,8 @@ class AuthTest extends RouteReferenceTestCase {
         $this->assertArrayHasKey('codes', $json);
 
         $this->assertArrayHasKey('lists', $json);
-        $this->assertArrayHasKey('Examiner', $json['lists']);
-        $this->assertContains('Ershad', $json['lists']['Examiner']);
-        $this->assertContains('Morshedul Alam', $json['lists']['Examiner']);
+        $this->assertArrayHasKey('Examiners', $json['lists']);
+        $this->assertContains('Ershad', $json['lists']['Examiners']);
+        $this->assertContains('Morshedul Alam', $json['lists']['Examiners']);
     }
 }

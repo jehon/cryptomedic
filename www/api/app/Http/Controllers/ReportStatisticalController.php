@@ -58,7 +58,7 @@ class ReportStatisticalController extends ReportController {
 		$this->filter = "("
 			. $this->getParamAsSqlFilter("when", "bills.Date")
 			. " AND "
-			. $this->getParamAsSqlFilter("examiner", "bills.examinerName")
+			. $this->getParamAsSqlFilter("examiner", "bills.examiner")
 			. " AND "
 			. $this->getParamAsSqlFilter("center", "bills.center")
 			. ")";
@@ -102,10 +102,10 @@ class ReportStatisticalController extends ReportController {
 
 		// By center
 		$centers = Lists::getList('Centers');
-		$res = $this->runSqlWithNamedParameter("SELECT Center, Count(*) as `count` FROM bills WHERE {$this->filter} GROUP BY Center");
+		$res = $this->runSqlWithNamedParameter("SELECT center, Count(*) as `count` FROM bills WHERE {$this->filter} GROUP BY center");
 		$res2 = array();
 		foreach ($res as $line) {
-			$res2[$line->Center] = $line->count;
+			$res2[$line->center] = $line->count;
 		}
 		foreach ($centers as $c) {
 			$this->resultPathSet("summary.centers.$c", array_key_exists($c, $res2) ? $res2[$c] : 0);

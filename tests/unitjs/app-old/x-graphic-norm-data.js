@@ -43,7 +43,7 @@ export let male = new Folder([
       id: 3,
       patient_id: 1,
       Date: "2014-01-04",
-      ExaminerName: "AMD doctor",
+      examiner: "AMD doctor",
       Weightkg: 37,
       Heightcm: 110
     }
@@ -91,7 +91,7 @@ export let female = new Folder([
       id: 3,
       patient_id: 1,
       Date: "2014-01-04",
-      ExaminerName: "AMD doctor",
+      examiner: "AMD doctor",
       Weightkg: 37,
       Heightcm: 110
     }

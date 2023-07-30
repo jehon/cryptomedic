@@ -14,7 +14,7 @@ describe(fn(import.meta.url), function () {
     lastuser: "Thierry",
     patient_id: 1,
     Date: "2007-01-10",
-    ExaminerName: "Ershad",
+    examiner: "Ershad",
     purpose: null,
     Nextappointment: "2999-01-10",
     NextCenter: null

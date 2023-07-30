@@ -6,12 +6,12 @@ import { getPref } from "../js/prefs.js";
 export default class FolderPage extends CRUD {
   initFromCachedPreferences() {
     var c = getPref("file", {
-      examinerName: "",
+      examiner: "",
       center: "",
       date: ""
     });
-    this.ExaminerName = c.examinerName;
-    this.Center = c.center;
+    this.examiner = c.examiner;
+    this.center = c.center;
     this.Date = c.date;
   }
 

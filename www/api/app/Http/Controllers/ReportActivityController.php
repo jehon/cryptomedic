@@ -12,8 +12,8 @@ class ReportActivityController extends ReportController {
           bills.id as bid,
           patients.id as pid,
           bills.Date as Date,
-          bills.ExaminerName as ExaminerName,
-          bills.Center as Center,
+          bills.examiner as examiner,
+          bills.center as center,
           CONCAT(patients.entry_year, '-', patients.entry_order) as patient_reference,
           patients.name as patient_name,
           patients.year_of_birth,
@@ -37,8 +37,8 @@ class ReportActivityController extends ReportController {
             JOIN patients ON bills.patient_id = patients.id
             JOIN prices ON bills.price_id = prices.id
         WHERE (1 = 1)
-          AND " . $this->getParamAsSqlFilter("center", "Center") . "
-          AND " . $this->getParamAsSqlFilter("examiner", "ExaminerName") . "
+          AND " . $this->getParamAsSqlFilter("center", "center") . "
+          AND " . $this->getParamAsSqlFilter("examiner", "examiner") . "
           AND " . Bill::getActivityFilter($this->getParam("activity", "")) . "
       ) AS t
       WHERE (1 = 1)
@@ -48,19 +48,19 @@ class ReportActivityController extends ReportController {
 
     $this->result['list'] = $list1;
     // $list2 = $this->runSqlWithNamedParameter("SELECT
-    //   payments.ExaminerName as ExaminerName,
-    //   bills.Center as Center,
+    //   payments.examiner as examiner,
+    //   bills.center as center,
     //   SUM(payments.amount) as total_paid
     //   FROM
     //     payments
     //     JOIN bills ON bills.id = payments.bill_id
     //   WHERE " . $this->getParamAsSqlFilter("when", "payments.Date") . "
     //     AND NOT(" . $this->getParamAsSqlFilter("when", "bills.Date") . ")
-    //     AND " . $this->getParamAsSqlFilter("center", "bills.Center") . "
-    //     AND " . $this->getParamAsSqlFilter("examiner", "payments.ExaminerName") . "
+    //     AND " . $this->getParamAsSqlFilter("center", "bills.center") . "
+    //     AND " . $this->getParamAsSqlFilter("examiner", "payments.examiner") . "
     //     AND " . Bill::getActivityFilter($this->getParam("activity", "")) . "
-    //     GROUP BY payments.ExaminerName, bills.Center
-    //   ORDER BY ExaminerName ASC, bills.Center ASC "
+    //     GROUP BY payments.examiner, bills.center
+    //   ORDER BY examiner ASC, bills.center ASC "
     // );
 
     // $this->result['list'] = array_merge($list1, $list2);

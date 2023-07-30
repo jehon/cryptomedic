@@ -122,8 +122,8 @@ class CryptomedicModel extends Model {
 				if (!in_array('Date', $n) && $this->Date) {
 					$n['Date'] = $this->Date;
 				}
-				if (!in_array('ExaminerName', $n) && $this->ExaminerName) {
-					$n['ExaminerName'] = $this->ExaminerName;
+				if (!in_array('examiner', $n) && $this->examiner) {
+					$n['examiner'] = $this->examiner;
 				}
 
 				$relation->create($n);

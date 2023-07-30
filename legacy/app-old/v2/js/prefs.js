@@ -33,11 +33,11 @@ export function extractPrefsFile(object) {
   if (object.Date) {
     prefs.date = object.Date;
   }
-  if (object.ExaminerName) {
-    prefs.examinerName = object.ExaminerName;
+  if (object.examiner) {
+    prefs.examiner = object.examiner;
   }
-  if (object.Center) {
-    prefs.center = object.Center;
+  if (object.center) {
+    prefs.center = object.center;
   }
   setPref("file", prefs);
 }

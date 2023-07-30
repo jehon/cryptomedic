@@ -68,7 +68,7 @@ export default function PatientSummary({
                 label="pathology"
                 value={patient.pathology}
               />
-              <IOText label="Other Comments" value={patient.comments} />
+              <IOText label="Comments" value={patient.comments} />
             </div>
           </Card.Body>
         </Accordion.Collapse>

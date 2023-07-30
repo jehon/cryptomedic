@@ -19,10 +19,10 @@ define("HARDCODED_LISTINGS", [
     /**** Common fields ****/
     /***********************/
     "all" => [
-        "Center"                   => "Centers",
+        "center"                   => "Centers",
         "NextCenter"               => "Centers",
         "treatment_evaluation"     => "Eval14",
-        "ExaminerName"             => "Examiner"
+        "examiner"                 => "Examiners"
     ],
     "bills" => [
         "Sociallevel"              => "SocialLevel"

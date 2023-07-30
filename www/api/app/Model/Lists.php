@@ -264,4 +264,4 @@ foreach ($examiners as $examiner) {
     }
 }
 
-Lists::$dataListings['lists']['Examiner'] = $examinersList;
+Lists::$dataListings['lists']['Examiners'] = $examinersList;

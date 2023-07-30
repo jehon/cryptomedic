@@ -22,7 +22,7 @@ class ReportSurgicalController extends ReportController
           IFNULL(GROUP_CONCAT(bills.id SEPARATOR '|'), '') as bids,
           COUNT(bills.id) as bills,
           MAX(bills.Date) as Date,
-          ANY_VALUE(bills.Center) as Center,
+          ANY_VALUE(bills.center) as center,
           MAX(bills.sl_familySalary) AS sl_familySalary,
           MAX(bills.sl_numberOfHouseholdMembers) AS sl_numberOfHouseholdMembers,
           MAX(bills.Sociallevel) AS Sociallevel,

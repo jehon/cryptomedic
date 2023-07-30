@@ -41,7 +41,7 @@ context("Actions", () => {
 
       patientSelectFile("OtherConsult", 1);
       cy.get("#Date").should("contain.text", "2007-01-10");
-      cy.get("#ExaminerName").should("contain.text", "Ershad");
+      cy.get("#examiner").should("contain.text", "Ershad");
 
       cy.get("x-ff-patient-related").should("exist");
       cy.get('x-ff-patient-related[patient-entry-number="2000-1"]').should(
