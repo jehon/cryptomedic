@@ -626,6 +626,12 @@
             "picture",
             "other"
         ],
+        "TreatmentEvaluation": [
+            "Very good results",
+            "Good result",
+            "No improvement",
+            "Patient is worse"
+        ],
         "Examiners": [
             "Thierry Craviari",
             "Morshedul Alam",

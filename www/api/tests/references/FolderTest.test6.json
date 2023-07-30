@@ -66,17 +66,17 @@
                 "CrossLeftF": null,
                 "x_Surgery": null,
                 "XRay": null,
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": null,
                 "WalkingDifficulties": null,
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 0,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 0,
+                "x_conclusion_medical_vitaminD": 0
             }
         },
         {
@@ -107,17 +107,17 @@
                 "CrossLeftF": null,
                 "x_Surgery": null,
                 "XRay": null,
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": null,
                 "WalkingDifficulties": null,
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 0,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 0,
+                "x_conclusion_medical_vitaminD": 0
             }
         },
         {
@@ -148,17 +148,17 @@
                 "CrossLeftF": null,
                 "x_Surgery": null,
                 "XRay": null,
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": null,
                 "WalkingDifficulties": null,
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 0,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 0,
+                "x_conclusion_medical_vitaminD": 0
             }
         },
         {
@@ -189,17 +189,17 @@
                 "CrossLeftF": null,
                 "x_Surgery": null,
                 "XRay": null,
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": null,
                 "WalkingDifficulties": null,
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 0,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 0,
+                "x_conclusion_medical_vitaminD": 0
             }
         },
         {
@@ -230,17 +230,17 @@
                 "CrossLeftF": null,
                 "x_Surgery": null,
                 "XRay": null,
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": null,
                 "WalkingDifficulties": null,
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 0,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 0,
+                "x_conclusion_medical_vitaminD": 0
             }
         },
         {
@@ -271,17 +271,17 @@
                 "CrossLeftF": null,
                 "x_Surgery": null,
                 "XRay": null,
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": null,
                 "WalkingDifficulties": null,
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 0,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 0,
+                "x_conclusion_medical_vitaminD": 0
             }
         },
         {
@@ -312,17 +312,17 @@
                 "CrossLeftF": null,
                 "x_Surgery": null,
                 "XRay": null,
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": null,
                 "WalkingDifficulties": null,
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 0,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 0,
+                "x_conclusion_medical_vitaminD": 0
             }
         },
         {
@@ -353,17 +353,17 @@
                 "CrossLeftF": null,
                 "x_Surgery": null,
                 "XRay": null,
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": null,
                 "WalkingDifficulties": null,
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 0,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 0,
+                "x_conclusion_medical_vitaminD": 0
             }
         },
         {
@@ -394,17 +394,17 @@
                 "CrossLeftF": null,
                 "x_Surgery": null,
                 "XRay": null,
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": null,
                 "WalkingDifficulties": null,
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 0,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 0,
+                "x_conclusion_medical_vitaminD": 0
             }
         }
     ],

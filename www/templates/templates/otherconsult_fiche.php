@@ -28,7 +28,6 @@ t::setDefaultOption("model", "OtherConsult");
 		<x-ff-patient-related></x-ff-patient-related>
 		<x-ff-next-appointment></x-ff-next-appointment>
 		<x-group-panel title='Conclusion'>
-			<?php (new t("OtherConsult.Surgery66"))->tr2("Surgery")->p(); ?>
 			<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
 		</x-group-panel>
 	</div>

@@ -99,7 +99,6 @@ context("Actions", () => {
       patientSelectFile("ClubFoot", 1);
       cy.get("#ageAtConsultationTime").should("be.visible");
       cy.get("#ageAtConsultationTime").should("contain.text", "2y0m");
-      cy.get("#ClubFoot_Treatment").should("contain.text", "DB splint");
       // TODO: adapt the data and check them
       cy.get("#button_edit").should("not.exist");
       cy.crCompareSnapshot("patient_2014_105_clubfoot");

@@ -21,7 +21,7 @@ define("HARDCODED_LISTINGS", [
     "all" => [
         "center"                   => "Centers",
         "NextCenter"               => "Centers",
-        "treatment_evaluation"     => "Eval14",
+        "treatment_evaluation"     => "TreatmentEvaluation",
         "examiner"                 => "Examiners"
     ],
     "bills" => [
@@ -51,12 +51,12 @@ define("HARDCODED_LISTINGS", [
         "JumpingOneLegRight"       => "Eval01",
         "RunLeft"                  => "Eval02",
         "RunRight"                 => "Eval02",
-        "Treatment"                => "CPTreatment"
+        "x_Treatment"              => "CPTreatment"
     ],
     "other_consults" => [
         "Pain"                     => "Pain",
         "Side"                     => "Side",
-        "Surgery66"                => "Surgery",
+        "x_Surgery66"              => "Surgery",
         "Walk"                     => "WalkingCapacities"
     ],
     "patients" => [
@@ -70,12 +70,12 @@ define("HARDCODED_LISTINGS", [
         "type"                     => "PictureType"
     ],
     "ricket_consults" => [
-        "Brace"                    => "Device",
+        "x_Brace"                  => "Device",
         "LeftLeg"                  => "LegAnalysis",
         "Pain"                     => "Pain",
         "Ribbeading"               => "Eval03",
         "RightLeg"                 => "LegAnalysis",
-        "Surgery"                  => "Surgery",
+        "x_Surgery"                => "Surgery",
         "WalkingDifficulties"      => "WalkingCapacities",
         "Wristenlargement"         => "Eval03"
     ]

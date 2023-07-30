@@ -53,7 +53,6 @@ t::setDefaultOption("model", "ClubFoot");
 		<x-ff-patient-related></x-ff-patient-related>
 		<x-ff-next-appointment></x-ff-next-appointment>
 		<x-group-panel title='Conclusion'>
-			<?php (new t("ClubFoot.Treatment"))->tr2()->p(); ?>
 			<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
 		</x-group-panel>
 	</div>

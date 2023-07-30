@@ -1,16 +1,6 @@
 <table style="width: 100%">
   <colgroup span="2" width="50%"></colgroup>
   <tbody>
-    <tr
-      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Treatment}'
-    >
-      <td>Treatment</td>
-      <td>
-        <span id="ClubFoot_Treatment" name="Treatment"
-          >{{ folder.getFilesRelatedToPatient($index).Treatment }}</span
-        >
-      </td>
-    </tr>
     <tr>
       <td>Pirani left</td>
       <td>{{currentFile().getPiraniLeft()}}</td>

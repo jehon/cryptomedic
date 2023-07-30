@@ -210,7 +210,7 @@
                 "XRay": "",
                 "Performed": null,
                 "NotPerformed": null,
-                "Surgery66": "Postero-medial release",
+                "x_Surgery66": "Postero-medial release",
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
@@ -260,17 +260,17 @@
                 "CrossLeftF": "0",
                 "x_Surgery": "Osteotomy",
                 "XRay": "",
-                "Brace": null,
-                "Nutrisupport": 0,
+                "x_Brace": null,
+                "x_Nutrisupport": 0,
                 "Brachialcircumferencecm": 0,
                 "WalkingDifficulties": "Level 1",
                 "comments": "",
                 "suggested_for_surgery": 1,
                 "treatment_evaluation": null,
                 "treatment_finished": null,
-                "conclusion_medical_calcium500": 0,
-                "conclusion_medical_calcium1000": 1,
-                "conclusion_medical_vitaminD": 0
+                "x_conclusion_medical_calcium500": 0,
+                "x_conclusion_medical_calcium1000": 1,
+                "x_conclusion_medical_vitaminD": 0
             }
         },
         {
