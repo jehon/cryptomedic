@@ -2,7 +2,7 @@
 INTEGRATION_TEST_TMP=$(TMP)/integration
 INTEGRATION_BUILT_MARK=$(INTEGRATION_TEST_TMP)/.built
 
-integration: clean-files dc-build dc-up integration-dump integration-test ok
+integration: clear clean-files dc-build dc-up integration-dump integration-test ok
 
 .PHONY: integration-dump
 dump: integration-dump

@@ -55,14 +55,15 @@ case "$FLAVOR" in
     ;;
 "desktop")
     # Nothing to do - default flavor - use the config preset's
-    run_cypress "run" "--env" "flavor=desktop"
-    shift
+    run_cypress "run" \
+        "--env" "flavor=desktop" \
+        "--config" "videosFolder=$OUTPUT/videos,screenshotsFolder=$OUTPUT/screenshots"
     ;;
 "mobile")
     # Mobile: 360 x 480
     run_cypress "run" \
         "--env" "flavor=mobile" \
-        "--config" "videosFolder=../$OUTPUT/videos,screenshotsFolder=../$OUTPUT/screenshots,viewportWidth=360,viewportHeight=640"
+        "--config" "videosFolder=$OUTPUT/videos,screenshotsFolder=$OUTPUT/screenshots,viewportWidth=360,viewportHeight=640"
     ;;
 *)
     echo "Need flavor as [1]" >&2
