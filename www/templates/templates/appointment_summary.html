@@ -3,18 +3,17 @@
     <tr
       ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).next_appointment}'
     >
-      <td>NextAppointment</td>
+      <td>Next Appointment</td>
       <td>
-        <span id="Appointment_NextAppointment" class="error"
-          >Read: key is not in the database:
-          'Appointment.next_appointment'</span
+        <span id="Appointment_next_appointment" name="next_appointment"
+          >{{ folder.getFilesRelatedToPatient($index).next_appointment }}</span
         >
       </td>
     </tr>
     <tr
       ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).next_center}'
     >
-      <td>NextCenter</td>
+      <td>Next Center</td>
       <td>
         <span id="Appointment_next_center" name="next_center"
           >{{ folder.getFilesRelatedToPatient($index).next_center }}</span

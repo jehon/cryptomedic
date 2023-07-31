@@ -12,7 +12,7 @@ class ReportConsultationsController extends ReportController {
   public function buildData() {
     $this->result['list'] = $this->runSqlWithNamedParameter(
       "SELECT patients.*, appointments.examiner as examiner, appointments.id as c_id, appointments.date as c_date, appointments.next_center as c_center, appointments.purpose as purpose, "
-        . " appointments.next_appointment as c_nextAppointment, appointments.patient_id as patient_id "
+        . " appointments.next_appointment as c_next_appointment, appointments.patient_id as patient_id "
         . " FROM appointments "
         . " JOIN patients ON (appointments.patient_id = patients.id) "
         . " WHERE (1 = 1) "

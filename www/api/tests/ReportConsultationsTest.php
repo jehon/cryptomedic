@@ -22,7 +22,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->assertArrayHasKey('list', $json);
 		$this->assertEquals(count($json['list']), 3);
 		foreach ($json['list'] as $k => $v) {
-			$this->assertEquals($v['c_nextAppointment'], self::$day);
+			$this->assertEquals($v['c_next_appointment'], self::$day);
 		}
 	}
 
@@ -34,7 +34,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 
 		$this->assertEquals(count($json['list']), 1);
 		foreach ($json['list'] as $k => $v) {
-			$this->assertEquals($v['c_nextAppointment'], self::$day);
+			$this->assertEquals($v['c_next_appointment'], self::$day);
 			$this->assertEquals($v['c_center'], "Chakaria Disability Center");
 		}
 	}

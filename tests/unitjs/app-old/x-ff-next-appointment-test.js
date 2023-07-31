@@ -27,7 +27,7 @@ describe(fn(import.meta.url), function () {
   it("should be initialized", function () {
     const el = new XFfNextAppointment();
     expect(el.hasAttribute("blocked")).toBeTrue();
-    expect(el._nextAppointment()).toBeNull();
+    expect(el._next_appointment()).toBeNull();
   });
 
   it("should show no appointment", function (done) {

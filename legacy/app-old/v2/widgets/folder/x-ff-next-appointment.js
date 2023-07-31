@@ -54,7 +54,7 @@ export default class XFfNextAppointment extends XWithFolder {
       );
   }
 
-  _nextAppointment() {
+  _next_appointment() {
     if (!this.isOk()) {
       return null;
     }
@@ -72,10 +72,11 @@ export default class XFfNextAppointment extends XWithFolder {
   }
 
   adapt() {
-    const nextAppointment = this._nextAppointment();
-    if (nextAppointment) {
-      this.setAttribute("next-appointment", nextAppointment);
-      this.shadowRoot.querySelector("#appointment").innerHTML = nextAppointment;
+    const next_appointment = this._next_appointment();
+    if (next_appointment) {
+      this.setAttribute("next-appointment", next_appointment);
+      this.shadowRoot.querySelector("#appointment").innerHTML =
+        next_appointment;
     } else {
       this.removeAttribute("next-appointment");
       this.shadowRoot.querySelector("#appointment").innerHTML = "";
