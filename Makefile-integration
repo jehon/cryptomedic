@@ -45,27 +45,25 @@ test: integration-test
 integration-test: integration-test-desktop integration-test-mobile integration-test-styles
 
 .PHONY: integration-test-desktop
-integration-test-desktop: $(INTEGRATION_TEST_TMP)/runtime/.tested-desktop
-$(INTEGRATION_TEST_TMP)/runtime/.tested-desktop: \
+integration-test-desktop: $(INTEGRATION_TEST_TMP)/.tested-desktop
+$(INTEGRATION_TEST_TMP)/.tested-desktop: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/cypress/ -name "*.js")
 
+	@mkdir -p "$(dir $@)"
 	bin/cr-data-reset
 	bin/cr-cypress "desktop" "$(INTEGRATION_TEST_TMP)/runtime/desktop"
-
-	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 .PHONY: integration-test-mobile
-integration-test-mobile: $(INTEGRATION_TEST_TMP)/runtime/.tested-mobile
-$(INTEGRATION_TEST_TMP)/runtime/.tested-mobile: \
+integration-test-mobile: $(INTEGRATION_TEST_TMP)/.tested-mobile
+$(INTEGRATION_TEST_TMP)/.tested-mobile: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/cypress/ -name "*.js")
 
+	@mkdir -p "$(dir $@)"
 	bin/cr-data-reset
 	bin/cr-cypress "mobile" "$(INTEGRATION_TEST_TMP)/runtime/mobile"
-
-	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 cypress-open: $(INTEGRATION_BUILT_MARK)

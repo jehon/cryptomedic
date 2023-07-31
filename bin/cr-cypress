@@ -28,7 +28,7 @@ setup_folders() {
 run_cypress() {
     header_begin "Cypress run tests ($*)"
     docker compose run --rm --quiet-pull \
-        --volume "$(pwd):/workdir" \
+        --volume "$CR_PRJ_DIR:/workdir" \
         --workdir /workdir/tests \
         --user "$(id -u)" --env HOME=/root \
         -e DISPLAY \
@@ -41,10 +41,13 @@ run_cypress() {
 }
 
 FLAVOR="$1"
-OUTPUT="${2}"
+OUTPUT="$2"
+mkdir -p "$OUTPUT"
 if [ -n "$OUTPUT" ]; then
     setup_folders "$OUTPUT"
 fi
+
+DOCKER_OUTPUT="/workdir/$(realpath --relative-to "$CR_PRJ_DIR" "$2")"
 
 case "$FLAVOR" in
 "version")
@@ -57,13 +60,13 @@ case "$FLAVOR" in
     # Nothing to do - default flavor - use the config preset's
     run_cypress "run" \
         "--env" "flavor=desktop" \
-        "--config" "videosFolder=$OUTPUT/videos,screenshotsFolder=$OUTPUT/screenshots"
+        "--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots"
     ;;
 "mobile")
     # Mobile: 360 x 480
     run_cypress "run" \
         "--env" "flavor=mobile" \
-        "--config" "videosFolder=$OUTPUT/videos,screenshotsFolder=$OUTPUT/screenshots,viewportWidth=360,viewportHeight=640"
+        "--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots,viewportWidth=360,viewportHeight=640"
     ;;
 *)
     echo "Need flavor as [1]" >&2
