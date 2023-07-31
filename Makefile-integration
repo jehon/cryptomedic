@@ -72,27 +72,25 @@ cypress-open: $(INTEGRATION_BUILT_MARK)
 .PHONY: test-styles
 integration-test-styles: $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json
 
-$(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json: $(INTEGRATION_TEST_TMP)/styles/.structure
-	bin/cr-node tests/styles/check-styles.js
-
-$(INTEGRATION_TEST_TMP)/styles/.structure: \
-		tests/styles \
-		tests/styles/references \
+$(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json: \
 		$(INTEGRATION_TEST_TMP)/.tested-desktop \
 		$(INTEGRATION_TEST_TMP)/.tested-mobile
 
-	@rm -fr "$(dir $@)"
-	@mkdir -p "$(dir $@)"
-	@mkdir -p "$(dir $@)/run/mobile"
-	@mkdir -p "$(dir $@)/run/desktop"
-
-	rsync -r tests/styles/ "$(dir $@)"
-	find $(INTEGRATION_TEST_TMP)/mobile/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/mobile/" ";"
-	find $(INTEGRATION_TEST_TMP)/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
-
-	@touch "$@"
+	bin/cr-node node_modules/.bin/ts-node --esm tests/styles/check-styles.ts \
+		--root="$(ROOT)" \
+		--references="$(ROOT)/tests/styles/references/" \
+		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
+		--target="$(INTEGRATION_TEST_TMP)/styles" \
 
 .PHONY: integration-update-references-styles
 update: integration-update-references-styles
-integration-update-references-styles: $(INTEGRATION_TEST_TMP)/styles/.structure
-	bin/cr-node tests/styles/check-styles.js --update
+integration-update-references-styles: \
+		$(INTEGRATION_TEST_TMP)/.tested-desktop \
+		$(INTEGRATION_TEST_TMP)/.tested-mobile
+
+	bin/cr-node node_modules/.bin/ts-node --esm tests/styles/check-styles.ts \
+		--root="$(ROOT)" \
+		--references="$(ROOT)/tests/styles/references/" \
+		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
+		--target="$(INTEGRATION_TEST_TMP)/styles" \
+		--update

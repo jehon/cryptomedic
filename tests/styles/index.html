@@ -33,16 +33,12 @@
         border: solid 1px black;
       }
 
-      [status="empty"] {
-        border: solid gray 5px;
+      [ok] {
+        display: none;
       }
 
-      [status="running"] {
-        border: solid blue 5px;
-      }
-
-      [status="running"] {
-        border: solid yellow 5px;
+      [all] [ok] {
+        display: block;
       }
 
       compare {
@@ -50,7 +46,6 @@
         margin-bottom: 5px;
       }
     </style>
-    <script src="./styles-problems-list.js"></script>
 
     <div class="compare" id="header">
       <span
@@ -65,6 +60,11 @@
         >
           normal
         </button>
+        <button
+          onclick="document.querySelector('body').setAttribute('all', 'all');"
+        >
+          all
+        </button>
       </span>
       <span>Test result</span>
       <span>Comparison</span>
@@ -74,21 +74,29 @@
     <div id="results"></div>
 
     <script>
-      fetch("./styles-problems-list.json")
+      fetch("/dev/tmp/integration/styles/styles-problems-list.json")
         .then((response) => response.json())
-        .then((problemsList) => {
+        .then((listOfFiles) => {
           let id = 0;
-          for (let f of Object.keys(problemsList)) {
-            const data = problemsList[f];
+          for (let key of Object.keys(listOfFiles)) {
+            const data = listOfFiles[key];
 
             document.querySelector("#results").insertAdjacentHTML(
               "beforeend",
-              `<h3>${data.key}: ${data.problemText ?? data.warningText}</h3>
+              `<div 
+                  ${!(data.problem || data.warning) ? "ok" : ""}
+                >
+                <h3>${key}: ${data.message}
+                  ${!(data.problem || data.warning) ? "ok" : ""}
+                  ${data.problem ? "problem" : ""}
+                  ${data.warning ? "warning" : ""}
+                </h3>
                 <div class="compare">
-                    <img ref src="${data.ref}"></img>
-                    <img run src="${data.run}"></img>
-                    <img diff src="${data.diff}"></img>
-                </div>`
+                    <img ref src="/dev/${data.reference}"></img>
+                    <img run src="/dev/${data.runtime}"></img>
+                    <img diff src="/dev/${data.difference}"></img>
+                </div>
+              </div>`
             );
             id++;
           }
