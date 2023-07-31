@@ -76,7 +76,7 @@ class Database {
 			if ($stmt) {
 				$stmt->closeCursor();
 			}
-			throw new Exception("[$dbgMsg] Invalid statement: " . $sql, $e);
+			throw new Exception("[ERROR] Invalid statement: " . $sql . "\n" . $e->getMessage(), 0);
 		}
 	}
 
