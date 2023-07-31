@@ -62,11 +62,11 @@ export default class XGraphic extends XWithFolder {
    * @returns {number} the age as a fractional number of years
    */
   getAge(file) {
-    // if (!file.Date) {
+    // if (!file.date) {
     //     return NaN;
     // }
     try {
-      return fromBirthDateTo(this.folder.getPatient().year_of_birth, file.Date);
+      return fromBirthDateTo(this.folder.getPatient().year_of_birth, file.date);
     } catch (e) {
       return NaN;
     }
@@ -246,7 +246,7 @@ export default class XGraphic extends XWithFolder {
                     valid="${this.isValid(file) ? "valid" : "invalid"}"
                     ng-class="{ hovered: hovered == $index }"
                 >
-                    <td>${file.Date}</td>
+                    <td>${file.date}</td>
                     <td>${this.displayX(file)}</td>
                     <td>${this.displayY(file)}</td>
                     <td>${this.isValid(file) ? "✓" : "✗"}</td>

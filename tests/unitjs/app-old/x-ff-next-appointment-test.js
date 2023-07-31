@@ -13,7 +13,7 @@ describe(fn(import.meta.url), function () {
     updated_at: "<timestamp>",
     last_user: "Thierry",
     patient_id: 1,
-    Date: "2007-01-10",
+    date: "2007-01-10",
     examiner: "Ershad",
     purpose: null,
     Nextappointment: "2999-01-10",

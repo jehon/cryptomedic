@@ -25,7 +25,7 @@ describe("PatientRelated", function () {
       expect(rc).toEqual(jasmine.any(RicketConsult));
       expect(rc).toEqual(jasmine.anything({ id: 13 }));
       expect(rc.getPatient()).toEqual(jasmine.any(Patient));
-      expect(rc.Date).toEqual("2014-01-04");
+      expect(rc.date).toEqual("2014-01-04");
     });
 
     describe("with ricketConsult_13", function () {

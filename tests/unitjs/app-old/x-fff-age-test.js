@@ -68,7 +68,7 @@ describe(fn(import.meta.url), function () {
       expect(fromBirthDateTo(2000)).toBeGreaterThan(20);
     });
 
-    // Date vs...
+    // date vs...
     it("should handle yearOfBirth of date vs. date", function () {
       expect(fromBirthDateTo(now, nowPlus5)).toBe(5);
     });
@@ -188,7 +188,7 @@ describe(fn(import.meta.url), function () {
       ).toBe("10y6m");
     });
 
-    // Date vs...
+    // date vs...
     it("should handle yearOfBirth of date vs. date", function () {
       expect(
         fromBirthDate(now, {

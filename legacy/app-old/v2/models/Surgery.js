@@ -14,7 +14,7 @@ export default class Surgery extends PatientRelated {
   validate(res) {
     res = super.validate(res);
 
-    if (this.Date > new Date().toISOString()) {
+    if (this.date > new Date().toISOString()) {
       res.dateInTheFuture = true;
     }
     return res;

@@ -21,7 +21,7 @@ class ReportSurgicalController extends ReportController
 
           IFNULL(GROUP_CONCAT(bills.id SEPARATOR '|'), '') as bids,
           COUNT(bills.id) as bills,
-          MAX(bills.Date) as Date,
+          MAX(bills.date) as date,
           ANY_VALUE(bills.center) as center,
           MAX(bills.sl_familySalary) AS sl_familySalary,
           MAX(bills.sl_numberOfHouseholdMembers) AS sl_numberOfHouseholdMembers,
@@ -45,13 +45,13 @@ class ReportSurgicalController extends ReportController
         FROM patients
           LEFT OUTER JOIN bills ON (
             bills.patient_id = patients.id
-            AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
+            AND " . $this->getParamAsSqlFilter("when", "bills.date") . "
             AND " . Bill::getActivityFilter("surgical") . "
           )
           LEFT OUTER JOIN prices ON prices.id = bills.price_id
           LEFT OUTER JOIN surgeries ON (
             surgeries.patient_id = patients.id
-            AND " . $this->getParamAsSqlFilter("when", "surgeries.Date") . "
+            AND " . $this->getParamAsSqlFilter("when", "surgeries.date") . "
           )
           LEFT OUTER JOIN consults ON (consults.patient_id = patients.id)
           LEFT OUTER JOIN consults AS consults2 ON (consults2.patient_id = patients.id AND consults2.date > consults.date)
@@ -61,7 +61,7 @@ class ReportSurgicalController extends ReportController
           AND (bills.id IS NOT NULL OR surgeries.id IS NOT NULL)
 
         GROUP BY patients.id
-        ORDER BY bills.Date, bills.id"
+        ORDER BY bills.date, bills.id"
       ),
     [
       "bids" => SQL::LIST,

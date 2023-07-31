@@ -62,7 +62,7 @@ export default class XFolderBill extends XFolderFile {
 
     const selectedPrice = selectPriceFromDate(
       this._allPrices,
-      this._currentFile.Date
+      this._currentFile.date
     );
 
     if (!selectedPrice) {

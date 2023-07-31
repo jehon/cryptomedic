@@ -25,7 +25,7 @@ class ReportFinancialController extends ReportController {
               SUM(bills.total_real) AS total_real,
               SUM(bills.total_asked) AS total_asked,
               COALESCE(SUM((SELECT SUM(amount) FROM payments WHERE bill_id = bills.id)), 0) AS total_paid,
-              (SELECT min(year(Date)) - patients.year_of_birth from bills where patient_id = patients.id) as age_at_first_consult,
+              (SELECT min(year(date)) - patients.year_of_birth from bills where patient_id = patients.id) as age_at_first_consult,
               (SELECT count(*) from consults WHERE consults.patient_id = patients.id) as nb_consults,
               (SELECT count(*) from pictures WHERE pictures.patient_id = patients.id) as nb_pictures,
               COUNT(*) as nb_bills
@@ -33,7 +33,7 @@ class ReportFinancialController extends ReportController {
                 JOIN bills ON bills.patient_id = patients.id
                 JOIN prices ON prices.id = bills.price_id
             WHERE (1 = 1)
-              AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
+              AND " . $this->getParamAsSqlFilter("when", "bills.date") . "
             GROUP BY patients.id
             HAVING (1 = 1)
       ",

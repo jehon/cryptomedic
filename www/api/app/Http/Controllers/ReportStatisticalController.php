@@ -14,7 +14,7 @@ class ReportStatisticalController extends ReportController {
 		if (!$pathology) {
 			$thisfilter = "(patients.pathology is NULL or patients.pathology = 'Other')";
 		}
-		$newPatients = " (patients.entry_year >= YEAR(bills.Date)) AND (ADDDATE(patients.created_at, INTERVAL 1 MONTH) >= bills.Date) ";
+		$newPatients = " (patients.entry_year >= YEAR(bills.date)) AND (ADDDATE(patients.created_at, INTERVAL 1 MONTH) >= bills.date) ";
 		$sql = "SELECT count(*) as res FROM bills JOIN patients ON (bills.patient_id = patients.id)"
 			. " WHERE {$this->filter} AND $thisfilter";
 		$all = $this->getOneBySQL($sql);
@@ -56,7 +56,7 @@ class ReportStatisticalController extends ReportController {
 
 	public function buildData() {
 		$this->filter = "("
-			. $this->getParamAsSqlFilter("when", "bills.Date")
+			. $this->getParamAsSqlFilter("when", "bills.date")
 			. " AND "
 			. $this->getParamAsSqlFilter("examiner", "bills.examiner")
 			. " AND "

@@ -28,7 +28,7 @@
           {{f.getModel()}}
         </x-button>
       </td>
-      <td>{{f.Date | date:'longDate' }}</td>
+      <td>{{f.date | date:'longDate' }}</td>
       <td>
         <span
           ng-include="template(f.getModel().toLowerCase(), 'summary')"

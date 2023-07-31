@@ -6,7 +6,7 @@ t::setDefaultOption("baseExpression", "currentFile().");
 		<x-fff-field variable label='Today' class='not-mode-read'>
 			<div>{{today}}</div>
 		</x-fff-field>
-		<?php (new t("Appointment.Date"))->tr2("Entry date")->p(); ?>
+		<?php (new t("Appointment.date"))->tr2("Entry date")->p(); ?>
 		<?php (new t("Appointment.purpose"))->tr2("Purpose")->p(); ?>
 		<?php (new t("Appointment.Nextappointment"))->tr2("Next Appointment")->p(); ?>
 		<?php (new t("Appointment.NextCenter"))->tr2("Next Center")->p(); ?>

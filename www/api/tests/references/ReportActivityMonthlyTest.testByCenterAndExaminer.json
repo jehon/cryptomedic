@@ -13,7 +13,7 @@
         {
             "bid": 12,
             "pid": 2,
-            "Date": "2014-05-20",
+            "date": "2014-05-20",
             "examiner": "Ershad",
             "center": "Chakaria Disability Center",
             "patient_reference": "2014-107",
@@ -40,7 +40,7 @@
         {
             "bid": 9,
             "pid": 5,
-            "Date": "2014-05-31",
+            "date": "2014-05-31",
             "examiner": "Ershad",
             "center": "Chakaria Disability Center",
             "patient_reference": "2014-105",
@@ -67,7 +67,7 @@
         {
             "bid": 2,
             "pid": 3,
-            "Date": "2014-01-14",
+            "date": "2014-01-14",
             "examiner": "Ershad",
             "center": "Chakaria Disability Center",
             "patient_reference": "2014-103",
@@ -87,7 +87,7 @@
         {
             "bid": 5,
             "pid": 2,
-            "Date": "2015-01-19",
+            "date": "2015-01-19",
             "examiner": "Ershad",
             "center": "Chakaria Disability Center",
             "patient_reference": "2014-107",

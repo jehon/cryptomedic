@@ -52,9 +52,9 @@ export default function ctrl_file_bill($scope, $element) {
     getXFolderBill().allPrices = getPrices();
   });
 
-  const dateElement = $element[0].querySelector("[name=Date]");
+  const dateElement = $element[0].querySelector("[name=date]");
   dateElement.addEventListener("blur", () => {
-    $scope.currentFile().Date = dateElement.value;
+    $scope.currentFile().date = dateElement.value;
     if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
       $scope.currentFile().calculatePriceId(getPrices());
     }

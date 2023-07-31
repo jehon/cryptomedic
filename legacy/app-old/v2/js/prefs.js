@@ -30,8 +30,8 @@ export function getPref(part, def = null) {
 
 export function extractPrefsFile(object) {
   let prefs = getPref("file", {});
-  if (object.Date) {
-    prefs.date = object.Date;
+  if (object.date) {
+    prefs.date = object.date;
   }
   if (object.examiner) {
     prefs.examiner = object.examiner;

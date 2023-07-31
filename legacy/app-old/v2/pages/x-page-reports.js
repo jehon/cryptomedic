@@ -600,7 +600,7 @@ reports[REPORT_ACTIVITY] = {
           footers: ["", ""]
         }
       )
-      .addDetail("Date", { headers: ["Date"] })
+      .addDetail("date", { headers: ["Date"] })
       .addDetail("examiner", { headers: ["Examiner"] })
       .addDetail(
         (data) => createElementWithObject(XCodage, { value: data.center }),
@@ -614,7 +614,7 @@ reports[REPORT_ACTIVITY] = {
         (data) =>
           createElementWithObject(XAge, {
             value: data.year_of_birth,
-            ref: data.Date
+            ref: data.date
           }),
         {
           headers: [
@@ -925,7 +925,7 @@ reports[REPORT_SURGICAL] = {
           footers: ["", ""]
         }
       )
-      .addDetail("Date", { headers: ["Date"] })
+      .addDetail("date", { headers: ["Date"] })
       .addDetail("center", { headers: ["Place"] })
       .addDetail("patient_reference", { headers: ["Record n#"] })
       .addDetail("patient_name", {

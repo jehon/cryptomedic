@@ -16,7 +16,7 @@
             "pathology": "ClubFoot",
             "bids": [],
             "bills": 0,
-            "Date": null,
+            "date": null,
             "center": null,
             "sl_familySalary": null,
             "sl_numberOfHouseholdMembers": null,
@@ -48,7 +48,7 @@
                 8
             ],
             "bills": 1,
-            "Date": "2014-01-25",
+            "date": "2014-01-25",
             "center": "Ukhia",
             "sl_familySalary": 7000,
             "sl_numberOfHouseholdMembers": 10,

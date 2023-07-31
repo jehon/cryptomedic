@@ -7,7 +7,7 @@ t::setDefaultOption("baseExpression", "currentFile().");
 <x-two-columns>
 	<div>
 		<x-group-panel title='Surgical Report'>
-			<?php (new t("Surgery.Date"))->tr2("Operation Date")->p(); ?>
+			<?php (new t("Surgery.date"))->tr2("Operation Date")->p(); ?>
 			<?php (new t("Surgery.report_diagnostic"))->tr2()->p(); ?>
 			<?php (new t("Surgery.report_surgeon"))->tr2()->p(); ?>
 			<?php (new t("Surgery.ReportSideR"))->tr2()->p(); ?>

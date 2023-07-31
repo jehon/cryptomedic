@@ -10,7 +10,7 @@ export default class RicketConsult extends PatientRelated {
   validate(res) {
     res = super.validate(res);
 
-    if (this.Date > new Date().toISOString()) {
+    if (this.date > new Date().toISOString()) {
       console.error("error");
       res.dateInTheFuture = true;
     }

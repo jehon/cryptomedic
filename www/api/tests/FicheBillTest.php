@@ -34,7 +34,7 @@ class FicheBillTest extends FicheTestHelper {
     // Modify it
     $json = $this->doUpdate($file['id'], [
       "examiner" => "Ershad",
-      "Date" => "2017-01-20"
+      "date" => "2017-01-20"
     ], false);
   }
 

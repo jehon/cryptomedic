@@ -430,7 +430,7 @@ export default function ctrl_folder($scope, $routeParams) {
             "The " +
             $scope.currentFile().getModel() +
             " of " +
-            $scope.currentFile().Date +
+            $scope.currentFile().date +
             " has been deleted"
         });
 

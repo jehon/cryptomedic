@@ -69,11 +69,11 @@ context("Actions", () => {
     checkFileAdd(
       "ricket_consult",
       {
-        "#Date": { value: "2003-01-01" },
+        "#date": { value: "2003-01-01" },
         "#Weightkg": "13"
       },
       () => {
-        cy.get("#Date").should("contain.text", "2003-01-01");
+        cy.get("#date").should("contain.text", "2003-01-01");
         cy.get("#Weightkg").should("contain.text", "13");
       }
     );
@@ -83,11 +83,11 @@ context("Actions", () => {
     checkFileAdd(
       "other_consult",
       {
-        "#Date": { value: "2003-01-01" },
+        "#date": { value: "2003-01-01" },
         "#Weightkg": "13"
       },
       () => {
-        cy.get("#Date").should("contain.text", "2003-01-01");
+        cy.get("#date").should("contain.text", "2003-01-01");
         cy.get("#Weightkg").should("contain.text", "13");
       }
     );
@@ -97,11 +97,11 @@ context("Actions", () => {
     checkFileAdd(
       "clubfoot",
       {
-        "#Date": { value: "2003-01-01" },
+        "#date": { value: "2003-01-01" },
         "#Weightkg": "13"
       },
       () => {
-        cy.get("#Date").should("contain.text", "2003-01-01");
+        cy.get("#date").should("contain.text", "2003-01-01");
         cy.get("#Weightkg").should("contain.text", "13");
       }
     );

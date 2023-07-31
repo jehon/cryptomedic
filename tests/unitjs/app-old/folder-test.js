@@ -184,8 +184,8 @@ describe("test-folder", function () {
     it("should order about Date", function () {
       const basis = {};
       const o1 = build(basis, {});
-      const o2 = build(basis, { Date: "2010-01-01" });
-      const o3 = build(basis, { Date: "2000-01-01" });
+      const o2 = build(basis, { date: "2010-01-01" });
+      const o3 = build(basis, { date: "2000-01-01" });
 
       resFirst(o1, o2);
       resFirst(o1, o3);
@@ -206,9 +206,9 @@ describe("test-folder", function () {
     it("should new > date > model > id", function () {
       const basis = {};
       const o1 = build(basis, {});
-      const o2 = build(basis, { Date: "2000-01-01" });
+      const o2 = build(basis, { date: "2000-01-01" });
       const o3 = build(basis, { id: "25" }, "a");
-      const o4 = build(basis, { id: "25", Date: "2000-01-01" });
+      const o4 = build(basis, { id: "25", date: "2000-01-01" });
 
       resFirst(o1, o2);
       resFirst(o1, o3);

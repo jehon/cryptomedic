@@ -37,7 +37,7 @@ class Bill extends CryptomedicModel {
 		if ($first_payment) {
 			$p = new Payment([
 				'bill_id'      => $obj->id,
-				'Date'         => $obj->Date,
+				'date'         => $obj->date,
 				'examiner'     => $obj->examiner,
 				'Amount'       => $first_payment,
 			]);

@@ -20,7 +20,7 @@ export let male = new Folder([
       label: "top-left",
       id: 1,
       patient_id: 1,
-      Date: "2007-01-10",
+      date: "2007-01-10",
       Weightkg: amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vtop,
       Heightcm: amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vleft
     }
@@ -31,7 +31,7 @@ export let male = new Folder([
     record: {
       id: 2,
       patient_id: 1,
-      Date: "2007-01-10",
+      date: "2007-01-10",
       Weightkg: amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vbottom,
       Heightcm: amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vright
     }
@@ -42,7 +42,7 @@ export let male = new Folder([
     record: {
       id: 3,
       patient_id: 1,
-      Date: "2014-01-04",
+      date: "2014-01-04",
       examiner: "AMD doctor",
       Weightkg: 37,
       Heightcm: 110
@@ -68,7 +68,7 @@ export let female = new Folder([
     record: {
       id: 1,
       patient_id: 1,
-      Date: "2007-01-10",
+      date: "2007-01-10",
       Weightkg: 0,
       Heightcm: 0
     }
@@ -79,7 +79,7 @@ export let female = new Folder([
     record: {
       id: 2,
       patient_id: 1,
-      Date: "2007-01-10",
+      date: "2007-01-10",
       Weightkg: 29,
       Heightcm: 134
     }
@@ -90,7 +90,7 @@ export let female = new Folder([
     record: {
       id: 3,
       patient_id: 1,
-      Date: "2014-01-04",
+      date: "2014-01-04",
       examiner: "AMD doctor",
       Weightkg: 37,
       Heightcm: 110

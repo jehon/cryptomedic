@@ -119,8 +119,8 @@ class CryptomedicModel extends Model {
 					return $v != $n['id'];
 				});
 			} else {
-				if (!in_array('Date', $n) && $this->Date) {
-					$n['Date'] = $this->Date;
+				if (!in_array('date', $n) && $this->date) {
+					$n['date'] = $this->date;
 				}
 				if (!in_array('examiner', $n) && $this->examiner) {
 					$n['examiner'] = $this->examiner;

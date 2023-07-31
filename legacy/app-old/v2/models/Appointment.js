@@ -17,7 +17,7 @@ export default class Appointment extends PatientRelated {
       var day = "0" + now.getDate();
       day = day.substring(day.length - 2);
 
-      this.Date = year + "-" + month + "-" + day;
+      this.date = year + "-" + month + "-" + day;
     }
   }
 

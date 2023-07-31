@@ -8,7 +8,7 @@ export default class XFffBmiSd extends XWithFile {
     const sd = stdDeviationFor(
       this.folder.getPatient().sexStr(),
       "bmi",
-      fromBirthDateTo(this.folder.getPatient().year_of_birth, this.file.Date),
+      fromBirthDateTo(this.folder.getPatient().year_of_birth, this.file.date),
       this.file.bmi()
     );
 

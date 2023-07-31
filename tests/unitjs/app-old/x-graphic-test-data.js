@@ -18,7 +18,7 @@ const folder = new Folder([
     record: {
       id: 2,
       patient_id: 1,
-      Date: "2007-01-10",
+      date: "2007-01-10",
       Weightkg: 0,
       Heightcm: 0,
       Y: 0
@@ -30,7 +30,7 @@ const folder = new Folder([
     record: {
       id: 1,
       patient_id: 1,
-      Date: "2007-01-10",
+      date: "2007-01-10",
       Weightkg: 29,
       Heightcm: 134,
       Y: 100
@@ -42,7 +42,7 @@ const folder = new Folder([
     record: {
       id: 13,
       patient_id: 1,
-      Date: "2014-01-04",
+      date: "2014-01-04",
       examiner: "AMD doctor",
       Weightkg: 37,
       Heightcm: 110,

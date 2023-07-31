@@ -74,7 +74,7 @@ class Picture extends CryptomedicModel {
 			. str_pad($patient->entry_order % 100, 3, "0", STR_PAD_LEFT)
 			. "/"
 			. "{$patient->entry_year}-{$patient->entry_order}."
-			. ($this->Date == null ? "undated" : $this->Date)
+			. ($this->date == null ? "undated" : $this->date)
 			. ".{$this->id}.{$ext}";
 	}
 

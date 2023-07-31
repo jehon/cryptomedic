@@ -52,5 +52,5 @@ class FolderSummary extends React.Component<
 
 bridgeTo("x-react-folder-summary", FolderSummary);
 
-//       <IODate value={f.Date} />
+//       <IODate value={f.date} />
 //     <td>summary</td>

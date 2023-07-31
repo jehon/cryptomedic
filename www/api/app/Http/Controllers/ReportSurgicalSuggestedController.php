@@ -20,7 +20,7 @@ class ReportSurgicalSuggestedController extends ReportController
           patients.pathology,
 
           COUNT(surgeries.id) as amount_surgeries,
-          MAX(surgeries.Date) AS last_surgery,
+          MAX(surgeries.date) AS last_surgery,
           MAX(consults.date) AS suggested_from
 
         FROM patients

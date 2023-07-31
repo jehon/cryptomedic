@@ -181,18 +181,18 @@ export default class Folder extends FolderPage {
       return 10 * o2First;
     }
 
-    // What to do if one 'Date' is missing
-    if (typeof o1.Date == "undefined" && typeof o2.Date != "undefined") {
+    // What to do if one 'date' is missing
+    if (typeof o1.date == "undefined" && typeof o2.date != "undefined") {
       return 20 * o1First;
     }
-    if (typeof o2.Date == "undefined" && typeof o1.Date != "undefined") {
+    if (typeof o2.date == "undefined" && typeof o1.date != "undefined") {
       return 20 * o2First;
     }
 
     // Both 'date' are present
-    if (typeof o1.Date != "undefined" && typeof o2.Date != "undefined") {
-      if (o1.Date < o2.Date) return 30 * o2First;
-      if (o1.Date > o2.Date) return 30 * o1First;
+    if (typeof o1.date != "undefined" && typeof o2.date != "undefined") {
+      if (o1.date < o2.date) return 30 * o2First;
+      if (o1.date > o2.date) return 30 * o1First;
     }
 
     if (

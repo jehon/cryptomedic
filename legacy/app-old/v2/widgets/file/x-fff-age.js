@@ -131,7 +131,7 @@ export default class XFffAge extends XWithFile {
     this.setAttribute("source", "non-patient");
     return fromBirthDateTo(
       this.folder.getPatient().year_of_birth,
-      this.file.Date
+      this.file.date
     );
   }
 }

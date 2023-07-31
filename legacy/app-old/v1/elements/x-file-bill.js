@@ -47,7 +47,7 @@ export default class XFileBill extends XFile {
       }
 
       // Should be in string for comparisons to works...
-      const dref = this.assertExists("Date");
+      const dref = this.assertExists("date");
 
       let index = -1;
       for (const i in prices) {

@@ -23,9 +23,9 @@ class ReportSurgicalTest extends RouteReferenceTestCase {
 
 		$this->assertEquals(2, count($json['list']));
 		foreach ($json['list'] as $k => $v) {
-			if ($v['Date'] > "") {
+			if ($v['date'] > "") {
 				// Otherwise, we have a surgical consultation
-				$this->assertEquals(substr($v['Date'], 0, 7), self::$month);
+				$this->assertEquals(substr($v['date'], 0, 7), self::$month);
 			}
 		}
 	}
@@ -38,9 +38,9 @@ class ReportSurgicalTest extends RouteReferenceTestCase {
 
 		$this->assertEquals(2, count($json['list']));
 		foreach ($json['list'] as $k => $v) {
-			if ($v['Date'] > "") {
+			if ($v['date'] > "") {
 				// Otherwise, we have a surgical consultation
-				$this->assertEquals(substr($v['Date'], 0, 7), self::$month);
+				$this->assertEquals(substr($v['date'], 0, 7), self::$month);
 				$this->assertEquals($v['center'], "Ukhia");
 			}
 		}

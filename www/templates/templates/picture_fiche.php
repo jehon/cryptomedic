@@ -12,7 +12,7 @@ t::setDefaultOption("baseExpression", "currentFile().");
 <x-two-columns>
 	<div>
 		<x-group-panel title='Picture informations'>
-			<?php (new t("Picture.Date"))->tr2()->p(); ?>
+			<?php (new t("Picture.date"))->tr2()->p(); ?>
 			<?php (new t("Picture.type"))->tr2()->p(); ?>
 			<?php (new t("Picture.comments"))->tr2()->p(); ?>
 			<?php (new t("Picture.file"))->readOnly()->tr2("File")->p(); ?>

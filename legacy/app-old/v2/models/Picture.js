@@ -22,7 +22,7 @@ export default class Picture extends PatientRelated {
       res.pictureRequired = true;
     }
 
-    if (this.Date > new Date().toISOString()) {
+    if (this.date > new Date().toISOString()) {
       res.dateInTheFuture = true;
     }
     return res;

@@ -40,7 +40,7 @@ context("Actions", () => {
       cy.crCompareSnapshot("patient_2000_1_summary");
 
       patientSelectFile("OtherConsult", 1);
-      cy.get("#Date").should("contain.text", "2007-01-10");
+      cy.get("#date").should("contain.text", "2007-01-10");
       cy.get("#examiner").should("contain.text", "Ershad");
 
       cy.get("x-ff-patient-related").should("exist");
@@ -111,7 +111,7 @@ context("Actions", () => {
       patientSelectFile("RicketConsult", 3);
       // TODO: adapt the data and check them
       cy.get("#button_edit").should("not.exist");
-      cy.get("#Date").should("contain.text", "2004-10-06");
+      cy.get("#date").should("contain.text", "2004-10-06");
       cy.crCompareSnapshot("patient_2001_1_ricketconsult");
     });
   });

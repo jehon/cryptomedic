@@ -9,15 +9,14 @@ class ReportCashRegisterController extends ReportController
 {
   public function buildData()
   {
-    // (SELECT min(year(bills.Date)) - patients.year_of_birth FROM bills WHERE patient_id = patients.id) as age_at_first_consult,
-    $childFilter = "(SELECT min(year(bills.Date)) - patients.year_of_birth FROM bills WHERE patient_id = patients.id) < 18";
+    $childFilter = "(SELECT min(year(bills.date)) - patients.year_of_birth FROM bills WHERE patient_id = patients.id) < 18";
     $poorFilter = "bills.Sociallevel <= 3";
     
     $this->result['list'] = 
       $this->runSqlWithNamedParameter(
         "SELECT
-            YEAR(bills.Date) as year,
-            MONTH(bills.Date) as month,
+            YEAR(bills.date) as year,
+            MONTH(bills.date) as month,
 
             SUM(bills.total_real) as total_real,
             SUM(bills.total_asked) as total_asked,
@@ -35,8 +34,8 @@ class ReportCashRegisterController extends ReportController
           bills
           LEFT JOIN patients ON patients.id = bills.patient_id
         WHERE 1 = 1
-          AND (" . $this->getParamAsSqlFilter("year", "YEAR(bills.Date)") . ")
-        GROUP BY YEAR(bills.Date), MONTH(bills.Date)
+          AND (" . $this->getParamAsSqlFilter("year", "YEAR(bills.date)") . ")
+        GROUP BY YEAR(bills.date), MONTH(bills.date)
         ");
   }
 }

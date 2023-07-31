@@ -87,7 +87,7 @@
         <span id='folder_files'>
           <span ng-repeat="f in folder.getFilesRelatedToPatient()" class='folder_file'>
             <x-button id='folder_menu_{{f.getModel()}}_{{f.id}}' to-route="#/folder/{{patient_id}}/file/{{f.getModel()}}/{{f.id}}" ng-class="{ 'selected': page + subtype + subid == 'file' + f.getModel() + f.id }" style='width: 100%'>
-              {{f.getModel()}}<span ng-if="f.Date"><br>[{{f.Date }}]</span>
+              {{f.getModel()}}<span ng-if="f.date"><br>[{{f.date }}]</span>
             </x-button>
           </span>
         </span>

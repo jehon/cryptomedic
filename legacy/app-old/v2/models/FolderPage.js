@@ -12,7 +12,7 @@ export default class FolderPage extends CRUD {
     });
     this.examiner = c.examiner;
     this.center = c.center;
-    this.Date = c.date;
+    this.date = c.date;
   }
 
   isSet(field) {

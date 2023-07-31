@@ -24,7 +24,7 @@ export default class Bill extends PatientRelated {
           if (!last_bill) {
             last_bill = v;
           } else {
-            if (last_bill.Date < v.Date) {
+            if (last_bill.date < v.date) {
               last_bill = v;
             }
           }
@@ -179,14 +179,14 @@ export default class Bill extends PatientRelated {
   }
 
   calculatePriceId(prices) {
-    if (typeof this.Date == "undefined" || !this.Date || !prices) {
+    if (typeof this.date == "undefined" || !this.date || !prices) {
       this.price_id = 0;
       this.price = false;
       return 0;
     }
     this.price_id = -1;
     var t = this;
-    var dref = this.Date;
+    var dref = this.date;
     for (var i in prices) {
       var p = prices[i];
       if (
@@ -214,11 +214,11 @@ export default class Bill extends PatientRelated {
         */
     res = super.validate(res);
 
-    if (!this.Date) {
+    if (!this.date) {
       res.noDate = true;
     }
 
-    if (this.Date > new Date().toISOString()) {
+    if (this.date > new Date().toISOString()) {
       res.dateInTheFuture = true;
     }
 
