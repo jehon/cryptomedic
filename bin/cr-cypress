@@ -14,8 +14,6 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-CYPRESS_ARGS=()
-
 setup_folders() {
     OUTPUT="$1"
 
@@ -42,25 +40,26 @@ run_cypress() {
     header_end
 }
 
-case "$1" in
+FLAVOR="$1"
+OUTPUT="${2}"
+if [ -n "$OUTPUT" ]; then
+    setup_folders "$OUTPUT"
+fi
+
+case "$FLAVOR" in
 "version")
     run_cypress "version" "--component" "package"
     ;;
 "open")
-    run_cypress "open" "--project" "." "--e2e" "--browser=electron"
+    run_cypress "open" "--env" "flavor=desktop" "--project" "." "--e2e" "--browser=electron"
     ;;
 "desktop")
     # Nothing to do - default flavor - use the config preset's
-    OUTPUT="tmp/integration/$1"
-    setup_folders "$OUTPUT"
     run_cypress "run" "--env" "flavor=desktop"
     shift
     ;;
 "mobile")
     # Mobile: 360 x 480
-    OUTPUT="tmp/integration/$1"
-    setup_folders "$OUTPUT"
-
     run_cypress "run" \
         "--env" "flavor=mobile" \
         "--config" "videosFolder=../$OUTPUT/videos,screenshotsFolder=../$OUTPUT/screenshots,viewportWidth=360,viewportHeight=640"
