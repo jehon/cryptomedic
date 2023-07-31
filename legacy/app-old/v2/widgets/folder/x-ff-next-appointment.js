@@ -19,7 +19,7 @@ export default class XFfNextAppointment extends XWithFolder {
     this.shadowRoot.innerHTML = `
             <css-inherit></css-inherit>
             <style>
-                :host(not([next-appointment])) #withAppointment {
+                :host(:not([next-appointment])) #withAppointment {
                   display: none;
                 }
 
