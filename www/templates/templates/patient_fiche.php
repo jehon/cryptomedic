@@ -70,7 +70,7 @@ t::setDefaultOption("baseExpression", "folder.getPatient().");
 	</div>
 	<div>
 		<x-group-panel id='PatientPathology' ng-class='{ jserror: errors.noPathology }' title='Pathology'>
-			<?php (new t("Patient.pathology"))->tr2("Main pathology")->p(); ?>
+			<?php (new t("Patient.pathology"))->tr2("Main Pathology")->p(); ?>
 			<?php (new t("Patient.comments"))->tr2("Comments")->p(); ?>
 		</x-group-panel>
 		<br />
