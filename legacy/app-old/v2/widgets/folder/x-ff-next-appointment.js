@@ -19,6 +19,14 @@ export default class XFfNextAppointment extends XWithFolder {
     this.shadowRoot.innerHTML = `
             <css-inherit></css-inherit>
             <style>
+                :host(not([next-appointment])) #withAppointment {
+                  display: none;
+                }
+
+                :host([next-appointment]) #withoutAppointment {
+                  display: none;
+                }
+
                 #withoutAppointment {
                     display: flex;
                     flex-direction: column;        
@@ -65,24 +73,12 @@ export default class XFfNextAppointment extends XWithFolder {
 
   adapt() {
     const nextAppointment = this._nextAppointment();
-
     if (nextAppointment) {
       this.setAttribute("next-appointment", nextAppointment);
       this.shadowRoot.querySelector("#appointment").innerHTML = nextAppointment;
-      this.shadowRoot
-        .querySelector("#withAppointment")
-        .removeAttribute("hidden");
-      this.shadowRoot
-        .querySelector("#withoutAppointment")
-        .setAttribute("hidden", "hidden");
     } else {
       this.removeAttribute("next-appointment");
-      this.shadowRoot
-        .querySelector("#withAppointment")
-        .setAttribute("hidden", "hidden");
-      this.shadowRoot
-        .querySelector("#withoutAppointment")
-        .removeAttribute("hidden");
+      this.shadowRoot.querySelector("#appointment").innerHTML = "";
     }
   }
 }

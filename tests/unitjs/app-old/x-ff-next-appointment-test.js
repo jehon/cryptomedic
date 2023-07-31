@@ -36,14 +36,16 @@ describe(fn(import.meta.url), function () {
 
     expect(el.hasAttribute("blocked")).toBeFalse();
     setTimeout(() => {
+      // expect(
+      //   el.shadowRoot.querySelector("#withoutAppointment").offsetWidth
+      // ).toBeGreaterThan(0);
+      // expect(el.shadowRoot.querySelector("#withAppointment").offsetWidth).toBe(
+      //   0
+      // );
       expect(
-        el.shadowRoot
-          .querySelector("#withoutAppointment")
-          .hasAttribute("hidden")
-      ).toBeFalse();
-      expect(
-        el.shadowRoot.querySelector("#withAppointment").hasAttribute("hidden")
-      ).toBeTrue();
+        el.shadowRoot.querySelector("#withAppointment #appointment").innerHTML
+      ).toBe("");
+
       done();
     });
   });
@@ -55,17 +57,16 @@ describe(fn(import.meta.url), function () {
 
     expect(el.hasAttribute("blocked")).toBeFalse();
     setTimeout(() => {
+      // expect(
+      //   el.shadowRoot.querySelector("#withoutAppointment").offsetWidth
+      // ).toBe(0);
+      // expect(
+      //   el.shadowRoot.querySelector("#withAppointment").hasAttribute("hidden")
+      //     .offsetWidth
+      // ).toBeGreaterThan(0);
       expect(
-        el.shadowRoot
-          .querySelector("#withoutAppointment")
-          .hasAttribute("hidden")
-      ).toBeTrue();
-      expect(
-        el.shadowRoot.querySelector("#withAppointment").hasAttribute("hidden")
-      ).toBeFalse();
-      expect(
-        el.shadowRoot.querySelector("#withAppointment").innerHTML
-      ).toContain("2999-01-10");
+        el.shadowRoot.querySelector("#withAppointment #appointment").innerHTML
+      ).toBe("2999-01-10");
       done();
     });
   });
@@ -80,17 +81,15 @@ describe(fn(import.meta.url), function () {
 
     expect(el.hasAttribute("blocked")).toBeFalse();
     setTimeout(() => {
+      // expect(
+      //   el.shadowRoot.querySelector("#withoutAppointment").offsetWidth
+      // ).toBe(0);
+      // expect(
+      //   el.shadowRoot.querySelector("#withAppointment").offsetWidth
+      // ).toBeGreaterThan(0);
       expect(
-        el.shadowRoot
-          .querySelector("#withoutAppointment")
-          .hasAttribute("hidden")
-      ).toBeTrue();
-      expect(
-        el.shadowRoot.querySelector("#withAppointment").hasAttribute("hidden")
-      ).toBeFalse();
-      expect(
-        el.shadowRoot.querySelector("#withAppointment").innerHTML
-      ).toContain("2999-01-10");
+        el.shadowRoot.querySelector("#withAppointment #appointment").innerHTML
+      ).toBe("2999-01-10");
       done();
     });
   });
