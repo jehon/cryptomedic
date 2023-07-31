@@ -39,7 +39,7 @@ class Bill extends CryptomedicModel {
 				'bill_id'      => $obj->id,
 				'date'         => $obj->date,
 				'examiner'     => $obj->examiner,
-				'Amount'       => $first_payment,
+				'amount'       => $first_payment,
 			]);
 			$p->save();
 

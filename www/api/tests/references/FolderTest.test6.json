@@ -34,8 +34,8 @@
                 "date": "2003-05-11",
                 "examiner": null,
                 "purpose": null,
-                "Nextappointment": "2015-04-28",
-                "NextCenter": "Chakaria Disability Center"
+                "next_appointment": "2015-04-28",
+                "next_center": "Chakaria Disability Center"
             }
         },
         {

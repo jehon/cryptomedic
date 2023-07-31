@@ -22,7 +22,7 @@ class AuthTest extends RouteReferenceTestCase {
         // $this->assertEquals(54, count($json['prices'][1]['price_lines']));
         // $this->assertArrayHasKey('price_lines', $json['prices'][1]);
         // $this->assertEquals("consult_CDC_consultation_Bengali_Doctor", $json['prices'][1]['price_lines'][0]['title']);
-        // $this->assertEquals(200, $json['prices'][1]['price_lines'][0]['Amount']);
+        // $this->assertEquals(200, $json['prices'][1]['price_lines'][0]['amount']);
 
         $this->assertArrayHasKey('codes', $json);
 

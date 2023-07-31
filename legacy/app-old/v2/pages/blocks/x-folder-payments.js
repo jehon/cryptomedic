@@ -26,7 +26,7 @@ export default class XFolderPayments extends XFolderFile {
   //         return '?';
   //     }
   //     return $scope.folder.getFilesRelatedToBill($scope.subid).reduce((acc, file) => {
-  //         return acc + (file.Amount ? parseInt(file.Amount, 10) : 0);
+  //         return acc + (file.amount ? parseInt(file.amount, 10) : 0);
   //     }, 0);
   // };
 

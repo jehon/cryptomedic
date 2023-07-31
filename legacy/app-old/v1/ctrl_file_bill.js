@@ -134,7 +134,7 @@ export default function ctrl_file_bill($scope, $element) {
     return $scope.folder
       .getFilesRelatedToBill($scope.subid)
       .reduce((acc, file) => {
-        return acc + (file.Amount ? parseInt(file.Amount, 10) : 0);
+        return acc + (file.amount ? parseInt(file.amount, 10) : 0);
       }, 0);
   };
 

@@ -20,15 +20,15 @@ class ReportCashRegisterController extends ReportController
 
             SUM(bills.total_real) as total_real,
             SUM(bills.total_asked) as total_asked,
-            SUM((SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id)) as paid,
+            SUM((SELECT SUM(amount) FROM payments WHERE payments.bill_id = bills.id)) as paid,
 
             SUM(IF($childFilter, bills.total_real, 0)) as child_total_real,
             SUM(IF($childFilter, bills.total_asked, 0)) as child_total_asked,
-            SUM(IF($childFilter, (SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as child_paid,
+            SUM(IF($childFilter, (SELECT SUM(amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as child_paid,
 
             SUM(IF($childFilter AND $poorFilter, bills.total_real, 0)) as poor_child_total_real,
             SUM(IF($childFilter AND $poorFilter, bills.total_asked, 0)) as poor_child_total_asked,
-            SUM(IF($childFilter AND $poorFilter, (SELECT SUM(Amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as poor_child_paid
+            SUM(IF($childFilter AND $poorFilter, (SELECT SUM(amount) FROM payments WHERE payments.bill_id = bills.id), 0)) as poor_child_paid
 
         FROM 
           bills

@@ -34,8 +34,8 @@
                 "date": "2007-01-10",
                 "examiner": "Ershad",
                 "purpose": null,
-                "Nextappointment": "2015-04-28",
-                "NextCenter": null
+                "next_appointment": "2015-04-28",
+                "next_center": null
             }
         },
         {
@@ -181,7 +181,7 @@
                 "bill_id": 1,
                 "date": "2011-06-09",
                 "examiner": "",
-                "Amount": 1500,
+                "amount": 1500,
                 "comments": "automatically generated from previous system"
             }
         },

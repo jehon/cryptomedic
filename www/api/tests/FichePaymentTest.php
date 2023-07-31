@@ -23,10 +23,10 @@ class FichePaymentTest extends FicheTestHelper {
 
   public function testCreate() {
     // Create it
-    $id = $this->doCreate([ "bill_id" => '1', 'Amount' => 1 ])['id'];
+    $id = $this->doCreate([ "bill_id" => '1', 'amount' => 1 ])['id'];
 
     // Modify it
-    $this->doUpdate($id, [ "Amount" => 3 ]);
+    $this->doUpdate($id, [ "amount" => 3 ]);
 
     // Delete it
     $this->doDelete($id);

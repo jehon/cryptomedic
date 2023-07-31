@@ -62,9 +62,9 @@ export default class XFfNextAppointment extends XWithFolder {
     const today = date2CanonicString(new Date(), true);
     var next = "";
     this.folder.getListByType(Appointment).forEach((v, _k) => {
-      if (v.Nextappointment > today) {
-        if (!next || v.Nextappointment < next) {
-          next = v.Nextappointment;
+      if (v.next_appointment > today) {
+        if (!next || v.next_appointment < next) {
+          next = v.next_appointment;
         }
       }
     });

@@ -64,7 +64,7 @@ context("Actions", () => {
       cy.crCompareSnapshot("patient_2000_1_otherconsult");
 
       patientSelectFile("Picture", 2);
-      cy.get("#Picture_Date").should("contain.text", "2014-11-04");
+      cy.get("#Picture_date").should("contain.text", "2014-11-04");
       cy.get("#Picture_file").should(
         "contain.text",
         "10_2014-11-06_15-32-45.JPG"
@@ -75,7 +75,7 @@ context("Actions", () => {
 
       patientSelectFile("Bill", 1);
       cy.get("#button_edit").should("not.exist");
-      cy.get("#Bill_Date").should("contain.text", "2011-06-09");
+      cy.get("#Bill_date").should("contain.text", "2011-06-09");
       // TODO: check bill
       cy.crCompareSnapshot("patient_2000_1_bill");
 

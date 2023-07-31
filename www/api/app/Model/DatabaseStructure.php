@@ -20,7 +20,7 @@ define("HARDCODED_LISTINGS", [
     /***********************/
     "all" => [
         "center"                   => "Centers",
-        "NextCenter"               => "Centers",
+        "next_center"              => "Centers",
         "treatment_evaluation"     => "TreatmentEvaluation",
         "examiner"                 => "Examiners"
     ],

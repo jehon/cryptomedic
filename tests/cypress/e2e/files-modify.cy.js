@@ -111,11 +111,11 @@ context("Actions", () => {
     checkFileAdd(
       "surgery",
       {
-        "#Surgery_Date": { value: "2003-01-01" },
+        "#Surgery_date": { value: "2003-01-01" },
         "#Surgery_report_diagnostic": "diagnostique"
       },
       () => {
-        cy.get("#Surgery_Date").should("contain.text", "2003-01-01");
+        cy.get("#Surgery_date").should("contain.text", "2003-01-01");
         cy.get("#Surgery_report_diagnostic").should(
           "contain.text",
           "diagnostique"
@@ -129,14 +129,14 @@ context("Actions", () => {
   //
   // it('should add a picture', () => {
   //     checkFileAdd('picture', () => {
-  //         cy.get('#Picture_Date').invoke('attr', 'value', '2003-01-01');
+  //         cy.get('#Picture_date').invoke('attr', 'value', '2003-01-01');
   //         cy.get('x-input-picture').shadow().find('input[type=file]')
   //             .should('be.visible')
   //             .selectFile('cypress/fixtures/upload.jpg'); // image/gif
 
   //         crReady();
   //     }, () => {
-  //         cy.get('#Picture_Date').should('contain.text', '2003-01-01');
+  //         cy.get('#Picture_date').should('contain.text', '2003-01-01');
   //         crReady();
   //     });
   // });
@@ -145,15 +145,15 @@ context("Actions", () => {
     checkFileAdd(
       "appointment",
       {
-        "#Appointment_Nextappointment": { value: "2100-01-01" },
-        "[name=NextCenter]": { value: "Ramu" }
+        "#Appointment_next_appointment": { value: "2100-01-01" },
+        "[name=next_center]": { value: "Ramu" }
       },
       () => {
-        cy.get("#Appointment_Nextappointment").should(
+        cy.get("#Appointment_next_appointment").should(
           "contain.text",
           "2100-01-01"
         );
-        cy.get("#Appointment_NextCenter").should("contain.text", "Ramu");
+        cy.get("#Appointment_next_center").should("contain.text", "Ramu");
 
         // also in widget
         cy.get("x-ff-next-appointment")

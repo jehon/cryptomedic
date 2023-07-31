@@ -16,8 +16,8 @@ describe(fn(import.meta.url), function () {
     date: "2007-01-10",
     examiner: "Ershad",
     purpose: null,
-    Nextappointment: "2999-01-10",
-    NextCenter: null
+    next_appointment: "2999-01-10",
+    next_center: null
   };
 
   beforeEach(() => {
@@ -74,7 +74,7 @@ describe(fn(import.meta.url), function () {
   it("should show the closest appointment", function (done) {
     const el = new XFfNextAppointment();
     let nb = JSON.parse(JSON.stringify(na)); // Make a copy
-    nb.Nextappointment = "3999-01-12";
+    nb.next_appointment = "3999-01-12";
     testFolder.list.push(new Appointment(na));
     testFolder.list.push(new Appointment(nb));
     el.folder = testFolder;

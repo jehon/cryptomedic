@@ -25,7 +25,7 @@ context("Actions", () => {
   });
 
   function setDate(val) {
-    cy.get("#Bill_Date")
+    cy.get("#Bill_date")
       .should("be.visible")
       .invoke("attr", "value", val)
       .within(() => {
