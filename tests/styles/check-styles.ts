@@ -176,6 +176,7 @@ fs.writeFileSync(
 
 if (args.update) {
   console.info("Updating references...");
+  let success = true;
   for (const [key, diff] of listOfFiles) {
     if (!diff.problem && !diff.warning) {
       continue;
@@ -184,24 +185,27 @@ if (args.update) {
       console.error(
         `${p_ko}: ${align(key, maxFilenameLength)} does not have a run`
       );
+      success = false;
       continue;
     }
     if (!diff.reference) {
       console.error(
         `${p_ko}: ${align(key, maxFilenameLength)} does not have a reference`
       );
+      success = false;
       continue;
     }
     process.stdout.write(`[update] ${key}\n`);
-    // fs.copyFileSync(rel2abs(diff.runtime), rel2abs(diff.reference));
+    fs.copyFileSync(rel2abs(diff.runtime), rel2abs(diff.reference));
   }
-} else {
-  if (
-    Array.from(listOfFiles.values()).filter((diff) => diff.problem).length > 0
-  ) {
-    console.error(p_ko, "some tests did fail");
-    process.exit(1);
-  }
-  console.info(p_ok, "ok");
-  process.exit(0);
+  process.exit(success ? 0 : 1);
 }
+
+if (
+  Array.from(listOfFiles.values()).filter((diff) => diff.problem).length > 0
+) {
+  console.error(p_ko, "some tests did fail");
+  process.exit(1);
+}
+console.info(p_ok, "ok");
+process.exit(0);
