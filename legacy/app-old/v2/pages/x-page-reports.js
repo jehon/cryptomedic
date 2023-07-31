@@ -191,7 +191,7 @@ x-button#export {
     if (this.isParam("center")) {
       this._params.insertAdjacentElement(
         "beforeend",
-        createElementWithObject(XLabel, { label: "center" }, [
+        createElementWithObject(XLabel, { label: "Center" }, [
           createElementWithObject(XInputList, {
             name: "center",
             nullable: true,
@@ -800,7 +800,7 @@ reports[REPORT_CONSULTATIONS] = {
   generator: (xtable) =>
     xtable
       .addHeaders(1)
-      .addDetail("c_center", { headers: ["center"] })
+      .addDetail("c_center", { headers: ["Center"] })
       .addDetail(
         (data) =>
           createElementWithTag(

@@ -135,7 +135,7 @@ EOD;
           <th>Date</th>
           <th>Receiver</th>
           <th>Amount</th>
-          <th>Notes</th>
+          <th>Comments</th>
           <th></th>
         </tr>
       </thead>
@@ -144,7 +144,7 @@ EOD;
           <td>{{p.Date}}</td>
           <td>{{p.examiner}}</td>
           <td>{{p.Amount}}</td>
-          <td>{{p.Notes}}</td>
+          <td>{{p.comments}}</td>
           <td>
             <x-button action='Edit' id='button_edit_{{$index}}' ng-click="actionEditPayment(p.id)">Edit</x-button>
             <x-button action='Delete' id='button_delete_{{$index}}' ng-click="actionDeletePayment(p.id)">Delete</x-button>
@@ -164,7 +164,7 @@ EOD;
       <?php (new t("Payment.Date"))->tr2("Date of receipt")->p(); ?>
       <?php (new t("Payment.examiner"))->tr2("Receiver")->p(); ?>
       <?php (new t("Payment.Amount"))->tr2("Amount")->p(); ?>
-      <?php (new t("Payment.Notes"))->tr2("Notes")->p(); ?>
+      <?php (new t("Payment.comments"))->tr2("Comments")->p(); ?>
       <x-button id='button_payment_create' ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>Create</x-button>
       <x-button action='Save' id='button_payment_save' ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>Save</x-button>
     </x-group-panel>

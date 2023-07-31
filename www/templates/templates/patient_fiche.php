@@ -34,7 +34,7 @@ t::setDefaultOption("baseExpression", "folder.getPatient().");
 					<x-fff-age></x-fff-age> old
 				</div>
 			</x-fff-field>
-			<x-fff-field field='address_district'>
+			<x-fff-field field='address_district' label='District'>
 				<div>
 					<span class='not-mode-read'>
 						<x-write-list value='{{folder.getPatient().address_district}}' name='address_district' list-name='Districts' nullable></x-write-list>
@@ -44,7 +44,7 @@ t::setDefaultOption("baseExpression", "folder.getPatient().");
 					</span>
 				</div>
 			</x-fff-field>
-			<x-fff-field field='address_upazilla'>
+			<x-fff-field field='address_upazilla' label='Upazilla'>
 				<div>
 					<span class='not-mode-read'>
 						<x-write-list value='{{folder.getPatient().address_upazilla}}' name='address_upazilla' nullable></x-write-list>
@@ -54,7 +54,7 @@ t::setDefaultOption("baseExpression", "folder.getPatient().");
 					</span>
 				</div>
 			</x-fff-field>
-			<x-fff-field field='Union'>
+			<x-fff-field field='address_union' label='Union'>
 				<div>
 					<span class='not-mode-read'>
 						<x-write-list value='{{folder.getPatient().address_union}}' name='address_union' nullable></x-write-list>
@@ -69,7 +69,7 @@ t::setDefaultOption("baseExpression", "folder.getPatient().");
 		</x-group-panel>
 	</div>
 	<div>
-		<x-group-panel id='PatientPathology' ng-class='{ jserror: errors.noPathology }' title='pathology'>
+		<x-group-panel id='PatientPathology' ng-class='{ jserror: errors.noPathology }' title='Pathology'>
 			<?php (new t("Patient.pathology"))->tr2("Main pathology")->p(); ?>
 			<?php (new t("Patient.comments"))->tr2("Comments")->p(); ?>
 		</x-group-panel>

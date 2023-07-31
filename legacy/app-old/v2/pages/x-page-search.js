@@ -58,7 +58,7 @@ export default class XPageSearch extends HTMLElement {
 								<td><input name='name' class='form-control' /></td>
 							</tr>
 							<tr>
-								<td>sex</td>
+								<td>Sex</td>
 								<td>
 									<x-write-list name='sex' list-name='sex' list='' nullable></x-write-list>
 								</td>
@@ -72,7 +72,7 @@ export default class XPageSearch extends HTMLElement {
 								<td><input name='phone' class='form-control' /></td>
 							</tr>
 							<tr>
-								<td>Main pathology</td>
+								<td>Main Pathology</td>
 								<td>
 									<x-write-list name='pathology' list-name='Pathologies' list='' nullable></x-write-list>
 								</td>
