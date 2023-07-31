@@ -7,8 +7,8 @@ export default class XFffWhSd extends XWithFile {
     const sd = stdDeviationFor(
       this.folder.getPatient().sexStr(),
       "wh",
-      this.file.Heightcm,
-      this.file.Weightkg
+      this.file.height_cm,
+      this.file.weight_kg
     );
 
     return Math.round(sd * 10) / 10 + " ds";

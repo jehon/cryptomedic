@@ -1,17 +1,17 @@
 
-ALTER TABLE `ricket_consult` CHANGE `Weightkg` `weight_kg` INT(4) NULL DEFAULT NULL;
-ALTER TABLE `club_foot` CHANGE `Weightkg` `weight_kg` INT(4) NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults` CHANGE `Weightkg` `weight_kg` INT(4) NULL DEFAULT NULL;
+ALTER TABLE `club_feet` CHANGE `Weightkg` `weight_kg` INT(4) NULL DEFAULT NULL;
 ALTER TABLE `other_consults` CHANGE `Weightkg` `weight_kg` INT(4) NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consult` CHANGE `Heightcm` `height_cm` INT(3) NULL DEFAULT NULL;
-ALTER TABLE `club_foot` CHANGE `Heightcm` `height_cm` INT(3) NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults` CHANGE `Heightcm` `height_cm` INT(3) NULL DEFAULT NULL;
+ALTER TABLE `club_feet` CHANGE `Heightcm` `height_cm` INT(3) NULL DEFAULT NULL;
 ALTER TABLE `other_consults` CHANGE `Heightcm` `height_cm` INT(3) NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consult` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT(3) NULL DEFAULT NULL;
-ALTER TABLE `club_foot` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT(3) NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT(3) NULL DEFAULT NULL;
+ALTER TABLE `club_feet` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT(3) NULL DEFAULT NULL;
 ALTER TABLE `other_consults` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT(3) NULL DEFAULT NULL; 
 
-CREATE VIEW `consults`;
+DROP VIEW `consults`;
 CREATE VIEW `consults` AS (
     select
         'ricket_consult' AS `type`,
@@ -73,4 +73,4 @@ union
         `other_consults`.`suggested_for_surgery`
    from
         `other_consults`
-)
+);

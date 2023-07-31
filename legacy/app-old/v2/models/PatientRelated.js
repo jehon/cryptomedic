@@ -25,23 +25,23 @@ export default class PatientRelated extends FolderPage {
   }
 
   wh() {
-    if (!this.isNotZero("Heightcm")) {
+    if (!this.isNotZero("height_cm")) {
       throw new DataMissingException("Height");
     }
-    if (!this.isNotZero("Weightkg")) {
+    if (!this.isNotZero("weight_kg")) {
       throw new DataMissingException("Weight");
     }
-    return this.Weightkg / this.Heightcm;
+    return this.weight_kg / this.height_cm;
   }
 
   bmi() {
-    if (!this.isNotZero("Heightcm")) {
+    if (!this.isNotZero("height_cm")) {
       throw new DataMissingException("Height");
     }
-    if (!this.isNotZero("Weightkg")) {
+    if (!this.isNotZero("weight_kg")) {
       throw new DataMissingException("Weight");
     }
-    return (10000 * this.Weightkg) / (this.Heightcm * this.Heightcm);
+    return (10000 * this.weight_kg) / (this.height_cm * this.height_cm);
   }
 
   isLocked() {

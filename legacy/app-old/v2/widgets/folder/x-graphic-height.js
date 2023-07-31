@@ -8,7 +8,7 @@ class XGraphicHeight extends XGraphic {
     return "height";
   }
   getImageDimensions(sex) {
-    return amd_stats.dimensions[`ageAtConsultTime_Heightcm_${sex}`];
+    return amd_stats.dimensions[`ageAtConsultTime_height_cm_${sex}`];
   }
 
   getVariableY() {
@@ -16,7 +16,7 @@ class XGraphicHeight extends XGraphic {
   }
 
   getValueY(file) {
-    return file.Heightcm;
+    return file.height_cm;
   }
 }
 

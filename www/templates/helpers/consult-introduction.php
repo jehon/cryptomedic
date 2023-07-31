@@ -14,23 +14,23 @@
 		<div></div>
 		<div slot='stat' class='not-mode-write'>Standard deviation (statistic)</div>
 	</x-fff-field>
-	<x-fff-field field='Weightkg'>
-		<div><?php (new t("Weightkg"))->value()->p(); ?></div>
+	<x-fff-field field='weight_kg'>
+		<div><?php (new t("weight_kg"))->value()->p(); ?></div>
 		<x-fff-weight-sd slot='stat' class='not-mode-write'></x-fff-weight-sd>
 	</x-fff-field>
 
-	<x-fff-field field='Heightcm'>
-		<div><?php (new t("Heightcm"))->value()->p(); ?></div>
+	<x-fff-field field='height_cm'>
+		<div><?php (new t("height_cm"))->value()->p(); ?></div>
 		<x-fff-height-sd slot='stat' class='not-mode-write'></x-fff-height-sd>
 	</x-fff-field>
 
-	<?php (new t("Brachialcircumferencecm"))->tr2("Brachial circumference (cm)")->p(); ?>
+	<?php (new t("brachial_circumference_cm"))->tr2("Brachial circumference (cm)")->p(); ?>
 
-	<x-fff-field class='not-mode-write' field='Heightcm' label='Weight/Height Ratio'>
+	<x-fff-field class='not-mode-write' field='height_cm' label='Weight/Height Ratio'>
 		<x-fff-wh></x-fff-wh>
 		<x-fff-wh-sd slot='stat'></x-fff-wh-sd>
 	</x-fff-field>
-	<x-fff-field label='BMI' field='Heightcm' class='not-mode-write'>
+	<x-fff-field label='BMI' field='height_cm' class='not-mode-write'>
 		<x-fff-bmi></x-fff-bmi>
 		<x-fff-bmi-sd slot='stat'></x-fff-bmi-sd>
 	</x-fff-field>

@@ -8,7 +8,7 @@ export default class XGraphicWeight extends XGraphic {
     return "weight";
   }
   getImageDimensions(sex) {
-    return amd_stats.dimensions[`ageAtConsultTime_Weightkg_${sex}`];
+    return amd_stats.dimensions[`ageAtConsultTime_weight_kg_${sex}`];
   }
 
   getVariableY() {
@@ -16,7 +16,7 @@ export default class XGraphicWeight extends XGraphic {
   }
 
   getValueY(file) {
-    return file.Weightkg;
+    return file.weight_kg;
   }
 }
 

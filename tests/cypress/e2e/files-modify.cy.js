@@ -70,11 +70,11 @@ context("Actions", () => {
       "ricket_consult",
       {
         "#date": { value: "2003-01-01" },
-        "#Weightkg": "13"
+        "#weight_kg": "13"
       },
       () => {
         cy.get("#date").should("contain.text", "2003-01-01");
-        cy.get("#Weightkg").should("contain.text", "13");
+        cy.get("#weight_kg").should("contain.text", "13");
       }
     );
   });
@@ -84,11 +84,11 @@ context("Actions", () => {
       "other_consult",
       {
         "#date": { value: "2003-01-01" },
-        "#Weightkg": "13"
+        "#weight_kg": "13"
       },
       () => {
         cy.get("#date").should("contain.text", "2003-01-01");
-        cy.get("#Weightkg").should("contain.text", "13");
+        cy.get("#weight_kg").should("contain.text", "13");
       }
     );
   });
@@ -98,11 +98,11 @@ context("Actions", () => {
       "clubfoot",
       {
         "#date": { value: "2003-01-01" },
-        "#Weightkg": "13"
+        "#weight_kg": "13"
       },
       () => {
         cy.get("#date").should("contain.text", "2003-01-01");
-        cy.get("#Weightkg").should("contain.text", "13");
+        cy.get("#weight_kg").should("contain.text", "13");
       }
     );
   });

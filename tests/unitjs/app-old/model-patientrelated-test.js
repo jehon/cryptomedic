@@ -35,8 +35,8 @@ describe("PatientRelated", function () {
 
         expect(rc).toEqual(jasmine.any(RicketConsult));
         expect(rc).toEqual(jasmine.anything({ id: 13 }));
-        expect(rc.Heightcm).toBeCloseTo(110, 1);
-        expect(rc.Weightkg).toBeCloseTo(37, 1);
+        expect(rc.height_cm).toBeCloseTo(110, 1);
+        expect(rc.weight_kg).toBeCloseTo(37, 1);
         expect(rc.bmi()).toBeCloseTo(30.57, 1);
         expect(rc.wh()).toBeCloseTo(0.3363, 3);
       });

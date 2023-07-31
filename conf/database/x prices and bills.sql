@@ -1,4 +1,8 @@
 
+-- bill.php#130 et #134
+-- bill.js#130
+-- files-modify-bill.cy.js#62
+
 ALTER TABLE `prices` 
     CHANGE `workshop_Knee_brace` `workshop_knee_brace` INT(11) NOT NULL DEFAULT '0', 
     CHANGE `workshop_Compensation_sole` `workshop_compensation_sole` INT(11) NOT NULL DEFAULT '0', 

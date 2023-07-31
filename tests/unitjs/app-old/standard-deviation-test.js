@@ -50,16 +50,16 @@ describe(fn(import.meta.url), function () {
       new DataOutOfBoundException()
     );
 
-    expect(stdDeviationFor("m", "Weightkg", 10, 32)).toBe(0);
-    expect(stdDeviationFor("m", "Weightkg", 10, 42)).toBeCloseTo(sigma);
-    expect(stdDeviationFor("f", "Weightkg", 3, 13.8)).toBe(0);
+    expect(stdDeviationFor("m", "weight_kg", 10, 32)).toBe(0);
+    expect(stdDeviationFor("m", "weight_kg", 10, 42)).toBeCloseTo(sigma);
+    expect(stdDeviationFor("f", "weight_kg", 3, 13.8)).toBe(0);
     expect(() => stdDeviationFor("f", "invalid", 3, 13.8)).toThrow(
       jasmine.any(ConfigurationMissingException)
     );
-    expect(() => stdDeviationFor("invalid", "Weightkg", 3, 13.8)).toThrow(
+    expect(() => stdDeviationFor("invalid", "weight_kg", 3, 13.8)).toThrow(
       jasmine.any(DataInvalidException)
     );
-    expect(() => stdDeviationFor("m", "Weightkg", 99, 13.8)).toThrow(
+    expect(() => stdDeviationFor("m", "weight_kg", 99, 13.8)).toThrow(
       jasmine.any(DataOutOfBoundException)
     );
 
@@ -67,7 +67,7 @@ describe(fn(import.meta.url), function () {
     expect(() =>
       stdDeviationFor(
         "m",
-        "Weightkg",
+        "weight_kg",
         /** @type {number} */ (/** @type {*} */ ("a")),
         13.8
       )
@@ -75,7 +75,7 @@ describe(fn(import.meta.url), function () {
     expect(() =>
       stdDeviationFor(
         "m",
-        "Weightkg",
+        "weight_kg",
         3,
         /** @type {number} */ (/** @type {*} */ ("a"))
       )

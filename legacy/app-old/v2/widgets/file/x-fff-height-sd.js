@@ -7,9 +7,9 @@ export default class XFffHeightSd extends XWithFile {
   formula() {
     const sd = stdDeviationFor(
       this.folder.getPatient().sexStr(),
-      "Heightcm",
+      "height_cm",
       fromBirthDateTo(this.folder.getPatient().year_of_birth, this.file.date),
-      this.file.Heightcm
+      this.file.height_cm
     );
 
     return Math.round(sd * 10) / 10 + " ds";

@@ -4,8 +4,8 @@ const amd_stats = { m: {}, f: {} };
 export default amd_stats;
 
 // Age based concatenate
-amd_stats.m.Heightcm = {};
-amd_stats.m.Heightcm.min = [
+amd_stats.m.height_cm = {};
+amd_stats.m.height_cm.min = [
   [0, 47],
   [0.25, 58],
   [0.5, 64],
@@ -26,7 +26,7 @@ amd_stats.m.Heightcm.min = [
   [19, 169],
   [20, 170]
 ];
-amd_stats.m.Heightcm.medium = [
+amd_stats.m.height_cm.medium = [
   [0, 50],
   [0.25, 61],
   [0.5, 67],
@@ -47,7 +47,7 @@ amd_stats.m.Heightcm.medium = [
   [19, 177],
   [20, 177]
 ];
-amd_stats.m.Heightcm.max = [
+amd_stats.m.height_cm.max = [
   [0, 53],
   [0.25, 64],
   [0.5, 70],
@@ -69,8 +69,8 @@ amd_stats.m.Heightcm.max = [
   [20, 186]
 ];
 
-amd_stats.m.Weightkg = {};
-amd_stats.m.Weightkg.min = [
+amd_stats.m.weight_kg = {};
+amd_stats.m.weight_kg.min = [
   [0, 2.8],
   [0.25, 5],
   [0.5, 6.8],
@@ -97,7 +97,7 @@ amd_stats.m.Weightkg.min = [
   [19, 57],
   [20, 58]
 ];
-amd_stats.m.Weightkg.medium = [
+amd_stats.m.weight_kg.medium = [
   [0, 3.6],
   [0.25, 6],
   [0.5, 8],
@@ -124,7 +124,7 @@ amd_stats.m.Weightkg.medium = [
   [19, 69],
   [20, 71]
 ];
-amd_stats.m.Weightkg.max = [
+amd_stats.m.weight_kg.max = [
   [0, 4.2],
   [0.25, 7],
   [0.5, 9.2],
@@ -152,8 +152,8 @@ amd_stats.m.Weightkg.max = [
   [20, 89]
 ];
 
-amd_stats.f.Heightcm = {};
-amd_stats.f.Heightcm.min = [
+amd_stats.f.height_cm = {};
+amd_stats.f.height_cm.min = [
   [0, 46],
   [0.25, 56],
   [0.5, 62],
@@ -181,7 +181,7 @@ amd_stats.f.Heightcm.min = [
   [17, 155],
   [20, 155]
 ];
-amd_stats.f.Heightcm.medium = [
+amd_stats.f.height_cm.medium = [
   [0, 51],
   [0.25, 59],
   [0.5, 65],
@@ -209,7 +209,7 @@ amd_stats.f.Heightcm.medium = [
   [17, 164],
   [20, 164]
 ];
-amd_stats.f.Heightcm.max = [
+amd_stats.f.height_cm.max = [
   [0, 53],
   [0.25, 63],
   [0.5, 67],
@@ -238,8 +238,8 @@ amd_stats.f.Heightcm.max = [
   [20, 172]
 ];
 
-amd_stats.f.Weightkg = {};
-amd_stats.f.Weightkg.min = [
+amd_stats.f.weight_kg = {};
+amd_stats.f.weight_kg.min = [
   [0, 2.8],
   [0.25, 4.6],
   [0.5, 6.2],
@@ -265,7 +265,7 @@ amd_stats.f.Weightkg.min = [
   [19, 48],
   [20, 49]
 ];
-amd_stats.f.Weightkg.medium = [
+amd_stats.f.weight_kg.medium = [
   [0, 3.7],
   [0.25, 5.8],
   [0.5, 7.2],
@@ -291,7 +291,7 @@ amd_stats.f.Weightkg.medium = [
   [19, 57],
   [20, 59]
 ];
-amd_stats.f.Weightkg.max = [
+amd_stats.f.weight_kg.max = [
   [0, 4],
   [0.25, 6.4],
   [0.5, 8.4],
@@ -469,87 +469,87 @@ amd_stats.f.wh.max = [
 ];
 
 amd_stats.dimensions = {};
-amd_stats.dimensions.ageAtConsultTime_Weightkg_m = {};
-amd_stats.dimensions.ageAtConsultTime_Weightkg_m.top = 0.05;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_m.bottom = 0.95;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_m.left = 0.03;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_m.right = 0.97;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vtop = 89;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vbottom = 2;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vleft = 0;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vright = 20;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_f = {};
-amd_stats.dimensions.ageAtConsultTime_Weightkg_f.top = 0.05;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_f.bottom = 0.95;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_f.left = 0.03;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_f.right = 0.97;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_f.vtop = 75;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_f.vbottom = 2;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_f.vleft = 0;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_f.vright = 20;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_null = {};
-amd_stats.dimensions.ageAtConsultTime_Weightkg_null.top = 0.05;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_null.bottom = 0.95;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_null.left = 0.03;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_null.right = 0.97;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_null.vtop = 89;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_null.vbottom = 2;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_null.vleft = 0;
-amd_stats.dimensions.ageAtConsultTime_Weightkg_null.vright = 20;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_m = {};
-amd_stats.dimensions.ageAtConsultTime_Heightcm_m.top = 0.05;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_m.bottom = 0.95;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_m.left = 0.03;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_m.right = 0.97;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_m.vtop = 186;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_m.vbottom = 47;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_m.vleft = 0;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_m.vright = 20;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_f = {};
-amd_stats.dimensions.ageAtConsultTime_Heightcm_f.top = 0.05;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_f.bottom = 0.95;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_f.left = 0.03;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_f.right = 0.97;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_f.vtop = 172;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_f.vbottom = 46;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_f.vleft = 0;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_f.vright = 20;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_null = {};
-amd_stats.dimensions.ageAtConsultTime_Heightcm_null.top = 0.05;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_null.bottom = 0.95;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_null.left = 0.03;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_null.right = 0.97;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_null.vtop = 186;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_null.vbottom = 46;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_null.vleft = 0;
-amd_stats.dimensions.ageAtConsultTime_Heightcm_null.vright = 20;
-amd_stats.dimensions.Heightcm_Weightkg_m = {};
-amd_stats.dimensions.Heightcm_Weightkg_m.top = 0.05;
-amd_stats.dimensions.Heightcm_Weightkg_m.bottom = 0.95;
-amd_stats.dimensions.Heightcm_Weightkg_m.left = 0.03;
-amd_stats.dimensions.Heightcm_Weightkg_m.right = 0.97;
-amd_stats.dimensions.Heightcm_Weightkg_m.vtop = 26;
-amd_stats.dimensions.Heightcm_Weightkg_m.vbottom = 10;
-amd_stats.dimensions.Heightcm_Weightkg_m.vleft = 80;
-amd_stats.dimensions.Heightcm_Weightkg_m.vright = 120;
-amd_stats.dimensions.Heightcm_Weightkg_f = {};
-amd_stats.dimensions.Heightcm_Weightkg_f.top = 0.05;
-amd_stats.dimensions.Heightcm_Weightkg_f.bottom = 0.95;
-amd_stats.dimensions.Heightcm_Weightkg_f.left = 0.03;
-amd_stats.dimensions.Heightcm_Weightkg_f.right = 0.97;
-amd_stats.dimensions.Heightcm_Weightkg_f.vtop = 26;
-amd_stats.dimensions.Heightcm_Weightkg_f.vbottom = 9;
-amd_stats.dimensions.Heightcm_Weightkg_f.vleft = 80;
-amd_stats.dimensions.Heightcm_Weightkg_f.vright = 120;
-amd_stats.dimensions.Heightcm_Weightkg_null = {};
-amd_stats.dimensions.Heightcm_Weightkg_null.top = 0.05;
-amd_stats.dimensions.Heightcm_Weightkg_null.bottom = 0.95;
-amd_stats.dimensions.Heightcm_Weightkg_null.left = 0.03;
-amd_stats.dimensions.Heightcm_Weightkg_null.right = 0.97;
-amd_stats.dimensions.Heightcm_Weightkg_null.vtop = 26;
-amd_stats.dimensions.Heightcm_Weightkg_null.vbottom = 9;
-amd_stats.dimensions.Heightcm_Weightkg_null.vleft = 80;
-amd_stats.dimensions.Heightcm_Weightkg_null.vright = 120;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_m = {};
+amd_stats.dimensions.ageAtConsultTime_weight_kg_m.top = 0.05;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_m.bottom = 0.95;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_m.left = 0.03;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_m.right = 0.97;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_m.vtop = 89;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_m.vbottom = 2;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_m.vleft = 0;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_m.vright = 20;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_f = {};
+amd_stats.dimensions.ageAtConsultTime_weight_kg_f.top = 0.05;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_f.bottom = 0.95;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_f.left = 0.03;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_f.right = 0.97;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_f.vtop = 75;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_f.vbottom = 2;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_f.vleft = 0;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_f.vright = 20;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_null = {};
+amd_stats.dimensions.ageAtConsultTime_weight_kg_null.top = 0.05;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_null.bottom = 0.95;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_null.left = 0.03;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_null.right = 0.97;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_null.vtop = 89;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_null.vbottom = 2;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_null.vleft = 0;
+amd_stats.dimensions.ageAtConsultTime_weight_kg_null.vright = 20;
+amd_stats.dimensions.ageAtConsultTime_height_cm_m = {};
+amd_stats.dimensions.ageAtConsultTime_height_cm_m.top = 0.05;
+amd_stats.dimensions.ageAtConsultTime_height_cm_m.bottom = 0.95;
+amd_stats.dimensions.ageAtConsultTime_height_cm_m.left = 0.03;
+amd_stats.dimensions.ageAtConsultTime_height_cm_m.right = 0.97;
+amd_stats.dimensions.ageAtConsultTime_height_cm_m.vtop = 186;
+amd_stats.dimensions.ageAtConsultTime_height_cm_m.vbottom = 47;
+amd_stats.dimensions.ageAtConsultTime_height_cm_m.vleft = 0;
+amd_stats.dimensions.ageAtConsultTime_height_cm_m.vright = 20;
+amd_stats.dimensions.ageAtConsultTime_height_cm_f = {};
+amd_stats.dimensions.ageAtConsultTime_height_cm_f.top = 0.05;
+amd_stats.dimensions.ageAtConsultTime_height_cm_f.bottom = 0.95;
+amd_stats.dimensions.ageAtConsultTime_height_cm_f.left = 0.03;
+amd_stats.dimensions.ageAtConsultTime_height_cm_f.right = 0.97;
+amd_stats.dimensions.ageAtConsultTime_height_cm_f.vtop = 172;
+amd_stats.dimensions.ageAtConsultTime_height_cm_f.vbottom = 46;
+amd_stats.dimensions.ageAtConsultTime_height_cm_f.vleft = 0;
+amd_stats.dimensions.ageAtConsultTime_height_cm_f.vright = 20;
+amd_stats.dimensions.ageAtConsultTime_height_cm_null = {};
+amd_stats.dimensions.ageAtConsultTime_height_cm_null.top = 0.05;
+amd_stats.dimensions.ageAtConsultTime_height_cm_null.bottom = 0.95;
+amd_stats.dimensions.ageAtConsultTime_height_cm_null.left = 0.03;
+amd_stats.dimensions.ageAtConsultTime_height_cm_null.right = 0.97;
+amd_stats.dimensions.ageAtConsultTime_height_cm_null.vtop = 186;
+amd_stats.dimensions.ageAtConsultTime_height_cm_null.vbottom = 46;
+amd_stats.dimensions.ageAtConsultTime_height_cm_null.vleft = 0;
+amd_stats.dimensions.ageAtConsultTime_height_cm_null.vright = 20;
+amd_stats.dimensions.height_cm_weight_kg_m = {};
+amd_stats.dimensions.height_cm_weight_kg_m.top = 0.05;
+amd_stats.dimensions.height_cm_weight_kg_m.bottom = 0.95;
+amd_stats.dimensions.height_cm_weight_kg_m.left = 0.03;
+amd_stats.dimensions.height_cm_weight_kg_m.right = 0.97;
+amd_stats.dimensions.height_cm_weight_kg_m.vtop = 26;
+amd_stats.dimensions.height_cm_weight_kg_m.vbottom = 10;
+amd_stats.dimensions.height_cm_weight_kg_m.vleft = 80;
+amd_stats.dimensions.height_cm_weight_kg_m.vright = 120;
+amd_stats.dimensions.height_cm_weight_kg_f = {};
+amd_stats.dimensions.height_cm_weight_kg_f.top = 0.05;
+amd_stats.dimensions.height_cm_weight_kg_f.bottom = 0.95;
+amd_stats.dimensions.height_cm_weight_kg_f.left = 0.03;
+amd_stats.dimensions.height_cm_weight_kg_f.right = 0.97;
+amd_stats.dimensions.height_cm_weight_kg_f.vtop = 26;
+amd_stats.dimensions.height_cm_weight_kg_f.vbottom = 9;
+amd_stats.dimensions.height_cm_weight_kg_f.vleft = 80;
+amd_stats.dimensions.height_cm_weight_kg_f.vright = 120;
+amd_stats.dimensions.height_cm_weight_kg_null = {};
+amd_stats.dimensions.height_cm_weight_kg_null.top = 0.05;
+amd_stats.dimensions.height_cm_weight_kg_null.bottom = 0.95;
+amd_stats.dimensions.height_cm_weight_kg_null.left = 0.03;
+amd_stats.dimensions.height_cm_weight_kg_null.right = 0.97;
+amd_stats.dimensions.height_cm_weight_kg_null.vtop = 26;
+amd_stats.dimensions.height_cm_weight_kg_null.vbottom = 9;
+amd_stats.dimensions.height_cm_weight_kg_null.vleft = 80;
+amd_stats.dimensions.height_cm_weight_kg_null.vright = 120;
 amd_stats.dimensions.ageAtConsultTime_bmi_m = {};
 amd_stats.dimensions.ageAtConsultTime_bmi_m.top = 0.05;
 amd_stats.dimensions.ageAtConsultTime_bmi_m.bottom = 0.95;

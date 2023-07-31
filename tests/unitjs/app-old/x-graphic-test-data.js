@@ -19,8 +19,8 @@ const folder = new Folder([
       id: 2,
       patient_id: 1,
       date: "2007-01-10",
-      Weightkg: 0,
-      Heightcm: 0,
+      weight_kg: 0,
+      height_cm: 0,
       Y: 0
     }
   },
@@ -31,8 +31,8 @@ const folder = new Folder([
       id: 1,
       patient_id: 1,
       date: "2007-01-10",
-      Weightkg: 29,
-      Heightcm: 134,
+      weight_kg: 29,
+      height_cm: 134,
       Y: 100
     }
   },
@@ -44,8 +44,8 @@ const folder = new Folder([
       patient_id: 1,
       date: "2014-01-04",
       examiner: "AMD doctor",
-      Weightkg: 37,
-      Heightcm: 110,
+      weight_kg: 37,
+      height_cm: 110,
       Y: 90
     }
   }

@@ -21,8 +21,8 @@ export let male = new Folder([
       id: 1,
       patient_id: 1,
       date: "2007-01-10",
-      Weightkg: amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vtop,
-      Heightcm: amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vleft
+      weight_kg: amd_stats.dimensions.ageAtConsultTime_weight_kg_m.vtop,
+      height_cm: amd_stats.dimensions.ageAtConsultTime_weight_kg_m.vleft
     }
   },
   {
@@ -32,8 +32,8 @@ export let male = new Folder([
       id: 2,
       patient_id: 1,
       date: "2007-01-10",
-      Weightkg: amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vbottom,
-      Heightcm: amd_stats.dimensions.ageAtConsultTime_Weightkg_m.vright
+      weight_kg: amd_stats.dimensions.ageAtConsultTime_weight_kg_m.vbottom,
+      height_cm: amd_stats.dimensions.ageAtConsultTime_weight_kg_m.vright
     }
   },
   {
@@ -44,8 +44,8 @@ export let male = new Folder([
       patient_id: 1,
       date: "2014-01-04",
       examiner: "AMD doctor",
-      Weightkg: 37,
-      Heightcm: 110
+      weight_kg: 37,
+      height_cm: 110
     }
   }
 ]);
@@ -69,8 +69,8 @@ export let female = new Folder([
       id: 1,
       patient_id: 1,
       date: "2007-01-10",
-      Weightkg: 0,
-      Heightcm: 0
+      weight_kg: 0,
+      height_cm: 0
     }
   },
   {
@@ -80,8 +80,8 @@ export let female = new Folder([
       id: 2,
       patient_id: 1,
       date: "2007-01-10",
-      Weightkg: 29,
-      Heightcm: 134
+      weight_kg: 29,
+      height_cm: 134
     }
   },
   {
@@ -92,8 +92,8 @@ export let female = new Folder([
       patient_id: 1,
       date: "2014-01-04",
       examiner: "AMD doctor",
-      Weightkg: 37,
-      Heightcm: 110
+      weight_kg: 37,
+      height_cm: 110
     }
   }
 ]);

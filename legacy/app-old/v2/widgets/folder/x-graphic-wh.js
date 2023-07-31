@@ -8,7 +8,7 @@ class XGraphicWH extends XGraphic {
     return "wh";
   }
   getImageDimensions(sex) {
-    return amd_stats.dimensions[`Heightcm_Weightkg_${sex}`];
+    return amd_stats.dimensions[`height_cm_weight_kg_${sex}`];
   }
 
   getVariableX() {
@@ -19,10 +19,10 @@ class XGraphicWH extends XGraphic {
   }
 
   getValueX(file) {
-    return file.Heightcm;
+    return file.height_cm;
   }
   getValueY(file) {
-    return file.Weightkg;
+    return file.weight_kg;
   }
 }
 
