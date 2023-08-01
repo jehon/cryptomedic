@@ -27,19 +27,19 @@ import { pricesCrud } from "../widgets/func/requests-admin.js";
  */
 function sortPrices(prices) {
   prices.sort((a, b) => {
-    // Left(smal) == bigger datefrom
-    if (a == null || a.datefrom == null || a.datefrom == "") {
+    // Left(smal) == bigger date_from
+    if (a == null || a.date_from == null || a.date_from == "") {
       return 1;
     }
-    if (b == null || b.datefrom == null || b.datefrom == "") {
+    if (b == null || b.date_from == null || b.date_from == "") {
       return -1;
     }
 
-    if (a.datefrom == b.datefrom) {
+    if (a.date_from == b.date_from) {
       return 0;
     }
 
-    if (a.datefrom > b.datefrom) {
+    if (a.date_from > b.date_from) {
       return -1;
     }
 
@@ -161,13 +161,13 @@ export default class XPagePrices extends HTMLElement {
             createElementWithTag("tr", {}, [
               createElementWithTag("th", {}, "Beginning date"),
               ...this.prices.map((p) =>
-                createElementWithTag("th", {}, p.datefrom)
+                createElementWithTag("th", {}, p.date_from)
               )
             ]),
             createElementWithTag("tr", {}, [
               createElementWithTag("th", {}, "End date"),
               ...this.prices.map((p) =>
-                createElementWithTag("th", {}, p.dateto)
+                createElementWithTag("th", {}, p.date_to)
               )
             ]),
             createElementWithTag("tr", {}, [
@@ -276,10 +276,10 @@ export default class XPagePrices extends HTMLElement {
       if (v == "updated_at") {
         return false;
       }
-      if (v == "datefrom") {
+      if (v == "date_from") {
         return false;
       }
-      if (v == "dateto") {
+      if (v == "date_to") {
         return false;
       }
       if (v == "last_user") {
@@ -288,7 +288,7 @@ export default class XPagePrices extends HTMLElement {
       if (v == "id") {
         return false;
       }
-      if (v.substr(0, 21) == "socialLevelPercentage") {
+      if (v.substring(0, 23) == "social_level_percentage") {
         return false;
       }
       return true;

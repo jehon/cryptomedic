@@ -25,8 +25,8 @@ function selectPriceFromDate(prices, date) {
   for (const i in prices) {
     var p = prices[i];
     if (
-      (p["datefrom"] == null || p["datefrom"] <= dref) &&
-      (p["dateto"] == null || p["dateto"] > dref)
+      (p["date_from"] == null || p["date_from"] <= dref) &&
+      (p["date_to"] == null || p["date_to"] > dref)
     ) {
       price_id = parseInt(i);
       price = prices[i];

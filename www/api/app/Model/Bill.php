@@ -127,11 +127,11 @@ class Bill extends CryptomedicModel {
 			", " .
 			"IF(bills.other_making_dressing, 'Dress ', '')" .
 			", " .
-			"IF(bills.other_X_Ray, 'XR ', '')" .
+			"IF(bills.`other_x-ray`, 'XR ', '')" .
 			", " .
 			"IF(bills.other_physiotherapy, 'Physio ', '')" .
 			", " .
-			"IF(bills.other_Other_consultation_care, 'Other ', '')" .
+			"IF(bills.other_other_consultation_care, 'Other ', '')" .
 			"))";
 	}
 

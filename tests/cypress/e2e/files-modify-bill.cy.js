@@ -59,18 +59,18 @@ context("Actions", () => {
 
     cy.get("#total_calculated_raw").should("contain.text", 150);
 
-    cy.get("#Bill_other_Other_consultation_care").clear();
-    cy.get("#Bill_other_Other_consultation_care").type("15");
+    cy.get("#Bill_other_other_consultation_care").clear();
+    cy.get("#Bill_other_other_consultation_care").type("15");
 
     cy.get("#total_calculated_raw").should("contain.text", 165);
 
-    // Let's play with SocialLevel
+    // Let's play with social_level
     cy.log("Let's play with Social Level");
 
     cy.get("[title=Summary]")
       .should("be.visible")
       .within(() => {
-        cy.get("#Bill_Sociallevel").should("contain.text", 4);
+        cy.get("#Bill_social_level").should("contain.text", 4);
         cy.get("#percentage").should("contain.text", "100%");
         cy.get("#total_calculated_asked").should("contain.text", "165");
       });
@@ -78,11 +78,11 @@ context("Actions", () => {
     cy.get('[title="Social Data"]')
       .should("be.visible")
       .within(() => {
-        cy.get("#Bill_sl_familySalary").clear();
-        cy.get("#Bill_sl_familySalary").type("3000");
+        cy.get("#Bill_sl_family_salary").clear();
+        cy.get("#Bill_sl_family_salary").type("3000");
 
-        cy.get("#Bill_sl_numberOfHouseholdMembers").clear();
-        cy.get("#Bill_sl_numberOfHouseholdMembers").type("3");
+        cy.get("#Bill_sl_number_of_household_members").clear();
+        cy.get("#Bill_sl_number_of_household_members").type("3");
 
         cy.get("x-fff-salary-ratio").should("contain.text", "1000");
         cy.get("#social_level_calculated").should("contain.text", 2);
@@ -91,7 +91,7 @@ context("Actions", () => {
     cy.get("[title=Summary]")
       .should("be.visible")
       .within(() => {
-        cy.get("#Bill_Sociallevel").should("contain.text", 2);
+        cy.get("#Bill_social_level").should("contain.text", 2);
         cy.get("#percentage").should("contain.text", "40%");
         cy.get("#total_calculated_asked").should("contain.text", "66");
       });
@@ -109,8 +109,11 @@ context("Actions", () => {
     cy.get('[title="Social Data"]')
       .should("be.visible")
       .within(() => {
-        cy.get("#Bill_sl_familySalary").should("contain.text", "3000");
-        cy.get("#Bill_sl_numberOfHouseholdMembers").should("contain.text", "3");
+        cy.get("#Bill_sl_family_salary").should("contain.text", "3000");
+        cy.get("#Bill_sl_number_of_household_members").should(
+          "contain.text",
+          "3"
+        );
 
         cy.get("x-fff-salary-ratio").should("contain.text", "1000");
         cy.get("#social_level_calculated").should("contain.text", 2);
@@ -119,7 +122,7 @@ context("Actions", () => {
     cy.get("[title=Summary]")
       .should("be.visible")
       .within(() => {
-        cy.get("#Bill_Sociallevel").should("contain.text", 2);
+        cy.get("#Bill_social_level").should("contain.text", 2);
         cy.get("#percentage").should("contain.text", "40%");
         cy.get("#total_calculated_asked").should("contain.text", "66");
       });

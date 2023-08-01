@@ -637,7 +637,7 @@ reports[REPORT_ACTIVITY] = {
             : "New",
         { headers: ["Old/New"] }
       )
-      .addDetail("sl_familySalary", {
+      .addDetail("sl_family_salary", {
         headers: [
           "Tk income",
           "SEL",
@@ -646,16 +646,18 @@ reports[REPORT_ACTIVITY] = {
           "Levels of the social level"
         ]
       })
-      .addDetail("sl_numberOfHouseholdMembers", { headers: ["Nb pers"] })
+      .addDetail("sl_number_of_household_members", { headers: ["Nb pers"] })
       .addDetail(
         (data) =>
           ifError(
-            Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers),
+            Math.round(
+              data.sl_family_salary / data.sl_number_of_household_members
+            ),
             ""
           ),
         { headers: ["Tk per pers", null, "301-500", 1] }
       )
-      .addDetail("Sociallevel", { headers: ["SL"] })
+      .addDetail("social_level", { headers: ["SL"] })
 
       .addDetail(
         (data) => createElementWithObject(XCodage, { value: data.pathology }),
@@ -844,7 +846,7 @@ reports[REPORT_FINANCIAL] = {
         headers: ["Age at first consult"],
         footers: [""]
       })
-      .addDetail("Sociallevel", {
+      .addDetail("social_level", {
         headers: ["SL"],
         footers: [""]
       })
@@ -944,7 +946,7 @@ reports[REPORT_SURGICAL] = {
         }
       )
       .addDetail("sex", { headers: ["M/F"] })
-      .addDetail("sl_familySalary", {
+      .addDetail("sl_family_salary", {
         headers: [
           "Tk income",
           "SEL",
@@ -953,16 +955,18 @@ reports[REPORT_SURGICAL] = {
           "Levels of the social level"
         ]
       })
-      .addDetail("sl_numberOfHouseholdMembers", { headers: ["Nb pers"] })
+      .addDetail("sl_number_of_household_members", { headers: ["Nb pers"] })
       .addDetail(
         (data) =>
           ifError(
-            Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers),
+            Math.round(
+              data.sl_family_salary / data.sl_number_of_household_members
+            ),
             ""
           ),
         { headers: ["Tk per pers", null, "301-500", 1] }
       )
-      .addDetail("Sociallevel", { headers: ["SL"] })
+      .addDetail("social_level", { headers: ["SL"] })
 
       .addDetail(
         (data) => createElementWithObject(XCodage, { value: data.pathology }),
@@ -1119,24 +1123,24 @@ reports[REPORT_STATISTICAL] = {
 
     <tr><td colspan="2" class="subheader">Social Level</td></tr>
     <tr><td>Family income (mean)</td><td>${r(
-      data.summary.sociallevel.familyincome,
+      data.summary.social_level.familyincome,
       1
     )}</td ></tr>
     <tr><td>Nb household mb (mean)</td><td>${r(
-      data.summary.sociallevel.nbhousehold,
+      data.summary.social_level.nbhousehold,
       1
     )}</td ></tr >
     <tr><td>ratio (mean)</td><td>${r(
-      data.summary.sociallevel.familyincome /
-        data.summary.sociallevel.nbhousehold,
+      data.summary.social_level.familyincome /
+        data.summary.social_level.nbhousehold,
       2
     )}</td ></tr >
-    ${listings.SocialLevel.map(
+    ${listings.SocialLevels.map(
       (v) =>
-        `<tr><td>Social Level ${v}</td><td>${data.summary.sociallevel[v]}</td></tr>`
+        `<tr><td>Social Level ${v}</td><td>${data.summary.social_level[v]}</td></tr>`
     ).join("\n")}
     <tr><td>All social level together</td><td>${
-      data.summary.sociallevel.total
+      data.summary.social_level.total
     }</td></tr>
 
     <tr><td colspan="2" class="subheader">Where</td></tr>
@@ -1321,11 +1325,11 @@ reports[REPORT_STATISTICAL] = {
     //         l('Number of patients seen', (_row) => dataList.summary.nbPatients),
 
     //         t('Social Level'),
-    //         l('Family income (mean)', (_row) => r(dataList.summary.sociallevel.familyincome, 1)),
-    //         l('Nb household mb (mean)', (_row) => r(dataList.summary.sociallevel.nbhousehold, 1)),
-    //         l('ratio (mean)', (_row) => r(dataList.summary.sociallevel.familyincome / dataList.summary.sociallevel.nbhousehold, 2)),
-    //         ...listings.SocialLevel.map(v => l(`Social Level ${v}`, (_row) => dataList.summary.sociallevel[v])),
-    //         l('All social level together', (_row) => dataList.summary.sociallevel.total),
+    //         l('Family income (mean)', (_row) => r(dataList.summary.social_level.familyincome, 1)),
+    //         l('Nb household mb (mean)', (_row) => r(dataList.summary.social_level.nbhousehold, 1)),
+    //         l('ratio (mean)', (_row) => r(dataList.summary.social_level.familyincome / dataList.summary.social_levell.nbhousehold, 2)),
+    //         ...listings.social_level.map(v => l(`Social Level ${v}`, (_row) => dataList.summary.social_levell[v])),
+    //         l('All social level together', (_row) => dataList.summary.social_level.total),
 
     //         t('Where'),
     //         // ...listings.centers.map(v => `<tr><td>@<x-i18n value="${v}"></x-i18n>', (row, ctx) =>   ctx.summary.centers[v] ?? 0),

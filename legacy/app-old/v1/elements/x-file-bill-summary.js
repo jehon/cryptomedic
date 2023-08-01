@@ -10,8 +10,8 @@ export default class XFileBillSummary extends XFileBill {
     const tc = new TwoColumns(this, {
       label: this.label
     });
-    tc.addLine("Sociallevel");
-    tc.addLine("total_asked");
+    tc.addLine("social_level", "Social Level");
+    tc.addLine("total_asked", "Total Asked");
 
     for (const cat of this.categoriesList) {
       tc.addLines(this.getFieldsBelongingTo(cat));

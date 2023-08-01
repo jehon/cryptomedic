@@ -37,7 +37,7 @@ describe("tests/unit/x-file-bill-test-summary.js", function () {
       it("should be instantiated", function () {
         let b = getBill(RefFolder1, 1);
         element().value = b;
-        hasRow(element, "Sociallevel", "2");
+        hasRow(element, "social_level", "2");
         hasRow(element, "total_asked", "6720");
         hasRow(element, "consult_CDC_consultation_physio", 1);
         hasRow(element, "workshop_BHKAFO_night", 1);

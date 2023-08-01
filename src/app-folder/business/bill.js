@@ -30,20 +30,22 @@ export default class Bill extends PatientRelated {
           }
         }
         if (last_bill) {
-          this.sl_familySalary = last_bill.sl_familySalary;
-          this.sl_numberOfHouseholdMembers =
-            last_bill.sl_numberOfHouseholdMembers;
+          this.sl_family_salary = last_bill.sl_family_salary;
+          this.sl_number_of_household_members =
+            last_bill.sl_number_of_household_members;
         }
       }
     }
   }
 
   ratioSalary() {
-    if (!this.isNotZero("sl_numberOfHouseholdMembers")) {
-      throw new DataMissingException("sl_numberOfHouseholdMembers");
+    if (!this.isNotZero("sl_number_of_household_members")) {
+      throw new DataMissingException("sl_number_of_household_members");
     }
 
-    return Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
+    return Math.ceil(
+      this.sl_family_salary / this.sl_number_of_household_members
+    );
   }
 
   social_level_calculated() {
@@ -100,10 +102,10 @@ export default class Bill extends PatientRelated {
       if (i === "last_user") {
         continue;
       }
-      if (i === "datefrom") {
+      if (i === "date_from") {
         continue;
       }
-      if (i === "dateto") {
+      if (i === "date_to") {
         continue;
       }
       if (i === "controller") {
@@ -115,19 +117,19 @@ export default class Bill extends PatientRelated {
       if (i === "dlocked") {
         continue;
       }
-      if (i === "socialLevelPercentage_0") {
+      if (i === "social_level_percentage_0") {
         continue;
       }
-      if (i === "socialLevelPercentage_1") {
+      if (i === "social_level_percentage_1") {
         continue;
       }
-      if (i === "socialLevelPercentage_2") {
+      if (i === "social_level_percentage_2") {
         continue;
       }
-      if (i === "socialLevelPercentage_3") {
+      if (i === "social_level_percentage_3") {
         continue;
       }
-      if (i === "socialLevelPercentage_4") {
+      if (i === "social_level_percentage_4") {
         continue;
       }
       if (this.price[i] < 0) {
@@ -151,16 +153,16 @@ export default class Bill extends PatientRelated {
       //console.warn('calculate_percentage_asked(): no price id');
       return 1;
     }
-    var sl = this["Sociallevel"];
+    var sl = this["social_level"];
     if (sl == null) {
       //console.warn('calculate_percentage_asked(): no social level');
       return 1;
     }
-    if (typeof this.price["socialLevelPercentage_" + sl] == "undefined") {
+    if (typeof this.price["social_level_percentage_" + sl] == "undefined") {
       //console.warn('calculate_percentage_asked(): no social level in price for sl ' + sl);
       return 1;
     }
-    var perc = this.price["socialLevelPercentage_" + sl];
+    var perc = this.price["social_level_percentage_" + sl];
     // console.log("price", this.price, sl, perc)
     return perc;
   }
@@ -190,8 +192,8 @@ export default class Bill extends PatientRelated {
     for (var i in prices) {
       var p = prices[i];
       if (
-        (p["datefrom"] == null || p["datefrom"] <= dref) &&
-        (p["dateto"] == null || p["dateto"] > dref)
+        (p["date_from"] == null || p["date_from"] <= dref) &&
+        (p["date_to"] == null || p["date_to"] > dref)
       ) {
         t.price_id = i;
         t.price = prices[i];

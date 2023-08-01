@@ -111,7 +111,7 @@ class PriceTest extends RouteReferenceTestCase {
 		);
 
 		$this->assertArrayHasKey('id', $json);
-		$this->assertEquals($json['datefrom'], $limit);
+		$this->assertEquals($json['date_from'], $limit);
 
 		$this->assertEquals($json['_editable'], true);
 
@@ -141,7 +141,7 @@ class PriceTest extends RouteReferenceTestCase {
 		);
 
 		$this->assertArrayHasKey('id', $json);
-		$this->assertEquals($json['datefrom'], $limit);
+		$this->assertEquals($json['date_from'], $limit);
 
 		$this->assertEquals($json['consult_field_visit'], 0);
 		$this->assertEquals($json['consult_home_visit'], 250);

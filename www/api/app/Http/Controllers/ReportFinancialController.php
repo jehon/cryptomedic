@@ -16,7 +16,7 @@ class ReportFinancialController extends ReportController {
               patients.name as patient_name,
               patients.year_of_birth,
               patients.sex,
-              AVG(bills.Sociallevel) as Sociallevel,
+              AVG(bills.social_level) as social_level,
               SUM(" . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . ") AS price_consult,
               SUM(" . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . ") AS price_medecine,
               SUM(" . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . ") AS price_workshop,
@@ -44,7 +44,7 @@ class ReportFinancialController extends ReportController {
       . " HAVING (1 = 1)
         " . ($this->getParam('is_complete', false) ? " AND ( nb_consults + nb_pictures > 0 )" : "") . "
         " . ($this->getParam('is_child', false) ? " AND ( age_at_first_consult < 18 )" : "") . "
-        " . ($this->getParam('is_poor', false) ? " AND ( Sociallevel <= 3 )" : "") . "
+        " . ($this->getParam('is_poor', false) ? " AND ( social_level <= 3 )" : "") . "
         ORDER BY patient_reference"
       ),
       [

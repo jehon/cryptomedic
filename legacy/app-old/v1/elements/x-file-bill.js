@@ -53,8 +53,8 @@ export default class XFileBill extends XFile {
       for (const i in prices) {
         const p = prices[i];
         if (
-          (p["datefrom"] == null || p["datefrom"] <= dref) &&
-          (p["dateto"] == null || p["dateto"] > dref)
+          (p["date_from"] == null || p["date_from"] <= dref) &&
+          (p["date_to"] == null || p["date_to"] > dref)
         ) {
           index = i;
         }

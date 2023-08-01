@@ -81,24 +81,24 @@ class ReportStatisticalController extends ReportController {
 		$this->resultPathSet("summary.nbPatients", $this->getOneBySQL("SELECT count(*) as res FROM (select DISTINCT patient_id FROM bills WHERE {$this->filter} ) AS patients"));
 
 		// Social levels
-		$res = $this->runSqlWithNamedParameter("SELECT CAST(SUM(sl_familySalary) / COUNT(*) AS DECIMAL) as income,
-				SUM(sl_numberOfHouseholdMembers) / COUNT(*) as nbhous
+		$res = $this->runSqlWithNamedParameter("SELECT CAST(SUM(sl_family_salary) / COUNT(*) AS DECIMAL) as income,
+				SUM(sl_number_of_household_members) / COUNT(*) as nbhous
 				FROM bills
 				WHERE {$this->filter} ");
 		$res = array_pop($res);
 
-		$this->resultPathSet("summary.sociallevel.familyincome", $res->income);
-		$this->resultPathSet("summary.sociallevel.nbhousehold", $res->nbhous);
+		$this->resultPathSet("summary.social_level.familyincome", $res->income);
+		$this->resultPathSet("summary.social_level.nbhousehold", $res->nbhous);
 
 
 		$allSL = 0;
-		foreach (Lists::getList('SocialLevel') as $i) {
+		foreach (Lists::getList('SocialLevels') as $i) {
 			$allSL += $this->resultPathSet(
-				"summary.sociallevel.$i",
-				$this->getOneBySQL("SELECT Count(*) as res FROM bills WHERE {$this->filter} AND SocialLevel = $i")
+				"summary.social_level.$i",
+				$this->getOneBySQL("SELECT Count(*) as res FROM bills WHERE {$this->filter} AND social_level = $i")
 			);
 		}
-		$this->resultPathSet("summary.sociallevel.total", $allSL);
+		$this->resultPathSet("summary.social_level.total", $allSL);
 
 		// By center
 		$centers = Lists::getList('Centers');

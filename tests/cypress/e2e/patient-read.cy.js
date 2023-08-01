@@ -33,7 +33,7 @@ context("Actions", () => {
         .row(5)
         .assert("#3")
         .col(4)
-        .assert("Sociallevel");
+        .assert("Social Level");
 
       // TODO: We need to wait for image to be loaded...
       cy.wait(1000); // eslint-disable-line

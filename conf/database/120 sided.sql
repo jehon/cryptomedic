@@ -4,6 +4,6 @@ ALTER TABLE `surgeries` CHANGE `ReportSideL` `report_side_left` TINYINT(1) NULL 
 
 -- To handle:
 --
---    club_feet
---    ricket_consults
+--    club_feet <= check after
+--    ricket_consults <= check after
 --

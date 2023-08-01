@@ -10,7 +10,7 @@ class ReportCashRegisterController extends ReportController
   public function buildData()
   {
     $childFilter = "(SELECT min(year(bills.date)) - patients.year_of_birth FROM bills WHERE patient_id = patients.id) < 18";
-    $poorFilter = "bills.Sociallevel <= 3";
+    $poorFilter = "bills.social_level <= 3";
     
     $this->result['list'] = 
       $this->runSqlWithNamedParameter(

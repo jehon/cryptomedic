@@ -228,14 +228,14 @@ buildValueList("Surgery",     [
     "Pin removal",
     "No surgery"
 ]);
-buildValueList("Device",             ["BHKAFO for night", "BHKAFO", "UHKAFO for night", "UHKAFO", "U.K.A.F.O", "BAFO for night", "BAFO", "orthoshoes with bar", "orthoshoes without bar", "Compensation Sole", "Arch support", "Supinator Corner", "wirst splint", "Hand Splint", "finger splint (ext/flex)", "Walker with wheel", "Walker without wheel", "Crutch(a pair)", "Wheel Chair", "CP standing table", "cervical collar", "Abdominal Corset belt", "Repairing", "others ortho device"]);
-buildValueList("Pain",               ["No", "Moderate", "Severe"]);
-buildValueList("WalkingCapacities",  ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5"]);
-buildValueList("LegAnalysis",        ["Valgus", "Varus"]);
-buildValueList("Side",               ["Right", "Left", "Bi"]);
-buildValueList("CPTreatment",        ["plaster", "tenotomy", "DB splint", "surgery"]);
+buildValueList("Device",              ["BHKAFO for night", "BHKAFO", "UHKAFO for night", "UHKAFO", "U.K.A.F.O", "BAFO for night", "BAFO", "orthoshoes with bar", "orthoshoes without bar", "Compensation Sole", "Arch support", "Supinator Corner", "wirst splint", "Hand Splint", "finger splint (ext/flex)", "Walker with wheel", "Walker without wheel", "Crutch(a pair)", "Wheel Chair", "CP standing table", "cervical collar", "Abdominal Corset belt", "Repairing", "others ortho device"]);
+buildValueList("Pain",                ["No", "Moderate", "Severe"]);
+buildValueList("WalkingCapacities",   ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5"]);
+buildValueList("LegAnalysis",         ["Valgus", "Varus"]);
+buildValueList("Side",                ["Right", "Left", "Bi"]);
+buildValueList("CPTreatment",         ["plaster", "tenotomy", "DB splint", "surgery"]);
 
-buildValueList("SocialLevel",         [0, 1, 2, 3, 4]);
+buildValueList("SocialLevels",        [0, 1, 2, 3, 4]);
 buildValueList("Pirani",              [0, 0.5, 1]);
 buildValueList("0-10",                [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 buildValueList("Eval01",              [0, 1]);

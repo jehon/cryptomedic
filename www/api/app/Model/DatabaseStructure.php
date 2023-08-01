@@ -25,7 +25,7 @@ define("HARDCODED_LISTINGS", [
         "examiner"                 => "Examiners"
     ],
     "bills" => [
-        "Sociallevel"              => "SocialLevel"
+        "social_level"             => "SocialLevels"
     ],
 
     "club_feet" => [

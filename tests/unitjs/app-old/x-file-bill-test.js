@@ -33,7 +33,7 @@ describe("tests/unit/x-file-bill-test.js", function () {
         expect(element().price).toBeFalsy();
 
         const prices = loadReference("PriceTest.testIndex.json");
-        prices[0].datefrom = "2015-01-01";
+        prices[0].date_from = "2015-01-01";
         setSession({ prices });
         expect(element().price).toBeFalsy();
       });

@@ -21,11 +21,11 @@ export default class TwoColumns {
     return this.text;
   }
 
-  addLine(field) {
+  addLine(field, label = null) {
     try {
       const val = this.about.assertNumericNotZero(field);
       this.text += `<tr>
-				<td>${this.options.label(field)}</td>
+				<td>${label ?? this.options.label(field)}</td>
 				<td><span id='${
           this.options.id_scope
         }${field}' name='${field}'>${val}</span></td>

@@ -87,8 +87,8 @@ EOD;
         <x-ff-patient-related></x-ff-patient-related>
         <x-ff-next-appointment></x-ff-next-appointment>
         <x-group-panel title='Social Data'>
-          <?php (new t("Bill.sl_familySalary"))->tr2("Family Salary in a Month")->p(); ?>
-          <?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr2("Number of Houslehold Members")->p(); ?>
+          <?php (new t("Bill.sl_family_salary"))->tr2("Family Salary in a Month")->p(); ?>
+          <?php (new t("Bill.sl_number_of_household_members"))->tr2("Number of Houslehold Members")->p(); ?>
           <x-fff-field label='Salary Ratio'>
             <x-fff-salary-ratio></x-fff-salary-ratio>
           </x-fff-field>
@@ -100,7 +100,7 @@ EOD;
           <x-fff-field label='Raw Calculated total'>
             <div id='total_calculated_raw'>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></div>
           </x-fff-field>
-          <?php (new t("Bill.Sociallevel"))->readOnly()->tr2("Social Level")->p(); ?>
+          <?php (new t("Bill.social_level"))->readOnly()->tr2("Social Level")->p(); ?>
           <x-fff-field label='Percentage of price to be asked'>
             <div id='percentage'>{{currentFile().calculate_percentage_asked() * 100 | number:0}}%</div>
           </x-fff-field>

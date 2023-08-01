@@ -67,7 +67,7 @@ export default function ctrl_file_bill($scope, $element) {
     .querySelectorAll("x-fff-salary-ratio")
     .forEach((/** @type {XFffSalaryRatio} */ el) => el.refresh());
 
-  $scope.$watch("currentFile().sl_numberOfHouseholdMembers", function () {
+  $scope.$watch("currentFile().sl_number_of_household_members", function () {
     try {
       $scope.currentFile().ratioSalary();
       document
@@ -76,7 +76,7 @@ export default function ctrl_file_bill($scope, $element) {
     } catch (e) {}
   });
 
-  $scope.$watch("currentFile().sl_familySalary", function () {
+  $scope.$watch("currentFile().sl_family_salary", function () {
     try {
       $scope.currentFile().ratioSalary();
       document
@@ -87,7 +87,7 @@ export default function ctrl_file_bill($scope, $element) {
 
   $scope.$watch("currentFile().social_level_calculated()", function (newValue) {
     if ($scope.mode != "read") {
-      $scope.currentFile().Sociallevel = $scope
+      $scope.currentFile().social_level = $scope
         .currentFile()
         .social_level_calculated();
     }
@@ -109,7 +109,7 @@ export default function ctrl_file_bill($scope, $element) {
   };
 
   if ($scope.mode != "read") {
-    $scope.currentFile().Sociallevel = $scope
+    $scope.currentFile().social_level = $scope
       .currentFile()
       .social_level_calculated();
   }

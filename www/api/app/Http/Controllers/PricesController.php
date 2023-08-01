@@ -17,7 +17,7 @@ class PricesController extends Controller {
 	// POST = create
 	public function store() {
 		$pivot = Request::input('pivot');
-		$lastPrice = Price::where("dateto", null)->first();
+		$lastPrice = Price::where("date_to", null)->first();
 
 		if ($lastPrice->_editable) {
 			abort(403, "Only one price could be editable at a time");
@@ -31,7 +31,7 @@ class PricesController extends Controller {
 		$newAttr = $lastPrice->getAttributes();
 
 		unset($newAttr['id']);
-		$newAttr['datefrom'] = $pivot;
+		$newAttr['date_from'] = $pivot;
 
 		$newObj = Price::create($newAttr);
 
@@ -39,7 +39,7 @@ class PricesController extends Controller {
 			abort(500, "Could not create the file");
 		}
 
-		$lastPrice->dateto = $pivot;
+		$lastPrice->date_to = $pivot;
 		$lastPrice->save();
 
 		return $newObj;
@@ -47,7 +47,7 @@ class PricesController extends Controller {
 
 	// PUT / PATCH
 	public function update($id) {
-		$attributes = Request::except(['_type', 'datefrom', 'dateto']);
+		$attributes = Request::except(['_type', 'date_from', 'date_to']);
 
 		$obj = Price::findOrFail($id);
 		if (!$obj->_editable) {
@@ -83,8 +83,8 @@ class PricesController extends Controller {
 			abort(404, "Could not delete $model@$id");
 		}
 
-		// Rollback latests "dateto" to null
-		DB::update("UPDATE prices SET dateto = NULL WHERE dateto = (SELECT max(dateto) FROM (SELECT dateto FROM prices) AS t)");
+		// Rollback latests "date_to" to null
+		DB::update("UPDATE prices SET date_to = NULL WHERE date_to = (SELECT max(date_to) FROM (SELECT date_to FROM prices) AS t)");
 
 		// return response()->json(array());
 		return 0;

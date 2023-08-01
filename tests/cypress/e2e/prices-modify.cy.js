@@ -52,9 +52,9 @@ function assertTableInitial(i = 0) {
     .assert("-")
     .nextCol()
     .assert("100")
-    .nextRow(7)
+    .nextRow(15)
     .col(1)
-    .assert("other_Other_consultation_care")
+    .assert("other_other_consultation_care")
     .col(1 + i)
     .nextCol()
     .assert("open")
@@ -74,7 +74,7 @@ flavorFilter(flavorFilter.DESKTOP, () =>
       crLoginInBackground(crApiLogin.ADMIN);
       crApiPriceList().then((data) => {
         data.forEach((p) => {
-          if (p.datefrom > "2130") {
+          if (p.date_from > "2130") {
             crApiPriceDelete(p.id);
           }
         });
@@ -138,7 +138,7 @@ flavorFilter(flavorFilter.DESKTOP, () =>
         .assert(100)
         .nextRow()
         .assert(100)
-        .row(12)
+        .row(20)
         .assert("open");
 
       assertTableInitial(1);
