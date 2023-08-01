@@ -42,12 +42,10 @@ run_cypress() {
 
 FLAVOR="$1"
 OUTPUT="$2"
-mkdir -p "$OUTPUT"
 if [ -n "$OUTPUT" ]; then
     setup_folders "$OUTPUT"
+    DOCKER_OUTPUT="/workdir/$(realpath --relative-to "$CR_PRJ_DIR" "$2")"
 fi
-
-DOCKER_OUTPUT="/workdir/$(realpath --relative-to "$CR_PRJ_DIR" "$2")"
 
 case "$FLAVOR" in
 "version")
