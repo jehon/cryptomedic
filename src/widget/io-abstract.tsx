@@ -1,5 +1,7 @@
 import React from "react";
 
+const minWidth = "300px";
+
 export default abstract class IOAbstract<T> extends React.Component<
   {
     label: string;
@@ -21,26 +23,43 @@ export default abstract class IOAbstract<T> extends React.Component<
     return (
       <div
         className="io-line"
-        // width will be  --min-width < w=width % -gap < 100%
-        //  --min-width = minimum for it to be visible
-        //  100% = the whole larger
         style={{
+          display: "flex",
+          flexDirection: "column",
+          padding: "5px",
+          // width will be  --min-width < w=width % -gap < 100%
+          //  --min-width = minimum for it to be visible
+          //  100% = the whole larger
           width: `calc( 
               min(
                 100%,
                 max(
-                  var(--min-width),
+                  ${minWidth},
                   ${width * 100}% - var(--column-gap) / 2
                 )
               )
             )`
         }}
       >
-        <label>
+        <label
+          style={{
+            color: "gray",
+            textAlign: "left",
+            fontSize: "smaller"
+          }}
+        >
           <span dangerouslySetInnerHTML={{ __html: label }}></span>
           {required ? <span className="required">*</span> : null}
         </label>
-        {edit ? this.renderOutput(value) : this.renderInput(value, required)}
+        <div
+          style={{
+            width: "100%",
+            color: "green",
+            textAlign: "right"
+          }}
+        >
+          {edit ? this.renderOutput(value) : this.renderInput(value, required)}
+        </div>
       </div>
     );
   }

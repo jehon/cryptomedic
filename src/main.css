@@ -30,28 +30,3 @@ img.inline {
   /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
   column-gap: var(--column-gap);
 }
-
-.io-line {
-  --min-width: 300px;
-
-  /* width is also set by io-abstract */
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-
-  padding: 5px;
-}
-
-.io-line > * {
-  width: 100%;
-
-  color: green;
-  text-align: right;
-}
-
-.io-line > label {
-  color: gray;
-  text-align: left;
-  font-size: smaller;
-}
