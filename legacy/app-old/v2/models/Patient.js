@@ -10,8 +10,13 @@ export default class Patient extends FolderPage {
   entry_year;
   entry_order;
   name;
-  year_of_birth;
   sex;
+  year_of_birth;
+  phone;
+  address_comments;
+  address_district;
+  address_upazilla;
+  address_union;
   pathology;
   comments;
 
@@ -19,8 +24,13 @@ export default class Patient extends FolderPage {
     entry_year,
     entry_order,
     name,
-    year_of_birth,
     sex,
+    year_of_birth,
+    phone,
+    address_comments,
+    address_district,
+    address_upazilla,
+    address_union,
     pathology,
     comments,
     ...other
@@ -29,8 +39,13 @@ export default class Patient extends FolderPage {
     this.entry_year = entry_year;
     this.entry_order = entry_order;
     this.name = name;
-    this.year_of_birth = year_of_birth;
     this.sex = sex;
+    this.year_of_birth = year_of_birth;
+    this.phone = phone;
+    this.address_comments = address_comments;
+    this.address_district = address_district;
+    this.address_upazilla = address_upazilla;
+    this.address_union = address_union;
     this.pathology = pathology;
     this.comments = comments;
   }

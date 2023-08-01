@@ -65,7 +65,7 @@ t::setDefaultOption("baseExpression", "folder.getPatient().");
 				</div>
 			</x-fff-field>
 			<?php (new t("Patient.phone"))->tr2()->p(); ?>
-			<?php (new t("Patient.address_notes"))->tr2("Adress Notes")->p(); ?>
+			<?php (new t("Patient.address_comments"))->tr2("Adress Notes")->p(); ?>
 		</x-group-panel>
 	</div>
 	<div>

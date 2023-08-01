@@ -31,7 +31,7 @@ export default function PatientSummary({
             <span>
               {patient.entry_year}-{patient.entry_order}
             </span>
-            <span className="no-mobile">{patient.Name}</span>
+            <span className="no-mobile">{patient.name}</span>
             <span className="no-mobile">{patient.year_of_birth}</span>
             <img src="/static/img/view.svg" alt="View" className="inline" />
           </div>
