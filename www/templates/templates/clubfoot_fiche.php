@@ -17,14 +17,14 @@ t::setDefaultOption("model", "ClubFoot");
 			</x-fff-field>
 
 			<div>Mid Foot</div>
-			<?php t::trSided('CurvedLateralBorder*'); ?>
-			<?php t::trSided('MedialCrease*'); ?>
-			<?php t::trSided('TalarHeadCoverage*'); ?>
+			<?php t::trSided('curved_lateral_border_*'); ?>
+			<?php t::trSided('medial_crease_*'); ?>
+			<?php t::trSided('talar_head_coverage_*'); ?>
 
 			<div>Hind Foot</div>
-			<?php t::trSided('PosteriorCrease*'); ?>
-			<?php t::trSided('RigidEquinus*'); ?>
-			<?php t::trSided('EmptyHeel*'); ?>
+			<?php t::trSided('posterior_crease_*'); ?>
+			<?php t::trSided('rigid_equinus_*'); ?>
+			<?php t::trSided('empty_heel_*'); ?>
 
 			<x-fff-field label='Total'>
 				<div slot='right'>{{currentFile().getPiraniRight()}}</div>
@@ -37,16 +37,16 @@ t::setDefaultOption("model", "ClubFoot");
 				<div slot='right'>Right</div>
 				<div slot='left'>Left</div>
 			</x-fff-field>
-			<?php t::trSided('Pain*'); ?>
-			<?php t::trSided('WalkingFloorContact*'); ?>
-			<?php t::trSided('WalkingFirstContact*'); ?>
-			<?php t::trSided('JumpingOneLeg*'); ?>
-			<?php t::trSided('Run*'); ?>
-			<?php t::trSided('AdductionAngle*'); ?>
-			<?php t::trSided('HindFootAngleW*'); ?>
-			<?php t::trSided('DorsalFlexionMax*'); ?>
-			<?php t::trSided('PlantarFlexionMax*'); ?>
-			<?php t::trSided('MuscularInbalance*'); ?>
+			<?php t::trSided('pain_*'); ?>
+			<?php t::trSided('walking_floor_contact_*'); ?>
+			<?php t::trSided('walking_first_contact_*'); ?>
+			<?php t::trSided('jumping_one_leg_*'); ?>
+			<?php t::trSided('run_*'); ?>
+			<?php t::trSided('adduction_angle_*'); ?>
+			<?php t::trSided('hind_foot_angle_W_*'); ?>
+			<?php t::trSided('dorsal_flexion_max_*'); ?>
+			<?php t::trSided('plantar_flexion_max_*'); ?>
+			<?php t::trSided('muscular_inbalance_*'); ?>
 		</x-group-panel>
 	</div>
 	<div>

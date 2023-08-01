@@ -20,11 +20,11 @@ t::setDefaultOption("model", "RicketConsult");
 				<div slot='left'>Left</div>
 				<div slot='right'>Right</div>
 			</x-fff-field>
-			<?php t::trSided('*Leg'); ?>
-			<?php t::trSided('*legAngle'); ?>
+			<?php t::trSided('*_leg'); ?>
+			<?php t::trSided('*_leg_angle'); ?>
 			<div>Cross</div>
-			<?php t::trSided('Cross*T'); ?>
-			<?php t::trSided('Cross*F'); ?>
+			<?php t::trSided('cross_*_T'); ?>
+			<?php t::trSided('cross_*_F'); ?>
 			<?php (new t("RicketConsult.IMIC_distance"))->tr2("IMIC Distance")->p(); ?>
 			<?php (new t("RicketConsult.x-ray"))->tr2()->p(); ?>
 		</x-group-panel>

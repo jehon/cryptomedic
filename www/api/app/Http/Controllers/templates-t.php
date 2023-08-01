@@ -239,8 +239,8 @@ class t {
     $label = ($label ? "label='$label'" : "");
     echo "<x-fff-field by-sides='$field' $mode $label>";
 
-    echo "  <div slot='left'>"  . (new t(str_replace("*", "Left",  static::$defaultOptions['model'] . ".$field")))->value()->__toString() . "</div>";
-    echo "  <div slot='right'>"  . (new t(str_replace("*", "Right",  static::$defaultOptions['model'] . ".$field")))->value()->__toString() . "</div>";
+    echo "  <div slot='left'>"  . (new t(str_replace("*", "left",  static::$defaultOptions['model'] . ".$field")))->value()->__toString() . "</div>";
+    echo "  <div slot='right'>"  . (new t(str_replace("*", "right",  static::$defaultOptions['model'] . ".$field")))->value()->__toString() . "</div>";
     echo "</x-fff-field>";
   }
 }

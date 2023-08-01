@@ -29,12 +29,12 @@ export default class ClubFoot extends PatientRelated {
     // TODO: try-catch it in gui
     try {
       return (
-        f(this.CurvedLateralBorderLeft) +
-        f(this.MedialCreaseLeft) +
-        f(this.TalarHeadCoverageLeft) +
-        f(this.PosteriorCreaseLeft) +
-        f(this.RigidEquinusLeft) +
-        f(this.EmptyHeelLeft)
+        f(this.curved_lateral_border_left) +
+        f(this.medial_crease_left) +
+        f(this.talar_head_coverage_left) +
+        f(this.posterior_crease_left) +
+        f(this.rigid_equinus_left) +
+        f(this.empty_heel_left)
       );
     } catch (e) {
       return "undefined";
@@ -45,12 +45,12 @@ export default class ClubFoot extends PatientRelated {
     // TODO: try-catch it in gui
     try {
       return (
-        f(this.CurvedLateralBorderRight) +
-        f(this.MedialCreaseRight) +
-        f(this.TalarHeadCoverageRight) +
-        f(this.PosteriorCreaseRight) +
-        f(this.RigidEquinusRight) +
-        f(this.EmptyHeelRight)
+        f(this.curved_lateral_border_right) +
+        f(this.medial_crease_right) +
+        f(this.talar_head_coverage_right) +
+        f(this.posterior_crease_right) +
+        f(this.rigid_equinus_right) +
+        f(this.empty_heel_right)
       );
     } catch (e) {
       return "undefined";

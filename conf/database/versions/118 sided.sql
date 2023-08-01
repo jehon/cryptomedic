@@ -1,15 +1,15 @@
 
--- See www/api/app/Http/Controllers/templates-t.php#242 (trSided)
+-- -- See www/api/app/Http/Controllers/templates-t.php#242 (trSided)
 
 ALTER TABLE `ricket_consults`
     CHANGE `CrossLeftT` `cross_left_T` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
     CHANGE `CrossRightT` `cross_right_T` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
     CHANGE `CrossLeftF` `cross_left_F` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    CHANGE `CrossRightF` `cross_right_F` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+    CHANGE `CrossRightF` `cross_right_F` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
     CHANGE `LeftLeg` `left_leg` VARCHAR(24) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
     CHANGE `RightLeg` `right_leg` VARCHAR(24) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
     CHANGE `LeftlegAngle` `left_leg_angle` INT(11) NULL DEFAULT NULL,
-    CHANGE `RightlegAngle` `right_leg_Angle` INT(11) NULL DEFAULT NULL,
+    CHANGE `RightlegAngle` `right_leg_angle` INT(11) NULL DEFAULT NULL;
 
 ALTER TABLE `club_feet`
     CHANGE `PainLeft` `pain_left` INT(5) UNSIGNED NULL DEFAULT NULL,

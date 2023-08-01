@@ -103,8 +103,8 @@ export default class XFffField extends XWithFile {
         break;
       case "by-sides":
         this.bySides = newValue;
-        this.sideLeft = toSide(this.bySides, "Left");
-        this.sideRight = toSide(this.bySides, "Right");
+        this.sideLeft = toSide(this.bySides, "left");
+        this.sideRight = toSide(this.bySides, "right");
         this.adapt();
     }
   }
