@@ -11,10 +11,10 @@ t::setDefaultOption("model", "RicketConsult");
 		<?php require(__DIR__ . "/../helpers/consult-introduction.php"); ?>
 		<br>
 		<x-group-panel title='RicketsData'>
-			<?php (new t("RicketConsult.WalkingDifficulties"))->tr2()->p(); ?>
-			<?php (new t("RicketConsult.Pain"))->tr2()->p(); ?>
-			<?php (new t("RicketConsult.Wristenlargement"))->tr2()->p(); ?>
-			<?php (new t("RicketConsult.Ribbeading"))->tr2()->p(); ?>
+			<?php (new t("RicketConsult.walking_difficulties"))->tr2()->p(); ?>
+			<?php (new t("RicketConsult.pain"))->tr2()->p(); ?>
+			<?php (new t("RicketConsult.wrist_enlargement"))->tr2()->p(); ?>
+			<?php (new t("RicketConsult.rib_heading"))->tr2()->p(); ?>
 			<div class='alert alert-danger'>Warning! Left and right sides are opposite.</div>
 			<x-fff-field label='Legs'>
 				<div slot='left'>Left</div>
@@ -25,8 +25,8 @@ t::setDefaultOption("model", "RicketConsult");
 			<div>Cross</div>
 			<?php t::trSided('Cross*T'); ?>
 			<?php t::trSided('Cross*F'); ?>
-			<?php (new t("RicketConsult.IMICDistance"))->tr2("IMIC Distance")->p(); ?>
-			<?php (new t("RicketConsult.XRay"))->tr2()->p(); ?>
+			<?php (new t("RicketConsult.IMIC_distance"))->tr2("IMIC Distance")->p(); ?>
+			<?php (new t("RicketConsult.x-ray"))->tr2()->p(); ?>
 		</x-group-panel>
 	</div>
 	<div>

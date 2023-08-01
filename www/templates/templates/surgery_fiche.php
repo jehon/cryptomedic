@@ -10,8 +10,8 @@ t::setDefaultOption("baseExpression", "currentFile().");
 			<?php (new t("Surgery.date"))->tr2("Operation Date")->p(); ?>
 			<?php (new t("Surgery.report_diagnostic"))->tr2()->p(); ?>
 			<?php (new t("Surgery.report_surgeon"))->tr2()->p(); ?>
-			<?php (new t("Surgery.ReportSideR"))->tr2()->p(); ?>
-			<?php (new t("Surgery.ReportSideL"))->tr2()->p(); ?>
+			<?php (new t("Surgery.report_side_right"))->tr2()->p(); ?>
+			<?php (new t("Surgery.report_side_left"))->tr2()->p(); ?>
 			<?php (new t("Surgery.report_procedure"))->tr2()->p(); ?>
 		</x-group-panel>
 		<x-group-panel title='Hospitalisation Follow-Up'>

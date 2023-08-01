@@ -18,4 +18,3 @@ ALTER TABLE `club_feet`
 
 ALTER TABLE `other_consults`
 	DROP `x_Surgery66`;
-

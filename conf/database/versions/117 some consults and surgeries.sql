@@ -18,3 +18,6 @@ ALTER TABLE `ricket_consults`
     CHANGE `Ribbeading` `rib_heading` INT(5) NULL DEFAULT NULL,
     CHANGE `IMICDistance` `IMIC_distance` VARCHAR(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
     CHANGE `WalkingDifficulties` `walking_difficulties` VARCHAR(24) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL; 
+
+ALTER TABLE `surgeries` CHANGE `ReportSideR` `report_side_right` TINYINT(1) NULL DEFAULT NULL;
+ALTER TABLE `surgeries` CHANGE `ReportSideL` `report_side_left` TINYINT(1) NULL DEFAULT NULL;

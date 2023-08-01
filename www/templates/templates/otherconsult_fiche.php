@@ -10,18 +10,18 @@ t::setDefaultOption("model", "OtherConsult");
 	<div>
 		<?php require(__DIR__ . "/../helpers/consult-introduction.php"); ?>
 		<x-group-panel title='Orthopedic Data'>
-			<?php (new t("OtherConsult.Side"))->tr2()->p(); ?>
-			<?php (new t("OtherConsult.Jointsorbonesaffected"))->tr2()->p(); ?>
-			<?php (new t("OtherConsult.Deformity"))->tr2()->p(); ?>
-			<?php (new t("OtherConsult.Articulationmobility"))->tr2()->p(); ?>
-			<?php (new t("OtherConsult.Musclestrength"))->tr2()->p(); ?>
-			<?php (new t("OtherConsult.Pain"))->tr2()->p(); ?>
-			<?php (new t("OtherConsult.Walk"))->tr2()->p(); ?>
-			<?php (new t("OtherConsult.XRay"))->tr2()->p(); ?>
+			<?php (new t("OtherConsult.side"))->tr2()->p(); ?>
+			<?php (new t("OtherConsult.joints_or_bones_affected"))->tr2()->p(); ?>
+			<?php (new t("OtherConsult.deformity"))->tr2()->p(); ?>
+			<?php (new t("OtherConsult.articulation_mobility"))->tr2()->p(); ?>
+			<?php (new t("OtherConsult.muscle_strength"))->tr2()->p(); ?>
+			<?php (new t("OtherConsult.pain"))->tr2()->p(); ?>
+			<?php (new t("OtherConsult.walk"))->tr2()->p(); ?>
+			<?php (new t("OtherConsult.x-ray"))->tr2()->p(); ?>
 		</x-group-panel>
 		<x-group-panel title='Conclusion'>
-			<?php (new t("OtherConsult.Performed"))->tr2("Activities Performed by the Patient")->p(); ?>
-			<?php (new t("OtherConsult.NotPerformed"))->tr2("Activities NOT Performed by the Patient")->p(); ?>
+			<?php (new t("OtherConsult.performed"))->tr2("Activities Performed by the Patient")->p(); ?>
+			<?php (new t("OtherConsult.not_performed"))->tr2("Activities NOT Performed by the Patient")->p(); ?>
 		</x-group-panel>
 	</div>
 	<div>

@@ -54,10 +54,10 @@ define("HARDCODED_LISTINGS", [
         "x_Treatment"              => "CPTreatment"
     ],
     "other_consults" => [
-        "Pain"                     => "Pain",
-        "Side"                     => "Side",
+        "pain"                     => "Pain",
+        "side"                     => "Side",
         "x_Surgery66"              => "Surgery",
-        "Walk"                     => "WalkingCapacities"
+        "walk"                     => "WalkingCapacities"
     ],
     "patients" => [
         "address_district"         => "Districts",
@@ -72,12 +72,12 @@ define("HARDCODED_LISTINGS", [
     "ricket_consults" => [
         "x_Brace"                  => "Device",
         "LeftLeg"                  => "LegAnalysis",
-        "Pain"                     => "Pain",
-        "Ribbeading"               => "Eval03",
+        "pain"                     => "Pain",
+        "rib_heading"              => "Eval03",
         "RightLeg"                 => "LegAnalysis",
         "x_Surgery"                => "Surgery",
-        "WalkingDifficulties"      => "WalkingCapacities",
-        "Wristenlargement"         => "Eval03"
+        "walking_difficulties"     => "WalkingCapacities",
+        "wrist_enlargement"        => "Eval03"
     ]
 ]);
 
