@@ -20,7 +20,7 @@ export default function PatientSummary({
   }
   return IOBlock(
     {
-      header_image: "/static/img/patient.gif"
+      type: "patient"
     },
     <>
       <span className="no-mobile">Patient</span>

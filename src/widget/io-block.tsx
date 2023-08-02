@@ -3,7 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 
 export default function IOBlock(
-  options: { header_image?: string },
+  options: { header_image?: string; type?: string },
   header: React.ReactNode,
   block: React.ReactNode
 ): React.ReactNode {
@@ -28,9 +28,9 @@ export default function IOBlock(
                 justifyContent: "space-between"
               }}
             >
-              {options.header_image ? (
+              {options.type ? (
                 <img
-                  src={options.header_image}
+                  src={options.header_image ?? `/static/${options.type}.gif`}
                   alt="Header"
                   className="inline"
                 />

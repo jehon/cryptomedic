@@ -24,26 +24,24 @@ export default abstract class IOAbstract<T> extends React.Component<
           display: "flex",
           flexDirection: "column",
           padding: "5px",
-          // width will be  --min-width < w=width % -gap < 100%
-          //  --min-width = minimum for it to be visible
-          //  100% = the whole larger
+          // Todo: handle gap
           width: `calc( 
               min(
                 300px,
                 100%,
                 ${width * 100}% - 20px / 2
               )
-            )`,
-          maxWidth: "min(100%, 400px)"
+            )`
+          // maxWidth: "min(100%, 400px)"
         }}
       >
         <label
           style={{
             minWidth: "30%",
             maxWidth: "100%",
-            color: "gray",
             textAlign: "left",
-            fontSize: "smaller"
+            fontSize: "smaller",
+            color: "gray"
           }}
         >
           <span dangerouslySetInnerHTML={{ __html: label }}></span>
@@ -53,8 +51,8 @@ export default abstract class IOAbstract<T> extends React.Component<
           style={{
             minWidth: "60%",
             maxWidth: "100%",
-            color: "green",
-            textAlign: "right"
+            textAlign: "right",
+            color: "green"
           }}
         >
           {edit ? this.renderOutput(value) : this.renderInput(value, required)}
