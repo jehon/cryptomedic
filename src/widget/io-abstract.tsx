@@ -22,7 +22,6 @@ export default abstract class IOAbstract<T> extends React.Component<
     } = this.props;
     return (
       <div
-        className="io-line"
         style={{
           display: "flex",
           flexDirection: "column",
@@ -32,17 +31,21 @@ export default abstract class IOAbstract<T> extends React.Component<
           //  100% = the whole larger
           width: `calc( 
               min(
+                300px,
                 100%,
                 max(
                   ${minWidth},
                   ${width * 100}% - var(--column-gap) / 2
                 )
               )
-            )`
+            )`,
+          maxWidth: "min(100%, 400px)"
         }}
       >
         <label
           style={{
+            minWidth: "30%",
+            maxWidth: "100%",
             color: "gray",
             textAlign: "left",
             fontSize: "smaller"
@@ -53,7 +56,8 @@ export default abstract class IOAbstract<T> extends React.Component<
         </label>
         <div
           style={{
-            width: "100%",
+            minWidth: "60%",
+            maxWidth: "100%",
             color: "green",
             textAlign: "right"
           }}

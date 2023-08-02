@@ -1,15 +1,15 @@
 # Structure
 
-| what     | business ? | gui ? | use what ?       | objectives                     |
-| -------- | ---------- | ----- | ---------------- | ------------------------------ |
-|          | no         |       |                  |                                |
-| utils    | no         | no    | -                | pure javascript helpers        |
-| widget   | no         | yes   | utils            | pure gui widgets               |
-|          |            |       |                  |                                |
-| business | yes        | no    | utils            | pojo representing the business |
-| blocs    | yes        | yes   | widget, business | functionnal gui                |
-| pages    | no         | yes   | blocs            | navigation oriented            |
-|          |            |       |                  |                                |
+| what     | business ? | gui ? | css? | use what ?       | objectives                     |
+| -------- | ---------- | ----- | ---- | ---------------- | ------------------------------ |
+|          |            |       |      |                  |                                |
+| utils    | -          | -     |      | -                | pure javascript helpers        |
+| widget   | -          | y     | y    | utils            | pure gui widgets               |
+|          |            |       |      |                  |                                |
+| business | y          | -     |      | utils            | pojo representing the business |
+| blocs    | y          | y     |      | widget, business | functionnal gui                |
+| pages    | -          | y     | ?    | blocs            | navigation oriented            |
+|          |            |       |      |                  |                                |
 
 # Jest assertions:
 
