@@ -33,10 +33,7 @@ export default abstract class IOAbstract<T> extends React.Component<
               min(
                 300px,
                 100%,
-                max(
-                  ${minWidth},
-                  ${width * 100}% - var(--column-gap) / 2
-                )
+                ${width * 100}% - 20px / 2
               )
             )`,
           maxWidth: "min(100%, 400px)"
