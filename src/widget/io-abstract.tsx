@@ -1,7 +1,5 @@
 import React from "react";
 
-const minWidth = "300px";
-
 export default abstract class IOAbstract<T> extends React.Component<
   {
     label: string;

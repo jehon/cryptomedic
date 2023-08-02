@@ -3,6 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 
 export default function IOBlock(
+  options: { header_image?: string },
   header: React.ReactNode,
   block: React.ReactNode
 ): React.ReactNode {
@@ -27,6 +28,13 @@ export default function IOBlock(
                 justifyContent: "space-between"
               }}
             >
+              {options.header_image ? (
+                <img
+                  src={options.header_image}
+                  alt="Header"
+                  className="inline"
+                />
+              ) : null}
               {header}
               <img src="/static/img/view.svg" alt="View" className="inline" />
             </div>

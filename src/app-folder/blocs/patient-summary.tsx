@@ -19,8 +19,10 @@ export default function PatientSummary({
     return <div>No patient selected</div>;
   }
   return IOBlock(
+    {
+      header_image: "/static/img/patient.gif"
+    },
     <>
-      <img src="/static/img/patient.gif" alt="Patient" className="inline" />
       <span className="no-mobile">Patient</span>
       <span>
         {patient.entry_year}-{patient.entry_order}
