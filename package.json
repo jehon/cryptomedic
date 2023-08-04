@@ -89,8 +89,7 @@
     "yargs": "17.7.2"
   },
   "scripts": {
-    "postinstall": "touch node_modules/.dependencies && husky install",
-    "build-continuously": "watch 'clear; make build' app/"
+    "postinstall": "touch package-lock.json node_modules/.dependencies && husky install"
   },
   "lint-staged": {
     "*.{js,jsx}": [
