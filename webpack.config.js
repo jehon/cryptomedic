@@ -49,8 +49,28 @@ module.exports = {
   module: {
     rules: [
       {
-        // Usage: import <string> from "...css?inline"
-        test: /\.css\?inline$/
+        test: /xxxx\.css$/,
+        type: "asset/inline"
+        // use: [
+        //   // {
+        //   //   loader: "to-string-loader"
+        //   // },
+        //   // HTMLInlineCSSWebpackPlugin.loader, // one of the key incredients!
+        //   {
+        //     // https://webpack.js.org/loaders/style-loader/#custom-elements-shadow-dom
+        //     loader: "style-loader"
+        //     // options: {
+        //     //   injectType: "lazyStyleTag",
+        //     //   insert: function insertIntoTarget(element, options) {
+        //     //     var parent = options.target || document.head;
+        //     //     parent.appendChild(element);
+        //     //   }
+        //     // }
+        //   },
+        //   {
+        //     loader: "css-loader"
+        //   }
+        // ]
       },
       {
         test: /\.css$/,
