@@ -49,14 +49,17 @@ module.exports = {
   module: {
     rules: [
       {
+        // Usage: import <string> from "...css?inline"
+        test: /\.css\?inline$/
+      },
+      {
         test: /\.css$/,
         use: [
           {
             loader: "style-loader"
           },
           {
-            loader: "css-loader",
-            options: {}
+            loader: "css-loader"
           }
         ]
       },
@@ -66,7 +69,7 @@ module.exports = {
       },
       {
         test: /\.tsx?/,
-        use: ["ts-loader"]
+        use: [{ loader: "ts-loader" }]
       }
     ]
   },
