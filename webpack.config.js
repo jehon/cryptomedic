@@ -48,7 +48,18 @@ module.exports = {
   ],
   module: {
     rules: [
-      { test: /\.css/, use: ["style-loader", "css-loader"] },
+      {
+        test: /\.css/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {}
+          }
+        ]
+      },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
         type: "asset"
