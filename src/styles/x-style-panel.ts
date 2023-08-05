@@ -1,5 +1,10 @@
+import { MyWebComponent } from "./style-helpers";
+
 export default class XStylePanel extends HTMLElement {
+  label?: string;
+
   connectedCallback() {
+    this.label = this.getAttribute("label") ?? "Label";
     this.attachShadow({ mode: "open" });
     this.shadowRoot!.innerHTML = `
       <style>
@@ -17,7 +22,7 @@ export default class XStylePanel extends HTMLElement {
           background-color: rgba(0,0,0,.03);
         }
       </style>
-      <label>${this.getAttribute("header") ?? "Header"}</label>
+      <label>${this.label}</label>
       <slot></slot>
     `;
 
@@ -32,10 +37,7 @@ customElements.define("x-style-panel", XStylePanel);
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "x-style-columns": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >;
+      "x-style-panel": MyWebComponent<XStylePanel>;
     }
   }
 }
