@@ -1,75 +1,73 @@
-import style from "../../node_modules/bootstrap5/dist/css/bootstrap.min.css";
-
 export default class XStyleIOBlock extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" }).innerHTML = `
+  connectedCallback() {
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot!.innerHTML = `
       <style>
+        :host {
+          display: flex;
+          flex-direction: column;
+
+          width: calc(min(100%, 800px));
+          margin: 0 auto;
+
+          border: 1px solid rgba(0,0,0,.125);
+          border-radius: 3px;
+
+          gap: 20px;
+        }
+
+        :host > * {
+          /* vertical horizontal */
+          padding: .75rem 1.25rem;
+        }
+
+        .header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+
+          padding: 0.75em;
+
+          background-color: rgba(0,0,0,.03);
+        }
+
+        .body {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: 20px;
+
+          border-bottom-left-radius: 2px;
+          border-bottom-right-radius: 2px;
+        }
+
+        :host[opened] .header {
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+        }
+
+        :host(:not([opened])) .body {
+          display: none;
+        }
+
+        img, ::slotted(img) {
+          height: 1.5em;
+        }
+
       </style>
-      <div class="card">
-        <div class="card-header">
-          Featured
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
+      <div class="header">
+        <slot name="header"></slot>
+        <img src="/static/img/view.svg" class="inline" alt="View" />
+      </div>
+      <div class="body">
+        <slot></slot>
       </div>
     `;
 
-    //   this.attachShadow({ mode: "open" }).innerHTML = `
-    //   <style>
-    //     :host() {
-    //       width: "calc(min(100%, 800px))",
-    //       display: "flex",
-    //       flexDirection: "row",
-    //       justifyContent: "space-between",
-    //       margin: "0 auto"
-    //     }
-    //   </style>
-    //   <Accordion defaultActiveKey="" style={{ width: "100%" }}>
-    //     <Card>
-    //       <Accordion.Toggle as={Card.Header} eventKey="0">
-    //         <div
-    //           style={{
-    //             width: "100%",
-    //             display: "flex",
-    //             flexDirection: "row",
-    //             justifyContent: "space-between"
-    //           }}
-    //         >
-    //           {options.type ? (
-    //             <img
-    //               src={options.header_image ?? `/static/${options.type}.gif`}
-    //               alt="Header"
-    //               className="inline"
-    //             />
-    //           ) : null}
-    //           {header}
-    //           <img src="/static/img/view.svg" alt="View" className="inline" />
-    //         </div>
-    //       </Accordion.Toggle>
-    //       <Accordion.Collapse eventKey="0">
-    //         <Card.Body>
-    //           <div
-    //             style={{
-    //               width: "calc(min(800px, 100%))",
-    //               margin: "0 auto",
-    //               display: "flex",
-    //               flexDirection: "row",
-    //               flexWrap: "wrap",
-    //               justifyContent: "space-between",
-    //               columnGap: "20px"
-    //             }}
-    //           >
-    //             {block}
-    //           </div>
-    //         </Card.Body>
-    //       </Accordion.Collapse>
-    //     </Card>
-    //   </Accordion>
-    // </div>`;
+    this.shadowRoot!.querySelector(".header")?.addEventListener("click", () =>
+      this.toggleAttribute("opened")
+    );
   }
 }
 

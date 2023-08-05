@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 
 import { bridgeTo } from "../../bridge";
 import Patient from "../../../legacy/app-old/v2/models/Patient";
-import IOBlock from "../../widget/io-block";
+import "../../styles/style-io-block";
 import IONumber from "../../widget/io-number";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
@@ -16,19 +16,26 @@ export default function PatientSummary({
   if (!patient) {
     return <div>No patient selected</div>;
   }
-  return IOBlock(
-    {
-      type: "patient"
-    },
-    <>
-      <span className="no-mobile">Patient</span>
-      <span>
+  return (
+    <x-style-io-block>
+      <span slot="header" className="no-mobile">
+        <img
+          slot="header"
+          src="/static/img/patient.gif"
+          alt="Patient"
+          className="inline"
+        />
+        Patient
+      </span>
+      <span slot="header">
         {patient.entry_year}-{patient.entry_order}
       </span>
-      <span className="no-mobile">{patient.name}</span>
-      <span className="no-mobile">{patient.year_of_birth}</span>
-    </>,
-    <>
+      <span slot="header" className="no-mobile">
+        {patient.name}
+      </span>
+      <span slot="header" className="no-mobile">
+        {patient.year_of_birth}
+      </span>
       <Button
         href={"#/folder/" + patient.getId() + "/"}
         variant="outline-info"
@@ -47,7 +54,7 @@ export default function PatientSummary({
       />
       <IOString width={0.5} label="pathology" value={patient.pathology} />
       <IOText label="Comments" value={patient.comments} />
-    </>
+    </x-style-io-block>
   );
 }
 
