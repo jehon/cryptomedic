@@ -27,7 +27,7 @@ export type MyWebComponent<T> = Partial<
   // https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype
   Omit<T, "style" | "children"> & {
     style: Partial<CSSStyleDeclaration>;
-  } & { children: any }
+  } & { children: React.ReactNode[] }
 >;
 
 type MyCustomEvents<K extends string> = {
