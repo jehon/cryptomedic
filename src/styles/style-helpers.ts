@@ -1,3 +1,7 @@
+import React from "react";
+import { ReactElement } from "react";
+import { CSSProperties, DOMAttributes, ReactNode } from "react";
+
 const integrities: Record<string, string> = {
   "5.3.1":
     "sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
@@ -16,3 +20,29 @@ export function getBootstrapStyle(version = currentVersion) {
     crossorigin="anonymous"
     >`;
 }
+
+// https://coryrylan.com/blog/how-to-use-web-components-with-typescript-and-react
+export type MyWebComponent<T> = Partial<
+  // https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys
+  // https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype
+  Omit<T, "style" | "children"> & {
+    style: Partial<CSSStyleDeclaration>;
+  } & { children: any }
+>;
+
+type MyCustomEvents<K extends string> = {
+  [key in K]: (event: CustomEvent) => void;
+};
+
+export type MyWebComponentWithEvents<T, K extends string> = Partial<
+  MyWebComponent<T> & MyCustomEvents<`on${K}`>
+>;
+
+// declare global {
+//   namespace JSX {
+//     interface IntrinsicElements {
+//       ['x-alert']: MyWebComponent<XAlert>;
+//       ['x-alert']: MyWebComponentWithEvents<XAlert, 'closeChange' | 'openChange'>;
+//     }
+//   }
+// }
