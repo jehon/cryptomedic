@@ -1,4 +1,4 @@
-export default class XStyleIOBlock extends HTMLElement {
+export default class XStyleCollapsible extends HTMLElement {
   connectedCallback() {
     this.attachShadow({ mode: "open" });
     this.shadowRoot!.innerHTML = `
@@ -71,12 +71,12 @@ export default class XStyleIOBlock extends HTMLElement {
   }
 }
 
-customElements.define("x-style-io-block", XStyleIOBlock);
+customElements.define("x-style-block", XStyleCollapsible);
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "x-style-io-block": React.DetailedHTMLProps<
+      "x-style-collabsible": React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement>,
         HTMLElement
       >;

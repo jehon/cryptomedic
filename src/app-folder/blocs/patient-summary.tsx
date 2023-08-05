@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 
 import { bridgeTo } from "../../bridge";
 import Patient from "../../../legacy/app-old/v2/models/Patient";
-import "../../styles/style-io-block";
+import "../../styles/x-style-collapsible";
 import IONumber from "../../widget/io-number";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
@@ -17,7 +17,7 @@ export default function PatientSummary({
     return <div>No patient selected</div>;
   }
   return (
-    <x-style-io-block>
+    <x-style-collabsible>
       <span slot="header" className="no-mobile">
         <img
           slot="header"
@@ -62,7 +62,7 @@ export default function PatientSummary({
       <hr />
       <IOString width={0.5} label="pathology" value={patient.pathology} />
       <IOText label="Comments" value={patient.comments} />
-    </x-style-io-block>
+    </x-style-collabsible>
   );
 }
 
