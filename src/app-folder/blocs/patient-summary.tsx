@@ -52,6 +52,14 @@ export default function PatientSummary({
         label="Year of birth"
         value={patient.year_of_birth}
       />
+      Age today
+      <hr />
+      <IOString width={1} label="Phone" value={patient.phone} />
+      <IOString width={0.5} label="District" value={patient.address_district} />
+      <IOString width={0.5} label="Union" value={patient.address_union} />
+      <IOString width={0.5} label="Upazilla" value={patient.address_upazilla} />
+      <IOString width={0.5} label="Comments" value={patient.address_comments} />
+      <hr />
       <IOString width={0.5} label="pathology" value={patient.pathology} />
       <IOText label="Comments" value={patient.comments} />
     </x-style-io-block>
