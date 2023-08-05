@@ -1,18 +1,23 @@
-export default class XStyleColumns extends HTMLElement {
+export default class XStylePanel extends HTMLElement {
   connectedCallback() {
     this.attachShadow({ mode: "open" });
     this.shadowRoot!.innerHTML = `
       <style>
         :host {
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
 
           border: 1px solid rgba(0,0,0,.125);
           border-radius: 3px;
 
           gap: 20px;
         }
+
+        label {
+          background-color: rgba(0,0,0,.03);
+        }
       </style>
+      <label>${this.getAttribute("header") ?? "Header"}</label>
       <slot></slot>
     `;
 
@@ -22,7 +27,7 @@ export default class XStyleColumns extends HTMLElement {
   }
 }
 
-customElements.define("x-style-columns", XStyleColumns);
+customElements.define("x-style-panel", XStylePanel);
 
 declare global {
   namespace JSX {

@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { bridgeTo } from "../../bridge";
 import Patient from "../../../legacy/app-old/v2/models/Patient";
 import "../../styles/x-style-collapsible";
+import "../../styles/x-style-panel";
 import IONumber from "../../widget/io-number";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";

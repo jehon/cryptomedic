@@ -71,7 +71,7 @@ export default class XStyleCollapsible extends HTMLElement {
   }
 }
 
-customElements.define("x-style-block", XStyleCollapsible);
+customElements.define("x-style-collabsible", XStyleCollapsible);
 
 declare global {
   namespace JSX {
