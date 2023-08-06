@@ -1,5 +1,4 @@
 import React from "react";
-import { defaultWidthBox } from "../styles/style-helpers";
 
 export default abstract class IOAbstract<T> extends React.Component<
   {
@@ -18,14 +17,19 @@ export default abstract class IOAbstract<T> extends React.Component<
       edit = false,
       required = false
     } = this.props;
+
+    // All execpt read without value
+    const empty = !edit && !value;
+
     return (
       <div
         style={{
-          display: "flex",
+          display: !empty ? "flex" : "none",
           flexDirection: "row",
           padding: "5px 10px",
           columnGap: "5%"
         }}
+        data-empty={empty ? "true" : ""}
       >
         <label
           style={{
