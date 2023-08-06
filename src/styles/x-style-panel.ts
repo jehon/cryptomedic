@@ -13,7 +13,7 @@ export default class XStylePanel extends HTMLElement {
           flex-direction: column;
           margin: 10px;
 
-          min-width: ${defaultWidthBox};
+          width: ${defaultWidthBox};
 
           box-sizing: border-box;
           border: 1px solid rgba(0,0,0,.125);

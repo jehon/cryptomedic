@@ -12,6 +12,7 @@ export default class XStyleCollapsible extends HTMLElement {
           width: ${defaultWidthScreen};
           margin: 0 auto;
 
+          box-sizing: border-box;
           border: 1px solid rgba(0,0,0,.125);
           border-radius: 3px;
 
@@ -20,7 +21,7 @@ export default class XStyleCollapsible extends HTMLElement {
 
         :host > * {
           /* vertical horizontal */
-          padding: .75rem 1.25rem;
+          padding: 5px;
         }
 
         .header {
