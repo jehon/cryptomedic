@@ -75,7 +75,8 @@ export default class Patient extends FolderPage {
     return null;
   }
 
-  actualAge(reference) {
+  // Used in typescript
+  actualAge(reference = new Date()) {
     if (!this.isSet("year_of_birth")) {
       return null;
     }
@@ -83,12 +84,11 @@ export default class Patient extends FolderPage {
     var options = Object.assign(
       {},
       {
-        reference: reference || new Date(),
+        reference,
         format: false
       },
       options
     );
-    // reference = reference || new Date();
     if (typeof options.reference == "number") {
       options.reference = "" + options.reference;
     }
