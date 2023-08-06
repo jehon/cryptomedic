@@ -37,6 +37,6 @@ export function toPropertyCase(
  *
  * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
  */
-export function toAttributeCase(text) {
+export function toAttributeCase(text: string): string {
   return _canonize(text).join("-");
 }
