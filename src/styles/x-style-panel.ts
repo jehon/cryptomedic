@@ -1,4 +1,4 @@
-import { MyWebComponent, defaultWidthBox } from "./style-helpers";
+import { MyWebComponent } from "./style-helpers";
 
 export default class XStylePanel extends HTMLElement {
   label?: string;
