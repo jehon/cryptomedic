@@ -18,8 +18,6 @@ export default class XStylePanel extends HTMLElement {
           box-sizing: border-box;
           border: 1px solid rgba(0,0,0,.125);
           border-radius: 3px;
-
-          gap: 20px;
         }
 
         :host > * {

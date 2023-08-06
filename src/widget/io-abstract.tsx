@@ -15,7 +15,6 @@ export default abstract class IOAbstract<T> extends React.Component<
     const {
       label = "Label",
       value,
-      width = 1,
       edit = false,
       required = false
     } = this.props;
@@ -23,23 +22,15 @@ export default abstract class IOAbstract<T> extends React.Component<
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          padding: "5px",
-          // Todo: handle gap
-          width: `calc( 
-              min(
-                ${defaultWidthBox},
-                ${width * 100}% - 20px / 2
-              )
-            )`
-          // maxWidth: "min(100%, 400px)"
+          flexDirection: "row",
+          padding: "5px 10px",
+          columnGap: "20px"
         }}
       >
         <label
           style={{
-            minWidth: "30%",
-            maxWidth: "100%",
-            textAlign: "left",
+            width: "100px",
+            textAlign: "right",
             fontSize: "smaller",
             color: "gray"
           }}
@@ -49,9 +40,8 @@ export default abstract class IOAbstract<T> extends React.Component<
         </label>
         <div
           style={{
-            minWidth: "60%",
-            maxWidth: "100%",
-            textAlign: "right",
+            flexGrow: 1,
+            textAlign: "left",
             color: "green"
           }}
         >
