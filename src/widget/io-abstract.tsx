@@ -24,20 +24,19 @@ export default abstract class IOAbstract<T> extends React.Component<
           display: "flex",
           flexDirection: "row",
           padding: "5px 10px",
-          columnGap: "20px"
+          columnGap: "5%"
         }}
       >
         <label
           style={{
-            width: "100px",
+            width: "25%",
             textAlign: "right",
             fontSize: "smaller",
-            color: "gray"
+            color: "gray",
+            textOverflow: "ellipsis"
           }}
-        >
-          <span dangerouslySetInnerHTML={{ __html: label }}></span>
-          {required ? <span className="required">*</span> : null}
-        </label>
+          dangerouslySetInnerHTML={{ __html: label + (required ? "*" : "") }}
+        ></label>
         <div
           style={{
             flexGrow: 1,
