@@ -1,3 +1,5 @@
+import { MyWebComponent, defaultWidthScreen } from "./style-helpers";
+
 export default class XStyleCollapsible extends HTMLElement {
   connectedCallback() {
     this.attachShadow({ mode: "open" });
@@ -7,7 +9,7 @@ export default class XStyleCollapsible extends HTMLElement {
           display: flex;
           flex-direction: column;
 
-          width: calc(min(100%, 800px));
+          width: ${defaultWidthScreen};
           margin: 0 auto;
 
           border: 1px solid rgba(0,0,0,.125);
@@ -31,28 +33,20 @@ export default class XStyleCollapsible extends HTMLElement {
           background-color: rgba(0,0,0,.03);
         }
 
+        img, ::slotted(img) {
+          height: 1.5em;
+        }
+
         .body {
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
           justify-content: space-between;
           gap: 20px;
-
-          border-bottom-left-radius: 2px;
-          border-bottom-right-radius: 2px;
-        }
-
-        :host[opened] .header {
-          border-bottom-left-radius: 0px;
-          border-bottom-right-radius: 0px;
         }
 
         :host(:not([opened])) .body {
           display: none;
-        }
-
-        img, ::slotted(img) {
-          height: 1.5em;
         }
 
       </style>
@@ -76,10 +70,9 @@ customElements.define("x-style-collabsible", XStyleCollapsible);
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "x-style-collabsible": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >;
+      "x-style-collabsible": MyWebComponent<XStyleCollapsible> & {
+        opened?: string;
+      };
     }
   }
 }

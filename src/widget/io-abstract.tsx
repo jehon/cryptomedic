@@ -1,4 +1,5 @@
 import React from "react";
+import { defaultWidthBox } from "../styles/style-helpers";
 
 export default abstract class IOAbstract<T> extends React.Component<
   {
@@ -27,8 +28,7 @@ export default abstract class IOAbstract<T> extends React.Component<
           // Todo: handle gap
           width: `calc( 
               min(
-                300px,
-                100%,
+                ${defaultWidthBox},
                 ${width * 100}% - 20px / 2
               )
             )`

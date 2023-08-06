@@ -18,7 +18,7 @@ export default function PatientSummary({
     return <div>No patient selected</div>;
   }
   return (
-    <x-style-collabsible>
+    <x-style-collabsible opened="1">
       <span slot="header" className="no-mobile">
         <img
           slot="header"
@@ -44,23 +44,23 @@ export default function PatientSummary({
       >
         View the Patient
       </Button>
-      <IONumber width={0.5} label="Entry Year" value={patient.entry_year} />
-      <IONumber width={0.5} label="Entry Order" value={patient.entry_order} />
-      <IOString width={0.5} label="Name" value={patient.name} />
-      <IOString width={0.5} label="sex" value={patient.sex} />
-      <IONumber
-        width={0.5}
-        label="Year of birth"
-        value={patient.year_of_birth}
-      />
-      Age today
-      <hr />
-      <IOString width={1} label="Phone" value={patient.phone} />
-      <IOString width={0.5} label="District" value={patient.address_district} />
-      <IOString width={0.5} label="Union" value={patient.address_union} />
-      <IOString width={0.5} label="Upazilla" value={patient.address_upazilla} />
-      <IOString width={0.5} label="Comments" value={patient.address_comments} />
-      <hr />
+      <div className="columns">
+        <x-style-panel label="Identification">
+          <IONumber label="Entry Year" value={patient.entry_year} />
+          <IONumber label="Entry Order" value={patient.entry_order} />
+          <IOString label="Name" value={patient.name} />
+          <IOString label="sex" value={patient.sex} />
+          <IONumber label="Year of birth" value={patient.year_of_birth} />
+          <div>Age today TODO</div>
+        </x-style-panel>
+        <x-style-panel label="Address">
+          <IOString width={1} label="Phone" value={patient.phone} />
+          <IOString label="District" value={patient.address_district} />
+          <IOString label="Union" value={patient.address_union} />
+          <IOString label="Upazilla" value={patient.address_upazilla} />
+          <IOString label="Comments" value={patient.address_comments} />
+        </x-style-panel>
+      </div>
       <IOString width={0.5} label="pathology" value={patient.pathology} />
       <IOText label="Comments" value={patient.comments} />
     </x-style-collabsible>

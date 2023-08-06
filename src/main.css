@@ -7,3 +7,18 @@
 img.inline {
   height: 1.5em;
 }
+
+.columns {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.columns > * {
+  flex-grow: 1;
+}
+
+.row {
+  width: 100%;
+}
