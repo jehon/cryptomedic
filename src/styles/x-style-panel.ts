@@ -25,6 +25,7 @@ export default class XStylePanel extends HTMLElement {
 
         label {
           background-color: rgba(0,0,0,.03);
+          text-align: center;
         }
 
         label img, label ::slotted(img) {
