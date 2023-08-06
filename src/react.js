@@ -6,5 +6,4 @@ import "./main-media.css";
  * What custom element do we need to import?
  */
 
-// import "./app-folder/blocs/folder-summary";
-import "./app-folder/blocs/patient-summary";
+import "./app-folder/blocs/folder-summary";

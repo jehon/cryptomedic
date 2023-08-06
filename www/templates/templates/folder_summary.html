@@ -1,3 +1,4 @@
+<x-react-patient-summary x-react-inject-patient></x-react-patient-summary>
 <table id="table_summary" class="summary table table-striped">
   <thead>
     <tr>
@@ -8,16 +9,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr id="summary_patient">
-      <td></td>
-      <td>
-        <x-button to-route="#/folder/{{folder.getId()}}/" style="width: 100%">
-          Patient
-        </x-button>
-      </td>
-      <td></td>
-      <td ng-include="template('patient', 'summary')"></td>
-    </tr>
     <tr ng-repeat="f in folder.getFilesRelatedToPatient()">
       <td>#{{$index}}</td>
       <td>

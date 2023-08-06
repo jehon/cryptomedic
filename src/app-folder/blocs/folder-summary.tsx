@@ -6,6 +6,7 @@ import PatientSummary from "./patient-summary";
 import IODate from "../../widget/io-date";
 import Folder from "../../../legacy/app-old/v2/models/Folder";
 import Patient from "../../../legacy/app-old/v2/models/Patient";
+import PatientRelated from "../../../legacy/app-old/v2/models/PatientRelated";
 
 class FolderSummary extends React.Component<
   { folderId: string; folder: Folder },
@@ -17,6 +18,11 @@ class FolderSummary extends React.Component<
         <PatientSummary
           patient={this.props.folder.getPatient() as Patient}
         ></PatientSummary>
+        {(this.props.folder.getFilesRelatedToPatient() as PatientRelated[]).map(
+          (file: PatientRelated, index: number) => (
+            <></>
+          )
+        )}
         <table id="table_summary" className="summary table table-striped">
           <thead>
             <tr>
@@ -29,26 +35,26 @@ class FolderSummary extends React.Component<
           <tbody>
             <tr>
               <td>
-                <IODate value={new Date()} />
+                <IODate label="" value={new Date()} />
               </td>
             </tr>
-            {this.props.folder
-              .getFilesRelatedToPatient()
-              .map((file: PatientRelated, index: number) => (
-                <tr key={index}>
-                  <td>#{index}</td>
-                  <td>
-                    <Button
-                      href="#/folder/{folder.getId()}/file/{f.getModel()}/{f.id}"
-                      style={{ width: "100%" }}
-                    >
-                      {file.getModel()}
-                    </Button>
-                  </td>
-                  <td></td>
-                  <td>summary</td>
-                </tr>
-              ))}
+            {(
+              this.props.folder.getFilesRelatedToPatient() as PatientRelated[]
+            ).map((file: PatientRelated, index: number) => (
+              <tr key={index}>
+                <td>#{index}</td>
+                <td>
+                  <Button
+                    href="#/folder/{folder.getId()}/file/{f.getModel()}/{f.id}"
+                    style={{ width: "100%" }}
+                  >
+                    {file.getModel()}
+                  </Button>
+                </td>
+                <td></td>
+                <td>summary</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
