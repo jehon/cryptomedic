@@ -7,13 +7,16 @@ import "../../styles/x-style-panel";
 import IONumber from "../../widget/io-number";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
+import Folder from "../../../legacy/app-old/v2/models/Folder";
 
 export default function PatientSummary({
-  patient
+  file,
+  folder
 }: {
-  patient: Patient;
+  file: Patient;
+  folder: Folder;
 }): React.ReactNode {
-  if (!patient) {
+  if (!file) {
     return <div>No patient selected</div>;
   }
   return (
@@ -21,23 +24,23 @@ export default function PatientSummary({
       <span slot="header" className="no-mobile">
         <img
           slot="header"
-          src="/static/img/patient.gif"
+          src="/static/img/model_patient.gif"
           alt="Patient"
           className="inline"
         />
         Patient
       </span>
       <span slot="header">
-        {patient.entry_year}-{patient.entry_order}
+        {file.entry_year}-{file.entry_order}
       </span>
       <span slot="header" className="no-mobile">
-        {patient.name}
+        {file.name}
       </span>
       <span slot="header" className="no-mobile">
-        {patient.year_of_birth}
+        {file.year_of_birth}
       </span>
       <Button
-        href={"#/folder/" + patient.getId() + "/"}
+        href={"#/folder/" + folder.getId() + "/"}
         variant="outline-info"
         style={{ width: "100%" }}
       >
@@ -45,21 +48,21 @@ export default function PatientSummary({
       </Button>
       <div className="columns">
         <x-style-panel label="Identification">
-          <IONumber label="Entry Year" value={patient.entry_year} />
-          <IONumber label="Entry Order" value={patient.entry_order} />
-          <IOString label="Name" value={patient.name} />
-          <IOString label="sex" value={patient.sex} />
-          <IONumber label="Year of birth" value={patient.year_of_birth} />
-          <IOString label="Age today" value={patient.actualAge() as string} />
-          <IOString label="pathology" value={patient.pathology} />
-          <IOText label="Comments" value={patient.comments} />
+          <IONumber label="Entry Year" value={file.entry_year} />
+          <IONumber label="Entry Order" value={file.entry_order} />
+          <IOString label="Name" value={file.name} />
+          <IOString label="sex" value={file.sex} />
+          <IONumber label="Year of birth" value={file.year_of_birth} />
+          <IOString label="Age today" value={file.actualAge() as string} />
+          <IOString label="pathology" value={file.pathology} />
+          <IOText label="Comments" value={file.comments} />
         </x-style-panel>
         <x-style-panel label="Address">
-          <IOString width={1} label="Phone" value={patient.phone} />
-          <IOString label="District" value={patient.address_district} />
-          <IOString label="Union" value={patient.address_union} />
-          <IOString label="Upazilla" value={patient.address_upazilla} />
-          <IOString label="Address Comments" value={patient.address_comments} />
+          <IOString width={1} label="Phone" value={file.phone} />
+          <IOString label="District" value={file.address_district} />
+          <IOString label="Union" value={file.address_union} />
+          <IOString label="Upazilla" value={file.address_upazilla} />
+          <IOString label="Address Comments" value={file.address_comments} />
         </x-style-panel>
       </div>
     </x-style-collabsible>
