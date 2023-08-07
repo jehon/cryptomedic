@@ -12,7 +12,7 @@ export default class Picture extends PatientRelated {
   date;
   comments;
 
-  constructor({ type, file, date, comments, ...others }) {
+  constructor({ type, file, date, comments, ...others } = {}) {
     super(others);
     this.type = type;
     this.file = file;

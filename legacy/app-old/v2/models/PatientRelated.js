@@ -4,8 +4,11 @@ import FolderPage from "./FolderPage.js";
 import { DataMissingException } from "../js/exceptions.js";
 
 export default class PatientRelated extends FolderPage {
-  constructor(data, folder = null) {
-    super(data);
+  patient_id;
+
+  constructor({ patient_id, ...others }, folder = null) {
+    super(others);
+    this.patient_id = patient_id;
     if (folder) {
       this.patient_id = folder.getId();
       this.linkPatient(folder.getPatient());
