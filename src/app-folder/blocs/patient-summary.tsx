@@ -16,8 +16,11 @@ export default function PatientSummary({
   file: Patient;
   folder: Folder;
 }): React.ReactNode {
+  if (!folder) {
+    return <div>No folder selected</div>;
+  }
   if (!file) {
-    return <div>No patient selected</div>;
+    return <div>No file selected</div>;
   }
   return (
     <x-style-collabsible opened="1">

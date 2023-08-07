@@ -6,12 +6,18 @@ import "../../styles/x-style-panel";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
 import Picture from "../../../legacy/app-old/v2/models/Picture";
+import Folder from "../../../legacy/app-old/v2/models/Folder";
 
 export default function PictureSummary({
-  file
+  file,
+  folder
 }: {
   file: Picture;
+  folder: Folder;
 }): React.ReactNode {
+  if (!folder) {
+    return <div>No folder selected</div>;
+  }
   if (!file) {
     return <div>No file selected</div>;
   }
