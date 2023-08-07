@@ -5,5 +5,8 @@
   "env": {
     "node": false,
     "browser": true
+  },
+  "rules": {
+    "jsx-a11y/img-redundant-alt": 0
   }
 }

@@ -7,17 +7,6 @@ export default class Patient extends FolderPage {
     return "Patient";
   }
 
-  entry_year;
-  entry_order;
-  name;
-  sex;
-  year_of_birth;
-  phone;
-  address_comments;
-  address_district;
-  address_upazilla;
-  address_union;
-  pathology;
   comments;
 
   constructor({
@@ -33,9 +22,9 @@ export default class Patient extends FolderPage {
     address_union,
     pathology,
     comments,
-    ...other
+    ...others
   } = {}) {
-    super(other);
+    super(others);
     this.entry_year = entry_year;
     this.entry_order = entry_order;
     this.name = name;

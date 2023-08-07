@@ -4,6 +4,13 @@ import CRUD from "./CRUD.js";
 import { getPref } from "../js/prefs.js";
 
 export default class FolderPage extends CRUD {
+  patient_id;
+
+  constructor({ patient_id, ...others }) {
+    super(others);
+    this.patient_id = patient_id;
+  }
+
   initFromCachedPreferences() {
     var c = getPref("file", {
       examiner: "",

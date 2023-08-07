@@ -7,6 +7,19 @@ export default class Picture extends PatientRelated {
     return "Picture";
   }
 
+  type;
+  file;
+  date;
+  comments;
+
+  constructor({ type, file, date, comments, ...others }) {
+    super(others);
+    this.type = type;
+    this.file = file;
+    this.date = date;
+    this.comments = comments;
+  }
+
   getPictureUrl() {
     return "/api/picture/" + this.id;
   }

@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-import { bridgeTo } from "../../bridge";
 import Patient from "../../../legacy/app-old/v2/models/Patient";
 import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
@@ -66,5 +65,3 @@ export default function PatientSummary({
     </x-style-collabsible>
   );
 }
-
-bridgeTo("x-react-patient-summary", PatientSummary);
