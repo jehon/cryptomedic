@@ -3,7 +3,7 @@ import Appointment from "../../../legacy/app-old/v2/models/Appointment.js";
 import Bill from "../../../src/app-folder/business/bill.js";
 import ClubFoot from "../../../legacy/app-old/v2/models/ClubFoot.js";
 import OtherConsult from "../../../legacy/app-old/v2/models/OtherConsult.js";
-import Patient from "../../../legacy/app-old/v2/models/Patient.js";
+import Patient from "../../../src/app-folder/business/patient.js";
 import Payment from "../../../legacy/app-old/v2/models/Payment.js";
 import Picture from "../../../legacy/app-old/v2/models/Picture.js";
 import RicketConsult from "../../../legacy/app-old/v2/models/RicketConsult.js";

@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-import Patient from "../../../legacy/app-old/v2/models/Patient";
+import Patient from "../business/patient";
 import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
 import IONumber from "../../widget/io-number";

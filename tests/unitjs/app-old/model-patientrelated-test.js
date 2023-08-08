@@ -1,5 +1,5 @@
 import PatientRelated from "../../../legacy/app-old/v2/models/PatientRelated.js";
-import Patient from "../../../legacy/app-old/v2/models/Patient.js";
+import Patient from "../../../src/app-folder/business/patient.js";
 import Folder from "../../../legacy/app-old/v2/models/Folder.js";
 import RicketConsult from "../../../legacy/app-old/v2/models/RicketConsult.js";
 import { DataMissingException } from "../../../legacy/app-old/v2/js/exceptions.js";

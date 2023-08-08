@@ -4,7 +4,7 @@ import {
 } from "../../js/exceptions.js";
 import { defineCustomElement } from "../../js/custom-element.js";
 import XWithFile from "./x-with-file.js";
-import Patient from "../../models/Patient.js";
+import Patient from "../../../../../src/app-folder/business/patient.js";
 
 /**
  * Obsolete (TODO: remove this function)

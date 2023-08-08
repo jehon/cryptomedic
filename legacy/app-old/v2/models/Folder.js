@@ -4,7 +4,7 @@
 // TODO: Adapt for: ctrl_file_bill
 
 import FolderPage from "./FolderPage.js";
-import Patient from "./Patient.js";
+import Patient from "../../../../src/app-folder/business/patient.js";
 import Appointment from "./Appointment.js";
 import Bill from "../../../../src/app-folder/business/bill.js";
 import ClubFoot from "./ClubFoot.js";

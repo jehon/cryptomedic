@@ -2,7 +2,7 @@ import React from "react";
 
 import { bridgeTo } from "../../bridge";
 import Folder from "../../../legacy/app-old/v2/models/Folder";
-import Patient from "../../../legacy/app-old/v2/models/Patient";
+import Patient from "../business/patient";
 import Picture from "../../../legacy/app-old/v2/models/Picture";
 import PatientRelated from "../../../legacy/app-old/v2/models/PatientRelated";
 
