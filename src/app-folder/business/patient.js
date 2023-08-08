@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import FolderPage from "../../../legacy/app-old/v2/models/FolderPage.js";
+import FolderPage from "./folder-page.js";
 
 export default class Patient extends FolderPage {
   getModel() {

@@ -1,10 +1,10 @@
 import React from "react";
 
 import { bridgeTo } from "../../bridge";
-import Folder from "../../../legacy/app-old/v2/models/Folder";
+import Folder from "../business/folder";
 import Patient from "../business/patient";
 import Picture from "../../../legacy/app-old/v2/models/Picture";
-import PatientRelated from "../../../legacy/app-old/v2/models/PatientRelated";
+import PatientRelated from "../business/patient-related";
 
 import PatientSummary from "./patient-summary";
 import PictureSummary from "./picture-summary";

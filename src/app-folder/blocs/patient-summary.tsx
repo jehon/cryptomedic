@@ -7,7 +7,7 @@ import "../../styles/x-style-panel";
 import IONumber from "../../widget/io-number";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
-import Folder from "../../../legacy/app-old/v2/models/Folder";
+import Folder from "../business/folder";
 
 export default function PatientSummary({
   file,

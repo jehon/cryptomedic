@@ -3,16 +3,16 @@
 // TODO: Adapt for: ctrl_folder
 // TODO: Adapt for: ctrl_file_bill
 
-import FolderPage from "./FolderPage.js";
-import Patient from "../../../../src/app-folder/business/patient.js";
-import Appointment from "./Appointment.js";
-import Bill from "../../../../src/app-folder/business/bill.js";
-import ClubFoot from "./ClubFoot.js";
-import OtherConsult from "./OtherConsult.js";
-import Payment from "./Payment.js";
-import Picture from "./Picture.js";
-import RicketConsult from "./RicketConsult.js";
-import Surgery from "./Surgery.js";
+import FolderPage from "./folder-page.js";
+import Patient from "./patient.js";
+import Appointment from "../../../legacy/app-old/v2/models/Appointment.js";
+import Bill from "./bill.js";
+import ClubFoot from "../../../legacy/app-old/v2/models/ClubFoot.js";
+import OtherConsult from "../../../legacy/app-old/v2/models/OtherConsult.js";
+import Payment from "../../../legacy/app-old/v2/models/Payment.js";
+import Picture from "../../../legacy/app-old/v2/models/Picture.js";
+import RicketConsult from "../../../legacy/app-old/v2/models/RicketConsult.js";
+import Surgery from "../../../legacy/app-old/v2/models/Surgery.js";
 
 export default class Folder extends FolderPage {
   static string2class(type) {
@@ -36,8 +36,9 @@ export default class Folder extends FolderPage {
         return RicketConsult;
       case "Surgery":
         return Surgery;
+      default:
+        throw Error("Type not found: ", type);
     }
-    throw Error("Type not found: ", type);
   }
 
   static create(folder, type, data = {}) {

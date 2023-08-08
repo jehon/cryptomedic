@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
-import CRUD from "./CRUD.js";
-import { getPref } from "../js/prefs.js";
+import CRUD from "./crud.js";
+import { getPref } from "../../../legacy/app-old/v2/js/prefs.js";
 
 export default class FolderPage extends CRUD {
   initFromCachedPreferences() {
@@ -39,10 +39,6 @@ export default class FolderPage extends CRUD {
     return false;
   }
 
-  // eslint-disable-next-line jsdoc/require-returns-check
-  /**
-   * @returns {string} the model name
-   */
   getModel() {
     return this.constructor.name;
   }

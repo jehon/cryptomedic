@@ -1,4 +1,4 @@
-import FolderPage from "../../../legacy/app-old/v2/models/FolderPage.js";
+import FolderPage from "../../../src/app-folder/business/folder-page.js";
 
 describe("FolderPage", function () {
   describe("with empty loader", function () {

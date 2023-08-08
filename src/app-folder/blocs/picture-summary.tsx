@@ -3,10 +3,11 @@ import Button from "react-bootstrap/Button";
 
 import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
+import IODate from "../../widget/io-date";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
 import Picture from "../../../legacy/app-old/v2/models/Picture";
-import Folder from "../../../legacy/app-old/v2/models/Folder";
+import Folder from "../business/folder";
 
 export default function PictureSummary({
   file,
@@ -42,8 +43,15 @@ export default function PictureSummary({
         View the Patient
       </Button>
       <div className="columns">
-        <x-style-panel label="Informations"></x-style-panel>
-        <x-style-panel label="Image"></x-style-panel>
+        <x-style-panel label="Informations">
+          <IOString label="Type" value={file.type as string} />
+          <IODate label="Date" value={file.date as Date} />
+          <IOString label="File" value={file.file as string} />
+          <IOText label="Comments" value={file.comments as string} />
+        </x-style-panel>
+        <x-style-panel label="Image">
+          <img src={file.getThumbnailUrl() as string} alt="Content" />
+        </x-style-panel>
       </div>
     </x-style-collabsible>
   );

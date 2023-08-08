@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import PatientRelated from "./PatientRelated.js";
+import PatientRelated from "../../../../src/app-folder/business/patient-related.js";
 
 /**
  * @param {string|null} val the value to be parsed
