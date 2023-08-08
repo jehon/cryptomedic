@@ -6,7 +6,7 @@ import "../../styles/x-style-panel";
 import IODate from "../../widget/io-date";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
-import Picture from "../../../legacy/app-old/v2/models/Picture";
+import Picture from "../business/picture";
 import Folder from "../business/folder";
 
 export default function PictureSummary({

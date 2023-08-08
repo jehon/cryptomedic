@@ -1,11 +1,11 @@
-import Folder from "../../../legacy/app-old/v2/models/Folder.js";
+import Folder from "../../../src/app-folder/business/folder.js";
 import Appointment from "../../../legacy/app-old/v2/models/Appointment.js";
 import Bill from "../../../src/app-folder/business/bill.js";
 import ClubFoot from "../../../legacy/app-old/v2/models/ClubFoot.js";
 import OtherConsult from "../../../legacy/app-old/v2/models/OtherConsult.js";
 import Patient from "../../../src/app-folder/business/patient.js";
 import Payment from "../../../legacy/app-old/v2/models/Payment.js";
-import Picture from "../../../legacy/app-old/v2/models/Picture.js";
+import Picture from "../../../src/app-folder/business/picture.js";
 import RicketConsult from "../../../legacy/app-old/v2/models/RicketConsult.js";
 import Surgery from "../../../legacy/app-old/v2/models/Surgery.js";
 

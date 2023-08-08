@@ -9,7 +9,7 @@ import {
   RefFolder1,
   RefFolder1RicketConsult13
 } from "./athelpers.js";
-import Folder from "../../../legacy/app-old/v2/models/Folder.js";
+import Folder from "../../../src/app-folder/business/folder.js";
 
 describe(fn(import.meta.url), function () {
   describe("fromBirthDateTo", function () {

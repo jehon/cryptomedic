@@ -148,7 +148,7 @@ export default class XxTest extends HTMLElement {
 
 defineCustomElement(XxTest);
 
-import Folder from "../../app/v2/models/Folder.js";
+import Folder from "../../app/src/app-folder/business/folder.js";
 import XForm from "../../app/widgets/func/x-form.js";
 
 document.querySelectorAll("x-requestor[demo-failed]").forEach((e) =>

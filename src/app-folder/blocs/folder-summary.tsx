@@ -3,7 +3,7 @@ import React from "react";
 import { bridgeTo } from "../../bridge";
 import Folder from "../business/folder";
 import Patient from "../business/patient";
-import Picture from "../../../legacy/app-old/v2/models/Picture";
+import Picture from "../business/picture";
 import PatientRelated from "../business/patient-related";
 
 import PatientSummary from "./patient-summary";
