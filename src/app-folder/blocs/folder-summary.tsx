@@ -17,12 +17,18 @@ class FolderSummary extends React.Component<
     return (
       <div>
         <PatientSummary
-          patient={this.props.folder.getPatient() as Patient}
+          file={this.props.folder.getPatient() as Patient}
+          folder={this.props.folder}
         ></PatientSummary>
         {(this.props.folder.getFilesRelatedToPatient() as PatientRelated[]).map(
           (file: PatientRelated, index: number) => {
             if (file instanceof Picture) {
-              return <PictureSummary file={file}></PictureSummary>;
+              return (
+                <PictureSummary
+                  folder={this.props.folder}
+                  file={file}
+                ></PictureSummary>
+              );
             }
             return null;
           }

@@ -32,12 +32,10 @@ export default function PictureSummary({
         />
         Patient
       </span>
-      <span slot="header">file.entry_year</span>
-      <span slot="header" className="no-mobile">
-        file.name
-      </span>
+      <span slot="header">file.type</span>
+      <span slot="header">file.Date</span>
       <Button
-        href={"#/folder/" + file.getId() + "/"}
+        href={"#/folder/" + folder.getId() + "/picture/" + file.getId()}
         variant="outline-info"
         style={{ width: "100%" }}
       >
