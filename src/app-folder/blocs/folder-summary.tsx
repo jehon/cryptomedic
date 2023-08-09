@@ -17,6 +17,7 @@ class FolderSummary extends React.Component<
     return (
       <div>
         <PatientSummary
+          key={(this.props.folder.getPatient() as Patient).uid()}
           file={this.props.folder.getPatient() as Patient}
           folder={this.props.folder}
         ></PatientSummary>
@@ -25,6 +26,7 @@ class FolderSummary extends React.Component<
             if (file instanceof Picture) {
               return (
                 <PictureSummary
+                  key={file.uid()}
                   folder={this.props.folder}
                   file={file}
                 ></PictureSummary>
