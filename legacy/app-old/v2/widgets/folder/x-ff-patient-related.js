@@ -26,7 +26,9 @@ export default class XFfPatientRelated extends XWithFolder {
         { class: "related", title: "Related patient" },
         [
           createElementWithTag("div", { slot: "versal" }, [
-            createElementWithTag("img", { src: "/static/img/patient.gif" })
+            createElementWithTag("img", {
+              src: "/static/img/model_patient.gif"
+            })
           ]),
           (this._form = createElementWithObject(XForm, { white: true }, [
             createElementWithObject(XLabel, { label: "Reference" }, [
