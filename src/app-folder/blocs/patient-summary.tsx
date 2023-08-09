@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
+import { icons } from "../../icons";
 import Patient from "../business/patient";
 import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
@@ -24,13 +25,13 @@ export default function PatientSummary({
   }
   return (
     <x-style-collabsible opened="1">
+      <img
+        slot="header"
+        src={config.models.patient}
+        alt="Patient"
+        className="inline"
+      />
       <span slot="header" className="no-mobile">
-        <img
-          slot="header"
-          src="/static/img/model_patient.gif"
-          alt="Patient"
-          className="inline"
-        />
         Patient
       </span>
       <span slot="header">

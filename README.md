@@ -103,3 +103,4 @@ root.render(React.createElement(Hello, {toWhat: 'World'}, null));
 # Attributions
 
 www/static/img/view.svg: Font Awesome by Dave Gandy - https://fortawesome.github.com/Font-Awesome
+www/static/img/model_picture.svg: klepas and the Tango people. - http://klepas.deviantart.com/art/Got-It-icon-revisions-130-239-62022117

@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
+import { icons } from "../../icons";
 import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
 import IODate from "../../widget/io-date";
@@ -24,16 +25,16 @@ export default function PictureSummary({
   }
   return (
     <x-style-collabsible opened="1">
+      <img
+        slot="header"
+        src={icons.models.picture}
+        alt="Picture"
+        className="inline"
+      />
       <span slot="header" className="no-mobile">
-        <img
-          slot="header"
-          src="/static/img/picture.gif"
-          alt="Picture"
-          className="inline"
-        />
-        Patient
+        Picture
       </span>
-      <span slot="header">file.type</span>
+      <span slot="header">{file.type}</span>
       <span slot="header">file.Date</span>
       <Button
         href={"#/folder/" + folder.getId() + "/picture/" + file.getId()}

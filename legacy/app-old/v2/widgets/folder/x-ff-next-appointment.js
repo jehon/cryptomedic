@@ -7,7 +7,7 @@ import "../style/x-group-panel.js";
 import "../style/x-message.js";
 import "../style/x-button.js";
 import "../func/x-buttons.js";
-import { messages } from "../../../config.js";
+import { messages } from "../../../../../src/config.js";
 import XButton from "../style/x-button.js";
 
 // TODO: better layout for without appointment

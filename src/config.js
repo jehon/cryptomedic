@@ -30,5 +30,8 @@ export const messages = {
 export const icons = {
   error: "/static/img/error.svg",
   logout: "/static/img/logout.gif",
-  patient: "/static/img/patient.gif"
+  models: {
+    patient: "/static/img/model_patient.gif",
+    picture: "/static/img/model_picture.svg"
+  }
 };

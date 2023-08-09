@@ -3,7 +3,7 @@ import {
   createElementWithTag,
   defineCustomElement
 } from "../../js/custom-element.js";
-import { messages, spacing } from "../../../config.js";
+import { messages, spacing } from "../../../../../src/config.js";
 
 /**
  * @typedef {object} Message a message for x-messages

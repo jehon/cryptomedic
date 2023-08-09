@@ -1,4 +1,4 @@
-import { spacing } from "../../../config.js";
+import { spacing } from "../../../../../src/config.js";
 import {
   createElementWithTag,
   defineCustomElement
