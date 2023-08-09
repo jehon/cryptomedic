@@ -86,7 +86,7 @@ export default class Folder extends FolderPage {
   getByTypeAndId(type, id) {
     const list = this.getListByType(type);
     for (const i in list) {
-      if (list[i].id + "" == id + "") {
+      if (list[i].id + "" === id + "") {
         return list[i];
       }
     }
@@ -99,11 +99,11 @@ export default class Folder extends FolderPage {
    * @returns {*} a file or null
    */
   getByUid(uid) {
-    if (uid == "patient") {
+    if (uid === "patient") {
       return this.getPatient();
     }
     for (const i in this.list) {
-      if (this.list[i].uid && this.list[i].uid() == uid) {
+      if (this.list[i].uid && this.list[i].uid() === uid) {
         return this.list[i];
       }
     }
@@ -113,7 +113,7 @@ export default class Folder extends FolderPage {
   getByFieldValue(field, value) {
     let res = [];
     for (let i in this.list) {
-      if (this.list[i][field] == value) {
+      if (this.list[i][field] === value) {
         res.push(this.list[i]);
       }
     }
@@ -122,7 +122,7 @@ export default class Folder extends FolderPage {
 
   getPatient() {
     let list = this.getListByType(Patient);
-    if (list.length == 0) {
+    if (list.length === 0) {
       // Always have a patient
       let p = new Patient();
       this.list.push(p);
