@@ -9,6 +9,7 @@ import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
 import Picture from "../business/picture";
 import Folder from "../business/folder";
+import { date2HumanString, normalizeDate } from "../../utils/date";
 
 export default function PictureSummary({
   file,
@@ -35,7 +36,7 @@ export default function PictureSummary({
         Picture
       </span>
       <span slot="header">{file.type}</span>
-      <span slot="header">file.Date</span>
+      <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
       <Button
         href={"#/folder/" + folder.getId() + "/picture/" + file.getId()}
         variant="outline-info"
