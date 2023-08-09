@@ -55,10 +55,10 @@ export default class Patient extends FolderPage {
     if (!this.isNotZero("sex")) {
       return null;
     }
-    if (this.sex == "Male") {
+    if (this.sex === "Male") {
       return "m";
     }
-    if (this.sex == "Female") {
+    if (this.sex === "Female") {
       return "f";
     }
     return null;
@@ -110,10 +110,10 @@ export default class Patient extends FolderPage {
     }
     var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
     var res = { years: days.getFullYear() - 1900, months: days.getMonth() };
-    if (options.format == "object") {
+    if (options.format === "object") {
       return res;
     }
-    if (options.format == "number") {
+    if (options.format === "number") {
       return res.years + res.months / 12;
     }
     return res.years + "y" + res.months + "m";
