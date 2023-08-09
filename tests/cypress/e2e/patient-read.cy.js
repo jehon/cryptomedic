@@ -30,7 +30,7 @@ context("Actions", () => {
       cy.get("#summary").click();
       new TableIterator("#table_summary", { xtable: false })
         // Summary Bill#1
-        .row(5)
+        .row(4)
         .assert("#3")
         .col(4)
         .assert("Social Level");
