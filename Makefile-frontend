@@ -144,15 +144,15 @@ frontend-test-legacy-continuously:
 update: frontend-update-references
 frontend-update-references: $(FRONTEND_BUILT_MARK)
 
-migration-status:
-	@find src -name "*.js" | jh-tag-stdin "js"
+migration-status: clear
+	@find src -name "*.js" -exec echo "To: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ src/ ";" | jh-tag-stdin "js"
 	@echo ""
 
-	@grep --recursive --fixed-strings "/../src/" legacy/ | jh-tag-stdin "ok"
+	@grep --files-with-matches --recursive --fixed-strings "/../src/" legacy/ | jh-tag-stdin "ok"
 	@echo ""
 
 	@grep --recursive --include "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "warn"
 	@echo ""
 
-	@grep --recursive --exclude "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "!ko!"
+	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "!ko!"
 	@echo ""
