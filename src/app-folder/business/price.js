@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import CRUD from "../../../../src/app-folder/business/crud.js";
+import CRUD from "./crud.js";
 
 export default class Price extends CRUD {
   static getBaseUrl() {

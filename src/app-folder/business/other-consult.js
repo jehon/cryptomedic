@@ -1,19 +1,19 @@
 /* istanbul ignore file */
 
-import PatientRelated from "../../../../src/app-folder/business/patient-related.js";
+import PatientRelated from "./patient-related.js";
 
-export default class RicketConsult extends PatientRelated {
+export default class OtherConsult extends PatientRelated {
   getModel() {
-    return "RicketConsult";
+    return "OtherConsult";
   }
 
   validate(res) {
     res = super.validate(res);
 
     if (this.date > new Date().toISOString()) {
-      console.error("error");
       res.dateInTheFuture = true;
     }
+
     return res;
   }
 }

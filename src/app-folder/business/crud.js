@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import nullify from "../../utils/nullify.js";
-import { toAttributeCase } from "../../utils/strings";
+import { toAttributeCase } from "../../../legacy/app-old/v2/js/string-utils.js";
 
 export default class CRUD {
   static getBaseUrl() {

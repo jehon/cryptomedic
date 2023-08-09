@@ -5,14 +5,14 @@
 
 import FolderPage from "./folder-page.js";
 import Patient from "./patient.js";
-import Appointment from "../../../legacy/app-old/v2/models/Appointment.js";
+import Appointment from "./appointment.js";
 import Bill from "./bill.js";
-import ClubFoot from "../../../legacy/app-old/v2/models/ClubFoot.js";
-import OtherConsult from "../../../legacy/app-old/v2/models/OtherConsult.js";
-import Payment from "../../../legacy/app-old/v2/models/Payment.js";
+import ClubFoot from "./club-foot.js";
+import OtherConsult from "./other-consult.js";
+import Payment from "./payment.js";
 import Picture from "./picture.js";
-import RicketConsult from "../../../legacy/app-old/v2/models/RicketConsult.js";
-import Surgery from "../../../legacy/app-old/v2/models/Surgery.js";
+import RicketConsult from "./ricket-consult.js";
+import Surgery from "./surgery.js";
 
 export default class Folder extends FolderPage {
   static string2class(type) {

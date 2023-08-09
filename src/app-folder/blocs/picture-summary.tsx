@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-import { icons } from "../../icons";
+import { icons } from "../../config";
 import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
 import IODate from "../../widget/io-date";

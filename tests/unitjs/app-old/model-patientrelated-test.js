@@ -1,7 +1,7 @@
 import PatientRelated from "../../../src/app-folder/business/patient-related.js";
 import Patient from "../../../src/app-folder/business/patient.js";
 import Folder from "../../../src/app-folder/business/folder.js";
-import RicketConsult from "../../../legacy/app-old/v2/models/RicketConsult.js";
+import RicketConsult from "../../../src/app-folder/business/ricket-consult.js";
 import { DataMissingException } from "../../../legacy/app-old/v2/js/exceptions.js";
 
 import { loadReference, RefFolder1 } from "./athelpers.js";

@@ -1,4 +1,4 @@
-import ClubFoot from "../../../legacy/app-old/v2/models/ClubFoot.js";
+import ClubFoot from "../../../src/app-folder/business/club-foot.js";
 
 describe("ClubFoot", function () {
   it("should give the correct model", function () {

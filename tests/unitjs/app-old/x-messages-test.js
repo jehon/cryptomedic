@@ -1,4 +1,4 @@
-import { messages } from "../../../legacy/app-old/config.js";
+import { messages } from "../../../src/config.js";
 import XMessages from "../../../legacy/app-old/v2/widgets/func/x-messages.js";
 import { fn } from "./athelpers.js";
 

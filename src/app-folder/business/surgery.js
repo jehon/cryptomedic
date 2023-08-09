@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import PatientRelated from "../../../../src/app-folder/business/patient-related.js";
+import PatientRelated from "./patient-related.js";
 
 export default class Surgery extends PatientRelated {
   getModel() {
