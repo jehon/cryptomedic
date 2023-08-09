@@ -1,11 +1,11 @@
 /* istanbul ignore file */
 
 import nullify from "../../utils/nullify.js";
-import { toAttributeCase } from "../../../legacy/app-old/v2/js/string-utils.js";
+import { toAttributeCase } from "../../utils/strings";
 
 export default class CRUD {
   static getBaseUrl() {
-    throw "getBaseUrl is not implemented";
+    throw new Error("getBaseUrl is not implemented");
   }
 
   static list(network) {
