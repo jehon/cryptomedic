@@ -1,6 +1,6 @@
 export { default as fireOn } from "../../legacy/app-old/v2/js/fire.js";
 export const RefFolder1 = "FolderTest.test1.json";
-export const RefFolder1RicketConsult13 = "ricket-consult-13";
+export const RefFolder1RicketConsult13 = "RicketConsult-13";
 
 /**
  * Count the number of included files

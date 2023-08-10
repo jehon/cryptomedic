@@ -9,7 +9,7 @@ import {
   DataInvalidException,
   DataOutOfBoundException,
   ConfigurationMissingException
-} from "../../../legacy/app-old/v2/js/exceptions.js";
+} from "../../../src/utils/exceptions.js";
 
 describe(fn(import.meta.url), function () {
   const poly = {

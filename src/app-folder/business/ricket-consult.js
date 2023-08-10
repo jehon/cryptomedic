@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 import PatientRelated from "./patient-related.js";
 
 export default class RicketConsult extends PatientRelated {

@@ -4,7 +4,7 @@ import Folder from "../../../src/app-folder/business/folder.js";
 import XFffSalaryRatio from "../../../legacy/app-old/v2/widgets/file/x-fff-salary-ratio.js";
 
 let testFolder;
-const fuid = "bill-1";
+const fuid = "Bill-1";
 
 describe(fn(import.meta.url), function () {
   beforeEach(() => {

@@ -1,7 +1,7 @@
 import Folder from "./app-folder/business/folder";
 
 export const RefFolder1 = "FolderTest.test1.json";
-export const RefFolder1RicketConsult13 = "ricket-consult-13";
+export const RefFolder1RicketConsult13 = "RicketConsult-13";
 
 export async function loadReference(name: string): Promise<Folder> {
   // Thanks to http://stackoverflow.com/a/27830579/1954789

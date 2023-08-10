@@ -13,7 +13,7 @@ import {
 } from "../../js/custom-element.js";
 import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
 import XLabel from "../style/x-label.js";
-import { WithDataError } from "../../js/exceptions.js";
+import { WithDataError } from "../../../../../src/utils/exceptions.js";
 import nullify from "../../../../../src/utils/nullify.js";
 import {
   overlayAcknowledge,

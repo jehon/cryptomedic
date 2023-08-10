@@ -1,4 +1,4 @@
-import { toSentenceCase } from "./string-utils.js";
+// TODO: data field could be sentenced
 
 export class WithDataError extends Error {
   constructor(message, data) {
@@ -26,7 +26,7 @@ export class ApplicationException extends Error {
 
 export class DataMissingException extends ApplicationException {
   constructor(data = "some data", reason = "is missing") {
-    super(toSentenceCase(data) + " " + reason);
+    super(data + " " + reason);
     this.data = data;
   }
 }
@@ -38,7 +38,7 @@ export class DataOutOfBoundException extends ApplicationException {
    */
   constructor(data = "some data", limits = null) {
     super(
-      `${toSentenceCase(data)} is out-of-bounds` +
+      `${data} is out-of-bounds` +
         (limits ? ` [${limits[0]} -> ${limits[1]}]` : "")
     );
     this.data = data;
@@ -47,14 +47,14 @@ export class DataOutOfBoundException extends ApplicationException {
 
 export class DataInvalidException extends ApplicationException {
   constructor(data = "some data", reason = "is invalid") {
-    super(toSentenceCase(data) + " " + reason);
+    super(data + " " + reason);
     this.data = data;
   }
 }
 
 export class ConfigurationMissingException extends ApplicationException {
   constructor(data) {
-    super(`Configuration '${toSentenceCase(data, true)}' is missing.`);
+    super(`Configuration '${data}' is missing.`);
     this.data = data;
   }
 }

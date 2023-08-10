@@ -1,7 +1,4 @@
-/* istanbul ignore file */
-
 import nullify from "../../utils/nullify.js";
-import { toAttributeCase } from "../../../legacy/app-old/v2/js/string-utils.js";
 
 export default class CRUD {
   static getBaseUrl() {
@@ -57,7 +54,7 @@ export default class CRUD {
   }
 
   uid() {
-    return `${toAttributeCase(this.getModel())}-${this.id}`;
+    return `${this.getModel()}-${this.id}`;
   }
 
   validate(res) {

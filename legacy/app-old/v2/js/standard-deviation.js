@@ -3,7 +3,7 @@ import {
   DataInvalidException,
   ConfigurationMissingException,
   DataOutOfBoundException
-} from "./exceptions.js";
+} from "../../../../src/utils/exceptions.js";
 
 /**
  * @param {Array<Array<number>>} line - the line ([[x, y]+])

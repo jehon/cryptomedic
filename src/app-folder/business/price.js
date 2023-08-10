@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 import CRUD from "./crud.js";
 
 export default class Price extends CRUD {

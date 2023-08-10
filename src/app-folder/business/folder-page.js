@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 import CRUD from "./crud.js";
 import { getPref } from "../../../legacy/app-old/v2/js/prefs.js";
 

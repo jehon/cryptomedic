@@ -1,7 +1,7 @@
 import {
   DataInvalidException,
   DataMissingException
-} from "../../js/exceptions.js";
+} from "../../../../../src/utils/exceptions.js";
 import { defineCustomElement } from "../../js/custom-element.js";
 import XWithFile from "./x-with-file.js";
 import Patient from "../../../../../src/app-folder/business/patient.js";
