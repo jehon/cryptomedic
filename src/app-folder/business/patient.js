@@ -70,14 +70,10 @@ export default class Patient extends FolderPage {
       return null;
     }
     var birth = this.year_of_birth;
-    var options = Object.assign(
-      {},
-      {
-        reference,
-        format: false
-      },
-      options
-    );
+    var options = {
+      reference,
+      format: false
+    };
     if (typeof options.reference == "number") {
       options.reference = "" + options.reference;
     }
