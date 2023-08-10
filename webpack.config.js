@@ -6,7 +6,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const fse = require("fs-extra");
 
 const webRoot = path.join(__dirname, "/www/");
-const builtRoot = path.join(webRoot, "/built/frontend/");
+const webBuildRoot = "/built/frontend";
+const builtRoot = path.join(webRoot, webBuildRoot);
 
 fse.emptyDirSync(builtRoot);
 
@@ -26,10 +27,18 @@ module.exports = {
   },
   output: {
     path: builtRoot,
-    filename: "[name]-[fullhash].js"
+    filename: "[name]-[fullhash].js",
+    // https://stackoverflow.com/a/36308143/1954789
+    publicPath: webBuildRoot
   },
   resolve: {
     extensions: [".ts", ".js", ".tsx"]
+  },
+  devServer: {
+    // static: "./www/",
+    proxy: {
+      "/": "http://localhost:5555"
+    }
   },
   devtool: isDebug ? "eval" : false,
   optimization: {

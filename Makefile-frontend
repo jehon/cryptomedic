@@ -92,6 +92,10 @@ $(FRONTEND_BUILT_MARK): \
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
+frontend-build-through-server:
+	@echo "Open http://localhost:8080/"
+	bin/cr-node node_modules/.bin/webpack serve
+
 $(FRONTEND_PUBLISHED)/.htaccess: src/build.htaccess
 	@mkdir -p "$(dir $@)"
 	cp "$<" "$@"
