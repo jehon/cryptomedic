@@ -124,7 +124,7 @@ build-on-change: $(FRONTEND_DEPENDENCIES_MARK)
 
 .PHONY: frontend-test
 test: frontend-test
-frontend-test: frontend-test-legacy
+frontend-test: frontend-test-legacy frontend-test-new
 
 frontend-test-new: $(FRONTEND_DEPENDENCIES_MARK)
 	bin/cr-node node_modules/.bin/jest
