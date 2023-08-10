@@ -40,6 +40,7 @@ export default abstract class IOAbstract<T> extends React.Component<
             textOverflow: "ellipsis"
           }}
           dangerouslySetInnerHTML={{ __html: label + (required ? "*" : "") }}
+          data-function="label"
         ></label>
         <div
           style={{
@@ -47,6 +48,7 @@ export default abstract class IOAbstract<T> extends React.Component<
             textAlign: "left",
             color: "green"
           }}
+          data-function="value"
         >
           {edit ? this.renderOutput(value) : this.renderInput(value, required)}
         </div>
