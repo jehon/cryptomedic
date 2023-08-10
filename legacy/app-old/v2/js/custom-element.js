@@ -1,7 +1,7 @@
 import { toAttributeCase } from "./string-utils.js";
 
 /**
- * @typedef {Object<string,string|object>} Parameters
+ * @typedef {{[key: string]: string|object}} Parameters
  */
 
 /**
