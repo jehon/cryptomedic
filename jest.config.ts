@@ -10,7 +10,6 @@ const config: Config = {
   showSeed: true,
   extensionsToTreatAsEsm: [...defaults.extensionsToTreatAsEsm, ".ts"],
   preset: "ts-jest/presets/default-esm"
-  // testPathIgnorePatterns: [...defaults.testPathIgnorePatterns, "legacy", "app"]
 };
 
 export default config;

@@ -1,7 +1,7 @@
 /**
  * Treat the object received from json, and standardize its content
  *
- * @param {object} what to be normalized
+ * @param {*} what to be normalized
  * @returns {*} normalized
  */
 export default function nullify(what) {
