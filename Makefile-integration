@@ -85,9 +85,11 @@ $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json: \
 .PHONY: integration-update-references-styles
 update: integration-update-references-styles
 integration-update-references-styles: \
-		$(INTEGRATION_TEST_TMP)/.tested-desktop \
-		$(INTEGRATION_TEST_TMP)/.tested-mobile
+		$(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json \
+		integration-update-references-styles-calcul
 
+# Raw without calculs
+integration-update-references-styles-calcul:
 	bin/cr-node node_modules/.bin/ts-node --esm tests/styles/check-styles.ts \
 		--root="$(ROOT)" \
 		--references="$(ROOT)/tests/styles/references/" \
