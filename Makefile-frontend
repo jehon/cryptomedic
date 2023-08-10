@@ -154,5 +154,8 @@ migration-status: clear
 	@grep --recursive --include "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "warn"
 	@echo ""
 
-	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "!ko!"
+	@grep --recursive --include "*.js" --fixed-strings "/../src/" tests/unitjs | jh-tag-stdin "ko:tests"
+	@echo ""
+
+	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "ko:deps"
 	@echo ""
