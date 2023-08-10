@@ -18,6 +18,7 @@ if (isDebug) {
 }
 
 module.exports = {
+  // https://webpack.js.org/guides/development/
   mode: isDebug ? "development" : "production",
   entry: {
     ng1x: path.join(__dirname, "/legacy/app-old/main.js"),
@@ -29,6 +30,12 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".js", ".tsx"]
+  },
+  devtool: isDebug ? "eval" : false,
+  optimization: {
+    // https://webpack.js.org/configuration/optimization/#optimizationmoduleids
+    moduleIds: "deterministic"
+    // runtimeChunks: "single"
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -72,9 +79,5 @@ module.exports = {
         use: [{ loader: "ts-loader" }]
       }
     ]
-  },
-  optimization: {
-    // https://webpack.js.org/configuration/optimization/#optimizationmoduleids
-    moduleIds: "deterministic"
   }
 };
