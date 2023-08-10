@@ -6,9 +6,9 @@ import "../../widgets/io/x-io-bill.js";
 import "../../widgets/style/x-label.js";
 
 /**
- * @param {Array<Object<string,(number|Date)>>} prices as the reference
+ * @param {Array<{[key: string]:  number|Date}>} prices as the reference
  * @param {Date} date as the pivot date
- * @returns {Object<string,(number|Date)>} as the price
+ * @returns {{[key: string]:  number|Date}} as the price
  */
 function selectPriceFromDate(prices, date) {
   /** @type {number} */
@@ -20,7 +20,7 @@ function selectPriceFromDate(prices, date) {
   }
 
   var dref = date;
-  /** @type {Object<string,*>} */
+  /** @type {{[key: string]: *}} */
   let price = null;
   for (const i in prices) {
     var p = prices[i];
