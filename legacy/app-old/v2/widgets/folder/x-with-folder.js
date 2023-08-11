@@ -6,6 +6,7 @@ const folder = Symbol("folder");
 export default class XWithFolder extends HTMLElement {
   constructor() {
     super();
+    // Use setter
     this.folder = null;
   }
 
@@ -29,6 +30,7 @@ export default class XWithFolder extends HTMLElement {
    * @returns {boolean} if all data are set
    */
   isOk() {
+    // Use getter
     return !!this.folder;
   }
 

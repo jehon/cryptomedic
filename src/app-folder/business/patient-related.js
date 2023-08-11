@@ -2,6 +2,10 @@ import FolderPage from "./folder-page.js";
 import { DataMissingException } from "../../utils/exceptions.js";
 
 export default class PatientRelated extends FolderPage {
+  /** @type {Patient|null} */
+  #patient;
+
+  /** @type {number} */
   patient_id;
 
   constructor({ patient_id, ...others } = {}, folder = null) {
@@ -16,13 +20,17 @@ export default class PatientRelated extends FolderPage {
   }
 
   linkPatient(patient) {
-    // Encapsulate into function, so that it is not persisted
-    this.getPatient = function () {
-      return patient;
-    };
+    this.#patient = patient;
     if (patient) {
       this.patient_id = patient.id;
     }
+  }
+
+  /**
+   * @returns {Patient|null}
+   */
+  getPatient() {
+    return this.#patient;
   }
 
   wh() {

@@ -237,7 +237,7 @@ export default class XGraphic extends XWithFolder {
     const imgElement = this.querySelector(".mark-container");
 
     for (const index in this.folder.getFilesRelatedToPatient()) {
-      const file = this.folder.getFilesRelatedToPatient(index);
+      const file = this.folder.getFileRelatedToPatient(index);
       const uid = file.uid();
       tableElement.insertAdjacentHTML(
         "beforeend",

@@ -63,7 +63,7 @@ describe(fn(import.meta.url), function () {
     divY.setAttribute(`with-${pattr}`, "1");
     Object.defineProperty(divY, "file", {
       set: (_v) => {
-        throw "error";
+        throw new Error("error");
       },
       get: () => "error"
     });
@@ -89,7 +89,7 @@ describe(fn(import.meta.url), function () {
     const xxTest = new XXTestPropertySetForFolder();
     Object.defineProperty(xxTest, prop, {
       set: (_v) => {
-        throw "error";
+        throw new Error("error");
       },
       get: () => "error"
     });
@@ -98,7 +98,7 @@ describe(fn(import.meta.url), function () {
     divY.setAttribute(`with-${pattr}`, "1");
     Object.defineProperty(divY, prop, {
       set: (_v) => {
-        throw "error";
+        throw new Error("error");
       },
       get: () => "error"
     });

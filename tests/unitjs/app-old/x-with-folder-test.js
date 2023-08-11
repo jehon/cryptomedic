@@ -2,7 +2,7 @@ import { fn, loadReference, RefFolder1 } from "./athelpers.js";
 
 import XWithFolder from "../../../legacy/app-old/v2/widgets/folder/x-with-folder.js";
 import Folder from "../../../src/app-folder/business/folder.js";
-import { ApplicationException } from "../../../src/utils/exceptions.js";
+import { DataException } from "../../../src/utils/exceptions.js";
 
 let testFolder;
 
@@ -60,14 +60,7 @@ describe(fn(import.meta.url), function () {
       expect(el.hasAttribute("error")).toBeFalse();
 
       el.formula = function () {
-        throw "blabla";
-      };
-      el.adapt();
-      expect(el.innerText).toBe("blabla");
-      expect(el.hasAttribute("error")).toBeTrue();
-
-      el.formula = function () {
-        throw new ApplicationException("appError");
+        throw new DataException("key", "appError");
       };
       el.adapt();
       expect(el.innerText).toBe("appError");

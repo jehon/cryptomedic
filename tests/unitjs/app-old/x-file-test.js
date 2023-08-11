@@ -20,7 +20,7 @@ describe("tests/unit/x-file-test.js", function () {
       spyOn(element(), "adapt");
       element().value = f;
       expect(element().value).toBe(f);
-      expect(element().adapt).toHaveBeenCalled();
+      expect(element().adapt).toHaveBeenCalledWith();
     });
 
     it("should free when value is set and not call adapt if not initialized", function () {
@@ -62,10 +62,10 @@ describe("tests/unit/x-file-test.js", function () {
 
       it("with assertExists", function () {
         expect(() => element().assertExists("anything")).toThrowError(
-          "anything is undefined"
+          "'anything' is not defined"
         );
         expect(() => element().assertExists("nullKey")).toThrowError(
-          "nullKey is undefined"
+          "'nullKey' is not defined"
         );
         expect(element().assertExists("a")).toBeTruthy();
         expect(element().assertExists("b")).toBe("azer");
@@ -76,67 +76,64 @@ describe("tests/unit/x-file-test.js", function () {
 
       it("with assertNumeric", function () {
         expect(() => element().assertNumeric("anything")).toThrowError(
-          "anything is undefined"
+          "'anything' is not defined"
         );
         expect(() => element().assertNumeric("nullKey")).toThrowError(
-          "nullKey is undefined"
+          "'nullKey' is not defined"
         );
         expect(element().assertNumeric("a")).toBe(1);
         expect(() => element().assertNumeric("b")).toThrowError(
-          "b is not numeric(azer)"
+          "'b' is invalid (\"azer\")"
         );
         expect(element().assertNumeric("c")).toBe(0);
         expect(element().assertNumeric("d")).toBe(1);
         expect(() => element().assertNumericNotZero("obj")).toThrowError(
-          "obj is not numeric(object)"
+          "'obj' is invalid ({})"
         );
       });
 
       it("with assertNumericNotZero", function () {
         expect(() => element().assertNumericNotZero("anything")).toThrowError(
-          "anything is undefined"
+          "'anything' is not defined"
         );
         expect(() => element().assertNumericNotZero("nullKey")).toThrowError(
-          "nullKey is undefined"
+          "'nullKey' is not defined"
         );
         expect(element().assertNumericNotZero("a")).toBeTruthy();
         expect(() => element().assertNumericNotZero("b")).toThrowError(
-          "b is not numeric(azer)"
+          "'b' is invalid (\"azer\")"
         );
         expect(() => element().assertNumericNotZero("c")).toThrowError(
-          "c is not non-zero(0)"
+          "'c' is invalid (0)"
         );
         expect(element().assertNumericNotZero("d")).toBeTruthy();
-        expect(() => element().assertNumericNotZero("obj")).toThrowError(
-          "obj is not numeric(object)"
-        );
       });
 
       it("with assertDate", function () {
         expect(() => element().assertDate("anything")).toThrowError(
-          "anything is undefined"
+          "'anything' is not defined"
         );
         expect(() => element().assertDate("nullKey")).toThrowError(
-          "nullKey is undefined"
+          "'nullKey' is not defined"
         );
         expect(() => element().assertDate("a")).toThrowError(
-          "a is not a valid date(1)"
+          "'a' is invalid (\"1\")"
         );
         expect(() => element().assertDate("b")).toThrowError(
-          "b is not a valid date(azer)"
+          "'b' is invalid (\"azer\")"
         );
         expect(() => element().assertDate("c")).toThrowError(
-          "c is not a valid date(0)"
+          "'c' is invalid (\"0\")"
         );
         expect(() => element().assertDate("d")).toThrowError(
-          "d is not a valid date(1)"
+          "'d' is invalid (\"1\")"
         );
         expect(() => element().assertDate("obj")).toThrowError(
-          "obj is not a valid date(object)"
+          "'obj' is invalid ({})"
         );
 
         expect(() => element().assertDate("dateNumInv")).toThrowError(
-          "dateNumInv is not a valid date(20)"
+          "'dateNumInv' is invalid (\"20\")"
         );
         expect(element().assertDate("dateNum")).toEqual(new Date(2015, 0, 1));
         expect(element().assertDate("dateNum6")).toEqual(new Date(2016, 1, 1));

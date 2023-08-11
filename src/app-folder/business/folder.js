@@ -1,6 +1,3 @@
-// TODO: Adapt for: ctrl_folder
-// TODO: Adapt for: ctrl_file_bill
-
 import FolderPage from "./folder-page.js";
 import Patient from "./patient.js";
 import Appointment from "./appointment.js";
@@ -43,6 +40,12 @@ export default class Folder extends FolderPage {
     return new (this.string2class(type))(data, folder);
   }
 
+  /** @type {[key: string]: any} */
+  headers;
+
+  /** @type {Array<number, PatientRelated|Patient>} */
+  list;
+
   constructor(listing = {}) {
     super();
     this.headers = {};
@@ -81,6 +84,10 @@ export default class Folder extends FolderPage {
     return res;
   }
 
+  /**
+   *
+   * @returns {PatientRelated|null}
+   */
   getByTypeAndId(type, id) {
     const list = this.getListByType(type);
     for (const i in list) {
@@ -94,10 +101,10 @@ export default class Folder extends FolderPage {
   /**
    *
    * @param {string} uid - see FolderPage#uid
-   * @returns {*} a file or null
+   * @returns {PatientRelated|null} a file or null
    */
   getByUid(uid) {
-    if (uid === "patient") {
+    if (uid === "Patient") {
       return this.getPatient();
     }
     for (const i in this.list) {
@@ -111,13 +118,18 @@ export default class Folder extends FolderPage {
   getByFieldValue(field, value) {
     let res = [];
     for (let i in this.list) {
-      if (this.list[i][field] === value) {
+      // eslint-disable-next-line eqeqeq
+      if (this.list[i][field] == value) {
         res.push(this.list[i]);
       }
     }
     return res;
   }
 
+  /**
+   *
+   * @returns {Patient}
+   */
   getPatient() {
     let list = this.getListByType(Patient);
     if (list.length === 0) {
@@ -131,17 +143,9 @@ export default class Folder extends FolderPage {
 
   /**
    *
-   * @param {boolean|number} i is the index of the file
-   * @returns {object} file
+   * @returns {Array<PatientRelated>} file
    */
-  getFilesRelatedToPatient(i = false) {
-    if (i !== false) {
-      let list = this.getFilesRelatedToPatient();
-      if (list.length > i) {
-        return list[i];
-      }
-      return null;
-    }
+  getFilesRelatedToPatient() {
     if (!this.getPatient().id) {
       return [];
     }
@@ -150,6 +154,23 @@ export default class Folder extends FolderPage {
     );
   }
 
+  /**
+   *
+   * @param {number} i is the index of the file
+   * @returns {PatientRelated|null} file
+   */
+  getFileRelatedToPatient(i) {
+    let list = this.getFilesRelatedToPatient();
+    if (list.length > i) {
+      return list[i];
+    }
+    return null;
+  }
+
+  /**
+   *
+   * @returns {Array<Payment>}
+   */
   getFilesRelatedToBill(id) {
     return this.getByFieldValue("bill_id", id).sort(Folder.ordering);
   }

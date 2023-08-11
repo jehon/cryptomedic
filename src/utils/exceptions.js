@@ -1,60 +1,78 @@
 // TODO: data field could be sentenced
 
-export class WithDataError extends Error {
-  constructor(message, data) {
-    super(message);
-    this.data = data;
-  }
+/**
+ *
+ * @param {string|undefined|null} key
+ */
+function key2string(key) {
+  return `'${key}'`;
 }
 
 export class ApplicationException extends Error {
-  data = "";
+  getId() {
+    return this.constructor.name;
+  }
+}
 
-  constructor(msg) {
+export class TransportRequestError extends ApplicationException {
+  constructor(request) {
+    super("Network Error", request);
+  }
+}
+
+export class DataException extends ApplicationException {
+  #key = "";
+
+  constructor(key, msg) {
     super(msg);
+    this.#key = key;
     this.message = msg;
   }
 
-  get id() {
-    return this.constructor.name + (this.data ? "#" + this.data : "");
+  getId() {
+    return super.getId() + "#" + this.#key;
   }
 
-  getMessage() {
-    return this.message;
-  }
-}
-
-export class DataMissingException extends ApplicationException {
-  constructor(data = "some data", reason = "is missing") {
-    super(data + " " + reason);
-    this.data = data;
+  getKey() {
+    return this.#key;
   }
 }
 
-export class DataOutOfBoundException extends ApplicationException {
+export class DataMissingException extends DataException {
+  constructor(key) {
+    super(key, `${key2string(key)} is not defined`);
+  }
+}
+
+export class DataOutOfBoundException extends DataException {
   /**
-   * @param {string} data - which field
+   * @param {string} key - which field
    * @param {Array<any>} limits - [min, max]
    */
-  constructor(data = "some data", limits = null) {
+  constructor(key, limits = null) {
     super(
-      `${data} is out-of-bounds` +
-        (limits ? ` [${limits[0]} -> ${limits[1]}]` : "")
+      key,
+      `${key2string(key)} is out-of-bounds${
+        limits ? ` [${limits[0]} -> ${limits[1]}]` : ""
+      }`
     );
-    this.data = data;
   }
 }
 
-export class DataInvalidException extends ApplicationException {
-  constructor(data = "some data", reason = "is invalid") {
-    super(data + " " + reason);
-    this.data = data;
+export class DataInvalidException extends DataException {
+  constructor(key, value = undefined) {
+    super(
+      key,
+      `${key2string(key)} is invalid` +
+        (value !== undefined ? ` (${JSON.stringify(value)})` : "")
+    );
   }
 }
 
-export class ConfigurationMissingException extends ApplicationException {
-  constructor(data) {
-    super(`Configuration '${data}' is missing.`);
-    this.data = data;
+export class ConfigurationException extends Error {}
+
+export class ConfigurationMissingException extends DataException {
+  constructor(key) {
+    super(key, `Configuration ${key2string(key)} is missing.`);
   }
 }

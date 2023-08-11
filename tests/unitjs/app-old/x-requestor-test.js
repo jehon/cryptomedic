@@ -367,7 +367,7 @@ describe(fn(import.meta.url), function () {
         const mock = await mockResponseWithFailureCode(400);
         try {
           const _req = await element.request({ url: "/anything" });
-          throw "it should throw an error";
+          throw new Error("it should throw an error");
         } catch {
           expect(mock.args.url).toBe("/anything");
           expect(element.isRequesting()).toBeFalsy();

@@ -13,12 +13,14 @@ import {
 } from "../../js/custom-element.js";
 import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
 import XLabel from "../style/x-label.js";
-import { WithDataError } from "../../../../../src/utils/exceptions.js";
 import nullify from "../../../../../src/utils/nullify.js";
 import {
   overlayAcknowledge,
   overlayWaiting
 } from "../../js/overlay-builder.js";
+
+import { TransportRequestError } from "../../../../../src/utils/exceptions.js";
+export { TransportRequestError } from "../../../../../src/utils/exceptions.js";
 
 /**
  * @param {number} code - http code
@@ -42,12 +44,6 @@ export class ServerRequestError extends Error {
     this.status = response.status;
     this.statusText = response.statusText; // ???
     this.headers = response.headers;
-  }
-}
-
-export class TransportRequestError extends WithDataError {
-  constructor(request) {
-    super("Network Error", request);
   }
 }
 

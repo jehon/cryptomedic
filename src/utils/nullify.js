@@ -18,13 +18,13 @@ export default function nullify(what) {
       }
       return what;
     case "object":
-      if (what == null) {
-        return what;
+      if (what === null) {
+        return null;
       }
       return Object.fromEntries(
-        Object.entries(what).map(([v, k]) => [nullify(v), k])
+        Object.entries(what).map(([key, value]) => [key, nullify(value)])
       );
     default:
+      return what;
   }
-  return what;
 }

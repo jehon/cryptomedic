@@ -1,4 +1,5 @@
 import {
+  DataException,
   DataInvalidException,
   DataMissingException
 } from "../../../../../src/utils/exceptions.js";
@@ -118,7 +119,7 @@ export default class XFffAge extends XWithFile {
 
   get value() {
     if (!this.isOk()) {
-      throw "No enough data";
+      throw DataException("No enough data");
     }
     if (this.file instanceof Patient) {
       this.setAttribute("source", "patient");

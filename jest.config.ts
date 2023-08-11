@@ -9,7 +9,8 @@ const config: Config = {
   rootDir: "src",
   showSeed: true,
   extensionsToTreatAsEsm: [...defaults.extensionsToTreatAsEsm, ".ts"],
-  preset: "ts-jest/presets/default-esm"
+  // preset: "ts-jest/presets/default-esm"
+  preset: "ts-jest/presets/js-with-ts"
 };
 
 export default config;

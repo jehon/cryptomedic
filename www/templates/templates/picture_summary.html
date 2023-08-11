@@ -5,19 +5,19 @@
       <td>
         <img
           width="50px"
-          ng-src="{{folder.getFilesRelatedToPatient($index).getThumbnailUrl()}}"
+          ng-src="{{folder.getFileRelatedToPatient($index).getThumbnailUrl()}}"
         />
       </td>
       <td>
         <span id="Picture_comment" style="white-space: pre"
-          >{{ folder.getFilesRelatedToPatient($index).comment }}</span
+          >{{ folder.getFileRelatedToPatient($index).comment }}</span
         >
       </td>
     </tr>
     <tr ng-class='{ "empty-value": !folder.getPatient().Name}'>
       <td>Type</td>
       <td>
-        <span>{{ folder.getFilesRelatedToPatient($index).type }}</span>
+        <span>{{ folder.getFileRelatedToPatient($index).type }}</span>
       </td>
     </tr>
   </tbody>

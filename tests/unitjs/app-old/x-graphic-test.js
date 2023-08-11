@@ -30,24 +30,24 @@ describe(fn(import.meta.url), function () {
         expect(el.innerHTML).not.toContain("No patient");
 
         let n = 1;
-        expect(folder.getFilesRelatedToPatient(n).id).toBe(13);
-        expect(folder.getFilesRelatedToPatient(n).getModel()).toBe(
+        expect(folder.getFileRelatedToPatient(n).id).toBe(13);
+        expect(folder.getFileRelatedToPatient(n).getModel()).toBe(
           "RicketConsult"
         );
-        expect(el.displayX(folder.getFilesRelatedToPatient(n))).toBe(
+        expect(el.displayX(folder.getFileRelatedToPatient(n))).toBe(
           "16 too high"
         );
-        expect(el.displayY(folder.getFilesRelatedToPatient(n))).toBe(
+        expect(el.displayY(folder.getFileRelatedToPatient(n))).toBe(
           "Invalid Y"
         );
 
         n = 3;
-        expect(folder.getFilesRelatedToPatient(n).id).toBe(1);
-        expect(folder.getFilesRelatedToPatient(n).getModel()).toBe("Bill");
-        expect(el.displayX(folder.getFilesRelatedToPatient(n))).toBe(
+        expect(folder.getFileRelatedToPatient(n).id).toBe(1);
+        expect(folder.getFileRelatedToPatient(n).getModel()).toBe("Bill");
+        expect(el.displayX(folder.getFileRelatedToPatient(n))).toBe(
           "13 too high"
         );
-        expect(el.displayY(folder.getFilesRelatedToPatient(n))).toBe(
+        expect(el.displayY(folder.getFileRelatedToPatient(n))).toBe(
           "Invalid Y"
         );
       });

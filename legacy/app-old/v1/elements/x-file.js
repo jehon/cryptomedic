@@ -3,6 +3,7 @@
 import JHElement from "./jh-element.js";
 import {
   ApplicationException,
+  DataInvalidException,
   DataMissingException
 } from "../../../../src/utils/exceptions.js";
 
@@ -39,7 +40,7 @@ export default class XFile extends JHElement {
   assertExists(field) {
     const values = this.assertData();
     if (typeof values[field] == "undefined" || values[field] == null) {
-      throw new DataMissingException(field, "is undefined");
+      throw new DataMissingException(field);
     }
     return values[field];
   }
@@ -54,9 +55,9 @@ export default class XFile extends JHElement {
       if (!isNaN(vi)) {
         return vi;
       }
-      throw new DataMissingException(field, `is not numeric(${v})`);
+      throw new DataInvalidException(field, v);
     }
-    throw new DataMissingException(field, `is not numeric(${typeof v})`);
+    throw new DataInvalidException(field, v);
   }
 
   assertNumericNotZero(field) {
@@ -64,7 +65,7 @@ export default class XFile extends JHElement {
     if (v !== 0) {
       return v;
     }
-    throw new DataMissingException(field, `is not non-zero(${v})`);
+    throw new DataInvalidException(field, v);
   }
 
   assertDate(field) {
@@ -74,11 +75,11 @@ export default class XFile extends JHElement {
     }
     if (typeof v == "string") {
       if (v.length < 4) {
-        throw new DataMissingException(field, `is not a valid date(${v})`);
+        throw new DataInvalidException(field, v);
       }
       var ry = parseInt(v.substring(0, 4));
       if (isNaN(ry)) {
-        throw new DataMissingException(field, `is not a valid date(${v})`);
+        throw new DataInvalidException(field, v);
       }
       var rm = parseInt(v.substring(5, 7));
       if (isNaN(rm)) {
@@ -89,7 +90,7 @@ export default class XFile extends JHElement {
     if (v instanceof Date) {
       return v;
     }
-    throw new DataMissingException(field, `is not a valid date(${typeof v})`);
+    throw new DataInvalidException(field, v);
     // return v;
   }
 }

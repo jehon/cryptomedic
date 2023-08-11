@@ -8,7 +8,8 @@ import {
 import {
   DataInvalidException,
   DataOutOfBoundException,
-  ConfigurationMissingException
+  ConfigurationMissingException,
+  ConfigurationException
 } from "../../../src/utils/exceptions.js";
 
 describe(fn(import.meta.url), function () {
@@ -71,7 +72,7 @@ describe(fn(import.meta.url), function () {
         /** @type {number} */ (/** @type {*} */ ("a")),
         13.8
       )
-    ).toThrow(jasmine.any(DataInvalidException));
+    ).toThrow(jasmine.any(ConfigurationException));
     expect(() =>
       stdDeviationFor(
         "m",
@@ -79,6 +80,6 @@ describe(fn(import.meta.url), function () {
         3,
         /** @type {number} */ (/** @type {*} */ ("a"))
       )
-    ).toThrow(jasmine.any(DataInvalidException));
+    ).toThrow(jasmine.any(ConfigurationException));
   });
 });

@@ -14,27 +14,11 @@ describe("Jasmine", function () {
 
   it("manage exceptions", function () {
     expect(function () {
-      throw "test";
-    }).toThrow();
-    expect(function () {
-      throw "test";
-    }).toThrow("test");
-    expect(function () {
-      throw new Error("test");
-    }).toThrow();
-    expect(function () {
       throw new Error("test");
     }).toThrow(new Error("test"));
     expect(function () {
       throw new DataMissingException("test");
-    }).toThrow();
-    expect(function () {
-      throw new DataMissingException("test");
     }).toThrow(new DataMissingException("test"));
-
-    expect(function () {
-      throw new DataMissingException();
-    }).toThrow(new DataMissingException("some data"));
   });
 
   it("load json files", function () {

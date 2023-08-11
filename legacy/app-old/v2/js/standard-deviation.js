@@ -2,7 +2,8 @@ import amd_stats from "./amd_stats.js";
 import {
   DataInvalidException,
   ConfigurationMissingException,
-  DataOutOfBoundException
+  DataOutOfBoundException,
+  ConfigurationException
 } from "../../../../src/utils/exceptions.js";
 
 /**
@@ -37,7 +38,7 @@ export function _evaluatePoly(line, x) {
  */
 export function _stdDeviation(statLines, x, y) {
   var avg = _evaluatePoly(statLines.medium, x);
-  if (isNaN(avg)) throw new DataOutOfBoundException();
+  if (isNaN(avg)) throw new DataOutOfBoundException(x);
   if (y == avg) return 0;
 
   var ref;
@@ -49,7 +50,7 @@ export function _stdDeviation(statLines, x, y) {
 
   /* istanbul ignore next: this case is when the polynome is not fully completed */
   if (isNaN(ref)) {
-    throw new DataOutOfBoundException();
+    throw new DataOutOfBoundException("x");
   }
 
   var dev = Math.abs((avg - ref) / sigma);
@@ -66,16 +67,16 @@ export function _stdDeviation(statLines, x, y) {
  */
 export function stdDeviationFor(sex, graphName, x, y) {
   if (!(sex in amd_stats)) {
-    throw new DataInvalidException("sex");
+    throw new DataInvalidException("sex", sex);
   }
   if (!(graphName in amd_stats[sex])) {
-    throw new ConfigurationMissingException("invalid graph name");
+    throw new ConfigurationMissingException("graph name");
   }
   if (isNaN(x)) {
-    throw new DataInvalidException("invalid x");
+    throw new ConfigurationException(`Invalid x axis ${x}`);
   }
   if (isNaN(y)) {
-    throw new DataInvalidException("invalid y");
+    throw new ConfigurationException(`Invalid y axis ${y}`);
   }
 
   return _stdDeviation(amd_stats[sex][graphName], x, y);

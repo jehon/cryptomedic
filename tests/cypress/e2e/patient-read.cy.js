@@ -52,10 +52,7 @@ context("Actions", () => {
       cy.get("x-fff-height-sd").should("contain.text", "0 ds");
 
       cy.get("x-fff-wh").should("contain.text", "0.22");
-      cy.get("x-fff-wh-sd").should(
-        "contain.text",
-        "Some data is out-of-bounds"
-      );
+      cy.get("x-fff-wh-sd").should("contain.text", "'134' is out-of-bounds");
 
       cy.get("x-fff-bmi").should("contain.text", "16.2");
       cy.get("x-fff-bmi-sd").should("contain.text", "0 ds");

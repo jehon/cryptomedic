@@ -1,22 +1,22 @@
 <table style="width: 100%">
   <tbody>
     <tr
-      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).next_appointment}'
+      ng-class='{ "empty-value": !folder.getFileRelatedToPatient($index).next_appointment}'
     >
       <td>Next Appointment</td>
       <td>
         <span id="Appointment_next_appointment" name="next_appointment"
-          >{{ folder.getFilesRelatedToPatient($index).next_appointment }}</span
+          >{{ folder.getFileRelatedToPatient($index).next_appointment }}</span
         >
       </td>
     </tr>
     <tr
-      ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).next_center}'
+      ng-class='{ "empty-value": !folder.getFileRelatedToPatient($index).next_center}'
     >
       <td>Next Center</td>
       <td>
         <span id="Appointment_next_center" name="next_center"
-          >{{ folder.getFilesRelatedToPatient($index).next_center }}</span
+          >{{ folder.getFileRelatedToPatient($index).next_center }}</span
         >
       </td>
     </tr>
