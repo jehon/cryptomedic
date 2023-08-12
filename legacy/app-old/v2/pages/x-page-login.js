@@ -156,4 +156,4 @@ export default class XPageLogin extends HTMLElement {
   }
 }
 
-customElements.define("page-login", XPageLogin);
+customElements.define("x-page-login", XPageLogin);
