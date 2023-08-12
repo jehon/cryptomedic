@@ -14,19 +14,7 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-setup_folders() {
-    OUTPUT="$1"
-
-    header_begin "Setup $OUTPUT"
-    mkdir -p "$OUTPUT"
-    cr-ensure-folder-empty "$OUTPUT"/screenshots
-    cr-ensure-folder-empty "$OUTPUT"/videos
-    cr-ensure-folder-empty "$OUTPUT"/coverage
-    header_end
-}
-
-run_cypress() {
-    header_begin "Cypress run tests ($*)"
+run_cypress_raw() {
     docker compose run --rm --quiet-pull \
         --volume "$CR_PRJ_DIR:/workdir" \
         --workdir /workdir/tests \
@@ -36,35 +24,49 @@ run_cypress() {
         --entrypoint "cypress" \
         cypress \
         "$@"
+}
+
+run_cypress() {
+    COMMAND="$1"
+    OUTPUT="$2"
+    shift
+    shift
+
+    mkdir -p "$OUTPUT"
+    cr-ensure-folder-empty "$OUTPUT"/screenshots
+    cr-ensure-folder-empty "$OUTPUT"/videos
+    cr-ensure-folder-empty "$OUTPUT"/coverage
+
+    DOCKER_OUTPUT="/workdir/$(realpath --relative-to "$CR_PRJ_DIR" "$OUTPUT")"
+
+    header_begin "Cypress run tests ($*)"
+    run_cypress_raw \
+        "$COMMAND" \
+        "--env" "flavor=desktop" \
+        "--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots" \
+        "$@"
 
     header_end
 }
 
-FLAVOR="$1"
+CMD="${1:?Need command as [1]}"
 OUTPUT="$2"
-if [ -n "$OUTPUT" ]; then
-    setup_folders "$OUTPUT"
-    DOCKER_OUTPUT="/workdir/$(realpath --relative-to "$CR_PRJ_DIR" "$2")"
-fi
 
-case "$FLAVOR" in
+case "$CMD" in
 "version")
-    run_cypress "version" "--component" "package"
+    run_cypress_raw "version" "--component" "package"
     ;;
 "open")
-    run_cypress "open" "--env" "flavor=desktop" "--project" "." "--e2e" "--browser=electron"
+    run_cypress "open" "$OUTPUT" \
+        "--project" "." "--e2e" "--browser=electron"
     ;;
 "desktop")
     # Nothing to do - default flavor - use the config preset's
-    run_cypress "run" \
-        "--env" "flavor=desktop" \
-        "--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots"
+    run_cypress "run" "$OUTPUT"
     ;;
 "mobile")
     # Mobile: 360 x 480
-    run_cypress "run" \
-        "--env" "flavor=mobile" \
-        "--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots,viewportWidth=360,viewportHeight=640"
+    run_cypress "run" "$OUTPUT"
     ;;
 *)
     echo "Need flavor as [1]" >&2
