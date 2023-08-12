@@ -1,7 +1,6 @@
 import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
 import {
   createElementWithTag,
-  defineCustomElement,
   getHTMLNameOfClass
 } from "../../js/custom-element.js";
 
@@ -63,4 +62,4 @@ export default class XPanel extends HTMLElement {
   }
 }
 
-defineCustomElement(XPanel);
+customElements.define("x-panel", XPanel);

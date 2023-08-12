@@ -1,7 +1,4 @@
-import {
-  createElementWithObject,
-  defineCustomElement
-} from "../js/custom-element.js";
+import { createElementWithObject } from "../js/custom-element.js";
 import { getRoute, routes } from "../js/router.js";
 import XRequestor from "../widgets/func/x-requestor.js";
 import XTable from "../widgets/x-table.js";
@@ -110,4 +107,4 @@ export default class XPageUsersList extends HTMLElement {
   }
 }
 
-defineCustomElement(XPageUsersList);
+customElements.define("x-page-users-list", XPageUsersList);

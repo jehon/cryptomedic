@@ -1,7 +1,4 @@
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 import XIoString from "./x-io-string.js";
 
 export default class XIoBoolean extends XIoString {
@@ -53,4 +50,4 @@ export default class XIoBoolean extends XIoString {
   }
 }
 
-defineCustomElement(XIoBoolean);
+customElements.define("x-io-boolean", XIoBoolean);

@@ -1,8 +1,7 @@
 import {
   createElementsFromHTML,
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../js/custom-element.js";
 import { getRouteToFolderPatient, setRoute } from "../js/router.js";
 import XForm from "../widgets/func/x-form.js";
@@ -159,4 +158,4 @@ export default class XPageSearch extends HTMLElement {
   }
 }
 
-defineCustomElement(XPageSearch);
+customElements.define("x-page-search", XPageSearch);

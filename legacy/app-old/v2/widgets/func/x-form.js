@@ -1,8 +1,7 @@
 import { messages } from "../../../../../src/config.js";
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../../js/custom-element.js";
 import XMessages from "../func/x-messages.js";
 import "../style/x-button.js";
@@ -381,4 +380,4 @@ export default class XForm extends HTMLElement {
   }
 }
 
-defineCustomElement(XForm);
+customElements.define("x-form", XForm);

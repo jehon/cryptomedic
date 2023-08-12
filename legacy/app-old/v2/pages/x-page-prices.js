@@ -1,8 +1,7 @@
 import { messages } from "../../../../src/config.js";
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../js/custom-element.js";
 import XForm from "../widgets/func/x-form.js";
 import XRequestor from "../widgets/func/x-requestor.js";
@@ -383,4 +382,4 @@ export default class XPagePrices extends HTMLElement {
   }
 }
 
-defineCustomElement(XPagePrices);
+customElements.define("x-page-prices", XPagePrices);

@@ -1,4 +1,3 @@
-import { defineCustomElement } from "../../js/custom-element.js";
 import date2CanonicString from "../../js/date2CanonicString.js";
 import { getRouteToFolderAdd, setRoute } from "../../js/router.js";
 import Appointment from "../../../../../src/app-folder/business/appointment.js";
@@ -84,4 +83,4 @@ export default class XFfNextAppointment extends XWithFolder {
   }
 }
 
-defineCustomElement(XFfNextAppointment);
+customElements.define("x-ff-next-appointment", XFfNextAppointment);

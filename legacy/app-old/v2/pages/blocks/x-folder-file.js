@@ -1,5 +1,3 @@
-import { defineCustomElement } from "../../js/custom-element.js";
-
 export default class XFolderFile extends HTMLElement {
   _edit = false;
 
@@ -13,4 +11,4 @@ export default class XFolderFile extends HTMLElement {
   }
 }
 
-defineCustomElement(XFolderFile);
+customElements.define("x-folder-file", XFolderFile);

@@ -1,7 +1,6 @@
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../../js/custom-element.js";
 import { getRouteToFolderPatient, setRoute } from "../../js/router.js";
 import XForm from "../../widgets/func/x-form.js";
@@ -145,4 +144,4 @@ export default class XPatientByReference extends HTMLElement {
   }
 }
 
-defineCustomElement(XPatientByReference);
+customElements.define("x-patient-by-reference", XPatientByReference);

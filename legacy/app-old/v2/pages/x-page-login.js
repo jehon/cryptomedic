@@ -5,8 +5,7 @@ import { setSession } from "../js/session.js";
 import XRequestor from "../widgets/func/x-requestor.js";
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../js/custom-element.js";
 import XForm from "../widgets/func/x-form.js";
 import XPanel from "../widgets/style/x-panel.js";
@@ -157,4 +156,4 @@ export default class XPageLogin extends HTMLElement {
   }
 }
 
-defineCustomElement(XPageLogin);
+customElements.define("page-login", XPageLogin);

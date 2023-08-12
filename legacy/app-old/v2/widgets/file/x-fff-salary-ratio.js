@@ -1,4 +1,3 @@
-import { defineCustomElement } from "../../js/custom-element.js";
 import XWithFile from "./x-with-file.js";
 
 export default class XFffSalaryRatio extends XWithFile {
@@ -7,4 +6,4 @@ export default class XFffSalaryRatio extends XWithFile {
   }
 }
 
-defineCustomElement(XFffSalaryRatio);
+customElements.define("x-fff-salary-ratio", XFffSalaryRatio);

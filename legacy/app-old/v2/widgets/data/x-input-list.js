@@ -1,9 +1,6 @@
 /* istanbul ignore file */
 
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 import fireOn from "../../js/fire.js";
 import { getSession } from "../../js/session.js";
 
@@ -231,4 +228,4 @@ export default class XInputList extends HTMLElement {
   }
 }
 
-defineCustomElement(XInputList);
+customElements.define("x-input-list", XInputList);

@@ -1,7 +1,6 @@
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../../js/custom-element.js";
 import { routeToFolderPatient } from "../../js/router.js";
 import XWithFolder from "./x-with-folder.js";
@@ -70,4 +69,4 @@ export default class XFfPatientRelated extends XWithFolder {
   }
 }
 
-defineCustomElement(XFfPatientRelated);
+customElements.define("x-ff-patient-related", XFfPatientRelated);

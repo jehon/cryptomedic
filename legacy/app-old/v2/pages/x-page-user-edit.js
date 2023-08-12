@@ -1,7 +1,6 @@
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../js/custom-element.js";
 import { setRoute, getRoute, routes } from "../js/router.js";
 import getInputObject, { TYPES } from "../js/getInput.js";
@@ -142,4 +141,4 @@ export default class XPageUserEdit extends HTMLElement {
   }
 }
 
-defineCustomElement(XPageUserEdit);
+customElements.define("x-page-user-edit", XPageUserEdit);

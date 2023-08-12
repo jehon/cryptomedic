@@ -1,4 +1,3 @@
-import { defineCustomElement } from "../../js/custom-element.js";
 import setPropertyOn from "../../js/set-property.js";
 
 const folder = Symbol("folder");
@@ -81,4 +80,4 @@ export default class XWithFolder extends HTMLElement {
   }
 }
 
-defineCustomElement(XWithFolder);
+customElements.define("x-with-folder", XWithFolder);

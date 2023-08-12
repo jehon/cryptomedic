@@ -1,7 +1,6 @@
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../../js/custom-element.js";
 import XI18n from "../func/x-i18n.js";
 
@@ -182,4 +181,4 @@ export default class XLabel extends HTMLElement {
   }
 }
 
-defineCustomElement(XLabel);
+customElements.define("x-label", XLabel);

@@ -1,4 +1,3 @@
-import { defineCustomElement } from "../../js/custom-element.js";
 import date2Display from "../../js/date2Display.js";
 
 export default class XDisplayDate extends HTMLElement {
@@ -15,4 +14,4 @@ export default class XDisplayDate extends HTMLElement {
   }
 }
 
-defineCustomElement(XDisplayDate);
+customElements.define("x-display-date", XDisplayDate);

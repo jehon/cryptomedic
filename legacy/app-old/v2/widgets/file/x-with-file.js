@@ -1,4 +1,3 @@
-import { defineCustomElement } from "../../js/custom-element.js";
 import XWithFolder from "../folder/x-with-folder.js";
 
 const file = Symbol("file");
@@ -45,4 +44,4 @@ export default class XWithFile extends XWithFolder {
   }
 }
 
-defineCustomElement(XWithFile);
+customElements.define("x-with-file", XWithFile);

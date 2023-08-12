@@ -1,7 +1,4 @@
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../app/js/custom-element.js";
+import { createElementWithTag } from "../../app/js/custom-element.js";
 
 // Must be imported globally
 import "../../node_modules/css-inherit/css-inherit.js";
@@ -146,7 +143,7 @@ export default class XxTest extends HTMLElement {
   }
 }
 
-defineCustomElement(XxTest);
+customElements.define("xx-test", XxTest);
 
 import Folder from "../../app/src/app-folder/business/folder.js";
 import XForm from "../../app/widgets/func/x-form.js";

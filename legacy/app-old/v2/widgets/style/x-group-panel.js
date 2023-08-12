@@ -1,8 +1,5 @@
 import { spacing } from "../../../../../src/config.js";
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 import { getPanelStyles } from "./x-panel.js";
 
 /**
@@ -110,4 +107,4 @@ export default class XGroupPanel extends HTMLElement {
   }
 }
 
-defineCustomElement(XGroupPanel);
+customElements.define("x-group-panel", XGroupPanel);

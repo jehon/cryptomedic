@@ -1,8 +1,5 @@
 import { spacing } from "../../../../../src/config.js";
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 import { getPanelStyles } from "../style/x-panel.js";
 
 /**
@@ -43,4 +40,4 @@ export default class XButtons extends HTMLElement {
   }
 }
 
-defineCustomElement(XButtons);
+customElements.define("x-buttons", XButtons);

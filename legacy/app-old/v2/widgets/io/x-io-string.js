@@ -1,7 +1,6 @@
 import {
   copyAttributes,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../../js/custom-element.js";
 
 /**
@@ -314,4 +313,4 @@ export default class XIoString extends HTMLElement {
   // }
 }
 
-defineCustomElement(XIoString);
+customElements.define("x-io-string", XIoString);

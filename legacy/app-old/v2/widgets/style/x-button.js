@@ -1,8 +1,5 @@
 import { spacing, icons } from "../../../../../src/config.js";
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 import { setLocation, setRoute } from "../../js/router.js";
 
 /**
@@ -245,4 +242,4 @@ export default class XButton extends HTMLElement {
   }
 }
 
-defineCustomElement(XButton);
+customElements.define("x-button", XButton);

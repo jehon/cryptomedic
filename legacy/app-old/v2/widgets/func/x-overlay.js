@@ -2,7 +2,6 @@ import XPanel, { getPanelStyles } from "../style/x-panel.js";
 import {
   createElementWithObject,
   createElementWithTag,
-  defineCustomElement,
   isEventOutOfSlot
 } from "../../js/custom-element.js";
 import XForm from "../func/x-form.js";
@@ -127,4 +126,4 @@ export default class XOverlay extends HTMLElement {
   }
 }
 
-defineCustomElement(XOverlay);
+customElements.define("x-overlay", XOverlay);

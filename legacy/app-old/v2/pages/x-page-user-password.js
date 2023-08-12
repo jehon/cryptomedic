@@ -1,7 +1,6 @@
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../js/custom-element.js";
 import { getRoute, routes, setRoute } from "../js/router.js";
 import XForm from "../widgets/func/x-form.js";
@@ -118,4 +117,4 @@ export default class XPageUserPassword extends HTMLElement {
   }
 }
 
-defineCustomElement(XPageUserPassword);
+customElements.define("x-page-user-password", XPageUserPassword);

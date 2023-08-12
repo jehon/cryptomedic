@@ -1,4 +1,3 @@
-import { defineCustomElement } from "../../js/custom-element.js";
 import XFolderFile from "./x-folder-file.js";
 
 import "./x-folder-payments.js";
@@ -80,4 +79,4 @@ export default class XFolderBill extends XFolderFile {
   }
 }
 
-defineCustomElement(XFolderBill);
+customElements.define("x-folder-bill", XFolderBill);

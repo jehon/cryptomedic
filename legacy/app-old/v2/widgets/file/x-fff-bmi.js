@@ -1,5 +1,4 @@
 import XWithFile from "./x-with-file.js";
-import { defineCustomElement } from "../../js/custom-element.js";
 
 export default class XFffBmi extends XWithFile {
   formula() {
@@ -7,4 +6,4 @@ export default class XFffBmi extends XWithFile {
   }
 }
 
-defineCustomElement(XFffBmi);
+customElements.define("x-fff-bmi", XFffBmi);

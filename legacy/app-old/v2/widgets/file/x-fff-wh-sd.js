@@ -1,5 +1,4 @@
 import XWithFile from "./x-with-file.js";
-import { defineCustomElement } from "../../js/custom-element.js";
 import { stdDeviationFor } from "../../js/standard-deviation.js";
 
 export default class XFffWhSd extends XWithFile {
@@ -15,4 +14,4 @@ export default class XFffWhSd extends XWithFile {
   }
 }
 
-defineCustomElement(XFffWhSd);
+customElements.define("x-fff-wh-sd", XFffWhSd);

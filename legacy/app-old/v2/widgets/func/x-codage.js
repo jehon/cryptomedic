@@ -1,9 +1,6 @@
 /* istanbul ignore file */
 
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 import { getSession } from "../../js/session.js";
 
 /**
@@ -73,4 +70,4 @@ export default class XCodage extends HTMLElement {
   }
 }
 
-defineCustomElement(XCodage);
+customElements.define("x-codage", XCodage);

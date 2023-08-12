@@ -1,7 +1,4 @@
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../js/custom-element.js";
+import { createElementWithTag } from "../js/custom-element.js";
 
 /**
  * Attributes:
@@ -119,4 +116,4 @@ export default class XPriceItemEdit extends HTMLElement {
   }
 }
 
-defineCustomElement(XPriceItemEdit);
+customElements.define("x-price-item-edit", XPriceItemEdit);

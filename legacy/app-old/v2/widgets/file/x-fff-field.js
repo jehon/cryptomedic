@@ -1,7 +1,6 @@
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../../js/custom-element.js";
 import { toSentenceCase } from "../../js/string-utils.js";
 import XLabel from "../style/x-label.js";
@@ -183,4 +182,4 @@ export default class XFffField extends XWithFile {
   }
 }
 
-defineCustomElement(XFffField);
+customElements.define("x-fff-field", XFffField);

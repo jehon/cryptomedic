@@ -1,8 +1,5 @@
 import { spacing } from "../../../../../src/config.js";
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 import "../style/x-message.js";
 import XMessage from "../style/x-message.js";
 import { getPanelStyles } from "../style/x-panel.js";
@@ -71,4 +68,4 @@ export default class XMessages extends HTMLElement {
   }
 }
 
-defineCustomElement(XMessages);
+customElements.define("x-messages", XMessages);

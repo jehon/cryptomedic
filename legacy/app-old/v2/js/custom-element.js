@@ -17,16 +17,6 @@ export function getHTMLNameOfClass(cls) {
 }
 
 /**
- * @param {object} cls - the class defining the object
- * @param {string} [name] - the name of the class
- * @returns {string} the calculated name
- */
-export function defineCustomElement(cls, name = getHTMLNameOfClass(cls)) {
-  customElements.define(name, cls);
-  return name;
-}
-
-/**
  * @template {HTMLElement} X
  * @param {new() => X} tag to be created
  * @param {Parameters} attributes to be set

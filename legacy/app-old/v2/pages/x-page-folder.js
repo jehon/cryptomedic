@@ -1,5 +1,3 @@
-import { defineCustomElement } from "../js/custom-element.js";
-
 import "./blocks/x-folder-bill.js";
 
 export default class XPageFolder extends HTMLElement {
@@ -8,4 +6,4 @@ export default class XPageFolder extends HTMLElement {
   }
 }
 
-defineCustomElement(XPageFolder);
+customElements.define("x-page-folder", XPageFolder);

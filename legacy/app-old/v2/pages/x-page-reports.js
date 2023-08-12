@@ -3,8 +3,7 @@ import { messages } from "../../../../src/config.js";
 import {
   createElementsFromHTML,
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../js/custom-element.js";
 import date2CanonicString from "../js/date2CanonicString.js";
 import { getPref, setPref } from "../js/prefs.js";
@@ -555,7 +554,7 @@ x-button#export {
 
 // TODO: remove addDetailsLegacy
 
-defineCustomElement(XPageReports);
+customElements.define("x-page-reports", XPageReports);
 
 export const REPORT_ACTIVITY = "activity";
 export const REPORT_CASH_REGISTER = "cash-register";

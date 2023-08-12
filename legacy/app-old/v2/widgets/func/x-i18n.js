@@ -1,5 +1,3 @@
-import { defineCustomElement } from "../../js/custom-element.js";
-
 export default class XI18n extends HTMLElement {
   static get observedAttributes() {
     return ["value"];
@@ -18,4 +16,4 @@ export default class XI18n extends HTMLElement {
   }
 }
 
-defineCustomElement(XI18n);
+customElements.define("x-i18n", XI18n);

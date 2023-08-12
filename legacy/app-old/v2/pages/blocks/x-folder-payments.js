@@ -1,7 +1,4 @@
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 import XFolderFile from "./x-folder-file.js";
 
 export default class XFolderPayments extends XFolderFile {
@@ -72,4 +69,4 @@ export default class XFolderPayments extends XFolderFile {
   // };
 }
 
-defineCustomElement(XFolderPayments);
+customElements.define("x-folder-payments", XFolderPayments);

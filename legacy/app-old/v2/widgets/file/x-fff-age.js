@@ -3,7 +3,6 @@ import {
   DataInvalidException,
   DataMissingException
 } from "../../../../../src/utils/exceptions.js";
-import { defineCustomElement } from "../../js/custom-element.js";
 import XWithFile from "./x-with-file.js";
 import Patient from "../../../../../src/app-folder/business/patient.js";
 
@@ -137,4 +136,4 @@ export default class XFffAge extends XWithFile {
   }
 }
 
-defineCustomElement(XFffAge);
+customElements.define("x-fff-age", XFffAge);

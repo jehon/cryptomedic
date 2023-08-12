@@ -8,7 +8,6 @@ import {
   createElementsFromHTML,
   createElementWithObject,
   createElementWithTag,
-  defineCustomElement,
   getHTMLNameOfClass
 } from "../../js/custom-element.js";
 import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
@@ -233,7 +232,7 @@ export default class XRequestor extends HTMLElement {
   }
 }
 
-defineCustomElement(XRequestor);
+customElements.define("x-requestor", XRequestor);
 
 /**
  * Build the request options for request where 'allowed' return code is not an error

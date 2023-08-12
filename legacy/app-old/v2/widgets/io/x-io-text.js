@@ -1,7 +1,4 @@
-import {
-  createElementWithTag,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 import XIoString from "./x-io-string.js";
 
 export default class XIoText extends XIoString {
@@ -52,4 +49,4 @@ export default class XIoText extends XIoString {
   }
 }
 
-defineCustomElement(XIoText);
+customElements.define("x-io-text", XIoText);

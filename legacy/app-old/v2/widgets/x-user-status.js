@@ -5,8 +5,7 @@ import XRequestor from "./func/x-requestor.js";
 import { getPanelStyles } from "./style/x-panel.js";
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../js/custom-element.js";
 import XButton from "./style/x-button.js";
 import { logoutBuilder } from "./func/requests-authenticator.js";
@@ -59,4 +58,4 @@ export default class XUserStatus extends HTMLElement {
   }
 }
 
-defineCustomElement(XUserStatus);
+customElements.define("x-user-status", XUserStatus);

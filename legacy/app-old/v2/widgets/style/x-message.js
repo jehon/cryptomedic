@@ -1,7 +1,6 @@
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../../js/custom-element.js";
 import { messages, spacing } from "../../../../../src/config.js";
 
@@ -108,4 +107,4 @@ export default class XMessage extends HTMLElement {
   }
 }
 
-defineCustomElement(XMessage);
+customElements.define("x-message", XMessage);

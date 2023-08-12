@@ -1,7 +1,4 @@
-import {
-  copyAttributes,
-  defineCustomElement
-} from "../../js/custom-element.js";
+import { copyAttributes } from "../../js/custom-element.js";
 import { nround } from "../../js/number-utils.js";
 import XIoString from "./x-io-string.js";
 /**
@@ -75,4 +72,4 @@ export default class XIoNumeric extends XIoString {
   }
 }
 
-defineCustomElement(XIoNumeric);
+customElements.define("x-io-numeric", XIoNumeric);

@@ -1,6 +1,5 @@
 import XWithFile from "./x-with-file.js";
 import { fromBirthDateTo } from "./x-fff-age.js";
-import { defineCustomElement } from "../../js/custom-element.js";
 import { stdDeviationFor } from "../../js/standard-deviation.js";
 
 export default class XFffWeightSd extends XWithFile {
@@ -16,4 +15,4 @@ export default class XFffWeightSd extends XWithFile {
   }
 }
 
-defineCustomElement(XFffWeightSd);
+customElements.define("x-fff-weight-sd", XFffWeightSd);

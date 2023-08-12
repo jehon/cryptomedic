@@ -1,7 +1,6 @@
 import {
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../../js/custom-element.js";
 import XIoNumeric from "./x-io-numeric.js";
 import XIoString from "./x-io-string.js";
@@ -187,4 +186,4 @@ export default class XIoBill extends XIoNumeric {
   }
 }
 
-defineCustomElement(XIoBill);
+customElements.define("x-io-bill", XIoBill);

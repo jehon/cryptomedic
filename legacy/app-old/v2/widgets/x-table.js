@@ -1,5 +1,4 @@
 import {
-  defineCustomElement,
   createElementWithObject,
   createElementWithTag,
   enrichObject
@@ -522,4 +521,4 @@ export default class XTable extends HTMLElement {
   }
 }
 
-defineCustomElement(XTable);
+customElements.define("x-table", XTable);

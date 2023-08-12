@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 
 import { yearsToYM, fromBirthDateTo } from "../file/x-fff-age";
-import { defineCustomElement } from "../../js/custom-element";
 
 export default class XAge extends HTMLElement {
   static get observedAttributes() {
@@ -40,4 +39,4 @@ export default class XAge extends HTMLElement {
   }
 }
 
-defineCustomElement(XAge);
+customElements.define("x-age", XAge);

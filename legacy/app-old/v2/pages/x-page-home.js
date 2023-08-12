@@ -3,8 +3,7 @@ import "./blocks/x-patient-by-reference.js";
 import {
   createElementsFromHTML,
   createElementWithObject,
-  createElementWithTag,
-  defineCustomElement
+  createElementWithTag
 } from "../js/custom-element.js";
 import { toAttributeCase } from "../js/string-utils.js";
 import { icons } from "../../../../src/config.js";
@@ -284,4 +283,4 @@ Thanks
   }
 }
 
-defineCustomElement(XPageHome);
+customElements.define("x-page-home", XPageHome);
