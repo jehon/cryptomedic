@@ -66,7 +66,7 @@ $(INTEGRATION_TEST_TMP)/.tested-mobile: \
 	bin/cr-cypress "mobile" "$(INTEGRATION_TEST_TMP)/runtime/mobile"
 	@touch "$@"
 
-cypress-open: $(INTEGRATION_BUILT_MARK)
+integration-test-open: $(INTEGRATION_BUILT_MARK)
 	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/runtime/desktop"
 
 .PHONY: test-styles
