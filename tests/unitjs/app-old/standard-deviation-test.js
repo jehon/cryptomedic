@@ -48,7 +48,7 @@ describe(fn(import.meta.url), function () {
     expect(_stdDeviation(poly, 0, 0)).toBe(-sigma);
     expect(_stdDeviation(poly, 0, 2)).toBe(sigma);
     expect(() => _stdDeviation(poly, -1, 2)).toThrow(
-      new DataOutOfBoundException()
+      new DataOutOfBoundException(-1)
     );
 
     expect(stdDeviationFor("m", "weight_kg", 10, 32)).toBe(0);
