@@ -29,6 +29,8 @@ run_cypress_raw() {
 run_cypress() {
     COMMAND="$1"
     OUTPUT="$2"
+    FLAVOR="$3"
+    shift
     shift
     shift
 
@@ -37,13 +39,17 @@ run_cypress() {
     cr-ensure-folder-empty "$OUTPUT"/videos
     cr-ensure-folder-empty "$OUTPUT"/coverage
 
+    if [ "$FLAVOR" = "mobile" ]; then
+        MOBILE_RESOLUTION=",viewportWidth=360,viewportHeight=640"
+    fi
+
     DOCKER_OUTPUT="/workdir/$(realpath --relative-to "$CR_PRJ_DIR" "$OUTPUT")"
 
     header_begin "Cypress run tests ($*)"
     run_cypress_raw \
         "$COMMAND" \
-        "--env" "flavor=desktop" \
-        "--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots" \
+        "--env" "flavor=$FLAVOR" \
+        "--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots$MOBILE_RESOLUTION" \
         "$@"
 
     header_end
@@ -57,16 +63,16 @@ case "$CMD" in
     run_cypress_raw "version" "--component" "package"
     ;;
 "open")
-    run_cypress "open" "$OUTPUT" \
+    run_cypress "open" "$OUTPUT" "desktop" \
         "--project" "." "--e2e" "--browser=electron"
     ;;
 "desktop")
     # Nothing to do - default flavor - use the config preset's
-    run_cypress "run" "$OUTPUT"
+    run_cypress "run" "$OUTPUT" "desktop"
     ;;
 "mobile")
     # Mobile: 360 x 480
-    run_cypress "run" "$OUTPUT"
+    run_cypress "run" "$OUTPUT" "mobile"
     ;;
 *)
     echo "Need flavor as [1]" >&2
