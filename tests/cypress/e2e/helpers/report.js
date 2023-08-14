@@ -15,12 +15,14 @@ export function goReport(reportName, fillInFieldsCb, checkCb) {
         cy.get("x-form#report_input")
           .should("be.visible")
           .within(() => {
+            // Ensure that the xpanel is gone
+            cy.get(`x-button[action="${XButton.Search}"]`).should("be.visible");
+
             fillInFieldsCb();
             cy.get(`x-button[action="${XButton.Search}"]`).click();
           });
 
         cy.get("x-table[count]").should("be.visible");
-
         cy.get("x-table[empty]").should("not.exist");
 
         checkCb(new TableIterator("x-table"));
