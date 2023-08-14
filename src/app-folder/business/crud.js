@@ -37,6 +37,13 @@ export default class CRUD {
   updated_at;
   last_user;
 
+  /**
+   *
+   * @param {id?}
+   * @param {created_at?}
+   * @param {updated_at?}
+   * @param {last_user?}
+   */
   constructor({ id, created_at, updated_at, last_user, ...others } = {}) {
     this.id = id;
     this.created_at = created_at;
