@@ -3,14 +3,13 @@ import Folder from "./app-folder/business/folder";
 export const RefFolder1 = "FolderTest.test1.json";
 export const RefFolder1RicketConsult13 = "RicketConsult-13";
 
+const refRoot = "../www/api/tests/references/";
+
 export async function loadReferenceFolder(name: string): Promise<Folder> {
-  // Thanks to http://stackoverflow.com/a/27830579/1954789
-  let valid_respond = await fetch("www/api/tests/references/" + name).then(
-    (response) => response.json()
-  );
+  const valid_respond = await import(refRoot + name);
 
   if (valid_respond == null) {
     throw new Error("The reference " + name + " is empty or not found");
   }
-  return valid_respond.folder as Folder;
+  return new Folder(valid_respond.default.folder);
 }
