@@ -11,6 +11,14 @@ const config: Config = {
   extensionsToTreatAsEsm: [...defaults.extensionsToTreatAsEsm, ".ts"],
   // preset: "ts-jest/presets/default-esm"
   preset: "ts-jest/presets/js-with-ts"
+  // transform: {
+  //   "\\.[jt]sx?$": [
+  //     "ts-jest",
+  //     {
+  //       useESM: true
+  //     }
+  //   ]
+  // }
 };
 
 export default config;
