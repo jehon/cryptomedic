@@ -17,6 +17,7 @@ export function goReport(reportName, fillInFieldsCb, checkCb) {
           .within(() => {
             // Ensure that the xpanel is gone
             cy.get(`x-button[action="${XButton.Search}"]`).should("be.visible");
+            cy.get("x-panel#overlay").should("not.exist");
 
             fillInFieldsCb();
             cy.get(`x-button[action="${XButton.Search}"]`).click();
