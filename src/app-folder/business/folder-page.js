@@ -37,10 +37,6 @@ export default class FolderPage extends CRUD {
     return false;
   }
 
-  getModel() {
-    return this.constructor.name;
-  }
-
   getServerRessource() {
     return this.getModel().toLowerCase() + "s";
   }

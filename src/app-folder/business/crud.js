@@ -64,6 +64,10 @@ export default class CRUD {
     return `${this.getModel()}-${this.id}`;
   }
 
+  getModel() {
+    throw new Error("getModel is not implemented");
+  }
+
   validate(res) {
     if (!res) {
       res = {};

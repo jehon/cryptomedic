@@ -40,6 +40,10 @@ export default class Folder extends FolderPage {
     return new (this.string2class(type))(data, folder);
   }
 
+  getModel() {
+    return "Folder";
+  }
+
   /** @type {[key: string]: any} */
   headers;
 
