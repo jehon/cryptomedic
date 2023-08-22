@@ -19,6 +19,7 @@ flavorFilter(flavorFilter.DESKTOP, () =>
         },
         (tableIterator) =>
           tableIterator
+            .row(3)
             .assert("Chakaria Disability Center")
             .col(2)
             .assert("2001-1")

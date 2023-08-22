@@ -73,6 +73,11 @@ test("should give patient related files", () => {
 
   let i = -1;
   i++;
+  expect(list[i]).toBeInstanceOf(Appointment);
+  expect(list[i].id).toBe(2);
+  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Appointment).id);
+
+  i++;
   expect(list[i]).toBeInstanceOf(Picture);
   expect(list[i].id).toBe(2);
   expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Picture).id);
@@ -91,11 +96,6 @@ test("should give patient related files", () => {
   expect(list[i]).toBeInstanceOf(Bill);
   expect(list[i].id).toBe(1);
   expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Bill).id);
-
-  i++;
-  expect(list[i]).toBeInstanceOf(Appointment);
-  expect(list[i].id).toBe(2);
-  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Appointment).id);
 
   i++;
   expect(list[i]).toBeInstanceOf(OtherConsult);

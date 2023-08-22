@@ -29,7 +29,7 @@ describe(fn(import.meta.url), function () {
 
         expect(el.innerHTML).not.toContain("No patient");
 
-        let n = 1;
+        let n = 2;
         expect(folder.getFileRelatedToPatient(n).id).toBe(13);
         expect(folder.getFileRelatedToPatient(n).getModel()).toBe(
           "RicketConsult"
@@ -41,7 +41,7 @@ describe(fn(import.meta.url), function () {
           "Invalid Y"
         );
 
-        n = 3;
+        n = 4;
         expect(folder.getFileRelatedToPatient(n).id).toBe(1);
         expect(folder.getFileRelatedToPatient(n).getModel()).toBe("Bill");
         expect(el.displayX(folder.getFileRelatedToPatient(n))).toBe(

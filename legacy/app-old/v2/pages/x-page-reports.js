@@ -21,7 +21,6 @@ import XRequestor from "../widgets/func/x-requestor.js";
 import XTable from "../widgets/x-table.js";
 import XButton from "../widgets/style/x-button.js";
 import XButtons from "../widgets/func/x-buttons.js";
-import XDisplayDate from "../widgets/style/x-display-date.js";
 import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XLabel from "../widgets/style/x-label.js";
 import XMessages from "../widgets/func/x-messages.js";
@@ -815,10 +814,6 @@ reports[REPORT_CONSULTATIONS] = {
       .addDetail("phone", { headers: ["Phone"] })
       .addDetail("examiner", { headers: ["Appointment from"] })
       .addDetail("purpose", { headers: ["Purpose"] })
-      .addDetail(
-        (data) => createElementWithObject(XDisplayDate, { value: data.c_date }),
-        { headers: ["Appointment from"] }
-      )
       .end()
 };
 
