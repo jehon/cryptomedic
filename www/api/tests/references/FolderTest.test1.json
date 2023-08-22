@@ -33,8 +33,8 @@
                 "patient_id": 1,
                 "examiner": "Ershad",
                 "purpose": null,
-                "next_appointment": "2015-04-28",
-                "next_center": null
+                "date": "2015-04-28",
+                "center": null
             }
         },
         {

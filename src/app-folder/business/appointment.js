@@ -7,18 +7,18 @@ export default class Appointment extends PatientRelated {
 
   examiner;
   purpose;
-  next_appointment;
-  next_center;
+  date;
+  center;
 
   constructor(
-    { examiner, purpose, next_appointment, next_center, ...others } = {},
+    { examiner, purpose, date, center, ...others } = {},
     folder = null
   ) {
     super(others, folder);
     this.examiner = examiner;
     this.purpose = purpose;
-    this.next_appointment = next_appointment;
-    this.next_center = next_center;
+    this.date = date;
+    this.center = center;
   }
 
   isLocked() {

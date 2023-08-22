@@ -7,8 +7,8 @@ t::setDefaultOption("baseExpression", "currentFile().");
 			<div>{{today}}</div>
 		</x-fff-field>
 		<?php (new t("Appointment.purpose"))->tr2("Purpose")->p(); ?>
-		<?php (new t("Appointment.next_appointment"))->tr2("Next Appointment")->p(); ?>
-		<?php (new t("Appointment.next_center"))->tr2("Next Center")->p(); ?>
+		<?php (new t("Appointment.date"))->tr2("Next Appointment")->p(); ?>
+		<?php (new t("Appointment.center"))->tr2("Next Center")->p(); ?>
 		<x-fff-field>
 			<div>
 				<x-button action='Alternate' ng-click='nextMonth(3)'>Plan in 3 months</x-button>

@@ -145,15 +145,12 @@ context("Actions", () => {
     checkFileAdd(
       "appointment",
       {
-        "#Appointment_next_appointment": { value: "2100-01-01" },
-        "[name=next_center]": { value: "Ramu" }
+        "#Appointment_date": { value: "2100-01-01" },
+        "[name=center]": { value: "Ramu" }
       },
       () => {
-        cy.get("#Appointment_next_appointment").should(
-          "contain.text",
-          "2100-01-01"
-        );
-        cy.get("#Appointment_next_center").should("contain.text", "Ramu");
+        cy.get("#Appointment_date").should("contain.text", "2100-01-01");
+        cy.get("#Appointment_center").should("contain.text", "Ramu");
 
         // also in widget
         cy.get("x-ff-next-appointment")

@@ -11,16 +11,16 @@ class ReportConsultationsController extends ReportController {
 
   public function buildData() {
     $this->result['list'] = $this->runSqlWithNamedParameter(
-      "SELECT patients.*, appointments.examiner as examiner, appointments.id as c_id, appointments.next_center as c_center, appointments.purpose as purpose, "
-        . " appointments.next_appointment as c_next_appointment, appointments.patient_id as patient_id "
+      "SELECT patients.*, appointments.examiner as examiner, appointments.id as c_id, appointments.center as c_center, appointments.purpose as purpose, "
+        . " appointments.date as c_date, appointments.patient_id as patient_id "
         . " FROM appointments "
         . " JOIN patients ON (appointments.patient_id = patients.id) "
         . " WHERE (1 = 1) "
         // . " AND " . $this->getParamAsSqlFilter("when", "day")
-        . " AND " . $this->getParamAsSqlFilter("day", "next_appointment")
-        . " AND " . $this->getParamAsSqlFilter("center", "next_center")
+        . " AND " . $this->getParamAsSqlFilter("day", "date")
+        . " AND " . $this->getParamAsSqlFilter("center", "center")
 
-        . " ORDER BY appointments.next_appointment, patients.id"
+        . " ORDER BY appointments.date, patients.id"
         . " LIMIT 100"
       );
   }

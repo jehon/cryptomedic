@@ -61,9 +61,9 @@ export default class XFfNextAppointment extends XWithFolder {
     const today = date2CanonicString(new Date(), true);
     var next = "";
     this.folder.getListByType(Appointment).forEach((v, _k) => {
-      if (v.next_appointment > today) {
-        if (!next || v.next_appointment < next) {
-          next = v.next_appointment;
+      if (v.date > today) {
+        if (!next || v.date < next) {
+          next = v.date;
         }
       }
     });
@@ -71,11 +71,10 @@ export default class XFfNextAppointment extends XWithFolder {
   }
 
   adapt() {
-    const next_appointment = this._next_appointment();
-    if (next_appointment) {
-      this.setAttribute("next-appointment", next_appointment);
-      this.shadowRoot.querySelector("#appointment").innerHTML =
-        next_appointment;
+    const date = this._next_appointment();
+    if (date) {
+      this.setAttribute("next-appointment", date);
+      this.shadowRoot.querySelector("#appointment").innerHTML = date;
     } else {
       this.removeAttribute("next-appointment");
       this.shadowRoot.querySelector("#appointment").innerHTML = "";

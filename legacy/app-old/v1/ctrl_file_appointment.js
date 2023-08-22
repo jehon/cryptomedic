@@ -16,7 +16,7 @@ export default function ctrl_file_appointment($scope) {
       0
     );
 
-    $scope.currentFile().next_appointment = date2CanonicString(nd, true);
+    $scope.currentFile().date = date2CanonicString(nd, true);
   };
 }
 
