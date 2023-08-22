@@ -18,7 +18,7 @@ jobs:
       group: release-${{ github.ref }}
     env:
       NO_CLEAR: yes
-      # CRYPTOMEDIC_PROD: yes
+      # CRYPTOMEDIC_PROD: yes (need rework of getHTMLNameOfClass)
 
     steps:
       - uses: actions/checkout@v3
