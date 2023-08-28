@@ -1,17 +1,7 @@
-import PatientRelated from "./patient-related.js";
+import Consult from "./consult.js";
 
-export default class OtherConsult extends PatientRelated {
+export default class OtherConsult extends Consult {
   getModel() {
     return "OtherConsult";
-  }
-
-  validate(res) {
-    res = super.validate(res);
-
-    if (this.date > new Date().toISOString()) {
-      res.dateInTheFuture = true;
-    }
-
-    return res;
   }
 }

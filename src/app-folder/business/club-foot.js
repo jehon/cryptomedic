@@ -1,4 +1,4 @@
-import PatientRelated from "./patient-related.js";
+import Consult from "./consult.js";
 
 /**
  * @param {string|null} val the value to be parsed
@@ -14,7 +14,7 @@ function f(val) {
   return val;
 }
 
-export default class ClubFoot extends PatientRelated {
+export default class ClubFoot extends Consult {
   getModel() {
     return "ClubFoot";
   }
@@ -53,15 +53,5 @@ export default class ClubFoot extends PatientRelated {
     } catch (e) {
       return "undefined";
     }
-  }
-
-  validate(res) {
-    res = super.validate(res);
-
-    if (this.date > new Date().toISOString()) {
-      res.dateInTheFuture = true;
-    }
-
-    return res;
   }
 }

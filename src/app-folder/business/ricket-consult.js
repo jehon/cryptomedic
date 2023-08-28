@@ -1,17 +1,7 @@
-import PatientRelated from "./patient-related.js";
+import Consult from "./consult.js";
 
-export default class RicketConsult extends PatientRelated {
+export default class RicketConsult extends Consult {
   getModel() {
     return "RicketConsult";
-  }
-
-  validate(res) {
-    res = super.validate(res);
-
-    if (this.date > new Date().toISOString()) {
-      console.error("error");
-      res.dateInTheFuture = true;
-    }
-    return res;
   }
 }
