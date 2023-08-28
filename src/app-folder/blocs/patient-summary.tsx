@@ -48,7 +48,7 @@ export default function PatientSummary({
         variant="outline-info"
         style={{ width: "100%" }}
       >
-        View the Patient
+        View
       </Button>
       <div className="columns">
         <x-style-panel label="Identification">

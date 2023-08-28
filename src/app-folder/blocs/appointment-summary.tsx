@@ -7,15 +7,15 @@ import "../../styles/x-style-panel";
 import IODate from "../../widget/io-date";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
-import Picture from "../business/picture";
 import Folder from "../business/folder";
 import { date2HumanString, normalizeDate } from "../../utils/date";
+import Appointment from "../business/appointment";
 
-export default function PictureSummary({
+export default function AppointmentSummary({
   file,
   folder
 }: {
-  file: Picture;
+  file: Appointment;
   folder: Folder;
 }): React.ReactNode {
   if (!folder) {
@@ -28,17 +28,17 @@ export default function PictureSummary({
     <x-style-collabsible opened="1">
       <img
         slot="header"
-        src={icons.models.picture}
-        alt="Picture"
+        src={icons.models.appointment}
+        alt="Appointment"
         className="inline"
       />
       <span slot="header" className="no-mobile">
-        Picture
+        Appointment
       </span>
-      <span slot="header">{file.type}</span>
       <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
+      <span slot="header">{file.center}</span>
       <Button
-        href={"#/folder/" + folder.getId() + "/picture/" + file.getId()}
+        href={"#/folder/" + folder.getId() + "/appointment/" + file.getId()}
         variant="outline-info"
         style={{ width: "100%" }}
       >
@@ -46,13 +46,12 @@ export default function PictureSummary({
       </Button>
       <div className="columns">
         <x-style-panel label="Informations">
-          <IOString label="Type" value={file.type as string} />
           <IODate label="Date" value={file.date as Date} />
-          <IOString label="File" value={file.file as string} />
-          <IOText label="Comments" value={file.comments as string} />
+          <IOString label="Center" value={file.center as string} />
+          <IOString label="Examiner" value={file.examiner as string} />
         </x-style-panel>
-        <x-style-panel label="Image">
-          <img src={file.getThumbnailUrl() as string} alt="Content" />
+        <x-style-panel label="Objective">
+          <IOText label="Purpose" value={file.purpose as string} />
         </x-style-panel>
       </div>
     </x-style-collabsible>
