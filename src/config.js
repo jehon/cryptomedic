@@ -33,6 +33,7 @@ export const icons = {
   models: {
     appointment: "/static/img/model_appointment.gif",
     patient: "/static/img/model_patient.gif",
-    picture: "/static/img/model_picture.svg"
+    picture: "/static/img/model_picture.svg",
+    surgery: "/static/img/model_surgery.png"
   }
 };

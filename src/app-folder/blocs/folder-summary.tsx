@@ -2,14 +2,17 @@ import React from "react";
 
 import { bridgeTo } from "../../bridge";
 import Folder from "../business/folder";
-import Patient from "../business/patient";
-import Picture from "../business/picture";
 import PatientRelated from "../business/patient-related";
 
+import Patient from "../business/patient";
 import PatientSummary from "./patient-summary";
-import AppointmentSummary from "./appointment-summary";
-import PictureSummary from "./picture-summary";
+
 import Appointment from "../business/appointment";
+import AppointmentSummary from "./appointment-summary";
+import Picture from "../business/picture";
+import PictureSummary from "./picture-summary";
+import Surgery from "../business/surgery";
+import SurgerySummary from "./surgery-summary";
 
 class FolderSummary extends React.Component<
   { folderId: string; folder: Folder },
@@ -41,6 +44,15 @@ class FolderSummary extends React.Component<
                   folder={this.props.folder}
                   file={file}
                 ></PictureSummary>
+              );
+            }
+            if (file instanceof Surgery) {
+              return (
+                <SurgerySummary
+                  key={file.uid()}
+                  folder={this.props.folder}
+                  file={file}
+                ></SurgerySummary>
               );
             }
             return null;

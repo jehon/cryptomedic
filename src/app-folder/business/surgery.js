@@ -9,6 +9,14 @@ export default class Surgery extends PatientRelated {
     return "surgeries";
   }
 
+  date;
+  report_diagnostic;
+  report_surgeon;
+  report_side_right;
+  report_side_left;
+  report_procedure;
+  follow_up_complication;
+
   validate(res) {
     res = super.validate(res);
 
