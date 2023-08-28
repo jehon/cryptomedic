@@ -33,7 +33,7 @@ export default function SurgerySummary({
         className="inline"
       />
       <span slot="header" className="no-mobile">
-        Picture
+        Surgery
       </span>
       <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
       <span slot="header">{file.report_diagnostic}</span>
