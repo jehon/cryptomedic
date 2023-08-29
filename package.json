@@ -49,7 +49,7 @@
     "eslint-config-react-app": "7.0.1",
     "eslint-plugin-cypress": "2.14.0",
     "eslint-plugin-jasmine": "4.1.3",
-    "eslint-plugin-jest-dom": "5.0.2",
+    "eslint-plugin-jest-dom": "5.1.0",
     "eslint-plugin-jsdoc": "46.5.0",
     "fs-extra": "latest",
     "geckodriver": "latest",
