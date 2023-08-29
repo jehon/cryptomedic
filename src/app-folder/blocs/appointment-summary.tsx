@@ -38,7 +38,9 @@ export default function AppointmentSummary({
       <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
       <span slot="header">{file.center}</span>
       <Button
-        href={"#/folder/" + folder.getId() + "/appointment/" + file.getId()}
+        href={
+          "#/folder/" + folder.getId() + "/file/Appointment/" + file.getId()
+        }
         variant="outline-info"
         style={{ width: "100%" }}
       >

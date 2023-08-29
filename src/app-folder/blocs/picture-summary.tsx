@@ -38,7 +38,7 @@ export default function PictureSummary({
       <span slot="header">{file.type}</span>
       <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
       <Button
-        href={"#/folder/" + folder.getId() + "/picture/" + file.getId()}
+        href={"#/folder/" + folder.getId() + "/file/Picture/" + file.getId()}
         variant="outline-info"
         style={{ width: "100%" }}
       >

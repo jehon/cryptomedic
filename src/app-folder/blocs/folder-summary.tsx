@@ -9,6 +9,14 @@ import PatientSummary from "./patient-summary";
 
 import Appointment from "../business/appointment";
 import AppointmentSummary from "./appointment-summary";
+import Bill from "../business/bill";
+import BillSummary from "./bill-summary";
+import ConsultClubfoot from "../business/club-foot";
+import ConsultClubfootSummary from "./consult-clubfoot-summary";
+import ConsultOther from "../business/other-consult";
+import ConsultOtherSummary from "./consult-other-summary";
+import ConsultRicket from "../business/ricket-consult";
+import ConsultRicketSummary from "./consult-ricket-summary";
 import Picture from "../business/picture";
 import PictureSummary from "./picture-summary";
 import Surgery from "../business/surgery";
@@ -35,6 +43,42 @@ class FolderSummary extends React.Component<
                   folder={this.props.folder}
                   file={file}
                 ></AppointmentSummary>
+              );
+            }
+            if (file instanceof Bill) {
+              return (
+                <BillSummary
+                  key={file.uid()}
+                  folder={this.props.folder}
+                  file={file}
+                ></BillSummary>
+              );
+            }
+            if (file instanceof ConsultClubfoot) {
+              return (
+                <ConsultClubfootSummary
+                  key={file.uid()}
+                  folder={this.props.folder}
+                  file={file}
+                ></ConsultClubfootSummary>
+              );
+            }
+            if (file instanceof ConsultOther) {
+              return (
+                <ConsultOtherSummary
+                  key={file.uid()}
+                  folder={this.props.folder}
+                  file={file}
+                ></ConsultOtherSummary>
+              );
+            }
+            if (file instanceof ConsultRicket) {
+              return (
+                <ConsultRicketSummary
+                  key={file.uid()}
+                  folder={this.props.folder}
+                  file={file}
+                ></ConsultRicketSummary>
               );
             }
             if (file instanceof Picture) {

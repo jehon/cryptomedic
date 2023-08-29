@@ -1,5 +1,6 @@
 import Consult from "./consult.js";
 
+// TODO: rename to ConsultRicket
 export default class RicketConsult extends Consult {
   getModel() {
     return "RicketConsult";

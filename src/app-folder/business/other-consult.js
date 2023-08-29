@@ -1,5 +1,6 @@
 import Consult from "./consult.js";
 
+// TODO: rename to ConsultOther
 export default class OtherConsult extends Consult {
   getModel() {
     return "OtherConsult";

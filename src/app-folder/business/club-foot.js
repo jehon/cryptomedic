@@ -14,6 +14,7 @@ function f(val) {
   return val;
 }
 
+// TODO: rename to ConsultClubfoot
 export default class ClubFoot extends Consult {
   getModel() {
     return "ClubFoot";

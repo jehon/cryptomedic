@@ -32,6 +32,10 @@ export const icons = {
   logout: "/static/img/logout.gif",
   models: {
     appointment: "/static/img/model_appointment.gif",
+    bill: "/static/img/error.svg",
+    consult_clubfoot: "/static/img/error.svg",
+    consult_other: "/static/img/error.svg",
+    consult_ricket: "/static/img/error.svg",
     patient: "/static/img/model_patient.gif",
     picture: "/static/img/model_picture.svg",
     surgery: "/static/img/model_surgery.png"
