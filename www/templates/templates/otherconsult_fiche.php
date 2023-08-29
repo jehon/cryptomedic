@@ -17,7 +17,7 @@ t::setDefaultOption("model", "OtherConsult");
 			<?php (new t("OtherConsult.muscle_strength"))->tr2()->p(); ?>
 			<?php (new t("OtherConsult.pain"))->tr2()->p(); ?>
 			<?php (new t("OtherConsult.walk"))->tr2()->p(); ?>
-			<?php (new t("OtherConsult.x-ray"))->tr2()->p(); ?>
+			<?php (new t("OtherConsult.xray"))->tr2()->p(); ?>
 		</x-group-panel>
 		<x-group-panel title='Conclusion'>
 			<?php (new t("OtherConsult.performed"))->tr2("Activities Performed by the Patient")->p(); ?>

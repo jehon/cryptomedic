@@ -26,7 +26,7 @@ t::setDefaultOption("model", "RicketConsult");
 			<?php t::trSided('cross_*_T'); ?>
 			<?php t::trSided('cross_*_F'); ?>
 			<?php (new t("RicketConsult.IMIC_distance"))->tr2("IMIC Distance")->p(); ?>
-			<?php (new t("RicketConsult.x-ray"))->tr2()->p(); ?>
+			<?php (new t("RicketConsult.xray"))->tr2()->p(); ?>
 		</x-group-panel>
 	</div>
 	<div>
