@@ -103,5 +103,8 @@ root.render(React.createElement(Hello, {toWhat: 'World'}, null));
 # Attributions
 
 www/static/img/view.svg: Font Awesome by Dave Gandy - https://fortawesome.github.com/Font-Awesome
+www/static/img/model*bill.svg: https://commons.wikimedia.org/wiki/File:Gnome-accessories-calculator.svg
+www/static/img/model_consult*\*.svg: https://commons.wikimedia.org/wiki/File:Physical_Therapy_-_The_Noun_Project.svg adapted
+www/static/img/model_payment.svg: https://commons.wikimedia.org/wiki/File:Bills_and_coins.svg
 www/static/img/model_picture.svg: klepas and the Tango people. - http://klepas.deviantart.com/art/
 www/static/img/model_surgery.png: Freepik - https://www.flaticon.com/free-icons/operation-theatre
