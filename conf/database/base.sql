@@ -52,7 +52,7 @@ INSERT INTO `appointments` VALUES (5,'1980-01-01 00:00:00','2015-05-10 08:01:10'
 INSERT INTO `appointments` VALUES (6,'1980-01-01 00:00:00','2015-05-10 04:29:15','murshed',5,'Ershad',NULL,'2014-05-31','Ukhia');
 INSERT INTO `appointments` VALUES (7,'1980-01-01 00:00:00','2015-05-07 16:53:30','murshed',5,'Ershad',NULL,'2014-04-21','Ukhia');
 INSERT INTO `appointments` VALUES (8,'1980-01-01 00:00:00','2015-05-07 16:49:28','murshed',5,'AMD doctor',NULL,'2014-03-21','Ukhia');
-INSERT INTO `appointments` VALUES (10,'2023-08-30 16:53:04','2023-08-30 16:53:04','jehon',100,'Ershad',NULL,'2023-06-01','Forcibly Displaced Myanmar Nationals');
+INSERT INTO `appointments` VALUES (100,'2023-08-30 16:53:04','2023-08-30 17:35:28','jehon',100,'Ershad',NULL,'2023-06-01','Forcibly Displaced Myanmar Nationals');
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,7 @@ INSERT INTO `bills` VALUES (10,'2014-06-21 08:44:48','2015-01-19 15:12:59','josi
 INSERT INTO `bills` VALUES (11,'2014-06-22 15:45:37','2015-01-19 15:12:59','josiane',3,4500,9,'2014-05-20',2,'Ramu','Ershad',500,2,100,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `bills` VALUES (12,'2014-06-25 05:20:49','2015-10-15 04:29:50','josiane',2,20000,8,'2014-05-20',2,'Chakaria Disability Center','Ershad',500,2,200,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `bills` VALUES (13,'2014-07-05 07:52:07','2015-01-19 15:12:59','josiane',2,20000,8,'2014-05-21',2,'Chakaria Disability Center','Hassan 1',3000,2,1200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-INSERT INTO `bills` VALUES (17,'2023-08-30 16:49:01','2023-08-30 16:49:21','jehon',100,6000,2,'2023-01-02',3,'Moheshkhali','Thierry Craviari',450,3,315,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `bills` VALUES (100,'2023-08-30 16:49:01','2023-08-30 17:35:00','jehon',100,6000,2,'2023-01-02',3,'Moheshkhali','Thierry Craviari',450,3,315,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `bills` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -361,7 +361,7 @@ INSERT INTO `club_feet` VALUES (3,'1980-01-01 00:00:00','2015-05-10 08:01:10','m
 INSERT INTO `club_feet` VALUES (4,'1980-01-01 00:00:00','2015-05-10 04:29:15','murshed',5,'2014-04-21','Ershad','Chakaria Disability Center',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,'DB splint','No 7 used',0,NULL,NULL,0);
 INSERT INTO `club_feet` VALUES (5,'1980-01-01 00:00:00','2015-05-07 16:53:30','murshed',5,'2014-03-29','Ershad','Ukhia',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0.00,NULL,0.00,NULL,0.00,0.00,0.00,0.00,0.00,0.00,0.00,'DB splint','No 7 given',0,NULL,NULL,NULL);
 INSERT INTO `club_feet` VALUES (6,'1980-01-01 00:00:00','2015-05-07 16:49:28','murshed',5,'2014-03-01','AMD doctor','Chakaria Disability Center',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.50,0.00,0.50,0.00,1.00,'tenotomy','7th plaster done',0,NULL,NULL,0);
-INSERT INTO `club_feet` VALUES (7,'2023-08-30 16:51:10','2023-08-30 16:51:10','jehon',100,'2023-01-04','Ershad','CMOSH',31,91,2,1,2,1,2,1,0,1,2,1,21,20,23,22,25,24,27,26,NULL,1,0.00,1.00,0.50,1.00,0.00,1.00,0.50,1.00,0.00,1.00,0.50,1.00,NULL,'dring a glass of milk',NULL,0,NULL,21);
+INSERT INTO `club_feet` VALUES (100,'2023-08-30 16:51:10','2023-08-30 17:35:45','jehon',100,'2023-01-04','Ershad','CMOSH',31,91,2,1,2,1,2,1,0,1,2,1,21,20,23,22,25,24,27,26,NULL,1,0.00,1.00,0.50,1.00,0.00,1.00,0.50,1.00,0.00,1.00,0.50,1.00,NULL,'dring a glass of milk',NULL,0,NULL,21);
 /*!40000 ALTER TABLE `club_feet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,7 +438,7 @@ CREATE TABLE `other_consults` (
 LOCK TABLES `other_consults` WRITE;
 /*!40000 ALTER TABLE `other_consults` DISABLE KEYS */;
 INSERT INTO `other_consults` VALUES (1,'1980-01-01 00:00:00','2015-02-19 13:52:16','Thierry',1,'2007-01-10','Ershad',NULL,29,134,0,NULL,'PBVE','','','','No',NULL,'',NULL,NULL,'Postero-medial release','',0,NULL,NULL);
-INSERT INTO `other_consults` VALUES (2,'2023-08-30 16:52:04','2023-08-30 16:52:04','jehon',100,'2023-01-05','Ershad','Forcibly Displaced Myanmar Nationals',34,124,24,'Left','some','yes','could be','strong','Moderate','Level 2','broken tongue','walking is ok','jumping is not ok',NULL,'drink a glass of air',NULL,0,1);
+INSERT INTO `other_consults` VALUES (100,'2023-08-30 16:52:04','2023-08-30 17:35:55','jehon',100,'2023-01-05','Ershad','Forcibly Displaced Myanmar Nationals',34,124,24,'Left','some','yes','could be','strong','Moderate','Level 2','broken tongue','walking is ok','jumping is not ok',NULL,'drink a glass of air',NULL,0,1);
 /*!40000 ALTER TABLE `other_consults` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -527,8 +527,8 @@ INSERT INTO `payments` VALUES (4,'2017-02-21 19:39:30','2017-02-24 17:17:24','je
 INSERT INTO `payments` VALUES (5,'2017-02-21 19:39:30','2017-02-24 17:17:24','josiane',12,'2014-05-20','Ershad',300,'automatically generated from previous system');
 INSERT INTO `payments` VALUES (6,'2017-02-24 17:17:29',NULL,'murshed',5,'2014-05-20','Murshed',156,NULL);
 INSERT INTO `payments` VALUES (7,'2017-02-24 17:17:29',NULL,'murshed',2,'2014-05-20','Murshed',113,NULL);
-INSERT INTO `payments` VALUES (8,'2023-08-30 16:49:01','2023-08-30 16:49:01','jehon',17,'2023-01-02','Thierry Craviari',100,NULL);
-INSERT INTO `payments` VALUES (9,'2023-08-30 16:49:08','2023-08-30 16:49:08','jehon',17,NULL,'Shetou',150,NULL);
+INSERT INTO `payments` VALUES (100,'2023-08-30 16:49:01','2023-08-30 16:49:01','jehon',100,'2023-01-02','Thierry Craviari',100,NULL);
+INSERT INTO `payments` VALUES (101,'2023-08-30 16:49:08','2023-08-30 16:49:08','jehon',100,NULL,'Shetou',150,NULL);
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -565,7 +565,7 @@ INSERT INTO `pictures` VALUES (1,'2014-06-01 14:51:42','2014-06-17 14:52:18','Th
 INSERT INTO `pictures` VALUES (2,'2014-11-06 14:32:45','2014-11-06 14:32:45','thierry',1,'','10_2014-11-06_15-32-45.JPG','2014-11-04','');
 INSERT INTO `pictures` VALUES (3,'1980-01-01 00:00:00','2015-01-18 17:58:19','ershad',3,'','3288.JPG','2015-01-18',NULL);
 INSERT INTO `pictures` VALUES (4,'1980-01-01 00:00:00','2015-05-17 08:31:28','catherine',5,'','98146_2015-04-28_3952.jpg','2015-04-28','follow up 1y4m good compliance');
-INSERT INTO `pictures` VALUES (5,'2023-08-30 16:52:25','2023-08-30 16:52:25','jehon',100,'picture','2020/000/2020-10000.2023-01-06.5.jpg','2023-01-06','what a writing');
+INSERT INTO `pictures` VALUES (100,'2023-08-30 16:52:25','2023-08-30 17:36:28','jehon',100,'picture','2020/000/2020-10000.2023-01-06.5.jpg','2023-01-06','what a writing');
 /*!40000 ALTER TABLE `pictures` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -781,7 +781,7 @@ INSERT INTO `ricket_consults` VALUES (7,'1980-01-01 00:00:00','2015-02-04 17:57:
 INSERT INTO `ricket_consults` VALUES (8,'1980-01-01 00:00:00','2015-02-04 17:57:04','transfer',6,'2003-01-11',NULL,NULL,17,108,NULL,'Valgus',NULL,0,0,4,4,NULL,NULL,NULL,'Valgus',NULL,NULL,NULL,NULL,0,NULL,NULL,'',0,NULL,NULL,0,0,0);
 INSERT INTO `ricket_consults` VALUES (9,'1980-01-01 00:00:00','2015-02-04 17:57:04','transfer',6,'2004-05-23',NULL,NULL,18,114,NULL,'Valgus',NULL,0,0,4,4,NULL,NULL,NULL,'Valgus',NULL,NULL,NULL,NULL,0,NULL,NULL,'',0,NULL,NULL,0,0,0);
 INSERT INTO `ricket_consults` VALUES (13,'2014-06-02 07:19:09','2023-08-30 05:11:54','Thierry',1,'2014-01-04','AMD doctor','Chakaria Disability Center',37,110,'0','Varus','Moderate',0,0,30,5,'','','10','Varus','0','Osteotomy','',NULL,0,0,'Level 1','',1,NULL,NULL,0,1,0);
-INSERT INTO `ricket_consults` VALUES (14,'2023-08-30 16:50:06','2023-08-30 16:50:06','jehon',100,'2023-01-03','Morshedul Alam','Pakua',90,120,'13','Valgus','Moderate',1,2,10,11,'12','14','16','Varus','15',NULL,'waw',NULL,0,20,'Level 2','drink a glass of water',NULL,0,NULL,0,0,0);
+INSERT INTO `ricket_consults` VALUES (100,'2023-08-30 16:50:06','2023-08-30 17:36:40','jehon',100,'2023-01-03','Morshedul Alam','Pakua',90,120,'13','Valgus','Moderate',1,2,10,11,'12','14','16','Varus','15',NULL,'waw',NULL,0,20,'Level 2','drink a glass of water',NULL,0,NULL,0,0,0);
 /*!40000 ALTER TABLE `ricket_consults` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -889,7 +889,7 @@ CREATE TABLE `surgeries` (
 LOCK TABLES `surgeries` WRITE;
 /*!40000 ALTER TABLE `surgeries` DISABLE KEYS */;
 INSERT INTO `surgeries` VALUES (5,'2020-09-02 07:20:43','2023-08-30 05:11:51','jehon',1,'2014-01-02','test','someone',NULL,NULL,NULL,'nothing');
-INSERT INTO `surgeries` VALUES (6,'2023-08-30 16:52:52','2023-08-30 16:52:52','jehon',100,'2023-01-07','cool','god',1,NULL,'could run again','but fall from a wall');
+INSERT INTO `surgeries` VALUES (100,'2023-08-30 16:52:52','2023-08-30 17:36:50','jehon',100,'2023-01-07','cool','god',1,NULL,'could run again','but fall from a wall');
 /*!40000 ALTER TABLE `surgeries` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -963,4 +963,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-30 17:27:21
+-- Dump completed on 2023-08-30 17:36:53
