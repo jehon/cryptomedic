@@ -35,7 +35,7 @@ CREATE TABLE `appointments` (
   PRIMARY KEY (`id`),
   KEY `entity_name` (`patient_id`),
   CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,6 +52,7 @@ INSERT INTO `appointments` VALUES (5,'1980-01-01 00:00:00','2015-05-10 08:01:10'
 INSERT INTO `appointments` VALUES (6,'1980-01-01 00:00:00','2015-05-10 04:29:15','murshed',5,'Ershad',NULL,'2014-05-31','Ukhia');
 INSERT INTO `appointments` VALUES (7,'1980-01-01 00:00:00','2015-05-07 16:53:30','murshed',5,'Ershad',NULL,'2014-04-21','Ukhia');
 INSERT INTO `appointments` VALUES (8,'1980-01-01 00:00:00','2015-05-07 16:49:28','murshed',5,'AMD doctor',NULL,'2014-03-21','Ukhia');
+INSERT INTO `appointments` VALUES (10,'2023-08-30 16:53:04','2023-08-30 16:53:04','jehon',11,'Ershad',NULL,'2023-06-01','Forcibly Displaced Myanmar Nationals');
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,7 +195,7 @@ CREATE TABLE `bills` (
   KEY `price_id_fk` (`price_id`),
   CONSTRAINT `bills_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `bills_ibfk_3` FOREIGN KEY (`price_id`) REFERENCES `prices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,6 +217,7 @@ INSERT INTO `bills` VALUES (10,'2014-06-21 08:44:48','2015-01-19 15:12:59','josi
 INSERT INTO `bills` VALUES (11,'2014-06-22 15:45:37','2015-01-19 15:12:59','josiane',3,4500,9,'2014-05-20',2,'Ramu','Ershad',500,2,100,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `bills` VALUES (12,'2014-06-25 05:20:49','2015-10-15 04:29:50','josiane',2,20000,8,'2014-05-20',2,'Chakaria Disability Center','Ershad',500,2,200,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `bills` VALUES (13,'2014-07-05 07:52:07','2015-01-19 15:12:59','josiane',2,20000,8,'2014-05-21',2,'Chakaria Disability Center','Hassan 1',3000,2,1200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `bills` VALUES (17,'2023-08-30 16:49:01','2023-08-30 16:49:21','jehon',11,6000,2,'2023-01-02',3,'Moheshkhali','Thierry Craviari',450,3,315,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `bills` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,7 +245,7 @@ CREATE TABLE `browser_features` (
   `feat_fromentries` int(11) DEFAULT NULL,
   UNIQUE KEY `id` (`id`) USING BTREE,
   UNIQUE KEY `browser_uuid` (`browser_uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,6 +254,7 @@ CREATE TABLE `browser_features` (
 
 LOCK TABLES `browser_features` WRITE;
 /*!40000 ALTER TABLE `browser_features` DISABLE KEYS */;
+INSERT INTO `browser_features` VALUES (1,'98b88133d6a822d1d1f38701b03d09e7','2023-08-30 16:47:01','2023-08-30 16:47:01',NULL,'Firefox','116.0','Firefox 116.0 on Windows 10 64-bit','Ok','Windows 10',1680,1050,0,0);
 /*!40000 ALTER TABLE `browser_features` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +274,7 @@ CREATE TABLE `browser_login` (
   `login` varchar(128) NOT NULL,
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `browser_login` (`browser_uuid`,`login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -280,6 +283,7 @@ CREATE TABLE `browser_login` (
 
 LOCK TABLES `browser_login` WRITE;
 /*!40000 ALTER TABLE `browser_login` DISABLE KEYS */;
+INSERT INTO `browser_login` VALUES (1,'2023-08-30 16:47:01','2023-08-30 16:47:01','jehon','98b88133d6a822d1d1f38701b03d09e7','jehon');
 /*!40000 ALTER TABLE `browser_login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -342,7 +346,7 @@ CREATE TABLE `club_feet` (
   PRIMARY KEY (`id`),
   KEY `entity_name` (`patient_id`),
   CONSTRAINT `club_feet_ibfk_3` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,6 +361,7 @@ INSERT INTO `club_feet` VALUES (3,'1980-01-01 00:00:00','2015-05-10 08:01:10','m
 INSERT INTO `club_feet` VALUES (4,'1980-01-01 00:00:00','2015-05-10 04:29:15','murshed',5,'2014-04-21','Ershad','Chakaria Disability Center',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,'DB splint','No 7 used',0,NULL,NULL,0);
 INSERT INTO `club_feet` VALUES (5,'1980-01-01 00:00:00','2015-05-07 16:53:30','murshed',5,'2014-03-29','Ershad','Ukhia',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0.00,NULL,0.00,NULL,0.00,0.00,0.00,0.00,0.00,0.00,0.00,'DB splint','No 7 given',0,NULL,NULL,NULL);
 INSERT INTO `club_feet` VALUES (6,'1980-01-01 00:00:00','2015-05-07 16:49:28','murshed',5,'2014-03-01','AMD doctor','Chakaria Disability Center',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.50,0.00,0.50,0.00,1.00,'tenotomy','7th plaster done',0,NULL,NULL,0);
+INSERT INTO `club_feet` VALUES (10,'2023-08-30 16:51:10','2023-08-30 16:51:10','jehon',11,'2023-01-04','Ershad','CMOSH',31,91,2,1,2,1,2,1,0,1,2,1,21,20,23,22,25,24,27,26,NULL,1,0.00,1.00,0.50,1.00,0.00,1.00,0.50,1.00,0.00,1.00,0.50,1.00,NULL,'dring a glass of milk',NULL,0,NULL,21);
 /*!40000 ALTER TABLE `club_feet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,7 +428,7 @@ CREATE TABLE `other_consults` (
   PRIMARY KEY (`id`),
   KEY `patient_id` (`patient_id`),
   CONSTRAINT `other_consults_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -433,6 +438,7 @@ CREATE TABLE `other_consults` (
 LOCK TABLES `other_consults` WRITE;
 /*!40000 ALTER TABLE `other_consults` DISABLE KEYS */;
 INSERT INTO `other_consults` VALUES (1,'1980-01-01 00:00:00','2015-02-19 13:52:16','Thierry',1,'2007-01-10','Ershad',NULL,29,134,0,NULL,'PBVE','','','','No',NULL,'',NULL,NULL,'Postero-medial release','',0,NULL,NULL);
+INSERT INTO `other_consults` VALUES (5,'2023-08-30 16:52:04','2023-08-30 16:52:04','jehon',11,'2023-01-05','Ershad','Forcibly Displaced Myanmar Nationals',34,124,24,'Left','some','yes','could be','strong','Moderate','Level 2','broken tongue','walking is ok','jumping is not ok',NULL,'drink a glass of air',NULL,0,1);
 /*!40000 ALTER TABLE `other_consults` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -464,7 +470,7 @@ CREATE TABLE `patients` (
   UNIQUE KEY `patients_entrynumber` (`entry_year`,`entry_order`),
   KEY `Name` (`name`),
   KEY `Pathology` (`pathology`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,6 +487,7 @@ INSERT INTO `patients` VALUES (5,'2014-03-01 07:03:47','2015-05-07 16:26:38','mu
 INSERT INTO `patients` VALUES (6,'2014-10-28 07:13:29','2015-04-24 05:28:14','jehon',2001,1,'al abdul koium','','1995','','','','','','Other','');
 INSERT INTO `patients` VALUES (7,'2014-08-04 18:31:40','2014-08-04 18:31:40','transfer',2001,4,'mozahar ahamed',NULL,'1996',NULL,'',NULL,NULL,NULL,'Other','');
 INSERT INTO `patients` VALUES (8,'2021-04-23 15:26:16','2021-04-23 20:46:30','murshed',1991,299,'crud patient',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `patients` VALUES (11,'2023-08-30 16:48:21','2023-08-30 16:48:21','jehon',2020,10000,'free test','Male','2013-01','+32123123','at the end of the world','Chittagong','Chandanish','~ Other ~','Ricket','I have something to add');
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,7 +511,7 @@ CREATE TABLE `payments` (
   PRIMARY KEY (`id`),
   KEY `bill_id` (`bill_id`),
   CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`bill_id`) REFERENCES `bills` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -520,6 +527,8 @@ INSERT INTO `payments` VALUES (4,'2017-02-21 19:39:30','2017-02-24 17:17:24','je
 INSERT INTO `payments` VALUES (5,'2017-02-21 19:39:30','2017-02-24 17:17:24','josiane',12,'2014-05-20','Ershad',300,'automatically generated from previous system');
 INSERT INTO `payments` VALUES (6,'2017-02-24 17:17:29',NULL,'murshed',5,'2014-05-20','Murshed',156,NULL);
 INSERT INTO `payments` VALUES (7,'2017-02-24 17:17:29',NULL,'murshed',2,'2014-05-20','Murshed',113,NULL);
+INSERT INTO `payments` VALUES (8,'2023-08-30 16:49:01','2023-08-30 16:49:01','jehon',17,'2023-01-02','Thierry Craviari',100,NULL);
+INSERT INTO `payments` VALUES (9,'2023-08-30 16:49:08','2023-08-30 16:49:08','jehon',17,NULL,'Shetou',150,NULL);
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -543,7 +552,7 @@ CREATE TABLE `pictures` (
   PRIMARY KEY (`id`),
   KEY `entity_name` (`patient_id`),
   CONSTRAINT `pictures_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -556,6 +565,7 @@ INSERT INTO `pictures` VALUES (1,'2014-06-01 14:51:42','2014-06-17 14:52:18','Th
 INSERT INTO `pictures` VALUES (2,'2014-11-06 14:32:45','2014-11-06 14:32:45','thierry',1,'','10_2014-11-06_15-32-45.JPG','2014-11-04','');
 INSERT INTO `pictures` VALUES (3,'1980-01-01 00:00:00','2015-01-18 17:58:19','ershad',3,'','3288.JPG','2015-01-18',NULL);
 INSERT INTO `pictures` VALUES (4,'1980-01-01 00:00:00','2015-05-17 08:31:28','catherine',5,'','98146_2015-04-28_3952.jpg','2015-04-28','follow up 1y4m good compliance');
+INSERT INTO `pictures` VALUES (5,'2023-08-30 16:52:25','2023-08-30 16:52:25','jehon',11,'picture','2020/000/2020-10000.2023-01-06.5.jpg','2023-01-06','what a writing');
 /*!40000 ALTER TABLE `pictures` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -752,7 +762,7 @@ CREATE TABLE `ricket_consults` (
   PRIMARY KEY (`id`),
   KEY `patient_id` (`patient_id`),
   CONSTRAINT `ricket_consults_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -771,6 +781,7 @@ INSERT INTO `ricket_consults` VALUES (7,'1980-01-01 00:00:00','2015-02-04 17:57:
 INSERT INTO `ricket_consults` VALUES (8,'1980-01-01 00:00:00','2015-02-04 17:57:04','transfer',6,'2003-01-11',NULL,NULL,17,108,NULL,'Valgus',NULL,0,0,4,4,NULL,NULL,NULL,'Valgus',NULL,NULL,NULL,NULL,0,NULL,NULL,'',0,NULL,NULL,0,0,0);
 INSERT INTO `ricket_consults` VALUES (9,'1980-01-01 00:00:00','2015-02-04 17:57:04','transfer',6,'2004-05-23',NULL,NULL,18,114,NULL,'Valgus',NULL,0,0,4,4,NULL,NULL,NULL,'Valgus',NULL,NULL,NULL,NULL,0,NULL,NULL,'',0,NULL,NULL,0,0,0);
 INSERT INTO `ricket_consults` VALUES (13,'2014-06-02 07:19:09','2023-08-30 05:11:54','Thierry',1,'2014-01-04','AMD doctor','Chakaria Disability Center',37,110,'0','Varus','Moderate',0,0,30,5,'','','10','Varus','0','Osteotomy','',NULL,0,0,'Level 1','',1,NULL,NULL,0,1,0);
+INSERT INTO `ricket_consults` VALUES (14,'2023-08-30 16:50:06','2023-08-30 16:50:06','jehon',11,'2023-01-03','Morshedul Alam','Pakua',90,120,'13','Valgus','Moderate',1,2,10,11,'12','14','16','Varus','15',NULL,'waw',NULL,0,20,'Level 2','drink a glass of water',NULL,0,NULL,0,0,0);
 /*!40000 ALTER TABLE `ricket_consults` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -792,7 +803,7 @@ CREATE TABLE `server_stats` (
   `counter` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `record` (`key`,`params`,`device`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -801,6 +812,20 @@ CREATE TABLE `server_stats` (
 
 LOCK TABLES `server_stats` WRITE;
 /*!40000 ALTER TABLE `server_stats` DISABLE KEYS */;
+INSERT INTO `server_stats` VALUES (1,'2023-08-30 16:47:01','1980-01-01 00:00:00',NULL,'computer','api/auth/settings','browser',1);
+INSERT INTO `server_stats` VALUES (2,'2023-08-30 16:47:01','2023-08-30 16:53:05',NULL,'computer','api/templates/{category?}/{name?}','',19);
+INSERT INTO `server_stats` VALUES (4,'2023-08-30 16:47:02','1980-01-01 00:00:00',NULL,'computer','api/folder/{model}/{id}','',1);
+INSERT INTO `server_stats` VALUES (5,'2023-08-30 16:47:12','1980-01-01 00:00:00',NULL,'computer','api/reference/{entry_year}/{entry_order}','',1);
+INSERT INTO `server_stats` VALUES (7,'2023-08-30 16:48:21','1980-01-01 00:00:00',NULL,'computer','api/fiche/patients','POST',1);
+INSERT INTO `server_stats` VALUES (11,'2023-08-30 16:49:00','1980-01-01 00:00:00',NULL,'computer','api/fiche/bills','POST',1);
+INSERT INTO `server_stats` VALUES (13,'2023-08-30 16:49:08','1980-01-01 00:00:00',NULL,'computer','api/fiche/payments','POST',1);
+INSERT INTO `server_stats` VALUES (14,'2023-08-30 16:49:21','1980-01-01 00:00:00',NULL,'computer','api/fiche/bills/{bill}','$$hashKey|center|consult_CDC_consultation_Bengali_Doctor|consult_CDC_consultation_Doctor|consult_CDC',1);
+INSERT INTO `server_stats` VALUES (16,'2023-08-30 16:50:06','1980-01-01 00:00:00',NULL,'computer','api/fiche/ricketconsults','POST',1);
+INSERT INTO `server_stats` VALUES (19,'2023-08-30 16:51:10','1980-01-01 00:00:00',NULL,'computer','api/fiche/clubfeet','POST',1);
+INSERT INTO `server_stats` VALUES (22,'2023-08-30 16:52:04','1980-01-01 00:00:00',NULL,'computer','api/fiche/otherconsults','POST',1);
+INSERT INTO `server_stats` VALUES (25,'2023-08-30 16:52:25','1980-01-01 00:00:00',NULL,'computer','api/fiche/pictures','POST',1);
+INSERT INTO `server_stats` VALUES (28,'2023-08-30 16:52:52','1980-01-01 00:00:00',NULL,'computer','api/fiche/surgeries','POST',1);
+INSERT INTO `server_stats` VALUES (31,'2023-08-30 16:53:04','1980-01-01 00:00:00',NULL,'computer','api/fiche/appointments','POST',1);
 /*!40000 ALTER TABLE `server_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -854,7 +879,7 @@ CREATE TABLE `surgeries` (
   PRIMARY KEY (`id`),
   KEY `patient_id` (`patient_id`),
   CONSTRAINT `surgeries_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -864,6 +889,7 @@ CREATE TABLE `surgeries` (
 LOCK TABLES `surgeries` WRITE;
 /*!40000 ALTER TABLE `surgeries` DISABLE KEYS */;
 INSERT INTO `surgeries` VALUES (5,'2020-09-02 07:20:43','2023-08-30 05:11:51','jehon',1,'2014-01-02','test','someone',NULL,NULL,NULL,'nothing');
+INSERT INTO `surgeries` VALUES (6,'2023-08-30 16:52:52','2023-08-30 16:52:52','jehon',11,'2023-01-07','cool','god',1,NULL,'could run again','but fall from a wall');
 /*!40000 ALTER TABLE `surgeries` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -902,7 +928,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES (101,'2011-10-18 04:24:37','2023-08-30 05:11:54','thierry','thierry','Thierry Craviari','$2y$10$dVJBP04XhHFpEmSV1.bYweYd0q4VpVhjbMTfebpja7arMGVpyHIMS','thierry.craviari@gmail.com','TCA','manager',1,'','2015-08-24 11:16:20','');
-INSERT INTO `users` VALUES (102,'2011-10-18 04:24:37','2023-08-30 05:11:54','jehon','jehon','Jean Honlet','$2y$10$dVJBP04XhHFpEmSV1.bYweYd0q4VpVhjbMTfebpja7arMGVpyHIMS','marielineet.jean@gmail.com','JH','admin',0,'','2016-01-03 16:14:35','');
+INSERT INTO `users` VALUES (102,'2011-10-18 04:24:37','2023-08-30 16:47:01','jehon','jehon','Jean Honlet','$2y$10$dVJBP04XhHFpEmSV1.bYweYd0q4VpVhjbMTfebpja7arMGVpyHIMS','marielineet.jean@gmail.com','JH','admin',0,'','2023-08-30 16:47:01','');
 INSERT INTO `users` VALUES (103,'2011-10-18 04:24:37','2023-08-30 05:11:54','murshed','murshed','Morshedul Alam','$2y$10$dVJBP04XhHFpEmSV1.bYweYd0q4VpVhjbMTfebpja7arMGVpyHIMS','bgdcox1@yahoo.com','MUR','cdc',1,'','2015-12-03 17:35:27','');
 INSERT INTO `users` VALUES (104,'2011-10-18 04:24:37','2023-08-30 05:11:54','readonly','readonly','readonly','$2y$10$dVJBP04XhHFpEmSV1.bYweYd0q4VpVhjbMTfebpja7arMGVpyHIMS',NULL,NULL,'readonly',0,NULL,'2015-12-03 17:35:16','');
 INSERT INTO `users` VALUES (105,NULL,'2023-08-30 05:11:54','jehon','ershad','Ershad','$2y$10$dVJBP04XhHFpEmSV1.bYweYd0q4VpVhjbMTfebpja7arMGVpyHIMS',NULL,'Ers','cdc',1,NULL,NULL,NULL);
@@ -937,4 +963,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-30 16:45:57
+-- Dump completed on 2023-08-30 16:53:10
