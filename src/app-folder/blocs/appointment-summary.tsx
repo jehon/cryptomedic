@@ -25,7 +25,7 @@ export default function AppointmentSummary({
     return <div>No file selected</div>;
   }
   return (
-    <x-style-collabsible opened="1">
+    <x-style-collabsible>
       <img
         slot="header"
         src={icons.models.appointment}

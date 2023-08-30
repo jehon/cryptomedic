@@ -24,7 +24,7 @@ export default function BillSummary({
     return <div>No file selected</div>;
   }
   return (
-    <x-style-collabsible opened="1">
+    <x-style-collabsible>
       <img
         slot="header"
         src={icons.models.bill}
