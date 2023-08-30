@@ -6,11 +6,11 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-OUTPUT="$CR_TMP/cryptomedic-$(date +%F-%H-%M-%S.%N)"
+OUTPUT="conf/database/base.sql"
 
 mkdir -p "$(dirname "$OUTPUT")"
 
-cr-mysqldump --user=root --password=root cryptomedic >"$OUTPUT"
+cr-mysqldump cryptomedic >"$OUTPUT"
 
 echo
 echo "Backup available at $OUTPUT"

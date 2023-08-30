@@ -102,6 +102,9 @@ logs:
 reset:
 	cr-data-reset
 
+database-update-base-sql:
+	bin/cr-database-backup
+
 #
 #
 # Acceptance
