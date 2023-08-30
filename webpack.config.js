@@ -38,7 +38,8 @@ module.exports = {
     // static: "./www/",
     proxy: {
       "/": "http://localhost:5555"
-    }
+    },
+    hot: true
   },
   devtool: isDebug ? "eval" : false,
   optimization: {
