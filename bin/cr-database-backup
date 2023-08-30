@@ -10,7 +10,7 @@ OUTPUT="conf/database/base.sql"
 
 mkdir -p "$(dirname "$OUTPUT")"
 
-cr-mysqldump cryptomedic >"$OUTPUT"
+cr-mysqldump --extended-insert=FALSE cryptomedic >"$OUTPUT"
 
 echo
 echo "Backup available at $OUTPUT"
