@@ -34,7 +34,7 @@ export default function ConsultOtherSummary({
         className="inline"
       />
       <span slot="header" className="no-mobile">
-        Consult
+        Other Consult
       </span>
       <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
       <Button
