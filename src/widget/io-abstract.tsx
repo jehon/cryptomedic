@@ -1,13 +1,13 @@
 import React from "react";
 
-export default abstract class IOAbstract<T> extends React.Component<
+export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
   {
     label: string;
     value: T;
     width?: number;
     edit?: boolean;
     required?: boolean;
-  },
+  } & Extra,
   {}
 > {
   render() {
