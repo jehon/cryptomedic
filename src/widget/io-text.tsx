@@ -1,7 +1,7 @@
 import React from "react";
 import IOAbstract from "./io-abstract";
 
-export default class IOString extends IOAbstract<string> {
+export default class IOText extends IOAbstract<string> {
   renderOutput(value: string) {
     return <pre>{value}</pre>;
   }
