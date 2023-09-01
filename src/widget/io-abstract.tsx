@@ -64,6 +64,11 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
   }
 
   abstract renderOutput(value: T): React.ReactNode;
-  abstract renderInput(value: T, required: boolean): React.ReactNode;
-  abstract getInputValue(): T;
+  renderInput(value: T, required: boolean): React.ReactNode {
+    return this.renderOutput(value);
+  }
+
+  getInputValue(): T {
+    return this.props.value;
+  }
 }
