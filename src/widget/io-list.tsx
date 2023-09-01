@@ -1,8 +1,6 @@
 import React from "react";
 import IOString from "./io-string";
 
-export const listings = {};
-
 export default class IOList extends IOString<{ list?: string[] }> {
   renderInput(value: string, required: boolean): React.ReactNode {
     return this.renderOutput(value);
