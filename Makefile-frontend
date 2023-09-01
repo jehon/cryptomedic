@@ -92,6 +92,8 @@ $(FRONTEND_BUILT_MARK): \
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
+.PHONY: frontend-build-dev-server
+start-dev: frontend-build-dev-server
 frontend-build-dev-server:
 	@echo "Open http://localhost:8080/"
 	bin/cr-node node_modules/.bin/webpack serve

@@ -88,6 +88,9 @@ start: dc-up dependencies build reset
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/dev/"
 
+start-dev: dc-up dependencies build
+# No reset!
+
 dc-up:
 	docker compose up -d
 	bin/cr-dc-init
