@@ -4,6 +4,10 @@
  * From 360 to 990
  */
 
+/* body {
+  scroll-behavior: smooth;
+} */
+
 img.inline {
   height: 1.5em;
 }
@@ -23,4 +27,25 @@ img.inline {
 
 .row {
   width: 100%;
+}
+
+/**
+ * text with image
+ *
+ */
+.with-image {
+  display: flex;
+  flex-direction: row;
+
+  height: 100%;
+  align-items: center;
+}
+
+.with-image > * {
+  flex-grow: 0;
+}
+
+.with-image > img {
+  height: 1em;
+  padding-right: 0.5em;
 }

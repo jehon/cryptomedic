@@ -9,7 +9,6 @@ import { icons } from "../../config";
 import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
 import IODate from "../../widget/io-date";
-import IOString from "../../widget/io-string";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 
 export default function ConsultClubfootSummary({
@@ -37,6 +36,14 @@ export default function ConsultClubfootSummary({
         Clubfoot Consult
       </span>
       <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
+      <span slot="header" className="with-image">
+        <img src="/static/img/side_right.svg" alt="Right" />
+        {file.getPiraniRight() as number}
+      </span>
+      <div slot="header" className="with-image">
+        <img src="/static/img/side_left.svg" alt="Left" />
+        {file.getPiraniLeft() as number}
+      </div>
       <Button
         href={"#/folder/" + folder.getId() + "/file/ClubFoot/" + file.getId()}
         variant="outline-info"
@@ -47,8 +54,6 @@ export default function ConsultClubfootSummary({
       <div className="columns">
         <x-style-panel label="Informations">
           <IODate label="Date" value={file.date as Date} />
-          <IOString label="Center" value={file.center as string} />
-          <IOString label="Examiner" value={file.examiner as string} />
         </x-style-panel>
         <x-style-panel label="Details"></x-style-panel>
       </div>
