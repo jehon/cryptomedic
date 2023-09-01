@@ -1,10 +1,21 @@
 import React from "react";
-import IOAbstract from "./io-abstract";
 import { Optional } from "../utils/generic-types";
 
-export default class IOString extends IOAbstract<Optional<number>> {
+import IOAbstract from "./io-abstract";
+import { roundTo } from "../utils/number";
+
+export default class IONumber extends IOAbstract<
+  Optional<number>,
+  { precision?: number }
+> {
   renderOutput(value: Optional<number>) {
-    return <div>{value}</div>;
+    return (
+      <div>
+        {this.props.precision && value
+          ? roundTo(value, this.props.precision)
+          : value}
+      </div>
+    );
   }
 
   renderInput(value: Optional<number>, required: boolean): React.ReactNode {
