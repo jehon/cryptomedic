@@ -19,7 +19,7 @@ export function normalizeDate(d) {
  *
  * @param {Date|null} date
  * @param {Date|null} reference
- * @returns {string}
+ * @returns {number}
  */
 export function fromBirthDateTo(date, reference = new Date()) {
   if (date == null) {

@@ -1,5 +1,6 @@
 import FolderPage from "./folder-page.js";
 import { DataMissingException } from "../../utils/exceptions.js";
+import { fromBirthDateTo, normalizeDate } from "../../utils/date-old.js";
 
 export default class PatientRelated extends FolderPage {
   /** @type {Patient|null} */
@@ -31,6 +32,13 @@ export default class PatientRelated extends FolderPage {
    */
   getPatient() {
     return this.#patient;
+  }
+
+  getAgeAtThatTime() {
+    return fromBirthDateTo(
+      normalizeDate(this.getPatient().year_of_birth),
+      normalizeDate(this.date)
+    );
   }
 
   wh() {

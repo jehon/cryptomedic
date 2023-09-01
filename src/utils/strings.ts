@@ -7,6 +7,14 @@ export function padLeftTrim(
   return int.substring(int.length - l, int.length);
 }
 
+export function tryOrMessage<T>(fn: () => T): T {
+  try {
+    return fn();
+  } catch (e: any) {
+    return e.message;
+  }
+}
+
 function _canonize(text: string): string[] {
   return text
     .split(/([ _-]|(?=[A-Z]))/g)
