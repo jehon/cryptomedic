@@ -2,7 +2,7 @@ import React from "react";
 import { Optional } from "../utils/generic-types";
 
 import IOAbstract from "./io-abstract";
-import { roundTo } from "../utils/number";
+import { roundTo } from "../utils/strings";
 
 export default class IONumber extends IOAbstract<
   Optional<number>,
@@ -13,7 +13,7 @@ export default class IONumber extends IOAbstract<
       <div>
         {this.props.precision && value
           ? roundTo(value, this.props.precision)
-          : value}
+          : "" + value}
       </div>
     );
   }
