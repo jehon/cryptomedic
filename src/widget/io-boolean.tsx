@@ -1,5 +1,3 @@
-import React from "react";
-
 import IOAbstract from "./io-abstract";
 import { ImgBooleanFalse, ImgBooleanTrue } from "./images";
 
