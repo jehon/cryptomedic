@@ -7,6 +7,7 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
     width?: number;
     edit?: boolean;
     required?: boolean;
+    note?: boolean;
   } & Extra,
   {}
 > {
@@ -15,7 +16,8 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
       label = "Label",
       value,
       edit = false,
-      required = false
+      required = false,
+      note = false
     } = this.props;
 
     // All execpt read without value
@@ -27,7 +29,8 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
           display: !empty ? "flex" : "none",
           flexDirection: "row",
           padding: "5px 10px",
-          columnGap: "5%"
+          columnGap: "5%",
+          ...(note ? { fontSize: "smaller" } : {})
         }}
         data-empty={empty ? "true" : ""}
       >
