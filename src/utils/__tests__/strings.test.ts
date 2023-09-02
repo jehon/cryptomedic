@@ -20,5 +20,5 @@ test("toTitleCase (english case)", function () {
 test("roundTo", function() {
   expect(roundTo(12.345, 0)).toBe("12");
   expect(roundTo(12.345, 1)).toBe("12.3");
-  expect(roundTo(12.345, 5)).toBe("12.345");
+  expect(roundTo(12.345, 5)).toBe("12.34500");
 })
