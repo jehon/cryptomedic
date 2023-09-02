@@ -1,6 +1,6 @@
 import XWithFile from "./x-with-file.js";
 import { fromBirthDateTo } from "../file/x-fff-age.js";
-import { stdDeviationFor } from "../../js/standard-deviation.js";
+import { stdDeviationFor } from "../../../../../src/utils/standard-deviation.js";
 
 export default class XFffBmiSd extends XWithFile {
   formula() {

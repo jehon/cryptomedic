@@ -1,4 +1,4 @@
-import { deepFreeze } from "./session.js";
+import { deepFreeze } from "./objects.js";
 
 const amd_stats = { m: {}, f: {} };
 export default amd_stats;

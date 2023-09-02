@@ -14,6 +14,8 @@ export class ApplicationException extends Error {
   }
 }
 
+export class ConfigurationException extends ApplicationException {}
+
 export class TransportRequestError extends ApplicationException {
   constructor(request) {
     super("Network Error", request);
@@ -47,12 +49,13 @@ export class DataMissingException extends DataException {
 export class DataOutOfBoundException extends DataException {
   /**
    * @param {string} key - which field
+   * @param {any} key - what value
    * @param {Array<any>} limits - [min, max]
    */
-  constructor(key, limits = null) {
+  constructor(key, value, limits = null) {
     super(
       key,
-      `${key2string(key)} is out-of-bounds${
+      `${key2string(key)} is out-of-bounds: ${value}${
         limits ? ` [${limits[0]} -> ${limits[1]}]` : ""
       }`
     );
@@ -60,6 +63,11 @@ export class DataOutOfBoundException extends DataException {
 }
 
 export class DataInvalidException extends DataException {
+  /**
+   *
+   * @param {string} key
+   * @param {any} value
+   */
   constructor(key, value = undefined) {
     super(
       key,
@@ -69,8 +77,7 @@ export class DataInvalidException extends DataException {
   }
 }
 
-export class ConfigurationException extends Error {}
-
+// TODO: useless - use ConfigurationException
 export class ConfigurationMissingException extends DataException {
   constructor(key) {
     super(key, `Configuration ${key2string(key)} is missing.`);

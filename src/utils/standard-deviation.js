@@ -1,10 +1,9 @@
 import amd_stats from "./amd_stats.js";
 import {
   DataInvalidException,
-  ConfigurationMissingException,
   DataOutOfBoundException,
   ConfigurationException
-} from "../../../../src/utils/exceptions.js";
+} from "./exceptions.js";
 
 /**
  * @param {Array<Array<number>>} line - the line ([[x, y]+])
@@ -21,7 +20,7 @@ export function _evaluatePoly(line, x) {
   }
 
   // i = the next indice (line[i-1] < x <= line[i])
-  if (x == line[i][0]) return line[i][1];
+  if (x === line[i][0]) return line[i][1];
 
   var xup = line[i][0];
   var yup = line[i][1];
@@ -38,8 +37,13 @@ export function _evaluatePoly(line, x) {
  */
 export function _stdDeviation(statLines, x, y) {
   var avg = _evaluatePoly(statLines.medium, x);
-  if (isNaN(avg)) throw new DataOutOfBoundException(x);
-  if (y == avg) return 0;
+  if (isNaN(avg)) {
+    throw new DataOutOfBoundException("value", x, [
+      statLines.medium[0][0],
+      statLines.medium[statLines.medium.length - 1][0]
+    ]);
+  }
+  if (y === avg) return 0;
 
   var ref;
   if (y < avg) {
@@ -70,7 +74,7 @@ export function stdDeviationFor(sex, graphName, x, y) {
     throw new DataInvalidException("sex", sex);
   }
   if (!(graphName in amd_stats[sex])) {
-    throw new ConfigurationMissingException("graph name");
+    throw new ConfigurationException("Unknown serie: " + graphName);
   }
   if (isNaN(x)) {
     throw new ConfigurationException(`Invalid x axis ${x}`);
