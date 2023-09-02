@@ -7,8 +7,8 @@ export function padLeftTrim(
   return int.substring(int.length - l, int.length);
 }
 
-export function roundTo(val: number, reference: number): string {
-  return Math.round(val / reference) * reference + "";
+export function roundTo(val: number, decimals: number = 1): string {
+  return val.toFixed(decimals);
 }
 
 export function tryOrMessage<T>(fn: () => T): T {
