@@ -1,6 +1,6 @@
 import React from "react";
 
-import Consult from "../business/consult";
+import Consult from "../../business/consult";
 
 import IODate from "../../widget/io-date";
 import IONumber from "../../widget/io-number";

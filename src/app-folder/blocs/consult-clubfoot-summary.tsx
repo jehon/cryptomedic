@@ -1,7 +1,7 @@
 import React from "react";
 
-import ConsultClubfoot from "../business/club-foot";
-import Folder from "../business/folder";
+import ConsultClubfoot from "../../business/club-foot";
+import Folder from "../../business/folder";
 
 import Button from "react-bootstrap/Button";
 import { ImgSideLeft, ImgSideRight } from "../../widget/images";

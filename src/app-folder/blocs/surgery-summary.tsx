@@ -7,9 +7,9 @@ import "../../styles/x-style-panel";
 import IODate from "../../widget/io-date";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
-import Folder from "../business/folder";
+import Folder from "../../business/folder";
 import { date2HumanString, normalizeDate } from "../../utils/date";
-import Surgery from "../business/surgery";
+import Surgery from "../../business/surgery";
 
 export default function SurgerySummary({
   file,

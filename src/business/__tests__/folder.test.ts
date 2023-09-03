@@ -1,6 +1,6 @@
 import { test, expect } from "@jest/globals";
 
-import { loadReferenceFolder, RefFolder1 } from "../../../test-helper";
+import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
 
 import Folder from "../folder.js";
 import Appointment from "../appointment.js";

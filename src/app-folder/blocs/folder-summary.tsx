@@ -1,25 +1,25 @@
 import React from "react";
 
 import { bridgeTo } from "../../bridge";
-import Folder from "../business/folder";
-import PatientRelated from "../business/patient-related";
+import Folder from "../../business/folder";
+import PatientRelated from "../../business/patient-related";
 
-import Patient from "../business/patient";
+import Patient from "../../business/patient";
 import PatientSummary from "./patient-summary";
 
-import Appointment from "../business/appointment";
+import Appointment from "../../business/appointment";
 import AppointmentSummary from "./appointment-summary";
-import Bill from "../business/bill";
+import Bill from "../../business/bill";
 import BillSummary from "./bill-summary";
-import ConsultClubfoot from "../business/club-foot";
+import ConsultClubfoot from "../../business/club-foot";
 import ConsultClubfootSummary from "./consult-clubfoot-summary";
-import ConsultOther from "../business/other-consult";
+import ConsultOther from "../../business/other-consult";
 import ConsultOtherSummary from "./consult-other-summary";
-import ConsultRicket from "../business/ricket-consult";
+import ConsultRicket from "../../business/ricket-consult";
 import ConsultRicketSummary from "./consult-ricket-summary";
-import Picture from "../business/picture";
+import Picture from "../../business/picture";
 import PictureSummary from "./picture-summary";
-import Surgery from "../business/surgery";
+import Surgery from "../../business/surgery";
 import SurgerySummary from "./surgery-summary";
 
 class FolderSummary extends React.Component<

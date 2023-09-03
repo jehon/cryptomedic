@@ -1,6 +1,6 @@
 import React from "react";
 
-import Consult from "../business/consult";
+import Consult from "../../business/consult";
 
 import IOString from "../../widget/io-string";
 import IOList from "../../widget/io-list";

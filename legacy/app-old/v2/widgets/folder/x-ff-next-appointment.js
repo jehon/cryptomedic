@@ -1,6 +1,6 @@
 import date2CanonicString from "../../js/date2CanonicString.js";
 import { getRouteToFolderAdd, setRoute } from "../../js/router.js";
-import Appointment from "../../../../../src/app-folder/business/appointment.js";
+import Appointment from "../../../../../src/business/appointment.js";
 import XWithFolder from "./x-with-folder.js";
 import "../style/x-group-panel.js";
 import "../style/x-message.js";

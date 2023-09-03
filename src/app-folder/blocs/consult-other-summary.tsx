@@ -1,7 +1,7 @@
 import React from "react";
 
-import ConsultOther from "../business/other-consult";
-import Folder from "../business/folder";
+import ConsultOther from "../../business/other-consult";
+import Folder from "../../business/folder";
 
 import Button from "react-bootstrap/Button";
 import ConsultAbstractIntroduction from "./consult-abstract-introduction";

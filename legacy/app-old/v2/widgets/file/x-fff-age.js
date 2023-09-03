@@ -4,7 +4,7 @@ import {
   DataMissingException
 } from "../../../../../src/utils/exceptions.js";
 import XWithFile from "./x-with-file.js";
-import Patient from "../../../../../src/app-folder/business/patient.js";
+import Patient from "../../../../../src/business/patient.js";
 
 /**
  * Obsolete (TODO: remove this function)

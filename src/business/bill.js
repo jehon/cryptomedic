@@ -1,5 +1,5 @@
 import PatientRelated from "./patient-related.js";
-import { DataMissingException } from "../../utils/exceptions.js";
+import { DataMissingException } from "../utils/exceptions.js";
 
 export default class Bill extends PatientRelated {
   getModel() {

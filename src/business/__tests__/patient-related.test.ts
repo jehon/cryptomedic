@@ -4,7 +4,7 @@ import PatientRelated from "../patient-related.js";
 import Patient from "../patient.js";
 import RicketConsult from "../ricket-consult.js";
 
-import { loadReferenceFolder, RefFolder1 } from "../../../test-helper";
+import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
 
 test("with TestFolder.test1.json", async function () {
   // Go through the rest_service !!!

@@ -1,4 +1,4 @@
-import nullify from "../../utils/nullify.js";
+import nullify from "../utils/nullify.js";
 
 export default class CRUD {
   static getBaseUrl() {

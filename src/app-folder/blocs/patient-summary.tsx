@@ -2,13 +2,13 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 
 import { icons } from "../../config";
-import Patient from "../business/patient";
+import Patient from "../../business/patient";
 import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
 import IONumber from "../../widget/io-number";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
-import Folder from "../business/folder";
+import Folder from "../../business/folder";
 
 export default function PatientSummary({
   file,

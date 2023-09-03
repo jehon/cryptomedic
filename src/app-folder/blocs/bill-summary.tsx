@@ -6,9 +6,9 @@ import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
 import IODate from "../../widget/io-date";
 import IOString from "../../widget/io-string";
-import Folder from "../business/folder";
+import Folder from "../../business/folder";
 import { date2HumanString, normalizeDate } from "../../utils/date";
-import Bill from "../business/bill";
+import Bill from "../../business/bill";
 
 export default function BillSummary({
   file,

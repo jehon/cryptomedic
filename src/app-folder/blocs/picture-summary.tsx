@@ -7,8 +7,8 @@ import "../../styles/x-style-panel";
 import IODate from "../../widget/io-date";
 import IOString from "../../widget/io-string";
 import IOText from "../../widget/io-text";
-import Picture from "../business/picture";
-import Folder from "../business/folder";
+import Picture from "../../business/picture";
+import Folder from "../../business/folder";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 
 export default function PictureSummary({
