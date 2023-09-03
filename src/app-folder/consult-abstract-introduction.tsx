@@ -1,15 +1,15 @@
 import React from "react";
 
-import Consult from "../../business/consult";
+import Consult from "../business/consult";
 
-import IODate from "../../widget/io-date";
-import IONumber from "../../widget/io-number";
-import IOString from "../../widget/io-string";
-import IOFunction from "../../widget/io-function";
-import IOList from "../../widget/io-list";
+import IODate from "../widget/io-date";
+import IONumber from "../widget/io-number";
+import IOString from "../widget/io-string";
+import IOFunction from "../widget/io-function";
+import IOList from "../widget/io-list";
 
-import { roundTo } from "../../utils/strings";
-import { yearsToYM } from "../../utils/date";
+import { roundTo } from "../utils/strings";
+import { yearsToYM } from "../utils/date";
 
 export default function ConsultAbstractIntroduction({
   file

@@ -1,15 +1,15 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-import { icons } from "../../config";
-import "../../styles/x-style-collapsible";
-import "../../styles/x-style-panel";
-import IODate from "../../widget/io-date";
-import IOString from "../../widget/io-string";
-import IOText from "../../widget/io-text";
-import Folder from "../../business/folder";
-import { date2HumanString, normalizeDate } from "../../utils/date";
-import Appointment from "../../business/appointment";
+import { icons } from "../config";
+import "../styles/x-style-collapsible";
+import "../styles/x-style-panel";
+import IODate from "../widget/io-date";
+import IOString from "../widget/io-string";
+import IOText from "../widget/io-text";
+import Folder from "../business/folder";
+import { date2HumanString, normalizeDate } from "../utils/date";
+import Appointment from "../business/appointment";
 
 export default function AppointmentSummary({
   file,

@@ -1,22 +1,22 @@
 import React from "react";
 
-import ConsultRicket from "../../business/ricket-consult";
-import Folder from "../../business/folder";
+import ConsultOther from "../business/other-consult";
+import Folder from "../business/folder";
 
 import Button from "react-bootstrap/Button";
 import ConsultAbstractIntroduction from "./consult-abstract-introduction";
 import ConsultAbstractConclusion from "./consult-abstract-conclusion";
 
-import { icons } from "../../config";
-import "../../styles/x-style-collapsible";
-import "../../styles/x-style-panel";
-import { date2HumanString, normalizeDate } from "../../utils/date";
+import { icons } from "../config";
+import "../styles/x-style-collapsible";
+import "../styles/x-style-panel";
+import { date2HumanString, normalizeDate } from "../utils/date";
 
-export default function ConsultRicketSummary({
+export default function ConsultOtherSummary({
   file,
   folder
 }: {
-  file: ConsultRicket;
+  file: ConsultOther;
   folder: Folder;
 }): React.ReactNode {
   if (!folder) {
@@ -29,17 +29,17 @@ export default function ConsultRicketSummary({
     <x-style-collabsible opened="1">
       <img
         slot="header"
-        src={icons.models.consult_ricket}
-        alt="Ricket Consult"
+        src={icons.models.consult_other}
+        alt="Other Consult"
         className="inline"
       />
       <span slot="header" className="no-mobile">
-        Ricket Consult
+        Other Consult
       </span>
       <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
       <Button
         href={
-          "#/folder/" + folder.getId() + "/file/RicketConsult/" + file.getId()
+          "#/folder/" + folder.getId() + "/file/OtherConsult/" + file.getId()
         }
         variant="outline-info"
         style={{ width: "100%" }}

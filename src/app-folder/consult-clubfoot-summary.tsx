@@ -1,17 +1,17 @@
 import React from "react";
 
-import ConsultClubfoot from "../../business/club-foot";
-import Folder from "../../business/folder";
+import ConsultClubfoot from "../business/club-foot";
+import Folder from "../business/folder";
 
 import Button from "react-bootstrap/Button";
-import { ImgSideLeft, ImgSideRight } from "../../widget/images";
+import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import ConsultAbstractIntroduction from "./consult-abstract-introduction";
 import ConsultAbstractConclusion from "./consult-abstract-conclusion";
 
-import { icons } from "../../config";
-import "../../styles/x-style-collapsible";
-import "../../styles/x-style-panel";
-import { date2HumanString, normalizeDate } from "../../utils/date";
+import { icons } from "../config";
+import "../styles/x-style-collapsible";
+import "../styles/x-style-panel";
+import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function ConsultClubfootSummary({
   file,
