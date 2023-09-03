@@ -4,11 +4,13 @@ import ConsultClubfoot from "../business/club-foot";
 import Folder from "../business/folder";
 
 import Button from "react-bootstrap/Button";
+import { ImgSideLeft, ImgSideRight } from "../../widget/images";
+import ConsultAbstractIntroduction from "./consult-abstract-introduction";
+import ConsultAbstractConclusion from "./consult-abstract-conclusion";
 
 import { icons } from "../../config";
 import "../../styles/x-style-collapsible";
 import "../../styles/x-style-panel";
-import IODate from "../../widget/io-date";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 
 export default function ConsultClubfootSummary({
@@ -37,11 +39,11 @@ export default function ConsultClubfootSummary({
       </span>
       <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
       <span slot="header" className="with-image">
-        <img src="/static/img/side_right.svg" alt="Right" />
+        <ImgSideRight></ImgSideRight>
         {file.getPiraniRight() as number}
       </span>
       <div slot="header" className="with-image">
-        <img src="/static/img/side_left.svg" alt="Left" />
+        <ImgSideLeft></ImgSideLeft>
         {file.getPiraniLeft() as number}
       </div>
       <Button
@@ -51,12 +53,22 @@ export default function ConsultClubfootSummary({
       >
         View
       </Button>
+      <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <div className="columns">
-        <x-style-panel label="Informations">
-          <IODate label="Date" value={file.date as Date} />
+        <x-style-panel label="Pirani Right">
+          <div className="with-image">
+            <ImgSideRight></ImgSideRight>
+            Right side
+          </div>
         </x-style-panel>
-        <x-style-panel label="Details"></x-style-panel>
+        <x-style-panel label="Pirani Left">
+          <div className="with-image">
+            <ImgSideLeft></ImgSideLeft>
+            Left side
+          </div>
+        </x-style-panel>
       </div>
+      <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
     </x-style-collabsible>
   );
 }
