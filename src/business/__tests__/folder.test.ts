@@ -214,3 +214,8 @@ test("getNextAppoinment", function() {
   f.list.push(new Appointment({ date: "2100-01-01" }));
   expect(f.getNextAppoinment()).toEqual(new Date("2100-01-01"));
 });
+
+test("getLastSeen", function() {
+  expect((new Folder()).getLastSeen()).toBeNull();
+    expect(f.getLastSeen()).toEqual(new Date("2014-11-04"));
+});

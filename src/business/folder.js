@@ -201,6 +201,25 @@ export default class Folder extends FolderPage {
       .reduce((prev, d) => (!prev || d < prev ? d : prev), null);
   }
 
+  /**
+   * Search the next but closest apointment
+   *
+   * @returns {Date|null}
+   */
+  getLastSeen() {
+    const today = new Date();
+    return (
+      this.list
+        // We take everything except Appointment
+        .filter((v) => !(v instanceof Appointment))
+        .map((v) => v.date)
+        .filter((d) => d)
+        .map((d) => new Date(d))
+        .filter((d) => d < today)
+        .reduce((last, d) => (!last || d > last ? d : last), null)
+    );
+  }
+
   static ordering(o1, o2) {
     const o1First = -1;
     const o2First = 1;
