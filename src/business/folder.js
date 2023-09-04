@@ -47,7 +47,7 @@ export default class Folder extends FolderPage {
   /** @type {[key: string]: any} */
   headers;
 
-  /** @type {Array<number, PatientRelated|Patient>} */
+  /** @type {Array<PatientRelated|Patient>} */
   list;
 
   constructor(listing = {}) {
@@ -187,6 +187,20 @@ export default class Folder extends FolderPage {
     return this.headers[key];
   }
 
+  /**
+   * Search the next but closest apointment
+   *
+   * @returns {Date|null}
+   */
+  getNextAppoinment() {
+    const today = new Date();
+    return this.getListByType(Appointment)
+      .map((v) => v.date)
+      .map((d) => new Date(d))
+      .filter((d) => d > today)
+      .reduce((prev, d) => (!prev || d < prev ? d : prev), null);
+  }
+
   static ordering(o1, o2) {
     const o1First = -1;
     const o2First = 1;
@@ -194,7 +208,7 @@ export default class Folder extends FolderPage {
     const o1id = parseInt(o1.id);
     const o2id = parseInt(o2.id);
 
-    // Return 1 if o1 > o2 (o1 - o2) (o1 est apr�s o2)
+    // Return 1 if o1 > o2 (o1 - o2) (o1 est après o2)
     // Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
 
     // What to do if one 'id' is missing

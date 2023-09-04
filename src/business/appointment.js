@@ -10,6 +10,11 @@ export default class Appointment extends PatientRelated {
   date;
   center;
 
+  /**
+   *
+   * @param {examiner?}
+   * @param {Folder} folder?
+   */
   constructor(
     { examiner, purpose, date, center, ...others } = {},
     folder = null

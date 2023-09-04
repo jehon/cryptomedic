@@ -122,7 +122,7 @@ test("should keep extra data", () => {
   expect(f.getHeader("newKey")).toBe(14);
 });
 
-describe("should order files correctly", function () {
+describe("order", function () {
   // const resEqual  = (a, b) => { expect(Folder.ordering(a, b)).toBe(0); };
   const resFirst = (a: Folder, b: Folder) => {
     expect(Folder.ordering(a, a)).toBe(0);
@@ -142,7 +142,7 @@ describe("should order files correctly", function () {
     }) as Folder;
   };
 
-  test("should sort by id", function() {
+  test("order by id", function() {
     const basis = {};
     const o1 = build(basis, {}) as Folder;
     const o2 = build(basis, { id: "2" }) as Folder;
@@ -158,7 +158,7 @@ describe("should order files correctly", function () {
     resFirst(build(basis, { id: "25" }), build(basis, { id: "3" }));
   });
 
-  test("should order about getModel", function () {
+  test("order by getModel", function () {
     const basis = {};
     const o1 = build(basis, {}, "a");
     const o2 = build(basis, {}, "b");
@@ -172,7 +172,7 @@ describe("should order files correctly", function () {
     resFirst(o2, build({ id: "25" }, "a"));
   });
 
-  test("should order about Date", function () {
+  test("order by Date", function () {
     const basis = {};
     const o1 = build(basis, {});
     const o2 = build(basis, { date: "2010-01-01" });
@@ -183,7 +183,7 @@ describe("should order files correctly", function () {
     resFirst(o2, o3);
   });
 
-  test("should order about created_at", function () {
+  test("order by created_at", function () {
     const basis = { id: "1" };
     const o1 = build({});
     const o2 = build(basis, { created_at: "2010-01-01" });
@@ -194,7 +194,7 @@ describe("should order files correctly", function () {
     resFirst(o2, o3);
   });
 
-  test("should new > date > model > id", function () {
+  test("order by new > date > model > id", function () {
     const basis = {};
     const o1 = build(basis, {});
     const o2 = build(basis, { date: "2000-01-01" });
@@ -206,4 +206,11 @@ describe("should order files correctly", function () {
     resFirst(o2, o3);
     resFirst(o3, o4);
   });
+});
+
+test("getNextAppoinment", function() {
+  expect((new Folder()).getNextAppoinment()).toBeNull();
+  
+  f.list.push(new Appointment({ date: "2100-01-01" }));
+  expect(f.getNextAppoinment()).toEqual(new Date("2100-01-01"));
 });
