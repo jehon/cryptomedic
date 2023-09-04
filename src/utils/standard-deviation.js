@@ -73,6 +73,10 @@ export function stdDeviationFor(sex, graphName, x, y) {
   if (!(sex in amd_stats)) {
     throw new DataInvalidException("sex", sex);
   }
+  if (!x) {
+    throw new DataInvalidException("value", x);
+  }
+
   if (!(graphName in amd_stats[sex])) {
     throw new ConfigurationException("Unknown serie: " + graphName);
   }
