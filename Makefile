@@ -17,10 +17,6 @@ export DBUPDATEPWD := secret # From config.php
 .PHONY: full
 full: clear clean stop dc-build start dependencies lint build test ok
 
-# End by test, since check-styles may fail
-.PHONY: dev
-dev: clear clean-files dc-build dc-up dependencies lint build test ok
-
 .PHONY: ok
 ok:
 	@echo -n "✓ ok at "
@@ -88,8 +84,9 @@ start: dc-up dependencies build reset
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/dev/"
 
-start-dev: dc-up dependencies build
+dev: dc-up dependencies build
 # No reset!
+# build: other stuff than frontend need to be build
 
 dc-up:
 	docker compose up -d

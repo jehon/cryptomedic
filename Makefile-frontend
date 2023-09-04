@@ -87,16 +87,27 @@ $(FRONTEND_BUILT_MARK): \
 		$(FRONTEND_BUILD_TMP)/platform.js \
 		$(FRONTEND_PUBLISHED)/.htaccess
 
-	bin/cr-node node_modules/.bin/webpack
+# TODO: should not be here... (need rework of getHTMLNameOfClass)
+	CRYPTOMEDIC_DEV=true bin/cr-node node_modules/.bin/webpack
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
+dev: frontend-build-dev-server
 .PHONY: frontend-build-dev-server
-start-dev: frontend-build-dev-server
-frontend-build-dev-server:
+frontend-build-dev-server: \
+		$(FRONTEND_DEPENDENCIES_MARK) \
+		$(shell find legacy/app-old/ ) \
+		$(shell find legacy/app-static/ ) \
+		$(shell find src/ ) \
+		webpack.config.js  \
+		$(FRONTEND_BUILD_TMP)/axios.js \
+		$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js \
+		$(FRONTEND_BUILD_TMP)/platform.js \
+		$(FRONTEND_PUBLISHED)/.htaccess
+
 	@echo "Open http://localhost:8080/"
-	bin/cr-node node_modules/.bin/webpack serve
+	CRYPTOMEDIC_DEV=true bin/cr-node node_modules/.bin/webpack serve
 
 $(FRONTEND_PUBLISHED)/.htaccess: src/build.htaccess
 	@mkdir -p "$(dir $@)"

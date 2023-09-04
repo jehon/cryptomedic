@@ -11,7 +11,7 @@ const builtRoot = path.join(webRoot, webBuildRoot);
 
 fse.emptyDirSync(builtRoot);
 
-const isDebug = !process.env.CRYPTOMEDIC_PROD ?? true;
+const isDebug = process.env.CRYPTOMEDIC_DEV ?? false;
 if (isDebug) {
   console.info("Webpack mode: development");
 } else {
