@@ -35,6 +35,9 @@ $(INTEGRATION_BUILT_MARK): \
 		$(FRONTEND_BUILT_MARK) \
 		www/built/browsers.json
 
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
 www/built/browsers.json: .browserslistrc $(FRONTEND_DEPENDENCIES_MARK)
 	@mkdir -p "$(dir $@)"
 	bin/cr-node node_modules/.bin/browserslist --json > "$@"
@@ -82,6 +85,8 @@ $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json: \
 		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
 		--target="$(INTEGRATION_TEST_TMP)/styles" \
 
+	touch "$@"
+
 .PHONY: integration-update-references-styles
 update: integration-update-references-styles
 integration-update-references-styles: \
@@ -89,6 +94,7 @@ integration-update-references-styles: \
 		integration-update-references-styles-calcul
 
 # Raw without calculs
+.PHONY: integration-update-references-styles-calcul
 integration-update-references-styles-calcul:
 	bin/cr-node node_modules/.bin/ts-node --esm tests/styles/check-styles.ts \
 		--root="$(ROOT)" \
