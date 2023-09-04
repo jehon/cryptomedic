@@ -1,14 +1,14 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
+import Folder from "../business/folder";
+import Bill from "../business/bill";
+
+import IO from "../widget/io";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
 import "../styles/x-style-panel";
-import IODate from "../widget/io-date";
-import IOString from "../widget/io-string";
-import Folder from "../business/folder";
 import { date2HumanString, normalizeDate } from "../utils/date";
-import Bill from "../business/bill";
 
 export default function BillSummary({
   file,
@@ -44,9 +44,9 @@ export default function BillSummary({
       </Button>
       <div className="columns">
         <x-style-panel label="Informations">
-          <IODate label="Date" value={file.date as Date} />
-          <IOString label="Center" value={file.center as string} />
-          <IOString label="Examiner" value={file.examiner as string} />
+          <IO.Date label="Date" value={file.date as Date} />
+          <IO.String label="Center" value={file.center as string} />
+          <IO.String label="Examiner" value={file.examiner as string} />
         </x-style-panel>
         <x-style-panel label="Details"></x-style-panel>
       </div>

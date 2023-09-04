@@ -1,15 +1,14 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
+import Folder from "../business/folder";
+import Surgery from "../business/surgery";
+
+import IO from "../widget/io";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
 import "../styles/x-style-panel";
-import IODate from "../widget/io-date";
-import IOString from "../widget/io-string";
-import IOText from "../widget/io-text";
-import Folder from "../business/folder";
 import { date2HumanString, normalizeDate } from "../utils/date";
-import Surgery from "../business/surgery";
 
 export default function SurgerySummary({
   file,
@@ -47,18 +46,18 @@ export default function SurgerySummary({
       </Button>
       <div className="columns">
         <x-style-panel label="Informations">
-          <IODate label="Date" value={file.date as Date} />
-          <IOText
+          <IO.Date label="Date" value={file.date as Date} />
+          <IO.Text
             label="Comments"
             value={file.follow_up_complication as string}
           />
         </x-style-panel>
         <x-style-panel label="Report">
-          <IOString label="File" value={file.report_diagnostic as string} />
-          <IOString label="File" value={file.report_surgeon as string} />
-          <IOString label="File" value={file.report_side_right as string} />
-          <IOString label="File" value={file.report_side_left as string} />
-          <IOString label="File" value={file.report_procedure as string} />
+          <IO.String label="File" value={file.report_diagnostic as string} />
+          <IO.String label="File" value={file.report_surgeon as string} />
+          <IO.String label="File" value={file.report_side_right as string} />
+          <IO.String label="File" value={file.report_side_left as string} />
+          <IO.String label="File" value={file.report_procedure as string} />
         </x-style-panel>
       </div>
     </x-style-collabsible>

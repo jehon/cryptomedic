@@ -1,14 +1,13 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-import { icons } from "../config";
+import Folder from "../business/folder";
 import Patient from "../business/patient";
+
+import IO from "../widget/io";
+import { icons } from "../config";
 import "../styles/x-style-collapsible";
 import "../styles/x-style-panel";
-import IONumber from "../widget/io-number";
-import IOString from "../widget/io-string";
-import IOText from "../widget/io-text";
-import Folder from "../business/folder";
 
 export default function PatientSummary({
   file,
@@ -52,21 +51,21 @@ export default function PatientSummary({
       </Button>
       <div className="columns">
         <x-style-panel label="Identification">
-          <IONumber label="Entry Year" value={file.entry_year} />
-          <IONumber label="Entry Order" value={file.entry_order} />
-          <IOString label="Name" value={file.name} />
-          <IOString label="sex" value={file.sex} />
-          <IONumber label="Year of birth" value={file.year_of_birth} />
-          <IOString label="Age today" value={file.actualAge() as string} />
-          <IOString label="pathology" value={file.pathology} />
-          <IOText label="Comments" value={file.comments} />
+          <IO.Number label="Entry Year" value={file.entry_year} />
+          <IO.Number label="Entry Order" value={file.entry_order} />
+          <IO.String label="Name" value={file.name} />
+          <IO.String label="sex" value={file.sex} />
+          <IO.Number label="Year of birth" value={file.year_of_birth} />
+          <IO.String label="Age today" value={file.actualAge() as string} />
+          <IO.String label="pathology" value={file.pathology} />
+          <IO.Text label="Comments" value={file.comments} />
         </x-style-panel>
         <x-style-panel label="Address">
-          <IOString width={1} label="Phone" value={file.phone} />
-          <IOString label="District" value={file.address_district} />
-          <IOString label="Union" value={file.address_union} />
-          <IOString label="Upazilla" value={file.address_upazilla} />
-          <IOString label="Address Comments" value={file.address_comments} />
+          <IO.String width={1} label="Phone" value={file.phone} />
+          <IO.String label="District" value={file.address_district} />
+          <IO.String label="Union" value={file.address_union} />
+          <IO.String label="Upazilla" value={file.address_upazilla} />
+          <IO.String label="Address Comments" value={file.address_comments} />
         </x-style-panel>
       </div>
     </x-style-collabsible>

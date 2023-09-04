@@ -1,14 +1,13 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
+import Folder from "../business/folder";
+import Picture from "../business/picture";
+
+import IO from "../widget/io";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
 import "../styles/x-style-panel";
-import IODate from "../widget/io-date";
-import IOString from "../widget/io-string";
-import IOText from "../widget/io-text";
-import Picture from "../business/picture";
-import Folder from "../business/folder";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function PictureSummary({
@@ -46,10 +45,10 @@ export default function PictureSummary({
       </Button>
       <div className="columns">
         <x-style-panel label="Informations">
-          <IOString label="Type" value={file.type as string} />
-          <IODate label="Date" value={file.date as Date} />
-          <IOString label="File" value={file.file as string} />
-          <IOText label="Comments" value={file.comments as string} />
+          <IO.String label="Type" value={file.type as string} />
+          <IO.Date label="Date" value={file.date as Date} />
+          <IO.String label="File" value={file.file as string} />
+          <IO.Text label="Comments" value={file.comments as string} />
         </x-style-panel>
         <x-style-panel label="Image">
           <img src={file.getThumbnailUrl() as string} alt="Content" />
