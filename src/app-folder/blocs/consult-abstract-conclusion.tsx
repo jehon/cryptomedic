@@ -1,10 +1,8 @@
 import React from "react";
 
-import Consult from "../business/consult";
+import Consult from "../../business/consult";
 
-import IOString from "../widget/io-string";
-import IOList from "../widget/io-list";
-import IOBoolean from "../widget/io-boolean";
+import IO from "../../widget/io";
 
 export default function ConsultAbstractConclusion({
   file
@@ -14,19 +12,19 @@ export default function ConsultAbstractConclusion({
   return (
     <div className="columns">
       <x-style-panel label="Conclusions">
-        <IOString
+        <IO.String
           label="Others Comments/Treatments"
           value={file.comments as string}
         />
-        <IOBoolean
+        <IO.Boolean
           label="Suggested for surgery"
           value={file.suggested_for_surgery as boolean}
         />
-        <IOList
+        <IO.List
           label="Treatment Evaluation"
           value={file.treatment_evaluation}
-        ></IOList>
-        <IOBoolean
+        />
+        <IO.Boolean
           label="Treatment Finished"
           value={file.treatment_finished as boolean}
         />

@@ -5,8 +5,8 @@ import Folder from "../business/folder";
 
 import Button from "react-bootstrap/Button";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
-import ConsultAbstractIntroduction from "./consult-abstract-introduction";
-import ConsultAbstractConclusion from "./consult-abstract-conclusion";
+import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
+import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
