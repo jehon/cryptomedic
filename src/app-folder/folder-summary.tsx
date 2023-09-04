@@ -22,89 +22,98 @@ import PictureSummary from "./picture-summary";
 import Surgery from "../business/surgery";
 import SurgerySummary from "./surgery-summary";
 
-class FolderSummary extends React.Component<
-  { folderId: string; folder: Folder },
-  {}
-> {
-  render() {
-    return (
-      <div>
-        <PatientSummary
-          key={(this.props.folder.getPatient() as Patient).uid()}
-          file={this.props.folder.getPatient() as Patient}
-          folder={this.props.folder}
-        ></PatientSummary>
-        {(this.props.folder.getFilesRelatedToPatient() as PatientRelated[]).map(
-          (file: PatientRelated, index: number) => {
-            if (file instanceof Appointment) {
-              return (
-                <AppointmentSummary
-                  key={file.uid()}
-                  folder={this.props.folder}
-                  file={file}
-                ></AppointmentSummary>
-              );
-            }
-            if (file instanceof Bill) {
-              return (
-                <BillSummary
-                  key={file.uid()}
-                  folder={this.props.folder}
-                  file={file}
-                ></BillSummary>
-              );
-            }
-            if (file instanceof ConsultClubfoot) {
-              return (
-                <ConsultClubfootSummary
-                  key={file.uid()}
-                  folder={this.props.folder}
-                  file={file}
-                ></ConsultClubfootSummary>
-              );
-            }
-            if (file instanceof ConsultOther) {
-              return (
-                <ConsultOtherSummary
-                  key={file.uid()}
-                  folder={this.props.folder}
-                  file={file}
-                ></ConsultOtherSummary>
-              );
-            }
-            if (file instanceof ConsultRicket) {
-              return (
-                <ConsultRicketSummary
-                  key={file.uid()}
-                  folder={this.props.folder}
-                  file={file}
-                ></ConsultRicketSummary>
-              );
-            }
-            if (file instanceof Picture) {
-              return (
-                <PictureSummary
-                  key={file.uid()}
-                  folder={this.props.folder}
-                  file={file}
-                ></PictureSummary>
-              );
-            }
-            if (file instanceof Surgery) {
-              return (
-                <SurgerySummary
-                  key={file.uid()}
-                  folder={this.props.folder}
-                  file={file}
-                ></SurgerySummary>
-              );
-            }
-            return null;
+import Panel from "../widget/panel";
+import IO from "../widget/io";
+import { defaultWidthScreen } from "../styles/style-helpers";
+
+export default function FolderSummary({
+  folderId,
+  folder
+}: {
+  folderId: string;
+  folder: Folder;
+}): React.ReactNode {
+  return (
+    <div style={{ width: defaultWidthScreen, margin: "0 auto" }}>
+      <Panel label="context">
+        <IO.Date label="Last seen" value={folder.getLastSeen()} />
+        <IO.Date label="Next appointment" value={folder.getNextAppoinment()} />
+      </Panel>
+      <PatientSummary
+        key={(folder.getPatient() as Patient).uid()}
+        file={folder.getPatient() as Patient}
+        folder={folder}
+      ></PatientSummary>
+      {(folder.getFilesRelatedToPatient() as PatientRelated[]).map(
+        (file: PatientRelated, index: number) => {
+          if (file instanceof Appointment) {
+            return (
+              <AppointmentSummary
+                key={file.uid()}
+                folder={folder}
+                file={file}
+              ></AppointmentSummary>
+            );
           }
-        )}
-      </div>
-    );
-  }
+          if (file instanceof Bill) {
+            return (
+              <BillSummary
+                key={file.uid()}
+                folder={folder}
+                file={file}
+              ></BillSummary>
+            );
+          }
+          if (file instanceof ConsultClubfoot) {
+            return (
+              <ConsultClubfootSummary
+                key={file.uid()}
+                folder={folder}
+                file={file}
+              ></ConsultClubfootSummary>
+            );
+          }
+          if (file instanceof ConsultOther) {
+            return (
+              <ConsultOtherSummary
+                key={file.uid()}
+                folder={folder}
+                file={file}
+              ></ConsultOtherSummary>
+            );
+          }
+          if (file instanceof ConsultRicket) {
+            return (
+              <ConsultRicketSummary
+                key={file.uid()}
+                folder={folder}
+                file={file}
+              ></ConsultRicketSummary>
+            );
+          }
+          if (file instanceof Picture) {
+            return (
+              <PictureSummary
+                key={file.uid()}
+                folder={folder}
+                file={file}
+              ></PictureSummary>
+            );
+          }
+          if (file instanceof Surgery) {
+            return (
+              <SurgerySummary
+                key={file.uid()}
+                folder={folder}
+                file={file}
+              ></SurgerySummary>
+            );
+          }
+          return null;
+        }
+      )}
+    </div>
+  );
 }
 
 bridgeTo("x-react-folder-summary", FolderSummary);
