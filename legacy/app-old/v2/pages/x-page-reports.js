@@ -6,7 +6,7 @@ import {
   createElementWithTag
 } from "../js/custom-element.js";
 import date2CanonicString from "../js/date2CanonicString.js";
-import { getPref, setPref } from "../js/prefs.js";
+import { getPref, setPref } from "../../../../src/utils/prefs.js";
 import {
   getRouteToFolderFileByParams,
   getRouteToFolderPatient

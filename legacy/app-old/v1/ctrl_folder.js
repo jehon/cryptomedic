@@ -3,7 +3,7 @@
 
 import Folder from "../../../src/business/folder.js";
 import { formGetContent } from "../v2/js/form.js";
-import { extractPrefsFile } from "../v2/js/prefs.js";
+import { extractPrefsFile } from "../../../src/utils/prefs.js";
 import getDataService from "../v2/js/getDataService.js";
 import { fromBirthDate } from "../v2/widgets/file/x-fff-age.js";
 import template from "../v2/js/template.js";
