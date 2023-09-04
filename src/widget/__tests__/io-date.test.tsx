@@ -17,5 +17,5 @@ test('io-date', () => {
 
 test('empty', () => {
     const { container } = render(<IODate label="test" value={null}/>)
-    expect((container.querySelector("[data-function='value']") as HTMLElement).children[0]).toBeEmptyDOMElement();
+    expect(container).toBeEmptyDOMElement();
 });

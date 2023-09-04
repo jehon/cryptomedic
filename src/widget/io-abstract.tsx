@@ -21,18 +21,19 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
     } = this.props;
 
     // All execpt read without value
-    const empty = !edit && !value;
+    if (!edit && !value) {
+      return null;
+    }
 
     return (
       <div
         style={{
-          display: !empty ? "flex" : "none",
+          display: "flex",
           flexDirection: "row",
           padding: "5px 10px",
           columnGap: "5%",
           ...(note ? { fontSize: "smaller" } : {})
         }}
-        data-empty={empty ? "true" : ""}
       >
         <label
           style={{
