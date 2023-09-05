@@ -7,9 +7,10 @@ import Button from "react-bootstrap/Button";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 
+import Panel from "../widget/panel";
+import IO from "../widget/io";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
-import "../styles/x-style-panel";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function ConsultOtherSummary({

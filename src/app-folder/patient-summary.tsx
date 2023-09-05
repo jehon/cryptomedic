@@ -4,10 +4,10 @@ import Button from "react-bootstrap/Button";
 import Folder from "../business/folder";
 import Patient from "../business/patient";
 
+import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
-import "../styles/x-style-panel";
 
 export default function PatientSummary({
   file,
@@ -50,7 +50,7 @@ export default function PatientSummary({
         View
       </Button>
       <div className="columns">
-        <x-style-panel label="Identification">
+        <Panel fixed label="Identification">
           <IO.Number label="Entry Year" value={file.entry_year} />
           <IO.Number label="Entry Order" value={file.entry_order} />
           <IO.String label="Name" value={file.name} />
@@ -59,14 +59,14 @@ export default function PatientSummary({
           <IO.String label="Age today" value={file.actualAge() as string} />
           <IO.String label="pathology" value={file.pathology} />
           <IO.Text label="Comments" value={file.comments} />
-        </x-style-panel>
-        <x-style-panel label="Address">
+        </Panel>
+        <Panel fixed label="Address">
           <IO.String width={1} label="Phone" value={file.phone} />
           <IO.String label="District" value={file.address_district} />
           <IO.String label="Union" value={file.address_union} />
           <IO.String label="Upazilla" value={file.address_upazilla} />
           <IO.String label="Address Comments" value={file.address_comments} />
-        </x-style-panel>
+        </Panel>
       </div>
     </x-style-collabsible>
   );

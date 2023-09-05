@@ -2,6 +2,7 @@ import React from "react";
 
 import Consult from "../../business/consult";
 
+import Panel from "../../widget/panel";
 import IO from "../../widget/io";
 
 import { roundTo } from "../../utils/strings";
@@ -14,7 +15,7 @@ export default function ConsultAbstractIntroduction({
 }): React.ReactNode {
   return (
     <div className="columns">
-      <x-style-panel label="Informations">
+      <Panel fixed label="Informations">
         <IO.Date label="Date" value={file.date as Date} />
         <IO.String label="Examiner" value={file.examiner as string} />
         <IO.List label="Center" value={file.center as string} />
@@ -22,8 +23,8 @@ export default function ConsultAbstractIntroduction({
           label="Age at consultation time"
           value={() => yearsToYM(file.getAgeAtThatTime())}
         />
-      </x-style-panel>
-      <x-style-panel label="Nutritional data">
+      </Panel>
+      <Panel fixed label="Nutritional data">
         <IO.Number label="Weitght (kg)" value={file.weight_kg as number} />
         <IO.Function
           label="Weitght sd"
@@ -56,7 +57,7 @@ export default function ConsultAbstractIntroduction({
           note
           value={() => roundTo(file.getBMISd())}
         />
-      </x-style-panel>
+      </Panel>
     </div>
   );
 }

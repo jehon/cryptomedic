@@ -4,10 +4,10 @@ import Button from "react-bootstrap/Button";
 import Folder from "../business/folder";
 import Picture from "../business/picture";
 
+import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
-import "../styles/x-style-panel";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function PictureSummary({
@@ -44,15 +44,15 @@ export default function PictureSummary({
         View
       </Button>
       <div className="columns">
-        <x-style-panel label="Informations">
+        <Panel fixed label="Informations">
           <IO.String label="Type" value={file.type as string} />
           <IO.Date label="Date" value={file.date as Date} />
           <IO.String label="File" value={file.file as string} />
           <IO.Text label="Comments" value={file.comments as string} />
-        </x-style-panel>
-        <x-style-panel label="Image">
+        </Panel>
+        <Panel fixed label="Image">
           <img src={file.getThumbnailUrl() as string} alt="Content" />
-        </x-style-panel>
+        </Panel>
       </div>
     </x-style-collabsible>
   );

@@ -4,21 +4,24 @@ export default function Panel(
   {
     headers,
     label,
-    opened,
-    children
+    closed,
+    children,
+    fixed
   }: {
     headers?: React.ReactNode;
     label?: string;
-    opened?: boolean;
+    closed?: boolean;
+    fixed?: boolean;
     children: React.ReactNode;
   } = {
     headers: null,
     label: "",
-    opened: false,
+    closed: false,
+    fixed: false,
     children: null
   }
 ): React.ReactNode {
-  const [statusOpened, toggleOpened] = React.useState(opened);
+  const [statusOpened, toggleOpened] = React.useState(!closed);
 
   if (React.Children.count(children) === 0) {
     // Show nothing if no children...
@@ -26,7 +29,9 @@ export default function Panel(
   }
 
   function onOpenClose() {
-    toggleOpened(!statusOpened);
+    if (!fixed) {
+      toggleOpened(!statusOpened);
+    }
   }
 
   return (

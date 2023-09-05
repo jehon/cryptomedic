@@ -4,10 +4,10 @@ import Button from "react-bootstrap/Button";
 import Folder from "../business/folder";
 import Appointment from "../business/appointment";
 
+import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
-import "../styles/x-style-panel";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function AppointmentSummary({
@@ -46,14 +46,14 @@ export default function AppointmentSummary({
         View
       </Button>
       <div className="columns">
-        <x-style-panel label="Informations">
+        <Panel fixed label="Informations">
           <IO.Date label="Date" value={file.date as Date} />
           <IO.String label="Center" value={file.center as string} />
           <IO.String label="Examiner" value={file.examiner as string} />
-        </x-style-panel>
-        <x-style-panel label="Objective">
+        </Panel>
+        <Panel fixed label="Objective">
           <IO.Text label="Purpose" value={file.purpose as string} />
-        </x-style-panel>
+        </Panel>
       </div>
     </x-style-collabsible>
   );

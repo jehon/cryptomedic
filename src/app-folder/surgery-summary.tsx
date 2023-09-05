@@ -4,10 +4,10 @@ import Button from "react-bootstrap/Button";
 import Folder from "../business/folder";
 import Surgery from "../business/surgery";
 
+import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
-import "../styles/x-style-panel";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function SurgerySummary({
@@ -45,20 +45,20 @@ export default function SurgerySummary({
         View
       </Button>
       <div className="columns">
-        <x-style-panel label="Informations">
+        <Panel fixed label="Informations">
           <IO.Date label="Date" value={file.date as Date} />
           <IO.Text
             label="Comments"
             value={file.follow_up_complication as string}
           />
-        </x-style-panel>
-        <x-style-panel label="Report">
+        </Panel>
+        <Panel fixed label="Report">
           <IO.String label="File" value={file.report_diagnostic as string} />
           <IO.String label="File" value={file.report_surgeon as string} />
           <IO.String label="File" value={file.report_side_right as string} />
           <IO.String label="File" value={file.report_side_left as string} />
           <IO.String label="File" value={file.report_procedure as string} />
-        </x-style-panel>
+        </Panel>
       </div>
     </x-style-collabsible>
   );

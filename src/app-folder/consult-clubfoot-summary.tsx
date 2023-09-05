@@ -8,9 +8,10 @@ import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 
+import Panel from "../widget/panel";
+import IO from "../widget/io";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
-import "../styles/x-style-panel";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function ConsultClubfootSummary({
@@ -55,18 +56,18 @@ export default function ConsultClubfootSummary({
       </Button>
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <div className="columns">
-        <x-style-panel label="Pirani Right">
+        <Panel fixed label="Pirani Right">
           <div className="with-image">
             <ImgSideRight></ImgSideRight>
             Right side
           </div>
-        </x-style-panel>
-        <x-style-panel label="Pirani Left">
+        </Panel>
+        <Panel fixed label="Pirani Left">
           <div className="with-image">
             <ImgSideLeft></ImgSideLeft>
             Left side
           </div>
-        </x-style-panel>
+        </Panel>
       </div>
       <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
     </x-style-collabsible>

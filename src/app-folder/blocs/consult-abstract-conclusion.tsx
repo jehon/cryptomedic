@@ -2,6 +2,7 @@ import React from "react";
 
 import Consult from "../../business/consult";
 
+import Panel from "../../widget/panel";
 import IO from "../../widget/io";
 
 export default function ConsultAbstractConclusion({
@@ -11,7 +12,7 @@ export default function ConsultAbstractConclusion({
 }): React.ReactNode {
   return (
     <div className="columns">
-      <x-style-panel label="Conclusions">
+      <Panel fixed label="Conclusions">
         <IO.String
           label="Others Comments/Treatments"
           value={file.comments as string}
@@ -28,7 +29,7 @@ export default function ConsultAbstractConclusion({
           label="Treatment Finished"
           value={file.treatment_finished as boolean}
         />
-      </x-style-panel>
+      </Panel>
     </div>
   );
 }
