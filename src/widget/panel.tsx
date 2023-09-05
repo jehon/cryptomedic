@@ -4,24 +4,26 @@ export default function Panel(
   {
     headers,
     label,
-    collapsible,
     opened,
     children
   }: {
     headers?: React.ReactNode;
     label?: string;
-    collapsible?: boolean;
     opened?: boolean;
     children: React.ReactNode;
   } = {
     headers: null,
     label: "",
-    collapsible: false,
     opened: false,
     children: null
   }
 ): React.ReactNode {
   const [statusOpened, toggleOpened] = React.useState(opened);
+
+  if (React.Children.count(children) === 0) {
+    // Show nothing if no children...
+    return null;
+  }
 
   function onOpenClose() {
     toggleOpened(!statusOpened);
@@ -33,9 +35,7 @@ export default function Panel(
         {label ? <label>{label}</label> : null}
         {headers}
       </div>
-      {!collapsible || statusOpened ? (
-        <div className="body">{children}</div>
-      ) : null}
+      {statusOpened ? <div className="body">{children}</div> : null}
     </div>
   );
 }
