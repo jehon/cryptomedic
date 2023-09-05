@@ -81,6 +81,9 @@ services:
     volumes:
       - type: tmpfs
         target: /var/lib/mysql
+      - type: bind
+        source: conf/database/dev/
+        target: /docker-entrypoint-initdb.d/
 
   ################################################################
   #

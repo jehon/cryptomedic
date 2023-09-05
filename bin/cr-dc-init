@@ -8,22 +8,4 @@ set -o pipefail
 
 header_begin "cr-dc-init"
 
-# echo "* Create user: phpmyadmin"
-# cr-mysql --database=mysql -e "CREATE USER IF NOT EXISTS 'phpmyadmin' IDENTIFIED BY 'phpmyadmin'"
-# cr-mysql --database=mysql -e "GRANT ALL PRIVILEGES ON *.* TO phpmyadmin"
-
-echo "* Create user: mysql_cryptomedic_username"
-cr-mysql --database=mysql <<EOS
-    CREATE USER IF NOT EXISTS 'mysql_cryptomedic_username' IDENTIFIED BY 'password';
-    SET PASSWORD FOR mysql_cryptomedic_username = PASSWORD('mysql_cryptomedic_password');
-    GRANT ALL PRIVILEGES ON cryptomedic.* TO mysql_cryptomedic_username;
-    FLUSH PRIVILEGES;
-EOS
-
-# Mysql 5.7, 7.0:
-# 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
-# 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-
-sleep "2s"
-
 header_end

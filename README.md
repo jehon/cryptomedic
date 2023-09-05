@@ -49,7 +49,7 @@ Notes:
 | Command              | What does it does?                                                        |
 | -------------------- | ------------------------------------------------------------------------- |
 | make deploy-test     | simulate deploy the stack to the production server (env config necessary) |
-| make database-backup | create a new base.sql for next run (usefull when creating new data)       |
+| make database-backup | create a new 100-base.sql for next run (usefull when creating new data)   |
 
 # Style
 

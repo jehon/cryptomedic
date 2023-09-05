@@ -27,17 +27,12 @@ cr-ensure-folder-empty "live/backups"
 header_end
 
 # Reset database
-header_begin "cr-data-reset - Mysql - configuring"
-
-echo "* Create schema"
-cr-mysql --database=mysql <<EOS
-    DROP SCHEMA IF EXISTS cryptomedic;
-    CREATE SCHEMA cryptomedic;
-EOS
-header_end
-
 header_begin "cr-data-reset - Mysql - restoring initial base"
-cr-mysql --database=cryptomedic <"conf/database/base.sql"
+for F in conf/database/dev/*.sql; do
+    header_begin "File $(basename "$F")"
+    QUIET=yes cr-mysql --database=cryptomedic <"$F"
+    header_end
+done
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"

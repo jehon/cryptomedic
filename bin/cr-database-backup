@@ -6,7 +6,7 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-OUTPUT="conf/database/base.sql"
+OUTPUT="conf/database/dev/100 base.sql"
 
 mkdir -p "$(dirname "$OUTPUT")"
 
