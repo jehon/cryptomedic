@@ -23,6 +23,9 @@ export default function Panel(
 ): React.ReactNode {
   const [statusOpened, toggleOpened] = React.useState(!closed);
 
+  // TODO: no display if no children? does not seem to work perfectly...
+
+
   if (React.Children.count(children) === 0) {
     // Show nothing if no children...
     return null;
