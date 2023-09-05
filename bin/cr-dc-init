@@ -8,4 +8,10 @@ set -o pipefail
 
 header_begin "cr-dc-init"
 
+"$CR_SCRIPT_DIR"/cr-mysql-wait
+
+header_begin "cr-data-reset: cr-refresh-structure"
+"$CR_SCRIPT_DIR"/cr-refresh-structure "http://localhost:5555/" "secret"
+header_end
+
 header_end
