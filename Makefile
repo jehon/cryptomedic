@@ -94,6 +94,8 @@ dc-up:
 
 stop:
 	docker compose down
+	docker compose kill -s SIGINT mysql || true
+	@echo ""
 
 .PHONY: logs
 logs:
