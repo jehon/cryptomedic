@@ -9,7 +9,7 @@ export default class IOFunction extends IOAbstract<T> {
       return <div>{value()}</div>;
     } catch (e: any) {
       // console.trace("io-function", e);
-      return <div className="error">{e.message}</div>;
+      return <div className="io-function-error">{e.message}</div>;
     }
   }
 }

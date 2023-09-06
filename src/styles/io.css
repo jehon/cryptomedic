@@ -24,3 +24,7 @@
   color: green;
   background-color: white;
 }
+
+.io > div > .io-function-error {
+  color: gray;
+}

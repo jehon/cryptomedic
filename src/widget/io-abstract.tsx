@@ -26,7 +26,7 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
     }
 
     return (
-      <div className={"io" + note ? " note" : ""}>
+      <div className={"io" + (note ? " note" : "")}>
         <label
           dangerouslySetInnerHTML={{ __html: label + (required ? "*" : "") }}
         ></label>
