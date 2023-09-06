@@ -15,12 +15,23 @@ set -o pipefail
 
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
+mysql_run() {
+    docker compose exec -T mysql mysql "$@"
+}
+
 #
 # We always wait... that does not take that much time
 #
-QUIET=y cr-mysql-wait
+mysql_test() {
+    # Do not capture stdin!
+    bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null </dev/null
+}
+
+while ! mysql_test; do
+    sleep 0.5s
+done
 
 # -T is necessary for <file.sql
 header_begin "Mysql: running $* ..."
-docker compose exec -T mysql mysql "$@"
+mysql_run "$@"
 header_end
