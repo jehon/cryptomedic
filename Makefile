@@ -90,7 +90,8 @@ dev: dc-up dependencies build
 
 dc-up:
 	docker compose up -d
-	bin/cr-refresh-structure "http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/" "secret"
+	bin/cr-data-reset
+# bin/cr-refresh-structure "http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/" "secret"
 
 stop:
 	docker compose down
