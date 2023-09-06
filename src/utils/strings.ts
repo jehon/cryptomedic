@@ -11,10 +11,13 @@ export function roundTo(val: number, decimals: number = 1): string {
   return val.toFixed(decimals);
 }
 
-export function tryOrMessage<T>(fn: () => T): T {
+export function tryOrMessage(fn: () => any, msg?: string): string {
   try {
-    return fn();
+    return "" + fn();
   } catch (e: any) {
+    if (msg !== undefined) {
+      return msg;
+    }
     return e.message;
   }
 }
