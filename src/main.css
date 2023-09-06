@@ -2,6 +2,11 @@
 @import url("./styles/panel.css");
 @import url("./styles/two-columns.css");
 
+/*
+  Reserved classes:
+    - separator
+*/
+
 /* body {
   scroll-behavior: smooth;
 } */

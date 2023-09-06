@@ -42,3 +42,10 @@
 .panel > * > img {
   height: 1.5em;
 }
+
+.panel > .body > .separator {
+  width: 100%;
+  background-color: lightgray;
+  border: black 1px dashed;
+  text-align: center;
+}
