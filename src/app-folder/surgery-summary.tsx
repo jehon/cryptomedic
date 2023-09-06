@@ -25,6 +25,7 @@ export default function SurgerySummary({
   }
   return (
     <Panel
+      closed
       headers={[
         <img src={icons.models.surgery} alt="Picture" className="inline" />,
         <span className="no-mobile">Surgery</span>,

@@ -28,6 +28,7 @@ export default function ConsultOtherSummary({
   }
   return (
     <Panel
+      closed
       headers={[
         <img
           src={icons.models.consult_other}

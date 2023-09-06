@@ -25,6 +25,7 @@ export default function PictureSummary({
   }
   return (
     <Panel
+      closed
       headers={[
         <img src={icons.models.picture} alt="Picture" className="inline" />,
         <span className="no-mobile">Picture</span>,

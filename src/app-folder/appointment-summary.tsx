@@ -25,6 +25,7 @@ export default function AppointmentSummary({
   }
   return (
     <Panel
+      closed
       headers={[
         <img
           src={icons.models.appointment}
