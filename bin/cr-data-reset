@@ -36,5 +36,5 @@ done
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"
-cr-refresh-structure "http://localhost:5555/" "secret"
+cr-refresh-structure "http://localhost:${CRYPTOMEDIC_HTTP_LOCAL_PORT}/" "secret"
 header_end
