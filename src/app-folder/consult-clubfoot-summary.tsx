@@ -13,6 +13,7 @@ import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
 import { date2HumanString, normalizeDate } from "../utils/date";
+import { tryOrMessage } from "../utils/strings";
 
 export default function ConsultClubfootSummary({
   file,
@@ -56,11 +57,14 @@ export default function ConsultClubfootSummary({
       </Button>
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns>
-        <Panel fixed label="Pirani Right (< 3 years)">
-          <div className="with-image">
-            <ImgSideRight></ImgSideRight>
-            Right side
-          </div>
+        <Panel
+          fixed
+          headers={[
+            <ImgSideRight></ImgSideRight>,
+            <span>Pirani Right (&lt; 3 years)</span>,
+            tryOrMessage(() => file.getPiraniRight(), "")
+          ]}
+        >
           <div className="separator">Mid Foot</div>
           <IO.List
             right
@@ -100,11 +104,14 @@ export default function ConsultClubfootSummary({
             value={() => file.getPiraniRight() + ""}
           ></IO.Function>
         </Panel>
-        <Panel fixed label="Pirani Left (< 3 years)">
-          <div className="with-image">
-            <ImgSideLeft></ImgSideLeft>
-            Left side
-          </div>
+        <Panel
+          fixed
+          headers={[
+            <ImgSideLeft></ImgSideLeft>,
+            <span>Pirani Left (&lt; 3 years)</span>,
+            tryOrMessage(() => file.getPiraniLeft(), "")
+          ]}
+        >
           <div className="separator">Mid Foot</div>
           <IO.List
             left
