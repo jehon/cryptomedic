@@ -30,6 +30,7 @@ export default function ConsultClubfootSummary({
   }
   return (
     <Panel
+      closed
       headers={[
         <img
           src={icons.models.consult_clubfoot}
