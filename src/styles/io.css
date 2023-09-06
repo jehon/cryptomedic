@@ -1,0 +1,26 @@
+.io {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
+  /* stylelint-disable-next-line plugin/no-unsupported-browser-features -- reported as partial support */
+  column-gap: 5%;
+}
+
+.io.note {
+  font-size: smaller;
+}
+
+.io > label {
+  width: 25%;
+  text-align: right;
+  font-size: smaller;
+  color: gray;
+  text-overflow: ellipsis;
+}
+
+.io > div {
+  flex-grow: 1;
+  text-align: left;
+  color: green;
+  background-color: white;
+}

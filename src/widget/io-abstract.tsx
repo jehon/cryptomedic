@@ -26,34 +26,11 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
     }
 
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          padding: "5px 10px",
-          columnGap: "5%",
-          ...(note ? { fontSize: "smaller" } : {})
-        }}
-      >
+      <div className={"io" + note ? " note" : ""}>
         <label
-          style={{
-            width: "25%",
-            textAlign: "right",
-            fontSize: "smaller",
-            color: "gray",
-            textOverflow: "ellipsis"
-          }}
           dangerouslySetInnerHTML={{ __html: label + (required ? "*" : "") }}
-          data-function="label"
         ></label>
-        <div
-          style={{
-            flexGrow: 1,
-            textAlign: "left",
-            color: "green"
-          }}
-          data-function="value"
-        >
+        <div>
           {edit ? this.renderOutput(value) : this.renderInput(value, required)}
         </div>
       </div>
