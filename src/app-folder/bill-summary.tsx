@@ -8,7 +8,6 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
-import "../styles/x-style-collapsible";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function BillSummary({
@@ -25,17 +24,13 @@ export default function BillSummary({
     return <div>No file selected</div>;
   }
   return (
-    <x-style-collabsible opened="1">
-      <img
-        slot="header"
-        src={icons.models.bill}
-        alt="Bill"
-        className="inline"
-      />
-      <span slot="header" className="no-mobile">
-        Bill
-      </span>
-      <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
+    <Panel
+      headers={[
+        <img src={icons.models.bill} alt="Bill" className="inline" />,
+        <span className="no-mobile">Bill</span>,
+        <span>{date2HumanString(normalizeDate(file.date))}</span>
+      ]}
+    >
       <Button
         href={"#/folder/" + folder.getId() + "/file/Bill/" + file.getId()}
         variant="outline-info"
@@ -51,6 +46,6 @@ export default function BillSummary({
         </Panel>
         <Panel label="Details">blablabla</Panel>
       </TwoColumns>
-    </x-style-collabsible>
+    </Panel>
   );
 }

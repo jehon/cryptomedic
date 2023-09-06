@@ -8,7 +8,6 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
-import "../styles/x-style-collapsible";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function AppointmentSummary({
@@ -25,18 +24,18 @@ export default function AppointmentSummary({
     return <div>No file selected</div>;
   }
   return (
-    <x-style-collabsible>
-      <img
-        slot="header"
-        src={icons.models.appointment}
-        alt="Appointment"
-        className="inline"
-      />
-      <span slot="header" className="no-mobile">
-        Appointment
-      </span>
-      <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
-      <span slot="header">{file.center}</span>
+    <Panel
+      headers={[
+        <img
+          src={icons.models.appointment}
+          alt="Appointment"
+          className="inline"
+        />,
+        <span className="no-mobile">Appointment</span>,
+        <span>{date2HumanString(normalizeDate(file.date))}</span>,
+        <span>{file.center}</span>
+      ]}
+    >
       <Button
         href={
           "#/folder/" + folder.getId() + "/file/Appointment/" + file.getId()
@@ -56,6 +55,6 @@ export default function AppointmentSummary({
           <IO.Text label="Purpose" value={file.purpose as string} />
         </Panel>
       </TwoColumns>
-    </x-style-collabsible>
+    </Panel>
   );
 }

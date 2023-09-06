@@ -11,7 +11,6 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
-import "../styles/x-style-collapsible";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function ConsultOtherSummary({
@@ -28,17 +27,17 @@ export default function ConsultOtherSummary({
     return <div>No file selected</div>;
   }
   return (
-    <x-style-collabsible opened="1">
-      <img
-        slot="header"
-        src={icons.models.consult_other}
-        alt="Other Consult"
-        className="inline"
-      />
-      <span slot="header" className="no-mobile">
-        Other Consult
-      </span>
-      <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
+    <Panel
+      headers={[
+        <img
+          src={icons.models.consult_other}
+          alt="Other Consult"
+          className="inline"
+        />,
+        <span className="no-mobile">Other Consult</span>,
+        <span>{date2HumanString(normalizeDate(file.date))}</span>
+      ]}
+    >
       <Button
         href={
           "#/folder/" + folder.getId() + "/file/OtherConsult/" + file.getId()
@@ -75,6 +74,6 @@ export default function ConsultOtherSummary({
         </Panel>
       </TwoColumns>
       <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
-    </x-style-collabsible>
+    </Panel>
   );
 }

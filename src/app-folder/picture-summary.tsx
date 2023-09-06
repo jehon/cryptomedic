@@ -8,7 +8,6 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
-import "../styles/x-style-collapsible";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function PictureSummary({
@@ -25,18 +24,14 @@ export default function PictureSummary({
     return <div>No file selected</div>;
   }
   return (
-    <x-style-collabsible>
-      <img
-        slot="header"
-        src={icons.models.picture}
-        alt="Picture"
-        className="inline"
-      />
-      <span slot="header" className="no-mobile">
-        Picture
-      </span>
-      <span slot="header">{file.type}</span>
-      <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
+    <Panel
+      headers={[
+        <img src={icons.models.picture} alt="Picture" className="inline" />,
+        <span className="no-mobile">Picture</span>,
+        <span>{file.type}</span>,
+        <span>{date2HumanString(normalizeDate(file.date))}</span>
+      ]}
+    >
       <Button
         href={"#/folder/" + folder.getId() + "/file/Picture/" + file.getId()}
         variant="outline-info"
@@ -55,6 +50,6 @@ export default function PictureSummary({
           <img src={file.getThumbnailUrl() as string} alt="Content" />
         </Panel>
       </TwoColumns>
-    </x-style-collabsible>
+    </Panel>
   );
 }

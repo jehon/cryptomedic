@@ -8,7 +8,6 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
-import "../styles/x-style-collapsible";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function SurgerySummary({
@@ -25,19 +24,15 @@ export default function SurgerySummary({
     return <div>No file selected</div>;
   }
   return (
-    <x-style-collabsible>
-      <img
-        slot="header"
-        src={icons.models.surgery}
-        alt="Picture"
-        className="inline"
-      />
-      <span slot="header" className="no-mobile">
-        Surgery
-      </span>
-      <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
-      <span slot="header">{file.report_diagnostic}</span>
-      <span slot="header">{file.report_surgeon}</span>
+    <Panel
+      headers={[
+        <img src={icons.models.surgery} alt="Picture" className="inline" />,
+        <span className="no-mobile">Surgery</span>,
+        <span>{date2HumanString(normalizeDate(file.date))}</span>,
+        <span>{file.report_diagnostic}</span>,
+        <span>{file.report_surgeon}</span>
+      ]}
+    >
       <Button
         href={"#/folder/" + folder.getId() + "/file/Surgery/" + file.getId()}
         variant="outline-info"
@@ -61,6 +56,6 @@ export default function SurgerySummary({
           <IO.String label="File" value={file.report_procedure as string} />
         </Panel>
       </TwoColumns>
-    </x-style-collabsible>
+    </Panel>
   );
 }

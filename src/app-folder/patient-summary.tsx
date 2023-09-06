@@ -8,7 +8,6 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
-import "../styles/x-style-collapsible";
 
 export default function PatientSummary({
   file,
@@ -24,25 +23,17 @@ export default function PatientSummary({
     return <div>No file selected</div>;
   }
   return (
-    <x-style-collabsible>
-      <img
-        slot="header"
-        src={icons.models.patient}
-        alt="Patient"
-        className="inline"
-      />
-      <span slot="header" className="no-mobile">
-        Patient
-      </span>
-      <span slot="header">
-        {file.entry_year}-{file.entry_order}
-      </span>
-      <span slot="header" className="no-mobile">
-        {file.name}
-      </span>
-      <span slot="header" className="no-mobile">
-        {file.year_of_birth}
-      </span>
+    <Panel
+      headers={[
+        <img src={icons.models.patient} alt="Patient" className="inline" />,
+        <span className="no-mobile">Patient</span>,
+        <span>
+          {file.entry_year}-{file.entry_order}
+        </span>,
+        <span className="no-mobile">{file.name}</span>,
+        <span className="no-mobile">{file.year_of_birth}</span>
+      ]}
+    >
       <Button
         href={"#/folder/" + folder.getId() + "/"}
         variant="outline-info"
@@ -69,6 +60,6 @@ export default function PatientSummary({
           <IO.String label="Address Comments" value={file.address_comments} />
         </Panel>
       </TwoColumns>
-    </x-style-collabsible>
+    </Panel>
   );
 }

@@ -11,7 +11,6 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
-import "../styles/x-style-collapsible";
 import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function ConsultRicketSummary({
@@ -28,17 +27,17 @@ export default function ConsultRicketSummary({
     return <div>No file selected</div>;
   }
   return (
-    <x-style-collabsible opened="1">
-      <img
-        slot="header"
-        src={icons.models.consult_ricket}
-        alt="Ricket Consult"
-        className="inline"
-      />
-      <span slot="header" className="no-mobile">
-        Ricket Consult
-      </span>
-      <span slot="header">{date2HumanString(normalizeDate(file.date))}</span>
+    <Panel
+      headers={[
+        <img
+          src={icons.models.consult_ricket}
+          alt="Ricket Consult"
+          className="inline"
+        />,
+        <span className="no-mobile">Ricket Consult</span>,
+        <span>{date2HumanString(normalizeDate(file.date))}</span>
+      ]}
+    >
       <Button
         href={
           "#/folder/" + folder.getId() + "/file/RicketConsult/" + file.getId()
@@ -51,6 +50,6 @@ export default function ConsultRicketSummary({
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns> </TwoColumns>
       <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
-    </x-style-collabsible>
+    </Panel>
   );
 }
