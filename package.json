@@ -7,7 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "@adobe/es-modules-middleware": "1.1.0",
-    "@testing-library/jest-dom": "5.17.0",
+    "@testing-library/jest-dom": "6.1.2",
     "@testing-library/react": "14.0.0",
     "angular": "1.8.3",
     "angular-route": "1.8.3",
@@ -28,7 +28,7 @@
     "@babel/cli": "7.22.15",
     "@commitlint/cli": "17.7.1",
     "@commitlint/config-conventional": "17.7.0",
-    "@testing-library/jest-dom": "5.17.0",
+    "@testing-library/jest-dom": "6.1.2",
     "@testing-library/react": "14.0.0",
     "@types/node": "20.5.9",
     "@types/pixelmatch": "5.2.4",
