@@ -70,8 +70,10 @@ services:
         MYSQL_VERSION: ${MYSQL_VERSION}
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      # # In dev, we don't need a password
       # MYSQL_ROOT_PASSWORD: mysql_root_password
-      MYSQL_DATABASE: cryptomedic
+      # # We don't create the database here, because we don't know when it will be done
+      # MYSQL_DATABASE: cryptomedic
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
