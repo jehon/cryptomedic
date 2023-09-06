@@ -1,5 +1,6 @@
 @import url("./styles/io.css");
 @import url("./styles/panel.css");
+@import url("./styles/two-columns.css");
 
 /* body {
   scroll-behavior: smooth;
@@ -9,6 +10,7 @@ img.inline {
   height: 1.5em;
 }
 
+/* TODO LEGACY */
 .columns {
   width: 100%;
   display: flex;
@@ -16,6 +18,7 @@ img.inline {
   flex-wrap: wrap;
 }
 
+/* TODO LEGACY */
 .columns > * {
   flex-grow: 1;
   flex-shrink: 1;

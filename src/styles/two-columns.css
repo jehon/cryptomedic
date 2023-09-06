@@ -1,0 +1,12 @@
+.two-columns {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.two-columns > * {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 20%;
+}
