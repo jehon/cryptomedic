@@ -8,6 +8,8 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
     edit?: boolean;
     required?: boolean;
     note?: boolean;
+    left?: boolean;
+    right?: boolean;
   } & Extra,
   {}
 > {
@@ -17,13 +19,17 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
       value,
       edit = false,
       required = false,
-      note = false
+      note = false,
+      left = false,
+      right = false
     } = this.props;
 
     // All execpt read without value
     if (!edit && !value) {
       return null;
     }
+
+    // TODO: handle left / right
 
     return (
       <div className={"io" + (note ? " note" : "")}>
