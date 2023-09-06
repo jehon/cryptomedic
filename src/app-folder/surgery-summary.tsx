@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Folder from "../business/folder";
 import Surgery from "../business/surgery";
 
+import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
@@ -44,7 +45,7 @@ export default function SurgerySummary({
       >
         View
       </Button>
-      <div className="columns">
+      <TwoColumns>
         <Panel fixed label="Informations">
           <IO.Date label="Date" value={file.date as Date} />
           <IO.Text
@@ -59,7 +60,7 @@ export default function SurgerySummary({
           <IO.String label="File" value={file.report_side_left as string} />
           <IO.String label="File" value={file.report_procedure as string} />
         </Panel>
-      </div>
+      </TwoColumns>
     </x-style-collabsible>
   );
 }

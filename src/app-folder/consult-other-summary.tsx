@@ -7,9 +7,9 @@ import Button from "react-bootstrap/Button";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 
+import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
-import TwoColumns from "../widget/two-columns";
 import { icons } from "../config";
 import "../styles/x-style-collapsible";
 import { date2HumanString, normalizeDate } from "../utils/date";

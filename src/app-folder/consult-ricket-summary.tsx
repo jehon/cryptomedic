@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 
+import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
@@ -48,6 +49,7 @@ export default function ConsultRicketSummary({
         View
       </Button>
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
+      <TwoColumns> </TwoColumns>
       <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
     </x-style-collabsible>
   );

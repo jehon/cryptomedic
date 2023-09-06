@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Folder from "../business/folder";
 import Appointment from "../business/appointment";
 
+import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
@@ -45,7 +46,7 @@ export default function AppointmentSummary({
       >
         View
       </Button>
-      <div className="columns">
+      <TwoColumns>
         <Panel fixed label="Informations">
           <IO.Date label="Date" value={file.date as Date} />
           <IO.String label="Center" value={file.center as string} />
@@ -54,7 +55,7 @@ export default function AppointmentSummary({
         <Panel fixed label="Objective">
           <IO.Text label="Purpose" value={file.purpose as string} />
         </Panel>
-      </div>
+      </TwoColumns>
     </x-style-collabsible>
   );
 }

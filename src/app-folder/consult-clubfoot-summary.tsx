@@ -8,6 +8,7 @@ import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 
+import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
@@ -55,7 +56,7 @@ export default function ConsultClubfootSummary({
         View
       </Button>
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
-      <div className="columns">
+      <TwoColumns>
         <Panel fixed label="Pirani Right">
           <div className="with-image">
             <ImgSideRight></ImgSideRight>
@@ -68,7 +69,7 @@ export default function ConsultClubfootSummary({
             Left side
           </div>
         </Panel>
-      </div>
+      </TwoColumns>
       <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
     </x-style-collabsible>
   );

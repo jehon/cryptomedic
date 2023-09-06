@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Folder from "../business/folder";
 import Patient from "../business/patient";
 
+import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
@@ -49,7 +50,7 @@ export default function PatientSummary({
       >
         View
       </Button>
-      <div className="columns">
+      <TwoColumns>
         <Panel fixed label="Identification">
           <IO.Number label="Entry Year" value={file.entry_year} />
           <IO.Number label="Entry Order" value={file.entry_order} />
@@ -67,7 +68,7 @@ export default function PatientSummary({
           <IO.String label="Upazilla" value={file.address_upazilla} />
           <IO.String label="Address Comments" value={file.address_comments} />
         </Panel>
-      </div>
+      </TwoColumns>
     </x-style-collabsible>
   );
 }

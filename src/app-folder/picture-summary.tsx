@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Folder from "../business/folder";
 import Picture from "../business/picture";
 
+import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
@@ -43,7 +44,7 @@ export default function PictureSummary({
       >
         View
       </Button>
-      <div className="columns">
+      <TwoColumns>
         <Panel fixed label="Informations">
           <IO.String label="Type" value={file.type as string} />
           <IO.Date label="Date" value={file.date as Date} />
@@ -53,7 +54,7 @@ export default function PictureSummary({
         <Panel fixed label="Image">
           <img src={file.getThumbnailUrl() as string} alt="Content" />
         </Panel>
-      </div>
+      </TwoColumns>
     </x-style-collabsible>
   );
 }

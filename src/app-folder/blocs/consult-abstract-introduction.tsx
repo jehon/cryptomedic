@@ -2,6 +2,7 @@ import React from "react";
 
 import Consult from "../../business/consult";
 
+import TwoColumns from "../../widget/two-columns";
 import Panel from "../../widget/panel";
 import IO from "../../widget/io";
 
@@ -14,7 +15,7 @@ export default function ConsultAbstractIntroduction({
   file: Consult;
 }): React.ReactNode {
   return (
-    <div className="columns">
+    <TwoColumns>
       <Panel fixed label="Informations">
         <IO.Date label="Date" value={file.date as Date} />
         <IO.String label="Examiner" value={file.examiner as string} />
@@ -58,6 +59,6 @@ export default function ConsultAbstractIntroduction({
           value={() => roundTo(file.getBMISd())}
         />
       </Panel>
-    </div>
+    </TwoColumns>
   );
 }

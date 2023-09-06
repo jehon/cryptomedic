@@ -6,27 +6,9 @@
   scroll-behavior: smooth;
 } */
 
+/* TODO: LEGACY - used in headers in summaries + collapsible */
 img.inline {
   height: 1.5em;
-}
-
-/* TODO LEGACY */
-.columns {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-/* TODO LEGACY */
-.columns > * {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 20%;
-}
-
-.row {
-  width: 100%;
 }
 
 /**
