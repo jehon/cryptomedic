@@ -44,8 +44,8 @@ try {
     }
 
     function ensureFolderEmpty($path) {
-        echo "ensureFolderEmpty: $path\n"; 
-        $target = __DIR__ . "/../" . $path;
+        $target = constant("CR_PRJ_ROOT") . "/" . $path;
+        echo "ensureFolderEmpty: $path ($target)\n"; 
         if (!is_dir($target)) {
             mkdir($target);
         } else {
@@ -54,8 +54,9 @@ try {
         }
     }
 
-    ensureFolderEmpty("api/bootstrap/cache/");
-    ensureFolderEmpty("../tmp/integration/webTemp/");
+    // Relative to CR_PRJ_ROOT
+    ensureFolderEmpty("www/api/bootstrap/cache/");
+    ensureFolderEmpty("tmp/integration/webTemp/");
 
     echo "\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);

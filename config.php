@@ -47,26 +47,6 @@ if (file_exists(__DIR__ . '/config-site.php')) {
   require(__DIR__ . '/config-site.php');
 }
 
-// function myShowConfigByPathForCmdLine($path) {
-//   global $myconfig;
-//   $array = $myconfig;
-
-//   $keys = explode('.', $path);
-//   foreach ($keys as $key) {
-//     if (isset($array[$key])) {
-//       $array = $array[$key];
-//     } else {
-//       throw new Exception("Path not found: " . $path);
-//     }
-//   }
-//   if (is_array($array)) {
-//     # If we have an array, then display the various keys
-//     echo implode("\n", array_keys($array)) . "\n";
-//   } else {
-//     echo $array;
-//   }
-// }
-
 // if (isset($argc)) {
 //   if (($argc == 2) && (substr($argv[0], -strlen(basename(__FILE__))) == basename(__FILE__))) {
 //     myShowConfigByPathForCmdLine($argv[1]);
