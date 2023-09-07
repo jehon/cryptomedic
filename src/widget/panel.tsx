@@ -24,6 +24,9 @@ export default function Panel(
   const [statusOpened, toggleOpened] = React.useState(!closed);
 
   // TODO: no display if no children? does not seem to work perfectly...
+  //
+  // https://react.dev/reference/react/useLayoutEffect
+  //
   //   https://react.dev/reference/react/Component#migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function
   //   => idea: useEffect ? https://react.dev/reference/react/useEffect#my-effect-runs-after-every-re-render
 
