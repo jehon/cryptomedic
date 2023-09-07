@@ -4,7 +4,6 @@ import ConsultClubfoot from "../business/club-foot";
 import Folder from "../business/folder";
 
 import Button from "react-bootstrap/Button";
-import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 
@@ -12,6 +11,7 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
+import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import { date2HumanString, normalizeDate } from "../utils/date";
 import { tryOrMessage } from "../utils/strings";
 
