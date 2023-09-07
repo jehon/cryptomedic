@@ -3,7 +3,7 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "laravel/framework": "10.21.1",
+    "laravel/framework": "10.22.0",
     "mobiledetect/mobiledetectlib": "3.74.0"
   },
   "require-dev": {
