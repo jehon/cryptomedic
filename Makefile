@@ -14,6 +14,9 @@ export CRYPTOMEDIC_HTTP_LOCAL_PORT = 5555
 export DBUPDATEPWD := secret # From config.php
 
 # Default target
+check: clear clean-files start dependencies lint build test ok
+
+# Test with clean environment
 .PHONY: full
 full: clear clean stop dc-build start dependencies lint build test ok
 
