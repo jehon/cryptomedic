@@ -29,6 +29,7 @@ export default function ConsultRicketSummary({
   }
   return (
     <Panel
+      closed
       headers={[
         <img
           src={icons.models.consult_ricket}
