@@ -8,4 +8,8 @@ export default class Price extends CRUD {
   static getBaseUrl() {
     return "admin/prices";
   }
+
+  static getCategories() {
+    return ["consult", "medecine", "other", "workshop", "surgical"];
+  }
 }

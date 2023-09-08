@@ -1,5 +1,6 @@
 import Timed from "./timed.js";
 import { DataMissingException } from "../utils/exceptions.js";
+import Price from "./price.js";
 
 export default class Bill extends Timed {
   getModel() {
@@ -18,13 +19,7 @@ export default class Bill extends Timed {
   // total_real;
   // social_level;
   // total_asked;
-  // lines;
-
-  // consult_*
-  // medecine_*
-  // other_*
-  // workshop_*
-  // surgical_*
+  items;
 
   constructor(
     {
@@ -34,6 +29,7 @@ export default class Bill extends Timed {
       //   total_real,
       //   social_level,
       //   total_asked,
+      items,
       ...others
     } = {},
     folder = null
@@ -56,6 +52,20 @@ export default class Bill extends Timed {
           this.sl_family_salary = last_bill.sl_family_salary;
           this.sl_number_of_household_members =
             last_bill.sl_number_of_household_members;
+        }
+      }
+    }
+
+    // Build up the current items'list
+    this.items = items;
+    if (!this.items) {
+      this.items = [];
+      for (const key of Object.keys(others)) {
+        if (others[key] > 0) {
+          const category = key.split("_")[0];
+          if (category in Price.getCategories()) {
+            this.items.push({ key, category, value: others[key] });
+          }
         }
       }
     }
