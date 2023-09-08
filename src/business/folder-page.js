@@ -1,18 +1,6 @@
 import CRUD from "./crud.js";
-import { getPref } from "../utils/prefs.js";
 
 export default class FolderPage extends CRUD {
-  initFromCachedPreferences() {
-    var c = getPref("file", {
-      examiner: "",
-      center: "",
-      date: ""
-    });
-    this.examiner = c.examiner;
-    this.center = c.center;
-    this.date = c.date;
-  }
-
   isSet(field) {
     if (typeof this[field] == "undefined") {
       return false;

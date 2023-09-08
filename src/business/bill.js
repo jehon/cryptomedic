@@ -1,7 +1,7 @@
-import PatientRelated from "./patient-related.js";
+import Timed from "./timed.js";
 import { DataMissingException } from "../utils/exceptions.js";
 
-export default class Bill extends PatientRelated {
+export default class Bill extends Timed {
   getModel() {
     return "Bill";
   }
@@ -12,127 +12,18 @@ export default class Bill extends PatientRelated {
     };
   }
 
+  // price_id;
   // sl_family_salary;
   // sl_number_of_household_members;
-  // date;
-  // price_id;
-  // center;
-  // examiner;
   // total_real;
   // social_level;
   // total_asked;
-  // consult_CDC_consultation_physio;
-  // consult_CDC_consultation_Bengali_Doctor;
-  // consult_CDC_consultation_Doctor;
-  // consult_field_visit;
-  // consult_home_visit;
-  // medecine_medecine;
-  // medecine_calcium_30x500mg;
-  // other_making_plaster;
-  // other_make_long_plaster;
-  // other_make_short_plaster;
-  // other_making_dressing;
-  // ["other_x-ray"];
-  // other_physiotherapy;
-  // other_other_consultation_care;
-  // workshop_BHKAFO_night;
-  // workshop_BHKAFO_walking;
-  // workshop_UHKAFO_night;
-  // workshop_UHKAFO_night_child;
-  // workshop_UHKAFO_walking;
-  // ["workshop_BKAFO_night_-_plastic"];
-  // workshop_BKAFO_walking;
-  // workshop_KAFO_night;
-  // workshop_UKAFO_walking;
-  // workshop_knee_brace;
-  // workshop_BAFO_night;
-  // workshop_BAFO_walking;
-  // workshop_BAFO_walking_child;
-  // workshop_AFO_night;
-  // workshop_AFO_night_child;
-  // workshop_AFO_walking;
-  // workshop_AFO_walking_child;
-  // ["workshop_orthoshoes_with_bar_-_one_leg"];
-  // ["workshop_orthoshoes_without_bar_-_one_leg"];
-  // workshop_DB_splint;
-  // workshop_compensation_sole;
-  // workshop_compensation_sole_1cm;
-  // workshop_compensation_sole_2cm;
-  // workshop_compensation_sole_3cm;
-  // workshop_compensation_sole_4cm;
-  // workshop_compensation_sole_5cm;
-  // workshop_arch_support;
-  // workshop_matetarsal_pade;
-  // workshop_supinator_corner;
-  // workshop_wirst_splint;
-  // workshop_hand_splint;
-  // workshop_finger_splint;
-  // ["workshop_walker_with_wheel_-_folding"];
-  // ["workshop_walker_with_wheel_-_non_folding"];
-  // ["workshop_crutch_a_pair_-_local"];
-  // ["workshop_crutch_-_stainless_steel"];
-  // ["workshop_wheel_chair_-_folding"];
-  // ["workshop_CP_chair_-_wooden"];
-  // ["workshop_CP_standing_table_-_wooden"];
-  // workshop_cervical_collar;
-  // workshop_abdominal_corset_belt;
-  // workshop_reparing;
-  // workshop_other_orthodevice;
-  // surgical_osteotomy;
-  // surgical_epiphysiodesis;
-  // surgical_polio_AL;
-  // surgical_percutaneous_AL_club_foot;
-  // surgical_PMR_club_foot;
-  // surgical_burn_release;
-  // surgical_pin_removal;
-  // surgical_other_operation;
-  // other_microbus;
-  // other_CMOSH_follow_up;
-  // consult_give_appointment;
-  // medecine_vitamineD;
-  // other_nutritionalAdvice;
-  // other_nutritionalSupport;
-  // other_group_physiotherapy;
-  // other_physiotherapy_child;
-  // other_physiotherapy_adult;
-  // workshop_BHKAFO_drop_lock_single_axis;
-  // ["workshop_crutch_alumenium_-_a_pair"];
-  // workshop_wheel_chair_china;
-  // workshop_mailwalke_brace;
-  // workshop_leg_truction;
-  // workshop_thoracic_brace;
-  // workshop_thoracic_brace_and_scoliosis_brace;
-  // workshop_samainto_brace;
-  // ["workshop_fracture_brace_-_one_leg"];
-  // workshop_smo;
-  // workshop_lifspring_afo;
-  // surgical_osteotomy_bi;
-  // surgical_epiphysiodesis_bi;
-  // surgical_polio_achileus_achileus_lenthening_bi;
-  // surgical_percutaneous_achil_tenotomy_bi_cmosh;
-  // surgical_percutaneous_achil_tenotomy_uni_cdc;
-  // surgical_percutaneous_achil_tenotomy_bi_cdc;
-  // surgical_PMR_club_club_foot_bi;
-  // surgical_burn_little_release;
-  // other_other_plaster;
-  // other_other_dressing;
-  // consult_club_foot_follow_up;
-  // ["workshop_UHKAFO_-_Drop_lock_single_axis_-_MI"];
-  // ["workshop_artificial_limb_-_BK_-_exoskeleton"];
-  // ["workshop_artificial_limb_-_AK_-_exoskeleton"];
-  // ["workshop_artificial_limb_-_BK_-_Endoskeleton_with_pylon_standard"];
-  // ["workshop_artificial_limb_-_AK_-_single_axis_standard"];
-  // ["workshop_artificial_limb_-_AK_-_polycentric_knee_joint"];
-  // workshop_artificial_tr_radial_prosthesis_alimco;
-  // workshop_artificial_tr_radial_prosthesis_jaipur;
-  // ["workshop_wheel_chair_-_china_-_modified"];
-  // workshop_white_can;
-  // workshop_hearing_aids;
-  // workshop_elbow_crutch;
-  // workshop_lifspring_BAFO;
-  // ["workshop_AFO_-_Articulated"];
-  // ["workshop_extension_brace_-_AFO"];
-  // workshop_other;
+
+  // consult_*
+  // medecine_*
+  // other_*
+  // workshop_*
+  // surgical_*
 
   constructor(data, folder = null) {
     super(data, folder);

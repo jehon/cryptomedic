@@ -1,6 +1,6 @@
-import PatientRelated from "./patient-related.js";
+import Timed from "./timed.js";
 
-export default class Surgery extends PatientRelated {
+export default class Surgery extends Timed {
   getModel() {
     return "Surgery";
   }

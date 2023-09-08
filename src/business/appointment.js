@@ -5,6 +5,8 @@ export default class Appointment extends PatientRelated {
     return "Appointment";
   }
 
+  // We could not inherit from Timed because Timed implies a date in the past
+
   examiner;
   purpose;
   date;

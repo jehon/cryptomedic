@@ -1,3 +1,4 @@
+import { getPref } from "../utils/prefs.js";
 import FolderPage from "./folder-page.js";
 
 export default class PatientRelated extends FolderPage {
@@ -20,6 +21,17 @@ export default class PatientRelated extends FolderPage {
     } else {
       this.linkPatient(null);
     }
+  }
+
+  initFromCachedPreferences() {
+    var c = getPref("file", {
+      examiner: "",
+      center: "",
+      date: ""
+    });
+    this.examiner = c.examiner;
+    this.center = c.center;
+    this.date = c.date;
   }
 
   linkPatient(patient) {
