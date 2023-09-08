@@ -61,6 +61,7 @@ export default function ConsultRicketSummary({
             value={file.wrist_enlargement}
           ></IO.List>
           <IO.List label="Rib Heading" value={file.rib_heading}></IO.List>
+          <IO.Text left label="XRay" value={file.xray}></IO.Text>
         </Panel>
       </TwoColumns>
       <TwoColumns>
@@ -73,7 +74,6 @@ export default function ConsultRicketSummary({
             label="Leg Angle"
             value={file.right_leg_angle}
           ></IO.Number>
-          <div className="separator">Cross</div>
           <IO.Number
             right
             label="Cross Right T"
@@ -89,7 +89,6 @@ export default function ConsultRicketSummary({
             label="IMIC Distance"
             value={file.IMIC_distance}
           ></IO.Number>
-          <IO.Text right label="XRay" value={file.xray}></IO.Text>
         </Panel>
         <Panel headers={[<ImgSideLeft></ImgSideLeft>, <span>Left leg</span>]}>
           <IO.List left label="Leg" value={file.left_leg}></IO.List>
@@ -98,7 +97,6 @@ export default function ConsultRicketSummary({
             label="Leg Angle"
             value={file.left_leg_angle}
           ></IO.Number>
-          <div className="separator">Cross</div>
           <IO.Number left label="Cross T" value={file.cross_left_T}></IO.Number>
           <IO.Number left label="Cross F" value={file.cross_left_F}></IO.Number>
           <IO.Number
@@ -106,7 +104,6 @@ export default function ConsultRicketSummary({
             label="IMIC Distance"
             value={file.IMIC_distance}
           ></IO.Number>
-          <IO.Text left label="XRay" value={file.xray}></IO.Text>
         </Panel>
       </TwoColumns>
       <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
