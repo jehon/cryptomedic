@@ -51,6 +51,9 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.web.rule=PathPrefix(`/`)
+    # extra_hosts:
+    #   # host.docker.internal: host-gateway
+    #   mysql: host-gateway
 
   dev-static:
     image: httpd:alpine
