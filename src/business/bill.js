@@ -18,6 +18,7 @@ export default class Bill extends Timed {
   // total_real;
   // social_level;
   // total_asked;
+  // lines;
 
   // consult_*
   // medecine_*
@@ -25,9 +26,20 @@ export default class Bill extends Timed {
   // workshop_*
   // surgical_*
 
-  constructor(data, folder = null) {
-    super(data, folder);
-    if (!data || !data.id) {
+  constructor(
+    {
+      //   price_id,
+      //   sl_family_salary,
+      //   sl_number_of_household_members,
+      //   total_real,
+      //   social_level,
+      //   total_asked,
+      ...others
+    } = {},
+    folder = null
+  ) {
+    super(others, folder);
+    if (!this.id) {
       // Initialize social level from last bill (if any)
       var last_bill = null;
       if (folder) {
