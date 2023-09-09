@@ -13,28 +13,36 @@ export default class Bill extends Timed {
     };
   }
 
-  // price_id;
-  // sl_family_salary;
-  // sl_number_of_household_members;
-  // total_real;
-  // social_level;
-  // total_asked;
+  price_id;
+  sl_family_salary;
+  sl_number_of_household_members;
+  total_real;
+  social_level;
+  total_asked;
   items;
 
   constructor(
     {
-      //   price_id,
-      //   sl_family_salary,
-      //   sl_number_of_household_members,
-      //   total_real,
-      //   social_level,
-      //   total_asked,
+      price_id,
+      sl_family_salary,
+      sl_number_of_household_members,
+      total_real,
+      social_level,
+      total_asked,
       items,
       ...others
     } = {},
     folder = null
   ) {
     super(others, folder);
+    this.price_id = price_id;
+    this.sl_family_salary = sl_family_salary;
+    this.sl_number_of_household_members = sl_number_of_household_members;
+    this.total_real = total_real;
+    this.social_level = social_level;
+    this.total_asked = total_asked;
+    this.items = items;
+
     if (!this.id) {
       // Initialize social level from last bill (if any)
       var last_bill = null;
