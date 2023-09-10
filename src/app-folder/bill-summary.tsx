@@ -27,6 +27,7 @@ export default function BillSummary({
   }
   return (
     <Panel
+      closed
       headers={[
         <img src={icons.models.bill} alt="Bill" className="inline" />,
         <span className="no-mobile">Bill</span>,
