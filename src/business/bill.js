@@ -46,7 +46,7 @@ export default class Bill extends Timed {
     if (!this.id) {
       // Initialize social level from last bill (if any)
       var last_bill = null;
-      if (folder) {
+      if (this.getFolder()) {
         for (var v of folder.getListByType(Bill)) {
           if (!last_bill) {
             last_bill = v;
@@ -65,18 +65,21 @@ export default class Bill extends Timed {
     }
 
     // Build up the current items'list
-    this.items = items;
-    if (!this.items) {
-      this.items = [];
-      for (const key of Object.keys(others)) {
-        if (others[key] > 0) {
-          const category = key.split("_")[0];
-          if (category in Price.getCategories()) {
-            this.items.push({ key, category, value: others[key] });
-          }
+    this.items = [];
+    for (const key of Object.keys(others)) {
+      if (others[key] > 0) {
+        const category = key.split("_")[0];
+        if (Price.getCategories().includes(category)) {
+          this.items.push({ key, category, value: others[key] });
         }
       }
     }
+  }
+
+  getTotalForCategory(category) {
+    return this.items
+      .filter((item) => item.category === category)
+      .reduce((item) => item.value * this.getPriceFor(item.key), 0);
   }
 
   ratioSalary() {
@@ -221,6 +224,12 @@ export default class Bill extends Timed {
     return this.price[key] * this[key];
   }
 
+  getTotalAlreadyPaid() {
+    return this.getFolder()
+      .getFilesRelatedToBill(this.getId())
+      .reduce((acc, payment) => acc + payment.amount, 0);
+  }
+
   calculatePriceId(prices) {
     if (typeof this.date == "undefined" || !this.date || !prices) {
       this.price_id = 0;
@@ -228,16 +237,14 @@ export default class Bill extends Timed {
       return 0;
     }
     this.price_id = -1;
-    var t = this;
-    var dref = this.date;
     for (var i in prices) {
       var p = prices[i];
       if (
-        (p["date_from"] == null || p["date_from"] <= dref) &&
-        (p["date_to"] == null || p["date_to"] > dref)
+        (p["date_from"] == null || p["date_from"] <= this.date) &&
+        (p["date_to"] == null || p["date_to"] > this.date)
       ) {
-        t.price_id = i;
-        t.price = prices[i];
+        this.price_id = i;
+        this.price = prices[i];
       }
     }
     if (this.price_id < 0) {

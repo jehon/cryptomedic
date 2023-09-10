@@ -9,6 +9,7 @@ import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { icons } from "../config";
 import { date2HumanString, normalizeDate } from "../utils/date";
+import { roundTo } from "../utils/strings";
 
 export default function BillSummary({
   file,
@@ -41,11 +42,43 @@ export default function BillSummary({
       <TwoColumns>
         <Panel fixed label="Informations">
           <IO.Date label="Date" value={file.date as Date} />
-          <IO.String label="Center" value={file.center as string} />
           <IO.String label="Examiner" value={file.examiner as string} />
+          <IO.String label="Center" value={file.center as string} />
         </Panel>
-        <Panel label="Details">blablabla</Panel>
+        <Panel fixed label="Totals">
+          <IO.Number
+            label="Family Salary"
+            value={file.sl_family_salary as number}
+          />
+          <IO.Number
+            label="Number of Houslehold Members"
+            value={file.sl_number_of_household_members as number}
+          />
+          <IO.Function
+            label="Salary Ratio"
+            value={() => roundTo(file.ratioSalary(), 0)}
+          />
+          <IO.Function
+            label="Social Level (calculated)"
+            value={() => roundTo(file.social_level_calculated(), 0)}
+          />
+          <IO.Function
+            label="Raw Calculated Total"
+            value={() => roundTo(file.calculate_total_real(), 0)}
+          />
+          <IO.Function
+            label="Percentage asked"
+            value={() => roundTo(file.calculate_percentage_asked(), 0)}
+          />
+          <IO.Number label="Price asked" value={file.total_asked} />
+          <IO.Function
+            label="Received"
+            value={() => roundTo(file.getTotalAlreadyPaid(), 0)}
+          />
+        </Panel>
       </TwoColumns>
+      <Panel label="Details">TODO xxx</Panel>
+      <Panel label="Payments">TODO xxx</Panel>
     </Panel>
   );
 }
