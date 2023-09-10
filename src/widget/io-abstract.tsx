@@ -19,9 +19,9 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
       value,
       edit = false,
       required = false,
-      note = false,
-      left = false,
-      right = false
+      note = false
+      // left = false,
+      // right = false
     } = this.props;
 
     // All execpt read without value
