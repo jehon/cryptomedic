@@ -17,20 +17,23 @@ export default class OtherConsult extends Consult {
   performed;
   not_performed;
 
-  constructor({
-    side,
-    joints_or_bones_affected,
-    deformity,
-    articulation_mobility,
-    muscle_strength,
-    pain,
-    walk,
-    xray,
-    performed,
-    not_performed,
-    ...others
-  } = {}) {
-    super(others);
+  constructor(
+    {
+      side,
+      joints_or_bones_affected,
+      deformity,
+      articulation_mobility,
+      muscle_strength,
+      pain,
+      walk,
+      xray,
+      performed,
+      not_performed,
+      ...others
+    } = {},
+    folder = null
+  ) {
+    super(others, folder);
 
     this.side = side;
     this.joints_or_bones_affected = joints_or_bones_affected;

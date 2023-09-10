@@ -57,42 +57,45 @@ export default class ClubFoot extends Consult {
   empty_heel_left;
   empty_heel_right;
 
-  constructor({
-    pain_left,
-    pain_right,
-    walking_floor_contact_left,
-    walking_floor_contact_right,
-    walking_first_contact_left,
-    walking_first_contact_right,
-    jumping_one_leg_left,
-    jumping_one_leg_right,
-    run_left,
-    run_right,
-    adduction_angle_left,
-    adduction_angle_right,
-    hind_foot_angle_W_left,
-    hind_foot_angle_W_right,
-    dorsal_flexion_max_left,
-    dorsal_flexion_max_right,
-    plantar_flexion_max_left,
-    plantar_flexion_max_right,
-    muscular_inbalance_left,
-    muscular_inbalance_right,
-    curved_lateral_border_left,
-    curved_lateral_border_right,
-    medial_crease_left,
-    medial_crease_right,
-    talar_head_coverage_left,
-    talar_head_coverage_right,
-    posterior_crease_left,
-    posterior_crease_right,
-    rigid_equinus_left,
-    rigid_equinus_right,
-    empty_heel_left,
-    empty_heel_right,
-    ...others
-  } = {}) {
-    super(others);
+  constructor(
+    {
+      pain_left,
+      pain_right,
+      walking_floor_contact_left,
+      walking_floor_contact_right,
+      walking_first_contact_left,
+      walking_first_contact_right,
+      jumping_one_leg_left,
+      jumping_one_leg_right,
+      run_left,
+      run_right,
+      adduction_angle_left,
+      adduction_angle_right,
+      hind_foot_angle_W_left,
+      hind_foot_angle_W_right,
+      dorsal_flexion_max_left,
+      dorsal_flexion_max_right,
+      plantar_flexion_max_left,
+      plantar_flexion_max_right,
+      muscular_inbalance_left,
+      muscular_inbalance_right,
+      curved_lateral_border_left,
+      curved_lateral_border_right,
+      medial_crease_left,
+      medial_crease_right,
+      talar_head_coverage_left,
+      talar_head_coverage_right,
+      posterior_crease_left,
+      posterior_crease_right,
+      rigid_equinus_left,
+      rigid_equinus_right,
+      empty_heel_left,
+      empty_heel_right,
+      ...others
+    } = {},
+    folder = null
+  ) {
+    super(others, folder);
     this.pain_left = pain_left;
     this.pain_right = pain_right;
     this.walking_floor_contact_left = walking_floor_contact_left;
