@@ -31,7 +31,9 @@ export default function BillSummary({
       headers={[
         <img src={icons.models.bill} alt="Bill" className="inline" />,
         <span className="no-mobile">Bill</span>,
-        <span>{date2HumanString(normalizeDate(file.date))}</span>
+        <span>{date2HumanString(normalizeDate(file.date))}</span>,
+        <span>total: {file.total_real}</span>,
+        <span>paid: {file.getTotalAlreadyPaid()}</span>
       ]}
     >
       <Button
