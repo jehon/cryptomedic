@@ -7,21 +7,29 @@ export default class Patient extends Pojo {
 
   comments;
 
-  constructor({
-    entry_year,
-    entry_order,
-    name,
-    sex,
-    year_of_birth,
-    phone,
-    address_comments,
-    address_district,
-    address_upazilla,
-    address_union,
-    pathology,
-    comments,
-    ...others
-  } = {}) {
+  /**
+   *
+   * @param {*} param0
+   * @param {Folder} folder
+   */
+  constructor(
+    {
+      entry_year,
+      entry_order,
+      name,
+      sex,
+      year_of_birth,
+      phone,
+      address_comments,
+      address_district,
+      address_upazilla,
+      address_union,
+      pathology,
+      comments,
+      ...others
+    } = {},
+    folder = null
+  ) {
     super(others);
     this.entry_year = entry_year;
     this.entry_order = entry_order;

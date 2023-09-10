@@ -2,14 +2,8 @@ import { getPref } from "../utils/prefs.js";
 import Pojo from "./pojo.js";
 
 export default class PatientRelated extends Pojo {
-  /** @type {Patient|null} */
-  #patient;
-
   /** @type {number} */
   patient_id;
-
-  /** @type {folder} */
-  #folder;
 
   /**
    *
@@ -18,12 +12,9 @@ export default class PatientRelated extends Pojo {
   constructor({ patient_id, ...others } = {}, folder = null) {
     super(others);
     this.patient_id = patient_id;
-    this.#folder = folder;
+    this.getFolder = () => folder;
     if (this.getFolder()) {
       this.patient_id = folder.getId();
-      this.linkPatient(folder.getPatient());
-    } else {
-      this.linkPatient(null);
     }
   }
 
@@ -38,22 +29,11 @@ export default class PatientRelated extends Pojo {
     this.date = c.date;
   }
 
-  linkPatient(patient) {
-    this.#patient = patient;
-    if (patient) {
-      this.patient_id = patient.id;
-    }
-  }
-
-  getFolder() {
-    return this.#folder;
-  }
-
   /**
    * @returns {Patient|null}
    */
   getPatient() {
-    return this.#patient;
+    return this.getFolder().getPatient();
   }
 
   isLocked() {

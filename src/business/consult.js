@@ -26,6 +26,7 @@ export default class Consult extends Timed {
    * @param {treatment_finished?}
    * @param {comments?}
    * @param {suggested_for_surgery?}
+   * @param {Folder} folder
    */
   constructor(
     {

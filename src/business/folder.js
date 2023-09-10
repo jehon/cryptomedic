@@ -60,10 +60,6 @@ export default class Folder extends Pojo {
       let v = listing[i];
       this.list.push(Folder.create(this, v.type, v.record));
     }
-
-    this.getFilesRelatedToPatient().forEach((f) => {
-      f.linkPatient(this.getPatient());
-    });
   }
 
   getId() {

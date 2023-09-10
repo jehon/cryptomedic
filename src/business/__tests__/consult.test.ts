@@ -6,6 +6,7 @@ import RicketConsult from "../ricket-consult.js";
 import { DataMissingException } from "../../utils/exceptions.js";
 
 import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
+import Folder from "../folder.js";
 
 test("with ricketConsult_13", async function () {
   let folder = await loadReferenceFolder(RefFolder1);
@@ -29,9 +30,11 @@ test("with ricketConsult_13", async function () {
 });
 
 test("with patient with sex", function () {
-  let p = new Patient({ id: 123, sex: "Male" } as any);
-  var c = new Consult({ patient_id: 123});
-  c.linkPatient(p);
+  let f = new Folder();
+  let p = new Patient({ id: 123, sex: "Male" } as any, f);
+  var c = new Consult({ patient_id: 123}, f);
+  f.list.push(p);
+  f.list.push(c);
 
   expect(function () {
     c.bmi();
