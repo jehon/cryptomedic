@@ -1,6 +1,6 @@
-import FolderPage from "./folder-page.js";
+import Pojo from "./pojo.js";
 
-export default class Patient extends FolderPage {
+export default class Patient extends Pojo {
   getModel() {
     return "Patient";
   }

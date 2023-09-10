@@ -1,7 +1,7 @@
 import { getPref } from "../utils/prefs.js";
-import FolderPage from "./folder-page.js";
+import Pojo from "./pojo.js";
 
-export default class PatientRelated extends FolderPage {
+export default class PatientRelated extends Pojo {
   /** @type {Patient|null} */
   #patient;
 

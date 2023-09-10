@@ -1,4 +1,4 @@
-import FolderPage from "../../../../src/business/folder-page.js";
+import Pojo from "../../../../src/business/pojo.js";
 
 /**
  * @param {string} pathname to be set
@@ -56,14 +56,14 @@ export function getRouteToFolderPatient(folderId, edit = false) {
 }
 
 /**
- * @param {FolderPage} folderPage - the file to display
+ * @param {Pojo} pojo - the file to display
  * @returns {string} the route
  */
-export function getRouteToFolderFile(folderPage) {
+export function getRouteToFolderFile(pojo) {
   return getRouteToFolderFileByParams(
-    folderPage.patient_id,
-    folderPage.getModel(),
-    folderPage.id
+    pojo.patient_id,
+    pojo.getModel(),
+    pojo.id
   );
 }
 

@@ -1,4 +1,4 @@
-import FolderPage from "./folder-page.js";
+import Pojo from "./pojo.js";
 import Patient from "./patient.js";
 import Appointment from "./appointment.js";
 import Bill from "./bill.js";
@@ -9,7 +9,7 @@ import Picture from "./picture.js";
 import RicketConsult from "./ricket-consult.js";
 import Surgery from "./surgery.js";
 
-export default class Folder extends FolderPage {
+export default class Folder extends Pojo {
   static string2class(type) {
     console.assert(typeof type == "string", "create[type/1] expect a string");
     switch (type) {
@@ -104,7 +104,7 @@ export default class Folder extends FolderPage {
 
   /**
    *
-   * @param {string} uid - see FolderPage#uid
+   * @param {string} uid - see Pojo#uid
    * @returns {PatientRelated|null} a file or null
    */
   getByUid(uid) {

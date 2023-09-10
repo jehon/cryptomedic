@@ -1,14 +1,14 @@
 import { test, expect } from "@jest/globals";
 
-import FolderPage from "../folder-page.js";
+import Pojo from "../pojo.js";
 
 test("with empty loader", function () {
-  var data = new FolderPage();
-    expect(data instanceof FolderPage).toBeTruthy();
+  var data = new Pojo();
+    expect(data instanceof Pojo).toBeTruthy();
 });
 
 test("with data loading at construction time", function () {
-  var data = new FolderPage({
+  var data = new Pojo({
     id: 123,
     created_at: new Date(),
     updated_at: new Date(),
@@ -23,7 +23,7 @@ test("with data loading at construction time", function () {
 });
 
 test("would interpret notSet correctly", function () {
-  var data = new FolderPage();
+  var data = new Pojo();
   expect(data.last_user).toBeUndefined();
   expect(data.isSet("last_user")).toBeFalsy();
   expect(data.isNotZero("last_user")).toBeFalsy();
