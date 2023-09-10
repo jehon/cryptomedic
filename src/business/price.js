@@ -1,6 +1,6 @@
-import CRUD from "./crud.js";
+import Pojo from "./pojo.js";
 
-export default class Price extends CRUD {
+export default class Price extends Pojo {
   getModel() {
     return "Price";
   }

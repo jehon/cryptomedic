@@ -17,17 +17,20 @@ export default class Surgery extends Timed {
   report_procedure;
   follow_up_complication;
 
-  constructor({
-    date,
-    report_diagnostic,
-    report_surgeon,
-    report_side_right,
-    report_side_left,
-    report_procedure,
-    follow_up_complication,
-    ...others
-  } = {}) {
-    super(others);
+  constructor(
+    {
+      date,
+      report_diagnostic,
+      report_surgeon,
+      report_side_right,
+      report_side_left,
+      report_procedure,
+      follow_up_complication,
+      ...others
+    } = {},
+    folder = null
+  ) {
+    super(others, folder);
     this.date = date;
     this.report_diagnostic = report_diagnostic;
     this.report_surgeon = report_surgeon;

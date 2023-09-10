@@ -8,6 +8,9 @@ export default class PatientRelated extends FolderPage {
   /** @type {number} */
   patient_id;
 
+  /** @type {folder} */
+  #folder;
+
   /**
    *
    * @param {patient_id?}
@@ -15,7 +18,8 @@ export default class PatientRelated extends FolderPage {
   constructor({ patient_id, ...others } = {}, folder = null) {
     super(others);
     this.patient_id = patient_id;
-    if (folder) {
+    this.#folder = folder;
+    if (this.getFolder()) {
       this.patient_id = folder.getId();
       this.linkPatient(folder.getPatient());
     } else {
@@ -39,6 +43,10 @@ export default class PatientRelated extends FolderPage {
     if (patient) {
       this.patient_id = patient.id;
     }
+  }
+
+  getFolder() {
+    return this.#folder;
   }
 
   /**

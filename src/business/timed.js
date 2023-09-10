@@ -1,5 +1,7 @@
 import PatientRelated from "./patient-related.js";
 
+// TODO: Use mixins https://www.typescriptlang.org/docs/handbook/mixins.html
+
 export default class Timed extends PatientRelated {
   getModel() {
     return "Consult";
@@ -13,8 +15,8 @@ export default class Timed extends PatientRelated {
    *
    * @param {weight_kg?}
    */
-  constructor({ date, examiner, center, ...others } = {}) {
-    super(others);
+  constructor({ date, examiner, center, ...others } = {}, folder = null) {
+    super(others, folder);
     this.date = date;
     this.examiner = examiner;
     this.center = center;

@@ -27,17 +27,20 @@ export default class Consult extends Timed {
    * @param {comments?}
    * @param {suggested_for_surgery?}
    */
-  constructor({
-    weight_kg,
-    height_cm,
-    brachial_circumference_cm,
-    treatment_evaluation,
-    treatment_finished,
-    comments,
-    suggested_for_surgery,
-    ...others
-  } = {}) {
-    super(others);
+  constructor(
+    {
+      weight_kg,
+      height_cm,
+      brachial_circumference_cm,
+      treatment_evaluation,
+      treatment_finished,
+      comments,
+      suggested_for_surgery,
+      ...others
+    } = {},
+    folder = null
+  ) {
+    super(others, folder);
 
     this.weight_kg = weight_kg;
     this.height_cm = height_cm;

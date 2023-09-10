@@ -1,6 +1,6 @@
 import nullify from "../utils/nullify.js";
 
-export default class CRUD {
+export default class Pojo {
   static getBaseUrl() {
     throw new Error("getBaseUrl is not implemented");
   }
@@ -73,5 +73,37 @@ export default class CRUD {
       res = {};
     }
     return res;
+  }
+
+  isSet(field) {
+    if (typeof this[field] == "undefined") {
+      return false;
+    }
+    if (this[field] == null) {
+      return false;
+    }
+    return true;
+  }
+
+  isNotZero(field) {
+    if (!this.isSet(field)) {
+      return false;
+    }
+    if (this[field] === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  isLocked() {
+    return false;
+  }
+
+  getServerRessource() {
+    return this.getModel().toLowerCase() + "s";
+  }
+
+  getRelated() {
+    return {};
   }
 }
