@@ -10,6 +10,7 @@ import IO from "../widget/io";
 import { icons } from "../config";
 import { date2HumanString, normalizeDate } from "../utils/date";
 import { roundTo } from "../utils/strings";
+import Payment from "../business/payment";
 
 export default function BillSummary({
   file,
@@ -77,8 +78,16 @@ export default function BillSummary({
           />
         </Panel>
       </TwoColumns>
-      <Panel label="Details">TODO xxx</Panel>
-      <Panel label="Payments">TODO xxx</Panel>
+      <Panel label="Bill Lines">
+        {file.items.map((line) => {
+          return <IO.Number label={line.key} value={line.value} />;
+        })}
+      </Panel>
+      <Panel label="Payments">
+        {file.getPayments().map((payment: Payment) => {
+          return <IO.Number label={payment.date} value={payment.amount} />;
+        })}
+      </Panel>
     </Panel>
   );
 }

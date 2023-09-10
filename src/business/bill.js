@@ -225,9 +225,11 @@ export default class Bill extends Timed {
   }
 
   getTotalAlreadyPaid() {
-    return this.getFolder()
-      .getFilesRelatedToBill(this.getId())
-      .reduce((acc, payment) => acc + payment.amount, 0);
+    return this.getPayments().reduce((acc, payment) => acc + payment.amount, 0);
+  }
+
+  getPayments() {
+    return this.getFolder().getFilesRelatedToBill(this.getId());
   }
 
   calculatePriceId(prices) {
