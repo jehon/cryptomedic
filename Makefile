@@ -14,11 +14,11 @@ export CRYPTOMEDIC_HTTP_LOCAL_PORT = 5555
 export DBUPDATEPWD := secret # From config.php
 
 # Default target
-check: clear clean-files start dependencies lint build test ok
+check: cls clean-files start dependencies lint build test ok
 
 # Test with clean environment
 .PHONY: full
-full: clear clean stop dc-build start dependencies lint build test ok
+full: cls clean stop dc-build start dependencies lint build test ok
 
 .PHONY: ok
 ok:
@@ -59,7 +59,10 @@ dump:
 	@echo "MySQL user:                     $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
 # @echo "Chrome:                         $(shell google-chrome --version 2>&1 )"
 
-clear:
+.PHONY: clear
+clear: cls
+.PHONY: cls
+cls:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi || true
 	@echo "**"
 	@echo "**"
