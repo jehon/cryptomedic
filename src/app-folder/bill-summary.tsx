@@ -83,12 +83,20 @@ export default function BillSummary({
       </TwoColumns>
       <Panel label="Bill Lines">
         {file.items.map((line) => {
-          return <IO.Number label={line.key} value={line.value} />;
+          return (
+            <IO.Number key={line.key} label={line.key} value={line.value} />
+          );
         })}
       </Panel>
       <Panel label="Payments">
         {file.getPayments().map((payment: Payment) => {
-          return <IO.Number label={payment.date} value={payment.amount} />;
+          return (
+            <IO.Number
+              key={payment.uid()}
+              label={payment.date}
+              value={payment.amount}
+            />
+          );
         })}
       </Panel>
     </Panel>
