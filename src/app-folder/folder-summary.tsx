@@ -2,7 +2,7 @@ import React from "react";
 
 import { bridgeTo } from "../bridge";
 import Folder from "../business/folder";
-import PatientRelated from "../business/patient-related";
+import PatientRelated from "../business/abstracts/patient-related";
 
 import Patient from "../business/patient";
 import PatientSummary from "./patient-summary";

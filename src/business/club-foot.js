@@ -1,4 +1,4 @@
-import Consult from "./consult.js";
+import Consult from "./abstracts/consult.js";
 
 /**
  * @param {string|null} val the value to be parsed

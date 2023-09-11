@@ -1,4 +1,4 @@
-import Consult from "./consult.js";
+import Consult from "./abstracts/consult.js";
 
 // TODO: rename to ConsultOther
 export default class OtherConsult extends Consult {

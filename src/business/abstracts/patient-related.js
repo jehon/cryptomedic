@@ -1,4 +1,4 @@
-import { getPref } from "../utils/prefs.js";
+import { getPref } from "../../utils/prefs.js";
 import Pojo from "./pojo.js";
 
 export default class PatientRelated extends Pojo {

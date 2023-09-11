@@ -1,4 +1,4 @@
-import Timed from "./timed.js";
+import Timed from "./abstracts/timed.js";
 
 export default class Surgery extends Timed {
   getModel() {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Consult from "../../business/consult";
+import Consult from "../../business/abstracts/consult";
 
 import TwoColumns from "../../widget/two-columns";
 import Panel from "../../widget/panel";

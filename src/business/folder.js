@@ -1,4 +1,4 @@
-import Pojo from "./pojo.js";
+import Pojo from "./abstracts/pojo.js";
 import Patient from "./patient.js";
 import Appointment from "./appointment.js";
 import Bill from "./bill.js";

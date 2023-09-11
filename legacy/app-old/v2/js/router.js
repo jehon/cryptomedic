@@ -1,4 +1,4 @@
-import Pojo from "../../../../src/business/pojo.js";
+import Pojo from "../../../../src/business/abstracts/pojo.js";
 
 /**
  * @param {string} pathname to be set

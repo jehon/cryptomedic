@@ -1,4 +1,4 @@
-import Consult from "./consult.js";
+import Consult from "./abstracts/consult.js";
 
 // TODO: rename to ConsultRicket
 export default class RicketConsult extends Consult {

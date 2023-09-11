@@ -1,4 +1,4 @@
-import PatientRelated from "./patient-related.js";
+import PatientRelated from "./abstracts/patient-related.js";
 
 export default class Picture extends PatientRelated {
   getModel() {

@@ -1,12 +1,12 @@
 import { test, expect } from "@jest/globals";
 
 import Consult from "../consult.js";
-import Patient from "../patient.js";
-import RicketConsult from "../ricket-consult.js";
-import { DataMissingException } from "../../utils/exceptions.js";
+import Patient from "../../patient.js";
+import RicketConsult from "../../ricket-consult.js";
+import { DataMissingException } from "../../../utils/exceptions.js";
 
-import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
-import Folder from "../folder.js";
+import { loadReferenceFolder, RefFolder1 } from "../../../test-helper";
+import Folder from "../../folder.js";
 
 test("with ricketConsult_13", async function () {
   let folder = await loadReferenceFolder(RefFolder1);

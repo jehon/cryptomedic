@@ -3,7 +3,7 @@ import { test, expect } from "@jest/globals";
 import Pojo from "../pojo.js";
 
 test("with empty loader", function () {
-  var data = new Pojo();
+  var data = new Pojo({});
     expect(data instanceof Pojo).toBeTruthy();
 });
 
@@ -23,7 +23,7 @@ test("with data loading at construction time", function () {
 });
 
 test("would interpret notSet correctly", function () {
-  var data = new Pojo();
+  var data = new Pojo({});
   expect(data.last_user).toBeUndefined();
   expect(data.isSet("last_user")).toBeFalsy();
   expect(data.isNotZero("last_user")).toBeFalsy();

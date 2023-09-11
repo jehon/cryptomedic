@@ -1,4 +1,4 @@
-import Pojo from "./pojo.js";
+import Pojo from "./abstracts/pojo.js";
 
 export default class Price extends Pojo {
   getModel() {

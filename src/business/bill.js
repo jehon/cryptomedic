@@ -1,4 +1,4 @@
-import Timed from "./timed.js";
+import Timed from "./abstracts/timed.js";
 import { DataMissingException } from "../utils/exceptions.js";
 import Price from "./price.js";
 
