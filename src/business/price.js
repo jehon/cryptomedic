@@ -1,10 +1,14 @@
 import Pojo from "./abstracts/pojo.js";
+import { registrySet } from "./registry.js";
+
+const model = "Price";
 
 export default class Price extends Pojo {
   getModel() {
-    return "Price";
+    return model;
   }
 
+  // Legacy
   static getBaseUrl() {
     return "admin/prices";
   }
@@ -13,3 +17,5 @@ export default class Price extends Pojo {
     return ["consult", "medecine", "other", "workshop", "surgical"];
   }
 }
+
+registrySet(model, Price);

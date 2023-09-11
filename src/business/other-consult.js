@@ -1,9 +1,12 @@
 import Consult from "./abstracts/consult.js";
+import { registrySet } from "./registry.js";
+
+const model = "OtherConsult";
 
 // TODO: rename to ConsultOther
 export default class OtherConsult extends Consult {
   getModel() {
-    return "OtherConsult";
+    return model;
   }
 
   side;
@@ -47,3 +50,5 @@ export default class OtherConsult extends Consult {
     this.not_performed = not_performed;
   }
 }
+
+registrySet(model, OtherConsult);

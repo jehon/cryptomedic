@@ -1,8 +1,11 @@
 import Pojo from "./abstracts/pojo.js";
+import { registrySet } from "./registry.js";
+
+const model = "Patient";
 
 export default class Patient extends Pojo {
   getModel() {
-    return "Patient";
+    return model;
   }
 
   comments;
@@ -45,6 +48,7 @@ export default class Patient extends Pojo {
     this.comments = comments;
   }
 
+  // Legacy
   getRelated() {
     return {
       Appointment: "patient_id",
@@ -57,6 +61,7 @@ export default class Patient extends Pojo {
     };
   }
 
+  // Legacy
   sexStr() {
     if (!this.isNotZero("sex")) {
       return null;
@@ -70,7 +75,6 @@ export default class Patient extends Pojo {
     return null;
   }
 
-  // Used in typescript
   actualAge(reference = new Date()) {
     if (!this.isSet("year_of_birth")) {
       return null;
@@ -121,3 +125,5 @@ export default class Patient extends Pojo {
     return res.years + "y" + res.months + "m";
   }
 }
+
+registrySet(model, Patient);

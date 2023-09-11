@@ -1,4 +1,5 @@
 import Consult from "./abstracts/consult.js";
+import { registrySet } from "./registry.js";
 
 /**
  * @param {string|null} val the value to be parsed
@@ -14,12 +15,15 @@ function f(val) {
   return val;
 }
 
+const model = "ClubFoot";
+
 // TODO: rename to ConsultClubfoot
 export default class ClubFoot extends Consult {
   getModel() {
-    return "ClubFoot";
+    return model;
   }
 
+  // Legacy
   getServerRessource() {
     return "clubfeet";
   }
@@ -57,6 +61,11 @@ export default class ClubFoot extends Consult {
   empty_heel_left;
   empty_heel_right;
 
+  /**
+   *
+   * @param {any} any
+   * @param {Folder} folder
+   */
   constructor(
     {
       pain_left,
@@ -162,3 +171,5 @@ export default class ClubFoot extends Consult {
     }
   }
 }
+
+registrySet(model, ClubFoot);

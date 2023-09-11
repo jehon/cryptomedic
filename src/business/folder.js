@@ -1,45 +1,23 @@
 import Pojo from "./abstracts/pojo.js";
 import Patient from "./patient.js";
 import Appointment from "./appointment.js";
-import Bill from "./bill.js";
-import ClubFoot from "./club-foot.js";
-import OtherConsult from "./other-consult.js";
-import Payment from "./payment.js";
-import Picture from "./picture.js";
-import RicketConsult from "./ricket-consult.js";
-import Surgery from "./surgery.js";
+
+// Enrich the registry:
+import "./bill.js";
+import "./club-foot.js";
+import "./other-consult.js";
+import "./payment.js";
+import "./picture.js";
+import "./ricket-consult.js";
+import "./surgery.js";
+import { registryGet } from "./registry.js";
 
 export default class Folder extends Pojo {
-  static string2class(type) {
-    console.assert(typeof type == "string", "create[type/1] expect a string");
-    switch (type) {
-      case "Patient":
-        return Patient;
-      case "Appointment":
-        return Appointment;
-      case "Bill":
-        return Bill;
-      case "ClubFoot":
-        return ClubFoot;
-      case "OtherConsult":
-        return OtherConsult;
-      case "Payment":
-        return Payment;
-      case "Picture":
-        return Picture;
-      case "RicketConsult":
-        return RicketConsult;
-      case "Surgery":
-        return Surgery;
-      default:
-        throw Error("Type not found: ", type);
-    }
-  }
-
   static create(folder, type, data = {}) {
-    return new (this.string2class(type))(data, folder);
+    return new (registryGet(type))(data, folder);
   }
 
+  // Legacy
   getModel() {
     return "Folder";
   }
@@ -70,6 +48,7 @@ export default class Folder extends Pojo {
     return -1;
   }
 
+  // Legacy
   getListByType(type) {
     console.assert(
       type instanceof Function,
@@ -84,6 +63,7 @@ export default class Folder extends Pojo {
     return res;
   }
 
+  // Legacy
   /**
    *
    * @returns {PatientRelated|null}
@@ -98,6 +78,7 @@ export default class Folder extends Pojo {
     return null;
   }
 
+  // Legacy
   /**
    *
    * @param {string} uid - see Pojo#uid
@@ -115,6 +96,7 @@ export default class Folder extends Pojo {
     return null;
   }
 
+  // Legacy
   getByFieldValue(field, value) {
     let res = [];
     for (let i in this.list) {
@@ -126,6 +108,7 @@ export default class Folder extends Pojo {
     return res;
   }
 
+  // Legacy
   /**
    *
    * @returns {Patient}
@@ -154,6 +137,7 @@ export default class Folder extends Pojo {
     );
   }
 
+  // Legacy
   /**
    *
    * @param {number} i is the index of the file
@@ -167,6 +151,7 @@ export default class Folder extends Pojo {
     return null;
   }
 
+  // Legacy
   /**
    *
    * @returns {Array<Payment>}
@@ -175,10 +160,12 @@ export default class Folder extends Pojo {
     return this.getByFieldValue("bill_id", id).sort(Folder.ordering);
   }
 
+  // Legacy
   setHeader(key, value) {
     this.headers[key] = value;
   }
 
+  // Legacy
   getHeader(key) {
     return this.headers[key];
   }

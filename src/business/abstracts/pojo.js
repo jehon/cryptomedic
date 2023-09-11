@@ -1,14 +1,17 @@
 import nullify from "../../utils/nullify.js";
 
 export default class Pojo {
+  // Legacy
   static getBaseUrl() {
     throw new Error("getBaseUrl is not implemented");
   }
 
+  // Legacy
   static list(network) {
     return network.start().requestWithGet().requestToUrl(this.getBaseUrl());
   }
 
+  // Legacy
   static create(network, data) {
     return network
       .start()
@@ -17,6 +20,7 @@ export default class Pojo {
       .requestWithData(nullify(data));
   }
 
+  // Legacy
   static remove(network, id) {
     return network
       .start()
@@ -24,6 +28,7 @@ export default class Pojo {
       .requestToUrl(this.getBaseUrl() + "/" + id);
   }
 
+  // Legacy
   static save(network, data) {
     return network
       .start()
@@ -68,6 +73,7 @@ export default class Pojo {
     throw new Error("getModel is not implemented");
   }
 
+  // Legacy
   validate(res) {
     if (!res) {
       res = {};
@@ -75,6 +81,7 @@ export default class Pojo {
     return res;
   }
 
+  // Legacy
   isSet(field) {
     if (typeof this[field] == "undefined") {
       return false;
@@ -85,6 +92,7 @@ export default class Pojo {
     return true;
   }
 
+  // Legacy
   isNotZero(field) {
     if (!this.isSet(field)) {
       return false;
@@ -95,14 +103,17 @@ export default class Pojo {
     return true;
   }
 
+  // Legacy
   isLocked() {
     return false;
   }
 
+  // Legacy
   getServerRessource() {
     return this.getModel().toLowerCase() + "s";
   }
 
+  // Legacy
   getRelated() {
     return {};
   }

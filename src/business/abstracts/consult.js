@@ -52,6 +52,7 @@ export default class Consult extends Timed {
     this.suggested_for_surgery = suggested_for_surgery;
   }
 
+  // Legacy
   validate(res) {
     res = super.validate(res);
 

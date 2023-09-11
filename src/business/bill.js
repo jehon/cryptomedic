@@ -1,10 +1,13 @@
 import Timed from "./abstracts/timed.js";
 import { DataMissingException } from "../utils/exceptions.js";
 import Price from "./price.js";
+import { registrySet } from "./registry.js";
+
+const model = "Bill";
 
 export default class Bill extends Timed {
   getModel() {
-    return "Bill";
+    return model;
   }
 
   getRelated() {
@@ -21,6 +24,11 @@ export default class Bill extends Timed {
   total_asked;
   items;
 
+  /**
+   *
+   * @param {price_id} price_id
+   * @param {*} folder
+   */
   constructor(
     {
       price_id,
@@ -92,6 +100,7 @@ export default class Bill extends Timed {
     );
   }
 
+  // Legacy
   social_level_calculated() {
     /**
      From TC:
@@ -123,6 +132,7 @@ export default class Bill extends Timed {
     return 4;
   }
 
+  // Legacy
   calculate_total_real() {
     if (!this.price) {
       this.total_real = 0;
@@ -192,6 +202,7 @@ export default class Bill extends Timed {
     return this.total_real;
   }
 
+  // Legacy
   calculate_percentage_asked() {
     if (!this.price) {
       //console.warn('calculate_percentage_asked(): no price id');
@@ -211,12 +222,14 @@ export default class Bill extends Timed {
     return perc;
   }
 
+  // Legacy
   getPriceFor(key) {
     if (!this.price) return 0;
     if (!this.price[key]) return 0;
     return this.price[key];
   }
 
+  // Legacy
   getTotalFor(key) {
     if (!this.price) return 0;
     if (!this.price[key]) return 0;
@@ -232,6 +245,7 @@ export default class Bill extends Timed {
     return this.getFolder().getFilesRelatedToBill(this.getId());
   }
 
+  // Legacy
   calculatePriceId(prices) {
     if (typeof this.date == "undefined" || !this.date || !prices) {
       this.price_id = 0;
@@ -255,10 +269,12 @@ export default class Bill extends Timed {
     this.calculate_total_real();
   }
 
+  // Legacy
   getPriceId() {
     return this.price_id;
   }
 
+  // Legacy
   validate(res) {
     /* Business rules (price > 4):
         - il faut pourvoir coder home visit ou give appointment mais pas les 2
@@ -289,3 +305,5 @@ export default class Bill extends Timed {
     return res;
   }
 }
+
+registrySet(model, Bill);

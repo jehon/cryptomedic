@@ -1,8 +1,11 @@
 import Pojo from "./abstracts/pojo.js";
+import { registrySet } from "./registry.js";
+
+const model = "Payment";
 
 export default class Payment extends Pojo {
   getModel() {
-    return "Payment";
+    return model;
   }
 
   bill_id;
@@ -23,7 +26,10 @@ export default class Payment extends Pojo {
     this.comments = comments;
   }
 
+  // Legacy
   getRelatedBill() {
     return this.getFolder().getByUid("Bo;;Bill-" + this.bill_id);
   }
 }
+
+registrySet(model, Payment);

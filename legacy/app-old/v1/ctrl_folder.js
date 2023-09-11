@@ -23,6 +23,7 @@ import "../v2/widgets/file/x-fff-wh.js";
 import "../v2/widgets/file/x-fff-wh-sd.js";
 import "../v2/widgets/folder/x-ff-patient-related.js";
 import "../v2/widgets/folder/x-ff-next-appointment.js";
+import { registryGet } from "../../../src/business/registry.js";
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise
@@ -150,7 +151,7 @@ export default function ctrl_folder($scope, $routeParams) {
         cachedCurrentFile.initFromCachedPreferences();
       } else {
         cachedCurrentFile = folder.getByTypeAndId(
-          Folder.string2class($scope.subtype),
+          registryGet($scope.subtype),
           $scope.subid
         );
       }

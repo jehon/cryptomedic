@@ -1,10 +1,14 @@
 import Timed from "./abstracts/timed.js";
+import { registrySet } from "./registry.js";
+
+const model = "Surgery";
 
 export default class Surgery extends Timed {
   getModel() {
-    return "Surgery";
+    return model;
   }
 
+  // Legacy
   getServerRessource() {
     return "surgeries";
   }
@@ -40,6 +44,7 @@ export default class Surgery extends Timed {
     this.follow_up_complication = follow_up_complication;
   }
 
+  // Legacy
   validate(res) {
     res = super.validate(res);
 
@@ -49,3 +54,5 @@ export default class Surgery extends Timed {
     return res;
   }
 }
+
+registrySet(model, Surgery);

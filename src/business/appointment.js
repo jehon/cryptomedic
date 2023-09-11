@@ -1,8 +1,11 @@
 import PatientRelated from "./abstracts/patient-related.js";
+import { registrySet } from "./registry.js";
+
+const model = "Appointment";
 
 export default class Appointment extends PatientRelated {
   getModel() {
-    return "Appointment";
+    return model;
   }
 
   // We could not inherit from Timed because Timed implies a date in the past
@@ -28,7 +31,10 @@ export default class Appointment extends PatientRelated {
     this.center = center;
   }
 
+  // Legacy
   isLocked() {
     return false;
   }
 }
+
+registrySet(model, Appointment);

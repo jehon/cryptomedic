@@ -1,9 +1,12 @@
 import Consult from "./abstracts/consult.js";
+import { registrySet } from "./registry.js";
+
+const model = "RicketConsult";
 
 // TODO: rename to ConsultRicket
 export default class RicketConsult extends Consult {
   getModel() {
-    return "RicketConsult";
+    return model;
   }
 
   cross_left_T;
@@ -64,3 +67,5 @@ export default class RicketConsult extends Consult {
     this.walking_difficulties = walking_difficulties;
   }
 }
+
+registrySet(model, RicketConsult);

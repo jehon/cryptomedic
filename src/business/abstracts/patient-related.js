@@ -18,6 +18,7 @@ export default class PatientRelated extends Pojo {
     }
   }
 
+  // Legacy
   initFromCachedPreferences() {
     var c = getPref("file", {
       examiner: "",
@@ -29,6 +30,7 @@ export default class PatientRelated extends Pojo {
     this.date = c.date;
   }
 
+  // Legacy
   /**
    * @returns {Patient|null}
    */
@@ -36,6 +38,7 @@ export default class PatientRelated extends Pojo {
     return this.getFolder().getPatient();
   }
 
+  // Legacy
   isLocked() {
     if (!this.updated_at) {
       return false;

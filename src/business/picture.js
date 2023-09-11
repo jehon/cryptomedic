@@ -1,8 +1,11 @@
 import PatientRelated from "./abstracts/patient-related.js";
+import { registrySet } from "./registry.js";
+
+const model = "Picture";
 
 export default class Picture extends PatientRelated {
   getModel() {
-    return "Picture";
+    return model;
   }
 
   type;
@@ -26,6 +29,7 @@ export default class Picture extends PatientRelated {
     return "/api/picture/" + this.id + "/thumbnail";
   }
 
+  // Legacy
   validate(res) {
     res = super.validate(res);
 
@@ -39,3 +43,5 @@ export default class Picture extends PatientRelated {
     return res;
   }
 }
+
+registrySet(model, Picture);

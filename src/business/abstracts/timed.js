@@ -22,6 +22,7 @@ export default class Timed extends PatientRelated {
     this.center = center;
   }
 
+  // Legacy
   validate(res) {
     res = super.validate(res);
 
