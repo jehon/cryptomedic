@@ -31,7 +31,7 @@ sort --stable "$CR_TMP"/deploy-local.txt >"$CR_TMP"/deploy-local.sorted.txt
 header_end
 
 header_begin "Getting the md5 from remote"
-cr_curl "http://${CRYPTOMEDIC_DEPLOY_HTTP_HOST}:${CRYPTOMEDIC_DEPLOY_HTTP_PORT}/maintenance/md5sum.php?filter=remote" >"$REMOTE_LISTING"
+cr_curl "http://${CRYPTOMEDIC_DEPLOY_WEB_HOST}:${CRYPTOMEDIC_DEPLOY_WEB_PORT}/maintenance/md5sum.php?filter=remote" >"$REMOTE_LISTING"
 header_end
 
 header_begin "Sorting remote file"
@@ -92,7 +92,7 @@ fi
 sleep 2
 
 header_begin "Refreshing structure"
-"$CR_SCRIPT_DIR/"cr-refresh-structure "http://${CRYPTOMEDIC_DEPLOY_HTTP_HOST}:${CRYPTOMEDIC_DEPLOY_HTTP_PORT}" "${CRYPTOMEDIC_DEPLOY_HTTP_TOKEN}"
+"$CR_SCRIPT_DIR/"cr-refresh-structure "http://${CRYPTOMEDIC_DEPLOY_WEB_HOST}:${CRYPTOMEDIC_DEPLOY_WEB_PORT}" "${CRYPTOMEDIC_DEPLOY_WEB_TOKEN}"
 header_end
 
 echo "*** End ***"

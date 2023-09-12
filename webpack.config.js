@@ -37,7 +37,7 @@ module.exports = {
   devServer: {
     // static: "./www/",
     proxy: {
-      // TODO: use ${CRYPTOMEDIC_DEPLOY_HTTP_PORT}
+      // TODO: use ${CRYPTOMEDIC_DEPLOY_WEB_PORT}
       "/": "http://localhost:8085"
     },
     hot: true

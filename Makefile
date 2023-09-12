@@ -10,9 +10,9 @@ ACCEPTANCE := $(ROOT)/live-from-production
 ## For patching, we need a ref to the local server
 export CRYPTOMEDIC_LOCAL_HTTP_PORT = 8085
 ## Where to deploy
-export CRYPTOMEDIC_DEPLOY_HTTP_HOST ?= localhost
-export CRYPTOMEDIC_DEPLOY_HTTP_PORT ?= $(CRYPTOMEDIC_LOCAL_HTTP_PORT)
-export CRYPTOMEDIC_DEPLOY_HTTP_TOKEN ?= secret
+export CRYPTOMEDIC_DEPLOY_WEB_HOST ?= localhost
+export CRYPTOMEDIC_DEPLOY_WEB_PORT ?= $(CRYPTOMEDIC_LOCAL_HTTP_PORT)
+export CRYPTOMEDIC_DEPLOY_WEB_TOKEN ?= secret
 export DBUPDATEPWD := secret # From config.php
 
 # Default target
@@ -51,9 +51,9 @@ dump:
 	@echo "SHELL:                          $(SHELL)"
 	@echo "PATH:                           $(PATH)"
 	@echo "ACCEPTANCE:                     $(ACCEPTANCE)"
-	@echo "CRYPTOMEDIC_DEPLOY_FTP_HOST:    $(CRYPTOMEDIC_DEPLOY_FTP_HOST)"
-	@echo "CRYPTOMEDIC_DEPLOY_HTTP_HOST:   $(CRYPTOMEDIC_DEPLOY_HTTP_HOST)"
-	@echo "CRYPTOMEDIC_DEPLOY_HTTP_PORT:   $(CRYPTOMEDIC_DEPLOY_HTTP_PORT)"
+	@echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:    $(CRYPTOMEDIC_DEPLOY_FILES_HOST)"
+	@echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:   $(CRYPTOMEDIC_DEPLOY_WEB_HOST)"
+	@echo "CRYPTOMEDIC_DEPLOY_WEB_PORT:   $(CRYPTOMEDIC_DEPLOY_WEB_PORT)"
 	@echo "CRYPTOMEDIC_LOCAL_HTTP_PORT:    $(CRYPTOMEDIC_LOCAL_HTTP_PORT)"
 	@echo "------------------------------------------"
 	@echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
