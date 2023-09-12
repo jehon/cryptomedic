@@ -1,9 +1,9 @@
-import Pojo from "./abstracts/pojo.js";
+import PatientRelated from "./abstracts/patient-related.js";
 import { registrySet } from "./registry.js";
 
 const model = "Patient";
 
-export default class Patient extends Pojo {
+export default class Patient extends PatientRelated {
   getModel() {
     return model;
   }
