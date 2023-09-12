@@ -20,7 +20,7 @@ truncate --size=0 "$LOG"
 ftp_exec_raw() {
     SSHPASS="${CRYPTOMEDIC_DEPLOY_PASSWORD}" sshpass -e \
         sftp -o "UserKnownHostsFile=$SWD/../conf/ovh.key" \
-        "${CRYPTOMEDIC_DEPLOY_USER}@${CRYPTOMEDIC_DEPLOY_HOST}" \
+        "${CRYPTOMEDIC_DEPLOY_USER}@${CRYPTOMEDIC_DEPLOY_FTP_HOST}" \
         2>&1 | tee -a "$LOG"
 }
 
@@ -68,7 +68,7 @@ ftp_rm() {
 }
 
 header_begin "Dump infos"
-echo "CRYPTOMEDIC_DEPLOY_HOST:     '${CRYPTOMEDIC_DEPLOY_HOST}'"
+echo "CRYPTOMEDIC_DEPLOY_FTPWHOST: '${CRYPTOMEDIC_DEPLOY_FTP_HOST}'"
 echo "CRYPTOMEDIC_DEPLOY_USER:     ${#CRYPTOMEDIC_DEPLOY_USER} characters"
 echo "CRYPTOMEDIC_DEPLOY_PASSWORD: ${#CRYPTOMEDIC_DEPLOY_PASSWORD} characters"
 echo "CRYPTOMEDIC_HTTP_LOCAL_PORT: ${CRYPTOMEDIC_HTTP_LOCAL_PORT}"
