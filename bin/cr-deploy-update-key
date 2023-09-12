@@ -5,7 +5,7 @@ set -o errexit
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-REMOTE="$(shell ssh-keyscan -t ssh-rsa "$CRYPTOMEDIC_DEPLOY_HOST" 2>/dev/null)"
+REMOTE="$(shell ssh-keyscan -t ssh-rsa "$CRYPTOMEDIC_DEPLOY_FTP_HOST" 2>/dev/null)"
 STORED="$(shell cat conf/ovh.key)"
 if [ "$REMOTE" = "$STORED" ]; then
     echo "Key is still the same, good!"
@@ -13,4 +13,4 @@ if [ "$REMOTE" = "$STORED" ]; then
 fi
 
 echo "Key is updated on remote host"
-ssh-keyscan -t ssh-rsa "$CRYPTOMEDIC_DEPLOY_HOST" >conf/ovh.key
+ssh-keyscan -t ssh-rsa "$CRYPTOMEDIC_DEPLOY_FTP_HOST" >conf/ovh.key

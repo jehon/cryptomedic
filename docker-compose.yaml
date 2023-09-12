@@ -16,11 +16,11 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
     ports:
-      # Using variable here does not work
-      - published: 5555
+      # TODO: Using variable here does not work
+      - published: 8085
         target: 80
         mode: host
-      - published: 5558
+      - published: 8089
         target: 8080
         mode: host
     volumes:

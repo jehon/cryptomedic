@@ -9,7 +9,8 @@ module.exports = defineConfig({
   viewportHeight: 800,
   video: false,
   e2e: {
-    baseUrl: "http://localhost:5555",
+    // TODO: use external variable CRYPTOMEDIC_HTTP_PORT
+    baseUrl: "http://localhost:8085",
     supportFile: "cypress/support/e2e.js",
     setupNodeEvents(on, _config) {
       // https://docs.cypress.io/api/plugins/writing-a-plugin

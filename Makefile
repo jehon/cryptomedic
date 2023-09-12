@@ -7,10 +7,12 @@ TMP := $(ROOT)/tmp
 ACCEPTANCE := $(ROOT)/live-from-production
 
 # Defaults value for Dev:
-export CRYPTOMEDIC_HTTP_HOST ?= localhost
-export CRYPTOMEDIC_HTTP_PORT ?= 5555
-export CRYPTOMEDIC_HTTP_TOKEN ?= secret
-export CRYPTOMEDIC_HTTP_LOCAL_PORT = 5555
+## For patching, we need a ref to the local server
+export CRYPTOMEDIC_HTTP_LOCAL_PORT = 8085
+## Where to deploy
+export CRYPTOMEDIC_DEPLOY_HTTP_HOST ?= localhost
+export CRYPTOMEDIC_DEPLOY_HTTP_PORT ?= $(CRYPTOMEDIC_HTTP_LOCAL_PORT)
+export CRYPTOMEDIC_DEPLOY_HTTP_TOKEN ?= secret
 export DBUPDATEPWD := secret # From config.php
 
 # Default target
@@ -49,10 +51,10 @@ dump:
 	@echo "SHELL:                          $(SHELL)"
 	@echo "PATH:                           $(PATH)"
 	@echo "ACCEPTANCE:                     $(ACCEPTANCE)"
-	@echo "CRYPTOMEDIC_HTTP_HOST:          $(CRYPTOMEDIC_HTTP_HOST)"
-	@echo "CRYPTOMEDIC_HTTP_PORT:          $(CRYPTOMEDIC_HTTP_PORT)"
+	@echo "CRYPTOMEDIC_DEPLOY_FTP_HOST:    $(CRYPTOMEDIC_DEPLOY_FTP_HOST)"
+	@echo "CRYPTOMEDIC_DEPLOY_HTTP_HOST:   $(CRYPTOMEDIC_DEPLOY_HTTP_HOST)"
+	@echo "CRYPTOMEDIC_DEPLOY_HTTP_PORT:   $(CRYPTOMEDIC_DEPLOY_HTTP_PORT)"
 	@echo "CRYPTOMEDIC_HTTP_LOCAL_PORT:    $(CRYPTOMEDIC_HTTP_LOCAL_PORT)"
-	@echo "CRYPTOMEDIC_DEPLOY_HOST:        $(CRYPTOMEDIC_DEPLOY_HOST)"
 	@echo "------------------------------------------"
 	@echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
 	@echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
@@ -87,8 +89,8 @@ dc-build:
 
 .PHONY: start
 start: dc-up dependencies build reset
-	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/"
-	@echo "Test page: http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/dev/"
+	@echo "Open browser: http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/"
+	@echo "Test page: http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/dev/"
 
 dev: dc-up dependencies build
 # No reset!
@@ -97,7 +99,7 @@ dev: dc-up dependencies build
 dc-up:
 	docker compose up -d
 	bin/cr-data-reset
-# bin/cr-refresh-structure "http://localhost:$(CRYPTOMEDIC_HTTP_LOCAL_PORT)/" "secret"
+# bin/cr-refresh-structure "http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
 
 stop:
 	docker compose down
@@ -122,7 +124,7 @@ database-update-base-sql:
 acceptance: $(ACCEPTANCE)/.done dc-up
 	cr-mysql -e "DROP DATABASE cryptomedic; CREATE DATABASE cryptomedic"
 	cr-mysql --database=cryptomedic < "$(ACCEPTANCE)"/backups/backup.sql
-	cr-refresh-structure "http://localhost:5555/" "secret"
+	cr-refresh-structure "http://localhost:$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
 	rsync -itr --delete "$(ACCEPTANCE)"/storage/ live/storage
 
 $(ACCEPTANCE)/.done:

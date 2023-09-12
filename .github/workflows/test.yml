@@ -58,9 +58,9 @@ jobs:
       - name: make deploy
         if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
         env:
-          CRYPTOMEDIC_HTTP_HOST: ${{ vars.CRYPTOMEDIC_HTTP_HOST }}
-          CRYPTOMEDIC_HTTP_PORT: ${{ vars.CRYPTOMEDIC_HTTP_PORT }}
-          CRYPTOMEDIC_HTTP_TOKEN: ${{ secrets.CRYPTOMEDIC_HTTP_TOKEN }}
+          CRYPTOMEDIC_DEPLOY_HTTP_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_HTTP_HOST }}
+          CRYPTOMEDIC_DEPLOY_HTTP_PORT: ${{ vars.CRYPTOMEDIC_DEPLOY_HTTP_PORT }}
+          CRYPTOMEDIC_DEPLOY_HTTP_TOKEN: ${{ secrets.CRYPTOMEDIC_DEPLOY_HTTP_TOKEN }}
 
           CRYPTOMEDIC_DEPLOY_FTP_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_FTP_HOST }}
           CRYPTOMEDIC_DEPLOY_USER: ${{ secrets.CRYPTOMEDIC_DEPLOY_USER }}

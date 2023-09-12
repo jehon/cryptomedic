@@ -5,9 +5,9 @@
 
 ## Local links
 
-Application: http://localhost:5555/
+Application: http://${CRYPTOMEDIC_DEPLOY_HTTP_HOST}:${CRYPTOMEDIC_DEPLOY_HTTP_PORT}/
 
-Debug: http://localhost:5555/dev/
+Debug: http://${CRYPTOMEDIC_DEPLOY_HTTP_HOST}:${CRYPTOMEDIC_DEPLOY_HTTP_PORT}/dev/
 
 ## Local requirements
 
