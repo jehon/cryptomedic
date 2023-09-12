@@ -148,7 +148,9 @@ export default function ctrl_folder($scope, $routeParams) {
       // File
       if ($scope.mode == "add") {
         cachedCurrentFile = Folder.create(folder, $scope.subtype);
-        cachedCurrentFile.initFromCachedPreferences();
+        if (cachedCurrentFile.initFromCachedPreferences) {
+          cachedCurrentFile.initFromCachedPreferences();
+        }
       } else {
         cachedCurrentFile = folder.getByTypeAndId(
           registryGet($scope.subtype),

@@ -1,4 +1,3 @@
-import { getPref } from "../../utils/prefs.js";
 import Pojo from "./pojo.js";
 
 export default class PatientRelated extends Pojo {
@@ -16,18 +15,6 @@ export default class PatientRelated extends Pojo {
     if (this.getFolder()) {
       this.patient_id = folder.getId();
     }
-  }
-
-  // Legacy
-  initFromCachedPreferences() {
-    var c = getPref("file", {
-      examiner: "",
-      center: "",
-      date: ""
-    });
-    this.examiner = c.examiner;
-    this.center = c.center;
-    this.date = c.date;
   }
 
   // Legacy

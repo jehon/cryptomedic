@@ -1,3 +1,4 @@
+import { getPref } from "../../utils/prefs.js";
 import PatientRelated from "./patient-related.js";
 
 // TODO: Use mixins https://www.typescriptlang.org/docs/handbook/mixins.html
@@ -20,6 +21,18 @@ export default class Timed extends PatientRelated {
     this.date = date;
     this.examiner = examiner;
     this.center = center;
+  }
+
+  // Legacy
+  initFromCachedPreferences() {
+    var c = getPref("file", {
+      examiner: "",
+      center: "",
+      date: ""
+    });
+    this.examiner = c.examiner;
+    this.center = c.center;
+    this.date = c.date;
   }
 
   // Legacy
