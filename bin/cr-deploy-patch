@@ -23,7 +23,7 @@ header_begin "Updating maintenance scripts [for real]"
 header_end
 
 header_begin "Getting the md5 from local"
-cr_curl "Getting the md5 from local" "http://localhost:$CRYPTOMEDIC_HTTP_LOCAL_PORT/maintenance/md5sum.php?filter=local" >"$CR_TMP"/deploy-local.txt
+cr_curl "Getting the md5 from local" "http://localhost:$CRYPTOMEDIC_LOCAL_HTTP_PORT/maintenance/md5sum.php?filter=local" >"$CR_TMP"/deploy-local.txt
 header_end
 
 header_begin "Sorting local file"

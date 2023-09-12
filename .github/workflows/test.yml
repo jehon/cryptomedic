@@ -63,8 +63,10 @@ jobs:
           CRYPTOMEDIC_DEPLOY_HTTP_TOKEN: ${{ secrets.CRYPTOMEDIC_DEPLOY_HTTP_TOKEN }}
 
           CRYPTOMEDIC_DEPLOY_FTP_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_FTP_HOST }}
-          CRYPTOMEDIC_DEPLOY_USER: ${{ secrets.CRYPTOMEDIC_DEPLOY_USER }}
-          CRYPTOMEDIC_DEPLOY_PASSWORD: ${{ secrets.CRYPTOMEDIC_DEPLOY_PASSWORD }}
+          # TODO: Fix variable in Github Actions
+          CRYPTOMEDIC_DEPLOY_FTP_USER: ${{ secrets.CRYPTOMEDIC_DEPLOY_USER }}
+          # TODO: Fix variable in Github Actions
+          CRYPTOMEDIC_DEPLOY_FTP_PASSWORD: ${{ secrets.CRYPTOMEDIC_DEPLOY_PASSWORD }}
         run:  make deploy
 
       - name: Upload styles

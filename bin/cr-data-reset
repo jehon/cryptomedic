@@ -39,5 +39,5 @@ done
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"
-cr-refresh-structure "http://localhost:${CRYPTOMEDIC_HTTP_DEPLOY_PORT}/" "secret"
+cr-refresh-structure "http://localhost:${CRYPTOMEDIC_DEPLOY_HTTP_PORT}/" "secret"
 header_end

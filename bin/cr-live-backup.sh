@@ -9,7 +9,7 @@
 set -o errexit
 set -o pipefail
 
-if [ -z "$CRYPTOMEDIC_DEPLOY_PASSWORD" ]; then
+if [ -z "$CRYPTOMEDIC_DEPLOY_FTP_PASSWORD" ]; then
     echo "$0 Need parameters" >&2
     exit 1
 fi
@@ -27,7 +27,7 @@ sleep 10s
 echo "...done"
 
 echo "Getting storage from $CRYPTOMEDIC_DEPLOY_FTP_HOST"
-lftp "$CRYPTOMEDIC_DEPLOY_USER:$CRYPTOMEDIC_DEPLOY_PASSWORD@$CRYPTOMEDIC_DEPLOY_FTP_HOST" \
+lftp "$CRYPTOMEDIC_DEPLOY_FTP_USER:$CRYPTOMEDIC_DEPLOY_FTP_PASSWORD@$CRYPTOMEDIC_DEPLOY_FTP_HOST" \
     -e "mirror live/ '$BACKUP_DIR/'; bye"
 echo "...done"
 
