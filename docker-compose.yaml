@@ -78,7 +78,8 @@ services:
       # # We don't create the database here, because we don't know when it will be done
       # MYSQL_DATABASE: cryptomedic
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      # Ping through http and socket
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "ping"]
       timeout: 20s
       retries: 10
     expose:
