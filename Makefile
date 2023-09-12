@@ -52,7 +52,7 @@ dump:
 	@echo "CRYPTOMEDIC_HTTP_HOST:          $(CRYPTOMEDIC_HTTP_HOST)"
 	@echo "CRYPTOMEDIC_HTTP_PORT:          $(CRYPTOMEDIC_HTTP_PORT)"
 	@echo "CRYPTOMEDIC_HTTP_LOCAL_PORT:    $(CRYPTOMEDIC_HTTP_LOCAL_PORT)"
-	@echo "CRYPTOMEDIC_DEPLOY_HOST:        $(CRYPTOMEDIC_DEPLOY_HOST)"
+	@echo "CRYPTOMEDIC_DEPLOY_FTP_HOST:    $(CRYPTOMEDIC_DEPLOY_FTP_HOST)"
 	@echo "------------------------------------------"
 	@echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
 	@echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
