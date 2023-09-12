@@ -58,15 +58,11 @@ jobs:
       - name: make deploy
         if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
         env:
-          # TODO: Fix variable in Github Actions
-          CRYPTOMEDIC_DEPLOY_WEB_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_HTTP_HOST }}
-          # TODO: Fix variable in Github Actions
-          CRYPTOMEDIC_DEPLOY_WEB_PORT: ${{ vars.CRYPTOMEDIC_DEPLOY_HTTP_PORT }}
-          # TODO: Fix variable in Github Actions
-          CRYPTOMEDIC_DEPLOY_WEB_TOKEN: ${{ secrets.CRYPTOMEDIC_DEPLOY_HTTP_TOKEN }}
+          CRYPTOMEDIC_DEPLOY_WEB_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_WEB_HOST }}
+          CRYPTOMEDIC_DEPLOY_WEB_PORT: ${{ vars.CRYPTOMEDIC_DEPLOY_WEB_PORT }}
+          CRYPTOMEDIC_DEPLOY_WEB_TOKEN: ${{ secrets.CRYPTOMEDIC_DEPLOY_WEB_TOKEN }}
 
-          # TODO: Fix variable in Github Actions
-          CRYPTOMEDIC_DEPLOY_FILES_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_FTP_HOST }}
+          CRYPTOMEDIC_DEPLOY_FILES_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_FILES_HOST }}
           # TODO: Fix variable in Github Actions
           CRYPTOMEDIC_DEPLOY_FILES_USER: ${{ secrets.CRYPTOMEDIC_DEPLOY_USER }}
           # TODO: Fix variable in Github Actions
