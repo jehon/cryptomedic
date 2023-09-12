@@ -11,6 +11,8 @@ export default class PatientRelated extends Pojo {
   constructor({ patient_id, ...others } = {}, folder = null) {
     super(others);
     this.patient_id = patient_id;
+
+    /** @type {(): Folder} */
     this.getFolder = () => folder;
     if (this.getFolder()) {
       this.patient_id = folder.getId();
