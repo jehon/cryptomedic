@@ -17,7 +17,7 @@ export default function FilePanel({
 }: {
   file: Pojo;
   folder: Folder;
-  headers: React.ReactNode;
+  headers?: React.ReactNode;
   children: React.ReactNode;
   closed?: boolean;
 }): React.ReactNode {

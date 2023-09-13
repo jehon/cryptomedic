@@ -22,10 +22,12 @@ export default function BillSummary({
       closed
       file={file}
       folder={folder}
-      headers={[
-        <span>total: {file.total_real}</span>,
-        <span>paid: {file.getTotalAlreadyPaid()}</span>
-      ]}
+      headers={
+        <>
+          <span>total: {file.total_real}</span>,
+          <span>paid: {file.getTotalAlreadyPaid()}</span>
+        </>
+      }
     >
       <TwoColumns>
         <Panel fixed label="Informations">

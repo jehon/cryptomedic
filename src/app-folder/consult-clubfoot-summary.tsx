@@ -25,16 +25,18 @@ export default function ConsultClubfootSummary({
       closed
       file={file}
       folder={folder}
-      headers={[
-        <span className="with-image">
-          <ImgSideRight></ImgSideRight>
-          {file.getPiraniRight() as number}
-        </span>,
-        <div className="with-image">
-          <ImgSideLeft></ImgSideLeft>
-          {file.getPiraniLeft() as number}
-        </div>
-      ]}
+      headers={
+        <>
+          <span className="with-image">
+            <ImgSideRight></ImgSideRight>
+            {file.getPiraniRight() as number}
+          </span>
+          <span className="with-image">
+            <ImgSideLeft></ImgSideLeft>
+            {file.getPiraniLeft() as number}
+          </span>
+        </>
+      }
     >
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns>

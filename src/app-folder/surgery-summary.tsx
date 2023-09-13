@@ -22,10 +22,12 @@ export default function SurgerySummary({
       closed
       file={file}
       folder={folder}
-      headers={[
-        <span>{file.report_diagnostic}</span>,
-        <span>{file.report_surgeon}</span>
-      ]}
+      headers={
+        <>
+          <span>{file.report_diagnostic}</span>
+          <span>{file.report_surgeon}</span>
+        </>
+      }
     >
       <TwoColumns>
         <Panel fixed label="Informations">

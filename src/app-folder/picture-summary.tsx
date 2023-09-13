@@ -7,8 +7,6 @@ import FilePanel from "./blocs/file-panel";
 import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
-import { icons } from "../config";
-import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function PictureSummary({
   file,
@@ -18,7 +16,7 @@ export default function PictureSummary({
   folder: Folder;
 }): React.ReactNode {
   return (
-    <FilePanel closed file={file} folder={folder} headers={[]}>
+    <FilePanel closed file={file} folder={folder}>
       <TwoColumns>
         <Panel fixed label="Informations">
           <IO.String label="Type" value={file.type as string} />

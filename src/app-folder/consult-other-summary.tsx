@@ -19,7 +19,7 @@ export default function ConsultOtherSummary({
   folder: Folder;
 }): React.ReactNode {
   return (
-    <FilePanel closed file={file} folder={folder} headers={[]}>
+    <FilePanel closed file={file} folder={folder}>
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns>
         <Panel label="Orthopedic data">

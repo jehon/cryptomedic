@@ -20,13 +20,15 @@ export default function PatientSummary({
       closed
       file={file}
       folder={folder}
-      headers={[
-        <span>
-          {file.entry_year}-{file.entry_order}
-        </span>,
-        <span className="no-mobile">{file.name}</span>,
-        <span className="no-mobile">{file.year_of_birth}</span>
-      ]}
+      headers={
+        <>
+          <span>
+            {file.entry_year}-{file.entry_order}
+          </span>
+          <span className="no-mobile">{file.name}</span>
+          <span className="no-mobile">{file.year_of_birth}</span>
+        </>
+      }
     >
       <TwoColumns>
         <Panel fixed label="Identification">

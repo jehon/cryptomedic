@@ -20,7 +20,7 @@ export default function AppointmentSummary({
       closed
       file={file}
       folder={folder}
-      headers={[<span>{file.center}</span>]}
+      headers={<span>{file.center}</span>}
     >
       <TwoColumns>
         <Panel fixed label="Informations">
