@@ -487,7 +487,7 @@ INSERT INTO `patients` VALUES (5,'2014-03-01 07:03:47','2015-05-07 16:26:38','mu
 INSERT INTO `patients` VALUES (6,'2014-10-28 07:13:29','2015-04-24 05:28:14','jehon',2001,1,'al abdul koium','','1995','','','','','','Other','');
 INSERT INTO `patients` VALUES (7,'2014-08-04 18:31:40','2014-08-04 18:31:40','transfer',2001,4,'mozahar ahamed',NULL,'1996',NULL,'',NULL,NULL,NULL,'Other','');
 INSERT INTO `patients` VALUES (8,'2021-04-23 15:26:16','2021-04-23 20:46:30','murshed',1991,299,'crud patient',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `patients` VALUES (100,'2023-08-30 16:48:21','2023-08-30 17:27:13','jehon',2000,100,'free test','Male','2013-01','+32123123','at the end of the world','Chittagong','Chandanish','~ Other ~','Ricket','I have something to add');
+INSERT INTO `patients` VALUES (100,'2023-08-30 16:48:21','2023-08-30 17:27:13','jehon',2010,100,'free test','Male','2013-01','+32123123','at the end of the world','Chittagong','Chandanish','~ Other ~','Ricket','I have something to add');
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
