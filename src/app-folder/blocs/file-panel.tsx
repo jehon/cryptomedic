@@ -1,19 +1,21 @@
 import React from "react";
 
-import PatientRelated from "../../business/abstracts/patient-related";
-
 import Panel from "../../widget/panel";
 import { Button } from "react-bootstrap";
 import { icons } from "../../config";
+import Pojo from "../../business/abstracts/pojo";
+import Folder from "../../business/folder";
 
 export default function FilePanel({
   file,
+  folder,
   header,
   children,
   closed
 }: {
+  file: Pojo;
+  folder: Folder;
   header: React.ReactNode;
-  file: PatientRelated;
   children: React.ReactNode;
   closed?: boolean;
 }): React.ReactNode {
@@ -29,7 +31,7 @@ export default function FilePanel({
       ]}
     >
       <Button
-        href={"#/folder/" + file.getFolder()?.getId() + "/"}
+        href={"#/folder/" + folder.getId() + "/"}
         variant="outline-info"
         style={{ width: "100%" }}
       >

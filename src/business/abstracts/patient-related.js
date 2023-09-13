@@ -19,11 +19,6 @@ export default class PatientRelated extends Pojo {
     }
   }
 
-  /** @return {string} */
-  getTitle() {
-    return this.getModel();
-  }
-
   // Legacy
   /**
    * @returns {Patient|null}

@@ -69,8 +69,16 @@ export default class Pojo {
     return `${this.getModel()}-${this.id}`;
   }
 
+  // TODO: abstract
   getModel() {
     throw new Error("getModel is not implemented");
+  }
+
+  /**
+   * @returns {string}
+   */
+  getTitle() {
+    return this.getModel();
   }
 
   // Legacy
