@@ -29,6 +29,7 @@ export default function FilePanel({
   }
   return (
     <Panel
+      role={file.uid()}
       closed={closed}
       header={
         <>
