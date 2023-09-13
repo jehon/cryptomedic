@@ -32,7 +32,7 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
     // TODO: handle left / right
 
     return (
-      <div className={"io" + (note ? " note" : "")}>
+      <div className={"io" + (note ? " note" : "")} role={label}>
         <label
           dangerouslySetInnerHTML={{ __html: label + (required ? "*" : "") }}
         ></label>
