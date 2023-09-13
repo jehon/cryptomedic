@@ -3,16 +3,14 @@ import React from "react";
 import ConsultClubfoot from "../business/club-foot";
 import Folder from "../business/folder";
 
-import Button from "react-bootstrap/Button";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 
+import FilePanel from "./blocs/file-panel";
 import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
-import { icons } from "../config";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
-import { date2HumanString, normalizeDate } from "../utils/date";
 import { tryOrMessage } from "../utils/strings";
 
 export default function ConsultClubfootSummary({
@@ -22,23 +20,12 @@ export default function ConsultClubfootSummary({
   file: ConsultClubfoot;
   folder: Folder;
 }): React.ReactNode {
-  if (!folder) {
-    return <div>No folder selected</div>;
-  }
-  if (!file) {
-    return <div>No file selected</div>;
-  }
   return (
-    <Panel
+    <FilePanel
       closed
+      file={file}
+      folder={folder}
       headers={[
-        <img
-          src={icons.models.consult_clubfoot}
-          alt="Clubfoot"
-          className="inline"
-        />,
-        <span className="no-mobile">Clubfoot Consult</span>,
-        <span>{date2HumanString(normalizeDate(file.date))}</span>,
         <span className="with-image">
           <ImgSideRight></ImgSideRight>
           {file.getPiraniRight() as number}
@@ -49,13 +36,6 @@ export default function ConsultClubfootSummary({
         </div>
       ]}
     >
-      <Button
-        href={"#/folder/" + folder.getId() + "/file/ClubFoot/" + file.getId()}
-        variant="outline-info"
-        style={{ width: "100%" }}
-      >
-        View
-      </Button>
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns>
         <Panel
@@ -253,6 +233,6 @@ export default function ConsultClubfootSummary({
         </Panel>
       </TwoColumns>
       <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
-    </Panel>
+    </FilePanel>
   );
 }

@@ -1,13 +1,12 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 
 import Folder from "../business/folder";
 import Patient from "../business/patient";
 
 import TwoColumns from "../widget/two-columns";
+import FilePanel from "./blocs/file-panel";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
-import { icons } from "../config";
 
 export default function PatientSummary({
   file,
@@ -16,18 +15,12 @@ export default function PatientSummary({
   file: Patient;
   folder: Folder;
 }): React.ReactNode {
-  if (!folder) {
-    return <div>No folder selected</div>;
-  }
-  if (!file) {
-    return <div>No file selected</div>;
-  }
   return (
-    <Panel
+    <FilePanel
       closed
+      file={file}
+      folder={folder}
       headers={[
-        <img src={icons.models.patient} alt="Patient" className="inline" />,
-        <span className="no-mobile">Patient</span>,
         <span>
           {file.entry_year}-{file.entry_order}
         </span>,
@@ -35,13 +28,6 @@ export default function PatientSummary({
         <span className="no-mobile">{file.year_of_birth}</span>
       ]}
     >
-      <Button
-        href={"#/folder/" + folder.getId() + "/"}
-        variant="outline-info"
-        style={{ width: "100%" }}
-      >
-        View
-      </Button>
       <TwoColumns>
         <Panel fixed label="Identification">
           <IO.Number label="Entry Year" value={file.entry_year} />
@@ -61,6 +47,6 @@ export default function PatientSummary({
           <IO.String label="Address Comments" value={file.address_comments} />
         </Panel>
       </TwoColumns>
-    </Panel>
+    </FilePanel>
   );
 }

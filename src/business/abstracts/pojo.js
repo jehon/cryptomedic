@@ -70,6 +70,9 @@ export default class Pojo {
   }
 
   // TODO: abstract
+  /**
+   * @returns {string}
+   */
   getModel() {
     throw new Error("getModel is not implemented");
   }

@@ -1,9 +1,9 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 
 import Folder from "../business/folder";
 import Picture from "../business/picture";
 
+import FilePanel from "./blocs/file-panel";
 import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
@@ -17,29 +17,8 @@ export default function PictureSummary({
   file: Picture;
   folder: Folder;
 }): React.ReactNode {
-  if (!folder) {
-    return <div>No folder selected</div>;
-  }
-  if (!file) {
-    return <div>No file selected</div>;
-  }
   return (
-    <Panel
-      closed
-      headers={[
-        <img src={icons.models.picture} alt="Picture" className="inline" />,
-        <span className="no-mobile">Picture</span>,
-        <span>{file.type}</span>,
-        <span>{date2HumanString(normalizeDate(file.date))}</span>
-      ]}
-    >
-      <Button
-        href={"#/folder/" + folder.getId() + "/file/Picture/" + file.getId()}
-        variant="outline-info"
-        style={{ width: "100%" }}
-      >
-        View
-      </Button>
+    <FilePanel closed file={file} folder={folder} headers={[]}>
       <TwoColumns>
         <Panel fixed label="Informations">
           <IO.String label="Type" value={file.type as string} />
@@ -51,6 +30,6 @@ export default function PictureSummary({
           <img src={file.getThumbnailUrl() as string} alt="Content" />
         </Panel>
       </TwoColumns>
-    </Panel>
+    </FilePanel>
   );
 }

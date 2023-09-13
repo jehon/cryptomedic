@@ -6,28 +6,50 @@ import { icons } from "../../config";
 import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";
 
+import { date2HumanString, normalizeDate } from "../../utils/date";
+
 export default function FilePanel({
   file,
   folder,
-  header,
+  headers,
   children,
   closed
 }: {
   file: Pojo;
   folder: Folder;
-  header: React.ReactNode;
+  headers: React.ReactNode;
   children: React.ReactNode;
   closed?: boolean;
 }): React.ReactNode {
+  if (!folder) {
+    return <div>No folder selected</div>;
+  }
+  if (!file) {
+    return <div>No file selected</div>;
+  }
   return (
     <Panel
       closed={closed}
       headers={[
-        <span>
-          <img src={icons.models.patient} alt="Patient" className="inline" />
+        <span className="first">
+          <img
+            src={
+              icons.models[(file.getModel() as keyof typeof icons.models) ?? ""]
+            }
+            alt={file.getTitle()}
+            className="inline"
+          />
+          {
+            // TODO: use interface?
+            "date" in file ? (
+              <span className="no-mobile">
+                {date2HumanString(normalizeDate(file["date"] as Date))}
+              </span>
+            ) : null
+          }
           <span className="no-mobile">{file.getTitle()}</span>
-          {header}
-        </span>
+        </span>,
+        headers
       ]}
     >
       <Button

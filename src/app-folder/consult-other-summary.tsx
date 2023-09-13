@@ -3,15 +3,13 @@ import React from "react";
 import ConsultOther from "../business/other-consult";
 import Folder from "../business/folder";
 
-import Button from "react-bootstrap/Button";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 
+import FilePanel from "./blocs/file-panel";
 import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
-import { icons } from "../config";
-import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function ConsultOtherSummary({
   file,
@@ -20,34 +18,8 @@ export default function ConsultOtherSummary({
   file: ConsultOther;
   folder: Folder;
 }): React.ReactNode {
-  if (!folder) {
-    return <div>No folder selected</div>;
-  }
-  if (!file) {
-    return <div>No file selected</div>;
-  }
   return (
-    <Panel
-      closed
-      headers={[
-        <img
-          src={icons.models.consult_other}
-          alt="Other Consult"
-          className="inline"
-        />,
-        <span className="no-mobile">Other Consult</span>,
-        <span>{date2HumanString(normalizeDate(file.date))}</span>
-      ]}
-    >
-      <Button
-        href={
-          "#/folder/" + folder.getId() + "/file/OtherConsult/" + file.getId()
-        }
-        variant="outline-info"
-        style={{ width: "100%" }}
-      >
-        View
-      </Button>
+    <FilePanel closed file={file} folder={folder} headers={[]}>
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns>
         <Panel label="Orthopedic data">
@@ -75,6 +47,6 @@ export default function ConsultOtherSummary({
         </Panel>
       </TwoColumns>
       <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
-    </Panel>
+    </FilePanel>
   );
 }

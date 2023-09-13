@@ -28,6 +28,10 @@
   text-align: center;
 }
 
+.panel > .header > .first * {
+  padding-right: 1em;
+}
+
 .panel > .body {
   display: flex;
   flex-direction: column;
