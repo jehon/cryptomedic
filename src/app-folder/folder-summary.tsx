@@ -34,7 +34,10 @@ export default function FolderSummary({
   folder: Folder;
 }): React.ReactNode {
   return (
-    <div style={{ width: defaultWidthScreen, margin: "0 auto" }}>
+    <div
+      data-role="summary"
+      style={{ width: defaultWidthScreen, margin: "0 auto" }}
+    >
       <Panel key="key-dates" label="Key dates" closed>
         <IO.Date label="Last seen" value={folder.getLastSeen()} />
         <IO.Date label="Next appointment" value={folder.getNextAppoinment()} />
