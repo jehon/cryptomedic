@@ -29,7 +29,7 @@ export default function FilePanel({
   }
   return (
     <Panel
-      role={file.uid()}
+      date-role={file.uid()}
       closed={closed}
       header={
         <>
@@ -51,7 +51,9 @@ export default function FilePanel({
                 </span>
               ) : null
             }
-            <span className="no-mobile">{file.getTitle()}</span>
+            <span data-role="type" className="no-mobile">
+              {file.getTitle()}
+            </span>
           </span>
           {header}
         </>

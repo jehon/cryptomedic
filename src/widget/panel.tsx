@@ -7,21 +7,21 @@ export default function Panel(
     closed,
     children,
     fixed,
-    role
+    dataRole
   }: {
     header?: React.ReactNode;
     label?: string;
     closed?: boolean;
     fixed?: boolean;
     children: React.ReactNode;
-    role?: string;
+    dataRole?: string;
   } = {
     header: null,
     label: "",
     closed: false,
     fixed: false,
     children: null,
-    role: ""
+    dataRole: ""
   }
 ): React.ReactNode {
   const [statusOpened, toggleOpened] = React.useState(!closed);
@@ -45,12 +45,16 @@ export default function Panel(
   }
 
   return (
-    <div className="panel" role={role}>
-      <div className="header" onClick={onOpenClose}>
+    <div className="panel" data-role={dataRole}>
+      <div data-role="header" className="header" onClick={onOpenClose}>
         {label ? <label>{label}</label> : null}
         {header}
       </div>
-      {statusOpened ? <div className="body">{children}</div> : null}
+      {statusOpened ? (
+        <div data-role="body" className="body">
+          {children}
+        </div>
+      ) : null}
     </div>
   );
 }
