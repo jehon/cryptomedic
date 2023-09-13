@@ -11,13 +11,13 @@ import { date2HumanString, normalizeDate } from "../../utils/date";
 export default function FilePanel({
   file,
   folder,
-  headers,
+  header,
   children,
   closed
 }: {
   file: Pojo;
   folder: Folder;
-  headers?: React.ReactNode;
+  header?: React.ReactNode;
   children: React.ReactNode;
   closed?: boolean;
 }): React.ReactNode {
@@ -30,27 +30,31 @@ export default function FilePanel({
   return (
     <Panel
       closed={closed}
-      headers={[
-        <span className="first">
-          <img
-            src={
-              icons.models[(file.getModel() as keyof typeof icons.models) ?? ""]
+      header={
+        <>
+          <span className="first">
+            <img
+              src={
+                icons.models[
+                  (file.getModel() as keyof typeof icons.models) ?? ""
+                ]
+              }
+              alt={file.getTitle()}
+              className="inline"
+            />
+            {
+              // TODO: use interface?
+              "date" in file ? (
+                <span className="no-mobile">
+                  {date2HumanString(normalizeDate(file["date"] as Date))}
+                </span>
+              ) : null
             }
-            alt={file.getTitle()}
-            className="inline"
-          />
-          {
-            // TODO: use interface?
-            "date" in file ? (
-              <span className="no-mobile">
-                {date2HumanString(normalizeDate(file["date"] as Date))}
-              </span>
-            ) : null
-          }
-          <span className="no-mobile">{file.getTitle()}</span>
-        </span>,
-        headers
-      ]}
+            <span className="no-mobile">{file.getTitle()}</span>
+          </span>
+          {header}
+        </>
+      }
     >
       <Button
         href={"#/folder/" + folder.getId() + "/"}
@@ -59,7 +63,6 @@ export default function FilePanel({
       >
         View
       </Button>
-
       {children}
     </Panel>
   );

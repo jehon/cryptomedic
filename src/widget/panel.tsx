@@ -2,19 +2,19 @@ import React from "react";
 
 export default function Panel(
   {
-    headers,
+    header,
     label,
     closed,
     children,
     fixed
   }: {
-    headers?: React.ReactNode;
+    header?: React.ReactNode;
     label?: string;
     closed?: boolean;
     fixed?: boolean;
     children: React.ReactNode;
   } = {
-    headers: null,
+    header: null,
     label: "",
     closed: false,
     fixed: false,
@@ -45,7 +45,7 @@ export default function Panel(
     <div className="panel">
       <div className="header" onClick={onOpenClose}>
         {label ? <label>{label}</label> : null}
-        {headers}
+        {header}
       </div>
       {statusOpened ? <div className="body">{children}</div> : null}
     </div>

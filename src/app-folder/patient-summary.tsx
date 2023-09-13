@@ -20,7 +20,7 @@ export default function PatientSummary({
       closed
       file={file}
       folder={folder}
-      headers={
+      header={
         <>
           <span>
             {file.entry_year}-{file.entry_order}
@@ -30,25 +30,27 @@ export default function PatientSummary({
         </>
       }
     >
-      <TwoColumns>
-        <Panel fixed label="Identification">
-          <IO.Number label="Entry Year" value={file.entry_year} />
-          <IO.Number label="Entry Order" value={file.entry_order} />
-          <IO.String label="Name" value={file.name} />
-          <IO.String label="sex" value={file.sex} />
-          <IO.Number label="Year of birth" value={file.year_of_birth} />
-          <IO.String label="Age today" value={file.actualAge() as string} />
-          <IO.String label="pathology" value={file.pathology} />
-          <IO.Text label="Comments" value={file.comments} />
-        </Panel>
-        <Panel fixed label="Address">
-          <IO.String width={1} label="Phone" value={file.phone} />
-          <IO.String label="District" value={file.address_district} />
-          <IO.String label="Union" value={file.address_union} />
-          <IO.String label="Upazilla" value={file.address_upazilla} />
-          <IO.String label="Address Comments" value={file.address_comments} />
-        </Panel>
-      </TwoColumns>
+      <>
+        <TwoColumns>
+          <Panel fixed label="Identification">
+            <IO.Number label="Entry Year" value={file.entry_year} />
+            <IO.Number label="Entry Order" value={file.entry_order} />
+            <IO.String label="Name" value={file.name} />
+            <IO.String label="sex" value={file.sex} />
+            <IO.Number label="Year of birth" value={file.year_of_birth} />
+            <IO.String label="Age today" value={file.actualAge() as string} />
+            <IO.String label="pathology" value={file.pathology} />
+            <IO.Text label="Comments" value={file.comments} />
+          </Panel>
+          <Panel fixed label="Address">
+            <IO.String width={1} label="Phone" value={file.phone} />
+            <IO.String label="District" value={file.address_district} />
+            <IO.String label="Union" value={file.address_union} />
+            <IO.String label="Upazilla" value={file.address_upazilla} />
+            <IO.String label="Address Comments" value={file.address_comments} />
+          </Panel>
+        </TwoColumns>
+      </>
     </FilePanel>
   );
 }

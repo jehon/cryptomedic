@@ -25,7 +25,7 @@ export default function ConsultClubfootSummary({
       closed
       file={file}
       folder={folder}
-      headers={
+      header={
         <>
           <span className="with-image">
             <ImgSideRight></ImgSideRight>
@@ -42,7 +42,7 @@ export default function ConsultClubfootSummary({
       <TwoColumns>
         <Panel
           fixed
-          headers={[
+          header={[
             <ImgSideRight></ImgSideRight>,
             <span>Pirani Right (&lt; 3 years)</span>,
             tryOrMessage(() => file.getPiraniRight(), "")
@@ -89,7 +89,7 @@ export default function ConsultClubfootSummary({
         </Panel>
         <Panel
           fixed
-          headers={[
+          header={[
             <ImgSideLeft></ImgSideLeft>,
             <span>Pirani Left (&lt; 3 years)</span>,
             tryOrMessage(() => file.getPiraniLeft(), "")

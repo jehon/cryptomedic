@@ -22,7 +22,7 @@ export default function BillSummary({
       closed
       file={file}
       folder={folder}
-      headers={
+      header={
         <>
           <span>total: {file.total_real}</span>,
           <span>paid: {file.getTotalAlreadyPaid()}</span>

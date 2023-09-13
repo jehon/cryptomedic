@@ -20,7 +20,7 @@ export default function SurgerySummary({
       closed
       file={file}
       folder={folder}
-      headers={
+      header={
         <>
           <span>{file.report_diagnostic}</span>
           <span>{file.report_surgeon}</span>
