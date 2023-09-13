@@ -21,15 +21,9 @@ export default function FilePanel({
   children: React.ReactNode;
   closed?: boolean;
 }): React.ReactNode {
-  if (!folder) {
-    return <div>No folder selected</div>;
-  }
-  if (!file) {
-    return <div>No file selected</div>;
-  }
   return (
     <Panel
-      date-role={file.uid()}
+      dataRole={file.uid()}
       closed={closed}
       header={
         <>

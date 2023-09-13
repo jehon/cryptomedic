@@ -33,6 +33,9 @@ export default function FolderSummary({
   folderId: string;
   folder: Folder;
 }): React.ReactNode {
+  if (!folder) {
+    return <div>No folder selected</div>;
+  }
   return (
     <div
       data-role="summary"
