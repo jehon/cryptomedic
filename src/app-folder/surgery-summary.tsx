@@ -7,8 +7,6 @@ import FilePanel from "./blocs/file-panel";
 import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
-import { icons } from "../config";
-import { date2HumanString, normalizeDate } from "../utils/date";
 
 export default function SurgerySummary({
   file,
