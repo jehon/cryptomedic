@@ -8,6 +8,7 @@ import {
   patientFilesRead2014_103,
   patientFilesRead2014_105
 } from "./helpers/e2e-entrynumber-assigned.js";
+import { getByDataRole } from "./helpers/gui.js";
 import { patientgo, patientSelectFile } from "./helpers/patients.js";
 import TableIterator from "./helpers/table-iterator.js";
 
@@ -27,13 +28,18 @@ context("Actions", () => {
 
       cy.crCompareSnapshot("patient_2000_1");
 
-      cy.get("#summary").click();
-      new TableIterator("#table_summary", { xtable: false })
-        // Summary Bill#1
-        .row(5)
-        .assert("#4")
-        .col(4)
-        .assert("Social Level");
+      cy.get("#folder_menu #summary").click();
+      getByDataRole("summary")
+        .should("be.visible")
+        .within(() => {
+          getByDataRole("Patient-1")
+            .should("be.visible")
+            .within(() => {
+              getByDataRole("header").within(() => {
+                getByDataRole("type").should("contain", "Patient");
+              });
+            });
+        });
 
       // TODO: We need to wait for image to be loaded...
       cy.wait(1000); // eslint-disable-line
