@@ -38,7 +38,14 @@ export default function ConsultRicketSummary({
         </Panel>
       </TwoColumns>
       <TwoColumns>
-        <Panel header={[<ImgSideRight></ImgSideRight>, <span>Right Leg</span>]}>
+        <Panel
+          header={
+            <>
+              <ImgSideRight></ImgSideRight>
+              <span>Right Leg</span>
+            </>
+          }
+        >
           <IO.List right label="Leg" value={file.right_leg}></IO.List>
           <IO.Number
             right
@@ -61,7 +68,14 @@ export default function ConsultRicketSummary({
             value={file.IMIC_distance}
           ></IO.Number>
         </Panel>
-        <Panel header={[<ImgSideLeft></ImgSideLeft>, <span>Left leg</span>]}>
+        <Panel
+          header={
+            <>
+              <ImgSideLeft></ImgSideLeft>
+              <span>Left leg</span>
+            </>
+          }
+        >
           <IO.List left label="Leg" value={file.left_leg}></IO.List>
           <IO.Number
             left

@@ -42,11 +42,13 @@ export default function ConsultClubfootSummary({
       <TwoColumns>
         <Panel
           fixed
-          header={[
-            <ImgSideRight></ImgSideRight>,
-            <span>Pirani Right (&lt; 3 years)</span>,
-            tryOrMessage(() => file.getPiraniRight(), "")
-          ]}
+          header={
+            <>
+              <ImgSideRight></ImgSideRight>
+              <span>Pirani Right (&lt; 3 years)</span>
+              {tryOrMessage(() => file.getPiraniRight(), "")}
+            </>
+          }
         >
           <div className="separator">Mid Foot</div>
           <IO.List
@@ -89,11 +91,13 @@ export default function ConsultClubfootSummary({
         </Panel>
         <Panel
           fixed
-          header={[
-            <ImgSideLeft></ImgSideLeft>,
-            <span>Pirani Left (&lt; 3 years)</span>,
-            tryOrMessage(() => file.getPiraniLeft(), "")
-          ]}
+          header={
+            <>
+              <ImgSideLeft></ImgSideLeft>
+              <span>Pirani Left (&lt; 3 years)</span>
+              {tryOrMessage(() => file.getPiraniLeft(), "")}
+            </>
+          }
         >
           <div className="separator">Mid Foot</div>
           <IO.List
