@@ -3,8 +3,11 @@ import { registrySet } from "./registry.js";
 
 const model = "OtherConsult";
 
-// TODO: rename to ConsultOther
-export default class OtherConsult extends Consult {
+export default class ConsultOther extends Consult {
+  static getModel() {
+    return model;
+  }
+
   getModel() {
     return model;
   }
@@ -51,4 +54,4 @@ export default class OtherConsult extends Consult {
   }
 }
 
-registrySet(model, OtherConsult);
+registrySet(model, ConsultOther);

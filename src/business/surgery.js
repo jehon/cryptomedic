@@ -4,6 +4,10 @@ import { registrySet } from "./registry.js";
 const model = "Surgery";
 
 export default class Surgery extends Timed {
+  static getModel() {
+    return model;
+  }
+
   getModel() {
     return model;
   }

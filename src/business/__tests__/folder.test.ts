@@ -5,12 +5,12 @@ import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
 import Folder from "../folder.js";
 import Appointment from "../appointment.js";
 import Bill from "../bill.js";
-import ClubFoot from "../club-foot.js";
-import OtherConsult from "../other-consult.js";
+import ConsultClubfoot from "../consult-clubfoot.js";
+import ConsultOther from "../consult-other.js";
 import Patient from "../patient.js";
 import Payment from "../payment.js";
 import Picture from "../picture.js";
-import RicketConsult from "../ricket-consult.js";
+import ConsultRicket from "../consult-ricket.js";
 import Surgery from "../surgery.js";
 
 let f: Folder = new Folder();
@@ -40,27 +40,27 @@ test("should instanciate classes", () => {
   expect(f.getPatient()).toBeInstanceOf(Patient);
   expect(f.getPatient().id).toBe(1);
 
-  expect(Folder.create(f, "Appointment", {})).toBeInstanceOf(Appointment);
-  expect(Folder.create(f, "Bill", {})).toBeInstanceOf(Bill);
-  expect(Folder.create(f, "ClubFoot", {})).toBeInstanceOf(ClubFoot);
-  expect(Folder.create(f, "OtherConsult", {})).toBeInstanceOf(OtherConsult);
-  expect(Folder.create(f, "Payment", {})).toBeInstanceOf(Payment);
-  expect(Folder.create(f, "Picture", {})).toBeInstanceOf(Picture);
-  expect(Folder.create(f, "RicketConsult", {})).toBeInstanceOf(RicketConsult);
-  expect(Folder.create(f, "Surgery", {})).toBeInstanceOf(Surgery);
+  expect(Folder.create(f, Appointment.getModel(), {})).toBeInstanceOf(Appointment);
+  expect(Folder.create(f, Bill.getModel(), {})).toBeInstanceOf(Bill);
+  expect(Folder.create(f, ConsultClubfoot.getModel(), {})).toBeInstanceOf(ConsultClubfoot);
+  expect(Folder.create(f, ConsultOther.getModel(), {})).toBeInstanceOf(ConsultOther);
+  expect(Folder.create(f, Payment.getModel(), {})).toBeInstanceOf(Payment);
+  expect(Folder.create(f, Picture.getModel(), {})).toBeInstanceOf(Picture);
+  expect(Folder.create(f, ConsultRicket.getModel(), {})).toBeInstanceOf(ConsultRicket);
+  expect(Folder.create(f, Surgery.getModel(), {})).toBeInstanceOf(Surgery);
 
   expect(() => Folder.create(f, "AnythingInvalid", {})).toThrow();
 });
 
 test("should query specific element (Otherconsult 1)", () => {
-  expect(f.getByTypeAndId(OtherConsult, 1)).toBeInstanceOf(OtherConsult);
-  expect(f.getByTypeAndId(OtherConsult, 1)?.id).toBe(1);
+  expect(f.getByTypeAndId(ConsultOther, 1)).toBeInstanceOf(ConsultOther);
+  expect(f.getByTypeAndId(ConsultOther, 1)?.id).toBe(1);
 
   expect(f.getByUid("OtherConsult-1")?.id).toBe(1);
 });
 
 test("should return null if element is not found (Otherconsult 0)", () => {
-  expect(f.getByTypeAndId(OtherConsult, 0)).toBeNull();
+  expect(f.getByTypeAndId(ConsultOther, 0)).toBeNull();
 });
 
 test("should give patient related files", () => {
@@ -83,9 +83,9 @@ test("should give patient related files", () => {
   expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Picture).id);
 
   i++;
-  expect(list[i]).toBeInstanceOf(RicketConsult);
+  expect(list[i]).toBeInstanceOf(ConsultRicket);
   expect(list[i].id).toBe(13);
-  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as RicketConsult).id);
+  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as ConsultRicket).id);
 
   i++;
   expect(list[i]).toBeInstanceOf(Surgery);
@@ -98,9 +98,9 @@ test("should give patient related files", () => {
   expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Bill).id);
 
   i++;
-  expect(list[i]).toBeInstanceOf(OtherConsult);
+  expect(list[i]).toBeInstanceOf(ConsultOther);
   expect(list[i].id).toBe(1);
-  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as OtherConsult).id);
+  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as ConsultOther).id);
 
   // And out of bounds...
   expect(f.getFileRelatedToPatient(1000)).toBeNull();

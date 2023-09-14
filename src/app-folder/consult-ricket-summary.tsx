@@ -1,6 +1,6 @@
 import React from "react";
 
-import ConsultRicket from "../business/ricket-consult";
+import ConsultRicket from "../business/consult-ricket";
 import Folder from "../business/folder";
 
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";

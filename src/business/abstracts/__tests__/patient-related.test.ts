@@ -2,7 +2,7 @@ import { test, expect } from "@jest/globals";
 
 import PatientRelated from "../patient-related.js";
 import Patient from "../../patient.js";
-import RicketConsult from "../../ricket-consult.js";
+import RicketConsult from "../../consult-ricket.js";
 
 import { loadReferenceFolder, RefFolder1 } from "../../../test-helper";
 

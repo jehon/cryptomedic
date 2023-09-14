@@ -1,6 +1,6 @@
 import React from "react";
 
-import ConsultClubfoot from "../business/club-foot";
+import ConsultClubfoot from "../business/consult-clubfoot";
 import Folder from "../business/folder";
 
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";

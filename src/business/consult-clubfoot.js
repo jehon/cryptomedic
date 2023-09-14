@@ -17,8 +17,11 @@ function f(val) {
 
 const model = "ClubFoot";
 
-// TODO: rename to ConsultClubfoot
-export default class ClubFoot extends Consult {
+export default class ConsultClubfoot extends Consult {
+  static getModel() {
+    return model;
+  }
+
   getModel() {
     return model;
   }
@@ -172,4 +175,4 @@ export default class ClubFoot extends Consult {
   }
 }
 
-registrySet(model, ClubFoot);
+registrySet(model, ConsultClubfoot);

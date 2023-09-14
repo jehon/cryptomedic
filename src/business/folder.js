@@ -4,11 +4,11 @@ import Appointment from "./appointment.js";
 
 // Enrich the registry:
 import "./bill.js";
-import "./club-foot.js";
-import "./other-consult.js";
+import "./consult-clubfoot.js";
+import "./consult-other.js";
 import "./payment.js";
 import "./picture.js";
-import "./ricket-consult.js";
+import "./consult-ricket.js";
 import "./surgery.js";
 import { registryGet } from "./registry.js";
 

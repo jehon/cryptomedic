@@ -4,6 +4,10 @@ import { registrySet } from "./registry.js";
 const model = "Price";
 
 export default class Price extends Pojo {
+  static getModel() {
+    return model;
+  }
+
   getModel() {
     return model;
   }

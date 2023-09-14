@@ -1,7 +1,7 @@
-import ClubFoot from "../club-foot.js";
+import ConsultClubfoot from "../consult-clubfoot.js";
 
 test("should give the correct model", function () {
-  let b = new ClubFoot();
+  let b = new ConsultClubfoot();
 
   expect(b.getModel()).toBe("ClubFoot");
   expect(b.getServerRessource()).toBe("clubfeet");

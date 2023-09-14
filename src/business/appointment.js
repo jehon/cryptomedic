@@ -4,6 +4,10 @@ import { registrySet } from "./registry.js";
 const model = "Appointment";
 
 export default class Appointment extends PatientRelated {
+  static getModel() {
+    return model;
+  }
+
   getModel() {
     return model;
   }
