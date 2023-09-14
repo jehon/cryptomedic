@@ -20,3 +20,7 @@ export function guiHashStartWith(hash, strict = false) {
     )
   );
 }
+
+export function getByDataRole(dataRole) {
+  return cy.get(`[data-role="${dataRole}"]`);
+}
