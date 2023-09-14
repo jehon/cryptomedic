@@ -6,4 +6,4 @@ import "./main-media.css";
  * What custom element do we need to import?
  */
 
-import "./app-folder/folder-summary.tsx";
+import "./app-folder/folder-element.tsx";

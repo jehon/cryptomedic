@@ -5,28 +5,28 @@ import Folder from "../business/folder";
 import PatientRelated from "../business/abstracts/patient-related";
 
 import Patient from "../business/patient";
-import PatientSummary from "./patient-summary";
+import PatientElement from "./patient-element";
 
 import Appointment from "../business/appointment";
-import AppointmentSummary from "./appointment-summary";
+import AppointmentElement from "./appointment-element";
 import Bill from "../business/bill";
-import BillSummary from "./bill-summary";
+import BillElement from "./bill-element";
 import ConsultClubfoot from "../business/consult-clubfoot";
-import ConsultClubfootSummary from "./consult-clubfoot-summary";
+import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOther from "../business/consult-other";
-import ConsultOtherSummary from "./consult-other-summary";
+import ConsultOtherElement from "./consult-other-element";
 import ConsultRicket from "../business/consult-ricket";
-import ConsultRicketSummary from "./consult-ricket-summary";
+import ConsultRicketElement from "./consult-ricket-element";
 import Picture from "../business/picture";
-import PictureSummary from "./picture-summary";
+import PictureElement from "./picture-element";
 import Surgery from "../business/surgery";
-import SurgerySummary from "./surgery-summary";
+import SurgeryElement from "./surgery-element";
 
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { defaultWidthScreen } from "../styles/style-helpers";
 
-export default function FolderSummary({
+export default function FolderElement({
   folderId,
   folder
 }: {
@@ -45,74 +45,74 @@ export default function FolderSummary({
         <IO.Date label="Last seen" value={folder.getLastSeen()} />
         <IO.Date label="Next appointment" value={folder.getNextAppoinment()} />
       </Panel>
-      <PatientSummary
+      <PatientElement
         key={(folder.getPatient() as Patient).uid()}
         file={folder.getPatient() as Patient}
         folder={folder}
-      ></PatientSummary>
+      ></PatientElement>
       {(folder.getFilesRelatedToPatient() as PatientRelated[]).map(
         (file: PatientRelated, index: number) => {
           if (file instanceof Appointment) {
             return (
-              <AppointmentSummary
+              <AppointmentElement
                 key={file.uid()}
                 folder={folder}
                 file={file}
-              ></AppointmentSummary>
+              ></AppointmentElement>
             );
           }
           if (file instanceof Bill) {
             return (
-              <BillSummary
+              <BillElement
                 key={file.uid()}
                 folder={folder}
                 file={file}
-              ></BillSummary>
+              ></BillElement>
             );
           }
           if (file instanceof ConsultClubfoot) {
             return (
-              <ConsultClubfootSummary
+              <ConsultClubfootElement
                 key={file.uid()}
                 folder={folder}
                 file={file}
-              ></ConsultClubfootSummary>
+              ></ConsultClubfootElement>
             );
           }
           if (file instanceof ConsultOther) {
             return (
-              <ConsultOtherSummary
+              <ConsultOtherElement
                 key={file.uid()}
                 folder={folder}
                 file={file}
-              ></ConsultOtherSummary>
+              ></ConsultOtherElement>
             );
           }
           if (file instanceof ConsultRicket) {
             return (
-              <ConsultRicketSummary
+              <ConsultRicketElement
                 key={file.uid()}
                 folder={folder}
                 file={file}
-              ></ConsultRicketSummary>
+              ></ConsultRicketElement>
             );
           }
           if (file instanceof Picture) {
             return (
-              <PictureSummary
+              <PictureElement
                 key={file.uid()}
                 folder={folder}
                 file={file}
-              ></PictureSummary>
+              ></PictureElement>
             );
           }
           if (file instanceof Surgery) {
             return (
-              <SurgerySummary
+              <SurgeryElement
                 key={file.uid()}
                 folder={folder}
                 file={file}
-              ></SurgerySummary>
+              ></SurgeryElement>
             );
           }
           return null;
@@ -122,4 +122,4 @@ export default function FolderSummary({
   );
 }
 
-bridgeTo("x-react-folder-summary", FolderSummary);
+bridgeTo("x-react-folder-element", FolderElement);

@@ -12,7 +12,7 @@ import Panel from "../widget/panel";
 import IO from "../widget/io";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
 
-export default function ConsultRicketSummary({
+export default function ConsultRicketElement({
   file,
   folder
 }: {

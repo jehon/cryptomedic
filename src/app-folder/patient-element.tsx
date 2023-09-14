@@ -8,7 +8,7 @@ import FilePanel from "./blocs/file-panel";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 
-export default function PatientSummary({
+export default function PatientElement({
   file,
   folder
 }: {

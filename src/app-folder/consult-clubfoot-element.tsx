@@ -13,7 +13,7 @@ import IO from "../widget/io";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import { tryOrMessage } from "../utils/strings";
 
-export default function ConsultClubfootSummary({
+export default function ConsultClubfootElement({
   file,
   folder
 }: {

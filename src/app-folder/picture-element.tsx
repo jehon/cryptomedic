@@ -8,7 +8,7 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 
-export default function PictureSummary({
+export default function PictureElement({
   file,
   folder
 }: {

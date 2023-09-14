@@ -10,7 +10,7 @@ import IO from "../widget/io";
 import { roundTo } from "../utils/strings";
 import Payment from "../business/payment";
 
-export default function BillSummary({
+export default function BillElement({
   file,
   folder
 }: {

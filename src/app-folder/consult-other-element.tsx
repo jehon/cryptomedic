@@ -11,7 +11,7 @@ import TwoColumns from "../widget/two-columns";
 import Panel from "../widget/panel";
 import IO from "../widget/io";
 
-export default function ConsultOtherSummary({
+export default function ConsultOtherElement({
   file,
   folder
 }: {
