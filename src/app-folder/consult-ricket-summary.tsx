@@ -20,7 +20,23 @@ export default function ConsultRicketSummary({
   folder: Folder;
 }): React.ReactNode {
   return (
-    <FilePanel closed file={file} folder={folder}>
+    <FilePanel
+      closed
+      file={file}
+      folder={folder}
+      header={
+        <>
+          <span className="with-image">
+            <ImgSideRight></ImgSideRight>
+            {file.right_leg}/{file.right_leg_angle}
+          </span>
+          <span className="with-image">
+            <ImgSideLeft></ImgSideLeft>
+            {file.left_leg}/{file.left_leg_angle}
+          </span>
+        </>
+      }
+    >
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns>
         <Panel label="Ricket Data">
