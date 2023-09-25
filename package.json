@@ -36,7 +36,7 @@
     "@types/pngjs": "6.0.2",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
-    "@types/string": "0.0.31",
+    "@types/string": "0.0.32",
     "@typescript-eslint/eslint-plugin": "6.7.2",
     "@typescript-eslint/parser": "6.7.2",
     "axios-mock-adapter": "1.22.0",
