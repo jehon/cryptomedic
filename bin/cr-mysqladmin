@@ -2,4 +2,4 @@
 
 set -o errexit
 
-docker compose exec mysql mysqladmin "$@"
+docker compose exec database mysqladmin "$@"

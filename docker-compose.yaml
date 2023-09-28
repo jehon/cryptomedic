@@ -53,7 +53,7 @@ services:
       - traefik.http.routers.web.rule=PathPrefix(`/`)
     # extra_hosts:
     #   # host.docker.internal: host-gateway
-    #   mysql: host-gateway
+    #   database: host-gateway
 
   dev-static:
     image: httpd:alpine
@@ -66,11 +66,8 @@ services:
       - traefik.http.routers.static.rule=PathPrefix(`/dev`)
       # - traefik.http.routers.static.middlewares=jhstriproot@docker
 
-  mysql:
-    build:
-      context: conf/mysql
-      args:
-        MYSQL_VERSION: ${MYSQL_VERSION}
+  database:
+    image: mysql:${MYSQL_VERSION}
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
       # # In dev, we don't need a password
@@ -109,7 +106,7 @@ services:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
     image: phpmyadmin/phpmyadmin:${PHPMYADMIN_VERSION}
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: database
       PMA_USER: root
       # PMA_PASSWORD: mysql_root_password
       # Force lang:

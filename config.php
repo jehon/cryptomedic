@@ -6,7 +6,7 @@ define("CR_PRJ_ROOT", __DIR__);
 
 $myconfig = [
   'database' => [
-    'host'       => 'mysql',
+    'host'       => 'database',
     'schema'     => 'cryptomedic',
     'username'   => 'mysql_cryptomedic_username',
     'password'   => 'mysql_cryptomedic_password',

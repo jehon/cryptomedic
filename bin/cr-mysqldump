@@ -2,4 +2,4 @@
 
 set -o errexit
 
-docker compose exec mysql mysqldump "$@"
+docker compose exec database mysqldump "$@"
