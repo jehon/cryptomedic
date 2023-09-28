@@ -16,7 +16,11 @@ set -o pipefail
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
 mysql_run() {
-    docker compose exec -T mysql mysql -h localhost "$@"
+    docker compose exec -T mysql mysql \
+	--quick \
+	--reconnect \
+	--unbuffered \
+	--wait "$@"
 }
 
 #
