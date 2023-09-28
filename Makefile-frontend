@@ -51,8 +51,7 @@ $(FRONTEND_DEPENDENCIES_MARK): package-lock.json
 	@touch "$@"
 
 package-lock.json: package.json
-	bin/cr-npm install
-
+	bin/cr-npm install --package-lock-only
 	@touch "$@"
 
 .PHONY: frontend-lint

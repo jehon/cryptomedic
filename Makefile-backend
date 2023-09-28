@@ -37,7 +37,6 @@ backend-dump:
 dependencies: backend-dependencies
 backend-dependencies: $(BACKEND_DEPENDENCIES_MARK)
 $(BACKEND_DEPENDENCIES_MARK): \
-		$(BACKEND_ROOT)/composer.json \
 		$(BACKEND_ROOT)/composer.lock
 
 	cr-ensure-folder-empty $(BACKEND_ROOT)/bootstrap/cache
@@ -45,6 +44,11 @@ $(BACKEND_DEPENDENCIES_MARK): \
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
+
+$(BACKEND_ROOT)/composer.lock: $(BACKEND_ROOT)/composer.json
+	bin/cr-composer update --no-install --working-dir "$(BACKEND_ROOT)"
+	@touch "$@"
+
 
 .PHONY: backend-update-dependencies
 update: backend-update-dependencies
