@@ -1,12 +1,9 @@
-import React from "react";
+import { IOParams } from "./io-abstract";
 import IOString from "./io-string";
+import { Optional } from "../utils/generic-types";
 
-export default class IOList extends IOString<{ list?: string[] }> {
-  renderInput(value: string, required: boolean): React.ReactNode {
-    return this.renderOutput(value);
-  }
-
-  getInputValue(): string {
-    return this.props.value;
-  }
+export default function IOList(
+  options: { list?: string[] } & IOParams<Optional<string>>
+) {
+  return IOString(options);
 }

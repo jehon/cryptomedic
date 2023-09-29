@@ -1,16 +1,9 @@
-import IOAbstract from "./io-abstract";
+import IOAbstract, { IOParams } from "./io-abstract";
+import { Optional } from "../utils/generic-types";
 import { ImgBooleanFalse, ImgBooleanTrue } from "./images";
 
-export default class IOBoolean extends IOAbstract<boolean> {
-  renderOutput(value: boolean) {
-    return value ? ImgBooleanTrue() : ImgBooleanFalse();
-  }
-
-  renderInput(value: boolean, required: boolean) {
-    return this.renderOutput(value);
-  }
-
-  getInputValue(): boolean {
-    return this.props.value;
-  }
+export default function IOBoolean(props: IOParams<Optional<boolean>>) {
+  return IOAbstract<Optional<boolean>>(props, {
+    renderOutput: (value) => (value ? ImgBooleanTrue() : ImgBooleanFalse())
+  });
 }

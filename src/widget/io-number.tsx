@@ -1,28 +1,18 @@
 import React from "react";
+import IOAbstract, { IOParams } from "./io-abstract";
 import { Optional } from "../utils/generic-types";
-
-import IOAbstract from "./io-abstract";
 import { roundTo } from "../utils/strings";
 
-export default class IONumber extends IOAbstract<
-  Optional<number>,
-  { precision?: number }
-> {
-  renderOutput(value: Optional<number>) {
-    return (
+export default function IONumber(
+  options: { precision?: number } & IOParams<Optional<number>>
+) {
+  return IOAbstract<Optional<number>>(options, {
+    renderOutput: (value) => (
       <div>
-        {this.props.precision && value
-          ? roundTo(value, this.props.precision)
+        {options.precision && value
+          ? roundTo(value, options.precision)
           : "" + value}
       </div>
-    );
-  }
-
-  renderInput(value: Optional<number>, required: boolean): React.ReactNode {
-    return this.renderOutput(value);
-  }
-
-  getInputValue(): Optional<number> {
-    return this.props.value;
-  }
+    )
+  });
 }

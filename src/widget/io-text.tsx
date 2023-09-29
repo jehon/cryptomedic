@@ -1,16 +1,9 @@
 import React from "react";
-import IOAbstract from "./io-abstract";
+import IOAbstract, { IOParams } from "./io-abstract";
+import { Optional } from "../utils/generic-types";
 
-export default class IOText extends IOAbstract<string> {
-  renderOutput(value: string) {
-    return <pre>{value}</pre>;
-  }
-
-  renderInput(value: string, required: boolean): React.ReactNode {
-    return this.renderOutput(value);
-  }
-
-  getInputValue(): string {
-    return this.props.value;
-  }
+export default function IOText(options: IOParams<string>) {
+  return IOAbstract<Optional<string>>(options, {
+    renderOutput: (value) => <pre>{value}</pre>
+  });
 }

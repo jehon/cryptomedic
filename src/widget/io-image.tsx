@@ -1,22 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import IOAbstract, { IOParams } from "./io-abstract";
 import { Optional } from "../utils/generic-types";
-
-import IOAbstract from "./io-abstract";
 
 // For styling, see io.css
 
-export default class IOPicture extends IOAbstract<Optional<string>> {
-  render(): React.ReactNode {
-    const { value } = this.props;
+export default function IOPicture(options: IOParams<Optional<string>>) {
+  const [top, setTop] = useState(false);
 
-    return this.renderOutput(value);
-  }
+  return IOAbstract<Optional<string>>(options, {
+    renderOutput: (value) => {
+      if (!value) {
+        return "No image";
+      }
 
-  renderOutput(value: Optional<string>): React.ReactNode {
-    if (!value) {
-      return "No image";
+      return (
+        <img
+          className={"io-img" + top ? " fullscreen" : ""}
+          src={value}
+          alt="Content"
+          onClick={() => setTop(!top)}
+        />
+      );
     }
-
-    return <img className="io-img" src={value} alt="Content" />;
-  }
+  });
 }

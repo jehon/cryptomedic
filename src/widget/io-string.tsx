@@ -1,16 +1,9 @@
 import React from "react";
-import IOAbstract from "./io-abstract";
+import IOAbstract, { IOParams } from "./io-abstract";
+import { Optional } from "../utils/generic-types";
 
-export default class IOString<Extra = {}> extends IOAbstract<string, Extra> {
-  renderOutput(value: string) {
-    return <div>{value}</div>;
-  }
-
-  renderInput(value: string, required: boolean): React.ReactNode {
-    return this.renderOutput(value);
-  }
-
-  getInputValue(): string {
-    return this.props.value;
-  }
+export default function IOString(options: IOParams<Optional<string>>) {
+  return IOAbstract<Optional<string>>(options, {
+    renderOutput: (value) => <div>{value}</div>
+  });
 }
