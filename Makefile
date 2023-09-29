@@ -16,7 +16,8 @@ export CRYPTOMEDIC_DEPLOY_WEB_TOKEN ?= secret
 export DBUPDATEPWD := secret # From config.php
 
 # Default target
-check: cls clean-files start dependencies lint build test ok
+.PHONY: check
+check: cls start dependencies lint build test ok
 
 # Test with clean environment
 .PHONY: full
