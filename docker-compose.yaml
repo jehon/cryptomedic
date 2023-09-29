@@ -67,6 +67,7 @@ services:
       # - traefik.http.routers.static.middlewares=jhstriproot@docker
 
   database:
+    image: mysql:${MYSQL_VERSION}
     restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
