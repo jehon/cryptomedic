@@ -13,7 +13,7 @@ export default abstract class IOAbstract<T, Extra = {}> extends React.Component<
   } & Extra,
   {}
 > {
-  render() {
+  render(): React.ReactNode {
     const {
       label = "Label",
       value,
