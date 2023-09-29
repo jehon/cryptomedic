@@ -3,6 +3,8 @@ import { Optional } from "../utils/generic-types";
 
 import IOAbstract from "./io-abstract";
 
+// For styling, see io.css
+
 export default class IOPicture extends IOAbstract<Optional<string>> {
   render(): React.ReactNode {
     const { value } = this.props;
@@ -15,12 +17,6 @@ export default class IOPicture extends IOAbstract<Optional<string>> {
       return "No image";
     }
 
-    return (
-      <img
-        src={value}
-        alt="Content"
-        style={{ objectFit: "contain", height: "100%" }}
-      />
-    );
+    return <img className="io-img" src={value} alt="Content" />;
   }
 }

@@ -44,7 +44,7 @@
   width: 100%;
 }
 
-.panel > * > img {
+.panel > .header > img {
   height: 1.5em;
 }
 
