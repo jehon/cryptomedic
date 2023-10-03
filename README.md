@@ -109,3 +109,5 @@ www/static/img/model*payment.svg: https://commons.wikimedia.org/wiki/File:Bills_
 www/static/img/model_picture.svg: klepas and the Tango people. - http://klepas.deviantart.com/art/
 www/static/img/model_surgery.png: Freepik - https://www.flaticon.com/free-icons/operation-theatre
 www/static/img/side*\*.svg https://www.iconfinder.com/icons/2203549/admin_avatar_human_login_user_icon heavily adapted
+www/static/io/fullscreen.svg: https://icons.getbootstrap.com/icons/fullscreen/
+www/static/io/exit.svg: https://icons.getbootstrap.com/icons/fullscreen-exit/

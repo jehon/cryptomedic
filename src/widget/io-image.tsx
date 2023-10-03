@@ -13,12 +13,19 @@ export default function IOPicture(props: IOParams<Optional<string>>) {
     return "No image";
   }
 
-  return (
-    <img
-      className={"io-img" + (top ? " fullscreen" : "")}
-      src={value}
-      alt="Content"
-      onClick={() => setTop(!top)}
-    />
+  return top ? (
+    <div className="io-img fullscreen" onClick={() => setTop(!top)}>
+      <img data-role="image" src={value} alt="Content" />
+      <img data-decorator src="/static/img/io/exit.svg" alt="Exit" />
+    </div>
+  ) : (
+    <div className="io-img" onClick={() => setTop(!top)}>
+      <img data-role="image" src={value} alt="Content" />
+      <img
+        data-decorator
+        src="/static/img/io/fullscreen.svg"
+        alt="Fullscreen"
+      />
+    </div>
   );
 }

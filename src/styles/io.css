@@ -29,9 +29,27 @@
   color: gray;
 }
 
-img.io-img {
+.io-img {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.io-img > img[data-role="image"] {
   object-fit: contain;
   height: 100%;
+  width: 100%;
 
-  transition: transform 0.25s ease;
+  transition: transform 1s ease;
+}
+
+.io-img > img[data-decorator] {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  object-fit: contain;
+  background-color: gray;
+  border-radius: 10px;
+  padding: 5px;
 }
