@@ -27,10 +27,8 @@ import IO from "../widget/io";
 import { defaultWidthScreen } from "../styles/style-helpers";
 
 export default function FolderElement({
-  folderId,
   folder
 }: {
-  folderId: string;
   folder: Folder;
 }): React.ReactNode {
   if (!folder) {
