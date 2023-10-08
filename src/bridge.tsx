@@ -25,7 +25,6 @@ export function bridgeTo(
         const mountPoint = document.createElement("span");
         this.innerHTML = "";
         this.insertAdjacentElement("beforeend", mountPoint);
-        // this.attachShadow({ mode: "open" }).appendChild(mountPoint);
 
         this.#root = createRoot(mountPoint);
       }
