@@ -7,7 +7,8 @@ import { ObjectMap } from "./utils/generic-types";
 export function bridgeTo(
   tag: string,
   reactComponent: any,
-  attributes: string[] = []
+  hardcodedAttributes: { [x: string]: any } = {},
+  transferedAttributes: string[] = []
 ) {
   customElements.define(
     tag,
@@ -17,7 +18,7 @@ export function bridgeTo(
       #props: ObjectMap<any> = {};
 
       static get observedAttributes() {
-        return attributes;
+        return transferedAttributes;
       }
 
       constructor() {
@@ -48,29 +49,30 @@ export function bridgeTo(
 
       render() {
         const attrs: any = {};
-        for (const k of attributes) {
+        for (const k of transferedAttributes) {
           attrs[k] = this.getAttribute(k) || "";
         }
         this.#element = React.createElement(reactComponent, {
           ...attrs,
+          ...hardcodedAttributes,
           ...this.#props
         });
         this.#root.render(this.#element);
       }
 
-      //
-      // For ctrl_folder
-      //
+      // //
+      // // For ctrl_folder
+      // //
 
-      set folder(f: any) {
-        this.set("folder", f);
-        this.render();
-      }
+      // set folder(f: any) {
+      //   this.set("folder", f);
+      //   this.render();
+      // }
 
-      set file(f: any) {
-        this.set("file", f);
-        this.render();
-      }
+      // set file(f: any) {
+      //   this.set("file", f);
+      //   this.render();
+      // }
     }
   );
 }
