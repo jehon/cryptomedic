@@ -1,9 +1,9 @@
-import axios from "axios";
 import nullify from "../utils/nullify";
 import {
   ServerRequestError,
   TransportRequestError
 } from "../../legacy/app-old/v2/widgets/func/x-requestor";
+import Folder from "../business/folder";
 
 async function request({
   url,
@@ -70,6 +70,6 @@ async function request({
   );
 }
 
-export async function getFolder(id: number) {
+export async function getFolder(id: number): Promise<Folder> {
   return request({ url: `folder/Patient/${id}` }).then((data) => data.folder);
 }
