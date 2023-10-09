@@ -66,10 +66,13 @@ async function request({
         // Something happened in setting up the request that triggered an Error
         err = error;
       }
+      throw err;
     }
   );
 }
 
 export async function getFolder(id: number): Promise<Folder> {
-  return request({ url: `folder/Patient/${id}` }).then((data) => data.folder);
+  return request({ url: `folder/Patient/${id}` })
+    .then((data) => data.folder)
+    .then((folder) => new Folder(folder));
 }
