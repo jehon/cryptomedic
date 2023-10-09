@@ -1,6 +1,5 @@
 import React from "react";
 
-import { bridgeTo } from "../bridge";
 import Folder from "../business/folder";
 import PatientRelated from "../business/abstracts/patient-related";
 
@@ -119,5 +118,3 @@ export default function FolderElement({
     </div>
   );
 }
-
-bridgeTo("x-react-folder-element", FolderElement);

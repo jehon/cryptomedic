@@ -36,10 +36,6 @@ function newRefresh(folder = null, file = null) {
     setPropertyOn(mc, "folder", folder);
     setPropertyOn(mc, "file", file);
   }
-
-  for (const reactEl of document.querySelectorAll("[x-react-inject-folder]")) {
-    reactEl.set("folder", folder);
-  }
 }
 
 /**

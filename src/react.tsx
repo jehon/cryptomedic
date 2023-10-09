@@ -8,7 +8,6 @@ import "./main.css";
 import "./main-media.css";
 
 /* Application */
-import "./app-folder/folder-element";
 import FolderRouter, { folderLoader } from "./app-folder/folder-router";
 import { bridgeTo } from "./bridge";
 import ErrorPage from "./widget/error-page";
