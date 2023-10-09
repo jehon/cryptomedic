@@ -73,5 +73,3 @@ async function request({
 export async function getFolder(id: number) {
   return request({ url: `folder/Patient/${id}` }).then((data) => data.folder);
 }
-
-console.log(await getFolder(2));
