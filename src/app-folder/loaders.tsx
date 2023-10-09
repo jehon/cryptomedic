@@ -20,7 +20,7 @@ async function request({
   method = method || "GET";
   data = nullify(data);
 
-  if (url[0] != "/") {
+  if (url[0] !== "/") {
     url = `/api/${url}`;
   }
 
@@ -28,7 +28,7 @@ async function request({
   const signal = controller.signal;
 
   return fetch(
-    url + (method == "GET" ? "?" + new URLSearchParams(data).toString() : ""),
+    url + (method === "GET" ? "?" + new URLSearchParams(data).toString() : ""),
     {
       method,
       credentials: "same-origin",
@@ -36,7 +36,7 @@ async function request({
       headers: {
         "Content-Type": "application/json"
       },
-      body: method == "GET" ? null : JSON.stringify(data)
+      body: method === "GET" ? null : JSON.stringify(data)
     }
   ).then(
     (response) => {
