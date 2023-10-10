@@ -9,7 +9,8 @@ module.exports = {
     "no-descending-specificity": null,
     "selector-type-no-unknown": [true, { ignore: "custom-elements" }],
     "plugin/no-unsupported-browser-features": [true, {
-      "severity": "warning"
+      // TODO: remove this
+      "ignore": [ "css-nesting" ]
     }]
   }
 };
