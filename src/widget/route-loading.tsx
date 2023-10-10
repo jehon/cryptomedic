@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
+import { useNavigation } from "react-router-dom";
 
-export default function RouteLoading({ message }: { message?: string }) {
+export default function RouteLoading({
+  element,
+  message
+}: {
+  element: React.ReactNode;
+  message?: string;
+}) {
   const [started, start] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
-    // // https://stackoverflow.com/a/24195559/1954789
-    // window.getComputedStyle(document.body); // Trigger the rendering
     // We need some time otherwise the browser render it transitionned
     setTimeout(() => start(true), 100);
   }, []);
+
+  if (navigation.state === "idle") {
+    return element;
+  }
 
   return (
     <div className="route-loading">

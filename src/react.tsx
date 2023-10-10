@@ -11,6 +11,7 @@ import "./main-media.css";
 import FolderRouter, { folderLoader } from "./app-folder/folder-router";
 import { bridgeTo } from "./bridge";
 import ErrorPage from "./widget/error-page";
+import RouteLoading from "./widget/route-loading";
 
 // Thanks to: https:/rm /reactrouter.com/en/main/start/tutorial#setup
 // https://reactrouter.com/en/main/routers/create-browser-router
@@ -19,9 +20,19 @@ const router = createHashRouter([
     errorElement: <ErrorPage />
   },
   {
+    // Temporary
+    path: "/login/*",
+    element: (
+      <RouteLoading
+        message="Authenticating and loading"
+        element={<div>Ready</div>}
+      />
+    )
+  },
+  {
     path: "/folder/:folderId/summary",
-    element: <FolderRouter />,
-    loader: folderLoader
+    loader: folderLoader,
+    element: <RouteLoading element={<FolderRouter />} />
   }
 ]);
 
