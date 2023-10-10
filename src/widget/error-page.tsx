@@ -1,5 +1,10 @@
 import React from "react";
-import { isRouteErrorResponse, useRouteError } from "react-router-dom";
+import {
+  isRouteErrorResponse,
+  useNavigation,
+  useRouteError
+} from "react-router-dom";
+import RouteLoading from "./route-loading";
 
 // https://github.com/remix-run/react-router/discussions/9628#discussioncomment-5555901
 function errorMessage(error: unknown): string {
@@ -17,7 +22,11 @@ function errorMessage(error: unknown): string {
 
 export default function ErrorPage() {
   const error = useRouteError();
-  console.error(error);
+  const navigation = useNavigation();
+
+  if (navigation.state !== "idle") {
+    return <RouteLoading />;
+  }
 
   return (
     <div id="error-page">

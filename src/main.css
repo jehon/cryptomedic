@@ -1,4 +1,5 @@
 @import url("./styles/io.css");
+@import url("./styles/route-loading.css");
 @import url("./styles/panel.css");
 @import url("./styles/two-columns.css");
 
@@ -6,6 +7,9 @@
   Reserved classes:
     - separator
 */
+:root {
+  --color-around-green: green;
+}
 
 /* body {
   scroll-behavior: smooth;
