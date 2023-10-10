@@ -16,14 +16,26 @@ export default function RouteLoading({
     setTimeout(() => start(true), 100);
   }, []);
 
-  if (navigation.state === "idle") {
-    return element;
+  // See https://reactrouter.com/en/main/hooks/use-navigation
+  let ctxMessage = message;
+  switch (navigation.state) {
+    case "idle":
+      //   idle       = ok -> show the element
+      return element;
+    case "submitting":
+      //   submitting = submit current page
+      ctxMessage = message;
+      break;
+    case "loading":
+      //   loading    = load next page
+      ctxMessage = "Loading next page";
+      break;
   }
 
   return (
     <div className="route-loading">
       <div className={"bar" + (started ? " go" : "")}></div>
-      <div>{message ?? "Loading"}</div>
+      <div>{ctxMessage}</div>
     </div>
   );
 }
