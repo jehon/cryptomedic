@@ -99,7 +99,6 @@ dev: dc-up dependencies build
 
 dc-up:
 	docker compose up -d
-	bin/cr-data-reset
 # bin/cr-refresh-structure "http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
 
 stop:
@@ -112,7 +111,7 @@ logs:
 	docker compose logs -f
 
 reset:
-	cr-data-reset
+	bin/cr-data-reset
 
 database-update-base-sql:
 	bin/cr-database-backup
