@@ -13,13 +13,20 @@ import IO from "../widget/io";
 
 export default function ConsultOtherElement({
   file,
-  folder
+  folder,
+  opened
 }: {
   file: ConsultOther;
   folder: Folder;
+  opened?: boolean;
 }): React.ReactNode {
   return (
-    <FilePanel closed file={file} folder={folder} header={<>{file.side}</>}>
+    <FilePanel
+      closed={!opened}
+      file={file}
+      folder={folder}
+      header={<>{file.side}</>}
+    >
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns>
         <Panel label="Orthopedic data">

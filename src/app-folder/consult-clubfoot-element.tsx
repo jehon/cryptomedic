@@ -15,14 +15,16 @@ import { tryOrMessage } from "../utils/strings";
 
 export default function ConsultClubfootElement({
   file,
-  folder
+  folder,
+  opened
 }: {
   file: ConsultClubfoot;
   folder: Folder;
+  opened?: boolean;
 }): React.ReactNode {
   return (
     <FilePanel
-      closed
+      closed={!opened}
       file={file}
       folder={folder}
       header={

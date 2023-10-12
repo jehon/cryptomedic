@@ -10,14 +10,16 @@ import IO from "../widget/io";
 
 export default function AppointmentElement({
   file,
-  folder
+  folder,
+  opened
 }: {
   file: Appointment;
   folder: Folder;
+  opened?: boolean;
 }): React.ReactNode {
   return (
     <FilePanel
-      closed
+      closed={!opened}
       file={file}
       folder={folder}
       header={<span>{file.center}</span>}

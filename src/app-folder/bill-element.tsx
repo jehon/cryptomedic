@@ -12,14 +12,16 @@ import Payment from "../business/payment";
 
 export default function BillElement({
   file,
-  folder
+  folder,
+  opened
 }: {
   file: Bill;
   folder: Folder;
+  opened?: boolean;
 }): React.ReactNode {
   return (
     <FilePanel
-      closed
+      closed={!opened}
       file={file}
       folder={folder}
       header={

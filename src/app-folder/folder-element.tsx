@@ -26,9 +26,11 @@ import IO from "../widget/io";
 import { defaultWidthScreen } from "../styles/style-helpers";
 
 export default function FolderElement({
-  folder
+  folder,
+  uid
 }: {
   folder: Folder;
+  uid?: string;
 }): React.ReactNode {
   if (!folder) {
     return <div>No folder selected</div>;
@@ -38,7 +40,7 @@ export default function FolderElement({
       data-role="summary"
       style={{ width: defaultWidthScreen, margin: "0 auto" }}
     >
-      <Panel key="key-dates" label="Key dates" closed>
+      <Panel key="key-dates" label="Key dates">
         <IO.Date label="Last seen" value={folder.getLastSeen()} />
         <IO.Date label="Next appointment" value={folder.getNextAppoinment()} />
       </Panel>
@@ -46,6 +48,7 @@ export default function FolderElement({
         key={(folder.getPatient() as Patient).uid()}
         file={folder.getPatient() as Patient}
         folder={folder}
+        opened={folder.getPatient().uid() == uid || !uid}
       ></PatientElement>
       {(folder.getFilesRelatedToPatient() as PatientRelated[]).map(
         (file: PatientRelated, index: number) => {
@@ -55,6 +58,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
+                opened={file.uid() == uid}
               ></AppointmentElement>
             );
           }
@@ -64,6 +68,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
+                opened={file.uid() == uid}
               ></BillElement>
             );
           }
@@ -73,6 +78,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
+                opened={file.uid() == uid}
               ></ConsultClubfootElement>
             );
           }
@@ -82,6 +88,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
+                opened={file.uid() == uid}
               ></ConsultOtherElement>
             );
           }
@@ -91,6 +98,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
+                opened={file.uid() == uid}
               ></ConsultRicketElement>
             );
           }
@@ -100,6 +108,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
+                opened={file.uid() == uid}
               ></PictureElement>
             );
           }
@@ -109,6 +118,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
+                opened={file.uid() == uid}
               ></SurgeryElement>
             );
           }

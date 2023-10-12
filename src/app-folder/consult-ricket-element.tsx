@@ -14,14 +14,16 @@ import { ImgSideLeft, ImgSideRight } from "../widget/images";
 
 export default function ConsultRicketElement({
   file,
-  folder
+  folder,
+  opened
 }: {
   file: ConsultRicket;
   folder: Folder;
+  opened?: boolean;
 }): React.ReactNode {
   return (
     <FilePanel
-      closed
+      closed={!opened}
       file={file}
       folder={folder}
       header={

@@ -30,7 +30,7 @@ const router = createHashRouter([
     )
   },
   {
-    path: "/folder/:folderId/summary",
+    path: "/folder/:folderId/summary/:uid?",
     loader: folderLoader,
     element: <RouteLoading element={<FolderRouter />} />
   }

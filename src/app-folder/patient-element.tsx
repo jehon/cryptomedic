@@ -10,14 +10,16 @@ import IO from "../widget/io";
 
 export default function PatientElement({
   file,
-  folder
+  folder,
+  opened
 }: {
   file: Patient;
   folder: Folder;
+  opened?: boolean;
 }): React.ReactNode {
   return (
     <FilePanel
-      closed
+      closed={!opened}
       file={file}
       folder={folder}
       header={

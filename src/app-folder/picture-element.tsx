@@ -10,13 +10,15 @@ import IO from "../widget/io";
 
 export default function PictureElement({
   file,
-  folder
+  folder,
+  opened
 }: {
   file: Picture;
   folder: Folder;
+  opened?: boolean;
 }): React.ReactNode {
   return (
-    <FilePanel closed file={file} folder={folder}>
+    <FilePanel closed={!opened} file={file} folder={folder}>
       <TwoColumns>
         <Panel fixed label="Informations">
           <IO.String label="Type" value={file.type as string} />
