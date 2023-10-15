@@ -35,9 +35,11 @@ context("Actions", () => {
           getByDataRole("Patient-1")
             .should("be.visible")
             .within(() => {
-              getByDataRole("header").within(() => {
-                getByDataRole("type").should("contain", "Patient");
-              });
+              getByDataRole("header")
+                .first()
+                .within(() => {
+                  getByDataRole("type").should("contain", "Patient");
+                });
             });
         });
 
