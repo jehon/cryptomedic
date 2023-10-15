@@ -54,7 +54,9 @@ export default function FilePanel({
       }
     >
       <div className="technical">
-        <div>#{file.id}</div>
+        <div>
+          {file.getModel()}#{file.id}
+        </div>
         <div>created at {date2HumanString(normalizeDate(file.created_at))}</div>
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
         <div>by {file.last_user}</div>
