@@ -44,6 +44,17 @@
   width: 100%;
 }
 
+.panel > .body > .technical {
+  display: flex;
+  width: 100%;
+
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  color: gray;
+  font-size: 8px;
+}
+
 .panel > .header > img {
   height: 1.5em;
 }
