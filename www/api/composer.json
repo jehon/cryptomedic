@@ -4,7 +4,7 @@
   "type": "project",
   "require": {
     "laravel/framework": "10.28.0",
-    "mobiledetect/mobiledetectlib": "3.74.0"
+    "mobiledetect/mobiledetectlib": "3.74.2"
   },
   "require-dev": {
     "phpunit/phpunit": "10.4.1"
