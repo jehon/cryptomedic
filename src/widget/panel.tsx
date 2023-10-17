@@ -5,12 +5,14 @@ export default function Panel(
     header,
     label,
     closed,
+    actions,
     children,
     fixed,
     dataRole
   }: {
     header?: React.ReactNode;
     label?: string;
+    actions?: Array<React.ReactNode>;
     closed?: boolean;
     fixed?: boolean;
     children: React.ReactNode;
@@ -51,9 +53,12 @@ export default function Panel(
         {header}
       </div>
       {statusOpened ? (
-        <div data-role="body" className="body">
-          {children}
-        </div>
+        <>
+          {actions ? <div className="actions">{actions}</div> : null}
+          <div data-role="body" className="body">
+            {children}
+          </div>
+        </>
       ) : null}
     </div>
   );

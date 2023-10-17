@@ -41,18 +41,20 @@ export default function ActionButton({
 }): React.ReactNode {
   style = style ?? ActionsEnum.View;
   text = text ?? style.text;
-  onClick = onClick ?? (() => {});
   linkTo = linkTo ?? "";
   if (Array.isArray(linkTo)) {
     linkTo = "#/" + linkTo.join("/");
   }
+  onClick =
+    onClick ??
+    (() => {
+      document.location.href = linkTo as string;
+    });
 
   return (
-    <a href={linkTo}>
-      <div className={"action-button" + " " + style.css} onClick={onClick}>
-        {text}
-      </div>
-    </a>
+    <div className={"action-button" + " " + style.css} onClick={onClick}>
+      {text}
+    </div>
   );
 }
 

@@ -7,6 +7,7 @@ import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";
 
 import { date2HumanString, normalizeDate } from "../../utils/date";
+import ActionButton from "../../widget/action-button";
 
 export default function FilePanel({
   file,
@@ -52,6 +53,18 @@ export default function FilePanel({
           {header}
         </>
       }
+      actions={[
+        <ActionButton
+          style={ActionButton.Actions.View}
+          linkTo={[
+            "folder",
+            "" + folder.getId(),
+            "file",
+            file.getModel(),
+            "" + file.getId()
+          ]}
+        />
+      ]}
     >
       <div className="technical">
         <div>
@@ -61,13 +74,6 @@ export default function FilePanel({
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
         <div>by {file.last_user}</div>
       </div>
-      <Button
-        href={"#/folder/" + folder.getId() + "/"}
-        variant="outline-info"
-        style={{ width: "100%" }}
-      >
-        View
-      </Button>
       {children}
     </Panel>
   );
