@@ -131,12 +131,7 @@ $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_
 
 .PHONY: build-on-change
 build-on-change: $(FRONTEND_DEPENDENCIES_MARK)
-	multitail \
-		-cT ANSI \
-		--mark-interval "60" \
-		-l "bin/cr-node node_modules/.bin/webpack --watch"
-
-		# -s 2 -sn 2,1 : two columns
+	bin/cr-node node_modules/.bin/webpack --watch
 
 .PHONY: frontend-test
 test: frontend-test
