@@ -1,66 +1,65 @@
 div.action-button {
-    display: inline-block;
-    background-color: rgba(0, 0, 0, 0);
+  display: inline-block;
 
-    flex-shrink: 0;
-    flex-grow: 1;
-    flex-basis: 100px;
-    min-width: 100px;
+  flex-shrink: 0;
+  flex-grow: 1;
+  flex-basis: 100px;
+  min-width: 100px;
 
-    vertical-align: middle;
+  vertical-align: middle;
 
-    margin-bottom: 0;
+  margin-bottom: 0;
 
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
 
-    padding: 6px 12px;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
+  padding: 6px 12px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
 
-    touch-action: manipulation;
-    cursor: pointer;
-    line-height: 1.42857143;
-    user-select: none;
+  touch-action: manipulation;
+  cursor: pointer;
+  line-height: 1.4286;
+  user-select: none;
 
-    border-color: #46b8da;
+  border-color: #46b8da;
+  background-color: #5bc0de;
+  color: white;
+
+  &.action-confirm {
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+  }
+
+  &.action-cancel {
+    background-color: #f0ad4e;
+    border-color: #eea236;
+  }
+
+  &.action-alternate {
     background-color: #5bc0de;
-    color: white;
+    border-color: #46b8da;
+  }
 
-    &.action-confirm {
-        background-color: #5cb85c;
-        border-color: #4cae4c;
-    }
+  &.action-delete {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+  }
 
-    &.action-cancel {
-        background-color: #f0ad4e;
-        border-color: #eea236;
-    }
+  &.discrete {
+    background-color: transparent !important;
+    color: black !important;
+  }
 
-    &.action-alternate {
-        background-color: #5bc0de;
-        border-color: #46b8da;
-    }
+  img[src=""] {
+    display: none;
+  }
 
-    &.action-delete {
-        background-color: #d9534f;
-        border-color: #d43f3a;
-    }
-
-    &.discrete {
-        background-color: transparent !important;
-        color: black !important;
-    }
-
-    img[src=''] {
-        display: none;
-    }
-
-    img {
-        height: 1.5em;
-        vertical-align: middle;
-        padding-right: 5px;
-    }
+  img {
+    height: 1.5em;
+    vertical-align: middle;
+    padding-right: 5px;
+  }
 }

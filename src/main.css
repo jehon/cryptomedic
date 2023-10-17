@@ -27,11 +27,11 @@ img.inline {
   align-items: center;
 }
 
-.with-image>* {
+.with-image > * {
   flex-grow: 0;
 }
 
-.with-image>img {
+.with-image > img {
   height: 1em;
   padding-right: 0.5em;
 }
