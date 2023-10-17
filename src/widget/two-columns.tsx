@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./two-columns.css";
+
 export default function TwoColumns({
   children
 }: {

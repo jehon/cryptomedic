@@ -7,6 +7,8 @@ import Number from "./io-number";
 import String from "./io-string";
 import Text from "./io-text";
 
+import "./io.css";
+
 const IO = {
   Boolean,
   Date,
