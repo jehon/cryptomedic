@@ -14,7 +14,7 @@ export default function Panel(
   }: {
     header?: React.ReactNode;
     label?: string;
-    actions?: Array<React.ReactNode>;
+    actions?: React.ReactNode;
     closed?: boolean;
     fixed?: boolean;
     children: React.ReactNode;
