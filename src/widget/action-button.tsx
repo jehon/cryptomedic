@@ -1,47 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useSyncExternalStore } from "react";
 
 import "./action-button.css";
+import useRequiresTransaction from "../utils/use-requires-transaction";
 
-const ActionsEnum = {
+export type ActionStyle = {
+  css: string;
+  text: string;
+};
+
+export const ActionStyles: Record<string, ActionStyle> = {
   Alternate: {
     css: "action-alternate",
     text: "Alternate"
-  },
+  } as const,
   Cancel: {
     css: "action-cancel",
     text: "Cancel"
-  },
+  } as const,
   Confirm: {
     css: "action-confirm",
     text: "confirm"
-  },
+  } as const,
   Delete: {
     css: "action-delete",
     text: "Delete"
-  },
+  } as const,
   View: {
     css: "action-view",
     text: "View"
-  }
+  } as const
 };
-
-type Actions = (typeof ActionsEnum)[keyof typeof ActionsEnum];
 
 export default function ActionButton({
   style,
   text,
-  accessRight,
   onClick,
-  linkTo
+  linkTo,
+  requiresTransaction
 }: {
-  style?: Actions;
+  style?: ActionStyle;
   text?: string;
-  accessRight?: string;
   onClick?: () => void;
   linkTo?: string | string[];
+  requiresTransaction?: string;
 }): React.ReactNode {
-  style = style ?? ActionsEnum.View;
+  const isAllowed = useRequiresTransaction(requiresTransaction);
+
+  style = style ?? ActionStyles.View;
   text = text ?? style.text;
   linkTo = linkTo ?? "";
   if (Array.isArray(linkTo)) {
@@ -61,4 +66,4 @@ export default function ActionButton({
 }
 
 // To simplify import
-ActionButton.Actions = ActionsEnum;
+ActionButton.ActionStyles = ActionStyles;
