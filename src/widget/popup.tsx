@@ -1,0 +1,20 @@
+import React from "react";
+
+import ActionButton, { ActionStyle, ActionStyles } from "./action-button";
+import "./popup.css";
+
+export default function Popup({
+  title,
+  style,
+  children
+}: {
+  title?: string;
+  style?: ActionStyle;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="popup">
+      <div className="box">{children}</div>
+    </div>
+  );
+}
