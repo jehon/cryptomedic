@@ -1,7 +1,6 @@
-import React, { useSyncExternalStore } from "react";
+import React from "react";
 
 import "./action-button.css";
-import useRequiresTransaction from "../utils/use-requires-transaction";
 
 export type ActionStyle = {
   css: string;
@@ -35,17 +34,13 @@ export default function ActionButton({
   style,
   text,
   onClick,
-  linkTo,
-  requiresTransaction
+  linkTo
 }: {
   style?: ActionStyle;
   text?: string;
   onClick?: () => void;
   linkTo?: string | string[];
-  requiresTransaction?: string;
 }): React.ReactNode {
-  const isAllowed = useRequiresTransaction(requiresTransaction);
-
   style = style ?? ActionStyles.View;
   text = text ?? style.text;
   linkTo = linkTo ?? "";
