@@ -54,16 +54,18 @@ export default function FilePanel({
         </>
       }
       actions={
-        <ActionButton
-          style={ActionButton.ActionStyles.View}
-          linkTo={[
-            "folder",
-            "" + folder.getId(),
-            "file",
-            file.getModel(),
-            "" + file.getId()
-          ]}
-        />
+        <>
+          <ActionButton
+            style={ActionButton.ActionStyles.View}
+            linkTo={[
+              "folder",
+              "" + folder.getId(),
+              "file",
+              file.getModel(),
+              "" + file.getId()
+            ]}
+          />
+        </>
       }
     >
       <div className="technical">
