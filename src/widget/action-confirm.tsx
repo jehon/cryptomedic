@@ -38,7 +38,7 @@ export default function ActionConfirm({
             />
             <ActionButton
               style={style}
-              text="ok"
+              text={buttonText}
               onClick={() => {
                 doOpen(false);
                 onOk();
