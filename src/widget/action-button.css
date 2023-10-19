@@ -39,8 +39,8 @@ div.action-button {
   }
 
   &.action-alternate {
-    background-color: #5bc0de;
-    border-color: #46b8da;
+    background-color: rgb(50% 50% 50%);
+    border-color: rgb(45% 45% 45%);
   }
 
   &.action-delete {
