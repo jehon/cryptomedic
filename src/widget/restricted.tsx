@@ -29,19 +29,14 @@ export function useRequiresTransaction(role?: string) {
 
 export default function Restricted({
   requiresTransaction,
-  requiresFunction,
   inverted,
   children
 }: {
-  requiresTransaction?: string;
-  requiresFunction?: () => boolean;
+  requiresTransaction: string;
   inverted?: boolean;
   children: React.ReactNode;
 }) {
-  const isAllowed =
-    useRequiresTransaction(requiresTransaction) && requiresFunction
-      ? requiresFunction()
-      : true;
+  const isAllowed = useRequiresTransaction(requiresTransaction);
 
   // Logical XOR with potentially non boolean
   if (!isAllowed != !inverted) {
