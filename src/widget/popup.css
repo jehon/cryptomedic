@@ -8,19 +8,27 @@
   transition: opacity 500ms;
 
   .box {
-    margin: 70px auto;
-    background-color: white;
-    border-radius: 5px;
-    width: 30%;
     position: relative;
+    width: 30%;
+
+    margin: 70px auto;
+    border: 1px solid rgb(0 0 0 / 20%);
+    border-radius: 0.3rem;
+
+    background-color: white;
     transition: all 5s ease-in-out;
 
     & > div {
       padding: 20px;
-      border-top: gray 1px solid;
+      border-top: 1px solid #e9ecef;
 
       &:last-child {
-        text-align: right;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+
+        padding: 1rem;
       }
     }
   }
