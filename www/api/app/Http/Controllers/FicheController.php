@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Response;
 
 // TODO: protect frozen files
-abstract class FicheController extends CRUDController {
+abstract class FicheController extends CRUDController
+{
     // @see http://laravel.com/docs/5.0/controllers
 
-    protected function getOnlineObject($id) {
+    protected function getOnlineObject($id)
+    {
         return (object) [
             "record" => static::getObjectByModelAndId($id),
             "id" => $id,
@@ -16,7 +18,8 @@ abstract class FicheController extends CRUDController {
         ];
     }
 
-    public function store() {
+    public function store()
+    {
         $newObj = parent::store();
         $id = $newObj->id;
 
@@ -26,7 +29,8 @@ abstract class FicheController extends CRUDController {
         ]);
     }
 
-    public function update($id) {
+    public function update($id)
+    {
         $obj = parent::update($id);
         return response()->json([
             "id" => $obj->id,
@@ -34,7 +38,8 @@ abstract class FicheController extends CRUDController {
         ]);
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         try {
             // Keep root reference for folder build up...
             $obj = static::getObjectById($id);
@@ -52,7 +57,10 @@ abstract class FicheController extends CRUDController {
     }
 
     // Unfreeze special route
-    public function unlock($id) {
+    public function unlock($id)
+    {
+        // TODO: PUT (See loaders.tsx)
+        // TODO: Send back modified file only
         $m = static::getModelClass($id);
         $obj = $m::find($id);
 
@@ -60,10 +68,13 @@ abstract class FicheController extends CRUDController {
         if ($affectedRows > 1) {
             abort(500, "Affected rows: " . $affectedRows);
         }
+        // Reload the object
+        $newObj = $m::find($id);
 
         return response()->json([
             'id' => $id,
-            'folder' => $obj->getRoot()->getDependantsRecords()
+            'folder' => $obj->getRoot()->getDependantsRecords(),
+            'file' => $newObj
         ]);
     }
 }
