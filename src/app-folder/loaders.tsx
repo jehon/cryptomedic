@@ -2,6 +2,7 @@ import {
   ServerRequestError,
   TransportRequestError
 } from "../../legacy/app-old/v2/widgets/func/x-requestor";
+import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";
 import nullify from "../utils/nullify";
 
@@ -76,6 +77,16 @@ export async function getFolder(id: string): Promise<Folder> {
   return request({ url: ["folder", "Patient", id] })
     .then((json) => json.folder)
     .then((json) => new Folder(json));
+}
+
+export async function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
+  // See www/api/app/Http/Controllers/FicheController.php
+  return request({
+    url: ["fiche", file.getServerRessource(), "unlock", file.id]
+    // TODO: method: "PUT"
+  })
+    .then((json) => json.file)
+    .then((json) => file.createNewInstance(json));
 }
 
 // See legacy/app-old/v1/elements/cryptomedic-data-service.js
