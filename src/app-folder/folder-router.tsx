@@ -8,10 +8,8 @@ import { getFolder } from "./loaders";
 export async function folderLoader({
   params
 }: {
-  params: { folderId: string };
+  params: any;
 }): Promise<Folder> {
-  params as { folderId: string };
-
   return getFolder(params.folderId);
 }
 
