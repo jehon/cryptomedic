@@ -44,7 +44,7 @@ export default class Folder extends Pojo {
    * Deletion is made by uid
    */
   deleteFile(file) {
-    this.list = this.list.filter((f) => f.uid != file.uid);
+    this.list = this.list.filter((f) => f.uid() !== file.uid());
     return this;
   }
 
