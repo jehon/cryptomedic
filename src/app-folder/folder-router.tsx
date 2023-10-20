@@ -1,16 +1,17 @@
 import React from "react";
 
-import FolderElement from "./folder-element";
-import Folder from "../business/folder";
 import { useLoaderData, useParams } from "react-router-dom";
+import Folder from "../business/folder";
+import FolderElement from "./folder-element";
 import { getFolder } from "./loaders";
 
 export async function folderLoader({
   params
 }: {
-  params: any;
+  params: { folderId: string };
 }): Promise<Folder> {
-  // await new Promise((r) => setTimeout(r, 2000));
+  params as { folderId: string };
+
   return getFolder(params.folderId);
 }
 
