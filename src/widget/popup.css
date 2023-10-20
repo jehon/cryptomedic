@@ -19,7 +19,7 @@
     transition: all 5s ease-in-out;
 
     & > div {
-      padding: 20px;
+      padding: 1rem;
       border-top: 1px solid #e9ecef;
 
       &:last-child {

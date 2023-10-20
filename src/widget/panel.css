@@ -38,9 +38,8 @@
     flex-wrap: wrap;
     justify-content: flex-end;
 
-    margin-bottom: 10px;
-
     width: 100%;
+    margin-bottom: 10px;
   }
 
   & > .body {
