@@ -17,9 +17,9 @@ export default class PatientRelated extends Pojo {
 
   registerParent(parent) {
     /** @type {(): Folder} */
-    this.getFolder = () => folder;
+    this.getFolder = () => parent;
     if (this.getFolder()) {
-      this.patient_id = folder.getId();
+      this.patient_id = parent.getId();
     }
   }
 

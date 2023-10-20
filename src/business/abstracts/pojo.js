@@ -130,6 +130,6 @@ export default class Pojo {
 
   createNewInstance(json) {
     // See https://stackoverflow.com/a/73328117/1954789
-    return new (Object.getPrototypeOf(file).constructor)(json);
+    return new (Object.getPrototypeOf(this).constructor)(json);
   }
 }

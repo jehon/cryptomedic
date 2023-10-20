@@ -40,6 +40,21 @@ export default class Folder extends Pojo {
     }
   }
 
+  /**
+   * Deletion is made by uid
+   */
+  deleteFile(file) {
+    this.list = this.list.filter((f) => f.uid != file.uid);
+    return this;
+  }
+
+  updateOrAddFile(file) {
+    file.registerParent(this);
+    this.deleteFile(file);
+    this.list.push(file);
+    return this;
+  }
+
   getId() {
     const patient = this.getPatient();
     if (patient.id) {
