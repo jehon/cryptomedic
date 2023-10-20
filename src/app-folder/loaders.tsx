@@ -71,7 +71,7 @@ async function request({
   );
 }
 
-export async function getFolder(id: number): Promise<Folder> {
+export async function getFolder(id: string): Promise<Folder> {
   return request({ url: `folder/Patient/${id}` })
     .then((data) => data.folder)
     .then((folder) => new Folder(folder));
