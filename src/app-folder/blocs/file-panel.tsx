@@ -7,7 +7,9 @@ import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";
 
 import { date2HumanString, normalizeDate } from "../../utils/date";
-import ActionButton from "../../widget/action-button";
+import ActionButton, { ActionStyles } from "../../widget/action-button";
+import ActionConfirm from "../../widget/action-confirm";
+import Restricted from "../../widget/restricted";
 
 export default function FilePanel({
   file,
