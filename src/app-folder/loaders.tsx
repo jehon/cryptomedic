@@ -1,9 +1,9 @@
-import nullify from "../utils/nullify";
 import {
   ServerRequestError,
   TransportRequestError
 } from "../../legacy/app-old/v2/widgets/func/x-requestor";
 import Folder from "../business/folder";
+import nullify from "../utils/nullify";
 
 async function request({
   url,
@@ -11,34 +11,35 @@ async function request({
   data,
   allowed
 }: {
-  url: string;
+  url: string[];
   method?: string;
   data?: any;
   allowed?: number[];
 }) {
-  url = url || "/";
+  url = url || ["/"];
   method = method || "GET";
   data = nullify(data);
 
   if (url[0] !== "/") {
-    url = `/api/${url}`;
+    url = ["/", "api", ...url];
   }
 
   const controller = new AbortController();
   const signal = controller.signal;
 
-  return fetch(
-    url + (method === "GET" ? "?" + new URLSearchParams(data).toString() : ""),
-    {
-      method,
-      credentials: "same-origin",
-      signal,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: method === "GET" ? null : JSON.stringify(data)
-    }
-  ).then(
+  const strUrl =
+    url.join("/").replaceAll("//", "/") +
+    (method === "GET" ? "?" + new URLSearchParams(data).toString() : "");
+
+  return fetch(strUrl, {
+    method,
+    credentials: "same-origin",
+    signal,
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: method === "GET" ? null : JSON.stringify(data)
+  }).then(
     (response) => {
       if (
         (response.status >= 200 && response.status < 300) ||
@@ -72,7 +73,9 @@ async function request({
 }
 
 export async function getFolder(id: string): Promise<Folder> {
-  return request({ url: `folder/Patient/${id}` })
+  return request({ url: ["folder", "Patient", id] })
     .then((data) => data.folder)
     .then((folder) => new Folder(folder));
 }
+
+// See legacy/app-old/v1/elements/cryptomedic-data-service.js
