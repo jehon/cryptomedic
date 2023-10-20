@@ -1,28 +1,8 @@
 {
-  "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#004f03"
-  },
-  "javascript.preferences.importModuleSpecifierEnding": "js",
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "javascript.preferences.importModuleSpecifier": "relative",
-  "github-actions.workflows.pinned.workflows": [
-    ".github/workflows/test.yml"
-  ],
-  "editor.formatOnSave": true,
-  "prettier.documentSelectors": [
-    "*.js",
-    "*.ts",
-    "*.tsx",
-    "*.html",
-    "*.json"
-  ],
-  "files.associations": {
-    "Makefile-*": "makefile"
-  },
-  "[html]": {
+  "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[css]": {
+  "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
@@ -34,5 +14,29 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "json.format.enable": false
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.organizeImports": "always"
+  },
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "Makefile-*": "makefile"
+  },
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/test.yml"
+  ],
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "json.format.enable": false,
+  "prettier.documentSelectors": [
+    "*.js",
+    "*.ts",
+    "*.tsx",
+    "*.html",
+    "*.json"
+  ],
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#004f03"
+  }
 }
