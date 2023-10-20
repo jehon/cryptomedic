@@ -32,11 +32,13 @@ export const ActionStyles: Record<string, ActionStyle> = {
 
 export default function ActionButton({
   style,
+  discrete,
   text,
   onClick,
   linkTo
 }: {
   style?: ActionStyle;
+  discrete?: boolean;
   text?: string;
   onClick?: () => void;
   linkTo?: string | string[];
@@ -54,7 +56,12 @@ export default function ActionButton({
     });
 
   return (
-    <div className={"action-button" + " " + style.css} onClick={onClick}>
+    <div
+      className={
+        "action-button" + " " + style.css + " " + (discrete ? "discrete" : "")
+      }
+      onClick={onClick}
+    >
       {text}
     </div>
   );

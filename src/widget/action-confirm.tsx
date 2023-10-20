@@ -4,12 +4,14 @@ import Popup from "./popup";
 
 export default function ActionConfirm({
   style,
+  discrete,
   buttonText,
   title,
   onOk,
   children
 }: {
   style?: ActionStyle;
+  discrete?: boolean;
   buttonText: string;
   title?: string;
   onOk: () => void;
@@ -24,6 +26,7 @@ export default function ActionConfirm({
     <>
       <ActionButton
         style={style}
+        discrete={discrete}
         text={buttonText}
         onClick={() => doOpen(true)}
       ></ActionButton>
@@ -33,11 +36,13 @@ export default function ActionConfirm({
           <div>
             <ActionButton
               style={ActionStyles.Cancel}
+              discrete={true}
               text="Cancel"
               onClick={() => doOpen(false)}
             />
             <ActionButton
               style={style}
+              discrete={discrete}
               text={buttonText}
               onClick={() => {
                 doOpen(false);
