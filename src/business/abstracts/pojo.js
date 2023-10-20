@@ -119,7 +119,6 @@ export default class Pojo {
     return false;
   }
 
-  // Legacy
   getServerRessource() {
     return this.getModel().toLowerCase() + "s";
   }
@@ -127,5 +126,10 @@ export default class Pojo {
   // Legacy
   getRelated() {
     return {};
+  }
+
+  createNewInstance(json) {
+    // See https://stackoverflow.com/a/73328117/1954789
+    return new (Object.getPrototypeOf(file).constructor)(json);
   }
 }

@@ -12,6 +12,10 @@ export default class Patient extends PatientRelated {
     return model;
   }
 
+  isLocked() {
+    return false;
+  }
+
   comments;
 
   /**

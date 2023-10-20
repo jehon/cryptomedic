@@ -74,8 +74,8 @@ async function request({
 
 export async function getFolder(id: string): Promise<Folder> {
   return request({ url: ["folder", "Patient", id] })
-    .then((data) => data.folder)
-    .then((folder) => new Folder(folder));
+    .then((json) => json.folder)
+    .then((json) => new Folder(json));
 }
 
 // See legacy/app-old/v1/elements/cryptomedic-data-service.js

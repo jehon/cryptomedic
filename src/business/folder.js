@@ -1,16 +1,16 @@
 import Pojo from "./abstracts/pojo.js";
-import Patient from "./patient.js";
 import Appointment from "./appointment.js";
+import Patient from "./patient.js";
 
 // Enrich the registry:
 import "./bill.js";
 import "./consult-clubfoot.js";
 import "./consult-other.js";
+import "./consult-ricket.js";
 import "./payment.js";
 import "./picture.js";
-import "./consult-ricket.js";
-import "./surgery.js";
 import { registryGet } from "./registry.js";
+import "./surgery.js";
 
 export default class Folder extends Pojo {
   static create(folder, type, data = {}) {
