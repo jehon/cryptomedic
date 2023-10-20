@@ -3,29 +3,32 @@ import React from "react";
 import ConsultRicket from "../business/consult-ricket";
 import Folder from "../business/folder";
 
-import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
+import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
-import FilePanel from "./blocs/file-panel";
-import TwoColumns from "../widget/two-columns";
-import Panel from "../widget/panel";
-import IO from "../widget/io";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
+import IO from "../widget/io";
+import Panel from "../widget/panel";
+import TwoColumns from "../widget/two-columns";
+import FilePanel from "./blocs/file-panel";
 
 export default function ConsultRicketElement({
   file,
   folder,
-  opened
+  opened,
+  onUpdate
 }: {
   file: ConsultRicket;
   folder: Folder;
   opened?: boolean;
+  onUpdate: () => void;
 }): React.ReactNode {
   return (
     <FilePanel
       closed={!opened}
       file={file}
       folder={folder}
+      onUpdate={onUpdate}
       header={
         <>
           <span className="with-image">

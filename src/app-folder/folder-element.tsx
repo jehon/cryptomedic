@@ -1,29 +1,29 @@
 import React from "react";
 
-import Folder from "../business/folder";
 import PatientRelated from "../business/abstracts/patient-related";
+import Folder from "../business/folder";
 
 import Patient from "../business/patient";
 import PatientElement from "./patient-element";
 
 import Appointment from "../business/appointment";
-import AppointmentElement from "./appointment-element";
 import Bill from "../business/bill";
-import BillElement from "./bill-element";
 import ConsultClubfoot from "../business/consult-clubfoot";
-import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOther from "../business/consult-other";
-import ConsultOtherElement from "./consult-other-element";
 import ConsultRicket from "../business/consult-ricket";
-import ConsultRicketElement from "./consult-ricket-element";
 import Picture from "../business/picture";
-import PictureElement from "./picture-element";
 import Surgery from "../business/surgery";
+import AppointmentElement from "./appointment-element";
+import BillElement from "./bill-element";
+import ConsultClubfootElement from "./consult-clubfoot-element";
+import ConsultOtherElement from "./consult-other-element";
+import ConsultRicketElement from "./consult-ricket-element";
+import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
 
-import Panel from "../widget/panel";
-import IO from "../widget/io";
 import { defaultWidthScreen } from "../styles/style-helpers";
+import IO from "../widget/io";
+import Panel from "../widget/panel";
 
 export default function FolderElement({
   folder,
@@ -32,7 +32,8 @@ export default function FolderElement({
   folder: Folder;
   uid?: string;
 }): React.ReactNode {
-  if (!folder) {
+  const updated = () => {};
+
     return <div>No folder selected</div>;
   }
   return (
@@ -59,6 +60,7 @@ export default function FolderElement({
                 folder={folder}
                 file={file}
                 opened={file.uid() == uid}
+                onUpdate={updated}
               ></AppointmentElement>
             );
           }
@@ -69,6 +71,7 @@ export default function FolderElement({
                 folder={folder}
                 file={file}
                 opened={file.uid() == uid}
+                onUpdate={updated}
               ></BillElement>
             );
           }
@@ -79,6 +82,7 @@ export default function FolderElement({
                 folder={folder}
                 file={file}
                 opened={file.uid() == uid}
+                onUpdate={updated}
               ></ConsultClubfootElement>
             );
           }
@@ -89,6 +93,7 @@ export default function FolderElement({
                 folder={folder}
                 file={file}
                 opened={file.uid() == uid}
+                onUpdate={updated}
               ></ConsultOtherElement>
             );
           }
@@ -99,6 +104,7 @@ export default function FolderElement({
                 folder={folder}
                 file={file}
                 opened={file.uid() == uid}
+                onUpdate={updated}
               ></ConsultRicketElement>
             );
           }
@@ -109,6 +115,7 @@ export default function FolderElement({
                 folder={folder}
                 file={file}
                 opened={file.uid() == uid}
+                onUpdate={updated}
               ></PictureElement>
             );
           }
@@ -119,6 +126,7 @@ export default function FolderElement({
                 folder={folder}
                 file={file}
                 opened={file.uid() == uid}
+                onUpdate={updated}
               ></SurgeryElement>
             );
           }

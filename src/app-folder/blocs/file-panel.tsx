@@ -13,13 +13,15 @@ export default function FilePanel({
   folder,
   header,
   children,
-  closed
+  closed,
+  onUpdate
 }: {
   file: Pojo;
   folder: Folder;
   header?: React.ReactNode;
   children: React.ReactNode;
   closed?: boolean;
+  onUpdate: () => void;
 }): React.ReactNode {
   return (
     <Panel

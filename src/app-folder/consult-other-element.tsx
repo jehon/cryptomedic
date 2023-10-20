@@ -3,28 +3,31 @@ import React from "react";
 import ConsultOther from "../business/consult-other";
 import Folder from "../business/folder";
 
-import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
+import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
-import FilePanel from "./blocs/file-panel";
-import TwoColumns from "../widget/two-columns";
-import Panel from "../widget/panel";
 import IO from "../widget/io";
+import Panel from "../widget/panel";
+import TwoColumns from "../widget/two-columns";
+import FilePanel from "./blocs/file-panel";
 
 export default function ConsultOtherElement({
   file,
   folder,
-  opened
+  opened,
+  onUpdate
 }: {
   file: ConsultOther;
   folder: Folder;
   opened?: boolean;
+  onUpdate: () => void;
 }): React.ReactNode {
   return (
     <FilePanel
       closed={!opened}
       file={file}
       folder={folder}
+      onUpdate={onUpdate}
       header={<>{file.side}</>}
     >
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>

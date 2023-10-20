@@ -1,29 +1,32 @@
 import React from "react";
 
-import Folder from "../business/folder";
 import Bill from "../business/bill";
+import Folder from "../business/folder";
 
-import FilePanel from "./blocs/file-panel";
-import TwoColumns from "../widget/two-columns";
-import Panel from "../widget/panel";
-import IO from "../widget/io";
-import { roundTo } from "../utils/strings";
 import Payment from "../business/payment";
+import { roundTo } from "../utils/strings";
+import IO from "../widget/io";
+import Panel from "../widget/panel";
+import TwoColumns from "../widget/two-columns";
+import FilePanel from "./blocs/file-panel";
 
 export default function BillElement({
   file,
   folder,
-  opened
+  opened,
+  onUpdate
 }: {
   file: Bill;
   folder: Folder;
   opened?: boolean;
+  onUpdate: () => void;
 }): React.ReactNode {
   return (
     <FilePanel
       closed={!opened}
       file={file}
       folder={folder}
+      onUpdate={onUpdate}
       header={
         <>
           <span>total: {file.total_real}</span>

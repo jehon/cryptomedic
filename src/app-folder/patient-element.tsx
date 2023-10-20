@@ -3,25 +3,28 @@ import React from "react";
 import Folder from "../business/folder";
 import Patient from "../business/patient";
 
+import IO from "../widget/io";
+import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import FilePanel from "./blocs/file-panel";
-import Panel from "../widget/panel";
-import IO from "../widget/io";
 
 export default function PatientElement({
   file,
   folder,
-  opened
+  opened,
+  onUpdate
 }: {
   file: Patient;
   folder: Folder;
   opened?: boolean;
+  onUpdate: () => void;
 }): React.ReactNode {
   return (
     <FilePanel
       closed={!opened}
       file={file}
       folder={folder}
+      onUpdate={onUpdate}
       header={
         <>
           <span>

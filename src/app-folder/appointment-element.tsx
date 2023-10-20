@@ -1,27 +1,30 @@
 import React from "react";
 
-import Folder from "../business/folder";
 import Appointment from "../business/appointment";
+import Folder from "../business/folder";
 
-import FilePanel from "./blocs/file-panel";
-import TwoColumns from "../widget/two-columns";
-import Panel from "../widget/panel";
 import IO from "../widget/io";
+import Panel from "../widget/panel";
+import TwoColumns from "../widget/two-columns";
+import FilePanel from "./blocs/file-panel";
 
 export default function AppointmentElement({
   file,
   folder,
-  opened
+  opened,
+  onUpdate
 }: {
   file: Appointment;
   folder: Folder;
   opened?: boolean;
+  onUpdate: () => void;
 }): React.ReactNode {
   return (
     <FilePanel
       closed={!opened}
       file={file}
       folder={folder}
+      onUpdate={onUpdate}
       header={<span>{file.center}</span>}
     >
       <TwoColumns>

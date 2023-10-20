@@ -3,22 +3,24 @@ import React from "react";
 import Folder from "../business/folder";
 import Picture from "../business/picture";
 
-import FilePanel from "./blocs/file-panel";
-import TwoColumns from "../widget/two-columns";
-import Panel from "../widget/panel";
 import IO from "../widget/io";
+import Panel from "../widget/panel";
+import TwoColumns from "../widget/two-columns";
+import FilePanel from "./blocs/file-panel";
 
 export default function PictureElement({
   file,
   folder,
-  opened
+  opened,
+  onUpdate
 }: {
   file: Picture;
   folder: Folder;
   opened?: boolean;
+  onUpdate: () => void;
 }): React.ReactNode {
   return (
-    <FilePanel closed={!opened} file={file} folder={folder}>
+    <FilePanel closed={!opened} file={file} folder={folder} onUpdate={onUpdate}>
       <TwoColumns>
         <Panel fixed label="Informations">
           <IO.String label="Type" value={file.type as string} />
