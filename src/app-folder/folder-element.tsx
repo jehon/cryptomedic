@@ -34,6 +34,7 @@ export default function FolderElement({
 }): React.ReactNode {
   const updated = () => {};
 
+  if (!folder) {
     return <div>No folder selected</div>;
   }
   return (
@@ -50,6 +51,7 @@ export default function FolderElement({
         file={folder.getPatient() as Patient}
         folder={folder}
         opened={folder.getPatient().uid() == uid || !uid}
+        onUpdate={updated}
       ></PatientElement>
       {(folder.getFilesRelatedToPatient() as PatientRelated[]).map(
         (file: PatientRelated, index: number) => {
