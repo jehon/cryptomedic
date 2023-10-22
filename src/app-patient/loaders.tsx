@@ -1,9 +1,6 @@
-import {
-  ServerRequestError,
-  TransportRequestError
-} from "../../legacy/app-old/v2/widgets/func/x-requestor";
 import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";
+import { ServerRequestError, TransportRequestError } from "../utils/exceptions";
 import nullify from "../utils/nullify";
 
 async function request({

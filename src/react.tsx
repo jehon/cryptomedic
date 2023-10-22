@@ -9,7 +9,7 @@ import "./main.css";
 import "./main-media.css";
 
 /* Application */
-import FolderRouter, { folderLoader } from "./app-folder/folder-router";
+import FolderRouter, { folderLoader } from "./app-patient/folder-router";
 import { bridgeTo } from "./bridge";
 import ErrorPage from "./widget/error-page";
 import RouteLoading from "./widget/route-loading";

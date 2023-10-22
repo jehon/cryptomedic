@@ -17,8 +17,14 @@ export class ApplicationException extends Error {
 export class ConfigurationException extends ApplicationException {}
 
 export class TransportRequestError extends ApplicationException {
-  constructor(request) {
-    super("Network Error", request);
+  constructor(msg) {
+    super("Network Error: " + msg);
+  }
+}
+
+export class ServerRequestError extends ApplicationException {
+  constructor(msg) {
+    super("Server Error: " + msg);
   }
 }
 
