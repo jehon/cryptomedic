@@ -9,7 +9,7 @@ import "./main.css";
 import "./main-media.css";
 
 /* Application */
-import FolderRouter, { folderLoader } from "./app-patient/folder-router";
+import PatientRouter, { patientLoader } from "./app-patient/patient-router";
 import { bridgeTo } from "./bridge";
 import ErrorPage from "./widget/error-page";
 import RouteLoading from "./widget/route-loading";
@@ -32,8 +32,8 @@ const router = createHashRouter([
   },
   {
     path: "/folder/:folderId/summary/:uid?",
-    loader: folderLoader,
-    element: <RouteLoading element={<FolderRouter />} />
+    loader: patientLoader,
+    element: <RouteLoading element={<PatientRouter />} />
   }
 ]);
 

@@ -5,7 +5,7 @@ import Folder from "../business/folder";
 import FolderElement from "./folder-element";
 import { getFolder } from "./loaders";
 
-export async function folderLoader({
+export async function patientLoader({
   params
 }: {
   params: any;
@@ -13,7 +13,7 @@ export async function folderLoader({
   return getFolder(params.folderId);
 }
 
-export default function FolderRouter(): React.ReactNode {
+export default function PatientRouter(): React.ReactNode {
   const folder = useLoaderData() as Folder;
   const { uid } = useParams();
 
