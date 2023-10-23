@@ -27,6 +27,7 @@
     color: green;
     background-color: white;
     max-width: 100%;
+    overflow-wrap: break-word;
 
     .io-function-error {
       color: gray;
