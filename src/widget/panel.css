@@ -6,6 +6,8 @@
   border: 1px solid rgb(0 0 0 / 12.5%);
   border-radius: 3px;
 
+  min-width: var(--screen-min-width);
+
   & > * {
     width: 100%;
   }

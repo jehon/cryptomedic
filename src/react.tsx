@@ -5,8 +5,6 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 /* Styles */
 import "bootstrap4/dist/css/bootstrap.min.css";
 import "./main.css";
-// After main
-import "./main-media.css";
 
 /* Application */
 import PatientRouter, { patientLoader } from "./app-patient/patient-router";

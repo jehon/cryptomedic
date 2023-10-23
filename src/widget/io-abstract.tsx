@@ -47,7 +47,7 @@ export default function IOAbstract<T>(
           __html: props.label + (props.required ? "*" : "")
         }}
       ></label>
-      <div>
+      <div className="content">
         {props.edit
           ? renderOutput(props.value)
           : renderInput(props.value, props.required)}
