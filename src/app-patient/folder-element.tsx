@@ -21,7 +21,9 @@ import ConsultRicketElement from "./consult-ricket-element";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
 
+import ButtonsGroup from "../styles/buttons-group";
 import { defaultWidthScreen } from "../styles/style-helpers";
+import ActionButton from "../widget/action-button";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 
@@ -42,6 +44,13 @@ export default function FolderElement({
       data-role="summary"
       style={{ width: defaultWidthScreen, margin: "0 auto" }}
     >
+      <ButtonsGroup>
+        <ActionButton
+          style={ActionButton.ActionStyles.Alternate}
+          text="Add"
+          linkTo={["folder", "" + folder.getId(), "addfile"]}
+        />
+      </ButtonsGroup>
       <Panel key="key-dates" label="Key dates">
         <IO.Date label="Last seen" value={folder.getLastSeen()} />
         <IO.Date label="Next appointment" value={folder.getNextAppoinment()} />
