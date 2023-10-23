@@ -3,7 +3,7 @@ import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";
 import { icons } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
-import ActionButton from "../../widget/action-button";
+import ActionButton, { ActionStyles } from "../../widget/action-button";
 import Panel from "../../widget/panel";
 
 export default function FilePanel({
@@ -55,13 +55,14 @@ export default function FilePanel({
       actions={
         <>
           <ActionButton
-            style={ActionButton.ActionStyles.View}
+            style={ActionStyles.Edit}
             linkTo={[
               "folder",
               "" + folder.getId(),
               "file",
               file.getModel(),
-              "" + file.getId()
+              "" + file.getId(),
+              "edit"
             ]}
           />
         </>

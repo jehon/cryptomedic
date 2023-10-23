@@ -24,6 +24,10 @@ export const ActionStyles: Record<string, ActionStyle> = {
     css: "action-delete",
     text: "Delete"
   } as const,
+  Edit: {
+    css: "action-view",
+    text: "Edit"
+  } as const,
   View: {
     css: "action-view",
     text: "View"
@@ -64,6 +68,3 @@ export default function ActionButton({
     </div>
   );
 }
-
-// To simplify import
-ActionButton.ActionStyles = ActionStyles;
