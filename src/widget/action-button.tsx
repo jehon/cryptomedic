@@ -57,9 +57,7 @@ export default function ActionButton({
 
   return (
     <div
-      className={
-        "action-button" + " " + style.css + " " + (discrete ? "discrete" : "")
-      }
+      className={" action-button " + style.css + (discrete ? " discrete " : "")}
       onClick={onClick}
     >
       {text}

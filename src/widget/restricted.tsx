@@ -13,7 +13,7 @@ export default function Restricted({
   const isAllowed = useRequiresTransaction(requiresTransaction);
 
   // Logical XOR with potentially non boolean
-  if (!isAllowed != !inverted) {
+  if (!isAllowed !== !inverted) {
     return children;
   }
   return <></>;

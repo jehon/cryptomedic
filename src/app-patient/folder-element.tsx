@@ -59,7 +59,7 @@ export default function FolderElement({
         key={(folder.getPatient() as Patient).uid()}
         file={folder.getPatient() as Patient}
         folder={folder}
-        opened={folder.getPatient().uid() == uid || !uid}
+        opened={folder.getPatient().uid() === uid || !uid}
         onUpdate={updated}
       ></PatientElement>
       {(folder.getFilesRelatedToPatient() as PatientRelated[]).map(
@@ -70,7 +70,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() == uid}
+                opened={file.uid() === uid}
                 onUpdate={updated}
               ></AppointmentElement>
             );
@@ -81,7 +81,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() == uid}
+                opened={file.uid() === uid}
                 onUpdate={updated}
               ></BillElement>
             );
@@ -92,7 +92,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() == uid}
+                opened={file.uid() === uid}
                 onUpdate={updated}
               ></ConsultClubfootElement>
             );
@@ -103,7 +103,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() == uid}
+                opened={file.uid() === uid}
                 onUpdate={updated}
               ></ConsultOtherElement>
             );
@@ -114,7 +114,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() == uid}
+                opened={file.uid() === uid}
                 onUpdate={updated}
               ></ConsultRicketElement>
             );
@@ -125,7 +125,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() == uid}
+                opened={file.uid() === uid}
                 onUpdate={updated}
               ></PictureElement>
             );
@@ -136,7 +136,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() == uid}
+                opened={file.uid() === uid}
                 onUpdate={updated}
               ></SurgeryElement>
             );

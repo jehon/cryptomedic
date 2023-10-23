@@ -3,10 +3,8 @@ import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";
 import { icons } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
-import ActionButton, { ActionStyles } from "../../widget/action-button";
-import ActionConfirm from "../../widget/action-confirm";
+import ActionButton from "../../widget/action-button";
 import Panel from "../../widget/panel";
-import Restricted from "../../widget/restricted";
 
 export default function FilePanel({
   file,
