@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ButtonsGroup from "../styles/buttons-group";
 import ActionButton, { ActionStyle, ActionStyles } from "./action-button";
 import Popup from "./popup";
 
@@ -31,9 +32,9 @@ export default function ActionConfirm({
         onClick={() => doOpen(true)}
       ></ActionButton>
       {isOpen ? (
-        <Popup title="Confirmation" style={ActionStyles.Confirm}>
+        <Popup title="Confirmation" style={style}>
           {children}
-          <div>
+          <ButtonsGroup>
             <ActionButton
               style={ActionStyles.Cancel}
               discrete={true}
@@ -49,7 +50,7 @@ export default function ActionConfirm({
                 onOk();
               }}
             />
-          </div>
+          </ButtonsGroup>
         </Popup>
       ) : null}
     </>

@@ -1,4 +1,4 @@
-div.action-button {
+.action-button {
   display: inline-block;
   flex-shrink: 0;
   flex-basis: 100px;
@@ -8,9 +8,9 @@ div.action-button {
 
   margin: 0.25rem;
 
-  background-color: #5bc0de;
-  border: 1px solid #46b8da;
   border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
 
   padding: 6px 12px;
   color: white;
@@ -22,31 +22,6 @@ div.action-button {
   touch-action: manipulation;
   cursor: pointer;
   user-select: none;
-
-  &.action-confirm {
-    background-color: #5cb85c;
-    border-color: #4cae4c;
-  }
-
-  &.action-cancel {
-    background-color: #f0ad4e;
-    border-color: #eea236;
-  }
-
-  &.action-alternate {
-    background-color: rgb(50% 50% 50%);
-    border-color: rgb(45% 45% 45%);
-  }
-
-  &.action-delete {
-    background-color: #d9534f;
-    border-color: #d43f3a;
-  }
-
-  &.discrete {
-    background-color: transparent !important;
-    color: black !important;
-  }
 
   img[src=""] {
     display: none;

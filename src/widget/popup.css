@@ -19,17 +19,10 @@
     transition: all 5s ease-in-out;
 
     & > div {
+      width: 100%;
+
       padding: 1rem;
       border-top: 1px solid #e9ecef;
-
-      &:last-child {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-end;
-
-        padding: 1rem;
-      }
     }
   }
 }
