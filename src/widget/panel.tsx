@@ -1,5 +1,6 @@
 import React from "react";
 
+import ButtonsGroup from "../styles/buttons-group";
 import "./panel.css";
 
 export default function Panel(
@@ -56,7 +57,7 @@ export default function Panel(
       </div>
       {statusOpened ? (
         <>
-          {actions ? <div className="actions">{actions}</div> : null}
+          {actions ? <ButtonsGroup>{actions}</ButtonsGroup> : null}
           <div data-role="body" className="body">
             {children}
           </div>

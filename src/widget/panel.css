@@ -34,16 +34,6 @@
     }
   }
 
-  & > .actions {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
   & > .body {
     display: flex;
     flex-direction: column;
