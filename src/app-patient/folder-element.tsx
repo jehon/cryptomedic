@@ -23,7 +23,7 @@ import SurgeryElement from "./surgery-element";
 
 import ButtonsGroup from "../styles/buttons-group";
 import { defaultWidthScreen } from "../styles/style-helpers";
-import ActionButton from "../widget/action-button";
+import ActionButton, { ActionStyles } from "../widget/action-button";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 
@@ -46,7 +46,7 @@ export default function FolderElement({
     >
       <ButtonsGroup>
         <ActionButton
-          style={ActionButton.ActionStyles.Alternate}
+          style={ActionStyles.Alternate}
           text="Add"
           linkTo={["folder", "" + folder.getId(), "addfile"]}
         />
