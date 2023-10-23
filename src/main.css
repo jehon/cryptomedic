@@ -66,26 +66,31 @@ img.inline {
 .action-view {
   background-color: #5bc0de;
   border-color: #46b8da;
+  color: white;
 }
 
 .action-confirm {
   background-color: #5cb85c;
   border-color: #4cae4c;
+  color: white;
 }
 
 .action-cancel {
   background-color: #f0ad4e;
   border-color: #eea236;
+  color: white;
 }
 
 .action-alternate {
   background-color: rgb(50% 50% 50%);
   border-color: rgb(45% 45% 45%);
+  color: white;
 }
 
 .action-delete {
   background-color: #d9534f;
   border-color: #d43f3a;
+  color: white;
 }
 
 .discrete {

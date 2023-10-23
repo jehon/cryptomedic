@@ -14,8 +14,8 @@ export default function Popup({
 }) {
   return (
     <div className="popup">
-      <div className="box">
-        <h2 className={style?.css}>{title}</h2>
+      <div className={"box " + style?.css}>
+        <h2>{title}</h2>
         {children}
       </div>
     </div>
