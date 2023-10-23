@@ -102,7 +102,7 @@ dc-up:
 # bin/cr-refresh-structure "http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
 
 stop:
-	docker compose down
+	docker compose down  --volumes --remove-orphans
 	docker compose kill -s SIGINT mysql || true
 	@echo ""
 
