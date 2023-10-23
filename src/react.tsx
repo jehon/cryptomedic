@@ -21,7 +21,7 @@ const router = createHashRouter([
     errorElement: <ErrorPage />
   },
   {
-    // Temporary
+    // TODO: Temporary
     path: "/login/*",
     element: (
       <RouteLoading
@@ -31,10 +31,18 @@ const router = createHashRouter([
     )
   },
   {
+    // TODO: Temporary
     path: "/folder/:folderId/summary/:uid?",
+    loader: patientLoader,
+    element: <RouteLoading element={<PatientRouter />} />
+  },
+  {
+    path: "/patient/:folderId/:uid?",
     loader: patientLoader,
     element: <RouteLoading element={<PatientRouter />} />
   }
 ]);
 
-bridgeTo("x-react-router", RouterProvider, { router });
+bridgeTo("x-react-router", RouterProvider, {
+  router
+});

@@ -10,25 +10,25 @@ window.jQuery = jQuery;
 import angular from "angular";
 import "angular-route";
 
-import template from "../v2/js/template.js";
 import goThere from "../v2/js/goThere.js";
+import template from "../v2/js/template.js";
 
-import JHElement from "./elements/jh-element.js";
-window.JHElement = JHElement;
-import "./elements/x-o-overlay.js";
 import "./elements/cryptomedic-data-service.js";
+import JHElement from "./elements/jh-element.js";
 import "./elements/jh-script.js";
+import "./elements/x-file-bill-summary.js";
+import "./elements/x-file-bill.js";
+import XFile from "./elements/x-file.js";
 import "./elements/x-input-date.js";
 import XInputPicture from "./elements/x-input-picture.js";
-window.XInputPicture = XInputPicture;
-import "./elements/x-read.js";
+import "./elements/x-o-overlay.js";
 import "./elements/x-read-boolean.js";
-import "./elements/x-write.js";
+import "./elements/x-read.js";
 import "./elements/x-write-list.js";
-import XFile from "./elements/x-file.js";
+import "./elements/x-write.js";
+window.JHElement = JHElement;
+window.XInputPicture = XInputPicture;
 window.XFile = XFile;
-import "./elements/x-file-bill.js";
-import "./elements/x-file-bill-summary.js";
 
 let mainApp = angular.module("app_main", ["ngRoute"]).config([
   "$locationProvider",
@@ -79,11 +79,11 @@ mainApp.controller("ctrl_folder", ctrl_folder);
 
 // Routing
 import { createElementWithObject } from "../v2/js/custom-element.js";
-import XPageLogin from "../v2/pages/x-page-login.js";
 import XPageHome from "../v2/pages/x-page-home.js";
+import XPageLogin from "../v2/pages/x-page-login.js";
 import XPagePrices from "../v2/pages/x-page-prices.js";
-import XPageSearch from "../v2/pages/x-page-search.js";
 import XPageReports from "../v2/pages/x-page-reports.js";
+import XPageSearch from "../v2/pages/x-page-search.js";
 import XPageUserEdit from "../v2/pages/x-page-user-edit.js";
 import XPageUserPassword from "../v2/pages/x-page-user-password.js";
 import XPageUsersList from "../v2/pages/x-page-users-list.js";
@@ -118,6 +118,9 @@ mainApp.config([
       .when("/folder/:patient_id/:page?/:subtype?/:subid?/:mode?", {
         templateUrl: template("folder"),
         controller: "ctrl_folder"
+      })
+      .when("/patient/:folderId?/:uid?/:mode?", {
+        template: "<x-react-router></x-react-router>"
       })
       .when("/reports/:report", {
         template: (params) => goToElement(XPageReports, params)
