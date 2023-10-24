@@ -3,6 +3,7 @@ import Appointment from "./appointment.js";
 import Patient from "./patient.js";
 
 // Enrich the registry:
+import { produce } from "immer";
 import "./bill.js";
 import "./consult-clubfoot.js";
 import "./consult-other.js";
@@ -41,18 +42,34 @@ export default class Folder extends Pojo {
   }
 
   /**
-   * Deletion is made by uid
+   *
+   * @param {Pojo} file
+   * @returns {Folder}
    */
-  deleteFile(file) {
-    this.list = this.list.filter((f) => f.uid() !== file.uid());
-    return this;
+  withFile(file) {
+    //
+    // We remove and add in one run
+    // to avoid building twice the folder
+    //
+    return produce(this.withoutFile(file.uid()), (draft) => {
+      draft.list.push(file);
+    });
   }
 
-  updateOrAddFile(file) {
-    file.registerParent(this);
-    this.deleteFile(file);
-    this.list.push(file);
-    return this;
+  /**
+   *
+   * @param {string} uid
+   * @returns {Folder}
+   */
+  withoutFile(uid) {
+    const i = this.list.findIndex((val) => val.uid() === uid);
+    if (i < 0) {
+      return this;
+    }
+
+    return produce(this, (draft) => {
+      draft.list.splice(i, 1);
+    });
   }
 
   getId() {

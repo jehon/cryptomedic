@@ -1,10 +1,14 @@
 import React from "react";
+import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";
 import { icons } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import ActionButton, { ActionStyles } from "../../widget/action-button";
+import ActionConfirm from "../../widget/action-confirm";
 import Panel from "../../widget/panel";
+import Restricted from "../../widget/restricted";
+import { folderFileUnlock } from "../loaders";
 
 export type FolderUpdateCallback = (folder: Folder) => void;
 
@@ -56,17 +60,42 @@ export default function FilePanel({
       }
       actions={
         <>
-          <ActionButton
-            style={ActionStyles.Edit}
-            linkTo={[
-              "folder",
-              "" + folder.getId(),
-              "file",
-              file.getModel(),
-              "" + file.getId(),
-              "edit"
-            ]}
-          />
+          {file.isLocked() ? (
+            // File is locked
+            file instanceof PatientRelated && (
+              <Restricted requiresTransaction="folder.unlock">
+                <ActionConfirm
+                  style={ActionStyles.Alternate}
+                  buttonText="Unlock"
+                  discrete={true}
+                  onOk={() =>
+                    folderFileUnlock<typeof file>(file)
+                      .then((file) => folder.withFile(file))
+                      .then((newFolder) => onUpdate(newFolder))
+                  }
+                >
+                  <div>
+                    Are you sure you want to unlock the File {file.getModel()}?
+                    <br />
+                    Anybody will then be able to edit it.
+                  </div>
+                </ActionConfirm>
+              </Restricted>
+            )
+          ) : (
+            // File is not locked
+            <ActionButton
+              style={ActionStyles.Edit}
+              linkTo={[
+                "folder",
+                "" + folder.getId(),
+                "file",
+                file.getModel(),
+                "" + file.getId(),
+                "edit"
+              ]}
+            />
+          )}
         </>
       }
     >

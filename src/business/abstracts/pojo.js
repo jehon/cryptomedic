@@ -1,6 +1,9 @@
+import { immerable } from "immer";
 import nullify from "../../utils/nullify.js";
 
 export default class Pojo {
+  [immerable] = true;
+
   // Legacy
   static getBaseUrl() {
     throw new Error("getBaseUrl is not implemented");

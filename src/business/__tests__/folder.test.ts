@@ -222,10 +222,21 @@ test("getLastSeen", function() {
 
 
 test("Copy with new file", function() {
-  expect(f.id).toBe(1);
+  expect(f.getId()).toBe("1");
   const fap = f.getByUid("Appointment-2");
   expect(fap).toBeInstanceOf(Appointment);
-  expect(fap.purpose).toBe("brol");
+  expect(fap.purpose).toBe(null);
 
-  f.withFile("Appointment-2", new Appointment({ id: 2, examiner: "test", purpose: "test" }));
+  const f2 = f.withFile(new Appointment({ id: 2, examiner: "test", purpose: "test" }));
+  expect(f2).toBeInstanceOf(Folder);
+  const fap2 = f2.getByUid("Appointment-2");
+  expect(fap2).toBeInstanceOf(Appointment);
+  expect(fap2.purpose).toBe("test");
+  expect(fap2.purpose).toBe("test");
+
+  // Initial 
+  const fap3 = f.getByUid("Appointment-2");
+  expect(fap3).toBeInstanceOf(Appointment);
+  expect(fap3.purpose).toBe(null);
+
 })
