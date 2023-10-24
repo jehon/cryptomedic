@@ -52,9 +52,9 @@ dump:
 	@echo "SHELL:                          $(SHELL)"
 	@echo "PATH:                           $(PATH)"
 	@echo "ACCEPTANCE:                     $(ACCEPTANCE)"
-	@echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:    $(CRYPTOMEDIC_DEPLOY_FILES_HOST)"
-	@echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:   $(CRYPTOMEDIC_DEPLOY_WEB_HOST)"
-	@echo "CRYPTOMEDIC_DEPLOY_WEB_PORT:   $(CRYPTOMEDIC_DEPLOY_WEB_PORT)"
+	@echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:  $(CRYPTOMEDIC_DEPLOY_FILES_HOST)"
+	@echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:    $(CRYPTOMEDIC_DEPLOY_WEB_HOST)"
+	@echo "CRYPTOMEDIC_DEPLOY_WEB_PORT:    $(CRYPTOMEDIC_DEPLOY_WEB_PORT)"
 	@echo "CRYPTOMEDIC_LOCAL_HTTP_PORT:    $(CRYPTOMEDIC_LOCAL_HTTP_PORT)"
 	@echo "------------------------------------------"
 	@echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
@@ -90,8 +90,10 @@ dc-build:
 
 .PHONY: start
 start: dc-up dependencies build reset
-	@echo "Open browser: http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/"
-	@echo "Test page: http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/dev/"
+	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_LOCAL_HTTP_PORT)/"
+	@echo "Test page: http://localhost:$(CRYPTOMEDIC_LOCAL_HTTP_PORT)/dev/"
+	@echo -n "Official port: "
+	@docker compose port proxy 80
 
 dev: dc-up dependencies build
 # No reset!
