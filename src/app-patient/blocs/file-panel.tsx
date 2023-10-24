@@ -6,6 +6,8 @@ import { date2HumanString, normalizeDate } from "../../utils/date";
 import ActionButton, { ActionStyles } from "../../widget/action-button";
 import Panel from "../../widget/panel";
 
+export type FolderUpdateCallback = (folder: Folder) => void;
+
 export default function FilePanel({
   file,
   folder,
@@ -19,7 +21,7 @@ export default function FilePanel({
   header?: React.ReactNode;
   children: React.ReactNode;
   closed?: boolean;
-  onUpdate: () => void;
+  onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   return (
     <Panel

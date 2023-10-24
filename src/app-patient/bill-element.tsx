@@ -8,7 +8,7 @@ import { roundTo } from "../utils/strings";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel from "./blocs/file-panel";
+import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
 
 export default function BillElement({
   file,
@@ -19,7 +19,7 @@ export default function BillElement({
   file: Bill;
   folder: Folder;
   opened?: boolean;
-  onUpdate: () => void;
+  onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   return (
     <FilePanel

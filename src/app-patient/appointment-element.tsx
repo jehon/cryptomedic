@@ -6,7 +6,7 @@ import Folder from "../business/folder";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel from "./blocs/file-panel";
+import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
 
 export default function AppointmentElement({
   file,
@@ -17,7 +17,7 @@ export default function AppointmentElement({
   file: Appointment;
   folder: Folder;
   opened?: boolean;
-  onUpdate: () => void;
+  onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   return (
     <FilePanel

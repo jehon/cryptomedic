@@ -9,7 +9,7 @@ import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel from "./blocs/file-panel";
+import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
 
 export default function ConsultOtherElement({
   file,
@@ -20,7 +20,7 @@ export default function ConsultOtherElement({
   file: ConsultOther;
   folder: Folder;
   opened?: boolean;
-  onUpdate: () => void;
+  onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   return (
     <FilePanel

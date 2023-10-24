@@ -6,7 +6,7 @@ import Picture from "../business/picture";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel from "./blocs/file-panel";
+import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
 
 export default function PictureElement({
   file,
@@ -17,7 +17,7 @@ export default function PictureElement({
   file: Picture;
   folder: Folder;
   opened?: boolean;
-  onUpdate: () => void;
+  onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   return (
     <FilePanel closed={!opened} file={file} folder={folder} onUpdate={onUpdate}>

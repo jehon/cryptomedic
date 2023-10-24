@@ -11,7 +11,7 @@ import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel from "./blocs/file-panel";
+import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
 
 export default function ConsultClubfootElement({
   file,
@@ -22,7 +22,7 @@ export default function ConsultClubfootElement({
   file: ConsultClubfoot;
   folder: Folder;
   opened?: boolean;
-  onUpdate: () => void;
+  onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   return (
     <FilePanel
