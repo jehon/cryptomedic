@@ -2,28 +2,28 @@
 /* eslint-disable */
 
 import Folder from "../../../src/business/folder.js";
-import { formGetContent } from "../v2/js/form.js";
 import { extractPrefsFile } from "../../../src/utils/prefs.js";
-import getDataService from "../v2/js/getDataService.js";
-import { fromBirthDate } from "../v2/widgets/file/x-fff-age.js";
-import template from "../v2/js/template.js";
-import goThere from "../v2/js/goThere.js";
 import date2CanonicString from "../v2/js/date2CanonicString.js";
+import { formGetContent } from "../v2/js/form.js";
+import getDataService from "../v2/js/getDataService.js";
+import goThere from "../v2/js/goThere.js";
 import setPropertyOn from "../v2/js/set-property.js";
+import template from "../v2/js/template.js";
+import { fromBirthDate } from "../v2/widgets/file/x-fff-age.js";
 
 import "../v2/pages/x-page-folder.js";
 
+import { registryGet } from "../../../src/business/registry.js";
 import "../v2/pages/blocks/x-folder-graphics.js";
-import "../v2/widgets/style/x-button.js";
-import "../v2/widgets/file/x-fff-bmi.js";
 import "../v2/widgets/file/x-fff-bmi-sd.js";
+import "../v2/widgets/file/x-fff-bmi.js";
 import "../v2/widgets/file/x-fff-height-sd.js";
 import "../v2/widgets/file/x-fff-weight-sd.js";
-import "../v2/widgets/file/x-fff-wh.js";
 import "../v2/widgets/file/x-fff-wh-sd.js";
-import "../v2/widgets/folder/x-ff-patient-related.js";
+import "../v2/widgets/file/x-fff-wh.js";
 import "../v2/widgets/folder/x-ff-next-appointment.js";
-import { registryGet } from "../../../src/business/registry.js";
+import "../v2/widgets/folder/x-ff-patient-related.js";
+import "../v2/widgets/style/x-button.js";
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise
