@@ -1,16 +1,16 @@
-import { test, expect } from "@jest/globals";
+import { expect, test } from "@jest/globals";
 
 import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
 
-import Folder from "../folder.js";
 import Appointment from "../appointment.js";
 import Bill from "../bill.js";
 import ConsultClubfoot from "../consult-clubfoot.js";
 import ConsultOther from "../consult-other.js";
+import ConsultRicket from "../consult-ricket.js";
+import Folder from "../folder.js";
 import Patient from "../patient.js";
 import Payment from "../payment.js";
 import Picture from "../picture.js";
-import ConsultRicket from "../consult-ricket.js";
 import Surgery from "../surgery.js";
 
 let f: Folder = new Folder();
@@ -219,3 +219,13 @@ test("getLastSeen", function() {
   expect((new Folder()).getLastSeen()).toBeNull();
     expect(f.getLastSeen()).toEqual(new Date("2014-11-04"));
 });
+
+
+test("Copy with new file", function() {
+  expect(f.id).toBe(1);
+  const fap = f.getByUid("Appointment-2");
+  expect(fap).toBeInstanceOf(Appointment);
+  expect(fap.purpose).toBe("brol");
+
+  f.withFile("Appointment-2", new Appointment({ id: 2, examiner: "test", purpose: "test" }));
+})

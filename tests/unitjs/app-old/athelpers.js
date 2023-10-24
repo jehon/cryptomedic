@@ -1,9 +1,9 @@
 export {
-  fn,
-  fireOn,
   RefFolder1,
   RefFolder1RicketConsult13,
   extractPath,
+  fireOn,
+  fn,
   loadReference
 } from "../test-lib.js";
 
