@@ -161,7 +161,7 @@ services:
     profiles:
       - tool
     # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/12/Dockerfile
-    image: cypress/included:13.3.2
+    image: cypress/included:13.3.3
     environment:
       HOME: /tmp
       LANG: C.UTF-8
