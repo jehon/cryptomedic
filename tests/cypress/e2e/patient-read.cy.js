@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import { crApiLogin } from "./helpers/cr-api.js";
 import { crLoginInBackground } from "./helpers/cr.js";
 import {
@@ -9,7 +7,7 @@ import {
   patientFilesRead2014_105
 } from "./helpers/e2e-entrynumber-assigned.js";
 import { getByDataRole } from "./helpers/gui.js";
-import { patientgo, patientSelectFile } from "./helpers/patients.js";
+import { patientSelectFile, patientgo } from "./helpers/patients.js";
 import TableIterator from "./helpers/table-iterator.js";
 
 context("Actions", () => {
