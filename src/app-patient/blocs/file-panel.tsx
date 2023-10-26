@@ -84,18 +84,19 @@ export default function FilePanel({
             )
           ) : (
             // File is not locked
-            <ActionButton
-              style={ActionStyles.Edit}
-              linkTo={[
-                "folder",
-                "" + folder.getId(),
-                "file",
-                file.getModel(),
-                "" + file.getId(),
-                "edit"
-              ]}
-            />
+            <></>
           )}
+          <ActionButton
+            style={ActionStyles.Edit}
+            linkTo={[
+              "folder",
+              "" + folder.getId(),
+              "file",
+              file.getModel(),
+              "" + file.getId(),
+              "edit"
+            ]}
+          />
         </>
       }
     >
