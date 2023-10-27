@@ -47,6 +47,7 @@ export function patientgo(patient) {
 
   return crPage();
 }
+
 /**
  * @param {string} type of the fiel
  * @param {number} id of the file

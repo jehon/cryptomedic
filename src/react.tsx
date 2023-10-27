@@ -30,12 +30,12 @@ const router = createHashRouter([
   },
   {
     // TODO: Temporary
-    path: "/folder/:folderId/summary/:uid?",
+    path: "/folder/:folderId/summary/:selectedUid?",
     loader: patientLoader,
     element: <RouteLoading element={<PatientRouter />} />
   },
   {
-    path: "/patient/:folderId/:uid?",
+    path: "/patient/:folderId/:selectedUid?",
     loader: patientLoader,
     element: <RouteLoading element={<PatientRouter />} />
   }

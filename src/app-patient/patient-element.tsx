@@ -41,10 +41,10 @@ export default function PatientElement({
             <IO.Number label="Entry Year" value={file.entry_year} />
             <IO.Number label="Entry Order" value={file.entry_order} />
             <IO.String label="Name" value={file.name} />
-            <IO.String label="sex" value={file.sex} />
+            <IO.String label="Sex" value={file.sex} />
             <IO.Number label="Year of birth" value={file.year_of_birth} />
             <IO.String label="Age today" value={file.actualAge() as string} />
-            <IO.String label="pathology" value={file.pathology} />
+            <IO.String label="Pathology" value={file.pathology} />
             <IO.Text label="Comments" value={file.comments} />
           </Panel>
           <Panel fixed label="Address">

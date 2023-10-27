@@ -41,7 +41,7 @@ export default function IOAbstract<T>(
   // TODO: handle left / right
 
   return (
-    <div className={"io" + (props.note ? " note" : "")} role={props.label}>
+    <div className={"io" + (props.note ? " note" : "")} data-role={props.label}>
       <label
         dangerouslySetInnerHTML={{
           __html: props.label + (props.required ? "*" : "")

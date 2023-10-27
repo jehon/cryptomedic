@@ -15,7 +15,7 @@ export async function patientLoader({
 
 export default function PatientRouter(): React.ReactNode {
   const folder = useLoaderData() as Folder;
-  const { uid } = useParams();
+  const { selectedUid } = useParams();
 
-  return <FolderElement folder={folder} uid={uid} />;
+  return <FolderElement folder={folder} selectedUid={selectedUid} />;
 }

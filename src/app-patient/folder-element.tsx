@@ -30,10 +30,10 @@ import { FolderUpdateCallback } from "./blocs/file-panel";
 
 export default function FolderElement({
   folder: givenFolder,
-  uid
+  selectedUid: selectedUid
 }: {
   folder: Folder;
-  uid?: string;
+  selectedUid?: string;
 }): React.ReactNode {
   const [folder, folderUpdatedCallback]: [any, FolderUpdateCallback] =
     useState(givenFolder);
@@ -44,6 +44,7 @@ export default function FolderElement({
   return (
     <div
       data-role="summary"
+      data-test-id={"folder-" + folder.getId()}
       style={{ width: defaultWidthScreen, margin: "0 auto" }}
     >
       <ButtonsGroup>
@@ -61,7 +62,7 @@ export default function FolderElement({
         key={(folder.getPatient() as Patient).uid()}
         file={folder.getPatient() as Patient}
         folder={folder}
-        opened={folder.getPatient().uid() === uid || !uid}
+        opened={folder.getPatient().uid() === selectedUid || !selectedUid}
         onUpdate={folderUpdatedCallback}
       ></PatientElement>
       {(folder.getFilesRelatedToPatient() as PatientRelated[]).map(
@@ -72,7 +73,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() === uid}
+                opened={file.uid() === selectedUid}
                 onUpdate={folderUpdatedCallback}
               ></AppointmentElement>
             );
@@ -83,7 +84,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() === uid}
+                opened={file.uid() === selectedUid}
                 onUpdate={folderUpdatedCallback}
               ></BillElement>
             );
@@ -94,7 +95,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() === uid}
+                opened={file.uid() === selectedUid}
                 onUpdate={folderUpdatedCallback}
               ></ConsultClubfootElement>
             );
@@ -105,7 +106,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() === uid}
+                opened={file.uid() === selectedUid}
                 onUpdate={folderUpdatedCallback}
               ></ConsultOtherElement>
             );
@@ -116,7 +117,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() === uid}
+                opened={file.uid() === selectedUid}
                 onUpdate={folderUpdatedCallback}
               ></ConsultRicketElement>
             );
@@ -127,7 +128,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() === uid}
+                opened={file.uid() === selectedUid}
                 onUpdate={folderUpdatedCallback}
               ></PictureElement>
             );
@@ -138,7 +139,7 @@ export default function FolderElement({
                 key={file.uid()}
                 folder={folder}
                 file={file}
-                opened={file.uid() === uid}
+                opened={file.uid() === selectedUid}
                 onUpdate={folderUpdatedCallback}
               ></SurgeryElement>
             );

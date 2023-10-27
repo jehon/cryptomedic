@@ -24,3 +24,11 @@ export function guiHashStartWith(hash, strict = false) {
 export function getByDataRole(dataRole) {
   return cy.get(`[data-role="${dataRole}"]`);
 }
+
+export function getByTestId(testId) {
+  return cy.get(`[data-test-id="${testId}"]`);
+}
+
+export function expectFieldContain(field, value) {
+  getByDataRole(field).get(".content").should("contain.text", value);
+}
