@@ -79,7 +79,7 @@ $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json: \
 		$(INTEGRATION_TEST_TMP)/.tested-desktop \
 		$(INTEGRATION_TEST_TMP)/.tested-mobile
 
-	bin/cr-node node_modules/.bin/ts-node --esm tests/styles/check-styles.ts \
+	bin/cr-node node_modules/.bin/tsx tests/styles/check-styles.ts \
 		--root="$(ROOT)" \
 		--references="$(ROOT)/tests/styles/references/" \
 		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
@@ -96,7 +96,7 @@ integration-update-references-styles: \
 # Raw without calculs
 .PHONY: integration-update-references-styles-calcul
 integration-update-references-styles-calcul:
-	bin/cr-node node_modules/.bin/ts-node --esm tests/styles/check-styles.ts \
+	bin/cr-node node_modules/.bin/tsx tests/styles/check-styles.ts \
 		--root="$(ROOT)" \
 		--references="$(ROOT)/tests/styles/references/" \
 		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
