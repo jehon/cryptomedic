@@ -2,8 +2,8 @@ import { expect, test } from '@jest/globals';
 
 import {
   ApplicationException,
-  DataMissingException,
   DataInvalidException,
+  DataMissingException,
   DataOutOfBoundException
 } from "../exceptions.js";
 
@@ -11,7 +11,7 @@ test("should inherit from Error", function () {
   var ae = new ApplicationException("my message");
 
   expect(ae instanceof Error).toBeTruthy();
-  expect(ae.getId()).toBe("ApplicationException");
+  expect(ae instanceof ApplicationException).toBeTruthy();
   expect(ae.message).toBe("my message");
 });
 
@@ -20,7 +20,7 @@ test("should have DataMissingException", function () {
 
   expect(ae instanceof ApplicationException).toBeTruthy();
   expect(ae instanceof Error).toBeTruthy();
-  expect(ae.getId()).toBe("DataMissingException#data");
+  expect(ae instanceof DataMissingException).toBeTruthy();
   expect(ae.message).toBe("'data' is not defined");
   expect(ae.getKey()).toBe("data");
 });

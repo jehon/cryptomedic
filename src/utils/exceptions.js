@@ -8,11 +8,7 @@ function key2string(key) {
   return `'${key}'`;
 }
 
-export class ApplicationException extends Error {
-  getId() {
-    return this.constructor.name;
-  }
-}
+export class ApplicationException extends Error {}
 
 export class ConfigurationException extends ApplicationException {}
 
@@ -35,10 +31,6 @@ export class DataException extends ApplicationException {
     super(msg);
     this.#key = key;
     this.message = msg;
-  }
-
-  getId() {
-    return super.getId() + "#" + this.#key;
   }
 
   getKey() {
