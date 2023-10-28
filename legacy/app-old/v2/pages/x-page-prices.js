@@ -1,22 +1,22 @@
 import { messages } from "../../../../src/config.js";
+import XInputDate from "../../v1/elements/x-input-date.js";
 import {
   createElementWithObject,
   createElementWithTag
 } from "../js/custom-element.js";
+import { createOverlay, overlayAcknowledge } from "../js/overlay-builder.js";
+import { pricesCrud } from "../widgets/func/requests-admin.js";
+import XButtons from "../widgets/func/x-buttons.js";
 import XForm from "../widgets/func/x-form.js";
+import XMessages from "../widgets/func/x-messages.js";
 import XRequestor from "../widgets/func/x-requestor.js";
 import XButton from "../widgets/style/x-button.js";
-import XButtons from "../widgets/func/x-buttons.js";
 import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XLabel from "../widgets/style/x-label.js";
 import XMessage from "../widgets/style/x-message.js";
-import XMessages from "../widgets/func/x-messages.js";
 import "../widgets/x-price-item-edit.js";
 import XPriceItemEdit from "../widgets/x-price-item-edit.js";
-import XInputDate from "../../v1/elements/x-input-date.js";
-import { createOverlay, overlayAcknowledge } from "../js/overlay-builder.js";
 import pageStyles from "./page-helper.js";
-import { pricesCrud } from "../widgets/func/requests-admin.js";
 
 /**
  * Sort !in place!
@@ -59,6 +59,10 @@ function sortPrices(prices) {
  *     sinon: ajout d'un nouveau
  */
 export default class XPagePrices extends HTMLElement {
+  static get Tag() {
+    return "x-page-prices";
+  }
+
   /** @type {HTMLElement} */
   explainEl;
 
@@ -73,7 +77,7 @@ export default class XPagePrices extends HTMLElement {
 
     this.innerHTML = "";
     this.append(
-      pageStyles(this),
+      pageStyles(this.constructor.Tag),
       (this._header = createElementWithTag("div", {}, [
         createElementWithObject(XMessages, {}, [
           createElementWithObject(XMessage, { level: messages.info }, [
@@ -382,4 +386,4 @@ export default class XPagePrices extends HTMLElement {
   }
 }
 
-customElements.define("x-page-prices", XPagePrices);
+customElements.define(XPagePrices.Tag, XPagePrices);

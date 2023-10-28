@@ -1,35 +1,35 @@
 import ExcellentExport from "excellentexport";
 import { messages } from "../../../../src/config.js";
+import { getPref, setPref } from "../../../../src/utils/prefs.js";
+import XInputDate from "../../v1/elements/x-input-date.js";
 import {
-  createElementsFromHTML,
   createElementWithObject,
-  createElementWithTag
+  createElementWithTag,
+  createElementsFromHTML
 } from "../js/custom-element.js";
 import date2CanonicString from "../js/date2CanonicString.js";
-import { getPref, setPref } from "../../../../src/utils/prefs.js";
+import { ifError } from "../js/number-utils.js";
 import {
   getRouteToFolderFileByParams,
   getRouteToFolderPatient
 } from "../js/router.js";
 import { getSession } from "../js/session.js";
 import { toSentenceCase } from "../js/string-utils.js";
+import XInputList from "../widgets/data/x-input-list.js";
+import { reportQueryBuilder } from "../widgets/func/requests-reports.js";
+import XAge from "../widgets/func/x-age.js";
+import XButtons from "../widgets/func/x-buttons.js";
 import XCodage from "../widgets/func/x-codage.js";
 import XForm from "../widgets/func/x-form.js";
-import XInputList from "../widgets/data/x-input-list.js";
-import XIoBoolean from "../widgets/io/x-io-boolean.js";
+import "../widgets/func/x-i18n.js";
+import XMessages from "../widgets/func/x-messages.js";
 import XRequestor from "../widgets/func/x-requestor.js";
-import XTable from "../widgets/x-table.js";
+import XIoBoolean from "../widgets/io/x-io-boolean.js";
 import XButton from "../widgets/style/x-button.js";
-import XButtons from "../widgets/func/x-buttons.js";
 import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XLabel from "../widgets/style/x-label.js";
-import XMessages from "../widgets/func/x-messages.js";
-import XAge from "../widgets/func/x-age.js";
-import XInputDate from "../../v1/elements/x-input-date.js";
+import XTable from "../widgets/x-table.js";
 import pageStyles from "./page-helper.js";
-import "../widgets/func/x-i18n.js";
-import { reportQueryBuilder } from "../widgets/func/requests-reports.js";
-import { ifError } from "../js/number-utils.js";
 
 /**
  * Two parts here:
@@ -38,6 +38,10 @@ import { ifError } from "../js/number-utils.js";
  */
 
 export default class XPageReports extends HTMLElement {
+  static get Tag() {
+    return "x-page-reports";
+  }
+
   /** @type {XRequestor} */
   _requestor;
 
@@ -78,7 +82,7 @@ export default class XPageReports extends HTMLElement {
     this.reportId = this.getAttribute("report");
 
     this.append(
-      pageStyles(this),
+      pageStyles(this.constructor.Tag),
       // TODO: only two-columns on large screens !
       createElementWithTag(
         "style",
@@ -553,7 +557,7 @@ x-button#export {
 
 // TODO: remove addDetailsLegacy
 
-customElements.define("x-page-reports", XPageReports);
+customElements.define(XPageReports.Tag, XPageReports);
 
 export const REPORT_ACTIVITY = "activity";
 export const REPORT_CASH_REGISTER = "cash-register";

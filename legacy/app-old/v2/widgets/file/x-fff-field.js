@@ -35,6 +35,10 @@ function toSide(field, side) {
  *  - label (default constructed basd on field / by-sides)
  */
 export default class XFffField extends XWithFile {
+  static get Tag() {
+    return "x-fff-field";
+  }
+
   label = "";
   field = "";
   bySides = "";
@@ -48,7 +52,7 @@ export default class XFffField extends XWithFile {
 
     this.shadowRoot.innerHTML = "";
     this.shadowRoot.append(
-      getPanelStyles(this),
+      getPanelStyles(this.constructor.Tag),
       createElementWithTag(
         "style",
         {},
@@ -182,4 +186,4 @@ export default class XFffField extends XWithFile {
   }
 }
 
-customElements.define("x-fff-field", XFffField);
+customElements.define(XFffField.Tag, XFffField);

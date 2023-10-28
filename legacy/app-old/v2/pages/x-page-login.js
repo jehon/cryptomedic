@@ -1,29 +1,33 @@
 import { messages } from "../../../../src/config.js";
-import { setRoute, parseRouteLogin } from "../js/router.js";
+import { parseRouteLogin, setRoute } from "../js/router.js";
 import { setSession } from "../js/session.js";
 
-import XRequestor from "../widgets/func/x-requestor.js";
 import {
   createElementWithObject,
   createElementWithTag
 } from "../js/custom-element.js";
-import XForm from "../widgets/func/x-form.js";
-import XPanel from "../widgets/style/x-panel.js";
-import XLabel from "../widgets/style/x-label.js";
-import XButtons from "../widgets/func/x-buttons.js";
-import XButton from "../widgets/style/x-button.js";
-import XGroupPanel from "../widgets/style/x-group-panel.js";
-import pageStyles from "./page-helper.js";
-import XIoString from "../widgets/io/x-io-string.js";
 import {
   loginCheckRequestBuilder,
   loginRequestBuilder
 } from "../widgets/func/requests-authenticator.js";
+import XButtons from "../widgets/func/x-buttons.js";
+import XForm from "../widgets/func/x-form.js";
+import XRequestor from "../widgets/func/x-requestor.js";
+import XIoString from "../widgets/io/x-io-string.js";
+import XButton from "../widgets/style/x-button.js";
+import XGroupPanel from "../widgets/style/x-group-panel.js";
+import XLabel from "../widgets/style/x-label.js";
+import XPanel from "../widgets/style/x-panel.js";
+import pageStyles from "./page-helper.js";
 
 /**
  * attribute redirect - Where to redirect on login
  */
 export default class XPageLogin extends HTMLElement {
+  static get Tag() {
+    return "x-page-login";
+  }
+
   /** @type {XRequestor} */
   _requestor;
 
@@ -36,7 +40,7 @@ export default class XPageLogin extends HTMLElement {
 
     this.innerHTML = "";
     this.append(
-      pageStyles(this),
+      pageStyles(this.constructor.Tag),
       createElementWithObject(XPanel, {}, [
         createElementWithObject(
           XGroupPanel,
@@ -156,4 +160,4 @@ export default class XPageLogin extends HTMLElement {
   }
 }
 
-customElements.define("x-page-login", XPageLogin);
+customElements.define(XPageLogin.Tag, XPageLogin);

@@ -5,8 +5,8 @@ import {
 } from "../../js/custom-element.js";
 import XMessages from "../func/x-messages.js";
 import "../style/x-button.js";
-import { getPanelStyles } from "../style/x-panel.js";
 import XButton from "../style/x-button.js";
+import { getPanelStyles } from "../style/x-panel.js";
 
 /**
  * Export
@@ -45,6 +45,10 @@ const log = (..._args) => {};
  *  - reset (reset the form)
  */
 export default class XForm extends HTMLElement {
+  static get Tag() {
+    return "x-form";
+  }
+
   static get ActionSubmit() {
     return "x-form-submit";
   }
@@ -70,7 +74,7 @@ export default class XForm extends HTMLElement {
 
     this.attachShadow({ mode: "open" });
     this.shadowRoot.append(
-      getPanelStyles(this),
+      getPanelStyles(this.constructor.Tag),
       // createElementWithObject('css-inherit'),
       createElementWithTag("slot"),
       (this._messages = /** @type {XMessages} */ (
@@ -380,4 +384,4 @@ export default class XForm extends HTMLElement {
   }
 }
 
-customElements.define("x-form", XForm);
+customElements.define(XForm.Tag, XForm);

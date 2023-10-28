@@ -1,22 +1,19 @@
 import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
-import {
-  createElementWithTag,
-  getHTMLNameOfClass
-} from "../../js/custom-element.js";
+import { createElementWithTag } from "../../js/custom-element.js";
 
 /**
- * @param {HTMLElement} element to be applied on
+ * @param {string} tag to be applied on
  * @param {boolean?} full if need to take full place
  * @returns {HTMLStyleElement} to be applied to each element
  */
-export function getPanelStyles(element, full = false) {
+export function getPanelStyles(tag, full = false) {
   return /** @type {HTMLStyleElement} */ (
     createElementWithTag(
       "style",
       {},
       `
 
-:host(${getHTMLNameOfClass(element)}) {
+:host(${tag}) {
     position: relative;
 
     display: flex;
@@ -52,14 +49,18 @@ ${
  * Slot[]: content to be shown in the pannel
  */
 export default class XPanel extends HTMLElement {
+  static get Tag() {
+    return "x-panel";
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
     this.shadowRoot.append(
-      getPanelStyles(this, true),
+      getPanelStyles(this.constructor.Tag, true),
       createElementWithTag("slot")
     );
   }
 }
 
-customElements.define("x-panel", XPanel);
+customElements.define(XPanel.Tag, XPanel);

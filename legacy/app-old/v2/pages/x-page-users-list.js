@@ -1,19 +1,23 @@
+import XReadBoolean from "../../v1/elements/x-read-boolean.js";
 import { createElementWithObject } from "../js/custom-element.js";
 import { getRoute, routes } from "../js/router.js";
-import XRequestor from "../widgets/func/x-requestor.js";
-import XTable from "../widgets/x-table.js";
-import XButton from "../widgets/style/x-button.js";
-import XButtons from "../widgets/func/x-buttons.js";
-import XPanel from "../widgets/style/x-panel.js";
-import XReadBoolean from "../../v1/elements/x-read-boolean.js";
-import pageStyles from "./page-helper.js";
 import { usersCrud } from "../widgets/func/requests-admin.js";
+import XButtons from "../widgets/func/x-buttons.js";
+import XRequestor from "../widgets/func/x-requestor.js";
+import XButton from "../widgets/style/x-button.js";
+import XPanel from "../widgets/style/x-panel.js";
+import XTable from "../widgets/x-table.js";
+import pageStyles from "./page-helper.js";
 
 /**
  * attributes:
  * - uid: the id of the user where to change the password
  */
 export default class XPageUsersList extends HTMLElement {
+  static get Tag() {
+    return "x-page-users-list";
+  }
+
   /** @type {XRequestor} */
   _requestor;
 
@@ -25,7 +29,7 @@ export default class XPageUsersList extends HTMLElement {
     this.innerHTML = "";
 
     this.append(
-      pageStyles(this),
+      pageStyles(this.constructor.Tag),
       (this._requestor = createElementWithObject(XRequestor, {}, [
         createElementWithObject(
           XPanel,
@@ -107,4 +111,4 @@ export default class XPageUsersList extends HTMLElement {
   }
 }
 
-customElements.define("x-page-users-list", XPageUsersList);
+customElements.define(XPageUsersList.Tag, XPageUsersList);

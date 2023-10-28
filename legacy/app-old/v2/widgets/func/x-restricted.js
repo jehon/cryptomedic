@@ -1,11 +1,15 @@
 import { createElementWithTag } from "../../js/custom-element.js";
-import { onSession, getAuthorized } from "../../js/session.js";
+import { getAuthorized, onSession } from "../../js/session.js";
 import { getPanelStyles } from "../style/x-panel.js";
 
 /**
  * Slot[]: content
  */
 export default class XRestricted extends HTMLElement {
+  static get Tag() {
+    return "x-restricted";
+  }
+
   static get observedAttributes() {
     return ["restricted-by", "inverted"];
   }
@@ -17,7 +21,7 @@ export default class XRestricted extends HTMLElement {
 
     this.attachShadow({ mode: "open" });
     this.shadowRoot.append(
-      getPanelStyles(this),
+      getPanelStyles(this.constructor.Tag),
       createElementWithTag(
         "style",
         {},
@@ -73,4 +77,4 @@ export default class XRestricted extends HTMLElement {
   }
 }
 
-window.customElements.define("x-restricted", XRestricted);
+window.customElements.define(XRestricted.Tag, XRestricted);

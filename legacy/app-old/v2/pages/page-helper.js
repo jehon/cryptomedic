@@ -1,18 +1,15 @@
-import {
-  createElementWithTag,
-  getHTMLNameOfClass
-} from "../js/custom-element.js";
+import { createElementWithTag } from "../js/custom-element.js";
 
 /**
- * @param {HTMLElement} el as the basis of the styling
+ * @param {string} tag as the basis of the styling
  * @returns {HTMLElement} with the content
  */
-export default function pageStyles(el) {
+export default function pageStyles(tag) {
   return createElementWithTag(
     "style",
     {},
     `
-        ${getHTMLNameOfClass(el)} {
+        ${tag} {
             display: block;
         }
     `

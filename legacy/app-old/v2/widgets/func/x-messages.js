@@ -12,11 +12,15 @@ import { getPanelStyles } from "../style/x-panel.js";
  * Slot[]: content
  */
 export default class XMessages extends HTMLElement {
+  static get Tag() {
+    return "x-messages";
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
     this.shadowRoot.append(
-      getPanelStyles(this, true),
+      getPanelStyles(this.constructor.Tag, true),
       createElementWithTag(
         "style",
         {},
@@ -68,4 +72,4 @@ export default class XMessages extends HTMLElement {
   }
 }
 
-customElements.define("x-messages", XMessages);
+customElements.define(XMessages.Tag, XMessages);

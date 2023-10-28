@@ -1,22 +1,21 @@
 import axios from "../../../../built/axios.js";
 axios.defaults.timeout = 30 * 1000;
 
-import { setSession } from "../../js/session.js";
 import { routeToLogin } from "../../js/router.js";
+import { setSession } from "../../js/session.js";
 
+import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
+import nullify from "../../../../../src/utils/nullify.js";
 import {
   createElementsFromHTML,
   createElementWithObject,
-  createElementWithTag,
-  getHTMLNameOfClass
+  createElementWithTag
 } from "../../js/custom-element.js";
-import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
-import XLabel from "../style/x-label.js";
-import nullify from "../../../../../src/utils/nullify.js";
 import {
   overlayAcknowledge,
   overlayWaiting
 } from "../../js/overlay-builder.js";
+import XLabel from "../style/x-label.js";
 
 import { TransportRequestError } from "../../../../../src/utils/exceptions.js";
 export { TransportRequestError } from "../../../../../src/utils/exceptions.js";
@@ -55,6 +54,10 @@ export class ServerRequestError extends Error {
  *   < running, erroneous
  */
 export default class XRequestor extends HTMLElement {
+  static get Tag() {
+    return "x-requestor";
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -63,7 +66,7 @@ export default class XRequestor extends HTMLElement {
         "style",
         {},
         `
-      :host(${getHTMLNameOfClass(this)}) {
+      :host(${this.constructor.Tag}) {
           display: flex;
           flex-direction: column;
       `
@@ -232,7 +235,7 @@ export default class XRequestor extends HTMLElement {
   }
 }
 
-customElements.define("x-requestor", XRequestor);
+customElements.define(XRequestor.Tag, XRequestor);
 
 /**
  * Build the request options for request where 'allowed' return code is not an error

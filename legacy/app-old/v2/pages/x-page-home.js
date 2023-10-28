@@ -1,21 +1,22 @@
 import "./blocks/x-patient-by-reference.js";
 
+import { icons } from "../../../../src/config.js";
 import {
   createElementsFromHTML,
   createElementWithObject,
   createElementWithTag
 } from "../js/custom-element.js";
 import { toAttributeCase } from "../js/string-utils.js";
-import { icons } from "../../../../src/config.js";
 
-import XPatientByReference from "./blocks/x-patient-by-reference.js";
+import XButtons from "../widgets/func/x-buttons.js";
+import XRestricted from "../widgets/func/x-restricted.js";
+import XButton from "../widgets/style/x-button.js";
 import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XPanel from "../widgets/style/x-panel.js";
-import XButtons from "../widgets/func/x-buttons.js";
-import XButton from "../widgets/style/x-button.js";
-import XRestricted from "../widgets/func/x-restricted.js";
+import XPatientByReference from "./blocks/x-patient-by-reference.js";
 
 import { getRouteToCreateReference, getRouteToReport } from "../js/router.js";
+import pageStyles from "./page-helper.js";
 import {
   REPORT_ACTIVITY,
   REPORT_CASH_REGISTER,
@@ -25,7 +26,6 @@ import {
   REPORT_SURGICAL,
   REPORT_SURGICAL_SUGGESTED
 } from "./x-page-reports.js";
-import pageStyles from "./page-helper.js";
 
 /**
  * @param {object} options to generate the XGroupPanel
@@ -93,10 +93,14 @@ function createMenu({
  *
  */
 export default class XPageHome extends HTMLElement {
+  static get Tag() {
+    return "x-page-home";
+  }
+
   constructor() {
     super();
     this.append(
-      pageStyles(this),
+      pageStyles(this.constructor.Tag),
       createElementWithTag(
         "style",
         {},
@@ -283,4 +287,4 @@ Thanks
   }
 }
 
-customElements.define("x-page-home", XPageHome);
+customElements.define(XPageHome.Tag, XPageHome);

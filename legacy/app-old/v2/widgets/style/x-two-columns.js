@@ -2,13 +2,17 @@ import { createElementWithTag } from "../../js/custom-element.js";
 import { getPanelStyles } from "./x-panel.js";
 
 export default class XTwoColumns extends HTMLElement {
+  static get Tag() {
+    return "x-two-columns";
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
 
     this.shadowRoot.innerHTML = "";
     this.shadowRoot.append(
-      getPanelStyles(this),
+      getPanelStyles(this.constructor.Tag),
       createElementWithTag(
         "style",
         {},
@@ -50,4 +54,4 @@ export default class XTwoColumns extends HTMLElement {
   }
 }
 
-customElements.define("x-two-columns", XTwoColumns);
+customElements.define(XTwoColumns.Tag, XTwoColumns);

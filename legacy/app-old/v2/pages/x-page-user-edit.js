@@ -2,17 +2,17 @@ import {
   createElementWithObject,
   createElementWithTag
 } from "../js/custom-element.js";
-import { setRoute, getRoute, routes } from "../js/router.js";
 import getInputObject, { TYPES } from "../js/getInput.js";
+import { overlayAcknowledge } from "../js/overlay-builder.js";
+import { getRoute, routes, setRoute } from "../js/router.js";
 import { usersCrud } from "../widgets/func/requests-admin.js";
+import XButtons from "../widgets/func/x-buttons.js";
 import XForm from "../widgets/func/x-form.js";
 import XRequestor from "../widgets/func/x-requestor.js";
 import XButton from "../widgets/style/x-button.js";
-import XButtons from "../widgets/func/x-buttons.js";
 import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XLabel from "../widgets/style/x-label.js";
 import XPanel from "../widgets/style/x-panel.js";
-import { overlayAcknowledge } from "../js/overlay-builder.js";
 import pageStyles from "./page-helper.js";
 
 /**
@@ -20,6 +20,10 @@ import pageStyles from "./page-helper.js";
  * - uid: the id of the user where to change the password
  */
 export default class XPageUserEdit extends HTMLElement {
+  static get Tag() {
+    return "x-page-user-edit";
+  }
+
   /** @type {number} */
   uid;
 
@@ -36,7 +40,7 @@ export default class XPageUserEdit extends HTMLElement {
     super();
     this.innerHTML = "";
     this.append(
-      pageStyles(this),
+      pageStyles(this.constructor.Tag),
       createElementWithTag("css-inherit"),
       createElementWithTag(
         "style",
@@ -141,4 +145,4 @@ export default class XPageUserEdit extends HTMLElement {
   }
 }
 
-customElements.define("x-page-user-edit", XPageUserEdit);
+customElements.define(XPageUserEdit.Tag, XPageUserEdit);

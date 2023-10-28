@@ -1,24 +1,28 @@
-import "./style/x-button.js";
-import { routeToLogin } from "../js/router.js";
-import { onSession, getUsername, setSession } from "../js/session.js";
-import XRequestor from "./func/x-requestor.js";
-import { getPanelStyles } from "./style/x-panel.js";
 import {
   createElementWithObject,
   createElementWithTag
 } from "../js/custom-element.js";
-import XButton from "./style/x-button.js";
+import { routeToLogin } from "../js/router.js";
+import { getUsername, onSession, setSession } from "../js/session.js";
 import { logoutBuilder } from "./func/requests-authenticator.js";
+import XRequestor from "./func/x-requestor.js";
+import "./style/x-button.js";
+import XButton from "./style/x-button.js";
+import { getPanelStyles } from "./style/x-panel.js";
 
 const user = Symbol("user");
 const logout = Symbol("logout");
 const requestor = Symbol("requestor");
 
 export default class XUserStatus extends HTMLElement {
+  static get Tag() {
+    return "x-user-status";
+  }
+
   connectedCallback() {
     this.innerHTML = "";
     this.append(
-      getPanelStyles(this, true),
+      getPanelStyles(this.constructor.Tag, true),
       (this[logout] = createElementWithObject(
         XButton,
         { id: "logout", icon: "logout", discrete: true },
@@ -58,4 +62,4 @@ export default class XUserStatus extends HTMLElement {
   }
 }
 
-customElements.define("x-user-status", XUserStatus);
+customElements.define(XUserStatus.Tag, XUserStatus);

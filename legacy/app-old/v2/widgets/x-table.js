@@ -3,10 +3,10 @@ import {
   createElementWithTag,
   enrichObject
 } from "../js/custom-element.js";
-import XOverlay from "./func/x-overlay.js";
-import XPanel from "./style/x-panel.js";
-import XIoBoolean from "./io/x-io-boolean.js";
 import { getFloatFrom } from "../js/number-utils.js";
+import XOverlay from "./func/x-overlay.js";
+import XIoBoolean from "./io/x-io-boolean.js";
+import XPanel from "./style/x-panel.js";
 
 //
 // Idea to reverse it (statistical report): https://stackoverflow.com/a/44092580/1954789
@@ -60,6 +60,10 @@ const BODY = "body";
  * TODO: addBefore(), addAfter() => first/last column or head/foot ?
  */
 export default class XTable extends HTMLElement {
+  static get Tag() {
+    return "x-table";
+  }
+
   static MACROS = {
     sum: (col) => col.reduce((prev, val) => prev + getFloatFrom(val), 0),
     count: (col) => col.reduce((prev, val) => prev + (val ? 1 : 0), 0),
@@ -112,8 +116,7 @@ export default class XTable extends HTMLElement {
 
     this.innerHTML = "";
     this.append(
-      // createElementWithTag('css-inherit'),
-      // getPanelStyles(this, true),
+      // getPanelStyles(this.constructor.Tag, true),
       (this._overlay = createElementWithObject(XOverlay, {}, [
         createElementWithObject(XPanel, { slot: "overlay" }, [
           (this._overlayMsg = createElementWithTag("div"))
@@ -521,4 +524,4 @@ export default class XTable extends HTMLElement {
   }
 }
 
-customElements.define("x-table", XTable);
+customElements.define(XTable.Tag, XTable);

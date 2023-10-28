@@ -2,23 +2,27 @@ import {
   createElementWithObject,
   createElementWithTag
 } from "../js/custom-element.js";
+import { overlayAcknowledge } from "../js/overlay-builder.js";
 import { getRoute, routes, setRoute } from "../js/router.js";
+import { usersCrud } from "../widgets/func/requests-admin.js";
+import XButtons from "../widgets/func/x-buttons.js";
 import XForm from "../widgets/func/x-form.js";
 import XRequestor from "../widgets/func/x-requestor.js";
 import XButton from "../widgets/style/x-button.js";
-import XButtons from "../widgets/func/x-buttons.js";
 import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XLabel from "../widgets/style/x-label.js";
 import XPanel, { getPanelStyles } from "../widgets/style/x-panel.js";
-import { overlayAcknowledge } from "../js/overlay-builder.js";
 import pageStyles from "./page-helper.js";
-import { usersCrud } from "../widgets/func/requests-admin.js";
 
 /**
  * attributes:
  * - uid: the id of the user where to change the password
  */
 export default class XPageUserPassword extends HTMLElement {
+  static get Tag() {
+    return "x-page-user-password";
+  }
+
   /** @type {XRequestor} */
   _requestor;
 
@@ -33,9 +37,9 @@ export default class XPageUserPassword extends HTMLElement {
 
     this.innerHTML = "";
     this.append(
-      pageStyles(this),
+      pageStyles(this.constructor.Tag),
       createElementWithTag("css-inherit"),
-      getPanelStyles(this),
+      getPanelStyles(this.constructor.Tag),
       createElementWithObject(XPanel, {}, [
         createElementWithObject(XGroupPanel, { title: "Set the password" }, [
           (this._requestor = createElementWithObject(XRequestor, {}, [
@@ -117,4 +121,4 @@ export default class XPageUserPassword extends HTMLElement {
   }
 }
 
-customElements.define("x-page-user-password", XPageUserPassword);
+customElements.define(XPageUserPassword.Tag, XPageUserPassword);

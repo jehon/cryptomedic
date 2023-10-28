@@ -5,18 +5,6 @@ import { toAttributeCase } from "./string-utils.js";
  */
 
 /**
- * @param {(new() => HTMLElement)|HTMLElement} cls to be analysed
- * @returns {string} as the class name
- */
-export function getHTMLNameOfClass(cls) {
-  if (cls instanceof HTMLElement) {
-    cls = /** @type {new () => HTMLElement} */ (cls.constructor);
-  }
-
-  return toAttributeCase(cls.name);
-}
-
-/**
  * @template {HTMLElement} X
  * @param {new() => X} tag to be created
  * @param {Parameters} attributes to be set

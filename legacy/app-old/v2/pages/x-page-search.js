@@ -1,25 +1,29 @@
+import "../../v1/elements/x-write-list.js";
 import {
   createElementsFromHTML,
   createElementWithObject,
   createElementWithTag
 } from "../js/custom-element.js";
 import { getRouteToFolderPatient, setRoute } from "../js/router.js";
+import { patientSearchBuilder } from "../widgets/func/requests-folder.js";
+import XButtons from "../widgets/func/x-buttons.js";
 import XForm from "../widgets/func/x-form.js";
 import XRequestor from "../widgets/func/x-requestor.js";
-import XTable from "../widgets/x-table.js";
 import XButton from "../widgets/style/x-button.js";
-import XButtons from "../widgets/func/x-buttons.js";
 import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XPanel from "../widgets/style/x-panel.js";
-import "../../v1/elements/x-write-list.js";
+import XTable from "../widgets/x-table.js";
 import pageStyles from "./page-helper.js";
-import { patientSearchBuilder } from "../widgets/func/requests-folder.js";
 
 export default class XPageSearch extends HTMLElement {
+  static get Tag() {
+    return "x-page-search";
+  }
+
   constructor() {
     super();
     this.append(
-      pageStyles(this),
+      pageStyles(this.constructor.Tag),
       createElementWithTag("css-inherit"),
       createElementWithTag(
         "style",
@@ -158,4 +162,4 @@ export default class XPageSearch extends HTMLElement {
   }
 }
 
-customElements.define("x-page-search", XPageSearch);
+customElements.define(XPageSearch.Tag, XPageSearch);

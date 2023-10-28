@@ -6,6 +6,10 @@ import { getPanelStyles } from "./x-panel.js";
  * Slot[]: content
  */
 export default class XGroupPanel extends HTMLElement {
+  static get Tag() {
+    return "x-group-panel";
+  }
+
   static get observedAttributes() {
     return ["title"];
   }
@@ -14,7 +18,7 @@ export default class XGroupPanel extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     this.shadowRoot.append(
-      getPanelStyles(this),
+      getPanelStyles(this.constructor.Tag),
       createElementWithTag(
         "style",
         {},
@@ -107,4 +111,4 @@ export default class XGroupPanel extends HTMLElement {
   }
 }
 
-customElements.define("x-group-panel", XGroupPanel);
+customElements.define(XGroupPanel.Tag, XGroupPanel);

@@ -6,11 +6,15 @@ import { getPanelStyles } from "../style/x-panel.js";
  * Slot[]: content
  */
 export default class XButtons extends HTMLElement {
+  static get Tag() {
+    return "x-buttons";
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
     this.shadowRoot.append(
-      getPanelStyles(this, true),
+      getPanelStyles(this.constructor.Tag, true),
       createElementWithTag(
         "style",
         {},
@@ -40,4 +44,4 @@ export default class XButtons extends HTMLElement {
   }
 }
 
-customElements.define("x-buttons", XButtons);
+customElements.define(XButtons.Tag, XButtons);

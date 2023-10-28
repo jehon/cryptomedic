@@ -1,16 +1,20 @@
-import XPanel, { getPanelStyles } from "../style/x-panel.js";
 import {
   createElementWithObject,
   createElementWithTag,
   isEventOutOfSlot
 } from "../../js/custom-element.js";
 import XForm from "../func/x-form.js";
+import XPanel, { getPanelStyles } from "../style/x-panel.js";
 
 /**
  * Slot[]: content to be shown in the panel
  * Slot[overlay]: overlay to be put on top when blocked
  */
 export default class XOverlay extends HTMLElement {
+  static get Tag() {
+    return "x-overlay";
+  }
+
   static get ActionFree() {
     return "x-overlay-free";
   }
@@ -22,7 +26,7 @@ export default class XOverlay extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     this.shadowRoot.append(
-      getPanelStyles(this, true),
+      getPanelStyles(this.constructor.Tag, true),
       createElementWithTag(
         "style",
         { "css-inherit-local": true },
@@ -126,4 +130,4 @@ export default class XOverlay extends HTMLElement {
   }
 }
 
-customElements.define("x-overlay", XOverlay);
+customElements.define(XOverlay.Tag, XOverlay);
