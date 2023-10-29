@@ -57,14 +57,6 @@ function align(msg: string, n: number) {
   return msg.padEnd(n);
 }
 
-function rel2abs(str: string): string {
-  return path.join(root, str);
-}
-
-function abs2rel(str: string): string {
-  return str.substring(root.length + 1);
-}
-
 // Full list of files
 const listOfFiles = new Map<string, Diff>();
 
@@ -78,7 +70,7 @@ for (const flavor of ["desktop", "mobile"]) {
       diff = new Diff();
     }
 
-    diff.runtime = abs2rel(path.join(runSubFolder, f));
+    diff.runtime = path.join(runSubFolder, f);
     listOfFiles.set(key, diff);
   });
 
@@ -91,7 +83,7 @@ for (const flavor of ["desktop", "mobile"]) {
       diff = new Diff();
     }
 
-    diff.reference = abs2rel(path.join(refSubFolder, f));
+    diff.reference = path.join(refSubFolder, f);
     listOfFiles.set(key, diff);
   });
 }
@@ -111,10 +103,8 @@ for (const [key, diff] of listOfFiles) {
       diff.message = "No run found";
     } else {
       // Generate the diffs
-      const pngReference = PNG.sync.read(
-        fs.readFileSync(rel2abs(diff.reference))
-      );
-      const pngRuntime = PNG.sync.read(fs.readFileSync(rel2abs(diff.runtime)));
+      const pngReference = PNG.sync.read(fs.readFileSync(diff.reference));
+      const pngRuntime = PNG.sync.read(fs.readFileSync(diff.runtime));
       const { width, height } = pngReference;
       const pngDifference = new PNG({ width, height });
       diff.differenceSize = Math.abs(
@@ -143,11 +133,8 @@ for (const [key, diff] of listOfFiles) {
             diff.warning = true;
             diff.message = `content - ${diff.differencePixes}`;
           }
-          diff.difference = abs2rel(path.join(differenceFolder, key));
-          fs.writeFileSync(
-            rel2abs(diff.difference),
-            PNG.sync.write(pngDifference)
-          );
+          diff.difference = path.join(differenceFolder, key);
+          fs.writeFileSync(diff.difference, PNG.sync.write(pngDifference));
         }
       }
     }
@@ -197,7 +184,7 @@ if (args.update) {
       continue;
     }
     process.stdout.write(`[update] ${key}\n`);
-    fs.copyFileSync(rel2abs(diff.runtime), rel2abs(diff.reference));
+    fs.copyFileSync(diff.runtime, diff.reference);
   }
   process.exit(success ? 0 : 1);
 }
