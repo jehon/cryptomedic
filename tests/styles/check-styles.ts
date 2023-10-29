@@ -26,6 +26,8 @@ const targetFolder = args.target;
 const differenceFolder = path.join(targetFolder, "differences");
 const stylesJSON = path.join(targetFolder, "styles-problems-list.json");
 
+console.info(`Generating relative to ${root}`);
+
 const MaxDiffs = {
   sizePercent: 0.1,
   contentPixels: 40
