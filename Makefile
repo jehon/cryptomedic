@@ -3,7 +3,7 @@
 #
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
-TMP := $(ROOT)/tmp
+TMP := tmp
 ACCEPTANCE := $(ROOT)/live-from-production
 
 # Defaults value for Dev:

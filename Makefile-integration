@@ -17,7 +17,7 @@ integration-dump:
 .PHONY: integration-clean
 clean: integration-clean
 integration-clean: integration-clean-files
-	rm -fr $(TMP)/integration
+	rm -fr "$(ROOT)/$(TMP)/integration"
 
 .PHONY: integration-clean-files
 clean: integration-clean-files

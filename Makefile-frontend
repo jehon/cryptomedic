@@ -18,13 +18,13 @@ frontend-clean: frontend-clean-files
 .PHONY: frontend-clean-files
 clean-files: frontend-clean-files
 frontend-clean-files:
-	rm -fr $(TMP)/frontend
+	rm -fr "$(ROOT)/$(TMP)/frontend"
 
-	rm -f www/index.html
-	rm -fr $(FRONTEND_PUBLISHED)
-	rm -fr $(FRONTEND_BUILD_TMP)
+	rm -f "www/index.html"
+	rm -fr "$(FRONTEND_PUBLISHED)"
+	rm -fr "$(FRONTEND_BUILD_TMP)"
 
-	rm -fr $(FRONTEND_BUILT_MARK)
+	rm -fr "$(FRONTEND_BUILT_MARK)"
 
 .PHONY: frontend-dump
 dump: frontend-dump
