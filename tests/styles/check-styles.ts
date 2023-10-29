@@ -1,26 +1,25 @@
 #!/usr/bin/env node
 
-import path from "path";
+import chalk from "chalk";
 import fs from "fs";
 import { globSync } from "glob";
+import path from "path";
 import pixelMatch from "pixelmatch";
 import { PNG } from "pngjs";
 import yargs from "yargs";
-import chalk from "chalk";
 
 export const p_ok = chalk.green(" ✓ ");
 export const p_warn = chalk.yellow(" ? ");
 export const p_ko = chalk.red("✗  ");
 
 const args = await yargs(process.argv.slice(2)).options({
-  root: { type: "string", required: true },
   references: { type: "string", required: true },
   runtime: { type: "string", required: true },
   target: { type: "string", required: true },
   update: { type: "boolean", default: false }
 }).argv;
 
-const root = args.root;
+const root = process.cwd();
 const referencesFolder = args.references;
 const runtimeFolder = args.runtime;
 const targetFolder = args.target;
