@@ -10,8 +10,8 @@ frontend: clear clean-files dc-build dc-up frontend-dump frontend-dependencies f
 .PHONY: frontend-clean
 clean: frontend-clean
 frontend-clean: frontend-clean-files
-	rm -fr node_modules
-	rm -fr $(FRONTEND_DEPENDENCIES_MARK)
+	rm -fr "$(ROOT)/node_modules"
+	rm -fr "$(ROOT)/$(FRONTEND_DEPENDENCIES_MARK)"
 
 	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 
@@ -20,9 +20,9 @@ clean-files: frontend-clean-files
 frontend-clean-files:
 	rm -fr "$(ROOT)/$(TMP)/frontend"
 
-	rm -f "www/index.html"
-	rm -fr "$(FRONTEND_PUBLISHED)"
-	rm -fr "$(FRONTEND_BUILD_TMP)"
+	rm -f "$(ROOT)/www/index.html"
+	rm -fr "$(ROOT)/$(FRONTEND_PUBLISHED)"
+	rm -fr "$(ROOT)/$(FRONTEND_BUILD_TMP)"
 
 	rm -fr "$(FRONTEND_BUILT_MARK)"
 

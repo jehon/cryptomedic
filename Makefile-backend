@@ -7,14 +7,14 @@ backend: clear clean-files dc-build dc-up backend-dump backend-dependencies back
 
 .PHONY: backend-clean
 backend-clean: backend-clean-files
-	rm -fr "$(BACKEND_ROOT)/vendor"
-	rm -fr "$(BACKEND_DEPENDENCIES_MARK)"
+	rm -fr "$(ROOT)/$(BACKEND_ROOT)/vendor"
+	rm -fr "$(ROOT)/$(BACKEND_DEPENDENCIES_MARK)"
 
 .PHONY: backend-clean-files
 clean-files: backend-clean-files
 backend-clean-files:
-	rm -fr "$(BACKEND_ROOT)/bootstrap/cache"
-	rm -fr "$(BACKEND_ROOT)/storage"
+	rm -fr "$(ROOT)/$(BACKEND_ROOT)/bootstrap/cache"
+	rm -fr "$(ROOT)/$(BACKEND_ROOT)/storage"
 	rm -fr "$(ROOT)/$(TMP)/backend"
 
 .PHONY: backend-dump

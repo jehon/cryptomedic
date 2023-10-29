@@ -22,7 +22,7 @@ integration-clean: integration-clean-files
 .PHONY: integration-clean-files
 clean: integration-clean-files
 integration-clean-files:
-	rm -fr live/
+	rm -fr "$(ROOT)/live/"
 	jh-kill-by-port 9515 || true
 # pkill chromedriver || true
 

@@ -4,7 +4,7 @@
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 TMP := tmp
-ACCEPTANCE := $(ROOT)/live-from-production
+ACCEPTANCE := live-from-production
 
 # Defaults value for Dev:
 ## For patching, we need a ref to the local server
@@ -75,14 +75,14 @@ cls:
 
 clean: stop clean-files
 #	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
-	rm -fr tmp
+	rm -fr "$(ROOT)/tmp"
 
 clean-files:
 	find . -name "*.log" -delete
 
-	rm -f .ovhconfig
-	rm -f www/built/backup
-	rm -f www/built/browsers.json
+	rm -f "$(ROOT)/.ovhconfig"
+	rm -f "$(ROOT)/www/built/backup"
+	rm -f "$(ROOT)/www/built/browsers.json"
 
 dc-build:
 	docker compose build
@@ -134,12 +134,12 @@ $(ACCEPTANCE)/.done:
 	touch "$@"
 
 acceptance-refresh:
-	rm -f "$(ACCEPTANCE)/.done"
+	rm -f "$(ROOT)/$(ACCEPTANCE)/.done"
 # Do not depend but force running
-	make "$(ACCEPTANCE)/.done"
+	make "$(ROOT)/$(ACCEPTANCE)/.done"
 
 acceptance-clean:
-	rm -f "$(ACCEPTANCE)/"
+	rm -f "$(ROOT)/$(ACCEPTANCE)/"
 
 #
 # Deploy command
