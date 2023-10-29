@@ -6,8 +6,6 @@ set -o pipefail
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
 docker compose run --rm --quiet-pull -T \
-    --volume "$(pwd):/workdir" \
-    --workdir /workdir \
     --user "$(id -u)" \
     node \
     node --max-old-space-size=4096 \
