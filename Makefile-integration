@@ -96,8 +96,7 @@ integration-update-references-styles: \
 .PHONY: integration-update-references-styles-calcul
 integration-update-references-styles-calcul:
 	bin/cr-node node_modules/.bin/tsx tests/styles/check-styles.ts \
-		--root="$(ROOT)" \
-		--references="$(ROOT)/tests/styles/references/" \
+		--references="tests/styles/references/" \
 		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
 		--target="$(INTEGRATION_TEST_TMP)/styles" \
 		--update
