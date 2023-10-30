@@ -3,21 +3,31 @@
 import chalk from "chalk";
 import fs from "fs";
 import { globSync } from "glob";
+import assert from "node:assert/strict";
+import { parseArgs } from "node:util";
 import path from "path";
 import pixelMatch from "pixelmatch";
 import { PNG } from "pngjs";
-import yargs from "yargs";
 
 export const p_ok = chalk.green(" ✓ ");
 export const p_warn = chalk.yellow(" ? ");
 export const p_ko = chalk.red("✗  ");
 
-const args = await yargs(process.argv.slice(2)).options({
-  references: { type: "string", required: true },
-  runtime: { type: "string", required: true },
-  target: { type: "string", required: true },
-  update: { type: "boolean", default: false }
-}).argv;
+const args = parseArgs({
+  options: {
+    references: {
+      type: "string"
+    },
+    runtime: {
+      type: "string"
+    },
+    target: { type: "string" },
+    update: { type: "boolean" }
+  }
+}).values;
+assert(args.references, "You must specify a runtime: --reference");
+assert(args.runtime, "You must specify a runtime: --runtime");
+assert(args.target, "You must specify a target: --target");
 
 const root = process.cwd();
 const referencesFolder = args.references;
