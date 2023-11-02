@@ -30,7 +30,7 @@ import { FolderUpdateCallback } from "./blocs/file-panel";
 
 export default function FolderElement({
   folder: givenFolder,
-  selectedUid: selectedUid
+  selectedUid
 }: {
   folder: Folder;
   selectedUid?: string;
