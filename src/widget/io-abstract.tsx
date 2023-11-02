@@ -9,6 +9,7 @@ export type IOParams<T> = {
   note?: boolean;
   left?: boolean;
   right?: boolean;
+  variable?: boolean;
 };
 
 export default function IOAbstract<T>(
@@ -29,6 +30,7 @@ export default function IOAbstract<T>(
     note: false,
     left: false,
     right: false,
+    variable: false,
     ...props
   };
   renderInput = renderInput || renderOutput;
@@ -47,7 +49,7 @@ export default function IOAbstract<T>(
           __html: props.label + (props.required ? "*" : "")
         }}
       ></label>
-      <div className="content">
+      <div className="content" data-variable={props.variable ? "variable" : ""}>
         {props.edit
           ? renderOutput(props.value)
           : renderInput(props.value, props.required)}
