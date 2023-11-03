@@ -21,7 +21,7 @@
     hyphens: auto;
   }
 
-  & > div.content {
+  & > .content {
     flex-grow: 1;
     text-align: left;
     color: green;
