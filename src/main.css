@@ -19,6 +19,13 @@
   }
 }
 
+body[screenshot="e2e"] {
+  [variable],
+  [data-variable="variable"] {
+    display: none;
+  }
+}
+
 /* body {
   scroll-behavior: smooth;
 } */

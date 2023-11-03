@@ -1,7 +1,5 @@
 import { crReady } from "../e2e/helpers/cr.js";
 
-const SHADOW_SELECTOR = "[variable], [data-variable=variable]";
-
 Cypress.Commands.add("crCompareSnapshot", (name = "") => {
   crReady();
 
@@ -26,17 +24,8 @@ Cypress.Commands.add("crCompareSnapshot", (name = "") => {
     .concat(Cypress.spec.name.replace(".js", ""))
     .concat(name ? "-" + name : ""); // Take a screenshot and copy to baseline if it does not exist
 
-  const setStyle = (style = "") => {
-    cy.document().then((el) =>
-      el
-        .querySelectorAll(SHADOW_SELECTOR)
-        .forEach((el) => (el.style.display = style))
-    );
-  };
-
   // Hide those
-  setStyle("none");
+  cy.document().its("body").invoke("attr", "screenshot", "e2e");
   cy.screenshot(testName);
-  // Reset those
-  setStyle();
+  cy.document().its("body").invoke("attr", "screenshot", "");
 });
