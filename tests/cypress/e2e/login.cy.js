@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import { crApiLogin } from "./helpers/cr-api.js";
 import { crGo, crLoginInBackground, crPage } from "./helpers/cr.js";
 import { guiHashStartWith } from "./helpers/gui.js";

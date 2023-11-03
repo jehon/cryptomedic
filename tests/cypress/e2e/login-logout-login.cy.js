@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import { crGo, crPage } from "./helpers/cr.js";
 import { guiHashStartWith } from "./helpers/gui.js";
 
