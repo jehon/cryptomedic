@@ -25,7 +25,18 @@ Cypress.Commands.add("crCompareSnapshot", (name = "") => {
   var testName = ""
     .concat(Cypress.spec.name.replace(".js", ""))
     .concat(name ? "-" + name : ""); // Take a screenshot and copy to baseline if it does not exist
-  cy.screenshot(testName, {
-    blackout: [SHADOW_SELECTOR]
-  });
+
+  const setStyle = (style = "") => {
+    cy.document().then((el) =>
+      el
+        .querySelectorAll(SHADOW_SELECTOR)
+        .forEach((el) => (el.style.display = style))
+    );
+  };
+
+  // Hide those
+  setStyle("none");
+  cy.screenshot(testName);
+  // Reset those
+  setStyle();
 });
