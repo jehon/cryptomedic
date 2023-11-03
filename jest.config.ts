@@ -9,16 +9,10 @@ const config: Config = {
   rootDir: "src",
   showSeed: true,
   extensionsToTreatAsEsm: [...defaults.extensionsToTreatAsEsm, ".ts"],
-  // preset: "ts-jest/presets/default-esm"
-  preset: "ts-jest/presets/js-with-ts"
-  // transform: {
-  //   "\\.[jt]sx?$": [
-  //     "ts-jest",
-  //     {
-  //       useESM: true
-  //     }
-  //   ]
-  // }
+  preset: "ts-jest/presets/js-with-ts",
+  moduleNameMapper: {
+    "\\.css$": "identity-obj-proxy"
+  }
 };
 
 export default config;
