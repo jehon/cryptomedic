@@ -1,5 +1,7 @@
 import { crReady } from "../e2e/helpers/cr.js";
 
+const SHADOW_SELECTOR = "[variable], [data-variable=variable]";
+
 Cypress.Commands.add("crCompareSnapshot", (name = "") => {
   crReady();
 
@@ -24,6 +26,6 @@ Cypress.Commands.add("crCompareSnapshot", (name = "") => {
     .concat(Cypress.spec.name.replace(".js", ""))
     .concat(name ? "-" + name : ""); // Take a screenshot and copy to baseline if it does not exist
   cy.screenshot(testName, {
-    blackout: ["[variable]", "[data-variable=variable]"]
+    blackout: [SHADOW_SELECTOR]
   });
 });
