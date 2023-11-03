@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./io.css";
+
 export type IOParams<T> = {
   label: string;
   value: T;
