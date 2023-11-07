@@ -33,7 +33,7 @@
     "@commitlint/config-conventional": "18.1.0",
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.0.0",
-    "@types/node": "20.8.10",
+    "@types/node": "20.9.0",
     "@types/pixelmatch": "5.2.6",
     "@types/pngjs": "6.0.4",
     "@types/react": "18.2.35",
