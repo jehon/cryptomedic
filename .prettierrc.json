@@ -1,3 +1,7 @@
 {
+  "plugins": [
+    "@prettier/plugin-php",
+    "prettier-plugin-sql"
+  ],
   "trailingComma": "none"
 }
