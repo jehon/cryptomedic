@@ -1,1 +1,2 @@
-ALTER TABLE `appointments` DROP `date`;
+ALTER TABLE `appointments`
+DROP `date`;

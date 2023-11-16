@@ -3,5 +3,13 @@
     "@prettier/plugin-php",
     "prettier-plugin-sql"
   ],
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "overrides": [
+    {
+      "files": "*.sql",
+      "options": {
+        "keywordCase": "upper"
+      }
+    }
+  ]
 }

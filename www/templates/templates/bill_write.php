@@ -1,4 +1,4 @@
 <?php
-  t::setDefaultOption("writeOnly", true);
+t::setDefaultOption("writeOnly", true);
 
-  require_once(str_replace('_write', '_fiche', __FILE__ ));
+require_once str_replace("_write", "_fiche", __FILE__);

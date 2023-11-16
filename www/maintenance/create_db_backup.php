@@ -1,18 +1,18 @@
 <?php
 
-require_once(__DIR__ . "/lib/config.php");
-require_once(__DIR__ . "/lib/protect.php");
+require_once __DIR__ . "/lib/config.php";
+require_once __DIR__ . "/lib/protect.php";
 
 echo "<pre>";
 
-$date = date('Y-m-d_H-i-s');
+$date = date("Y-m-d_H-i-s");
 
 /**
  * Prepare the file
  */
-$dir = $myconfig['folders']['backups'];
+$dir = $myconfig["folders"]["backups"];
 echo "Creating folder $dir\n";
-if (! is_dir($dir)) {
+if (!is_dir($dir)) {
     mkdir($dir, 0777) || die("Could not create backup folder $dir");
     chmod($dir, 0777) || die("Could not chmod backup folder $dir");
 }
@@ -22,7 +22,7 @@ echo "Creating file $backup_file\n";
 if (file_exists($backup_file)) {
     unlink($backup_file);
 }
-$fileHandler = fopen($backup_file, 'w+');
+$fileHandler = fopen($backup_file, "w+");
 chmod($backup_file, 0666) || die("Could not chmod backup file $backup_file");
 
 echo "Writing headers\n";
@@ -49,32 +49,49 @@ echo "\n";
 echo "Getting tables\n";
 $result = $db->runPrepareStatement("SHOW TABLES");
 $tables = array_map(fn($a) => array_pop($a), $result);
-usort($tables, function($a, $b) {
+usort($tables, function ($a, $b) {
     $A_BEFORE_B = -1; # a < b = -1
     $A_AFTER_B = 1; # a > b = 1
-
-    if ($a == $b) return 0;
+    if ($a == $b) {
+        return 0;
+    }
 
     # First one:
-    if ($a == "patients") return $A_BEFORE_B;
-    if ($b == "patients") return $A_AFTER_B;
+    if ($a == "patients") {
+        return $A_BEFORE_B;
+    }
+    if ($b == "patients") {
+        return $A_AFTER_B;
+    }
 
     # Next one:
-    if ($a == "prices") return $A_BEFORE_B;
-    if ($b == "prices") return $A_AFTER_B;
+    if ($a == "prices") {
+        return $A_BEFORE_B;
+    }
+    if ($b == "prices") {
+        return $A_AFTER_B;
+    }
 
     # Next one:
-    if ($a == "bills") return $A_BEFORE_B;
-    if ($b == "bills") return $A_AFTER_B;
+    if ($a == "bills") {
+        return $A_BEFORE_B;
+    }
+    if ($b == "bills") {
+        return $A_AFTER_B;
+    }
 
     # Last one:
-    if ($a == "consults") return $A_AFTER_B;
-    if ($b == "consults") return $A_BEFORE_B;
+    if ($a == "consults") {
+        return $A_AFTER_B;
+    }
+    if ($b == "consults") {
+        return $A_BEFORE_B;
+    }
 
     # Order naturally the rest
-    return ($a < $b) ? $A_BEFORE_B : $A_AFTER_B;
+    return $a < $b ? $A_BEFORE_B : $A_AFTER_B;
 });
-echo "Found: " . join(', ', $tables) . "\n";
+echo "Found: " . join(", ", $tables) . "\n";
 
 echo "\n";
 echo "Saving data:"; # newline added in for loop
@@ -113,10 +130,13 @@ foreach ($tables as $table) {
     $create_sql = array_values($result)[1];
 
     if (isset($result["View"])) {
-        echo(" (view)");
+        echo " (view)";
 
         # CREATE ALGORITHM=UNDEFINED DEFINER=`cryptomekpmain`@`%` SQL SECURITY DEFINER VIEW => CREATE VIEW
-        fwrite($fileHandler, preg_replace('/CREATE .* VIEW/','CREATE VIEW', $create_sql) . ";\n");
+        fwrite(
+            $fileHandler,
+            preg_replace("/CREATE .* VIEW/", "CREATE VIEW", $create_sql) . ";\n"
+        );
         fwrite($fileHandler, "\n");
 
         # We don't save views
@@ -136,20 +156,20 @@ foreach ($tables as $table) {
             $keys = "";
             $vals = "";
 
-            foreach($row as $key => $val) {
-                $keys .= '`' . $key . '`,';
+            foreach ($row as $key => $val) {
+                $keys .= "`" . $key . "`,";
                 if ($val === null) {
-                    $vals .= 'NULL,';
+                    $vals .= "NULL,";
                 } else {
-                    $vals .= $db->pdo->quote($val) . ',';
+                    $vals .= $db->pdo->quote($val) . ",";
                 }
             }
             $sqlScript =
-                "INSERT INTO $table ("
-                . rtrim($keys, ',')
-                . ") VALUES ("
-                . rtrim($vals, ',')
-                . "); \n";
+                "INSERT INTO $table (" .
+                rtrim($keys, ",") .
+                ") VALUES (" .
+                rtrim($vals, ",") .
+                "); \n";
             fwrite($fileHandler, $sqlScript);
         }
     } finally {

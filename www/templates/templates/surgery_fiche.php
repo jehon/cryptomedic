@@ -1,6 +1,5 @@
 <?php
-t::setDefaultOption("baseExpression", "currentFile().");
-?>
+t::setDefaultOption("baseExpression", "currentFile()."); ?>
 <div ng-if='errors.dateInTheFuture'>
 	<div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
 </div>

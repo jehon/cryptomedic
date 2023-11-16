@@ -1,4 +1,4 @@
-<?php ?><x-group-panel title='General Data'>
+<x-group-panel title='General Data'>
 	<?php (new t("date"))->tr2("Date")->p(); ?>
 	<?php (new t("examiner"))->tr2("Examiner Name")->p(); ?>
 	<?php (new t("center"))->tr2("Center")->p(); ?>
@@ -24,7 +24,9 @@
 		<x-fff-height-sd slot='stat' class='not-mode-write'></x-fff-height-sd>
 	</x-fff-field>
 
-	<?php (new t("brachial_circumference_cm"))->tr2("Brachial circumference (cm)")->p(); ?>
+	<?php (new t("brachial_circumference_cm"))
+     ->tr2("Brachial circumference (cm)")
+     ->p(); ?>
 
 	<x-fff-field class='not-mode-write' field='height_cm' label='Weight/Height Ratio'>
 		<x-fff-wh></x-fff-wh>
