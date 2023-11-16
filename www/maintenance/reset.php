@@ -3,21 +3,22 @@ ob_start();
 http_response_code(500);
 
 try {
-	echo "<pre>";
+    echo "<pre>";
 
     echo "\nRunning...\n";
 
-    require_once(__DIR__ . "/lib/config.php");
-    require_once(__DIR__ . "/lib/protect.php");
+    require_once __DIR__ . "/lib/config.php";
+    require_once __DIR__ . "/lib/protect.php";
 
     global $myconfig;
 
-    function deleteRecursively($filepath) {
+    function deleteRecursively($filepath)
+    {
         if (is_dir($filepath)) {
-            if (substr($filepath, strlen($filepath) - 1, 1) != '/') {
-                $filepath .= '/';
+            if (substr($filepath, strlen($filepath) - 1, 1) != "/") {
+                $filepath .= "/";
             }
-            $files = glob($filepath . '*', GLOB_MARK);
+            $files = glob($filepath . "*", GLOB_MARK);
             foreach ($files as $file) {
                 if (is_dir($file)) {
                     deleteRecursively($file);
@@ -29,7 +30,8 @@ try {
         rmdir($filepath);
     }
 
-    function deleteFileFromGlob($glob) {
+    function deleteFileFromGlob($glob)
+    {
         $files = glob($glob);
         foreach ($files as $file) {
             if (is_dir($file)) {
@@ -43,9 +45,10 @@ try {
         }
     }
 
-    function ensureFolderEmpty($path) {
+    function ensureFolderEmpty($path)
+    {
         $target = constant("CR_PRJ_ROOT") . "/" . $path;
-        echo "ensureFolderEmpty: $path ($target)\n"; 
+        echo "ensureFolderEmpty: $path ($target)\n";
         if (!is_dir($target)) {
             mkdir($target);
         } else {

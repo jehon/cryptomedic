@@ -1,6 +1,5 @@
 <?php
-t::setDefaultOption("baseExpression", "currentFile().");
-?>
+t::setDefaultOption("baseExpression", "currentFile()."); ?>
 <x-two-columns ng-controller='ctrl_file_appointment'>
 	<x-group-panel title='Next appointment'>
 		<x-fff-field variable label='Today' class='not-mode-read'>
