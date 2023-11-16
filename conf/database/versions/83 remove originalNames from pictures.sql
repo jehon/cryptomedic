@@ -1,2 +1,2 @@
-
-ALTER TABLE pictures DROP COLUMN OriginalName;
+ALTER TABLE pictures
+DROP COLUMN OriginalName;
