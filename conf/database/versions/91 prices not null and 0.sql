@@ -7,614 +7,614 @@ SET
 WHERE
   `socialLevelPercentage_0` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `consult_CDC_consultation_physio` = 0
 WHERE
   `consult_CDC_consultation_physio` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `consult_CDC_consultation_Bengali_Doctor` = 0
 WHERE
   `consult_CDC_consultation_Bengali_Doctor` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `consult_CDC_consultation_Doctor` = 0
 WHERE
   `consult_CDC_consultation_Doctor` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `consult_field_visit` = 0
 WHERE
   `consult_field_visit` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `consult_home_visit` = 0
 WHERE
   `consult_home_visit` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `medecine_medecine` = 0
 WHERE
   `medecine_medecine` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `medecine_calcium_30x500mg` = 0
 WHERE
   `medecine_calcium_30x500mg` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_BHKAFO_night` = 0
 WHERE
   `workshop_BHKAFO_night` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_BHKAFO_walking` = 0
 WHERE
   `workshop_BHKAFO_walking` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_UHKAFO_night` = 0
 WHERE
   `workshop_UHKAFO_night` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_UHKAFO_walking` = 0
 WHERE
   `workshop_UHKAFO_walking` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_BKAFO_night_-_plastic` = 0
 WHERE
   `workshop_BKAFO_night_-_plastic` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_BKAFO_walking` = 0
 WHERE
   `workshop_BKAFO_walking` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_KAFO_night` = 0
 WHERE
   `workshop_KAFO_night` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_UKAFO_walking` = 0
 WHERE
   `workshop_UKAFO_walking` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Knee_brace` = 0
 WHERE
   `workshop_Knee_brace` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_BAFO_night` = 0
 WHERE
   `workshop_BAFO_night` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_BAFO_walking` = 0
 WHERE
   `workshop_BAFO_walking` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_AFO_night` = 0
 WHERE
   `workshop_AFO_night` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_AFO_walking` = 0
 WHERE
   `workshop_AFO_walking` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Orthoshoes_with_bar_-_one_leg` = 0
 WHERE
   `workshop_Orthoshoes_with_bar_-_one_leg` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Orthoshoes_without_bar_-_one_leg` = 0
 WHERE
   `workshop_Orthoshoes_without_bar_-_one_leg` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_DB_splint` = 0
 WHERE
   `workshop_DB_splint` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Compensation_sole` = 0
 WHERE
   `workshop_Compensation_sole` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Arch_support` = 0
 WHERE
   `workshop_Arch_support` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Matetarsal_pade` = 0
 WHERE
   `workshop_Matetarsal_pade` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Supinator_corner` = 0
 WHERE
   `workshop_Supinator_corner` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Wirst_splint` = 0
 WHERE
   `workshop_Wirst_splint` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Hand_splint` = 0
 WHERE
   `workshop_Hand_splint` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Finger_splint` = 0
 WHERE
   `workshop_Finger_splint` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Walker_with_wheel_-_folding` = 0
 WHERE
   `workshop_Walker_with_wheel_-_folding` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Walker_with_wheel_-_non_folding` = 0
 WHERE
   `workshop_Walker_with_wheel_-_non_folding` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Crutch_a_pair_-_local` = 0
 WHERE
   `workshop_Crutch_a_pair_-_local` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Crutch_-_Stainless_steel` = 0
 WHERE
   `workshop_Crutch_-_Stainless_steel` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Wheel_chair_-_folding` = 0
 WHERE
   `workshop_Wheel_chair_-_folding` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_CP_chair_-_wooden` = 0
 WHERE
   `workshop_CP_chair_-_wooden` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_CP_standing_table_-_wooden` = 0
 WHERE
   `workshop_CP_standing_table_-_wooden` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Cervical_Collar` = 0
 WHERE
   `workshop_Cervical_Collar` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Abdominal_corset_belt` = 0
 WHERE
   `workshop_Abdominal_corset_belt` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Reparing` = 0
 WHERE
   `workshop_Reparing` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Other_orthodevice` = 0
 WHERE
   `workshop_Other_orthodevice` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_osteotomy` = 0
 WHERE
   `surgical_osteotomy` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_epiphysiodesis` = 0
 WHERE
   `surgical_epiphysiodesis` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_polio_AL` = 0
 WHERE
   `surgical_polio_AL` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_percutaneous_AL_club_foot` = 0
 WHERE
   `surgical_percutaneous_AL_club_foot` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_PMR_club_foot` = 0
 WHERE
   `surgical_PMR_club_foot` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_Burn_release` = 0
 WHERE
   `surgical_Burn_release` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_Pin_removal` = 0
 WHERE
   `surgical_Pin_removal` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_other_operation` = 0
 WHERE
   `surgical_other_operation` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `consult_give_appointment` = 0
 WHERE
   `consult_give_appointment` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `medecine_vitamineD` = 0
 WHERE
   `medecine_vitamineD` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_BHKAFO_Drop_lock_single_axis` = 0
 WHERE
   `workshop_BHKAFO_Drop_lock_single_axis` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_crutch_alumenium_-_a_pair` = 0
 WHERE
   `workshop_crutch_alumenium_-_a_pair` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_wheel_chair_china` = 0
 WHERE
   `workshop_wheel_chair_china` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_mailwalke_brace` = 0
 WHERE
   `workshop_mailwalke_brace` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_leg_truction` = 0
 WHERE
   `workshop_leg_truction` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_thoracic_brace` = 0
 WHERE
   `workshop_thoracic_brace` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_samainto_brace` = 0
 WHERE
   `workshop_samainto_brace` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_fracture_brace_-_one_leg` = 0
 WHERE
   `workshop_fracture_brace_-_one_leg` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_smo` = 0
 WHERE
   `workshop_smo` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_lifspring_afo` = 0
 WHERE
   `workshop_lifspring_afo` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_osteotomy_bi` = 0
 WHERE
   `surgical_osteotomy_bi` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_epiphysiodesis_bi` = 0
 WHERE
   `surgical_epiphysiodesis_bi` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_polio_achileus_Achileus_lenthening_bi` = 0
 WHERE
   `surgical_polio_achileus_Achileus_lenthening_bi` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_percutaneous_achil_tenotomy_bi_cmosh` = 0
 WHERE
   `surgical_percutaneous_achil_tenotomy_bi_cmosh` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_percutaneous_achil_tenotomy_uni_cdc` = 0
 WHERE
   `surgical_percutaneous_achil_tenotomy_uni_cdc` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_percutaneous_achil_tenotomy_bi_cdc` = 0
 WHERE
   `surgical_percutaneous_achil_tenotomy_bi_cdc` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_PMR_club_club_foot_bi` = 0
 WHERE
   `surgical_PMR_club_club_foot_bi` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `surgical_burn_little_release` = 0
 WHERE
   `surgical_burn_little_release` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_physiotherapy_adult` = 0
 WHERE
   `other_physiotherapy_adult` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_physiotherapy_child` = 0
 WHERE
   `other_physiotherapy_child` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_group_physiotherapy` = 0
 WHERE
   `other_group_physiotherapy` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_nutritionalSupport` = 0
 WHERE
   `other_nutritionalSupport` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_nutritionalAdvice` = 0
 WHERE
   `other_nutritionalAdvice` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_CMOSH_follow_up` = 0
 WHERE
   `other_CMOSH_follow_up` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_microbus` = 0
 WHERE
   `other_microbus` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_Other_consultation_care` = 0
 WHERE
   `other_Other_consultation_care` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_physiotherapy` = 0
 WHERE
   `other_physiotherapy` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_X_Ray` = 0
 WHERE
   `other_X_Ray` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_making_dressing` = 0
 WHERE
   `other_making_dressing` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_make_short_plaster` = 0
 WHERE
   `other_make_short_plaster` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_make_long_plaster` = 0
 WHERE
   `other_make_long_plaster` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_making_plaster` = 0
 WHERE
   `other_making_plaster` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_Other_plaster` = 0
 WHERE
   `other_Other_plaster` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `other_Other_dressing` = 0
 WHERE
   `other_Other_dressing` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `consult_ClubFoot_Follow_up` = 0
 WHERE
   `consult_ClubFoot_Follow_up` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_UHKAFO_-_Drop_lock_single_axis_-_MI` = 0
 WHERE
   `workshop_UHKAFO_-_Drop_lock_single_axis_-_MI` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Artificial_limb_-_BK_-_Exoskeleton` = 0
 WHERE
   `workshop_Artificial_limb_-_BK_-_Exoskeleton` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Artificial_limb_-_AK_-_Exoskeleton` = 0
 WHERE
   `workshop_Artificial_limb_-_AK_-_Exoskeleton` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Artificial_limb_-_BK_-_Endoskeleton_with_pylon_Std` = 0
 WHERE
   `workshop_Artificial_limb_-_BK_-_Endoskeleton_with_pylon_Std` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Artificial_limb_-_AK_-_single_axis_standard` = 0
 WHERE
   `workshop_Artificial_limb_-_AK_-_single_axis_standard` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_artificial_limb_-_AK_-_polycentric_knee_joint` = 0
 WHERE
   `workshop_artificial_limb_-_AK_-_polycentric_knee_joint` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Artificial_Tr_radial_prosthesis_Alimco` = 0
 WHERE
   `workshop_Artificial_Tr_radial_prosthesis_Alimco` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Artificial_Tr_radial_prosthesis_jaipur` = 0
 WHERE
   `workshop_Artificial_Tr_radial_prosthesis_jaipur` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Wheel_Chair_-_china_-_modified` = 0
 WHERE
   `workshop_Wheel_Chair_-_china_-_modified` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_White_can` = 0
 WHERE
   `workshop_White_can` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Hearing_aids` = 0
 WHERE
   `workshop_Hearing_aids` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Elbow_crutch` = 0
 WHERE
   `workshop_Elbow_crutch` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Lifspring_BAFO` = 0
 WHERE
   `workshop_Lifspring_BAFO` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_AFO_-_Articulated` = 0
 WHERE
   `workshop_AFO_-_Articulated` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_Extension_brace_-_AFO` = 0
 WHERE
   `workshop_Extension_brace_-_AFO` = -1;
 
-update prices
-set
+UPDATE prices
+SET
   `workshop_other` = 0
 WHERE
   `workshop_other` = -1;

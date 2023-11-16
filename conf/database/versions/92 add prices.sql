@@ -52,4 +52,4 @@ SET
   workshop_BAFO_walking_child = 6940,
   workshop_UHKAFO_night_child = 4850
 WHERE
-  dateto is NULL;
+  dateto IS NULL;

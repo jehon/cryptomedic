@@ -8,5 +8,5 @@ UPDATE `ricket_consults`
 SET
   suggestedForSurgery = 1
 WHERE
-  Surgery is not null
-  and surgery > "";
+  Surgery IS NOT NULL
+  AND surgery > "";

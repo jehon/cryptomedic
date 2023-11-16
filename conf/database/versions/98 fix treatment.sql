@@ -1,17 +1,17 @@
-update other_consults
-set
+UPDATE other_consults
+SET
   TreatmentEvaluation = 1
-where
+WHERE
   TreatmentEvaluation = 0;
 
-update club_feet
-set
+UPDATE club_feet
+SET
   TreatmentEvaluation = 1
-where
+WHERE
   TreatmentEvaluation = 0;
 
-update ricket_consults
-set
+UPDATE ricket_consults
+SET
   TreatmentEvaluation = 1
-where
+WHERE
   TreatmentEvaluation = 0;

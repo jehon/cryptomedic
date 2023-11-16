@@ -7,13 +7,13 @@ SET
   workshop_other = 0
 WHERE
   id = (
-    select
+    SELECT
       MAX(id)
     FROM
       (
-        select
+        SELECT
           id
-        from
+        FROM
           prices
       ) t
   );

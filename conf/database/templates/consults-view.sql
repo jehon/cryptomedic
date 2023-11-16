@@ -2,7 +2,7 @@ DROP VIEW consults;
 
 CREATE VIEW
   `consults` AS (
-    select
+    SELECT
       'ricket_consult' AS `type`,
       `ricket_consults`.`id` AS `id`,
       `ricket_consults`.`created_at` AS `created_at`,
@@ -18,12 +18,12 @@ CREATE VIEW
       `ricket_consults`.`TreatmentFinished` AS `TreatmentFinished`,
       `ricket_consults`.`Comments` AS `Comments`,
       `ricket_consults`.`suggestedForSurgery` AS `suggestedForSurgery`
-    from
+    FROM
       `ricket_consults`
   )
-union
+UNION
 (
-  select
+  SELECT
     'club_foot' AS `type`,
     `club_feet`.`id` AS `id`,
     `club_feet`.`created_at` AS `created_at`,
@@ -39,12 +39,12 @@ union
     `club_feet`.`TreatmentFinished` AS `TreatmentFinished`,
     `club_feet`.`Comments` AS `Comments`,
     `club_feet`.`suggestedForSurgery` AS `suggestedForSurgery`
-  from
+  FROM
     `club_feet`
 )
-union
+UNION
 (
-  select
+  SELECT
     'other_consult' AS `type`,
     `other_consults`.`id` AS `id`,
     `other_consults`.`created_at` AS `created_at`,
@@ -60,6 +60,6 @@ union
     `other_consults`.`TreatmentFinished` AS `TreatmentFinished`,
     `other_consults`.`Comments` AS `Comments`,
     `other_consults`.`suggestedForSurgery` AS `suggestedForSurgery`
-  from
+  FROM
     `other_consults`
 )

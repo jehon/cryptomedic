@@ -9,4 +9,4 @@ SET
   other_physiotherapy_child = 100;
 
 WHERE
-  dateto is NULL;
+  dateto IS NULL;

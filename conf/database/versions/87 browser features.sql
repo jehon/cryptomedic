@@ -14,9 +14,9 @@ ALTER TABLE `browser_features` ADD `browser_uuid` VARCHAR(125) NOT NULL AFTER `l
 CREATE TABLE
   `browser_login` (
     `id` INT (10) NOT NULL AUTO_INCREMENT,
-    `created_at` timestamp NULL DEFAULT NULL,
-    `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `lastuser` varchar(50) NOT NULL,
+    `created_at` TIMESTAMP NULL DEFAULT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `lastuser` VARCHAR(50) NOT NULL,
     `browser_uuid` VARCHAR(128) NOT NULL,
     `login` VARCHAR(128) NOT NULL,
     UNIQUE KEY `id` (`id`),
