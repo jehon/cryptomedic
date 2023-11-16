@@ -634,9 +634,9 @@ reports[REPORT_ACTIVITY] = {
           val.oldPatient == 1
             ? "Old"
             : val.patient_reference.substr(0, 4) <
-              ("" + context.params.when).substr(0, 4)
-            ? "Old(EN)"
-            : "New",
+                ("" + context.params.when).substr(0, 4)
+              ? "Old(EN)"
+              : "New",
         { headers: ["Old/New"] }
       )
       .addDetail("sl_family_salary", {
