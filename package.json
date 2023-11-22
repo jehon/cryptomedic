@@ -38,7 +38,7 @@
     "@types/pixelmatch": "5.2.6",
     "@types/pngjs": "6.0.4",
     "@types/react": "18.2.38",
-    "@types/react-dom": "18.2.16",
+    "@types/react-dom": "18.2.17",
     "@types/string": "0.0.34",
     "@typescript-eslint/eslint-plugin": "6.11.0",
     "@typescript-eslint/parser": "6.11.0",
