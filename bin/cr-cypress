@@ -16,6 +16,7 @@ set -o pipefail
 
 run_cypress_raw() {
     docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
+        -T \
         --volume "$CR_PRJ_DIR:/workdir" \
         --workdir /workdir/tests \
         --env HOME=/root \
