@@ -291,7 +291,7 @@ export default class XPagePrices extends HTMLElement {
       if (v == "id") {
         return false;
       }
-      if (v.substring(0, 23) == "social_level_percentage") {
+      if (v.startsWith("social_level_")) {
         return false;
       }
       return true;

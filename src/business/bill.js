@@ -1,5 +1,5 @@
-import Timed from "./abstracts/timed.js";
 import { DataMissingException } from "../utils/exceptions.js";
+import Timed from "./abstracts/timed.js";
 import Price from "./price.js";
 import { registrySet } from "./registry.js";
 
@@ -175,19 +175,7 @@ export default class Bill extends Timed {
       if (i === "dlocked") {
         continue;
       }
-      if (i === "social_level_percentage_0") {
-        continue;
-      }
-      if (i === "social_level_percentage_1") {
-        continue;
-      }
-      if (i === "social_level_percentage_2") {
-        continue;
-      }
-      if (i === "social_level_percentage_3") {
-        continue;
-      }
-      if (i === "social_level_percentage_4") {
+      if (i.startsWith("social_level_")) {
         continue;
       }
       if (this.price[i] < 0) {
