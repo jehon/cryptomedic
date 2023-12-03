@@ -143,7 +143,7 @@ services:
   ################################################################
   composer:
     profiles:
-      - tool
+      - tools
     image: composer:latest
     working_dir: /app
     volumes:
@@ -151,7 +151,7 @@ services:
 
   node:
     profiles:
-      - tool
+      - tools
     build: conf/node
     working_dir: /app
     volumes:
@@ -167,7 +167,7 @@ services:
 
   cypress:
     profiles:
-      - tool
+      - tools
     # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/12/Dockerfile
     image: cypress/included:13.6.0
     environment:

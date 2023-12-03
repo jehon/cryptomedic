@@ -86,7 +86,7 @@ clean-files:
 
 dc-build:
 	docker compose build
-	docker compose --profile=tool build
+	docker compose --profile=tools build
 
 .PHONY: start
 start: dc-up dependencies build reset
