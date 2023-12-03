@@ -5,8 +5,8 @@ set -o pipefail
 
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
-docker compose run --rm --quiet-pull -T \
-    --user "$(id -u)" \
+docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
+    -T \
     node \
     node --max-old-space-size=4096 \
     "$@"

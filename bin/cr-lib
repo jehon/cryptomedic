@@ -73,3 +73,6 @@ progress() {
         echo -n "."
     fi
 }
+declare -a CR_DOCKER_ARGS=( --user "$(id -u)" )
+declare -a CR_DOCKER_ARGS_RUN=( "--rm" "--quiet-pull" )
+CR_DOCKER_ARGS_RUN+=( "${CR_DOCKER_ARGS[@]}" )

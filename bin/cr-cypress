@@ -15,10 +15,10 @@ set -o pipefail
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 run_cypress_raw() {
-    docker compose run --rm --quiet-pull \
+    docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
         --volume "$CR_PRJ_DIR:/workdir" \
         --workdir /workdir/tests \
-        --user "$(id -u)" --env HOME=/root \
+        --env HOME=/root \
         -e DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         --entrypoint "cypress" \
