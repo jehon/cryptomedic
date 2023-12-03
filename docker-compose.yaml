@@ -24,7 +24,10 @@ services:
       #   target: 8080
       #   mode: host
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - type: bind
+        source: ${DOCKER_SOCKET:-/var/run/docker.sock}
+        target: /var/run/docker.sock
+        read_only: true
     labels:
       - traefik.protocol=http
       - traefik.enable=true
