@@ -78,6 +78,6 @@ declare -a CR_DOCKER_ARGS=( )
 export CR_DOCKER_ARGS
 CR_DOCKER_ARGS+=( "--user" "$(id -u)" )
 
-declare -a CR_DOCKER_ARGS_RUN=( "--interactive=false" "--rm" "--quiet-pull" "--no-TTY" )
+declare -a CR_DOCKER_ARGS_RUN=( "--rm" "--quiet-pull" "--no-TTY" "--interactive=false" "--no-deps" )
 CR_DOCKER_ARGS_RUN+=( "${CR_DOCKER_ARGS[@]}" )
 export CR_DOCKER_ARGS_RUN
