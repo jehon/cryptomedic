@@ -14,6 +14,7 @@ export CRYPTOMEDIC_DEPLOY_WEB_HOST ?= localhost
 export CRYPTOMEDIC_DEPLOY_WEB_PORT ?= $(CRYPTOMEDIC_LOCAL_HTTP_PORT)
 export CRYPTOMEDIC_DEPLOY_WEB_TOKEN ?= secret
 export DBUPDATEPWD := secret # From config.php
+export CRYPTOMEDIC_DOCKER_SOCKET := $(shell docker context inspect | jq -r .[0].Endpoints.docker.Host | sed "s^unix://^^")
 
 # Default target
 .PHONY: check
@@ -42,7 +43,10 @@ ok:
 #   --debug=basic
 #
 
-dump:
+dump: global-dump
+
+.PHONY: global-dump
+global-dump:
 	@echo ""
 	@echo "***************"
 	@echo "*** generic ***"
@@ -51,12 +55,14 @@ dump:
 	@echo "HOME:                           $(HOME)"
 	@echo "SHELL:                          $(SHELL)"
 	@echo "PATH:                           $(PATH)"
+	@echo "CRYPTOMEDIC_DOCKER_SOCKET:      $(CRYPTOMEDIC_DOCKER_SOCKET)" 
 	@echo "ACCEPTANCE:                     $(ACCEPTANCE)"
 	@echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:  $(CRYPTOMEDIC_DEPLOY_FILES_HOST)"
 	@echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:    $(CRYPTOMEDIC_DEPLOY_WEB_HOST)"
 	@echo "CRYPTOMEDIC_DEPLOY_WEB_PORT:    $(CRYPTOMEDIC_DEPLOY_WEB_PORT)"
 	@echo "CRYPTOMEDIC_LOCAL_HTTP_PORT:    $(CRYPTOMEDIC_LOCAL_HTTP_PORT)"
 	@echo "------------------------------------------"
+	@echo "Docker:                         $(shell docker info -f "{{println .SecurityOptions}}")"
 	@echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
 	@echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
 	@echo "MySQL user:                     $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
