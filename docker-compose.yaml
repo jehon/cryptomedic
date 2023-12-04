@@ -25,7 +25,7 @@ services:
       #   mode: host
     volumes:
       - type: bind
-        source: ${DOCKER_SOCKET:-/var/run/docker.sock}
+        source: ${CRYPTOMEDIC_DOCKER_SOCKET:-/var/run/docker.sock}
         target: /var/run/docker.sock
         read_only: true
     labels:
