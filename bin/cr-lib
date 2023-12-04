@@ -74,10 +74,10 @@ progress() {
     fi
 }
 
-declare -a CR_DOCKER_ARGS=( )
+declare -a CR_DOCKER_ARGS=( "--no-TTY" )
 export CR_DOCKER_ARGS
 CR_DOCKER_ARGS+=( "--user" "$(id -u)" )
 
-declare -a CR_DOCKER_ARGS_RUN=( "--rm" "--quiet-pull" "--no-TTY" "--interactive=false" "--no-deps" )
+declare -a CR_DOCKER_ARGS_RUN=( "--rm" "--quiet-pull" "--interactive=false" "--no-deps" )
 CR_DOCKER_ARGS_RUN+=( "${CR_DOCKER_ARGS[@]}" )
 export CR_DOCKER_ARGS_RUN
