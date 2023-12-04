@@ -108,31 +108,36 @@ export default class Bill extends Timed {
   social_level_calculated() {
     /**
      From TC:
-     Level 0 is when the familial ration is < 300
-     Level 1 is when the familial ration is 300<  FR < 500
-     Level 2 is when the familial ration is 500< FR < 1500
-     Level 3 is when the familial ration is 1500< FR < 3000
-     Level 4 is when the familial ration is 3000< FR
+     Level 0 is when the familial ration is                            FR <= social_level_threshold_1
+     Level 1 is when the familial ration is social_level_threshold_1 < FR <= social_level_threshold_2
+     Level 2 is when the familial ration is social_level_threshold_2 < FR <= social_level_threshold_3
+     Level 3 is when the familial ration is social_level_threshold_3 < FR <= social_level_threshold_4
+     Level 4 is when the familial ration is social_level_threshold_4 < FR
      */
-    try {
-      const rs = this.ratioSalary();
 
-      if (rs <= 300) {
-        return 0;
-      }
+    if (this.price) {
+      try {
+        const rs = this.ratioSalary();
 
-      if (rs <= 500) {
-        return 1;
-      }
+        if (rs <= this.price.social_level_threshold_1) {
+          return 0;
+        }
 
-      if (rs <= 1500) {
-        return 2;
-      }
+        if (rs <= this.price.social_level_threshold_2) {
+          return 1;
+        }
 
-      if (rs <= 3000) {
-        return 3;
-      }
-    } catch (e) {}
+        if (rs <= this.price.social_level_threshold_3) {
+          return 2;
+        }
+
+        if (rs <= this.price.social_level_threshold_4) {
+          return 3;
+        }
+      } catch (e) {}
+    }
+
+    // Default
     return 4;
   }
 
