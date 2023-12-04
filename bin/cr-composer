@@ -8,7 +8,6 @@ set -o pipefail
 FOLDER="$(realpath --relative-to="$CR_PRJ_DIR" "$(pwd)")"
 
 docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
-    -T \
     --workdir "/app/$FOLDER" \
     composer \
     --no-interaction \

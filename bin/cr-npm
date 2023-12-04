@@ -6,7 +6,6 @@ set -o pipefail
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
 # docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
-#     -T \
 #     --volume "$(pwd):/workdir" \
 #     --workdir /workdir \
 #     node \
