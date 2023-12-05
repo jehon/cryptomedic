@@ -640,13 +640,7 @@ reports[REPORT_ACTIVITY] = {
         { headers: ["Old/New"] }
       )
       .addDetail("sl_family_salary", {
-        headers: [
-          "Tk income",
-          "SEL",
-          "0 - 300",
-          0,
-          "Levels of the social level"
-        ]
+        headers: ["Tk income", "SEL"]
       })
       .addDetail("sl_number_of_household_members", { headers: ["Nb pers"] })
       .addDetail(
@@ -657,19 +651,19 @@ reports[REPORT_ACTIVITY] = {
             ),
             ""
           ),
-        { headers: ["Tk per pers", null, "301-500", 1] }
+        { headers: ["Tk per pers"] }
       )
       .addDetail("social_level", { headers: ["SL"] })
 
       .addDetail(
         (data) => createElementWithObject(XCodage, { value: data.pathology }),
-        { headers: ["Diagno", "Medical", "501-1500", 2] }
+        { headers: ["Diagno", "Medical"] }
       )
       .addDetail("act", { headers: ["Act"] })
-      .addDetail("treatment", { headers: ["Trt", null, "1501-3000", 3] })
+      .addDetail("treatment", { headers: ["Trt"] })
       .addDetail("last_seen", { headers: ["Last seen", "Surgical"] })
       .addDetail("last_treat_result", {
-        headers: ["Result", null, "3001-...", 4]
+        headers: ["Result"]
       })
       .addDetail("last_treat_finished", { headers: ["Done ?", null] })
 
@@ -945,13 +939,7 @@ reports[REPORT_SURGICAL] = {
       )
       .addDetail("sex", { headers: ["M/F"] })
       .addDetail("sl_family_salary", {
-        headers: [
-          "Tk income",
-          "SEL",
-          "0 - 300",
-          0,
-          "Levels of the social level"
-        ]
+        headers: ["Tk income", "SEL"]
       })
       .addDetail("sl_number_of_household_members", { headers: ["Nb pers"] })
       .addDetail(
@@ -962,21 +950,21 @@ reports[REPORT_SURGICAL] = {
             ),
             ""
           ),
-        { headers: ["Tk per pers", null, "301-500", 1] }
+        { headers: ["Tk per pers"] }
       )
       .addDetail("social_level", { headers: ["SL"] })
 
       .addDetail(
         (data) => createElementWithObject(XCodage, { value: data.pathology }),
-        { headers: ["Diagno", "Medical", "501-1500", 2] }
+        { headers: ["Diagno", "Medical"] }
       )
       .addDetail("last_seen", {
-        headers: ["Last seen", "Surgical", "1501-3000", 3]
+        headers: ["Last seen", "Surgical"]
       })
       .addDetail("last_treat_result", {
-        headers: ["Result", null, "3001-...", 4]
+        headers: ["Result"]
       })
-      .addDetail("last_treat_finished", { headers: ["Done ?", null] })
+      .addDetail("last_treat_finished", { headers: ["Done ?"] })
 
       .addDetail("price_consult", {
         headers: ["Consult", "Price", "", "", ""],
