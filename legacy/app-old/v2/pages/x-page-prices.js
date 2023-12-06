@@ -239,7 +239,7 @@ export default class XPagePrices extends HTMLElement {
               createElementWithTag("tr", {}, [
                 createElementWithTag("td", {}, k),
                 ...this.prices.map((p) =>
-                  this.editId == p["id"]
+                  this.editId == p["id"] && !k.startsWith("social_level_")
                     ? // We are editing it
                       createElementWithTag("td", {}, [
                         createElementWithObject(XPriceItemEdit, {
@@ -250,7 +250,11 @@ export default class XPagePrices extends HTMLElement {
                     : createElementWithTag(
                         "td",
                         {},
-                        parseInt(p[k]) <= 0 ? "-" : p[k] == "1" ? "open" : p[k]
+                        parseFloat(p[k]) <= 0
+                          ? "-"
+                          : p[k] == "1"
+                            ? "open"
+                            : p[k]
                       )
                 )
               ])
@@ -289,9 +293,6 @@ export default class XPagePrices extends HTMLElement {
         return false;
       }
       if (v == "id") {
-        return false;
-      }
-      if (v.startsWith("social_level_")) {
         return false;
       }
       return true;
