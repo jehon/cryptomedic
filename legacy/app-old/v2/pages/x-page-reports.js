@@ -596,7 +596,7 @@ reports[REPORT_ACTIVITY] = {
             "",
             (_col, context) => "Daily report of " + context.params.when,
             "SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR",
-            "Name of the project: Rikces in cox' Bazar",
+            "Name of the project: Rickets in cox' Bazar",
             "SARPV - AMD - KDM"
           ],
           footers: ["", ""]
@@ -913,7 +913,7 @@ reports[REPORT_SURGICAL] = {
             "",
             (_col, context) => "Daily report of " + context.params.when,
             "SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR",
-            "Name of the project: Rikces in cox' Bazar",
+            "Name of the project: Rickets in cox' Bazar",
             "SARPV - AMD - KDM 2"
           ],
           footers: ["", ""]
@@ -923,18 +923,12 @@ reports[REPORT_SURGICAL] = {
       .addDetail("center", { headers: ["Place"] })
       .addDetail("patient_reference", { headers: ["Record n#"] })
       .addDetail("patient_name", {
-        headers: ["Patient Name", "Identity", "Where", "When", "Who"]
+        headers: ["Patient Name", "Identity", "When"]
       })
       .addDetail(
         (data) => createElementWithObject(XAge, { value: data.year_of_birth }),
         {
-          headers: [
-            "Age",
-            null,
-            (_col, context) => context.params.center,
-            (_col, context) => context.params.when,
-            (_col, context) => context.params.examiner
-          ]
+          headers: ["Age", null, (_col, context) => context.params.when]
         }
       )
       .addDetail("sex", { headers: ["M/F"] })
