@@ -58,7 +58,7 @@
     "fs-extra": "latest",
     "geckodriver": "latest",
     "glob": "10.3.10",
-    "html-webpack-plugin": "5.5.3",
+    "html-webpack-plugin": "5.5.4",
     "htmlhint": "1.1.4",
     "husky": "8.0.3",
     "identity-obj-proxy": "3.0.0",
