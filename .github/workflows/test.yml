@@ -69,14 +69,14 @@ jobs:
 
       - name: Upload styles
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: integration
           path: tmp/integration/
 
       - name: Upload deploy.log
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: deploy.log
           path: tmp/deploy.log
