@@ -8,12 +8,9 @@ AddType image/jpg .jpeg
 
 <ifModule mod_expires.c>
     ExpiresActive 	  On
-
     ExpiresByType 	  text/html                     "A0"
     ExpiresByType     application/json              "A0"
     ExpiresByType     text/javascript				"A0"
-
     ExpiresByType	  text/css						"access plus 1 week"
-
     ExpiresDefault    "access plus 1 year"
 </ifModule>
