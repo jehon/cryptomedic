@@ -13,4 +13,11 @@ AddType image/jpg .jpeg
     ExpiresByType     text/javascript				"A0"
     ExpiresByType	  text/css						"access plus 1 week"
     ExpiresDefault    "access plus 1 year"
+
+    # # Thanks to https://stackoverflow.com/a/27029144/1954789
+    # RewriteEngine On
+    # RewriteCond %{HTTPS} off
+    # RewriteCond ! %{ENV:SERVER_ENV} ^dev$
+    # # TODO: 301: Permanently Moved
+    # RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=302,L]
 </ifModule>

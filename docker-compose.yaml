@@ -47,6 +47,8 @@ services:
       context: conf/web
       args:
         PHP_VERSION: ${PHP_VERSION}
+    environment:
+      - SERVER_ENV=dev
     expose:
       - 80
     volumes:
