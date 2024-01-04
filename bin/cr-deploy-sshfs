@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+# shellcheck source=./cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
+
+SWD="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+header_begin "Dump infos"
+echo "CRYPTOMEDIC_LOCAL_HTTP_PORT:        ${CRYPTOMEDIC_LOCAL_HTTP_PORT}"
+echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:        ${CRYPTOMEDIC_DEPLOY_WEB_HOST}"
+echo "CRYPTOMEDIC_DEPLOY_WEB_PORT:        ${CRYPTOMEDIC_DEPLOY_WEB_PORT}"
+echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:     '${CRYPTOMEDIC_DEPLOY_FILES_HOST}'"
+echo "CRYPTOMEDIC_DEPLOY_FILES_USER:       ${#CRYPTOMEDIC_DEPLOY_FILES_USER} characters"
+echo "CRYPTOMEDIC_DEPLOY_FILES_PASSWORD:   ${#CRYPTOMEDIC_DEPLOY_FILES_PASSWORD} characters"
+header_end
+
+if [ -z "$CRYPTOMEDIC_DEPLOY_FILES_USER" ]; then
+    echo "No CRYPTOMEDIC_DEPLOY_FILES_USER. Did you forget something?" >&2
+    exit 1
+fi
+
+LOCAL_MOUNT=ttt
+mkdir -p "${LOCAL_MOUNT}"
+
+exiting() {
+    RES=$?
+    echo "Exiting"
+    fusermount -u "${LOCAL_MOUNT}"
+    return $?
+}
+
+trap exiting EXIT
+
+sshpass -p"${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}" \
+    sshfs "${CRYPTOMEDIC_DEPLOY_FILES_USER}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}:" "${LOCAL_MOUNT}"
+
+echo "✔ Mounted"
+ls -l "${LOCAL_MOUNT}"
+
+read -p "✔✔✔ Waiting your command"
