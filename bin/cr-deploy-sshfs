@@ -8,6 +8,8 @@ set -o pipefail
 
 SWD="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
+LOCAL_MOUNT="$( realpath tmp/remote )"
+
 header_begin "Dump infos"
 echo "CRYPTOMEDIC_LOCAL_HTTP_PORT:        ${CRYPTOMEDIC_LOCAL_HTTP_PORT}"
 echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:        ${CRYPTOMEDIC_DEPLOY_WEB_HOST}"
@@ -15,6 +17,8 @@ echo "CRYPTOMEDIC_DEPLOY_WEB_PORT:        ${CRYPTOMEDIC_DEPLOY_WEB_PORT}"
 echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:     '${CRYPTOMEDIC_DEPLOY_FILES_HOST}'"
 echo "CRYPTOMEDIC_DEPLOY_FILES_USER:       ${#CRYPTOMEDIC_DEPLOY_FILES_USER} characters"
 echo "CRYPTOMEDIC_DEPLOY_FILES_PASSWORD:   ${#CRYPTOMEDIC_DEPLOY_FILES_PASSWORD} characters"
+echo ""
+echo "LOCAL_MOUNT:                        ${LOCAL_MOUNT}"
 header_end
 
 if [ -z "$CRYPTOMEDIC_DEPLOY_FILES_USER" ]; then
@@ -22,22 +26,32 @@ if [ -z "$CRYPTOMEDIC_DEPLOY_FILES_USER" ]; then
     exit 1
 fi
 
-LOCAL_MOUNT=ttt
 mkdir -p "${LOCAL_MOUNT}"
 
 exiting() {
     RES=$?
     echo "Exiting"
-    fusermount -u "${LOCAL_MOUNT}"
+    fusermount -u -z "${LOCAL_MOUNT}" || true
+    rmdir "${LOCAL_MOUNT}"
     return $?
 }
 
 trap exiting EXIT
 
+# -o StrictHostKeyChecking=accept-new -o UpdateHostKeys=yes 
+
 sshpass -p"${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}" \
-    sshfs "${CRYPTOMEDIC_DEPLOY_FILES_USER}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}:" "${LOCAL_MOUNT}"
+    sshfs "${CRYPTOMEDIC_DEPLOY_FILES_USER}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}:" "${LOCAL_MOUNT}" \
+    -o sshfs_sync -o StrictHostKeyChecking=accept-new -o UpdateHostKeys=yes \
+    -s -f &
+
+echo "✔ Waiting for mount to be ready"
+sleep 1s
+while [ ! -r www ]; do
+    sleep 1s
+done
 
 echo "✔ Mounted"
-ls -l "${LOCAL_MOUNT}"
 
+ls -l "${LOCAL_MOUNT}"
 read -p "✔✔✔ Waiting your command"
