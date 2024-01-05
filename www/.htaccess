@@ -14,7 +14,7 @@ AddType image/jpg .jpeg
     #
     RewriteEngine On
     RewriteCond %{HTTPS} off
-    RewriteCond !%{ENV:SERVER_ENV} ^dev$
+    RewriteCond %{ENV:SERVER_ENV} !dev
     RewriteRule (.*) https://%{HTTP_HOST}/$1 [R=301,L,QSA]
 
     ExpiresActive 	  On
