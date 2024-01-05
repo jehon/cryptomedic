@@ -6,6 +6,12 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
+DRYRUN="-n"
+
+if [ "$1" == "commit" ]; then
+    DRYRUN=
+fi
+
 SWD="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 LOCAL_MOUNT="$( realpath tmp/remote )"
@@ -26,7 +32,10 @@ if [ -z "$CRYPTOMEDIC_DEPLOY_FILES_USER" ]; then
     exit 1
 fi
 
-mkdir -p "${LOCAL_MOUNT}"
+header_begin "Cleaning local"
+find . -type d -empty -delete
+header_end
+
 
 exiting() {
     RES=$?
@@ -36,10 +45,12 @@ exiting() {
     return $?
 }
 
-trap exiting EXIT
+trap exiting EXIT SIGINT
 
 # -o StrictHostKeyChecking=accept-new -o UpdateHostKeys=yes 
 
+header_begin "Mounting"
+mkdir -p "${LOCAL_MOUNT}"
 sshpass -p"${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}" \
     sshfs "${CRYPTOMEDIC_DEPLOY_FILES_USER}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}:" "${LOCAL_MOUNT}" \
     -o sshfs_sync -o StrictHostKeyChecking=accept-new -o UpdateHostKeys=yes \
@@ -50,8 +61,15 @@ sleep 1s
 while [ ! -r www ]; do
     sleep 1s
 done
-
 echo "✔ Mounted"
+header_end
 
-ls -l "${LOCAL_MOUNT}"
-read -p "✔✔✔ Waiting your command"
+header_begin "Syncing"
+rsync $DRYRUN \
+    --itemize-changes \
+    --recursive --times --omit-dir-times \
+    --delete \
+    --include-from="${SWD}/../deploy-filter" \
+    "${CR_PRJ_DIR}"/ \
+    "${LOCAL_MOUNT}"
+header_end
