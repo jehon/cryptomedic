@@ -10,7 +10,7 @@ make build
 
 DRY_RUN="-n"
 if [ "$1" == "commit" ]; then
-    jh_info "Commiting really"
+    echo "*** Commiting really ***"
     DRY_RUN=
     shift
 fi
@@ -18,8 +18,6 @@ fi
 if [ -n "$1" ]; then
     PART="${1%/}/"
 fi
-
-SWD="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 LOCAL_MOUNT="$( realpath tmp/remote )"
 
@@ -73,12 +71,14 @@ done
 echo "✔ Mounted"
 header_end
 
+# --ignore-times
+
 header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
 rsync $DRY_RUN \
     --itemize-changes \
     --recursive --times --omit-dir-times \
     --delete \
-    --include-from="${SWD}/../deploy-filter" \
+    --include-from="${CR_PRJ_DIR}/deploy-filter" \
     "${CR_PRJ_DIR}/${PART}" \
     "${LOCAL_MOUNT}/${PART}"
 header_end
