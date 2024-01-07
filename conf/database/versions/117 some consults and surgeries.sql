@@ -35,8 +35,8 @@ SET
   CHANGE `XRay` `x-ray` VARCHAR(127) CHARACTER
 SET
   utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  CHANGE `Wristenlargement` `wrist_enlargement` INT (5) NULL DEFAULT NULL,
-  CHANGE `Ribbeading` `rib_heading` INT (5) NULL DEFAULT NULL,
+  CHANGE `Wristenlargement` `wrist_enlargement` INT(5) NULL DEFAULT NULL,
+  CHANGE `Ribbeading` `rib_heading` INT(5) NULL DEFAULT NULL,
   CHANGE `IMICDistance` `IMIC_distance` VARCHAR(64) CHARACTER
 SET
   utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,

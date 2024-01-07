@@ -17,27 +17,26 @@ ALTER TABLE `surgeries` CHANGE `Date` `date` DATE NULL DEFAULT NULL;
 
 DROP VIEW consults;
 
-CREATE VIEW
-  `consults` AS (
-    SELECT
-      'ricket_consult' AS `type`,
-      `ricket_consults`.`id`,
-      `ricket_consults`.`created_at`,
-      `ricket_consults`.`updated_at`,
-      `ricket_consults`.`patient_id`,
-      `ricket_consults`.`date`,
-      `ricket_consults`.`examiner`,
-      `ricket_consults`.`center`,
-      `ricket_consults`.`Weightkg` AS `weight_kg`,
-      `ricket_consults`.`Heightcm` AS `height_cm`,
-      `ricket_consults`.`Brachialcircumferencecm` AS `brachial_circumference_cm`,
-      `ricket_consults`.`treatment_evaluation`,
-      `ricket_consults`.`treatment_finished`,
-      `ricket_consults`.`comments`,
-      `ricket_consults`.`suggested_for_surgery`
-    FROM
-      `ricket_consults`
-  )
+CREATE VIEW `consults` AS (
+  SELECT
+    'ricket_consult' AS `type`,
+    `ricket_consults`.`id`,
+    `ricket_consults`.`created_at`,
+    `ricket_consults`.`updated_at`,
+    `ricket_consults`.`patient_id`,
+    `ricket_consults`.`date`,
+    `ricket_consults`.`examiner`,
+    `ricket_consults`.`center`,
+    `ricket_consults`.`Weightkg` AS `weight_kg`,
+    `ricket_consults`.`Heightcm` AS `height_cm`,
+    `ricket_consults`.`Brachialcircumferencecm` AS `brachial_circumference_cm`,
+    `ricket_consults`.`treatment_evaluation`,
+    `ricket_consults`.`treatment_finished`,
+    `ricket_consults`.`comments`,
+    `ricket_consults`.`suggested_for_surgery`
+  FROM
+    `ricket_consults`
+)
 UNION
 (
   SELECT

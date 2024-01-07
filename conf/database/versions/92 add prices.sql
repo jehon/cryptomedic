@@ -16,27 +16,27 @@
 -- AFO Night (child)     _     3485 tk
 -- BAFO Walking (Child)  _  6940 tk
 -- UHKAFO (Child) Night  _   4850 tk
-ALTER TABLE `bills` ADD `workshop_thoracic_brace_and_scoliosis_brace` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_thoracic_brace`,
-ADD `workshop_Compensation_sole_1cm` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole`,
-ADD `workshop_Compensation_sole_2cm` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole_1cm`,
-ADD `workshop_Compensation_sole_3cm` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole_2cm`,
-ADD `workshop_Compensation_sole_4cm` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole_3cm`,
-ADD `workshop_Compensation_sole_5cm` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole_4cm`,
-ADD `workshop_AFO_walking_child` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_AFO_walking`,
-ADD `workshop_AFO_night_child` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_AFO_night`,
-ADD `workshop_BAFO_walking_child` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_BAFO_walking`,
-ADD `workshop_UHKAFO_night_child` INT (11) NOT NULL DEFAULT '0' AFTER `workshop_UHKAFO_night`;
+ALTER TABLE `bills` ADD `workshop_thoracic_brace_and_scoliosis_brace` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_thoracic_brace`,
+ADD `workshop_Compensation_sole_1cm` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole`,
+ADD `workshop_Compensation_sole_2cm` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole_1cm`,
+ADD `workshop_Compensation_sole_3cm` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole_2cm`,
+ADD `workshop_Compensation_sole_4cm` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole_3cm`,
+ADD `workshop_Compensation_sole_5cm` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_Compensation_sole_4cm`,
+ADD `workshop_AFO_walking_child` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_AFO_walking`,
+ADD `workshop_AFO_night_child` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_AFO_night`,
+ADD `workshop_BAFO_walking_child` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_BAFO_walking`,
+ADD `workshop_UHKAFO_night_child` INT(11) NOT NULL DEFAULT '0' AFTER `workshop_UHKAFO_night`;
 
-ALTER TABLE `prices` ADD `workshop_thoracic_brace_and_scoliosis_brace` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_thoracic_brace`,
-ADD `workshop_Compensation_sole_1cm` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole`,
-ADD `workshop_Compensation_sole_2cm` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole_1cm`,
-ADD `workshop_Compensation_sole_3cm` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole_2cm`,
-ADD `workshop_Compensation_sole_4cm` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole_3cm`,
-ADD `workshop_Compensation_sole_5cm` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole_4cm`,
-ADD `workshop_AFO_walking_child` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_AFO_walking`,
-ADD `workshop_AFO_night_child` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_AFO_night`,
-ADD `workshop_BAFO_walking_child` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_BAFO_walking`,
-ADD `workshop_UHKAFO_night_child` INT (11) NOT NULL DEFAULT '-1' AFTER `workshop_UHKAFO_night`;
+ALTER TABLE `prices` ADD `workshop_thoracic_brace_and_scoliosis_brace` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_thoracic_brace`,
+ADD `workshop_Compensation_sole_1cm` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole`,
+ADD `workshop_Compensation_sole_2cm` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole_1cm`,
+ADD `workshop_Compensation_sole_3cm` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole_2cm`,
+ADD `workshop_Compensation_sole_4cm` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole_3cm`,
+ADD `workshop_Compensation_sole_5cm` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_Compensation_sole_4cm`,
+ADD `workshop_AFO_walking_child` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_AFO_walking`,
+ADD `workshop_AFO_night_child` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_AFO_night`,
+ADD `workshop_BAFO_walking_child` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_BAFO_walking`,
+ADD `workshop_UHKAFO_night_child` INT(11) NOT NULL DEFAULT '-1' AFTER `workshop_UHKAFO_night`;
 
 UPDATE `prices`
 SET

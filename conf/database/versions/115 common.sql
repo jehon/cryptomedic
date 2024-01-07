@@ -1,44 +1,43 @@
-ALTER TABLE `ricket_consults` CHANGE `Weightkg` `weight_kg` INT (4) NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults` CHANGE `Weightkg` `weight_kg` INT(4) NULL DEFAULT NULL;
 
-ALTER TABLE `club_feet` CHANGE `Weightkg` `weight_kg` INT (4) NULL DEFAULT NULL;
+ALTER TABLE `club_feet` CHANGE `Weightkg` `weight_kg` INT(4) NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `Weightkg` `weight_kg` INT (4) NULL DEFAULT NULL;
+ALTER TABLE `other_consults` CHANGE `Weightkg` `weight_kg` INT(4) NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consults` CHANGE `Heightcm` `height_cm` INT (3) NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults` CHANGE `Heightcm` `height_cm` INT(3) NULL DEFAULT NULL;
 
-ALTER TABLE `club_feet` CHANGE `Heightcm` `height_cm` INT (3) NULL DEFAULT NULL;
+ALTER TABLE `club_feet` CHANGE `Heightcm` `height_cm` INT(3) NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `Heightcm` `height_cm` INT (3) NULL DEFAULT NULL;
+ALTER TABLE `other_consults` CHANGE `Heightcm` `height_cm` INT(3) NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consults` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT (3) NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT(3) NULL DEFAULT NULL;
 
-ALTER TABLE `club_feet` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT (3) NULL DEFAULT NULL;
+ALTER TABLE `club_feet` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT(3) NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT (3) NULL DEFAULT NULL;
+ALTER TABLE `other_consults` CHANGE `Brachialcircumferencecm` `brachial_circumference_cm` INT(3) NULL DEFAULT NULL;
 
 DROP VIEW `consults`;
 
-CREATE VIEW
-  `consults` AS (
-    SELECT
-      'ricket_consult' AS `type`,
-      `ricket_consults`.`id`,
-      `ricket_consults`.`created_at`,
-      `ricket_consults`.`updated_at`,
-      `ricket_consults`.`patient_id`,
-      `ricket_consults`.`date`,
-      `ricket_consults`.`examiner`,
-      `ricket_consults`.`center`,
-      `ricket_consults`.`weight_kg`,
-      `ricket_consults`.`height_cm`,
-      `ricket_consults`.`brachial_circumference_cm`,
-      `ricket_consults`.`treatment_evaluation`,
-      `ricket_consults`.`treatment_finished`,
-      `ricket_consults`.`comments`,
-      `ricket_consults`.`suggested_for_surgery`
-    FROM
-      `ricket_consults`
-  )
+CREATE VIEW `consults` AS (
+  SELECT
+    'ricket_consult' AS `type`,
+    `ricket_consults`.`id`,
+    `ricket_consults`.`created_at`,
+    `ricket_consults`.`updated_at`,
+    `ricket_consults`.`patient_id`,
+    `ricket_consults`.`date`,
+    `ricket_consults`.`examiner`,
+    `ricket_consults`.`center`,
+    `ricket_consults`.`weight_kg`,
+    `ricket_consults`.`height_cm`,
+    `ricket_consults`.`brachial_circumference_cm`,
+    `ricket_consults`.`treatment_evaluation`,
+    `ricket_consults`.`treatment_finished`,
+    `ricket_consults`.`comments`,
+    `ricket_consults`.`suggested_for_surgery`
+  FROM
+    `ricket_consults`
+)
 UNION
 (
   SELECT

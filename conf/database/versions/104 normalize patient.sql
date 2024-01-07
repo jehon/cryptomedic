@@ -10,9 +10,9 @@ ALTER TABLE `patients` CHANGE `Telephone` `phone` VARCHAR(127) CHARACTER
 SET
   utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `patients` CHANGE `entryyear` `entry_year` INT (4) UNSIGNED NOT NULL;
+ALTER TABLE `patients` CHANGE `entryyear` `entry_year` INT(4) UNSIGNED NOT NULL;
 
-ALTER TABLE `patients` CHANGE `entryorder` `entry_order` INT (4) NULL DEFAULT NULL;
+ALTER TABLE `patients` CHANGE `entryorder` `entry_order` INT(4) NULL DEFAULT NULL;
 
 ALTER TABLE `patients` CHANGE `Name` `name` VARCHAR(255) CHARACTER
 SET

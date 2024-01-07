@@ -1,26 +1,25 @@
 DROP VIEW consults;
 
-CREATE VIEW
-  `consults` AS (
-    SELECT
-      'ricket_consult' AS `type`,
-      `ricket_consults`.`id` AS `id`,
-      `ricket_consults`.`created_at` AS `created_at`,
-      `ricket_consults`.`updated_at` AS `updated_at`,
-      `ricket_consults`.`patient_id` AS `patient_id`,
-      `ricket_consults`.`Date` AS `date`,
-      `ricket_consults`.`ExaminerName` AS `examiner`,
-      `ricket_consults`.`Center` AS `center`,
-      `ricket_consults`.`Weightkg` AS `weight_kg`,
-      `ricket_consults`.`Heightcm` AS `height_cm`,
-      `ricket_consults`.`Brachialcircumferencecm` AS `brachial_circumference_cm`,
-      `ricket_consults`.`TreatmentEvaluation` AS `treatment_evaluation`,
-      `ricket_consults`.`TreatmentFinished` AS `treatment_finished`,
-      `ricket_consults`.`Comments` AS `comments`,
-      `ricket_consults`.`suggestedForSurgery` AS `suggested_for_surgery`
-    FROM
-      `ricket_consults`
-  )
+CREATE VIEW `consults` AS (
+  SELECT
+    'ricket_consult' AS `type`,
+    `ricket_consults`.`id` AS `id`,
+    `ricket_consults`.`created_at` AS `created_at`,
+    `ricket_consults`.`updated_at` AS `updated_at`,
+    `ricket_consults`.`patient_id` AS `patient_id`,
+    `ricket_consults`.`Date` AS `date`,
+    `ricket_consults`.`ExaminerName` AS `examiner`,
+    `ricket_consults`.`Center` AS `center`,
+    `ricket_consults`.`Weightkg` AS `weight_kg`,
+    `ricket_consults`.`Heightcm` AS `height_cm`,
+    `ricket_consults`.`Brachialcircumferencecm` AS `brachial_circumference_cm`,
+    `ricket_consults`.`TreatmentEvaluation` AS `treatment_evaluation`,
+    `ricket_consults`.`TreatmentFinished` AS `treatment_finished`,
+    `ricket_consults`.`Comments` AS `comments`,
+    `ricket_consults`.`suggestedForSurgery` AS `suggested_for_surgery`
+  FROM
+    `ricket_consults`
+)
 UNION
 (
   SELECT
