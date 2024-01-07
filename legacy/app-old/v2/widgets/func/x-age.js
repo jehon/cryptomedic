@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { yearsToYM, fromBirthDateTo } from "../file/x-fff-age";
+import { fromBirthDateTo, yearsToYM } from "../file/x-fff-age";
 
 export default class XAge extends HTMLElement {
   static get observedAttributes() {
@@ -9,6 +9,11 @@ export default class XAge extends HTMLElement {
 
   constructor() {
     super();
+    // Fixed width -> testing e2s
+    this.style.display = "inline-block";
+    this.style.width = "7ch";
+    this.style.overflow = "hidden";
+    this.style.textOverflow = "ellipsis";
     this.adapt();
   }
 
