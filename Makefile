@@ -153,7 +153,7 @@ acceptance-clean:
 
 .PHONY: deploy
 deploy:
-	bin/cr-deploy-sshfs
+	bin/cr-deploy-sshfs commit
 
 .PHONY: deploy-test
 deploy-test:
