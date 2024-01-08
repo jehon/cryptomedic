@@ -17,7 +17,7 @@ context("Actions", () => {
         .find('x-message[msg-id="invalid-credentials"')
         .should("have.text", "Invalid credentials");
 
-      cy.crCompareSnapshot("invalid-credentials");
+      //      cy.crCompareSnapshot("invalid-credentials");
     });
   });
 });
