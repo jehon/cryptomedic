@@ -14,3 +14,6 @@ if [ ! -r "$HOME"/.ssh/id_rsa ]; then
     echo "Generating a ssh key"
     ssh-keygen -b 2048 -t rsa -f "$HOME"/.ssh/id_rsa -q -N ""
 fi
+
+ssh -V
+sshpass -V
