@@ -55,6 +55,7 @@ global-dump:
 	@echo "HOME:                           $(HOME)"
 	@echo "SHELL:                          $(SHELL)"
 	@echo "PATH:                           $(PATH)"
+	@echo "arch:                           $(shell arch)"
 	@echo "CRYPTOMEDIC_DOCKER_SOCKET:      $(CRYPTOMEDIC_DOCKER_SOCKET)" 
 	@echo "ACCEPTANCE:                     $(ACCEPTANCE)"
 	@echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:  $(CRYPTOMEDIC_DEPLOY_FILES_HOST)"
