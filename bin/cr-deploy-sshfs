@@ -48,7 +48,7 @@ exiting() {
     RES=$?
     echo "Exiting"
     fusermount -u -z "${LOCAL_MOUNT}" || true
-    rmdir "${LOCAL_MOUNT}"
+    rmdir "${LOCAL_MOUNT}" || true
     return $?
 }
 
@@ -64,14 +64,17 @@ sshpass -p"${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}" \
     -s -f &
 
 echo "✔ Waiting for mount to be ready"
-sleep 1s
-while [ ! -r www ]; do
+(( I=1 ))
+while [ ! -r "${LOCAL_MOUNT}"/.ovhconfig ]; do
     sleep 1s
+    (( I++ ))
+	if [[ "$I" -gt 20 ]]; then
+		echo "waiting failed" >&2
+		exit 1
+	fi
 done
 echo "✔ Mounted"
 header_end
-
-# --ignore-times
 
 header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
 rsync $DRY_RUN \
@@ -82,3 +85,5 @@ rsync $DRY_RUN \
     "${CR_PRJ_DIR}/${PART}" \
     "${LOCAL_MOUNT}/${PART}"
 header_end
+
+echo "✔ Synced"
