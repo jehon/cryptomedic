@@ -59,13 +59,11 @@ try {
 
     function migrateFile(string $from, string $to): void
     {
-        echo "migrateFile: $from to $to\n";
-        $from = constant("CR_PRJ_ROOT") . "/" . $from;
-        $to = constant("CR_PRJ_ROOT") . "/" . $to;
-        echo "migrateFile: $from to $to\n";
-        if (file_exists($from)) {
+        $fromAbs = constant("CR_PRJ_ROOT") . "/" . $from;
+        $toAbs = constant("CR_PRJ_ROOT") . "/" . $to;
+        if (file_exists($fromAbs)) {
             echo "migrateFile: $from to $to\n";
-            $res = rename($from, $to);
+            $res = rename($fromAbs, $toAbs);
             if (!$res) {
                 throw new Exception("Impossible to move $from to $to");
             }

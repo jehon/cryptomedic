@@ -28,27 +28,28 @@ $myconfig = [
     ),
     "folders" => [
         # A pointer to this folder
-        "root" => __DIR__,
+        "root" => constant("CR_PRJ_ROOT"),
 
         # Storage of persistent data (pdf, image, ...)
-        "storage" => __DIR__ . "/live/storage/",
+        "storage" => constant("CR_PRJ_ROOT") . "/live/storage/",
 
         # Storage of persistent data (pdf, image, ...)
-        "backups" => __DIR__ . "/live/backups/",
+        "backups" => constant("CR_PRJ_ROOT") . "/live/backups/",
+
 
         # Storage of temporary files
-        "temporary" => __DIR__ . "/tmp/integration/webTemp/",
+        "temporary" => constant("CR_PRJ_ROOT") . "/tmp/integration/webTemp/",
     ],
 ];
 
-if (file_exists(__DIR__ . "/config-custom.php")) {
+if (file_exists(constant("CR_PRJ_ROOT") . "/config-custom.php")) {
     # config-custom hold the configuration of the project
-    require __DIR__ . "/config-custom.php";
+    require constant("CR_PRJ_ROOT") . "/config-custom.php";
 }
 
-if (file_exists(__DIR__ . "/config-site.php")) {
+if (file_exists(constant("CR_PRJ_ROOT") . "/config-site.php")) {
     # This file will be protected by the prj-go-site.sh
-    require __DIR__ . "/config-site.php";
+    require constant("CR_PRJ_ROOT") . "/config-site.php";
 }
 
 // if (isset($argc)) {
