@@ -8,7 +8,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt update
 
-apt install --yes openssh-client sshpass sshfs curl coreutils diffutils
+apt install --yes openssh-client sshpass sshfs curl coreutils diffutils lftp
 
 if [ ! -r "$HOME"/.ssh/id_rsa ]; then
     echo "Generating a ssh key"
