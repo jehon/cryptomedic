@@ -45,7 +45,7 @@ try {
         }
     }
 
-    function ensureFolderEmpty($path)
+    function ensureFolderEmpty(string $path): void
     {
         $target = constant("CR_PRJ_ROOT") . "/" . $path;
         echo "ensureFolderEmpty: $path ($target)\n";
@@ -54,6 +54,21 @@ try {
         } else {
             echo " - removing files in $target\n";
             deleteFileFromGlob($target . "/*");
+        }
+    }
+
+    function migrateFile(string $from, string $to): void
+    {
+        echo "migrateFile: $from to $to\n";
+        $from = constant("CR_PRJ_ROOT") . "/" . $from;
+        $to = constant("CR_PRJ_ROOT") . "/" . $to;
+        echo "migrateFile: $from to $to\n";
+        if (file_exists($from)) {
+            echo "migrateFile: $from to $to\n";
+            $res = rename($from, $to);
+            if (!$res) {
+                throw new Exception("Impossible to move $from to $to");
+            }
         }
     }
 
