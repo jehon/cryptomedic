@@ -15,6 +15,7 @@ clean-files: backend-clean-files
 backend-clean-files:
 	rm -fr "$(ROOT)/$(BACKEND_ROOT)/bootstrap/cache"
 	rm -fr "$(ROOT)/$(BACKEND_ROOT)/storage"
+	rm -fr "$(ROOT)/live/laravel"
 	rm -fr "$(ROOT)/$(TMP)/backend"
 
 .PHONY: backend-dump

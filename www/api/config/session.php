@@ -1,5 +1,7 @@
 <?php
 
+global $myconfig;
+
 return [
 
     /*
@@ -57,7 +59,7 @@ return [
     |
     */
 
-    'files' => storage_path('framework/sessions'),
+    'files' => $myconfig["folders"]["sessions"],
 
     /*
     |--------------------------------------------------------------------------

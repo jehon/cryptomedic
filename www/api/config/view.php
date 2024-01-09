@@ -1,5 +1,7 @@
 <?php
 
+global $myconfig;
+
 return [
 
     /*
@@ -28,6 +30,5 @@ return [
     |
     */
 
-    'compiled' => realpath(storage_path('framework/views')),
-
+    'compiled' => $myconfig["folders"]["views"],
 ];

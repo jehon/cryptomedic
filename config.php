@@ -36,6 +36,9 @@ $myconfig = [
         # Storage of persistent data (pdf, image, ...)
         "backups" => constant("CR_PRJ_ROOT") . "/live/backups/",
 
+        "cache" => constant("CR_PRJ_ROOT") . "/live/laravel/cache/",
+        "sessions" => constant("CR_PRJ_ROOT") . "/live/laravel/sessions/",
+        "views" => constant("CR_PRJ_ROOT") . "/live/laravel/views/",
 
         # Storage of temporary files
         "temporary" => constant("CR_PRJ_ROOT") . "/tmp/integration/webTemp/",

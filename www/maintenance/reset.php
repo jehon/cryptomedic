@@ -74,6 +74,9 @@ try {
     ensureFolderEmpty("www/api/bootstrap/cache/");
     ensureFolderEmpty("tmp/integration/webTemp/");
 
+    // As of 2024-01-09
+    migrateFile("www/api/storage/framework/sessions", "live/laravel/sessions");
+
     echo "\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);
     ob_end_flush();
