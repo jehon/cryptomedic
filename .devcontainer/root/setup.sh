@@ -10,4 +10,10 @@ apt update
 
 apt install --yes curl coreutils diffutils lftp
 
+echo "** curl **"
+curl --version
+echo
+
+echo "** lftp **"
 lftp -v
+echo
