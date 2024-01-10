@@ -8,6 +8,9 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[php]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[sql]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -37,7 +40,9 @@
     "*.ts",
     "*.tsx",
     "*.html",
-    "*.json"
+    "*.json",
+    "*.php",
+    "*.sql"
   ],
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#004f03"
