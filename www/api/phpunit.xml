@@ -10,7 +10,11 @@
       processIsolation="false"
       stopOnFailure="false"
     >
-  <coverage/>
+  <coverage>
+    <report>
+      <html outputDirectory="../../tmp/backend/coverage/"/>
+    </report>
+  </coverage>
   <testsuites>
     <testsuite name="Application Test Suite">
       <directory suffix="Test.php">./tests</directory>

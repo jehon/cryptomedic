@@ -16,17 +16,9 @@ set -o pipefail
 #
 #
 
-mkdir -m 777 -p "tmp"
-
 FOLDER="$CR_REL_PATH"
-REPORTS="tmp/backend/reports/"
-
-mkdir -p "$REPORTS"
-chmod a+rwx "$REPORTS"
 
 header_begin "PHPUnit: $T $V starting"
-
-# ( cd "$FOLDER" && ./vendor/bin/phpunit --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@" )
 
 docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
 	-e "COMMIT=$COMMIT" \
@@ -34,6 +26,6 @@ docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
 	--volume "$CR_PRJ_DIR:/workdir" \
 	--workdir "/workdir/$FOLDER" \
 	web \
-	vendor/bin/phpunit --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
+	vendor/bin/phpunit "$@"
 
 header_end
