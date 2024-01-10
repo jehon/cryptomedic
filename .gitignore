@@ -1,30 +1,28 @@
+
+#
+# Built artifacts
+#
+/.built
+/.ovhconfig
+/legacy/built/
+/www/built/
+/www/index.html
+
+#
+# Temporary files
+#
 /live/
 /live-from-production/
 /tmp/
-/www/index.html
-/www/api/bootstrap/cache
+/www/api/bootstrap/cache/
 
-/**/built/
-/**/logs/
-/**/node_modules/
-/**/tmp/
-/**/vendor/
-*.tmp.*
+node_modules
+vendor
+
+#
+# Others
+#
+/.~lock.*
 
 commit.msg
-.git
-.~lock.*
 *.bak
-*.log
-.phpunit.result.cache
-core
-.ovhconfig
-.built
-
-/.buildpath
-/.externalToolBuilders/
-/.idea
-/.metadata
-/.project
-/.settings
-/.DS_Store
