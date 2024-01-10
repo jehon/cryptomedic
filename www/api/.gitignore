@@ -1,8 +1,0 @@
-/node_modules
-/public/storage
-/vendor
-/bootstrap/cache
-/bootstrap/app
-Homestead.json
-Homestead.yaml
-.env

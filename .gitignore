@@ -1,6 +1,7 @@
 /live/
 /live-from-production/
 /tmp/
+/www/index.html
 
 /**/built/
 /**/logs/
@@ -11,7 +12,6 @@
 
 commit.msg
 .git
-.vagrant
 .~lock.*
 *.bak
 *.log
