@@ -41,6 +41,7 @@ fi
 
 header_begin "Cleaning local"
 find . -type d -empty -delete
+cr-ensure-folder-empty "www/api/bootstrap/cache/"
 header_end
 
 
