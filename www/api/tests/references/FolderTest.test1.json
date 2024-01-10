@@ -209,7 +209,6 @@
                 "xray": "",
                 "performed": null,
                 "not_performed": null,
-                "x_Surgery66": "Postero-medial release",
                 "comments": "",
                 "suggested_for_surgery": 0,
                 "treatment_evaluation": null,
@@ -257,19 +256,13 @@
                 "IMIC_distance": "10",
                 "left_leg": "Varus",
                 "cross_left_F": "0",
-                "x_Surgery": "Osteotomy",
                 "xray": "",
-                "x_Brace": null,
-                "x_Nutrisupport": 0,
                 "brachial_circumference_cm": 0,
                 "walking_difficulties": "Level 1",
                 "comments": "",
                 "suggested_for_surgery": 1,
                 "treatment_evaluation": null,
-                "treatment_finished": null,
-                "x_conclusion_medical_calcium500": 0,
-                "x_conclusion_medical_calcium1000": 1,
-                "x_conclusion_medical_vitaminD": 0
+                "treatment_finished": null
             }
         },
         {
