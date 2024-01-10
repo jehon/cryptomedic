@@ -73,6 +73,8 @@ try {
     // Relative to CR_PRJ_ROOT
     ensureFolderEmpty("www/api/bootstrap/cache/");
     ensureFolderEmpty("tmp/integration/webTemp/");
+    ensureFolderEmpty("live/laravel/cache/");
+    ensureFolderEmpty("live/laravel/views/");
 
     echo "\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);
