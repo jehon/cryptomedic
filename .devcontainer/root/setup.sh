@@ -8,9 +8,6 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt update
 
-apt install --yes openssh-client sshpass sshfs curl coreutils diffutils lftp
+apt install --yes curl coreutils diffutils lftp
 
-ssh -V
-sshpass -V
-sshfs -V
 lftp -v
