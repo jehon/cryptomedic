@@ -12,7 +12,6 @@ rsync -a --delete live-for-test/ live/
 chmod -R a+rwX "live/"
 
 cr-ensure-folder-empty "www/api/bootstrap/cache/"
-cr-ensure-folder-empty "www/api/storage/logs/"
 cr-ensure-folder-empty "tmp/integration/webTemp"
 
 header_end

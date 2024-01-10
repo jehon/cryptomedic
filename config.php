@@ -37,6 +37,7 @@ $myconfig = [
         "backups" => constant("CR_PRJ_ROOT") . "/live/backups/",
 
         "cache" => constant("CR_PRJ_ROOT") . "/live/laravel/cache/",
+        "log" => constant("CR_PRJ_ROOT") . "/live/laravel/laravel.log",
         "sessions" => constant("CR_PRJ_ROOT") . "/live/laravel/sessions/",
         "views" => constant("CR_PRJ_ROOT") . "/live/laravel/views/",
 
