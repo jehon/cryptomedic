@@ -95,4 +95,4 @@ header_begin "Refreshing structure"
 "$CR_SCRIPT_DIR/"cr-refresh-structure "http://${CRYPTOMEDIC_DEPLOY_WEB_HOST}:${CRYPTOMEDIC_DEPLOY_WEB_PORT}" "${CRYPTOMEDIC_DEPLOY_WEB_TOKEN}"
 header_end
 
-ok "Done"
+echo "✔ Done"
