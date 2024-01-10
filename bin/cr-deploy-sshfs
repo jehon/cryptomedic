@@ -8,7 +8,7 @@ set -o pipefail
 
 make build
 
-DRY_RUN="-n"
+DRY_RUN="--dry-run"
 if [ "$1" == "commit" ]; then
     echo "*** Commiting really ***"
     DRY_RUN=
@@ -42,49 +42,33 @@ fi
 header_begin "Cleaning local"
 find . -type d -empty -delete
 cr-ensure-folder-empty "www/api/bootstrap/cache/"
-header_end
 
-
-exiting() {
-    RES=$?
-    echo "Exiting"
-    fusermount -u -z "${LOCAL_MOUNT}" || true
-    rmdir "${LOCAL_MOUNT}" || true
-    return $?
-}
-
-trap exiting EXIT SIGINT
-
-# -o StrictHostKeyChecking=accept-new -o UpdateHostKeys=yes 
-
-header_begin "Mounting"
-mkdir -p "${LOCAL_MOUNT}"
-sshpass -p"${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}" \
-    sshfs "${CRYPTOMEDIC_DEPLOY_FILES_USER}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}:" "${LOCAL_MOUNT}" \
-    -o sshfs_sync -o StrictHostKeyChecking=accept-new -o UpdateHostKeys=yes \
-    -s -f &
-
-echo "✔ Waiting for mount to be ready"
-(( I=1 ))
-while [ ! -r "${LOCAL_MOUNT}"/.ovhconfig ]; do
-    sleep 1s
-    (( I++ ))
-	if [[ "$I" -gt 20 ]]; then
-		echo "waiting failed" >&2
-		exit 1
-	fi
-done
-echo "✔ Mounted"
 header_end
 
 header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
-rsync $DRY_RUN \
-    --itemize-changes \
-    --recursive --times --omit-dir-times \
-    --delete \
-    --include-from="${CR_PRJ_DIR}/deploy-filter" \
-    "${CR_PRJ_DIR}/${PART}" \
-    "${LOCAL_MOUNT}/${PART}"
+
+generate_sync_command() {
+    F="${1%%/}"
+    echo -n "mirror ${DRY_RUN} " \
+        "--reverse --delete --ignore-time --no-perms " \
+        "-x tmp -x bin -x test -x tests -x Tmp -x Temp -x '.+\.log'" \
+        "$F $F"
+}
+
+(
+cat <<EOS
+    $( generate_sync_command "" ) --file=.ovhconfig;
+    $( generate_sync_command "" ) --file=favicon*;
+    $( generate_sync_command "" ) --file=config.php;
+    $( generate_sync_command "" ) --file=index.html;
+    $( generate_sync_command "" ) --file=licenses*;
+    $( generate_sync_command "conf/database/versions/" );
+    $( generate_sync_command "conf/database/always" );
+    $( generate_sync_command "www" ) --exclude www/api/bootstrap/cache --exclude www/api/storage;
+    quit
+EOS
+) | lftp "sftp://${CRYPTOMEDIC_DEPLOY_FILES_USER}:${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}"
+
 header_end
 
 echo "✔ Synced"
