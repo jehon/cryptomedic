@@ -33,6 +33,8 @@ jobs:
 
       - run: sudo .devcontainer/root/setup.sh
 
+      - run: .devcontainer/root/setup-user.sh
+
       - run: make dc-build
 
       - run: make dc-up
