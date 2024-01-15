@@ -50,7 +50,7 @@ header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
 generate_sync_command() {
     F="${1%%/}"
     echo -n "mirror ${DRY_RUN} " \
-        "--reverse --delete --ignore-size --no-perms " \
+        "--reverse --delete --no-perms " \
         "-x tmp -x bin -x test -x tests -x Tmp -x Temp -x '.+\.log'" \
         "$F $F"
 }
