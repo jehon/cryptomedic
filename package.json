@@ -62,7 +62,7 @@
     "htmlhint": "1.1.4",
     "husky": "8.0.3",
     "identity-obj-proxy": "3.0.0",
-    "imports-loader": "4.0.1",
+    "imports-loader": "5.0.0",
     "jasmine": "5.1.0",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "jest": "29.7.0",
