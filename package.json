@@ -34,7 +34,7 @@
     "@prettier/plugin-php": "0.22.1",
     "@testing-library/jest-dom": "6.4.1",
     "@testing-library/react": "14.2.0",
-    "@types/node": "20.11.15",
+    "@types/node": "20.11.16",
     "@types/pixelmatch": "5.2.6",
     "@types/pngjs": "6.0.4",
     "@types/react": "18.2.51",
