@@ -7,7 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "@adobe/es-modules-middleware": "1.1.0",
-    "@testing-library/jest-dom": "6.4.0",
+    "@testing-library/jest-dom": "6.4.1",
     "@testing-library/react": "14.2.0",
     "angular": "1.8.3",
     "angular-route": "1.8.3",
@@ -32,7 +32,7 @@
     "@commitlint/cli": "18.6.0",
     "@commitlint/config-conventional": "18.6.0",
     "@prettier/plugin-php": "0.22.1",
-    "@testing-library/jest-dom": "6.4.0",
+    "@testing-library/jest-dom": "6.4.1",
     "@testing-library/react": "14.2.0",
     "@types/node": "20.11.14",
     "@types/pixelmatch": "5.2.6",
