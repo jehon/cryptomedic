@@ -51,55 +51,6 @@ Notes:
 | make deploy-test     | simulate deploy the stack to the production server (env config necessary) |
 | make database-backup | create a new 100-base.sql for next run (usefull when creating new data)   |
 
-# Style
-
-## JSDoc
-
-https://github.com/cancerberoSgx/jsdoc-typeof-plugin
-
-```lang=javascript
-/**
- * @return {typeof Something} a new Something subclass
- */
-```
-
-## Material design
-
-All Components: https://github.com/material-components/material-components-web-components
-
-Text field: https://github.com/material-components/material-components-web-components/tree/master/packages/textfield
-
-React: https://mui.com/material-ui/getting-started/overview/
-
-## React
-
-### Inside WC:
-
-class XSearch extends HTMLElement {
-connectedCallback() {
-const mountPoint = document.createElement('span');
-this.attachShadow({ mode: 'open' }).appendChild(mountPoint);
-
-    const name = this.getAttribute('name');
-    const url = 'https://www.google.com/search?q=' + encodeURIComponent(name);
-    const root = ReactDOM.createRoot(mountPoint);
-    root.render(<a href={url}>{name}</a>);
-
-}
-}
-customElements.define('x-search', XSearch);
-
-### No JSX:
-
-class Hello extends React.Component {
-render() {
-return React.createElement('div', null, `Hello ${this.props.toWhat}`);
-}
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(React.createElement(Hello, {toWhat: 'World'}, null));
-
 # Attributions
 
 www/static/img/view.svg: Font Awesome by Dave Gandy - https://fortawesome.github.com/Font-Awesome
