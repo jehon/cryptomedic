@@ -11,4 +11,10 @@ set -o pipefail
 #     node \
 #     npm "$@"
 
-npm "$@"
+if type npm >& /dev/null ; then
+    npm "$@"
+else 
+    docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
+        node \
+        npm "$@"
+fi

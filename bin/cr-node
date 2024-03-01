@@ -5,9 +5,11 @@ set -o pipefail
 
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
-docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
-    node \
-    node --max-old-space-size=4096 \
-    "$@"
-
-# node "$@"
+if type node >& /dev/null ; then
+    node "$@"
+else 
+    docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
+        node \
+        node --max-old-space-size=4096 \
+        "$@"
+fi
