@@ -14,10 +14,7 @@ t::setDefaultOption("baseExpression", "currentFile()."); ?>
 			<?php (new t("Picture.date"))->tr2()->p(); ?>
 			<?php (new t("Picture.type"))->tr2()->p(); ?>
 			<?php (new t("Picture.comments"))->tr2()->p(); ?>
-			<?php (new t("Picture.file"))
-       ->readOnly()
-       ->tr2("File")
-       ->p(); ?>
+			<?php (new t("Picture.file"))->readOnly()->tr2("File")->p(); ?>
 			<x-fff-field class='not-mode-read' label='Upload a file' ng-if="!currentFile().file" ng-class="{ error: errors.pictureRequired }">
 				<x-restricted slot='label' restricted-by='folder.edit'>
 					Upload a file
