@@ -7,6 +7,14 @@
   "license": "MIT",
   "dependencies": {
     "@adobe/es-modules-middleware": "1.1.0",
+    "@angular/animations": "17.2.0",
+    "@angular/common": "17.2.0",
+    "@angular/compiler": "17.2.0",
+    "@angular/core": "17.2.0",
+    "@angular/forms": "17.2.0",
+    "@angular/platform-browser": "17.2.0",
+    "@angular/platform-browser-dynamic": "17.2.0",
+    "@angular/router": "17.2.0",
     "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "14.2.1",
     "angular": "1.8.3",
@@ -25,15 +33,22 @@
     "pngjs": "7.0.0",
     "react-bootstrap": "1.6.8",
     "react-router-dom": "6.22.2",
-    "use-immer": "0.9.0"
+    "rxjs": "7.8.0",
+    "tslib": "^2.3.0",
+    "use-immer": "0.9.0",
+    "zone.js": "0.14.3"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "17.2.2",
+    "@angular/cli": "17.2.2",
+    "@angular/compiler-cli": "17.2.0",
     "@babel/cli": "7.23.9",
     "@commitlint/cli": "19.0.3",
     "@commitlint/config-conventional": "19.0.3",
     "@prettier/plugin-php": "0.22.2",
     "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "14.2.1",
+    "@types/jasmine": "5.1.0",
     "@types/node": "20.11.24",
     "@types/pixelmatch": "5.2.6",
     "@types/pngjs": "6.0.4",
@@ -62,10 +77,16 @@
     "identity-obj-proxy": "3.0.0",
     "imports-loader": "5.0.0",
     "jasmine": "5.1.0",
+    "jasmine-core": "5.1.0",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
     "jsdoc-typeof-plugin": "1.0.0",
+    "karma": "6.4.0",
+    "karma-chrome-launcher": "3.2.0",
+    "karma-coverage": "2.2.0",
+    "karma-jasmine": "5.1.0",
+    "karma-jasmine-html-reporter": "2.1.0",
     "lcov-parse": "1.0.0",
     "lint-staged": "15.2.2",
     "pixelmatch": "5.3.0",
@@ -95,5 +116,12 @@
       "stylelint",
       "prettier --list-different"
     ]
-  }
+  },
+  "scripts":{     "ng": "ng",
+  "start": "ng serve",
+  "build": "ng build",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test"
+
+}
 }
