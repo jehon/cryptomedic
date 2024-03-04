@@ -1,0 +1,10 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./tmp/frontend/out-tsc/app",
+    "types": []
+  },
+  "files": ["src-ng/main.ts"],
+  "include": ["src-ng/**/*.d.ts"]
+}

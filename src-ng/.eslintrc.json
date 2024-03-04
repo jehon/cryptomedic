@@ -1,0 +1,14 @@
+{
+  "plugins": [ "jasmine" ],
+  "env": {
+    "node": false,
+    "browser": true,
+    "jasmine": true
+  },
+  "overrides": [
+    {
+      "files": [ "*.spec.ts" ],
+      "extends" : [ "plugin:jasmine/recommended" ]
+    }
+  ]
+}
