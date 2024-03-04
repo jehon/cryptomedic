@@ -1,19 +1,39 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "esnext", // ES2022 ?
+    "module": "esnext", // ES2022 ?
     "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react", // Legacy
     // Add default import for modules
     // @see https://www.typescriptlang.org/tsconfig#esModuleInterop
     "esModuleInterop": true,
     // Load JSON modules
     // @see https://www.typescriptlang.org/tsconfig#resolveJsonModule
-    "resolveJsonModule": true,
+    "resolveJsonModule": true, // Legacy
     // "sourceMap": true,
     "strict": true,
-    "allowJs": true
+    "allowJs": true,
+    "outDir": "./www/built/angular/",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    // "declaration": false,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "useDefineForClassFields": false,
+    "lib": ["ES2022", "dom"]
   },
-  "include": ["src/", "legacy/built", "legacy/app-old"],
-  "exclude": ["node_modules"]
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "include": ["src/", "src-ng/", "legacy/built", "legacy/app-old"], // Legacy
+  "exclude": ["node_modules"] // Legacy
 }

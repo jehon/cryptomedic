@@ -7,7 +7,7 @@ export type ActionStyle = {
   text: string;
 };
 
-export const ActionStyles: Record<string, ActionStyle> = {
+export const ActionStyles = {
   Alternate: {
     css: "action-alternate",
     text: "Alternate"
