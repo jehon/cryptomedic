@@ -136,7 +136,11 @@ $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_
 
 .PHONY: frontend-test
 test: frontend-test
-frontend-test:
+frontend-test: \
+		frontend-test-legacy
+		
+.PHONY: frontend-test-legacy
+frontend-test-legacy:
 	bin/cr-node node_modules/.bin/jest
 
 .PHONY: frontend-update-references
