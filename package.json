@@ -52,7 +52,7 @@
     "@types/node": "20.11.24",
     "@types/pixelmatch": "5.2.6",
     "@types/pngjs": "6.0.4",
-    "@types/react": "18.2.62",
+    "@types/react": "18.2.63",
     "@types/react-dom": "18.2.19",
     "@types/string": "0.0.34",
     "@typescript-eslint/eslint-plugin": "7.1.1",
