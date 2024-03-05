@@ -113,7 +113,7 @@ frontend-dev: \
 		$(FRONTEND_PUBLISHED)/.htaccess
 
 	@mkdir -p "$(dir $@)"
-	node_modules/.bin/ng serve --serve-path /built/frontend-ng/browser/
+	node_modules/.bin/ng serve
 	@touch "$@"
 
 $(FRONTEND_PUBLISHED)/.htaccess: src/build.htaccess
