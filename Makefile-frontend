@@ -19,6 +19,7 @@ frontend-clean: frontend-clean-files
 clean-files: frontend-clean-files
 frontend-clean-files:
 	rm -fr "$(ROOT)/$(TMP)/frontend"
+	rm -fr "$(ROOT)/$(TMP)/frontend-ng"
 
 	rm -f "$(ROOT)/www/index.html"
 	rm -fr "$(ROOT)/$(FRONTEND_PUBLISHED)"
@@ -65,31 +66,44 @@ frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
 
 .PHONY: frontend-lint-css
 frontend-lint-css: $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/stylelint src/**/*.css legacy/**/*.css
+	bin/cr-node node_modules/.bin/stylelint src-ng/**/*.css src/**/*.css legacy/**/*.css
 
 .PHONY: frontend-lint-html
 frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/htmlhint src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
+	bin/cr-node node_modules/.bin/htmlhint src-ng/**/*.html src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
 
 .PHONY: frontend-build
 build: frontend-build
 frontend-build: $(FRONTEND_BUILT_MARK)
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild due to the recursive dependencies
 $(FRONTEND_BUILT_MARK): \
+		www/built/frontend/ng1x.html \
+		www/built/frontend-ng/browser/index.html \
+		$(FRONTEND_PUBLISHED)/.htaccess
+
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
+www/built/frontend/ng1x.html: \
 		$(FRONTEND_DEPENDENCIES_MARK) \
 		$(shell find legacy/app-old/ ) \
 		$(shell find legacy/app-static/ ) \
-		$(shell find src/ ) \
-		webpack.config.js  \
 		$(FRONTEND_BUILD_TMP)/axios.js \
 		$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js \
 		$(FRONTEND_BUILD_TMP)/platform.js \
-		$(FRONTEND_PUBLISHED)/.htaccess
-
-# TODO: should not be here... (need rework of getHTMLNameOfClass)
-	CRYPTOMEDIC_DEV=true bin/cr-node node_modules/.bin/webpack
+		webpack.config.js
 
 	@mkdir -p "$(dir $@)"
+# TODO: should not be here... (need rework of getHTMLNameOfClass)
+	CRYPTOMEDIC_DEV=true bin/cr-node node_modules/.bin/webpack
+	@touch "$@"
+
+www/built/frontend-ng/browser/index.html: \
+		$(FRONTEND_DEPENDENCIES_MARK) \
+		$(shell find src-ng/ )
+
+	@mkdir -p "$(dir $@)"
+	bin/cr-node node_modules/.bin/ng build
 	@touch "$@"
 
 dev: frontend-build-dev-server
@@ -115,18 +129,15 @@ $(FRONTEND_PUBLISHED)/.htaccess: src/build.htaccess
 
 # Dependencies are used in the build !
 $(FRONTEND_BUILD_TMP)/axios.js: node_modules/axios/dist/axios.js $(FRONTEND_DEPENDENCIES_MARK)
-# --source-maps inline 
 	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
 
 # Dependencies are used in the build !
 $(FRONTEND_BUILD_TMP)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js $(FRONTEND_DEPENDENCIES_MARK)
-# --source-maps inline 
 	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 # Dependencies are used in the build !
 $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_DEPENDENCIES_MARK)
-# --source-maps inline 
 	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
 
 .PHONY: frontend-test

@@ -16,7 +16,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "www/built/frontend/src-ng",
+            "outputPath": "www/built/frontend-ng",
             "index": "src-ng/index.html",
             "browser": "src-ng/main.ts",
             "polyfills": ["zone.js"],
@@ -56,7 +56,8 @@
               "buildTarget": "cryptomedic:build:production"
             },
             "development": {
-              "buildTarget": "cryptomedic:build:development"
+              "buildTarget": "cryptomedic:build:development",
+              "proxyConfig": "src-ng/proxy.conf.mjs"
             }
           },
           "defaultConfiguration": "development"
