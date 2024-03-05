@@ -11,12 +11,13 @@
       "schematics": {},
       "root": "",
       "sourceRoot": "src-ng",
-      "prefix": "app",
+      "prefix": "cryptomedic-ng",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "www/built/frontend-ng",
+            "baseHref": "/built/frontend-ng/browser/",
+            "outputPath": "www/built/frontend-ng/",
             "index": "src-ng/index.html",
             "browser": "src-ng/main.ts",
             "polyfills": ["zone.js"],
