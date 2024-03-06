@@ -5,5 +5,5 @@
     "outDir": "./tmp/frontend/out-tsc/spec",
     "types": ["jasmine"]
   },
-  "include": ["src-ng/**/*.spec.ts", "src-ng/**/*.d.ts"]
+  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

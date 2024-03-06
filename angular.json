@@ -10,7 +10,7 @@
       "projectType": "application",
       "schematics": {},
       "root": "",
-      "sourceRoot": "src-ng",
+      "sourceRoot": "src",
       "prefix": "cryptomedic-ng",
       "architect": {
         "build": {
@@ -18,12 +18,12 @@
           "options": {
             "baseHref": "/built/frontend-ng/browser/",
             "outputPath": "www/built/frontend-ng/",
-            "index": "src-ng/index.html",
-            "browser": "src-ng/main.ts",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src-ng/favicon.ico", "src-ng/assets"],
-            "styles": ["src-ng/styles.css"],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -58,7 +58,7 @@
             },
             "development": {
               "buildTarget": "cryptomedic:build:development",
-              "proxyConfig": "src-ng/proxy.conf.mjs"
+              "proxyConfig": "src/proxy.conf.mjs"
             }
           },
           "defaultConfiguration": "development"
@@ -74,8 +74,8 @@
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": ["src-ng/favicon.ico", "src-ng/assets"],
-            "styles": ["src-ng/styles.css"],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }

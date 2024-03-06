@@ -66,11 +66,11 @@ frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
 
 .PHONY: frontend-lint-css
 frontend-lint-css: $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/stylelint src-ng/**/*.css legacy/**/*.css
+	bin/cr-node node_modules/.bin/stylelint src/**/*.css legacy/**/*.css
 
 .PHONY: frontend-lint-html
 frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/htmlhint src-ng/**/*.html legacy/**/*.html tests/**/*.html --format=compact
+	bin/cr-node node_modules/.bin/htmlhint src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
 
 .PHONY: frontend-build
 build: frontend-build
@@ -100,7 +100,7 @@ www/built/frontend/ng1x.html: \
 
 www/built/frontend-ng/browser/index.html: \
 		$(FRONTEND_DEPENDENCIES_MARK) \
-		$(shell find src-ng/ )
+		$(shell find src/ )
 
 	@mkdir -p "$(dir $@)"
 	bin/cr-node node_modules/.bin/ng build
@@ -147,6 +147,7 @@ frontend-test-legacy:
 .PHONY: frontend-test-ng
 frontend-test-ng:
 	true
+#	ng test
 
 .PHONY: frontend-update-references
 update: frontend-update-references

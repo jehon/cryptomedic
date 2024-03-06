@@ -5,6 +5,6 @@
     "outDir": "./tmp/frontend/out-tsc/app",
     "types": []
   },
-  "files": ["src-ng/main.ts"],
-  "include": ["src-ng/**/*.d.ts"]
+  "files": ["src/main.ts"],
+  "include": ["src/**/*.d.ts"]
 }
