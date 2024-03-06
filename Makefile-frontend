@@ -144,7 +144,7 @@ frontend-test-legacy:
 	bin/cr-node node_modules/.bin/jest
 
 .PHONY: frontend-test-ng
-frontend-test-ng:
+frontend-test-ng: $(FRONTEND_DEPENDENCIES_MARK)
 	ng test --no-watch --no-progress
 
 .PHONY: frontend-update-references
