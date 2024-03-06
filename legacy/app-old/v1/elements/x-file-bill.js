@@ -1,11 +1,11 @@
 /* istanbul ignore file */
 
-import XFile from "./x-file.js";
 import {
-  DataMissingException,
-  ConfigurationMissingException
-} from "../../../../src/utils/exceptions.js";
-import { onSession, getSession } from "../../v2/js/session.js";
+  ConfigurationMissingException,
+  DataMissingException
+} from "../../../react/utils/exceptions.js";
+import { getSession, onSession } from "../../v2/js/session.js";
+import XFile from "./x-file.js";
 
 export default class XFileBill extends XFile {
   get categoriesList() {

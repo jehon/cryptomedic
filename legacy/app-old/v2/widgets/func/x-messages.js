@@ -1,4 +1,4 @@
-import { spacing } from "../../../../../src/config.js";
+import { spacing } from "../../../../react/config.js";
 import { createElementWithTag } from "../../js/custom-element.js";
 import "../style/x-message.js";
 import XMessage from "../style/x-message.js";

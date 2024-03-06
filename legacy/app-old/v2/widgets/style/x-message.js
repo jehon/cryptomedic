@@ -1,8 +1,8 @@
+import { messages, spacing } from "../../../../react/config.js";
 import {
   createElementWithObject,
   createElementWithTag
 } from "../../js/custom-element.js";
-import { messages, spacing } from "../../../../../src/config.js";
 
 /**
  * @typedef {object} Message a message for x-messages

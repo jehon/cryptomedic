@@ -1,8 +1,8 @@
 import amd_stats from "./amd_stats.js";
 import {
+  ConfigurationException,
   DataInvalidException,
-  DataOutOfBoundException,
-  ConfigurationException
+  DataOutOfBoundException
 } from "./exceptions.js";
 
 /**

@@ -1,4 +1,4 @@
-import { messages } from "../../../../src/config.js";
+import { messages } from "../../../react/config.js";
 import { parseRouteLogin, setRoute } from "../js/router.js";
 import { setSession } from "../js/session.js";
 

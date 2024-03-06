@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 
-import XRequestor from "./x-o-requestor.js";
-import TimedMap from "../../v2/js/timedMap.js";
-import Folder from "../../../../src/business/folder.js";
-import nullify from "../../../../src/utils/nullify.js";
+import Folder from "../../../react/business/folder.js";
+import nullify from "../../../react/utils/nullify.js";
 import { setCurrentFolder } from "../../v2/js/session.js";
+import TimedMap from "../../v2/js/timedMap.js";
+import XRequestor from "./x-o-requestor.js";
 
 let patientFolderCache = new TimedMap(15 * 60);
 

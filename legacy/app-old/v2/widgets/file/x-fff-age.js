@@ -1,10 +1,10 @@
+import Patient from "../../../../react/business/patient.js";
 import {
   DataException,
   DataInvalidException,
   DataMissingException
-} from "../../../../../src/utils/exceptions.js";
+} from "../../../../react/utils/exceptions.js";
 import XWithFile from "./x-with-file.js";
-import Patient from "../../../../../src/business/patient.js";
 
 /**
  * Obsolete (TODO: remove this function)

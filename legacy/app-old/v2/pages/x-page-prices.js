@@ -1,4 +1,4 @@
-import { messages } from "../../../../src/config.js";
+import { messages } from "../../../react/config.js";
 import XInputDate from "../../v1/elements/x-input-date.js";
 import {
   createElementWithObject,

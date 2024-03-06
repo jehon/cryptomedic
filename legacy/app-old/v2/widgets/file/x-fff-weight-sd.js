@@ -1,6 +1,6 @@
-import XWithFile from "./x-with-file.js";
+import { stdDeviationFor } from "../../../../react/utils/standard-deviation.js";
 import { fromBirthDateTo } from "./x-fff-age.js";
-import { stdDeviationFor } from "../../../../../src/utils/standard-deviation.js";
+import XWithFile from "./x-with-file.js";
 
 export default class XFffWeightSd extends XWithFile {
   formula() {

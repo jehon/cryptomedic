@@ -1,11 +1,11 @@
 /* istanbul ignore file */
 
-import JHElement from "./jh-element.js";
 import {
   ApplicationException,
   DataInvalidException,
   DataMissingException
-} from "../../../../src/utils/exceptions.js";
+} from "../../../react/utils/exceptions.js";
+import JHElement from "./jh-element.js";
 
 export default class XFile extends JHElement {
   static get properties() {

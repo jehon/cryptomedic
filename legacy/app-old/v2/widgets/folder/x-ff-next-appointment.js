@@ -1,13 +1,13 @@
+import Appointment from "../../../../react/business/appointment.js";
+import { messages } from "../../../../react/config.js";
 import date2CanonicString from "../../js/date2CanonicString.js";
 import { getRouteToFolderAdd, setRoute } from "../../js/router.js";
-import Appointment from "../../../../../src/business/appointment.js";
-import XWithFolder from "./x-with-folder.js";
+import "../func/x-buttons.js";
+import "../style/x-button.js";
+import XButton from "../style/x-button.js";
 import "../style/x-group-panel.js";
 import "../style/x-message.js";
-import "../style/x-button.js";
-import "../func/x-buttons.js";
-import { messages } from "../../../../../src/config.js";
-import XButton from "../style/x-button.js";
+import XWithFolder from "./x-with-folder.js";
 
 // TODO: better layout for without appointment
 

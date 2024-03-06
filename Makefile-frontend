@@ -66,11 +66,11 @@ frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
 
 .PHONY: frontend-lint-css
 frontend-lint-css: $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/stylelint src-ng/**/*.css src/**/*.css legacy/**/*.css
+	bin/cr-node node_modules/.bin/stylelint src-ng/**/*.css legacy/**/*.css
 
 .PHONY: frontend-lint-html
 frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/htmlhint src-ng/**/*.html src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
+	bin/cr-node node_modules/.bin/htmlhint src-ng/**/*.html legacy/**/*.html tests/**/*.html --format=compact
 
 .PHONY: frontend-build
 build: frontend-build
@@ -137,25 +137,30 @@ $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_
 .PHONY: frontend-test
 test: frontend-test
 frontend-test: \
-		frontend-test-legacy
+		frontend-test-legacy \
+		frontend-test-ng
 		
 .PHONY: frontend-test-legacy
 frontend-test-legacy:
 	bin/cr-node node_modules/.bin/jest
 
+.PHONY: frontend-test-ng
+frontend-test-ng:
+	true
+
 .PHONY: frontend-update-references
 update: frontend-update-references
 frontend-update-references: $(FRONTEND_BUILT_MARK)
 
-migration-status: clear
-	@echo "********** In legacy folders ******************"
-	@find src -name "*.js" -exec echo "** To: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ src/ ";" | jh-tag-stdin "to-js"
-	@echo ""
+# migration-status: clear
+# 	@echo "********** In legacy folders ******************"
+# 	@find src -name "*.js" -exec echo "** To: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ legacy/react/ ";" | jh-tag-stdin "to-js"
+# 	@echo ""
 
-	@echo "********** In src folders ******************"
+# 	@echo "********** In src folders ******************"
 
-	@grep --recursive --include "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "warn"
-	@echo ""
+# 	@grep --recursive --include "*.js" --fixed-strings "/../legacy/" legacy/react/ | jh-tag-stdin "warn"
+# 	@echo ""
 
-	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "ko:deps"
-	@echo ""
+# 	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "/../legacy/" legacy/react/ | jh-tag-stdin "ko:deps"
+# 	@echo ""

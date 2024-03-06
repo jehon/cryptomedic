@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 /* eslint-disable */
 
-import Payment from "../../../src/business/payment.js";
+import Payment from "../../react/business/payment.js";
+import { extractPrefsFile } from "../../react/utils/prefs.js";
 import { formGetContent } from "../v2/js/form.js";
-import { extractPrefsFile } from "../../../src/utils/prefs.js";
 import getDataService from "../v2/js/getDataService.js";
 import { getSession, onSession } from "../v2/js/session.js";
 import XFffSalaryRatio from "../v2/widgets/file/x-fff-salary-ratio.js";

@@ -1,8 +1,8 @@
 import "../../../legacy/app-old/v1/elements/x-file-bill.js";
 
 import { webDescribe, loadReference, RefFolder1 } from "./athelpers.js";
-import Folder from "../../../src/business/folder.js";
-import Bill from "../../../src/business/bill.js";
+import Folder from "../../../legacy/react/business/folder.js";
+import Bill from "../../../legacy/react/business/bill.js";
 import { setSession } from "../../../legacy/app-old/v2/js/session.js";
 
 // TODO: use constructor instead of webDescribe

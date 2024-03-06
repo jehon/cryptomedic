@@ -5,7 +5,7 @@ import {
   RefFolder1RicketConsult13
 } from "./athelpers.js";
 
-import Folder from "../../../src/business/folder.js";
+import Folder from "../../../legacy/react/business/folder.js";
 import XFffBmi from "../../../legacy/app-old/v2/widgets/file/x-fff-bmi.js";
 
 let testFolder;
