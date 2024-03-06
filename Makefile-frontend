@@ -137,8 +137,7 @@ $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_
 .PHONY: frontend-test
 test: frontend-test
 frontend-test: \
-		frontend-test-legacy \
-		frontend-test-ng
+		frontend-test-legacy
 		
 .PHONY: frontend-test-legacy
 frontend-test-legacy:
@@ -146,8 +145,7 @@ frontend-test-legacy:
 
 .PHONY: frontend-test-ng
 frontend-test-ng:
-	true
-#	ng test
+	ng test --no-watch --no-progress
 
 .PHONY: frontend-update-references
 update: frontend-update-references
