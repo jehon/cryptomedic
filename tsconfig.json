@@ -1,9 +1,7 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "esnext", // ES2022 ?
-    "module": "esnext", // ES2022 ?
-    "moduleResolution": "node",
     "jsx": "react", // Legacy
     // Add default import for modules
     // @see https://www.typescriptlang.org/tsconfig#esModuleInterop
@@ -12,19 +10,21 @@
     // @see https://www.typescriptlang.org/tsconfig#resolveJsonModule
     "resolveJsonModule": true, // Legacy
     // "sourceMap": true,
-    "strict": true,
     "allowJs": true,
     "outDir": "./www/built/angular/",
     "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    // "declaration": false,
     "experimentalDecorators": true,
+    "moduleResolution": "node",
     "importHelpers": true,
+    "target": "esnext",
+    "module": "esnext",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"]
   },
