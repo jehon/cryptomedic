@@ -79,7 +79,7 @@ frontend-build: $(FRONTEND_BUILT_MARK)
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild due to the recursive dependencies
 $(FRONTEND_BUILT_MARK): \
 		www/built/frontend/ng1x.html \
-		www/built/frontend-ng/browser/index.html \
+		dist/index.html \
 		$(FRONTEND_PUBLISHED)/.htaccess \
 		tsconfig.json tsconfig.app.json
 
@@ -101,9 +101,9 @@ www/built/frontend/ng1x.html: \
 	CRYPTOMEDIC_DEV=true bin/cr-node node_modules/.bin/webpack
 	@touch "$@"
 
-www/built/frontend-ng/browser/index.html: \
+dist/index.html: \
 		$(FRONTEND_DEPENDENCIES_MARK) \
-		tsconfig.json tsconfig.app.json
+		tsconfig.json tsconfig.app.json \
 		$(shell find src/ )
 
 	@mkdir -p "$(dir $@)"
