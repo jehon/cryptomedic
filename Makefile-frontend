@@ -141,6 +141,7 @@ $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_
 .PHONY: frontend-test
 test: frontend-test
 frontend-test: \
+		frontend-test-ng \
 		frontend-test-legacy
 		
 .PHONY: frontend-test-legacy
@@ -149,7 +150,7 @@ frontend-test-legacy:
 
 .PHONY: frontend-test-ng
 frontend-test-ng: $(FRONTEND_DEPENDENCIES_MARK)
-	ng test --no-watch --no-progress
+	ng test --no-watch --no-progress --browsers ChromeHeadless
 
 .PHONY: frontend-update-references
 update: frontend-update-references
