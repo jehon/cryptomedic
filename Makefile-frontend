@@ -80,7 +80,8 @@ frontend-build: $(FRONTEND_BUILT_MARK)
 $(FRONTEND_BUILT_MARK): \
 		www/built/frontend/ng1x.html \
 		www/built/frontend-ng/browser/index.html \
-		$(FRONTEND_PUBLISHED)/.htaccess
+		$(FRONTEND_PUBLISHED)/.htaccess \
+		tsconfig.json tsconfig.app.json
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
@@ -92,7 +93,8 @@ www/built/frontend/ng1x.html: \
 		$(FRONTEND_BUILD_TMP)/axios.js \
 		$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js \
 		$(FRONTEND_BUILD_TMP)/platform.js \
-		webpack.config.js
+		webpack.config.js \
+		tsconfig.json tsconfig.app.json
 
 	@mkdir -p "$(dir $@)"
 # TODO: should not be here... (need rework of getHTMLNameOfClass)
@@ -101,6 +103,7 @@ www/built/frontend/ng1x.html: \
 
 www/built/frontend-ng/browser/index.html: \
 		$(FRONTEND_DEPENDENCIES_MARK) \
+		tsconfig.json tsconfig.app.json
 		$(shell find src/ )
 
 	@mkdir -p "$(dir $@)"
