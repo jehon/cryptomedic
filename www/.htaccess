@@ -7,16 +7,20 @@ AddType image/jpg .jpg
 AddType image/jpg .jpeg
 
 <ifModule mod_expires.c>
-    # Thanks to https://stackoverflow.com/a/27029144/1954789
-    #
-    # !! this will not work for api and/or public files
-    #    since .htaccess there will override this
-    #
     RewriteEngine On
+
+# Redirection to HTTPS & www:
+#
+#   Thanks to https://stackoverflow.com/a/27029144/1954789
+#
+#   !! this will not work for api and/or public files
+#      since .htaccess there will override this
+#
     RewriteCond %{HTTPS} off
     RewriteCond %{ENV:SERVER_ENV} !dev
     RewriteRule (.*) https://%{HTTP_HOST}/$1 [R=301,L,QSA]
 
+# Fix expiry
     ExpiresActive 	  On
     ExpiresByType 	  text/html                     "A0"
     ExpiresByType     application/json              "A0"
