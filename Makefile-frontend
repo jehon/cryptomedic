@@ -24,6 +24,7 @@ frontend-clean-files:
 	rm -f "$(ROOT)/www/index.html"
 	rm -fr "$(ROOT)/$(FRONTEND_PUBLISHED)"
 	rm -fr "$(ROOT)/$(FRONTEND_BUILD_TMP)"
+	rm -fr "$(ROOT)/dist"
 
 	rm -fr "$(FRONTEND_BUILT_MARK)"
 
