@@ -80,8 +80,7 @@ frontend-build: $(FRONTEND_BUILT_MARK)
 $(FRONTEND_BUILT_MARK): \
 		www/built/frontend/ng1x.html \
 		dist/index.html \
-		$(FRONTEND_PUBLISHED)/.htaccess \
-		tsconfig.json tsconfig.app.json
+		$(FRONTEND_PUBLISHED)/.htaccess
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
@@ -103,7 +102,7 @@ www/built/frontend/ng1x.html: \
 
 dist/index.html: \
 		$(FRONTEND_DEPENDENCIES_MARK) \
-		tsconfig.json tsconfig.app.json \
+		tsconfig.json tsconfig.app.json angular.json \
 		$(shell find src/ )
 
 	@mkdir -p "$(dir $@)"
