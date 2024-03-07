@@ -6,8 +6,7 @@ AddType image/png .png
 AddType image/jpg .jpg
 AddType image/jpg .jpeg
 
-<ifModule mod_expires.c>
-    RewriteEngine On
+RewriteEngine On
 
 # Redirection to HTTPS & www:
 #
@@ -16,10 +15,11 @@ AddType image/jpg .jpeg
 #   !! this will not work for api and/or public files
 #      since .htaccess there will override this
 #
-    RewriteCond %{HTTPS} off
-    RewriteCond %{ENV:SERVER_ENV} !dev
-    RewriteRule (.*) https://%{HTTP_HOST}/$1 [R=301,L,QSA]
+RewriteCond %{HTTPS} off
+RewriteCond %{ENV:SERVER_ENV} !dev
+RewriteRule (.*) https://%{HTTP_HOST}/$1 [R=301,L,QSA]
 
+<ifModule mod_expires.c>
 # Fix expiry
     ExpiresActive 	  On
     ExpiresByType 	  text/html                     "A0"
