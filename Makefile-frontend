@@ -149,7 +149,7 @@ frontend-test-legacy:
 
 .PHONY: frontend-test-ng
 frontend-test-ng: $(FRONTEND_DEPENDENCIES_MARK)
-	ng test --no-watch --no-progress --browsers ChromeHeadless
+	node_modules/.bin/ng test --no-watch --no-progress --browsers ChromeHeadless
 
 .PHONY: frontend-update-references
 update: frontend-update-references
