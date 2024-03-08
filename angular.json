@@ -17,7 +17,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "baseHref": "/built/frontend-ng/browser/",
-            "outputPath": "www/built/frontend-ng",
+            "outputPath": "www/built/frontend-ng/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
