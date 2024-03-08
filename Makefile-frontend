@@ -24,7 +24,6 @@ frontend-clean-files:
 	rm -f "$(ROOT)/www/index.html"
 	rm -fr "$(ROOT)/$(FRONTEND_PUBLISHED)"
 	rm -fr "$(ROOT)/$(FRONTEND_BUILD_TMP)"
-	rm -fr "$(ROOT)/dist"
 
 	rm -fr "$(FRONTEND_BUILT_MARK)"
 
@@ -79,7 +78,7 @@ frontend-build: $(FRONTEND_BUILT_MARK)
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild due to the recursive dependencies
 $(FRONTEND_BUILT_MARK): \
 		www/built/frontend/ng1x.html \
-		dist/index.html \
+		www/built/frontend-ng/index.html \
 		$(FRONTEND_PUBLISHED)/.htaccess
 
 	@mkdir -p "$(dir $@)"
@@ -100,7 +99,7 @@ www/built/frontend/ng1x.html: \
 	CRYPTOMEDIC_DEV=true bin/cr-node node_modules/.bin/webpack
 	@touch "$@"
 
-dist/index.html: \
+www/built/frontend-ng/index.html: \
 		$(FRONTEND_DEPENDENCIES_MARK) \
 		tsconfig.json tsconfig.app.json angular.json \
 		$(shell find src/ )
@@ -155,15 +154,15 @@ frontend-test-ng: $(FRONTEND_DEPENDENCIES_MARK)
 update: frontend-update-references
 frontend-update-references: $(FRONTEND_BUILT_MARK)
 
-# migration-status: clear
-# 	@echo "********** In legacy folders ******************"
-# 	@find src -name "*.js" -exec echo "** To: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ legacy/react/ ";" | jh-tag-stdin "to-js"
-# 	@echo ""
+migration-status: clear
+	@echo "********** In legacy folders ******************"
+	@find src -name "*.js" -exec echo "** To: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ legacy/react/ ";" | jh-tag-stdin "to-js"
+	@echo ""
 
-# 	@echo "********** In src folders ******************"
+	@echo "********** In src folders ******************"
 
-# 	@grep --recursive --include "*.js" --fixed-strings "/../legacy/" legacy/react/ | jh-tag-stdin "warn"
-# 	@echo ""
+	@grep --recursive --include "*.js" --fixed-strings "/../legacy/" legacy/react/ | jh-tag-stdin "warn"
+	@echo ""
 
-# 	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "/../legacy/" legacy/react/ | jh-tag-stdin "ko:deps"
-# 	@echo ""
+	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "/../legacy/" legacy/react/ | jh-tag-stdin "ko:deps"
+	@echo ""
