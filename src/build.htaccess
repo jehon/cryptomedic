@@ -10,3 +10,6 @@
 RewriteEngine On
 RewriteBase /built/
 RewriteRule ^ng1x.html frontend/ng1x.html [qsappend,redirect]
+
+# Skip the "browser" segment
+RewriteRule ^frontend-ng/(.*) frontend-ng/browser/$1
