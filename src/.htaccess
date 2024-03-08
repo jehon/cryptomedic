@@ -3,11 +3,7 @@
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  
-  # Redirection to HTTPS & www:
-  RewriteCond %{HTTP_HOST} !^www\. [NC]
-  RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-  
+    
   # Excluded directories:
   RewriteRule ^api/?(.*) %{REQUEST_URI} [L,R=301]
   

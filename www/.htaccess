@@ -8,7 +8,7 @@ AddType image/jpg .jpeg
 
 RewriteEngine On
 
-# Redirection to HTTPS & www:
+# Redirection to HTTPS:
 #
 #   Thanks to https://stackoverflow.com/a/27029144/1954789
 #
@@ -18,6 +18,17 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteCond %{ENV:SERVER_ENV} !dev
 RewriteRule (.*) https://%{HTTP_HOST}/$1 [R=301,L,QSA]
+
+# Redirect to "www."
+#
+#   Thanks to https://stackoverflow.com/a/12050652/1954789
+#
+#   !! this will not work for api and/or public files
+#      since .htaccess there will override this
+#
+RewriteCond %{ENV:SERVER_ENV} !dev
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
 
 <ifModule mod_expires.c>
 # Fix expiry
