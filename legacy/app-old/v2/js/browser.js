@@ -1,6 +1,5 @@
 import hash from "./hash.js";
 
-/* global platform */
 import platform from "../../../built/platform.js";
 
 /* istanbul ignore else: impossible to test */

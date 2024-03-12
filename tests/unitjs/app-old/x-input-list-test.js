@@ -1,8 +1,8 @@
 import XInputList from "../../../legacy/app-old/v2/widgets/data/x-input-list.js";
 
-import { setSession } from "../../../legacy/app-old/v2/js/session.js";
 import { createElementWithObject } from "../../../legacy/app-old/v2/js/custom-element.js";
 import fireOn from "../../../legacy/app-old/v2/js/fire.js";
+import { setSession } from "../../../legacy/app-old/v2/js/session.js";
 import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {
@@ -118,6 +118,7 @@ describe(fn(import.meta.url), function () {
           listName: "unknownList"
         });
         expect(el.getAttribute("mode")).toBe("empty");
+        // eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
         expect(console.error).toHaveBeenCalled();
       });
 

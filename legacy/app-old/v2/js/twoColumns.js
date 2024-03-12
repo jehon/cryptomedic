@@ -30,7 +30,7 @@ export default class TwoColumns {
           this.options.id_scope
         }${field}' name='${field}'>${val}</span></td>
 			</tr>`;
-    } catch (e) {
+    } catch (_e) {
       /* istanbul ignore next: what error could I catch here? */
       // if (!(e instanceof ApplicationException)) {
       // throw e;

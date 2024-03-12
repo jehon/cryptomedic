@@ -1,8 +1,8 @@
 import XUserStatus from "../../../legacy/app-old/v2/widgets/x-user-status.js";
 
-import { webDescribe, fireOn, fn } from "./athelpers.js";
-import { mockResponseWithSuccess } from "./x-requestor-test.js";
 import { setSession } from "../../../legacy/app-old/v2/js/session.js";
+import { fireOn, fn, webDescribe } from "./athelpers.js";
+import { mockResponseWithSuccess } from "./x-requestor-test.js";
 
 // TODO: use constructor instead of webDescribe
 
@@ -53,6 +53,7 @@ describe(fn(import.meta.url), function () {
 
             spyOn(XUserStatus.prototype, "doLogout").and.callThrough();
             fireOn(element().querySelector("#logout"), "click");
+            // eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
             expect(XUserStatus.prototype.doLogout).toHaveBeenCalled();
           });
         });

@@ -110,7 +110,7 @@ export default class JHElement extends HTMLElement {
     });
   }
 
-  attributeChangedCallback(attributeName, oldValue, newValue) {
+  attributeChangedCallback(attributeName, _oldValue, newValue) {
     // snake-case to camel-case
     const attributeNameCamel = JHElement.snakeToCamel(attributeName);
     const attributeNameInternal = "_" + attributeNameCamel;
@@ -130,7 +130,7 @@ export default class JHElement extends HTMLElement {
             if (typeof newValue == "string") {
               try {
                 this[attributeNameInternal] = JSON.parse(newValue);
-              } catch (e) {
+              } catch (_e) {
                 this[attributeNameInternal] = null;
               }
             } else {

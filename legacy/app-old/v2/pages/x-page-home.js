@@ -150,7 +150,6 @@ export default class XPageHome extends HTMLElement {
         createElementWithTag("div", { class: "grid" }, [
           createElementWithObject(XPatientByReference),
 
-          // @ts-ignore
           createMenu({
             title: "Create a reference",
             id: "autogenerate-reference",
@@ -159,7 +158,6 @@ export default class XPageHome extends HTMLElement {
             toRoute: getRouteToCreateReference()
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Search",
             restrictedBy: "folder.read",
@@ -169,7 +167,6 @@ export default class XPageHome extends HTMLElement {
             toRoute: "/search"
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Consultations of the day",
             restrictedBy: "planning.execute",
@@ -179,7 +176,6 @@ export default class XPageHome extends HTMLElement {
             toRoute: getRouteToReport(REPORT_CONSULTATIONS)
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Activity Report",
             restrictedBy: "reports.execute",
@@ -192,7 +188,6 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
             toRoute: getRouteToReport(REPORT_ACTIVITY)
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Statistical Report",
             restrictedBy: "reports.execute",
@@ -202,7 +197,6 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
             toRoute: getRouteToReport(REPORT_STATISTICAL)
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Cash Register Report",
             restrictedBy: "reports.execute",
@@ -212,7 +206,6 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
             toRoute: getRouteToReport(REPORT_CASH_REGISTER)
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Surgical Report",
             restrictedBy: "reports.execute",
@@ -222,7 +215,6 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
             toRoute: getRouteToReport(REPORT_SURGICAL)
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Surgical Suggestions Report",
             restrictedBy: "reports.execute",
@@ -232,7 +224,6 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
             toRoute: getRouteToReport(REPORT_SURGICAL_SUGGESTED)
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Financial Report",
             restrictedBy: "reports.execute",
@@ -242,7 +233,6 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
             toRoute: getRouteToReport(REPORT_FINANCIAL)
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Bug reporting",
             versalIcon: "/static/img/bug.jpeg",
@@ -253,7 +243,6 @@ Thanks
             toLocation: "mailto:jeanhonlet@gmail.com?subject=Cryptomedic%20bug:"
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Prices",
             restrictedBy: "price.edit",
@@ -263,7 +252,6 @@ Thanks
             toRoute: "/prices"
           }),
 
-          // @ts-ignore
           createMenu({
             title: "Users management",
             restrictedBy: "users.manage",
@@ -273,7 +261,6 @@ Thanks
             toRoute: "/users"
           }),
 
-          // @ts-ignore
           createMenu({
             title: "View matrix",
             restrictedBy: "admin.securityMatrix",

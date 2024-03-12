@@ -1,8 +1,8 @@
+import * as router from "../../../legacy/app-old/v2/js/router.js";
 import {
   getRoute,
   getRouteParameters
 } from "../../../legacy/app-old/v2/js/router.js";
-import * as router from "../../../legacy/app-old/v2/js/router.js";
 
 import { fn } from "./athelpers.js";
 
@@ -70,10 +70,5 @@ describe(fn(import.meta.url), function () {
       router.setRoute("/login/login/test");
       expect(router.parseRouteLogin().redirect).toBe("/test");
     }
-  });
-
-  xit("should route to login", function () {
-    router.routeToLogin("test");
-    expect(router.getCurrentRoute()).toBe("/login/test");
   });
 });

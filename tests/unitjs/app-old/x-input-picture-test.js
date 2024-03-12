@@ -22,13 +22,16 @@ describe("tests/unit/x-input-picture-test.js", function () {
       });
 
       it("should load a text file and show warning ", function () {
-        spyOn(console, "error"); //.and.returnValue(null);
+        spyOn(console, "error");
         spyOn(window, "alert");
 
         element()._generatePreview(
           XInputPicture.dataURItoBlob(invalidImg, "test.txt")
         );
+        // eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
         expect(console.error).toHaveBeenCalled();
+
+        // eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
         expect(window.alert).toHaveBeenCalled();
       });
 

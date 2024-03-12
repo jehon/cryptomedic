@@ -2,25 +2,15 @@ import { fn } from "./athelpers.js";
 
 import XRequestor, {
   requestAndFilterBuilder,
-  ServerRequestError,
-  TransportRequestError
+  ServerRequestError
 } from "../../../legacy/app-old/v2/widgets/func/x-requestor.js";
 
-import axios from "../../../legacy/built/axios.js";
-import MockAdapter from "../../../legacy/built/axios-mock-adapter.js";
-import { getSession } from "../../../legacy/app-old/v2/js/session.js";
 import {
   loginCheckRequestBuilder,
   loginRequestBuilder
 } from "../../../legacy/app-old/v2/widgets/func/requests-authenticator.js";
-
-const buildResponse = function (ok = true, status = 200, statusText = "") {
-  return {
-    ok,
-    status,
-    statusText
-  };
-};
+import MockAdapter from "../../../legacy/built/axios-mock-adapter.js";
+import axios from "../../../legacy/built/axios.js";
 
 /**
  * @param cb
@@ -199,53 +189,6 @@ describe(fn(import.meta.url), function () {
             done();
           })
           .catch(done.fail);
-      });
-
-      xit("should close error messages with button", async function () {
-        element.showFailure(new TransportRequestError({}));
-
-        expect(element.isFailed()).toBeTruthy();
-        document.querySelector("x-overlay.acknowledge x-button").click();
-
-        expect(element.isFailed()).toBeFalsy();
-      });
-
-      xit("should display TransportRequestError messages when requested", function () {
-        element.showFailure(new TransportRequestError({}));
-
-        expect(element.isRequesting()).toBeFalsy();
-        expect(element.isFailed()).toBeTruthy();
-        // expect(element.querySelector('#errorMsg').innerText).toContain('Network Error');
-      });
-
-      xit("should display object messages when requested", function () {
-        element.showFailure(
-          new ServerRequestError(buildResponse(false, 404, "Not found"))
-        );
-
-        expect(element.isRequesting()).toBeFalsy();
-        expect(element.isFailed()).toBeTruthy();
-        // expect(element.querySelector('#errorMsg').innerText).toContain('Not found');
-        // expect(element.querySelector('#errorContent').innerText).toContain('404');
-      });
-
-      xit("should logout on 401 Response messages", function () {
-        element.showFailure(
-          new ServerRequestError(buildResponse(false, 401, "Unauthorized"))
-        );
-
-        // expect(element.querySelector('#errorMsg').innerText).toContain('Unauthorized');
-        // expect(element.querySelector('#errorContent').innerText).toContain('401');
-        expect(getSession()).toBeFalsy();
-      });
-
-      xit("should display TypeError messages when requested", function () {
-        element.showFailure(new Error("Something went very wrong"));
-
-        expect(element.isRequesting()).toBeFalsy();
-        expect(element.isFailed()).toBeTruthy();
-        // expect(element.querySelector('#errorMsg').innerText).toContain('Network Error');
-        // expect(element.querySelector('#errorContent').innerText).toContain('Something went very wrong');
       });
     });
 

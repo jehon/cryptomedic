@@ -18,7 +18,7 @@ class XGraphicBMI extends XGraphic {
   getValueY(file) {
     try {
       return file.bmi();
-    } catch (e) {
+    } catch (_e) {
       return NaN;
     }
   }

@@ -1,11 +1,11 @@
 /* istanbul ignore file: TODO */
 
-import { fromBirthDateTo } from "../file/x-fff-age.js";
 import { getRouteToFolderFile, setRoute } from "../../js/router.js";
+import { fromBirthDateTo } from "../file/x-fff-age.js";
 
 import createCallback from "../../js/callback.js";
-import XWithFolder from "./x-with-folder.js";
 import "../style/x-group-panel.js";
+import XWithFolder from "./x-with-folder.js";
 
 const hooverCallback = createCallback("hooverCallback");
 
@@ -67,7 +67,7 @@ export default class XGraphic extends XWithFolder {
     // }
     try {
       return fromBirthDateTo(this.folder.getPatient().year_of_birth, file.date);
-    } catch (e) {
+    } catch (_e) {
       return NaN;
     }
   }

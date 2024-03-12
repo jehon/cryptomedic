@@ -34,7 +34,7 @@ export function fromBirthDate(birth, options) {
     }
     // Default ?
     return yearsToYM(res);
-  } catch (e) {
+  } catch (_e) {
     return options.format ? null : "?";
   }
 }
