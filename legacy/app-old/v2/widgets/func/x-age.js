@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { fromBirthDateTo, yearsToYM } from "../file/x-fff-age";
+import { fromBirthDateTo, yearsToYM } from "../file/x-fff-age.js";
 
 export default class XAge extends HTMLElement {
   static get observedAttributes() {

@@ -5,6 +5,7 @@
   "description": "Cryptomedic application for all plateforms",
   "repository": "https://github.com/jehon/cryptomedic",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "@adobe/es-modules-middleware": "1.1.0",
     "@angular/animations": "17.2.4",

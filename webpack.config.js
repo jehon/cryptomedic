@@ -1,9 +1,12 @@
 /* eslint-env node */
 
-const path = require("path");
+import path from "node:path";
+import url from "node:url";
 
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const fse = require("fs-extra");
+import fse from "fs-extra";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 const webRoot = path.join(__dirname, "/www/");
 const webBuildRoot = "/built/frontend";
@@ -18,7 +21,7 @@ if (isDebug) {
   console.info("Webpack mode: production");
 }
 
-module.exports = {
+export default {
   // https://webpack.js.org/guides/development/
   mode: isDebug ? "development" : "production",
   entry: {
