@@ -37,14 +37,6 @@ export default {
   resolve: {
     extensions: [".ts", ".js", ".tsx"]
   },
-  devServer: {
-    // static: "./www/",
-    proxy: {
-      // TODO: use ${CRYPTOMEDIC_DEPLOY_WEB_PORT}
-      "/": "http://localhost:8085"
-    },
-    hot: true
-  },
   devtool: isDebug ? "eval" : false,
   optimization: {
     // https://webpack.js.org/configuration/optimization/#optimizationmoduleids
