@@ -109,7 +109,7 @@
     "webpack-dev-server": "5.0.2"
   },
   "lint-staged": {
-    "*.{js,jsx}": [
+    "*.{js,jsx,ts}": [
       "eslint",
       "prettier --list-different"
     ],
