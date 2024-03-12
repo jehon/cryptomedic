@@ -13,9 +13,9 @@ import AuthService from "../_services/auth.service";
   providers: [HttpClient]
 })
 export class LoginComponent {
-  form: any = {
-    username: null,
-    password: null
+  form = {
+    username: "",
+    password: ""
   };
   isLoggedIn = false;
   isLoginFailed = false;

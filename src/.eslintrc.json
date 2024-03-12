@@ -9,6 +9,12 @@
     {
       "files": [ "*.spec.ts" ],
       "extends" : [ "plugin:jasmine/recommended" ]
+    },
+    {
+      "files": [ "*.ts" ],
+      "rules": {
+        "no-unused-vars": "off"
+      }
     }
   ]
 }
