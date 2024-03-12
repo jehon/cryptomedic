@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import AuthService from "../_services/auth.service";
+import BackendAuthInterface from "../_services/backend.auth";
 
 @Component({
   standalone: true,
@@ -20,16 +21,17 @@ export class LoginComponent {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = "";
-  roles: string[] = [];
+  data?: BackendAuthInterface;
 
   constructor(private authService: AuthService) {}
 
   onSubmit(): void {
     const { username, password } = this.form;
     this.authService.login(username, password).subscribe({
-      next: (_data) => {
+      next: (data: BackendAuthInterface) => {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
+        this.data = data;
       },
       error: (err) => {
         this.errorMessage = err.error.message;
