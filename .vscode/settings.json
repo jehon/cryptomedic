@@ -8,6 +8,10 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "json.format.enable": false,
   "[php]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -25,26 +29,20 @@
     "source.organizeImports": "always"
   },
   "editor.formatOnSave": true,
-  "files.associations": {
-    "Makefile-*": "makefile"
-  },
   "github-actions.workflows.pinned.workflows": [
     ".github/workflows/test.yml"
   ],
   "javascript.preferences.importModuleSpecifier": "relative",
   "javascript.preferences.importModuleSpecifierEnding": "js",
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "json.format.enable": false,
   "prettier.documentSelectors": [
     "*.js",
+    "*.json",
     "*.ts",
     "*.tsx",
     "*.html",
     "*.json",
     "*.php",
     "*.sql"
-  ],
-  "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#004f03"
-  }
+  ]
 }
