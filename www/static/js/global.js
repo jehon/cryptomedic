@@ -3,7 +3,9 @@
  * @param {HTMLTextAreaElement} element where onkeyup is set
  */
 
-// eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+// TODO: ,@typescript-eslint/no-unused-vars
+
+// eslint-disable-next-line no-unused-vars
 function textareaAdjust(element) {
   // @See templates-t.php
 
