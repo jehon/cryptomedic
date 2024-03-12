@@ -29,3 +29,9 @@ export default class AuthService {
     return this.http.post<void>('/api/auth/logout', { }, httpOptions);
   }
 }
+
+// https://www.vitamindev.com/angular/how-to-initialize-a-service-on-startup/
+export const authServiceFactory = (httpClient: HttpClient) => {
+  const au = new AuthService(httpClient);
+  return au;
+};
