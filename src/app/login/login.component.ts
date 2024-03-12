@@ -1,5 +1,4 @@
 import { CommonModule } from "@angular/common";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import AuthService from "../_services/auth.service";
@@ -8,10 +7,9 @@ import BackendAuthInterface from "../_services/backend.auth";
 @Component({
   standalone: true,
   selector: "app-login",
-  imports: [FormsModule, CommonModule, HttpClientModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: "./login.component.html",
-  styleUrl: "./login.component.css",
-  providers: [HttpClient]
+  styleUrl: "./login.component.css"
 })
 export class LoginComponent {
   form = {
