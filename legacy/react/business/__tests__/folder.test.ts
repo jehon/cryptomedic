@@ -40,13 +40,21 @@ test("should instanciate classes", () => {
   expect(f.getPatient()).toBeInstanceOf(Patient);
   expect(f.getPatient().id).toBe(1);
 
-  expect(Folder.create(f, Appointment.getModel(), {})).toBeInstanceOf(Appointment);
+  expect(Folder.create(f, Appointment.getModel(), {})).toBeInstanceOf(
+    Appointment
+  );
   expect(Folder.create(f, Bill.getModel(), {})).toBeInstanceOf(Bill);
-  expect(Folder.create(f, ConsultClubfoot.getModel(), {})).toBeInstanceOf(ConsultClubfoot);
-  expect(Folder.create(f, ConsultOther.getModel(), {})).toBeInstanceOf(ConsultOther);
+  expect(Folder.create(f, ConsultClubfoot.getModel(), {})).toBeInstanceOf(
+    ConsultClubfoot
+  );
+  expect(Folder.create(f, ConsultOther.getModel(), {})).toBeInstanceOf(
+    ConsultOther
+  );
   expect(Folder.create(f, Payment.getModel(), {})).toBeInstanceOf(Payment);
   expect(Folder.create(f, Picture.getModel(), {})).toBeInstanceOf(Picture);
-  expect(Folder.create(f, ConsultRicket.getModel(), {})).toBeInstanceOf(ConsultRicket);
+  expect(Folder.create(f, ConsultRicket.getModel(), {})).toBeInstanceOf(
+    ConsultRicket
+  );
   expect(Folder.create(f, Surgery.getModel(), {})).toBeInstanceOf(Surgery);
 
   expect(() => Folder.create(f, "AnythingInvalid", {})).toThrow();
@@ -114,7 +122,7 @@ test("should give bill related files", () => {
   i++;
   expect(list[i]).toBeInstanceOf(Payment);
   expect(list[i].id).toBe(3);
-  expect((list[i]).bill_id).toBe(1);
+  expect(list[i].bill_id).toBe(1);
 });
 
 test("should keep extra data", () => {
@@ -142,7 +150,7 @@ describe("order", function () {
     }) as Folder;
   };
 
-  test("order by id", function() {
+  test("order by id", function () {
     const basis = {};
     const o1 = build(basis, {}) as Folder;
     const o2 = build(basis, { id: "2" }) as Folder;
@@ -208,35 +216,35 @@ describe("order", function () {
   });
 });
 
-test("getNextAppoinment", function() {
-  expect((new Folder()).getNextAppoinment()).toBeNull();
-  
+test("getNextAppoinment", function () {
+  expect(new Folder().getNextAppoinment()).toBeNull();
+
   f.list.push(new Appointment({ date: "2100-01-01" }));
   expect(f.getNextAppoinment()).toEqual(new Date("2100-01-01"));
 });
 
-test("getLastSeen", function() {
-  expect((new Folder()).getLastSeen()).toBeNull();
-    expect(f.getLastSeen()).toEqual(new Date("2014-11-04"));
+test("getLastSeen", function () {
+  expect(new Folder().getLastSeen()).toBeNull();
+  expect(f.getLastSeen()).toEqual(new Date("2014-11-04"));
 });
 
-
-test("Copy with new file", function() {
+test("Copy with new file", function () {
   expect(f.getId()).toBe("1");
   const fap = f.getByUid("Appointment-2");
   expect(fap).toBeInstanceOf(Appointment);
   expect(fap.purpose).toBe(null);
 
-  const f2 = f.withFile(new Appointment({ id: 2, examiner: "test", purpose: "test" }));
+  const f2 = f.withFile(
+    new Appointment({ id: 2, examiner: "test", purpose: "test" })
+  );
   expect(f2).toBeInstanceOf(Folder);
   const fap2 = f2.getByUid("Appointment-2");
   expect(fap2).toBeInstanceOf(Appointment);
   expect(fap2.purpose).toBe("test");
   expect(fap2.purpose).toBe("test");
 
-  // Initial 
+  // Initial
   const fap3 = f.getByUid("Appointment-2");
   expect(fap3).toBeInstanceOf(Appointment);
   expect(fap3.purpose).toBe(null);
-
-})
+});

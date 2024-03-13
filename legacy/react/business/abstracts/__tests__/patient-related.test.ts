@@ -13,9 +13,7 @@ test("with TestFolder.test1.json", async function () {
   expect(folder.getPatient()).toBeInstanceOf(Patient);
   expect(folder.getPatient().sex).toBe("Male");
   expect(folder.getPatient().year_of_birth).toBe("1998");
-  expect(folder.getPatient().actualAge(new Date("2014-01-01"))).toBe(
-    "16y0m"
-  );
+  expect(folder.getPatient().actualAge(new Date("2014-01-01"))).toBe("16y0m");
 
   let rc = folder.getByTypeAndId(RicketConsult, 13);
 

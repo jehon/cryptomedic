@@ -32,7 +32,7 @@ test("with ricketConsult_13", async function () {
 test("with patient with sex", function () {
   let f = new Folder();
   let p = new Patient({ id: 123, sex: "Male" } as any, f);
-  var c = new Consult({ patient_id: 123}, f);
+  var c = new Consult({ patient_id: 123 }, f);
   f.list.push(p);
   f.list.push(c);
 

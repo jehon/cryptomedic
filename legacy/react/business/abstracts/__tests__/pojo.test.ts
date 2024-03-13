@@ -4,7 +4,7 @@ import Pojo from "../pojo.js";
 
 test("with empty loader", function () {
   var data = new Pojo({});
-    expect(data instanceof Pojo).toBeTruthy();
+  expect(data instanceof Pojo).toBeTruthy();
 });
 
 test("with data loading at construction time", function () {
