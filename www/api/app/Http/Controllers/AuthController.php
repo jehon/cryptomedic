@@ -136,11 +136,7 @@ class AuthController extends Controller {
 
     public function getLogout(Request $request) {
         Auth::logout();
-        if (\Illuminate\Support\Facades\Request::ajax()) {
-            // if ($request->isAjax()) {
-            return response()->json(null);
-        }
-        return redirect('/static/logout.html');
+        return response()->json(null);
     }
 
     public function matrix() {

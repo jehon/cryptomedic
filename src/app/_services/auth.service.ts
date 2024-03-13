@@ -59,11 +59,12 @@ export default class AuthService {
   }
 
   logout(): Observable<void> {
-    // Nothing to be sent back...
-    this.currentUser = undefined;
-    this.#emit();
-
-    return this.http.get<void>("/api/auth/logout", httpOptions);
+    const response = this.http.get<void>("/api/auth/logout", httpOptions);
+    response.subscribe(() => {
+      this.currentUser = undefined;
+      this.#emit();
+    });
+    return response;
   }
 
   #emit() {
