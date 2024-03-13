@@ -21,7 +21,7 @@ export default class AuthService {
   constructor(private http: HttpClient) {}
 
   hydrate(): Observable<BackendAuthInterface | undefined> {
-    const response = this.http
+    return this.http
       .get<BackendAuthInterface | undefined>("/api/auth/settings", httpOptions)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -32,13 +32,14 @@ export default class AuthService {
           }
           return throwError(() => error);
         })
+      )
+      .pipe(
+        map((v) => {
+          this.currentUser = v;
+          this.#emit();
+          return v;
+        })
       );
-
-    response.subscribe((data: BackendAuthInterface | undefined) => {
-      this.currentUser = data;
-      this.#emit();
-    });
-    return response;
   }
 
   login(username: string, password: string): Observable<BackendAuthInterface> {
