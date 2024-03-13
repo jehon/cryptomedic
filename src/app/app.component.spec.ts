@@ -1,3 +1,4 @@
+import { provideHttpClient } from "@angular/common/http";
 import { TestBed } from "@angular/core/testing";
 import { RouterModule } from "@angular/router";
 import { AppComponent } from "./app.component";
@@ -6,7 +7,8 @@ import routes from "./app.routes";
 describe("AppComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, RouterModule.forRoot(routes)]
+      imports: [AppComponent, RouterModule.forRoot(routes)],
+      providers: [provideHttpClient()]
     }).compileComponents();
   });
 
@@ -21,7 +23,7 @@ describe("AppComponent", () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
 
-    expect(app.title).toEqual("cryptomedic");
+    expect(app.title).toEqual("Cryptomedic");
   });
 
   it("should render title", () => {
