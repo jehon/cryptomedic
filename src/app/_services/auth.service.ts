@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { EventEmitter, Injectable, OnInit } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import BackendAuthInterface from "./backend.auth";
 
@@ -10,17 +10,11 @@ const httpOptions = {
 @Injectable({
   providedIn: "root"
 })
-export default class AuthService implements OnInit {
+export default class AuthService {
   public events: EventEmitter<BackendAuthInterface> = new EventEmitter();
   currentUser: BackendAuthInterface | undefined;
 
-  constructor(private http: HttpClient) {
-    this.hydrate();
-  }
-
-  ngOnInit(): void {
-    this.#emit();
-  }
+  constructor(private http: HttpClient) {}
 
   hydrate() {
     return fetch("/api/auth/settings", {
@@ -29,13 +23,20 @@ export default class AuthService implements OnInit {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(async (response) => {
-      if (response.ok) {
-        this.currentUser = (await response.json()) as BackendAuthInterface;
-      } else {
+    }).then(
+      async (response) => {
+        if (response.ok) {
+          this.currentUser = (await response.json()) as BackendAuthInterface;
+        } else {
+          this.currentUser = undefined;
+        }
+        this.#emit();
+      },
+      () => {
         this.currentUser = undefined;
+        this.#emit();
       }
-    });
+    );
   }
 
   login(username: string, password: string): Observable<BackendAuthInterface> {
@@ -62,11 +63,10 @@ export default class AuthService implements OnInit {
     this.currentUser = undefined;
     this.#emit();
 
-    return this.http.post<void>("/api/auth/logout", {}, httpOptions);
+    return this.http.get<void>("/api/auth/logout", httpOptions);
   }
 
   #emit() {
-    console.log("emit", this.currentUser);
     this.events.emit(this.currentUser);
   }
 }

@@ -1,4 +1,4 @@
-import { ApplicationConfig } from "@angular/core";
+import { APP_INITIALIZER, ApplicationConfig } from "@angular/core";
 import { provideRouter } from "@angular/router";
 
 import { HttpClient, provideHttpClient } from "@angular/common/http";
@@ -13,6 +13,12 @@ export const appConfig: ApplicationConfig = {
       provide: AuthService,
       useClass: AuthService,
       deps: [HttpClient]
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (authService: AuthService) => () => authService.hydrate(),
+      deps: [AuthService],
+      multi: true
     }
   ]
 };

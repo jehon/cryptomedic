@@ -11,7 +11,7 @@ import BackendAuthInterface from "./_services/backend.auth";
   styleUrl: "./app.component.css"
 })
 export class AppComponent implements OnInit {
-  title = "cryptomedic";
+  title = "Cryptomedic";
   currentUser?: BackendAuthInterface;
 
   constructor(public authService: AuthService) {}
@@ -19,19 +19,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser;
     this.authService.events.subscribe((val) => {
-      console.log("update", { val });
       this.currentUser = val;
     });
   }
 
   logout(): void {
-    this.authService.logout().subscribe({
-      //     next: (res) => {
-      //       window.location.reload();
-      //     },
-      //     error: (err) => {
-      //       console.log(err);
-      //     }
-    });
+    this.authService.logout();
   }
 }
