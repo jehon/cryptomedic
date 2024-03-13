@@ -1,6 +1,10 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders
+} from "@angular/common/http";
 import { EventEmitter, Injectable } from "@angular/core";
-import { Observable, map } from "rxjs";
+import { Observable, catchError, map, of, throwError } from "rxjs";
 import BackendAuthInterface from "./backend.auth";
 
 const httpOptions = {
@@ -16,27 +20,25 @@ export default class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  hydrate() {
-    return fetch("/api/auth/settings", {
-      method: "GET",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(
-      async (response) => {
-        if (response.ok) {
-          this.currentUser = (await response.json()) as BackendAuthInterface;
-        } else {
-          this.currentUser = undefined;
-        }
-        this.#emit();
-      },
-      () => {
-        this.currentUser = undefined;
-        this.#emit();
-      }
-    );
+  hydrate(): Observable<BackendAuthInterface | undefined> {
+    const response = this.http
+      .get<BackendAuthInterface | undefined>("/api/auth/settings", httpOptions)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (!(error.error instanceof ErrorEvent)) {
+            if (401 === error.status) {
+              return of(undefined);
+            }
+          }
+          return throwError(() => error);
+        })
+      );
+
+    response.subscribe((data: BackendAuthInterface | undefined) => {
+      this.currentUser = data;
+      this.#emit();
+    });
+    return response;
   }
 
   login(username: string, password: string): Observable<BackendAuthInterface> {
