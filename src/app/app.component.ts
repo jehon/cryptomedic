@@ -1,5 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { RouterLink, RouterOutlet } from "@angular/router";
+import AuthService from "./_services/auth.service";
+import BackendAuthInterface from "./_services/backend.auth";
 
 @Component({
   standalone: true,
@@ -8,34 +10,28 @@ import { RouterLink, RouterOutlet } from "@angular/router";
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css"
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = "cryptomedic";
-  isLoggedIn = false;
-  username?: string;
-  // eventBusSub?: Subscription;
+  currentUser?: BackendAuthInterface;
 
-  // constructor(
-  //   private authService: AuthService,
-  //   private eventBusService: EventBusService
-  // ) {}
+  constructor(public authService: AuthService) {}
 
-  // ngOnInit(): void {
-  //   if (this.isLoggedIn) {
-  //   }
-
-  //   this.eventBusSub = this.eventBusService.on("logout", () => {
-  //     this.logout();
-  //   });
-  // }
+  ngOnInit(): void {
+    this.currentUser = this.authService.currentUser;
+    this.authService.events.subscribe((val) => {
+      console.log("update", { val });
+      this.currentUser = val;
+    });
+  }
 
   logout(): void {
-    //   this.authService.logout().subscribe({
-    //     next: (res) => {
-    //       window.location.reload();
-    //     },
-    //     error: (err) => {
-    //       console.log(err);
-    //     }
-    //   });
+    this.authService.logout().subscribe({
+      //     next: (res) => {
+      //       window.location.reload();
+      //     },
+      //     error: (err) => {
+      //       console.log(err);
+      //     }
+    });
   }
 }

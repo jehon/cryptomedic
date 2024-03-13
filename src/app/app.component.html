@@ -1,31 +1,29 @@
 <div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
+  <nav class="navbar navbar-expand navbar-dark bg-dark justify-content-between">
     <ul class="navbar-nav mr-auto" routerLinkActive="active">
       <li class="nav-item">
         <a [routerLink]="['/home']" class="nav-link">Home </a>
       </li>
-      @if (isLoggedIn) {
-        Connected!
-      }
+      <li class="nav-item">
+        <a [routerLink]="['/login']" class="nav-link">Login </a>
+      </li>
     </ul>
-
-    @if (!isLoggedIn) {
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a [routerLink]="['/login']" class="nav-link">Login </a>
-        </li>
-      </ul>
-    } @else {
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a href class="nav-link" (click)="logout()">LogOut</a>
-        </li>
-      </ul>
-    }
+    <span>
+      @if (currentUser) {
+        <span class="navbar-text">
+          {{ currentUser.username }}
+        </span>
+        <button (click)="logout()" class="btn btn-danger" type="submit">
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
+      }
+    </span>
   </nav>
 
   <div class="container">
     <h1>Hello</h1>
+    AuthService: {{ authService.currentUser?.username ?? "unknown" }}<br>
+    Direct: {{ currentUser?.username ?? "unknown" }}<br>
     <router-outlet></router-outlet>
   </div>
 </div>
