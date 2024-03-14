@@ -1,5 +1,4 @@
 import {
-  HTTP_INTERCEPTORS,
   HttpEvent,
   HttpHandler,
   HttpHeaders,
@@ -23,7 +22,3 @@ export class HttpRequestInterceptor<T extends undefined | unknown>
     return next.handle(req);
   }
 }
-
-export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
-];

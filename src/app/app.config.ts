@@ -15,6 +15,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpRequestInterceptor,
+      multi: true
+    },
+    {
       provide: AuthService,
       useClass: AuthService,
       deps: [HttpClient]
@@ -23,11 +28,6 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: (authService: AuthService) => () => authService.hydrate(),
       deps: [AuthService],
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpRequestInterceptor,
       multi: true
     }
   ]
