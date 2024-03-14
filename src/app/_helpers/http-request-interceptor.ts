@@ -7,13 +7,14 @@ import {
 } from "@angular/common/http";
 import { Injectable, Provider } from "@angular/core";
 import { Observable, finalize } from "rxjs";
+import { HttpService } from "../_services/http.service";
 
 @Injectable()
 export class HttpRequestInterceptor<T> implements HttpInterceptor {
-  public runningConnections = 0;
+  constructor(private httpService: HttpService) {}
 
   intercept(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
-    this.runningConnections++;
+    this.httpService.running++;
 
     // Auto set some options
     const jsonReq = req.clone({
@@ -46,7 +47,7 @@ export class HttpRequestInterceptor<T> implements HttpInterceptor {
         //     return throwError(() => message);
         //   })
         // );
-        .pipe(finalize(() => this.runningConnections--))
+        .pipe(finalize(() => this.httpService.running--))
     );
   }
 }

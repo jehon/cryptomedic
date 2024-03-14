@@ -24,6 +24,8 @@
     <h1>Hello</h1>
     AuthService: {{ authService.currentUser?.username ?? "unknown" }}<br />
     Direct: {{ currentUser?.username ?? "unknown" }}<br />
+    Running connections: {{ httpService.running }}<br />
+    Running errors: {{ httpService.errors | json }}<br />
     <router-outlet></router-outlet>
   </div>
 </div>
