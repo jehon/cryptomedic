@@ -1,15 +1,7 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders
-} from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { EventEmitter, Injectable } from "@angular/core";
 import { Observable, catchError, map, of, throwError } from "rxjs";
 import BackendAuthInterface from "./backend.auth";
-
-const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" })
-};
 
 @Injectable({
   providedIn: "root"
@@ -22,7 +14,7 @@ export default class AuthService {
 
   hydrate(): Observable<BackendAuthInterface | undefined> {
     return this.http
-      .get<BackendAuthInterface | undefined>("/api/auth/settings", httpOptions)
+      .get<BackendAuthInterface | undefined>("/api/auth/settings")
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (!(error.error instanceof ErrorEvent)) {
@@ -44,14 +36,10 @@ export default class AuthService {
 
   login(username: string, password: string): Observable<BackendAuthInterface> {
     return this.http
-      .post<BackendAuthInterface>(
-        "/api/auth/mylogin",
-        {
-          username,
-          password
-        },
-        httpOptions
-      )
+      .post<BackendAuthInterface>("/api/auth/mylogin", {
+        username,
+        password
+      })
       .pipe(
         map((data) => {
           this.currentUser = data;
@@ -62,7 +50,7 @@ export default class AuthService {
   }
 
   logout(): Observable<void> {
-    const response = this.http.get<void>("/api/auth/logout", httpOptions);
+    const response = this.http.get<void>("/api/auth/logout");
     response.subscribe(() => {
       this.currentUser = undefined;
       this.#emit();
