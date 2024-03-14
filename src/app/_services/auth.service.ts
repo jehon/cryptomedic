@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { EventEmitter, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Observable, catchError, map, of, throwError } from "rxjs";
 import BackendAuthInterface from "./backend.auth";
 
@@ -7,7 +7,6 @@ import BackendAuthInterface from "./backend.auth";
   providedIn: "root"
 })
 export default class AuthService {
-  public events: EventEmitter<BackendAuthInterface> = new EventEmitter();
   currentUser: BackendAuthInterface | undefined;
 
   constructor(private http: HttpClient) {}
@@ -28,7 +27,6 @@ export default class AuthService {
       .pipe(
         map((v) => {
           this.currentUser = v;
-          this.#emit();
           return v;
         })
       );
@@ -43,7 +41,6 @@ export default class AuthService {
       .pipe(
         map((data) => {
           this.currentUser = data;
-          this.#emit();
           return data;
         })
       );
@@ -53,12 +50,7 @@ export default class AuthService {
     const response = this.http.get<void>("/api/auth/logout");
     response.subscribe(() => {
       this.currentUser = undefined;
-      this.#emit();
     });
     return response;
-  }
-
-  #emit() {
-    this.events.emit(this.currentUser);
   }
 }

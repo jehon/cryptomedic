@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { RouterLink, RouterOutlet } from "@angular/router";
 import AuthService from "./_services/auth.service";
 import BackendAuthInterface from "./_services/backend.auth";
@@ -10,17 +10,13 @@ import BackendAuthInterface from "./_services/backend.auth";
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css"
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = "Cryptomedic";
-  currentUser?: BackendAuthInterface;
 
   constructor(public authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.currentUser = this.authService.currentUser;
-    this.authService.events.subscribe((val) => {
-      this.currentUser = val;
-    });
+  get currentUser(): BackendAuthInterface | undefined {
+    return this.authService.currentUser;
   }
 
   logout(): void {

@@ -6,8 +6,8 @@ import {
   provideHttpClient,
   withInterceptorsFromDi
 } from "@angular/common/http";
+import { httpRequestInterceptorProvider } from "./_helpers/http-request-interceptor";
 import AuthService from "./_services/auth.service";
-import { httpRequestInterceptorProvider } from "./_services/http-request-interceptor";
 import routes from "./app.routes";
 
 export const appConfig: ApplicationConfig = {
