@@ -4,7 +4,21 @@
 $bootstrap-icons-font-src: "../node_modules/bootstrap-icons/font/bootstrap-icons.scss";
 @import "../node_modules/bootstrap-icons/font/bootstrap-icons.scss";
 
-.cr-waiting {
+.cr-above {
   @extend .d-flex;
   @extend .justify-content-center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+
+  align-items: center;
+
+  background-color: lightgray;
+  opacity: 0.75;
+
+  gap: 10px;
 }

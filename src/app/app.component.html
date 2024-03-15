@@ -28,4 +28,9 @@
     Running errors: {{ httpService.errors | json }}<br />
     <router-outlet></router-outlet>
   </div>
+  @if (httpService.running > 0) {
+    <div class="cr-above">
+      <div class="spinner-border" role="status"></div>
+    </div>
+  }
 </div>
