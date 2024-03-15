@@ -8,7 +8,7 @@ FRONTEND_BUILD_TMP = legacy/built
 frontend: clear clean-files dc-build dc-up frontend-dump frontend-dependencies frontend-lint frontend-build frontend-test ok
 
 # Temporary
-ng: clear frontend-lint frontend-test-ng ok
+dev-ng: clear frontend-lint frontend-test-ng ok
 
 .PHONY: frontend-clean
 clean: frontend-clean

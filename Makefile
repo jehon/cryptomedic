@@ -102,7 +102,7 @@ start: dc-up dependencies build reset
 	@echo -n "Official port: "
 	@docker compose port proxy 80
 
-dev: clear dc-up dependencies build
+dev: clear start
 # No reset!
 # build: other stuff than frontend need to be build
 
