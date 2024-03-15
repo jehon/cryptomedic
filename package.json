@@ -51,7 +51,7 @@
     "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "14.2.1",
     "@types/jasmine": "5.1.4",
-    "@types/node": "20.11.27",
+    "@types/node": "20.11.28",
     "@types/pixelmatch": "5.2.6",
     "@types/pngjs": "6.0.4",
     "@types/react": "18.2.66",
