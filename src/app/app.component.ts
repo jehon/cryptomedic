@@ -2,7 +2,6 @@ import { JsonPipe } from "@angular/common";
 import { Component } from "@angular/core";
 import { RouterLink, RouterOutlet } from "@angular/router";
 import AuthService from "./_services/auth.service";
-import BackendAuthInterface from "./_services/backend.auth";
 import { HttpService } from "./_services/http.service";
 
 @Component({
@@ -19,10 +18,6 @@ export class AppComponent {
     public authService: AuthService,
     public httpService: HttpService
   ) {}
-
-  get currentUser(): BackendAuthInterface | undefined {
-    return this.authService.currentUser;
-  }
 
   logout(): void {
     this.authService.logout();
