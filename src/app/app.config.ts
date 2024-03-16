@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, ApplicationConfig } from "@angular/core";
-import { provideRouter } from "@angular/router";
+import { provideRouter, withComponentInputBinding } from "@angular/router";
 
 import {
   HttpClient,
@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     // Thanks to https://github.com/angular/angular-cli/issues/25187#issuecomment-1629727033
     provideHttpClient(withInterceptorsFromDi()),
     httpRequestInterceptorProvider,
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     {
       provide: AuthService,
       useClass: AuthService,
