@@ -50,4 +50,8 @@ export default class AuthService {
     this.currentUser = undefined;
     return this.http.get<void>("/api/auth/logout");
   }
+
+  isAuthenticated(): boolean {
+    return !!this.currentUser;
+  }
 }

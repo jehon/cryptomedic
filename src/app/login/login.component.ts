@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
   }
 
   checkRoute() {
-    if (this.authService.currentUser) {
+    if (this.authService.isAuthenticated()) {
       this.router.navigate([this.redirect]);
     }
   }

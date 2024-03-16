@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   }
 
   checkRoute() {
-    if (this.authService.currentUser) {
+    if (this.authService.isAuthenticated()) {
       return;
     }
 

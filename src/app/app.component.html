@@ -8,9 +8,9 @@
       </li>
     </ul>
     <span>
-      @if (authService.currentUser) {
+      @if (authService.isAuthenticated()) {
         <span class="navbar-text">
-          {{ authService.currentUser.username }}
+          {{ authService.currentUser!.username }}
         </span>
         <button (click)="logout()" class="btn btn-danger" type="submit">
           <i class="bi bi-box-arrow-right"></i>
