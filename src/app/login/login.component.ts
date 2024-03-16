@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import AuthService from "../_services/auth.service";
 import BackendAuthInterface from "../_services/backend.auth";
 
@@ -21,13 +21,16 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = "";
   data?: BackendAuthInterface;
+  redirect: string = "/";
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.redirect = this.route.snapshot.queryParamMap.get("redirectTo") ?? "/";
     this.checkRoute();
   }
 
@@ -49,7 +52,7 @@ export class LoginComponent implements OnInit {
 
   checkRoute() {
     if (this.authService.currentUser) {
-      this.router.navigate(["/home"]);
+      this.router.navigate([this.redirect]);
     }
   }
 }
