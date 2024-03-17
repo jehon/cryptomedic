@@ -23,9 +23,7 @@
     </span>
   </nav>
 
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
+  <router-outlet></router-outlet>
   @if (httpService.running > 0) {
     <div class="cr-above">
       <div class="spinner-border" role="status"></div>
