@@ -6,6 +6,7 @@ import {
   RouterLink,
   RouterOutlet
 } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import { filter } from "rxjs";
 import AuthService from "./_services/auth.service";
 import { HttpService } from "./_services/http.service";
@@ -23,8 +24,8 @@ export class AppComponent implements OnInit {
   constructor(
     public httpService: HttpService,
     public authService: AuthService,
-    private router: Router
-    // private route: ActivatedRoute
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit {
   logout(): void {
     this.authService.logout().subscribe(() => {
       this.checkRoute();
+      this.toastr.success("Logged out");
     });
   }
 

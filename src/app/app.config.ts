@@ -6,6 +6,8 @@ import {
   provideHttpClient,
   withInterceptorsFromDi
 } from "@angular/common/http";
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { provideToastr } from "ngx-toastr";
 import { httpRequestInterceptorProvider } from "./_helpers/http-request-interceptor";
 import AuthService from "./_services/auth.service";
 import routes from "./app.routes";
@@ -16,6 +18,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     httpRequestInterceptorProvider,
     provideRouter(routes, withComponentInputBinding()),
+    provideAnimations(),
+    provideToastr(),
     {
       provide: AuthService,
       useClass: AuthService,

@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import AuthService from "../_services/auth.service";
 import BackendAuthInterface from "../_services/backend.auth";
 
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private toastr: ToastrService,
     private authService: AuthService
   ) {}
 
@@ -41,6 +43,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.data = data;
+        this.toastr.success("Logged in");
         this.checkRoute();
       },
       error: (err) => {
