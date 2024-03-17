@@ -4,7 +4,6 @@ import { FormsModule } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import AuthService from "../_services/auth.service";
-import BackendAuthInterface from "../_services/backend.auth";
 
 @Component({
   standalone: true,
@@ -18,10 +17,8 @@ export class LoginComponent implements OnInit {
     username: "",
     password: ""
   };
-  isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = "";
-  data?: BackendAuthInterface;
   redirect: string = "/";
 
   constructor(
@@ -39,10 +36,8 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const { username, password } = this.form;
     this.authService.login(username, password).subscribe({
-      next: (data: BackendAuthInterface) => {
+      next: () => {
         this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.data = data;
         this.toastr.success("Logged in");
         this.checkRoute();
       },
