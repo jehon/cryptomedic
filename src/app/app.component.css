@@ -1,4 +1,10 @@
 #top {
   display: flex;
+  flex-wrap: none;
+
   justify-content: center;
+  align-content: center;
+  align-items: baseline;
+
+  width: 100%;
 }
