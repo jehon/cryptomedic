@@ -7,6 +7,25 @@ $bootstrap-icons-font-src: "../node_modules/bootstrap-icons/font/bootstrap-icons
 // https://www.npmjs.com/package/ngx-toastr
 @import "ngx-toastr/toastr-bs5-alert";
 
+////////////////////////////////////////
+//
+// Override Bootstrap
+//
+////////////////////////////////////////
+
+.button-group {
+  @extend .d-flex;
+  @extend .justify-content-end;
+
+  width: 100%;
+}
+
+////////////////////////////////////////
+//
+// Custom
+//
+////////////////////////////////////////
+
 .cr-above {
   @extend .d-flex;
   @extend .justify-content-center;
