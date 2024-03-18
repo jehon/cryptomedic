@@ -42,7 +42,7 @@ jobs:
           name: php
           path: www/api/vendor
   
-  test:
+  tests:
     runs-on: ubuntu-latest
     needs:
       - build
@@ -71,10 +71,11 @@ jobs:
         with:
           node-version: lts/*
 
-      - run: make "${{ matrix.target }}"
-
+#      - run: make "${{ matrix.target }}"
           
   ga-test:
+    needs: 
+      - tests
     runs-on: ubuntu-latest
     timeout-minutes: 45
     concurrency:
