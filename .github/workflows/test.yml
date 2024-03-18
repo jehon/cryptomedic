@@ -31,19 +31,49 @@ jobs:
       - run: make build
 
       - name: Upload npm
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: npm
           path: node_modules
 
-      - name: Upload npm
-        if: always()
+      - name: Upload vendor
         uses: actions/upload-artifact@v4
         with:
           name: php
           path: www/api/vendor
   
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    strategy:
+      # Do not stop the rest of the matrix in case of failure
+      fail-fast: false
+      matrix:
+        target:
+          - lint
+
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: npm
+          path: node_modules
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: php
+          path: www/api/vendor
+
+      # https://github.com/actions/setup-node
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - run: make "${{ matrix.target }}"
+
+          
   ga-test:
     runs-on: ubuntu-latest
     timeout-minutes: 45
