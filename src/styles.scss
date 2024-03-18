@@ -20,6 +20,10 @@ $bootstrap-icons-font-src: "../node_modules/bootstrap-icons/font/bootstrap-icons
   width: 100%;
 }
 
+.button-group > button {
+  flex-grow: 1;
+}
+
 ////////////////////////////////////////
 //
 // Custom
