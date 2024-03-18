@@ -10,7 +10,7 @@ import AuthService from "../_services/auth.service";
   selector: "app-login",
   imports: [FormsModule, CommonModule],
   templateUrl: "./login.component.html",
-  styleUrl: "./login.component.css"
+  styleUrl: "./login.component.scss"
 })
 export class LoginComponent implements OnInit {
   form = {
