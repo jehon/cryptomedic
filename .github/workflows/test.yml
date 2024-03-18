@@ -10,14 +10,45 @@ on:
   schedule:
     - cron: "0 0 * * *"
 
+env:
+  NO_CLEAR: yes
+
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      # https://github.com/actions/setup-node
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - run: sudo .devcontainer/root/setup.sh
+
+      - run: .devcontainer/root/setup-user.sh
+
+      - run: make build
+
+      - name: Upload npm
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm
+          path: node_modules
+
+      - name: Upload npm
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: php
+          path: www/api/vendor
+  
   ga-test:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     concurrency:
       group: release-${{ github.ref }}
-    env:
-      NO_CLEAR: yes
 
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
