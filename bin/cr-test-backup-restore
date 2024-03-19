@@ -7,7 +7,7 @@ clear
 rm -f tmp/backup/backups/*.sql
 
 make reset
-wget "http://${CRYPTOMEDIC_DEPLOY_WEB_HOST}:${CRYPTOMEDIC_DEPLOY_WEB_PORT}/maintenance/create_db_backup.php?pwd=${CRYPTOMEDIC_DEPLOY_WEB_TOKEN}"
+curl -fsSL "http://${CRYPTOMEDIC_DEPLOY_WEB_HOST}:${CRYPTOMEDIC_DEPLOY_WEB_PORT}/maintenance/create_db_backup.php?pwd=${CRYPTOMEDIC_DEPLOY_WEB_TOKEN}"
 
 rsync -a live/ live-from-production/
 
