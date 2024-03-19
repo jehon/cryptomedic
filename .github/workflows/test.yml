@@ -24,22 +24,18 @@ jobs:
         with:
           node-version: lts/*
 
+      - run: type -a gpg || true
+
       - run: sudo .devcontainer/root/setup.sh
 
       - run: .devcontainer/root/setup-user.sh
 
       - run: make build
 
-      - name: Upload npm
-        uses: actions/upload-artifact@v4
-        with:
-          name: npm
-          path: node_modules
-
       - name: Upload vendor
         uses: actions/upload-artifact@v4
         with:
-          name: php
+          name: vendor
           path: www/api/vendor
   
   tests:
@@ -58,12 +54,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: npm
-          path: node_modules
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: php
+          name: vendor
           path: www/api/vendor
 
       # https://github.com/actions/setup-node
@@ -71,7 +62,7 @@ jobs:
         with:
           node-version: lts/*
 
-#      - run: make "${{ matrix.target }}"
+      - run: make "${{ matrix.target }}"
           
   ga-test:
     needs: 
