@@ -161,6 +161,12 @@ frontend-test-ng: $(FRONTEND_DEPENDENCIES_MARK)
 update: frontend-update-references
 frontend-update-references: $(FRONTEND_BUILT_MARK)
 
+
+.PHONY: frontend-github
+github: frontend-github
+frontend-github:
+	$(call rehydrate,$(FRONTEND_DEPENDENCIES_MARK),package-lock.json)
+
 migration-status: clear
 	@echo "********** In legacy folders ******************"
 	@find src -name "*.js" -exec echo "** To: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ legacy/react/ ";" | jh-tag-stdin "to-js"

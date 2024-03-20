@@ -16,6 +16,13 @@ export CRYPTOMEDIC_DEPLOY_WEB_TOKEN ?= secret
 export DBUPDATEPWD := secret # From config.php
 export CRYPTOMEDIC_DOCKER_SOCKET := $(shell docker context inspect | jq -r .[0].Endpoints.docker.Host | sed "s^unix://^^")
 
+define rehydrate
+	if [ -r "$(1)" ] && [ "$(1)" -ot "$(2)" ] ; then \
+		echo "Hydrate $(1)"; \
+		touch -m --reference "$(2)" "$(1)"; \
+	fi
+endef
+
 # Default target
 .PHONY: check
 check: cls start dependencies lint build test ok
@@ -36,6 +43,7 @@ ok:
 .PHONY: build
 .PHONY: test
 .PHONY: update
+.PHONY: github
 
 #
 # Debug options:
