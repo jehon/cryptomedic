@@ -62,8 +62,6 @@ jobs:
       #     name: vendor
       #     path: www/api/vendor
 
-      - run: find . -ls
-
       - run: make github
 
       - run: make "${{ matrix.target }}"
@@ -96,10 +94,6 @@ jobs:
       - run: make dc-build
 
       - run: make dc-up
-
-      - run: make dependencies
-
-      - run: make build
 
       - run: make backend-test
 
