@@ -8,7 +8,7 @@ on:
       - main
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "10 0 * * *"
 
 env:
   NO_CLEAR: yes
@@ -16,6 +16,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
@@ -40,6 +41,7 @@ jobs:
 
   tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs:
       - build
     strategy:
@@ -67,11 +69,11 @@ jobs:
 
       - run: make "${{ matrix.target }}"
           
-  ga-test:
+  dc-tests:
     needs: 
-      - tests
+      - build
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     concurrency:
       group: release-${{ github.ref }}
 
@@ -108,8 +110,49 @@ jobs:
 
       - run: make integration-test-styles
 
-      - name: make deploy
-        if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
+      - name: Upload styles
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration
+          path: tmp/integration/
+
+  deploy:
+    needs: 
+      - tests
+      - dc-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: release-${{ github.ref }}
+    if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
+
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: deploy
+          path: .
+
+      # https://github.com/marketplace/actions/setup-chrome
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - run: ./setup.sh
+
+      - run: make github
+
+      - run: make dc-build
+
+      - run: make build
+
+      - run: make deploy
         env:
           CRYPTOMEDIC_DEPLOY_WEB_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_WEB_HOST }}
           CRYPTOMEDIC_DEPLOY_WEB_PORT: ${{ vars.CRYPTOMEDIC_DEPLOY_WEB_PORT }}
@@ -118,14 +161,7 @@ jobs:
           CRYPTOMEDIC_DEPLOY_FILES_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_FILES_HOST }}
           CRYPTOMEDIC_DEPLOY_FILES_USER: ${{ vars.CRYPTOMEDIC_DEPLOY_FILES_USER }}
           CRYPTOMEDIC_DEPLOY_FILES_PASSWORD: ${{ secrets.CRYPTOMEDIC_DEPLOY_FILES_PASSWORD }}
-        run:  make deploy
 
-      - name: Upload styles
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: integration
-          path: tmp/integration/
 
       - name: Upload deploy.log
         if: always()
