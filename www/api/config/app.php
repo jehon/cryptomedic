@@ -1,5 +1,15 @@
 <?php
 
+// {
+//     // https://stackoverflow.com/questions/66206874/how-to-move-the-laravel-bootstrap-cache-directory-to-other-location
+//    
+//     $env_cache_dir = __DIR__ . "/../../../tmp/api/bootstrap/";
+//     echo $env_cache_dir;
+//     putenv("APP_CONFIG_CACHE=$env_cache_dir");
+//     mkdir($env_cache_dir, 0777, true);
+//     $_ENV["APP_CONFIG_CACHE"] = $env_cache_dir;
+// }
+
 global $myconfig;
 
 return [
