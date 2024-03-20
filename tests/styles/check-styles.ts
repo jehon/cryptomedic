@@ -25,7 +25,7 @@ const args = parseArgs({
     update: { type: "boolean" }
   }
 }).values;
-assert(args.references, "You must specify a runtime: --reference");
+assert(args.references, "You must specify a reference: --reference");
 assert(args.runtime, "You must specify a runtime: --runtime");
 assert(args.target, "You must specify a target: --target");
 
