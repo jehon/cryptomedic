@@ -68,6 +68,8 @@ jobs:
           name: deploy
           path: .
 
+      - run: make github
+
       - run: make "${{ matrix.target }}"
           
   e2e-tests:
@@ -77,7 +79,6 @@ jobs:
       fail-fast: false
       matrix:
         target:
-          - backend-test
           - integration-test-desktop
           - integration-test-mobile
           - integration-test-styles
