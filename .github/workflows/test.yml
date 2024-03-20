@@ -74,9 +74,6 @@ jobs:
       - build
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    concurrency:
-      group: release-${{ github.ref }}
-
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
@@ -85,14 +82,14 @@ jobs:
           node-version: lts/*
           cache: npm
 
+      # https://github.com/marketplace/actions/setup-chrome
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
       - uses: actions/download-artifact@v4
         with:
           name: deploy
           path: .
-
-      # https://github.com/marketplace/actions/setup-chrome
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
 
       - run: ./setup.sh
 
