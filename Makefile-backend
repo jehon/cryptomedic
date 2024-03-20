@@ -58,7 +58,9 @@ backend-update-dependencies:
 
 .PHONY: backend-test
 test: backend-test
-backend-test: $(BACKEND_DEPENDENCIES_MARK)
+backend-test: $(BACKEND_DEPENDENCIES_MARK) \
+		dc-up
+
 	cr-data-reset
 	cd "$(BACKEND_ROOT)" && $(ROOT)/bin/cr-phpunit
 
