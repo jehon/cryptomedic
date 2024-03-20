@@ -32,7 +32,7 @@ cr_curl() {
 cr_lftp() {
     # https://manpages.debian.org/bookworm/lftp/lftp.1.en.html#sftp:connect-program
     lftp \
-        -e "var sftp:connect-program=ssh -a -x"  \
+        -e "set sftp:connect-program ssh -a -x;"  \
         "$@"
 }
 
