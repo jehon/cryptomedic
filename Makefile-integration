@@ -2,6 +2,16 @@
 INTEGRATION_TEST_TMP=$(TMP)/integration
 INTEGRATION_BUILT_MARK=$(INTEGRATION_TEST_TMP)/.built
 
+#
+# integration-test-{flavor}-test:
+#   - $(INTEGRATION_TEST_TMP)/{flavor}/runtime: screenshot taken during test   ()
+#   - tests/styles/references/{flavor}:         references for screenshots     (flat)
+#   - $(INTEGRATION_TEST_TMP)/.tested-{flavor}: mark
+# 
+# integration-test-{flavor}-styles:
+#   - 
+#
+
 integration: clear clean-files dc-build dc-up integration-dump integration-test ok
 
 .PHONY: integration-dump
@@ -49,7 +59,10 @@ test: integration-test
 integration-test: integration-test-desktop integration-test-mobile integration-test-styles
 
 .PHONY: integration-test-desktop
-integration-test-desktop: $(INTEGRATION_TEST_TMP)/.tested-desktop
+integration-test-desktop: integration-test-desktop-run integration-test-desktop-style
+
+.PHONY: integration-test-desktop-test
+integration-test-desktop-run: $(INTEGRATION_TEST_TMP)/.tested-desktop
 $(INTEGRATION_TEST_TMP)/.tested-desktop: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/cypress/ -name "*.js")
@@ -59,8 +72,15 @@ $(INTEGRATION_TEST_TMP)/.tested-desktop: \
 	bin/cr-cypress "desktop" "$(INTEGRATION_TEST_TMP)/runtime/desktop"
 	@touch "$@"
 
+.PHONY: integration-test-desktop-style
+integration-test-desktop-style: $(INTEGRATION_TEST_TMP)/.tested-desktop
+	@true
+
 .PHONY: integration-test-mobile
-integration-test-mobile: $(INTEGRATION_TEST_TMP)/.tested-mobile
+integration-test-mobile: integration-test-mobile-run integration-test-mobile-style
+
+.PHONY: integration-test-mobile-run
+integration-test-mobile-run: $(INTEGRATION_TEST_TMP)/.tested-mobile
 $(INTEGRATION_TEST_TMP)/.tested-mobile: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/cypress/ -name "*.js")
@@ -69,6 +89,10 @@ $(INTEGRATION_TEST_TMP)/.tested-mobile: \
 	bin/cr-data-reset
 	bin/cr-cypress "mobile" "$(INTEGRATION_TEST_TMP)/runtime/mobile"
 	@touch "$@"
+
+.PHONY: integration-test-mobile-style
+integration-test-mobile-style: $(INTEGRATION_TEST_TMP)/.tested-mobile
+	@true
 
 integration-test-open: $(INTEGRATION_BUILT_MARK)
 	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/runtime/desktop"
