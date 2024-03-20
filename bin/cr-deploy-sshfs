@@ -58,10 +58,8 @@ generate_sync_command() {
 (
 cat <<EOS
     $( generate_sync_command "" ) --file=.ovhconfig;
-    $( generate_sync_command "" ) --file=favicon*;
+    $( generate_sync_command "" ) --file=LICENSE.md;
     $( generate_sync_command "" ) --file=config.php;
-    $( generate_sync_command "" ) --file=index.html;
-    $( generate_sync_command "" ) --file=licenses*;
     $( generate_sync_command "conf/database/versions/" );
     $( generate_sync_command "conf/database/always" );
     $( generate_sync_command "www" ) --exclude www/api/bootstrap/cache --exclude www/api/storage;
