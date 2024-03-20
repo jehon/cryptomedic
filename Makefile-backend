@@ -67,3 +67,8 @@ update: backend-update-references
 backend-update-references: $(BACKEND_DEPENDENCIES_MARK)
 	cr-data-reset
 	cd "$(BACKEND_ROOT)" && COMMIT=1 $(ROOT)/bin/cr-phpunit
+
+.PHONY: backend-github
+github: backend-github
+backend-github: 
+	chmod +x www/api/vendor/bin
