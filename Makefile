@@ -181,7 +181,7 @@ www/built/release_version.txt:
 .PHONY: update-references-browsers
 update: update-references-browsers
 update-references-browsers:
-	bin/cr-node node_modules/.bin/browserslist --update-db
+	node_modules/.bin/browserslist --update-db
 
 include Makefile-backend
 include Makefile-frontend

@@ -154,22 +154,6 @@ services:
     volumes:
       - ./:/app
 
-  node:
-    profiles:
-      - tools
-    build: conf/node
-    working_dir: /app
-    volumes:
-      - type: bind
-        source: ./
-        target: /app
-      # Nodejs need infos on user
-      # On Github Actions, we need to tell him who is the user
-      - type: bind
-        source: /etc/passwd
-        target: /etc/passwd
-        read_only: true
-
   cypress:
     profiles:
       - tools

@@ -40,7 +40,7 @@ $(INTEGRATION_BUILT_MARK): \
 
 www/built/browsers.json: .browserslistrc $(FRONTEND_DEPENDENCIES_MARK)
 	@mkdir -p "$(dir $@)"
-	bin/cr-node node_modules/.bin/browserslist --json > "$@"
+	node_modules/.bin/browserslist --json > "$@"
 	@touch "$@"
 
 .PHONY: integration-test
@@ -79,7 +79,7 @@ $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json: \
 		$(INTEGRATION_TEST_TMP)/.tested-desktop \
 		$(INTEGRATION_TEST_TMP)/.tested-mobile
 
-	bin/cr-node node_modules/.bin/tsx tests/styles/check-styles.ts \
+	node_modules/.bin/tsx tests/styles/check-styles.ts \
 		--references="tests/styles/references/" \
 		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
 		--target="$(INTEGRATION_TEST_TMP)/styles" \
@@ -95,7 +95,7 @@ integration-update-references-styles: \
 # Raw without calculs
 .PHONY: integration-update-references-styles-calcul
 integration-update-references-styles-calcul:
-	bin/cr-node node_modules/.bin/tsx tests/styles/check-styles.ts \
+	node_modules/.bin/tsx tests/styles/check-styles.ts \
 		--references="tests/styles/references/" \
 		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
 		--target="$(INTEGRATION_TEST_TMP)/styles" \

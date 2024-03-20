@@ -42,38 +42,38 @@ frontend-dump:
 	@echo "FRONTEND_PUBLISHED:             $(FRONTEND_PUBLISHED)"
 	@echo "FRONTEND_BUILT_MARK:            $(FRONTEND_BUILT_MARK)"
 	@echo "FRONTEND_BUILD_TMP:             $(FRONTEND_BUILD_TMP)"
-	@echo "NodeJS:                         $(shell bin/cr-node --version 2>&1 )"
-	@echo "NPM:                            $(shell bin/cr-npm --version 2>&1 )"
+	@echo "NodeJS:                         $(shell node --version 2>&1 )"
+	@echo "NPM:                            $(shell npm --version 2>&1 )"
 
 .PHONY: frontend-dependencies
 dependencies: frontend-dependencies
 frontend-dependencies: $(FRONTEND_DEPENDENCIES_MARK)
 $(FRONTEND_DEPENDENCIES_MARK): package-lock.json
-	bin/cr-npm ci
+	npm ci
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 package-lock.json: package.json
-	bin/cr-npm install --package-lock-only
+	npm install --package-lock-only
 	@touch "$@"
 
 .PHONY: frontend-lint
 lint: frontend-lint
 frontend-lint: frontend-lint-es frontend-lint-css frontend-lint-html
-	bin/cr-node node_modules/.bin/prettier --check .
+	node_modules/.bin/prettier --check .
 
 .PHONY: frontend-lint-es
 frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/eslint --ext .js,.ts,.tsx .
+	node_modules/.bin/eslint --ext .js,.ts,.tsx .
 
 .PHONY: frontend-lint-css
 frontend-lint-css: $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/stylelint src/**/*.css legacy/**/*.css
+	node_modules/.bin/stylelint src/**/*.css legacy/**/*.css
 
 .PHONY: frontend-lint-html
 frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/htmlhint src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
+	node_modules/.bin/htmlhint src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
 
 .PHONY: frontend-build
 build: frontend-build
@@ -99,7 +99,7 @@ $(FRONTEND_PUBLISHED)/frontend/ng1x.html: \
 
 	@mkdir -p "$(dir $@)"
 # TODO: should not be here... (need rework of getHTMLNameOfClass)
-	CRYPTOMEDIC_DEV=true bin/cr-node node_modules/.bin/webpack
+	CRYPTOMEDIC_DEV=true node_modules/.bin/webpack
 	@touch "$@"
 
 frontend-build-ng: 
@@ -111,7 +111,7 @@ $(FRONTEND_PUBLISHED)/frontend-ng/index.html: \
 		$(shell find src/ )
 
 	@mkdir -p "$(dir $@)"
-	bin/cr-node node_modules/.bin/ng build
+	node_modules/.bin/ng build
 	@touch "$@"
 
 dev: frontend-dev
@@ -132,16 +132,16 @@ $(FRONTEND_PUBLISHED)/.htaccess: src/build.htaccess
 
 # Dependencies are used in the build !
 $(FRONTEND_BUILD_TMP)/axios.js: node_modules/axios/dist/axios.js $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
+	node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
 
 # Dependencies are used in the build !
 $(FRONTEND_BUILD_TMP)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
+	node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 # Dependencies are used in the build !
 $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_DEPENDENCIES_MARK)
-	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
+	node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
 
 .PHONY: frontend-test
 test: frontend-test
@@ -151,7 +151,7 @@ frontend-test: \
 		
 .PHONY: frontend-test-legacy
 frontend-test-legacy:
-	bin/cr-node node_modules/.bin/jest
+	node_modules/.bin/jest
 
 .PHONY: frontend-test-ng
 frontend-test-ng: $(FRONTEND_DEPENDENCIES_MARK)
