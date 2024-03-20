@@ -29,6 +29,13 @@ cr_curl() {
     curl -fsSL --user-agent firefox "$@"
 }
 
+cr_lftp() {
+    # https://manpages.debian.org/bookworm/lftp/lftp.1.en.html#sftp:connect-program
+
+    lftp -o "sftp:connect-program=ssh -a -x" \
+        "$@"
+}
+
 jh_color() {
     COLOR=${1:-"0"}
     if [ -z "$JH_DAEMON" ]; then
