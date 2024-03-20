@@ -26,8 +26,8 @@ backend-dump:
 	@echo ""
 	@echo "BACKEND_ROOT:                   $(BACKEND_ROOT)"
 	@echo "BACKEND_DEPENDENCIES_MARK:      $(BACKEND_DEPENDENCIES_MARK)"
-	@echo "PHP:                            $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
-	@echo "PHP composer:                   $(shell bin/cr-composer --version 2>&1 )"
+# @echo "PHP:                            $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
+# @echo "PHP composer:                   $(shell bin/cr-composer --version 2>&1 )"
 
 # %/composer.lock: %/composer.json
 # 	bin/composer install --working-dir "$(dir $@)"

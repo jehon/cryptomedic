@@ -12,7 +12,7 @@ integration-dump:
 	@echo "*** integration ***"
 	@echo ""
 	@echo "INTEGRATION_TEST_TMP:           $(INTEGRATION_TEST_TMP)"
-	@echo "Cypress:                        $(shell QUIET=y bin/cr-cypress version )"
+# @echo "Cypress:                        $(shell QUIET=y bin/cr-cypress version )"
 
 .PHONY: integration-clean
 clean: integration-clean

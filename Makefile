@@ -64,9 +64,9 @@ global-dump:
 	@echo "CRYPTOMEDIC_LOCAL_HTTP_PORT:    $(CRYPTOMEDIC_LOCAL_HTTP_PORT)"
 	@echo "------------------------------------------"
 	@echo "Docker:                         $(shell docker info -f "{{println .SecurityOptions}}")"
-	@echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
-	@echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
-	@echo "MySQL user:                     $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
+# @echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
+# @echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
+# @echo "MySQL user:                     $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
 # @echo "Chrome:                         $(shell google-chrome --version 2>&1 )"
 
 .PHONY: clear
