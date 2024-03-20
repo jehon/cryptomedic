@@ -161,7 +161,8 @@ acceptance-clean:
 #
 
 .PHONY: deploy
-deploy:
+deploy: .ovhconfig
+
 	bin/cr-deploy-sshfs commit
 
 .PHONY: deploy-test
