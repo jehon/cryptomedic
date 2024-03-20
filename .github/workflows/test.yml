@@ -24,11 +24,7 @@ jobs:
         with:
           node-version: lts/*
 
-      - run: type -a gpg || true
-
-      - run: sudo .devcontainer/root/setup.sh
-
-      - run: .devcontainer/root/setup-user.sh
+      - run: ./setup.sh
 
       - run: make build
 
@@ -84,9 +80,7 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - run: sudo .devcontainer/root/setup.sh
-
-      - run: .devcontainer/root/setup-user.sh
+      - run: ./setup.sh
 
       - run: make dc-build
 
