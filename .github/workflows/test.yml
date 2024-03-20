@@ -99,8 +99,6 @@ jobs:
 
       - run: make dc-up
 
-      - run: find . -type f -name "phpunit" -ls
-
       - run: make backend-test
 
       - run: make integration-test-desktop
