@@ -62,6 +62,8 @@ jobs:
       #     name: vendor
       #     path: www/api/vendor
 
+      - run: find . -ls
+
       - run: make github
 
       - run: make "${{ matrix.target }}"
