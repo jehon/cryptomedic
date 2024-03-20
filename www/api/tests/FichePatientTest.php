@@ -3,6 +3,7 @@
 require_once("FicheTestHelper.php");
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use PHPUnit\Framework\Attributes\Depends;
 
 class FichePatientTest extends FicheTestHelper {
 	// Unit Tests could not be transactionals since each test depends on the previous one!
@@ -17,9 +18,7 @@ class FichePatientTest extends FicheTestHelper {
 		return $id;
 	}
 
-	/**
-	 * @depends testCreate
-	 */
+	#[Depends("testCreate")]
 	public function testUpdate($id) {
 		// Modify it
     	$this->doUpdate($id, [ "phone" => "phone" ]);
@@ -30,10 +29,8 @@ class FichePatientTest extends FicheTestHelper {
 		return $result;
 	}
 
-	/**
-	 * @depends testCreate 
-	 * @depends testUpdate
-	 */
+	#[Depends("testCreate")]
+	#[Depends("testUpdate")]
 	public function testOptimisticLocking($id, $fromUpdate) {
 		$newPhone = "testOptimisticLocking";
 		$original = $fromUpdate["folder"][0]["record"];
@@ -83,9 +80,7 @@ class FichePatientTest extends FicheTestHelper {
 		$this->assertEquals($originalPhone, $updated3["phone"]);
 	}
 
-	/**
-	 * @depends testCreate
-	 */
+	#[Depends("testCreate")]
 	public function testDelete($id) {
 		// Delete it
     	$this->doDelete($id);

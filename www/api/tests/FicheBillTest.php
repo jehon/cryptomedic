@@ -3,6 +3,7 @@
 require_once("FicheTestHelper.php");
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use PHPUnit\Framework\Attributes\Depends;
 
 class FicheBillTest extends FicheTestHelper {
   // Make Unit Tests are transactionals !
@@ -27,9 +28,7 @@ class FicheBillTest extends FicheTestHelper {
     return $file;
   }
 
-  /**
-   * @depends testCreate
-   */
+	#[Depends("testCreate")]
   public function testUpdate1($file) {
     // Modify it
     $json = $this->doUpdate($file['id'], [
@@ -38,11 +37,8 @@ class FicheBillTest extends FicheTestHelper {
     ], false);
   }
 
-  /**
-   * @depends testCreate
-   * @depends testUpdate1
-   * @ depends testUpdate2
-   */
+	#[Depends("testCreate")]
+	#[Depends("testUpdate1")]
   public function testDelete($file, $res) {
     // Delete it
     $this->doDelete($file['id']);
