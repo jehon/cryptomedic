@@ -33,7 +33,7 @@ jobs:
         with:
           name: vendor
           path: www/api/vendor
-  
+
   tests:
     runs-on: ubuntu-latest
     needs:
@@ -43,20 +43,21 @@ jobs:
       fail-fast: false
       matrix:
         target:
+          - dump
           - lint
 
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: vendor
-          path: www/api/vendor
-
       # https://github.com/actions/setup-node
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+
+      # - uses: actions/download-artifact@v4
+      #   with:
+      #     name: vendor
+      #     path: www/api/vendor
 
       - run: make "${{ matrix.target }}"
           
@@ -85,8 +86,6 @@ jobs:
       - run: make dc-build
 
       - run: make dc-up
-
-      - run: make dump
 
       - run: make dependencies
 
