@@ -60,6 +60,8 @@ jobs:
       #     name: vendor
       #     path: www/api/vendor
 
+      - run: make github
+
       - run: make "${{ matrix.target }}"
           
   ga-test:
@@ -83,6 +85,8 @@ jobs:
         uses: browser-actions/setup-chrome@v1
 
       - run: ./setup.sh
+
+      - run: make github
 
       - run: make dc-build
 
