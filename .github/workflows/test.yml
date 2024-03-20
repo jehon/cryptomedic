@@ -72,6 +72,14 @@ jobs:
   dc-tests:
     needs: 
       - build
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - backend-test
+          - integration-test-desktop
+          - integration-test-mobile
+          - integration-test-styles
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -99,13 +107,7 @@ jobs:
 
       - run: make dc-up
 
-      - run: make backend-test
-
-      - run: make integration-test-desktop
-
-      - run: make integration-test-mobile
-
-      - run: make integration-test-styles
+      - run: make "${{ matrix.target }}"
 
       - name: Upload styles
         if: always()
