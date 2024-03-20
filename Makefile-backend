@@ -71,4 +71,4 @@ backend-update-references: $(BACKEND_DEPENDENCIES_MARK)
 .PHONY: backend-github
 github: backend-github
 backend-github: 
-	chmod --changes a+x www/api/vendor/bin
+	chmod --changes a+x www/api/vendor/bin/*
