@@ -29,11 +29,14 @@ jobs:
 
       - run: make build
 
-      - name: Upload vendor
+      - name: Upload built
         uses: actions/upload-artifact@v4
+        # Include all generated files
         with:
-          name: vendor
-          path: www/api/vendor
+          name: deploy
+          path: |
+            .ovhconfig
+            www
 
   tests:
     runs-on: ubuntu-latest
@@ -57,12 +60,10 @@ jobs:
           node-version: lts/*
           cache: npm
 
-      # - uses: actions/download-artifact@v4
-      #   with:
-      #     name: vendor
-      #     path: www/api/vendor
-
-      - run: make github
+      - uses: actions/download-artifact@v4
+        with:
+          name: deploy
+          path: .
 
       - run: make "${{ matrix.target }}"
           
@@ -77,11 +78,15 @@ jobs:
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      # https://github.com/actions/setup-node
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: npm
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: deploy
+          path: .
 
       # https://github.com/marketplace/actions/setup-chrome
       - name: Setup Chrome
