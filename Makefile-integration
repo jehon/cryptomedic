@@ -40,7 +40,8 @@ $(INTEGRATION_BUILT_MARK): \
 
 www/built/browsers.json: .browserslistrc $(FRONTEND_DEPENDENCIES_MARK)
 	@mkdir -p "$(dir $@)"
-	node_modules/.bin/browserslist --json > "$@"
+# pipe will not work with snap
+	node_modules/.bin/browserslist --json | tee "$@"
 	@touch "$@"
 
 .PHONY: integration-test
