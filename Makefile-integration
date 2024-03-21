@@ -68,17 +68,17 @@ integration-update-references-styles: \
 	integration-update-references-styles-mobile \
 	integration-update-references-styles-desktop 
 
-##############################33
+##############################
 #
-# Destop
+# Cypress - Destop
 #
 
 .PHONY: integration-test-desktop
 integration-test-desktop: integration-test-desktop-run integration-test-desktop-styles
 
 .PHONY: integration-test-desktop-test
-integration-test-desktop-run: $(INTEGRATION_TEST_TMP)/.tested-desktop
-$(INTEGRATION_TEST_TMP)/.tested-desktop: \
+integration-test-desktop-run: $(INTEGRATION_TEST_TMP)/desktop/.tested
+$(INTEGRATION_TEST_TMP)/desktop/.tested: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/cypress/ -name "*.js")
 
@@ -89,7 +89,7 @@ $(INTEGRATION_TEST_TMP)/.tested-desktop: \
 
 .PHONY: integration-test-desktop-styles
 integration-test-desktop-styles: $(INTEGRATION_TEST_TMP)/desktop/styles.json
-$(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/.tested-desktop \
+$(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/desktop/.tested \
 		tests/styles/check-styles.ts
 
 	@mkdir -p "$(dir $@)"
@@ -103,17 +103,17 @@ integration-update-references-styles-desktop:
 	echo "TODO: $@"
 	false
 
-##############################33
+##############################
 #
-# Mobile
+# Cypress - Mobile
 #
 
 .PHONY: integration-test-mobile
 integration-test-mobile: integration-test-mobile-run integration-test-mobile-styles
 
 .PHONY: integration-test-mobile-run
-integration-test-mobile-run: $(INTEGRATION_TEST_TMP)/.tested-mobile
-$(INTEGRATION_TEST_TMP)/.tested-mobile: \
+integration-test-mobile-run: $(INTEGRATION_TEST_TMP)/mobile/.tested
+$(INTEGRATION_TEST_TMP)/mobile/.tested: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/cypress/ -name "*.js")
 
@@ -124,7 +124,7 @@ $(INTEGRATION_TEST_TMP)/.tested-mobile: \
 
 .PHONY: integration-test-mobile-styles
 integration-test-mobile-styles: $(INTEGRATION_TEST_TMP)/mobile/styles.json
-$(INTEGRATION_TEST_TMP)/mobile/styles.json: $(INTEGRATION_TEST_TMP)/.tested-mobile \
+$(INTEGRATION_TEST_TMP)/mobile/styles.json: $(INTEGRATION_TEST_TMP)/mobile/.tested \
 		tests/styles/check-styles.ts
 
 	@mkdir -p "$(dir $@)"
