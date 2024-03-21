@@ -49,7 +49,7 @@ header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
 
 generate_sync_command() {
     F="${1%%/}"
-    echo -n "mirror ${DRY_RUN} " \
+    echo -n "mirror ${DRY_RUN} --verbose" \
         "--reverse --delete --no-perms " \
         "-x tmp -x bin -x test -x tests -x Tmp -x Temp -x '.+\.log'" \
         "$F $F"
@@ -65,7 +65,7 @@ cat <<EOS
     $( generate_sync_command "www" ) --exclude www/api/bootstrap/cache;
     quit
 EOS
-) | cr_lftp --verbose "sftp://${CRYPTOMEDIC_DEPLOY_FILES_USER}:${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}"
+) | cr_lftp "sftp://${CRYPTOMEDIC_DEPLOY_FILES_USER}:${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}"
 
 header_end
 
