@@ -75,7 +75,15 @@ services:
       MYSQL_DATABASE: cryptomedic
     healthcheck:
       # https://docs.docker.com/reference/dockerfile/#healthcheck
-      test: ["CMD", "mysql", "--database", "cryptomedic", "-e", "SELECT * FROM `settings` WHERE id = 'structure_version'; "]
+      test:
+        [
+          "CMD",
+          "mysql",
+          "--database",
+          "cryptomedic",
+          "-e",
+          "SELECT * FROM `settings` WHERE id = 'structure_version'; "
+        ]
       start_period: 5s
       interval: 1s
       timeout: 1s
