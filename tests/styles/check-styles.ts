@@ -33,6 +33,7 @@ assert(args.target, "You must specify a target: --target");
 const root = process.cwd();
 const targetFolder = args.target;
 const stylesJSON = path.join(targetFolder, "styles-problems-list.json");
+fs.mkdirSync(targetFolder, { recursive: true });
 
 console.info(`Generating relative to ${root}`);
 
@@ -65,6 +66,9 @@ const listOfFiles = new Map<string, Diff>();
 
 const res: boolean = ["desktop", "mobile"]
   .map((flavor) => {
+    const targetFolder = path.join(args.results!, flavor);
+    const stylesJSON = path.join(targetFolder, "results.json");
+
     const referencesFolder = args.references!;
     const runtimeFolder = args.runtime!;
     const differenceFolder = path.join(targetFolder, "differences");
@@ -194,6 +198,11 @@ const res: boolean = ["desktop", "mobile"]
       }
       return success;
     } else {
+      fs.writeFileSync(
+        stylesJSON,
+        JSON.stringify(Object.fromEntries(listOfFiles), null, 2)
+      );
+
       return (
         Array.from(listOfFiles.values()).filter((diff) => diff.problem)
           .length == 0
