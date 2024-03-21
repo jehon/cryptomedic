@@ -4,9 +4,9 @@ INTEGRATION_BUILT_MARK=$(INTEGRATION_TEST_TMP)/.built
 
 #
 # integration-test-{flavor}-test:
-#   - tests/styles/references/{flavor}:         references for screenshots     (flat)
-#   - $(INTEGRATION_TEST_TMP)/runtime/{flavor}: screenshot taken during test   (by folders)
-#   - $(INTEGRATION_TEST_TMP)/.tested-{flavor}: mark
+#   - tests/styles/references/{flavor}:                    references for screenshots     (flat)
+#   - $(INTEGRATION_TEST_TMP)/{flavor}runtime/screenshots: screenshot taken during test   (by folders)
+#   - $(INTEGRATION_TEST_TMP)/.tested-{flavor}:            mark
 # 
 # integration-test-{flavor}-styles:
 #   - $(INTEGRATION_TEST_TMP)/styles/differences/{flavor}
@@ -70,7 +70,7 @@ $(INTEGRATION_TEST_TMP)/.tested-desktop: \
 
 	@mkdir -p "$(dir $@)"
 	bin/cr-data-reset
-	bin/cr-cypress "desktop" "$(INTEGRATION_TEST_TMP)/runtime/desktop"
+	bin/cr-cypress "desktop" "$(INTEGRATION_TEST_TMP)/desktop/runtime"
 	@touch "$@"
 
 .PHONY: integration-test-desktop-style
@@ -91,7 +91,7 @@ $(INTEGRATION_TEST_TMP)/.tested-mobile: \
 
 	@mkdir -p "$(dir $@)"
 	bin/cr-data-reset
-	bin/cr-cypress "mobile" "$(INTEGRATION_TEST_TMP)/runtime/mobile"
+	bin/cr-cypress "mobile" "$(INTEGRATION_TEST_TMP)/mobile/runtime"
 	@touch "$@"
 
 .PHONY: integration-test-mobile-style
@@ -102,7 +102,7 @@ $(INTEGRATION_TEST_TMP)/mobile/results.json: $(INTEGRATION_TEST_TMP)/.tested-mob
 	@true
 
 integration-test-open: $(INTEGRATION_BUILT_MARK)
-	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/runtime/desktop"
+	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/desktop/runtime"
 
 .PHONY: test-styles
 integration-test-styles: $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json
@@ -114,7 +114,7 @@ $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json: \
 	node_modules/.bin/tsx tests/styles/check-styles.ts \
 		--references="tests/styles/references/" \
 		--results="$(INTEGRATION_TEST_TMP)/" \
-		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
+		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots" \
 		--target="$(INTEGRATION_TEST_TMP)/styles" \
 
 	touch "$@"
@@ -131,6 +131,6 @@ integration-update-references-styles-calcul:
 	node_modules/.bin/tsx tests/styles/check-styles.ts \
 		--references="tests/styles/references/" \
 		--results="$(INTEGRATION_TEST_TMP)/" \
-		--runtime="$(INTEGRATION_TEST_TMP)/runtime" \
+		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots" \
 		--target="$(INTEGRATION_TEST_TMP)/styles" \
 		--update

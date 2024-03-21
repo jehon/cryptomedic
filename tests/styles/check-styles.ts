@@ -18,19 +18,17 @@ const args = parseArgs({
     references: {
       type: "string"
     },
+    screenshots: { type: "string" },
     results: { type: "string" },
-    runtime: {
-      type: "string"
-    },
     target: { type: "string" },
     update: { type: "boolean" }
   }
 }).values;
 assert(args.references, "You must specify a reference: --reference");
+assert(args.screenshots, "You must specify a screenshots: --screenshots");
 assert(args.results, "You must specify a results: --results");
 
 // Legacy
-assert(args.runtime, "You must specify a runtime: --runtime");
 assert(args.target, "You must specify a target: --target");
 
 const root = process.cwd();
@@ -71,11 +69,18 @@ const res: boolean = ["desktop", "mobile"]
   .map((flavor) => {
     const listOfFiles = new Map<string, Diff>();
 
+    const referencesFolder = path.join(args.references!, flavor);
+    // TODO: arg
+    const screenshotsFolder = path.join(
+      args.results!,
+      flavor,
+      "runtime",
+      "screenshots"
+    );
+
+    // TODO: arg
     const resultsFolder = path.join(args.results!, flavor);
     const stylesJSON = path.join(resultsFolder, "results.json");
-
-    const referencesFolder = args.references!;
-    const runtimeFolder = args.runtime!;
     const differenceFolder = path.join(resultsFolder, "differences");
 
     fs.mkdirSync(resultsFolder, { recursive: true });
@@ -84,28 +89,26 @@ const res: boolean = ["desktop", "mobile"]
     fs.mkdirSync(path.join(differenceFolder, "mobile"), { recursive: true });
 
     // Add the run
-    const runSubFolder = path.join(runtimeFolder, flavor, "screenshots");
-    globSync("**/*.png", { cwd: runSubFolder }).map((f) => {
+    globSync("**/*.png", { cwd: screenshotsFolder }).map((f) => {
       const key = path.join(flavor, path.basename(f));
       let diff = listOfFiles.get(key);
       if (!diff) {
         diff = new Diff();
       }
 
-      diff.runtime = path.join(runSubFolder, f);
+      diff.runtime = path.join(screenshotsFolder, f);
       listOfFiles.set(key, diff);
     });
 
     // Add the ref
-    const refSubFolder = path.join(referencesFolder, flavor);
-    globSync("**/*.png", { cwd: refSubFolder }).map((f) => {
+    globSync("**/*.png", { cwd: referencesFolder }).map((f) => {
       const key = path.join(flavor, path.basename(f));
       let diff = listOfFiles.get(key);
       if (!diff) {
         diff = new Diff();
       }
 
-      diff.reference = path.join(refSubFolder, f);
+      diff.reference = path.join(referencesFolder, f);
       listOfFiles.set(key, diff);
       fullListOfFiles.set(key, diff);
     });
