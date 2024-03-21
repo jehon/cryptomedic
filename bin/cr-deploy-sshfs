@@ -42,6 +42,7 @@ fi
 generate_sync_command() {
     F="${1%%/}"
     echo -n "mirror ${DRY_RUN} --verbose" \
+        "--parallel 5" \
         "--reverse --delete --no-perms " \
         "-x tmp -x bin -x test -x tests -x Tmp -x Temp -x '.+\.log'" \
         "$F $F"
