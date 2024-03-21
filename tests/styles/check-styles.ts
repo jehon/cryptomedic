@@ -27,6 +27,9 @@ const args = parseArgs({
   }
 }).values;
 assert(args.references, "You must specify a reference: --reference");
+assert(args.results, "You must specify a results: --results");
+
+// Legacy
 assert(args.runtime, "You must specify a runtime: --runtime");
 assert(args.target, "You must specify a target: --target");
 
@@ -68,14 +71,14 @@ const res: boolean = ["desktop", "mobile"]
   .map((flavor) => {
     const listOfFiles = new Map<string, Diff>();
 
-    const targetFolder = path.join(args.results!, flavor);
-    const stylesJSON = path.join(targetFolder, "results.json");
+    const resultsFolder = path.join(args.results!, flavor);
+    const stylesJSON = path.join(resultsFolder, "results.json");
 
     const referencesFolder = args.references!;
     const runtimeFolder = args.runtime!;
-    const differenceFolder = path.join(targetFolder, "differences");
+    const differenceFolder = path.join(resultsFolder, "differences");
 
-    fs.mkdirSync(targetFolder, { recursive: true });
+    fs.mkdirSync(resultsFolder, { recursive: true });
     fs.mkdirSync(differenceFolder, { recursive: true });
     fs.mkdirSync(path.join(differenceFolder, "desktop"), { recursive: true });
     fs.mkdirSync(path.join(differenceFolder, "mobile"), { recursive: true });
