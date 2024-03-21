@@ -75,6 +75,7 @@ services:
       MYSQL_DATABASE: cryptomedic
     healthcheck:
       # Ping through http and socket
+      # https://docs.docker.com/reference/dockerfile/#healthcheck
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "ping"]
       start_period: 5s
       interval: 1s
