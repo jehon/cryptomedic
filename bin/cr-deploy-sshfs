@@ -39,14 +39,6 @@ if [ -z "$CRYPTOMEDIC_DEPLOY_FILES_USER" ]; then
     exit 1
 fi
 
-header_begin "Cleaning local"
-find . -type d -empty -delete
-cr-ensure-folder-empty "www/api/bootstrap/cache/"
-
-header_end
-
-header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
-
 generate_sync_command() {
     F="${1%%/}"
     echo -n "mirror ${DRY_RUN} --verbose" \
@@ -55,14 +47,20 @@ generate_sync_command() {
         "$F $F"
 }
 
+header_begin "Cleaning local"
+find . -type d -empty -delete
+cr-ensure-folder-empty "www/api/bootstrap/cache/"
+header_end
+
+header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
+
 (
+    # Note: See "Cleaning local" above for managed exclusions
 cat <<EOS
     $( generate_sync_command "" ) --file=.ovhconfig;
-    $( generate_sync_command "" ) --file=LICENSE.md;
     $( generate_sync_command "" ) --file=config.php;
     $( generate_sync_command "conf/database/versions/" );
     $( generate_sync_command "conf/database/always" );
-    $( generate_sync_command "www" ) --exclude www/api/bootstrap/cache;
     quit
 EOS
 ) | cr_lftp "sftp://${CRYPTOMEDIC_DEPLOY_FILES_USER}:${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}"
