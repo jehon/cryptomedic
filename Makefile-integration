@@ -99,6 +99,7 @@ $(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/desktop/.te
 		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots"
 
 .PHONY: integration-update-references-styles-desktop
+update: integration-update-references-styles-desktop
 integration-update-references-styles-desktop: 
 	echo "TODO: $@"
 	false
@@ -134,6 +135,7 @@ $(INTEGRATION_TEST_TMP)/mobile/styles.json: $(INTEGRATION_TEST_TMP)/mobile/.test
 		--screenshots="$(INTEGRATION_TEST_TMP)/mobile/runtime/screenshots" \
 
 .PHONY: integration-update-references-styles-mobile
+update: integration-update-references-styles-mobile
 integration-update-references-styles-mobile:
 	echo "TODO: $@"
 	false
@@ -165,3 +167,9 @@ integration-test-playwright-styles: $(INTEGRATION_TEST_TMP)/playwright/.tested
 
 $(HOME)/.cache/ms-playwright:
 	node_modules/.bin/playwright install
+
+.PHONY: integration-update-browsers
+update: integration-update-browsers
+integration-update-browsers:
+	rm -fr $(HOME)/.cache/ms-playwright
+	$(MAKE) $(HOME)/.cache/ms-playwright
