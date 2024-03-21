@@ -6,11 +6,11 @@ INTEGRATION_BUILT_MARK=$(INTEGRATION_TEST_TMP)/.built
 # integration-test-{flavor}-test:
 #   - tests/styles/references/{flavor}:                    references for screenshots     (flat)
 #   - $(INTEGRATION_TEST_TMP)/{flavor}runtime/screenshots: screenshot taken during test   (by folders)
-#   - $(INTEGRATION_TEST_TMP)/.tested-{flavor}:            mark
+#   - $(INTEGRATION_TEST_TMP)/{flavor}/.tested:            mark
 # 
 # integration-test-{flavor}-styles:
-#   - $(INTEGRATION_TEST_TMP)/styles/differences/{flavor}
-#   - $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json
+#   - $(INTEGRATION_TEST_TMP)/{flavor}/differences
+#   - $(INTEGRATION_TEST_TMP)/{flavor}/styles.json
 #
 
 integration: clear clean-files dc-build dc-up integration-dump integration-test ok
