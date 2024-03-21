@@ -65,7 +65,7 @@ cat <<EOS
     $( generate_sync_command "www" ) --exclude www/api/bootstrap/cache;
     quit
 EOS
-) | cr_lftp "sftp://${CRYPTOMEDIC_DEPLOY_FILES_USER}:${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}"
+) | cr_lftp --verbose "sftp://${CRYPTOMEDIC_DEPLOY_FILES_USER}:${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}"
 
 header_end
 
