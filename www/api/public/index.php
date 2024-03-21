@@ -47,7 +47,7 @@ $app = require_once __DIR__ . '/../bootstrap/app.php';
 |
 */
 
-require_once __DIR__ . "/../../../config.php";
+require_once __DIR__ . "/../../config.php";
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 

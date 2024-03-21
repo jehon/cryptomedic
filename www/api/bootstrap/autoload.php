@@ -4,7 +4,7 @@ define('LARAVEL_START', microtime(true));
 
 /* JHO CONFIG */
 global $myconfig;
-require_once(dirname(dirname(dirname(__DIR__))) . "/config.php");
+require_once(dirname(dirname(__DIR__)) . "/config.php");
 date_default_timezone_set("GMT");
 /* JHO CONFIG */
 

@@ -58,7 +58,6 @@ header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
     # Note: See "Cleaning local" above for managed exclusions
 cat <<EOS
     $( generate_sync_command "" ) --file=.ovhconfig;
-    $( generate_sync_command "" ) --file=config.php;
     $( generate_sync_command "conf/database/versions/" );
     $( generate_sync_command "conf/database/always" );
     $( generate_sync_command "www/" );

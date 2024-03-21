@@ -2,7 +2,7 @@
 
 global $myconfig;
 
-define("CR_PRJ_ROOT", __DIR__);
+define("CR_PRJ_ROOT", dirname(__DIR__));
 
 $myconfig = [
     "database" => [
