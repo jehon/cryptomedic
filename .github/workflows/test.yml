@@ -120,11 +120,12 @@ jobs:
           path: tmp/integration/
 
   deploy:
+    # TODO: move into another workflow to allow tests to pass even if deploy is down
     needs: 
       - tests
       - e2e-tests
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     concurrency:
       group: release-${{ github.ref }}
     if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
