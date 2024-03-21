@@ -6,6 +6,14 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
+#
+# !!! Requires the database to be available
+#
+#   on deploy: the database is always up
+#
+#   on dev: to be checked before
+#
+
 BASE_HOST="$1"
 TOKEN="$2"
 
@@ -13,9 +21,6 @@ if [ -z "$2" ]; then
     echo "$0 need parameters" >&2
     exit 1
 fi
-
-# To wait for database...
-"$CR_SCRIPT_DIR"/cr-mysql --database=cryptomedic -e "USE cryptomedic"
 
 echo "Deploying to ${BASE_HOST} with pwd of #${#TOKEN} char length"
 

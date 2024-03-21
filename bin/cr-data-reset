@@ -19,6 +19,7 @@ header_end
 # Reset database
 header_begin "cr-data-reset - Mysql - restoring initial base"
 
+# This will wait for database...
 QUIET=yes cr-mysql --database=mysql -e "CREATE SCHEMA IF NOT EXISTS cryptomedic"
 
 for F in conf/database/dev/*.sql; do
