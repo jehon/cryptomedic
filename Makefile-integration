@@ -57,7 +57,7 @@ www/built/browsers.json: .browserslistrc $(FRONTEND_DEPENDENCIES_MARK)
 
 .PHONY: integration-test
 test: integration-test
-integration-test: integration-test-desktop integration-test-mobile integration-test-styles
+integration-test: integration-test-desktop integration-test-mobile integration-test-playwright
 
 integration-test-open: $(INTEGRATION_BUILT_MARK)
 	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/desktop/runtime"
