@@ -26,14 +26,13 @@ export default defineConfig({
 
   projects: [
     {
-      name: "firefox",
+      name: "Firefox",
       use: { ...devices["Desktop Firefox"] }
     },
     {
       name: "Google Chrome",
       use: { ...devices["Desktop Chrome"], channel: "chrome" }
     },
-    /* Test against mobile viewports. */
     {
       name: "Mobile Chrome",
       use: { ...devices["Pixel 5"] }

@@ -151,7 +151,8 @@ integration-test-playwright-run: $(INTEGRATION_TEST_TMP)/playwright/.tested
 $(INTEGRATION_TEST_TMP)/playwright/.tested: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/e2e/ -name "*.ts") \
-		playwright.config.ts
+		playwright.config.ts \
+		$(HOME)/.cache/ms-playwright
 
 	@mkdir -p "$(dir $@)"
 	node_modules/.bin/playwright test
@@ -161,3 +162,6 @@ $(INTEGRATION_TEST_TMP)/playwright/.tested: \
 integration-test-playwright-styles: $(INTEGRATION_TEST_TMP)/playwright/.tested
 
 	@true
+
+$(HOME)/.cache/ms-playwright:
+	node_modules/.bin/playwright install
