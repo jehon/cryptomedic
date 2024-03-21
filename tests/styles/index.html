@@ -67,23 +67,24 @@
         </button>
       </span>
       <span>Test result</span>
-      <span>Comparison</span>
       <span>Diff</span>
     </div>
 
     <div id="results"></div>
 
-    <script>
-      fetch("/dev/tmp/integration/styles/styles-problems-list.json")
-        .then((response) => response.json())
-        .then((listOfFiles) => {
-          let id = 0;
-          for (let key of Object.keys(listOfFiles)) {
-            const data = listOfFiles[key];
+    <script type="module">
+      const flavors = ["desktop", "mobile"];
+      for (const flavor of flavors) {
+        await fetch(`/dev/tmp/integration/${flavor}/results.json`)
+          .then((response) => response.json())
+          .then((listOfFiles) => {
+            let id = 0;
+            for (let key of Object.keys(listOfFiles)) {
+              const data = listOfFiles[key];
 
-            document.querySelector("#results").insertAdjacentHTML(
-              "beforeend",
-              `<div 
+              document.querySelector("#results").insertAdjacentHTML(
+                "beforeend",
+                `<div 
                   ${!(data.problem || data.warning) ? "ok" : ""}
                 >
                 <h3>${key}: ${data.message}
@@ -97,10 +98,11 @@
                     <img diff src="/dev/${data.difference}"></img>
                 </div>
               </div>`
-            );
-            id++;
-          }
-        });
+              );
+              id++;
+            }
+          });
+      }
     </script>
   </body>
 </html>
