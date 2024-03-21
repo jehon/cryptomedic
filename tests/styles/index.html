@@ -75,7 +75,10 @@
     <script type="module">
       const flavors = ["desktop", "mobile"];
       for (const flavor of flavors) {
-        await fetch(`/dev/tmp/integration/${flavor}/results.json`)
+        document
+          .querySelector("#results")
+          .insertAdjacentHTML("beforeend", `<h1>${flavor}</h1>`);
+        await fetch(`/dev/tmp/integration/${flavor}/styles.json`)
           .then((response) => response.json())
           .then((listOfFiles) => {
             let id = 0;
@@ -87,7 +90,7 @@
                 `<div 
                   ${!(data.problem || data.warning) ? "ok" : ""}
                 >
-                <h3>${key}: ${data.message}
+                <h3>[${flavor}] ${key}: ${data.message}
                   ${!(data.problem || data.warning) ? "ok" : ""}
                   ${data.problem ? "problem" : ""}
                   ${data.warning ? "warning" : ""}

@@ -20,7 +20,6 @@ const args = parseArgs({
     },
     screenshots: { type: "string" },
     results: { type: "string" },
-    target: { type: "string" },
     update: { type: "boolean" }
   }
 }).values;
@@ -28,13 +27,7 @@ assert(args.references, "You must specify a reference: --reference");
 assert(args.screenshots, "You must specify a screenshots: --screenshots");
 assert(args.results, "You must specify a results: --results");
 
-// Legacy
-assert(args.target, "You must specify a target: --target");
-
 const root = process.cwd();
-const targetFolder = args.target;
-const stylesJSON = path.join(targetFolder, "styles-problems-list.json");
-fs.mkdirSync(targetFolder, { recursive: true });
 
 console.info(`Generating relative to ${root}`);
 
@@ -65,171 +58,144 @@ function align(msg: string, n: number) {
 // Full list of files
 const fullListOfFiles = new Map<string, Diff>();
 
-const res: boolean = ["desktop", "mobile"]
-  .map((flavor) => {
-    const listOfFiles = new Map<string, Diff>();
+const listOfFiles = new Map<string, Diff>();
 
-    const referencesFolder = path.join(args.references!, flavor);
-    // TODO: arg
-    const screenshotsFolder = path.join(
-      args.results!,
-      flavor,
-      "runtime",
-      "screenshots"
-    );
+const referencesFolder: string = args.references!;
+const screenshotsFolder: string = args.screenshots!;
+const resultsFolder = args.results!;
+const stylesJSON = path.join(resultsFolder, "styles.json");
+const differenceFolder = path.join(resultsFolder, "differences");
 
-    // TODO: arg
-    const resultsFolder = path.join(args.results!, flavor);
-    const stylesJSON = path.join(resultsFolder, "results.json");
-    const differenceFolder = path.join(resultsFolder, "differences");
+fs.mkdirSync(differenceFolder);
 
-    fs.mkdirSync(resultsFolder, { recursive: true });
-    fs.mkdirSync(differenceFolder, { recursive: true });
-    fs.mkdirSync(path.join(differenceFolder, "desktop"), { recursive: true });
-    fs.mkdirSync(path.join(differenceFolder, "mobile"), { recursive: true });
+// Add the run
+globSync("**/*.png", { cwd: screenshotsFolder }).map((f) => {
+  const key = path.basename(f);
+  let diff = listOfFiles.get(key);
+  if (!diff) {
+    diff = new Diff();
+  }
 
-    // Add the run
-    globSync("**/*.png", { cwd: screenshotsFolder }).map((f) => {
-      const key = path.join(flavor, path.basename(f));
-      let diff = listOfFiles.get(key);
-      if (!diff) {
-        diff = new Diff();
-      }
+  diff.runtime = path.join(screenshotsFolder, f);
+  listOfFiles.set(key, diff);
+});
 
-      diff.runtime = path.join(screenshotsFolder, f);
-      listOfFiles.set(key, diff);
-    });
+// Add the ref
+globSync("**/*.png", { cwd: referencesFolder }).map((f) => {
+  const key = path.basename(f);
+  let diff = listOfFiles.get(key);
+  if (!diff) {
+    diff = new Diff();
+  }
 
-    // Add the ref
-    globSync("**/*.png", { cwd: referencesFolder }).map((f) => {
-      const key = path.join(flavor, path.basename(f));
-      let diff = listOfFiles.get(key);
-      if (!diff) {
-        diff = new Diff();
-      }
+  diff.reference = path.join(referencesFolder, f);
+  listOfFiles.set(key, diff);
+  fullListOfFiles.set(key, diff);
+});
 
-      diff.reference = path.join(referencesFolder, f);
-      listOfFiles.set(key, diff);
-      fullListOfFiles.set(key, diff);
-    });
+const maxFilenameLength = Array.from(listOfFiles.keys()).reduce(
+  (prev, val) => Math.max(prev, val.length),
+  0
+);
 
-    const maxFilenameLength = Array.from(listOfFiles.keys()).reduce(
-      (prev, val) => Math.max(prev, val.length),
-      0
-    );
-
-    for (const [key, diff] of listOfFiles) {
-      if (!diff.reference) {
-        diff.problem = true;
-        diff.message = "No reference found";
-      } else {
-        if (!diff.runtime) {
-          diff.problem = true;
-          diff.message = "No run found";
-        } else {
-          // Generate the diffs
-          // TODO: https://github.com/dmtrKovalenko/odiff
-          const pngReference = PNG.sync.read(fs.readFileSync(diff.reference));
-          const pngRuntime = PNG.sync.read(fs.readFileSync(diff.runtime));
-          const { width, height } = pngReference;
-          const pngDifference = new PNG({ width, height });
-          diff.differenceSize = Math.abs(
-            1 -
-              (pngRuntime.height * pngRuntime.width) /
-                (pngReference.height * pngReference.width)
-          );
-          if (diff.differenceSize > 0) {
-            diff.problem = true;
-            diff.message = `size    - ${rnd(diff.differenceSize)} vs. ${
-              MaxDiffs.sizePercent
-            }`;
-          } else {
-            diff.differencePixes = pixelMatch(
-              pngReference.data,
-              pngRuntime.data,
-              pngDifference.data,
-              width,
-              height /*, { threshold: 0.1 } */
-            );
-            if (diff.differencePixes > 0) {
-              if (diff.differencePixes > MaxDiffs.contentPixels) {
-                diff.problem = true;
-                diff.message = `content - ${diff.differencePixes} vs. ${MaxDiffs.contentPixels}`;
-              } else {
-                diff.warning = true;
-                diff.message = `content - ${diff.differencePixes}`;
-              }
-              diff.difference = path.join(differenceFolder, key);
-              fs.writeFileSync(diff.difference, PNG.sync.write(pngDifference));
-            }
-          }
-        }
-      }
-
-      if (diff.problem || diff.warning) {
-        if (diff.problem) {
-          console.error(
-            `${p_ko}: ${align(key, maxFilenameLength)}: ${diff.message}`
-          );
-        } else {
-          console.warn(
-            `${p_warn}: ${align(key, maxFilenameLength)}: ${diff.message}`
-          );
-        }
-      } else {
-        console.info(`${p_ok}: ${align(key, maxFilenameLength)}`);
-      }
-    }
-
-    if (args.update) {
-      console.info("Updating references...");
-      let success = true;
-      for (const [key, diff] of listOfFiles) {
-        if (!diff.problem && !diff.warning) {
-          continue;
-        }
-        if (!diff.runtime) {
-          console.error(
-            `${p_ko}: ${align(key, maxFilenameLength)} does not have a run`
-          );
-          success = false;
-          continue;
-        }
-        if (!diff.reference) {
-          console.error(
-            `${p_ko}: ${align(key, maxFilenameLength)} does not have a reference`
-          );
-          success = false;
-          continue;
-        }
-        process.stdout.write(`[update] ${key}\n`);
-        fs.copyFileSync(diff.runtime, diff.reference);
-      }
-      return success;
+for (const [key, diff] of listOfFiles) {
+  if (!diff.reference) {
+    diff.problem = true;
+    diff.message = "No reference found";
+  } else {
+    if (!diff.runtime) {
+      diff.problem = true;
+      diff.message = "No run found";
     } else {
-      fs.writeFileSync(
-        stylesJSON,
-        JSON.stringify(Object.fromEntries(listOfFiles), null, 2)
+      // Generate the diffs
+      // TODO: https://github.com/dmtrKovalenko/odiff
+      const pngReference = PNG.sync.read(fs.readFileSync(diff.reference));
+      const pngRuntime = PNG.sync.read(fs.readFileSync(diff.runtime));
+      const { width, height } = pngReference;
+      const pngDifference = new PNG({ width, height });
+      diff.differenceSize = Math.abs(
+        1 -
+          (pngRuntime.height * pngRuntime.width) /
+            (pngReference.height * pngReference.width)
       );
+      if (diff.differenceSize > 0) {
+        diff.problem = true;
+        diff.message = `size    - ${rnd(diff.differenceSize)} vs. ${
+          MaxDiffs.sizePercent
+        }`;
+      } else {
+        diff.differencePixes = pixelMatch(
+          pngReference.data,
+          pngRuntime.data,
+          pngDifference.data,
+          width,
+          height /*, { threshold: 0.1 } */
+        );
+        if (diff.differencePixes > 0) {
+          if (diff.differencePixes > MaxDiffs.contentPixels) {
+            diff.problem = true;
+            diff.message = `content - ${diff.differencePixes} vs. ${MaxDiffs.contentPixels}`;
+          } else {
+            diff.warning = true;
+            diff.message = `content - ${diff.differencePixes}`;
+          }
+          diff.difference = path.join(differenceFolder, key);
+          fs.writeFileSync(diff.difference, PNG.sync.write(pngDifference));
+        }
+      }
+    }
+  }
 
-      return (
-        Array.from(listOfFiles.values()).filter((diff) => diff.problem)
-          .length == 0
+  if (diff.problem || diff.warning) {
+    if (diff.problem) {
+      console.error(
+        `${p_ko}: ${align(key, maxFilenameLength)}: ${diff.message}`
+      );
+    } else {
+      console.warn(
+        `${p_warn}: ${align(key, maxFilenameLength)}: ${diff.message}`
       );
     }
-  })
-  .reduce((acc, val) => acc && val, true);
+  } else {
+    console.info(`${p_ok}: ${align(key, maxFilenameLength)}`);
+  }
+}
+let success = true;
 
-console.info("---------------------");
-
-if (!args.update) {
+if (args.update) {
+  console.info("Updating references...");
+  for (const [key, diff] of listOfFiles) {
+    if (!diff.problem && !diff.warning) {
+      continue;
+    }
+    if (!diff.runtime) {
+      console.error(
+        `${p_ko}: ${align(key, maxFilenameLength)} does not have a run`
+      );
+      success = false;
+      continue;
+    }
+    if (!diff.reference) {
+      console.error(
+        `${p_ko}: ${align(key, maxFilenameLength)} does not have a reference`
+      );
+      success = false;
+      continue;
+    }
+    process.stdout.write(`[update] ${key}\n`);
+    fs.copyFileSync(diff.runtime, diff.reference);
+  }
+} else {
   fs.writeFileSync(
     stylesJSON,
-    JSON.stringify(Object.fromEntries(fullListOfFiles), null, 2)
+    JSON.stringify(Object.fromEntries(listOfFiles), null, 2)
   );
+
+  success =
+    Array.from(listOfFiles.values()).filter((diff) => diff.problem).length == 0;
 }
 
-if (!res) {
+if (!success) {
   console.error(p_ko, "some tests did fail");
   process.exit(1);
 }

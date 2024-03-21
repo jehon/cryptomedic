@@ -59,8 +59,22 @@ www/built/browsers.json: .browserslistrc $(FRONTEND_DEPENDENCIES_MARK)
 test: integration-test
 integration-test: integration-test-desktop integration-test-mobile integration-test-styles
 
+integration-test-open: $(INTEGRATION_BUILT_MARK)
+	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/desktop/runtime"
+
+.PHONY: integration-update-references-styles
+update: integration-update-references-styles
+integration-update-references-styles: \
+	integration-update-references-styles-mobile \
+	integration-update-references-styles-desktop 
+
+##############################33
+#
+# Destop
+#
+
 .PHONY: integration-test-desktop
-integration-test-desktop: integration-test-desktop-run integration-test-desktop-style
+integration-test-desktop: integration-test-desktop-run integration-test-desktop-styles
 
 .PHONY: integration-test-desktop-test
 integration-test-desktop-run: $(INTEGRATION_TEST_TMP)/.tested-desktop
@@ -73,15 +87,29 @@ $(INTEGRATION_TEST_TMP)/.tested-desktop: \
 	bin/cr-cypress "desktop" "$(INTEGRATION_TEST_TMP)/desktop/runtime"
 	@touch "$@"
 
-.PHONY: integration-test-desktop-style
-integration-test-desktop-style: $(INTEGRATION_TEST_TMP)/desktop/results.json
-$(INTEGRATION_TEST_TMP)/desktop/results.json: $(INTEGRATION_TEST_TMP)/.tested-desktop \
+.PHONY: integration-test-desktop-styles
+integration-test-desktop-styles: $(INTEGRATION_TEST_TMP)/desktop/styles.json
+$(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/.tested-desktop \
 		tests/styles/check-styles.ts
 
-	@true
+	@mkdir -p "$(dir $@)"
+	node_modules/.bin/tsx tests/styles/check-styles.ts \
+		--references="tests/styles/references/desktop" \
+		--results="$(INTEGRATION_TEST_TMP)/desktop" \
+		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots"
+
+.PHONY: integration-update-references-styles-desktop
+integration-update-references-styles-desktop: 
+	echo "TODO: $@"
+	false
+
+##############################33
+#
+# Mobile
+#
 
 .PHONY: integration-test-mobile
-integration-test-mobile: integration-test-mobile-run integration-test-mobile-style
+integration-test-mobile: integration-test-mobile-run integration-test-mobile-styles
 
 .PHONY: integration-test-mobile-run
 integration-test-mobile-run: $(INTEGRATION_TEST_TMP)/.tested-mobile
@@ -94,43 +122,18 @@ $(INTEGRATION_TEST_TMP)/.tested-mobile: \
 	bin/cr-cypress "mobile" "$(INTEGRATION_TEST_TMP)/mobile/runtime"
 	@touch "$@"
 
-.PHONY: integration-test-mobile-style
-integration-test-mobile-style: $(INTEGRATION_TEST_TMP)/mobile/results.json
-$(INTEGRATION_TEST_TMP)/mobile/results.json: $(INTEGRATION_TEST_TMP)/.tested-mobile \
+.PHONY: integration-test-mobile-styles
+integration-test-mobile-styles: $(INTEGRATION_TEST_TMP)/mobile/styles.json
+$(INTEGRATION_TEST_TMP)/mobile/styles.json: $(INTEGRATION_TEST_TMP)/.tested-mobile \
 		tests/styles/check-styles.ts
 
-	@true
-
-integration-test-open: $(INTEGRATION_BUILT_MARK)
-	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/desktop/runtime"
-
-.PHONY: test-styles
-integration-test-styles: $(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json
-
-$(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json: \
-		$(INTEGRATION_TEST_TMP)/.tested-desktop \
-		$(INTEGRATION_TEST_TMP)/.tested-mobile
-
+	@mkdir -p "$(dir $@)"
 	node_modules/.bin/tsx tests/styles/check-styles.ts \
-		--references="tests/styles/references/" \
-		--results="$(INTEGRATION_TEST_TMP)/" \
-		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots" \
-		--target="$(INTEGRATION_TEST_TMP)/styles" \
+		--references="tests/styles/references/mobile" \
+		--results="$(INTEGRATION_TEST_TMP)/mobile" \
+		--screenshots="$(INTEGRATION_TEST_TMP)/mobile/runtime/screenshots" \
 
-	touch "$@"
-
-.PHONY: integration-update-references-styles
-update: integration-update-references-styles
-integration-update-references-styles: \
-		$(INTEGRATION_TEST_TMP)/styles/styles-problems-list.json \
-		integration-update-references-styles-calcul
-
-# Raw without calculs
-.PHONY: integration-update-references-styles-calcul
-integration-update-references-styles-calcul:
-	node_modules/.bin/tsx tests/styles/check-styles.ts \
-		--references="tests/styles/references/" \
-		--results="$(INTEGRATION_TEST_TMP)/" \
-		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots" \
-		--target="$(INTEGRATION_TEST_TMP)/styles" \
-		--update
+.PHONY: integration-update-references-styles-mobile
+integration-update-references-styles-mobile:
+	echo "TODO: $@"
+	false
