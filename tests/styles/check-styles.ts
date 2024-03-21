@@ -18,6 +18,7 @@ const args = parseArgs({
     references: {
       type: "string"
     },
+    results: { type: "string" },
     runtime: {
       type: "string"
     },
