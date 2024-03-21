@@ -62,10 +62,12 @@ function align(msg: string, n: number) {
 }
 
 // Full list of files
-const listOfFiles = new Map<string, Diff>();
+const fullListOfFiles = new Map<string, Diff>();
 
 const res: boolean = ["desktop", "mobile"]
   .map((flavor) => {
+    const listOfFiles = new Map<string, Diff>();
+
     const targetFolder = path.join(args.results!, flavor);
     const stylesJSON = path.join(targetFolder, "results.json");
 
@@ -102,6 +104,7 @@ const res: boolean = ["desktop", "mobile"]
 
       diff.reference = path.join(refSubFolder, f);
       listOfFiles.set(key, diff);
+      fullListOfFiles.set(key, diff);
     });
 
     const maxFilenameLength = Array.from(listOfFiles.keys()).reduce(
@@ -216,7 +219,7 @@ console.info("---------------------");
 if (!args.update) {
   fs.writeFileSync(
     stylesJSON,
-    JSON.stringify(Object.fromEntries(listOfFiles), null, 2)
+    JSON.stringify(Object.fromEntries(fullListOfFiles), null, 2)
   );
 }
 
