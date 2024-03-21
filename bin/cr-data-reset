@@ -18,15 +18,9 @@ header_end
 
 # Reset database
 header_begin "cr-data-reset - Mysql - restoring initial base"
-
+docker compose up --force-recreate database -d --wait
 # This will wait for database...
-QUIET=yes cr-mysql --database=mysql -e "CREATE SCHEMA IF NOT EXISTS cryptomedic"
-
-for F in conf/database/dev/*.sql; do
-    header_begin "File $(basename "$F")"
-    QUIET=yes cr-mysql --database=cryptomedic <"$F"
-    header_end
-done
+# QUIET=yes cr-mysql --database=mysql -e "USE cryptomedic"
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"

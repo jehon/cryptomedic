@@ -72,10 +72,7 @@ services:
     restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
-      # # In dev, we don't need a password
-      # MYSQL_ROOT_PASSWORD: mysql_root_password
-      # # We don't create the database here, because we don't know when it will be done
-      # MYSQL_DATABASE: cryptomedic
+      MYSQL_DATABASE: cryptomedic
     healthcheck:
       # Ping through http and socket
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "ping"]
@@ -87,9 +84,9 @@ services:
     volumes:
       - type: tmpfs
         target: /var/lib/mysql
-      # - type: bind
-      #   source: conf/database/dev/
-      #   target: /docker-entrypoint-initdb.d/
+      - type: bind
+        source: conf/database/dev/
+        target: /docker-entrypoint-initdb.d/
 
   ################################################################
   #
