@@ -74,7 +74,10 @@ $(INTEGRATION_TEST_TMP)/.tested-desktop: \
 	@touch "$@"
 
 .PHONY: integration-test-desktop-style
-integration-test-desktop-style: $(INTEGRATION_TEST_TMP)/.tested-desktop
+integration-test-desktop-style: $(INTEGRATION_TEST_TMP)/desktop/results.json
+$(INTEGRATION_TEST_TMP)/desktop/results.json: $(INTEGRATION_TEST_TMP)/.tested-desktop \
+		tests/styles/check-styles.ts
+
 	@true
 
 .PHONY: integration-test-mobile
@@ -92,7 +95,10 @@ $(INTEGRATION_TEST_TMP)/.tested-mobile: \
 	@touch "$@"
 
 .PHONY: integration-test-mobile-style
-integration-test-mobile-style: $(INTEGRATION_TEST_TMP)/.tested-mobile
+integration-test-mobile-style: $(INTEGRATION_TEST_TMP)/mobile/results.json
+$(INTEGRATION_TEST_TMP)/mobile/results.json: $(INTEGRATION_TEST_TMP)/.tested-mobile \
+		tests/styles/check-styles.ts
+
 	@true
 
 integration-test-open: $(INTEGRATION_BUILT_MARK)
