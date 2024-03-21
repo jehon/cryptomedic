@@ -12,6 +12,9 @@ set -o pipefail
 #   on deploy: the database is always up
 #
 #   on dev: to be checked before
+#        called from:
+#            - cr-data-reset
+#            - make acceptance
 #
 
 BASE_HOST="$1"
