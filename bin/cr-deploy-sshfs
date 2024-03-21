@@ -59,7 +59,6 @@ header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
 cat <<EOS
     $( generate_sync_command "" ) --file=.ovhconfig;
     $( generate_sync_command "conf/database/versions/" );
-    $( generate_sync_command "conf/database/always" );
     $( generate_sync_command "www/" );
     quit
 EOS
