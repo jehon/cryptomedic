@@ -74,9 +74,8 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
       MYSQL_DATABASE: cryptomedic
     healthcheck:
-      # Ping through http and socket
       # https://docs.docker.com/reference/dockerfile/#healthcheck
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "ping"]
+      test: ["CMD", "mysql", "--database", "cryptomedic", "-e", "SELECT * FROM `settings` WHERE id = 'structure_version'; "]
       start_period: 5s
       interval: 1s
       timeout: 1s
