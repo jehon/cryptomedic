@@ -8,6 +8,7 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   fullyParallel: true,
   retries: 0,
   timeout: 10000,
+  outputDir: "tmp/integration/playwright/test-results/",
   reporter: [
     ["list"]
     // ["html", { outputFolder: "tmp/integration/playwright/report" }]
