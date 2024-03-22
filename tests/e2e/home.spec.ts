@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { crUrl } from "./helpers/cr";
 
-test("has title", async ({ page }) => {
+test("load page", async ({ page }) => {
   await page.goto(crUrl());
 
   // Expect a title "to contain" a substring.
