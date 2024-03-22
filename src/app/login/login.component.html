@@ -13,6 +13,7 @@
           type="text"
           class="form-control"
           name="username"
+          autocomplete="username"
           [(ngModel)]="form.username"
           required
           #username="ngModel"
@@ -29,6 +30,7 @@
           type="password"
           class="form-control"
           name="password"
+          autocomplete="current-password"
           [(ngModel)]="form.password"
           required
           #password="ngModel"
