@@ -175,8 +175,14 @@ integration-test-playwright-headed: \
 $(HOME)/.cache/ms-playwright:
 	node_modules/.bin/playwright install
 
-.PHONY: integration-update-browsers
-update: integration-update-browsers
-integration-update-browsers:
+.PHONY: integration-update-playwright-browsers
+update: integration-update-playwright-browsers
+integration-update-playwright-browsers:
 	rm -fr $(HOME)/.cache/ms-playwright
 	$(MAKE) $(HOME)/.cache/ms-playwright
+
+.PHONY: integration-update-playwright-snapshots
+update: integration-update-playwright-snapshots
+integration-update-playwright-snapshots:
+
+	node_modules/.bin/playwright test --update-snapshots
