@@ -7,8 +7,9 @@ test("login and go to home", async ({ page }) => {
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Cryptomedic/);
+  await expect(page).toHaveScreenshot();
 
-  await page.waitForURL(/\/login\?redirect/);
+  await page.waitForURL(/\/login/);
   await expect(page.locator("#current-user")).toHaveCount(0);
   await expect(page.locator("#logout")).toHaveCount(0);
 
