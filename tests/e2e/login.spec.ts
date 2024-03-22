@@ -1,11 +1,8 @@
 import { expect, test } from "@playwright/test";
-import { LOGINS, PASSWORD, crUrl } from "./helpers/cr";
+import { LOGINS, PASSWORD, crDebugHooks, crUrl } from "./helpers/cr";
 
 test("login and go to home", async ({ page }) => {
-  // Listen for all console logs
-  page.on("console", (msg) =>
-    console.info("Error from browser:", { type: msg.type(), text: msg.text() })
-  );
+  crDebugHooks(page);
 
   // See playwright.config.ts:
   await page.goto(crUrl());
