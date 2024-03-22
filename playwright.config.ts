@@ -20,7 +20,7 @@ export default defineConfig({
   reporter: [["html", { outputFolder: "tmp/integration/playwright/report" }]],
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "http://127.0.0.1:8085",
+    baseURL: "http://localhost:8085/built/frontend-ng/",
     trace: "on-first-retry"
   },
 
