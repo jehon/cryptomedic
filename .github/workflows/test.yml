@@ -117,9 +117,9 @@ jobs:
 
       - run: sudo node_modules/.bin/playwright install-deps
 
-      - run: make integration-test-"${{ matrix.flavor }}"-run
+      - run: make integration-test-${{ matrix.flavor }}-run
 
-      - run: make integration-test-"${{ matrix.flavor }}"-styles
+      - run: make integration-test-${{ matrix.flavor }}-styles
 
       - name: Upload styles
         if: always()
