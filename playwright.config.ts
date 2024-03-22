@@ -9,10 +9,7 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   retries: 0,
   timeout: 10000,
   outputDir: "tmp/integration/playwright/test-results/",
-  reporter: [
-    ["list"]
-    // ["html", { outputFolder: "tmp/integration/playwright/report" }]
-  ],
+  reporter: [["list"]],
   projects: [
     {
       name: "Firefox",
@@ -32,6 +29,10 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
 if (process.env.CI) {
   if (config.reporter instanceof Array) {
     config.reporter.push(["github"]);
+    config.reporter.push([
+      "html",
+      { outputFolder: "tmp/integration/playwright/report" }
+    ]);
   }
   config.workers = 1;
 
