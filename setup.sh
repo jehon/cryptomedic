@@ -37,9 +37,3 @@ if [ ! -r "$HOME"/.ssh/id_rsa ]; then
     mkdir -p "$HOME"/.ssh
     ssh-keygen -b 2048 -t rsa -f "$HOME"/.ssh/id_rsa -q -N ""
 fi
-
-# if ! grep "${CRYPTOMEDIC_DEPLOY_FILES_HOST}" "$HOME"/.ssh/known_hosts > /dev/null; then
-#     echo "Add ovh key"
-#     mkdir -p "$HOME"/.ssh
-#     cat "${SWD}/conf/ovh.key" >> "$HOME"/.ssh/known_hosts
-# fi
