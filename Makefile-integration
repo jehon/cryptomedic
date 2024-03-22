@@ -165,6 +165,11 @@ integration-test-playwright-styles: $(INTEGRATION_TEST_TMP)/playwright/.tested
 
 	@true
 
+.PHONY: integration-test-playwright-headed
+integration-test-playwright-headed:
+
+	node_modules/.bin/playwright test --project Firefox --headed
+
 $(HOME)/.cache/ms-playwright:
 	node_modules/.bin/playwright install
 
