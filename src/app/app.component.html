@@ -16,7 +16,12 @@
         <span id="current-user" class="navbar-text">
           {{ authService.currentUser!.username }}
         </span>
-        <button id="logout" (click)="logout()" class="btn btn-danger" type="submit">
+        <button
+          id="logout"
+          (click)="logout()"
+          class="btn btn-danger"
+          type="submit"
+        >
           <i class="bi bi-box-arrow-right"></i>
         </button>
       }
