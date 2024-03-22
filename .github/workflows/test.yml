@@ -115,6 +115,8 @@ jobs:
 
       - run: make dependencies
 
+      - run: sudo playwright install-deps
+
       - run: make integration-test-"${{ matrix.flavor }}"-run
 
       - run: make integration-test-"${{ matrix.flavor }}"-styles
