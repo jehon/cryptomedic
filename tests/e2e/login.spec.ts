@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { crUrl } from "./helpers/cr";
+import { LOGINS, PASSWORD, crUrl } from "./helpers/cr";
 
 test("has title", async ({ page }) => {
   // See playwright.config.ts:
@@ -9,4 +9,7 @@ test("has title", async ({ page }) => {
   await expect(page).toHaveTitle(/Cryptomedic/);
 
   await page.waitForURL(/\/login\?redirect/);
+
+  await page.getByLabel("Username").fill(LOGINS.RO);
+  await page.getByLabel("Password").fill(PASSWORD);
 });
