@@ -1,29 +1,17 @@
-import { defineConfig, devices } from "@playwright/test";
-
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
+import { PlaywrightTestConfig, defineConfig, devices } from "@playwright/test";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+const config: PlaywrightTestConfig<unknown, unknown> = {
   testDir: "./tests/e2e",
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
   retries: 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
-  reporter: [["html", { outputFolder: "tmp/integration/playwright/report" }]],
-  use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "http://localhost:8085/built/frontend-ng/",
-    trace: "on-first-retry"
-  },
-
+  timeout: 10000,
+  reporter: [
+    ["list"]
+    // ["html", { outputFolder: "tmp/integration/playwright/report" }]
+  ],
   projects: [
     {
       name: "Firefox",
@@ -38,4 +26,16 @@ export default defineConfig({
       use: { ...devices["Pixel 5"] }
     }
   ]
-});
+};
+
+if (process.env.CI) {
+  if (config.reporter instanceof Array) {
+    config.reporter.push(["github"]);
+  }
+  config.workers = 1;
+
+  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  config.forbidOnly = true;
+}
+
+export default defineConfig(config);
