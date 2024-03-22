@@ -32,7 +32,7 @@ cr_curl() {
 cr_lftp() {
     # https://manpages.debian.org/bookworm/lftp/lftp.1.en.html#sftp:connect-program
     lftp \
-        -e "set sftp:connect-program ssh -a -x;"  \
+        -e "set sftp:connect-program ssh -a -x -o UserKnownHostsFile=${CR_PRJ_DIR}/conf/ovh.key;" \
         "$@"
 }
 
