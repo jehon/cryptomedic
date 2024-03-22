@@ -167,7 +167,7 @@ deploy: .ovhconfig
 
 .PHONY: deploy-test
 deploy-test:
-	bin/cr-deploy-patch
+	bin/cr-deploy-sshfs
 
 .PHONY: build
 build: \
