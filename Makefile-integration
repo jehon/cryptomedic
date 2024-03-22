@@ -170,7 +170,7 @@ integration-test-playwright-headed: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(HOME)/.cache/ms-playwright
 
-	node_modules/.bin/playwright test --project Firefox --headed
+	node_modules/.bin/playwright test --headed
 
 $(HOME)/.cache/ms-playwright:
 	node_modules/.bin/playwright install
