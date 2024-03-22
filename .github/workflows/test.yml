@@ -113,6 +113,8 @@ jobs:
 
       - run: make dc-up
 
+      - run: make dependencies
+
       - run: make integration-test-"${{ matrix.flavor }}"-run
 
       - run: make integration-test-"${{ matrix.flavor }}"-styles
@@ -122,7 +124,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: integration-${{ matrix.flavor }}
-          path: tmp/integration/
+          path: tmp/integration/${{ matrix.flavor }}
 
   valid:
     # placeholder for validation of PR
