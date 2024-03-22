@@ -115,7 +115,7 @@ dev: clear start
 # build: other stuff than frontend need to be build
 
 dc-up:
-	docker compose up -d
+	docker compose up -d --wait
 # bin/cr-refresh-structure "http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
 
 stop:
