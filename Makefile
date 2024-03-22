@@ -161,13 +161,16 @@ acceptance-clean:
 #
 
 .PHONY: deploy
-deploy: .ovhconfig
-
+deploy: .ovhconfig $(HOME)/.ssh/id_rsa
 	bin/cr-deploy-sshfs commit
 
 .PHONY: deploy-test
-deploy-test:
+deploy-test: .ovhconfig $(HOME)/.ssh/id_rsa
 	bin/cr-deploy-sshfs
+
+$(HOME)/.ssh/id_rsa:
+	mkdir -p "$(HOME)"/.ssh
+	ssh-keygen -b 2048 -t rsa -f "$(HOME)"/.ssh/id_rsa -q -N ""
 
 .PHONY: build
 build: \
