@@ -191,4 +191,4 @@ integration-update-playwright-browsers:
 update: integration-update-playwright-snapshots
 integration-update-playwright-snapshots:
 
-	bin/cr-update-playwright-snapshots
+	node --import=tsx bin/cr-update-playwright-snapshots.ts
