@@ -21,6 +21,7 @@ test("login and go to home", async ({ page }) => {
   await page.locator(".btn-primary").click();
 
   await page.waitForURL(/\/home$/);
+  crDebugHooks(page);
 
   await expect(page.locator("#current-user")).toContainText(LOGINS.RO);
   await expect(page.locator("#logout")).toBeVisible();

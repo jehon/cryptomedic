@@ -32,7 +32,7 @@
     <router-outlet></router-outlet>
   </div>
   @if (httpService.running > 0) {
-    <div class="cr-above">
+    <div data-testid="global-wait" class="cr-above">
       <div class="spinner-border" role="status"></div>
     </div>
   }

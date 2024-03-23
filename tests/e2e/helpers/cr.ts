@@ -47,4 +47,15 @@ export async function crInit(page: Page, url: string = "") {
 
   // App is initialized
   await expect(page.getByTestId("initial-loader")).toHaveCount(0);
+
+  return crReady(page);
+}
+
+export async function crReady(page: Page, url?: string) {
+  if (url !== undefined) {
+    await page.goto(crUrl(url));
+  }
+
+  // No global spinning wheel anymore
+  await expect(page.getByTestId("global-wait")).toHaveCount(0);
 }
