@@ -18,17 +18,20 @@ export function crDebugHooks(page: Page) {
     console.info("Error from browser: ", { type: msg.type(), text: msg.text() })
   );
 
-  page.on("console", (msg) => console.info("Error from browser 2: ", msg));
-
   page.on("console", async (msg) => {
     const msgArgs = msg.args();
     const logValues = await Promise.all(
       msgArgs.map(async (arg) => await arg.jsonValue())
     );
-    console.warn("Error from browser 3: ", ...logValues);
+    console.warn(
+      "Error from browser: ",
+      msg.type(),
+      msg.text(),
+      JSON.stringify(logValues, null, 2)
+    );
   });
 
   page.on("pageerror", (err) =>
-    console.error("Uncatched error from browser: ", err)
+    console.warn("Uncatched error from browser: ", err)
   );
 }
