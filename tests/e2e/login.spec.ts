@@ -9,7 +9,6 @@ test("login and go to home", async ({ page }) => {
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Cryptomedic/);
-  await expect(page).toHaveScreenshot();
 
   await page.waitForURL(/\/login/);
   await expect(page.locator("#current-user")).toHaveCount(0);
@@ -18,6 +17,7 @@ test("login and go to home", async ({ page }) => {
   await page.getByLabel("Username").fill(LOGINS.RO);
   await page.getByLabel("Password").fill(PASSWORD);
 
+  await expect(page).toHaveScreenshot();
   await page.locator(".btn-primary").click();
 
   await page.waitForURL(/\/home$/);
@@ -25,4 +25,5 @@ test("login and go to home", async ({ page }) => {
 
   await expect(page.locator("#current-user")).toContainText(LOGINS.RO);
   await expect(page.locator("#logout")).toBeVisible();
+  await expect(page).toHaveScreenshot();
 });
