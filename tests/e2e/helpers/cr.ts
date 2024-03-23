@@ -51,11 +51,19 @@ export async function crInit(page: Page, url: string = "") {
   return crReady(page);
 }
 
-export async function crReady(page: Page, url?: string) {
-  if (url !== undefined) {
-    await page.goto(crUrl(url));
+export async function crReady(
+  page: Page,
+  options: { url?: string; forScreenshot?: boolean } = {}
+) {
+  if (options.url !== undefined) {
+    await page.goto(crUrl(options.url));
   }
 
   // No global spinning wheel anymore
   await expect(page.getByTestId("global-wait")).toHaveCount(0);
+
+  if (options.forScreenshot) {
+    // No ToastR
+    await expect(page.getByRole("alert")).toHaveCount(0);
+  }
 }
