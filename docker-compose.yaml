@@ -57,7 +57,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.web.rule=PathPrefix(`/`)
 
-  dev-static:
+  dev:
     image: httpd:alpine
     expose:
       - 80
