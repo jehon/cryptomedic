@@ -49,12 +49,11 @@ try {
     {
         $target = constant("CR_PRJ_ROOT") . "/" . $path;
         echo "ensureFolderEmpty: $path ($target)\n";
-        if (!is_dir($target)) {
-            mkdir($target);
-        } else {
+        if (is_dir($target)) {
             echo " - removing files in $target\n";
             deleteFileFromGlob($target . "/*");
         }
+        mkdir($target, 0777, true);
     }
 
     function migrateFile(string $from, string $to): void
@@ -75,6 +74,7 @@ try {
     ensureFolderEmpty("tmp/integration/webTemp/");
     ensureFolderEmpty("live/laravel/cache/");
     ensureFolderEmpty("live/laravel/views/");
+    mkdir("live/laravel/sessions/", 0777, true);
 
     echo "\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);
