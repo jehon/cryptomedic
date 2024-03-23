@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 
 export const LOGINS = {
   PHYSIO: "murshed",
@@ -8,7 +8,7 @@ export const LOGINS = {
 
 export const PASSWORD = "p";
 
-export function crUrl(segment: string = ""): string {
+function crUrl(segment: string = ""): string {
   return `http://localhost:8085/built/frontend-ng/${segment}`;
 }
 
@@ -34,4 +34,17 @@ export function crDebugHooks(page: Page) {
   page.on("pageerror", (err) =>
     console.warn("Uncatched error from browser: ", err)
   );
+}
+
+export async function crInit(page: Page, url: string = "") {
+  await page.goto(crUrl(url));
+
+  // Expect a title "to contain" a substring.
+  await expect(page).toHaveTitle(/Cryptomedic/);
+
+  // Body is loading
+  await expect(page.getByTestId("top-level")).toBeVisible();
+
+  // App is initialized
+  await expect(page.getByTestId("initial-loader")).toHaveCount(0);
 }

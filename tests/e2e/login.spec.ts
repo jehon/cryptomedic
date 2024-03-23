@@ -1,11 +1,11 @@
 import { expect, test } from "@playwright/test";
-import { LOGINS, PASSWORD, crDebugHooks, crUrl } from "./helpers/cr";
+import { LOGINS, PASSWORD, crDebugHooks, crInit } from "./helpers/cr";
 
 test("login and go to home", async ({ page }) => {
   crDebugHooks(page);
 
   // See playwright.config.ts:
-  await page.goto(crUrl());
+  await crInit(page);
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Cryptomedic/);
