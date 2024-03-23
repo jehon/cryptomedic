@@ -190,4 +190,5 @@ integration-update-playwright-browsers:
 .PHONY: integration-update-playwright-snapshots
 update: integration-update-playwright-snapshots
 integration-update-playwright-snapshots:
-	false
+
+	bin/cr-update-playwright-snapshots

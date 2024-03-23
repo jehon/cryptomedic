@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+// # tests/e2e/login.spec.ts-snapshots/login-and-go-to-home-1-Firefox-linux.png
+// # ==> login.spec.ts-snapshots/login-and-go-to-home-1-Firefox-linux.png
+// # {file}.spec.ts-snapshots/{name}-{browser}-{os}.png
+
+// # tmp/integration/playwright/test-results/login-login-and-go-to-home-Firefox/login-and-go-to-home-1-actual.png
+// # ==> login-login-and-go-to-home-Firefox/login-and-go-to-home-1-actual.png
+// # {file}-{name}-{browser}/{name}-actual.png
+
+// # {file}: from tests (**/*.spec.ts)
+// # {browser}: from tests (playwright.conf.ts > projets > .name)
+// # {os}: = linux
+// # {name} ??? test that it exists as string in file?
