@@ -101,8 +101,11 @@ $(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/desktop/.te
 .PHONY: integration-update-references-styles-desktop
 update: integration-update-references-styles-desktop
 integration-update-references-styles-desktop: 
-	echo "TODO: $@"
-	false
+	node_modules/.bin/tsx tests/styles/check-styles.ts \
+		--references="tests/styles/references/desktop" \
+		--results="$(INTEGRATION_TEST_TMP)/desktop" \
+		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots" \
+		--update
 
 ##############################
 #
@@ -132,13 +135,16 @@ $(INTEGRATION_TEST_TMP)/mobile/styles.json: $(INTEGRATION_TEST_TMP)/mobile/.test
 	node_modules/.bin/tsx tests/styles/check-styles.ts \
 		--references="tests/styles/references/mobile" \
 		--results="$(INTEGRATION_TEST_TMP)/mobile" \
-		--screenshots="$(INTEGRATION_TEST_TMP)/mobile/runtime/screenshots" \
+		--screenshots="$(INTEGRATION_TEST_TMP)/mobile/runtime/screenshots"
 
 .PHONY: integration-update-references-styles-mobile
 update: integration-update-references-styles-mobile
 integration-update-references-styles-mobile:
-	echo "TODO: $@"
-	false
+	node_modules/.bin/tsx tests/styles/check-styles.ts \
+		--references="tests/styles/references/mobile" \
+		--results="$(INTEGRATION_TEST_TMP)/mobile" \
+		--screenshots="$(INTEGRATION_TEST_TMP)/mobile/runtime/screenshots" \
+		--update
 
 ##############################
 #
@@ -184,5 +190,4 @@ integration-update-playwright-browsers:
 .PHONY: integration-update-playwright-snapshots
 update: integration-update-playwright-snapshots
 integration-update-playwright-snapshots:
-
-	node_modules/.bin/playwright test --update-snapshots
+	false
