@@ -43,7 +43,7 @@ jobs:
             .ovhconfig
             www
 
-  tests:
+  tests-unit:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs:
@@ -76,7 +76,7 @@ jobs:
 
       - run: make "${{ matrix.target }}"
           
-  tests-e2e-cypress:
+  tests-e2e:
     needs: 
       - build
     strategy:
@@ -85,6 +85,7 @@ jobs:
         flavor:
           - desktop
           - mobile
+          - playwright
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -110,7 +111,7 @@ jobs:
 
       - run: make dc-build
 
-      - run: make dc-up
+      - run: make start
 
       - run: make dependencies
 
@@ -125,55 +126,55 @@ jobs:
           name: integration-${{ matrix.flavor }}
           path: tmp/integration/${{ matrix.flavor }}
 
-  tests-e2e-playwright:
-    needs: 
-      - build
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+#   tests-e2e-playwright:
+#     needs: 
+#       - build
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 30
+#     steps:
+#       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: npm
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: lts/*
+#           cache: npm
 
-      # https://github.com/marketplace/actions/setup-chrome
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+#       # https://github.com/marketplace/actions/setup-chrome
+#       - name: Setup Chrome
+#         uses: browser-actions/setup-chrome@v1
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: deploy
-          path: .
+#       - uses: actions/download-artifact@v4
+#         with:
+#           name: deploy
+#           path: .
 
-      - run: ./setup.sh
+#       - run: ./setup.sh
 
-      - run: make github
+#       - run: make github
 
-      - run: make dc-build
+#       - run: make dc-build
 
-      - run: make dependencies
+#       - run: make dependencies
 
-#      - run: make start
+# #      - run: make start
 
-#      - run: sudo node_modules/.bin/playwright install-deps
+# #      - run: sudo node_modules/.bin/playwright install-deps
 
-      - run: make integration-test-playwright-run
+#       - run: make integration-test-playwright-run
 
-      - name: Upload styles
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: integration-playwright
-          path: tmp/integration/playwright
+#       - name: Upload styles
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: integration-playwright
+#           path: tmp/integration/playwright
 
   valid:
     # placeholder for validation of PR
     needs: 
-      - tests
-      - tests-e2e-cypress
-      - tests-e2e-playwright
+      - tests-unit
+      - tests-e2e
+      # - tests-e2e-playwright
     runs-on: ubuntu-latest
     steps:
       - run: echo "ok"
