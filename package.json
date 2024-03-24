@@ -111,13 +111,16 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts}": [
-      "eslint",
-      "prettier --list-different"
+      "eslint"
     ],
     "*.css": [
-      "stylelint",
+      "stylelint"
+    ],
+    "*.*": [
       "prettier --list-different"
     ]
   },
-  "scripts": {}
+  "scripts": {
+    "prepare": "husky"
+  }
 }
