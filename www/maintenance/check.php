@@ -10,7 +10,9 @@ try {
 
     require_once __DIR__ . "/lib/config.php";
 
-    echo "MySQL Version: " . $db->pdo->getAttribute(PDO::ATTR_SERVER_VERSION) . "<br>\n";
+    echo "MySQL Version: " .
+        $db->pdo->getAttribute(PDO::ATTR_SERVER_VERSION) .
+        "<br>\n";
     echo "Structure version: " . $db->getVersion() . "<br>\n";
 
     echo "\n<br><br>";
