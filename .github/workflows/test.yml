@@ -76,7 +76,7 @@ jobs:
 
       - run: make "${{ matrix.target }}"
           
-  e2e-tests:
+  tests-e2e-cypress:
     needs: 
       - build
     strategy:
@@ -125,7 +125,7 @@ jobs:
           name: integration-${{ matrix.flavor }}
           path: tmp/integration/${{ matrix.flavor }}
 
-  e2e-tests-playwright:
+  tests-e2e-playwright:
     needs: 
       - build
     runs-on: ubuntu-latest
@@ -172,8 +172,8 @@ jobs:
     # placeholder for validation of PR
     needs: 
       - tests
-      - e2e-tests
-      - e2e-tests-playwright
+      - tests-e2e-cypress
+      - tests-e2e-playwright
     runs-on: ubuntu-latest
     steps:
       - run: echo "ok"
