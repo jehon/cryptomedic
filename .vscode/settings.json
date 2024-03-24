@@ -47,5 +47,6 @@
     "*.json",
     "*.php",
     "*.sql"
-  ]
+  ],
+  "prettier.prettierPath": "./node_modules/prettier"
 }
