@@ -121,12 +121,17 @@ const unusedTestFiles = testFilesList.filter(
 // );
 
 for (const uf of unusedTestFiles) {
-  process.stdout.write(`Removing: ${uf}\n`);
-  await fs.promises.unlink(uf);
+  process.stdout.write(`!! Only local file: ${uf}\n`);
+  // await fs.promises.unlink(uf);
 }
 
 for (const { from, to } of oneToOne) {
-  if (await fs.promises.stat(to)) {
+  if (
+    await fs.promises.stat(to).then(
+      () => true,
+      () => false
+    )
+  ) {
     process.stdout.write(`Updating: ${to}\n`);
     await fs.promises.unlink(to);
   } else {
