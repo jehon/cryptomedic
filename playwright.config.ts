@@ -10,6 +10,8 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   timeout: 10 * 1000,
   outputDir: "tmp/integration/playwright/test-results/",
   reporter: [["list"]],
+  // Enable snapshots only on CI
+  ignoreSnapshots: true,
   projects: [
     {
       name: "Firefox",
@@ -38,6 +40,8 @@ if (process.env.CI) {
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   config.forbidOnly = true;
+
+  config.ignoreSnapshots = false;
 }
 
 export default defineConfig(config);
