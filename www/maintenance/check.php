@@ -5,16 +5,15 @@ try {
     http_response_code(500);
     $res = true;
     echo "<h1>Check</h1>";
-    
+
     echo "PHP Version: " . phpversion() . "<br>\n";
 
     require_once __DIR__ . "/lib/config.php";
 
     echo "MySQL Version: " . "TODO" . "<br>\n";
-    echo "Structure version: " . $db->getVersion(). "<br>\n";
+    echo "Structure version: " . $db->getVersion() . "<br>\n";
 
     echo "\n<br><br>";
-
 
     if ($res) {
         echo "Ok<br>\n";
