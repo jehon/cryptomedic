@@ -1,3 +1,4 @@
 
-# echo "Running husky commit-msg hook..."
+echo "** Running husky commit-msg hook..."
+
 "$(npm root)"/.bin/commitlint --edit "$1"
