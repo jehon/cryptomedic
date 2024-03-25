@@ -26,7 +26,7 @@ export PATH="$CR_SCRIPT_DIR:$PATH"
 export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
 
 cr_curl() {
-    curl -fsSL --user-agent firefox "$@"
+    curl -sSL --fail-with-body --user-agent firefox "$@"
 }
 
 cr_lftp() {
