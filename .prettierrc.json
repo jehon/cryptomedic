@@ -8,7 +8,8 @@
     {
       "files": "*.sql",
       "options": {
-        "keywordCase": "upper"
+        "keywordCase": "upper",
+        "language": "mysql"
       }
     }
   ]

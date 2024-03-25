@@ -1,4 +1,5 @@
-ALTER TABLE `prices` CHANGE `workshop_Knee_brace` `workshop_knee_brace` INT(11) NOT NULL DEFAULT '0',
+ALTER TABLE `prices`
+CHANGE `workshop_Knee_brace` `workshop_knee_brace` INT(11) NOT NULL DEFAULT '0',
 CHANGE `workshop_Compensation_sole` `workshop_compensation_sole` INT(11) NOT NULL DEFAULT '0',
 CHANGE `workshop_Compensation_sole_1cm` `workshop_compensation_sole_1cm` INT(11) NOT NULL DEFAULT '-1',
 CHANGE `workshop_Compensation_sole_2cm` `workshop_compensation_sole_2cm` INT(11) NOT NULL DEFAULT '-1',
@@ -49,7 +50,8 @@ CHANGE `workshop_BHKAFO_Drop_lock_single_axis` `workshop_BHKAFO_drop_lock_single
 CHANGE `surgical_polio_achileus_Achileus_lenthening_bi` `surgical_polio_achileus_achileus_lenthening_bi` INT(11) NOT NULL DEFAULT '0',
 CHANGE `other_Other_consultation_care` `other_other_consultation_care` INT(11) NOT NULL DEFAULT '0';
 
-ALTER TABLE `bills` CHANGE `workshop_Knee_brace` `workshop_knee_brace` INT(11) NOT NULL DEFAULT '0',
+ALTER TABLE `bills`
+CHANGE `workshop_Knee_brace` `workshop_knee_brace` INT(11) NOT NULL DEFAULT '0',
 CHANGE `workshop_Compensation_sole` `workshop_compensation_sole` INT(11) NOT NULL DEFAULT '0',
 CHANGE `workshop_Compensation_sole_1cm` `workshop_compensation_sole_1cm` INT(11) NOT NULL DEFAULT '-1',
 CHANGE `workshop_Compensation_sole_2cm` `workshop_compensation_sole_2cm` INT(11) NOT NULL DEFAULT '-1',
@@ -95,9 +97,11 @@ CHANGE `workshop_BHKAFO_Drop_lock_single_axis` `workshop_BHKAFO_drop_lock_single
 CHANGE `surgical_polio_achileus_Achileus_lenthening_bi` `surgical_polio_achileus_achileus_lenthening_bi` INT(11) NOT NULL DEFAULT '0',
 CHANGE `other_Other_consultation_care` `other_other_consultation_care` INT(11) NOT NULL DEFAULT '0';
 
-ALTER TABLE `prices` CHANGE `datefrom` `date_from` DATE NULL DEFAULT NULL,
+ALTER TABLE `prices`
+CHANGE `datefrom` `date_from` DATE NULL DEFAULT NULL,
 CHANGE `dateto` `date_to` DATE NULL DEFAULT NULL;
 
-ALTER TABLE `bills` CHANGE `sl_familySalary` `sl_family_salary` INT(11) NULL DEFAULT NULL,
+ALTER TABLE `bills`
+CHANGE `sl_familySalary` `sl_family_salary` INT(11) NULL DEFAULT NULL,
 CHANGE `sl_numberOfHouseholdMembers` `sl_number_of_household_members` INT(11) NULL DEFAULT NULL,
 CHANGE `Sociallevel` `social_level` INT(10) UNSIGNED NULL DEFAULT NULL;

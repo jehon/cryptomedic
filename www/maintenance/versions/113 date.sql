@@ -1,19 +1,27 @@
 -- Date
-ALTER TABLE `appointments` CHANGE `Date` `date` DATE NULL DEFAULT NULL;
+ALTER TABLE `appointments`
+CHANGE `Date` `date` DATE NULL DEFAULT NULL;
 
-ALTER TABLE `bills` CHANGE `Date` `date` DATE NULL DEFAULT NULL;
+ALTER TABLE `bills`
+CHANGE `Date` `date` DATE NULL DEFAULT NULL;
 
-ALTER TABLE `club_feet` CHANGE `Date` `date` DATE NULL DEFAULT NULL;
+ALTER TABLE `club_feet`
+CHANGE `Date` `date` DATE NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `Date` `date` DATE NULL DEFAULT NULL;
+ALTER TABLE `other_consults`
+CHANGE `Date` `date` DATE NULL DEFAULT NULL;
 
-ALTER TABLE `payments` CHANGE `Date` `date` DATE NULL DEFAULT NULL;
+ALTER TABLE `payments`
+CHANGE `Date` `date` DATE NULL DEFAULT NULL;
 
-ALTER TABLE `pictures` CHANGE `Date` `date` DATE NULL DEFAULT NULL;
+ALTER TABLE `pictures`
+CHANGE `Date` `date` DATE NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consults` CHANGE `Date` `date` DATE NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults`
+CHANGE `Date` `date` DATE NULL DEFAULT NULL;
 
-ALTER TABLE `surgeries` CHANGE `Date` `date` DATE NULL DEFAULT NULL;
+ALTER TABLE `surgeries`
+CHANGE `Date` `date` DATE NULL DEFAULT NULL;
 
 DROP VIEW consults;
 

@@ -1,20 +1,29 @@
-ALTER TABLE `club_feet` CHANGE `TreatmentFinished` `treatment_finished` TINYINT (1) NULL DEFAULT NULL;
+ALTER TABLE `club_feet`
+CHANGE `TreatmentFinished` `treatment_finished` TINYINT(1) NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `TreatmentFinished` `treatment_finished` TINYINT (1) NULL DEFAULT NULL;
+ALTER TABLE `other_consults`
+CHANGE `TreatmentFinished` `treatment_finished` TINYINT(1) NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consults` CHANGE `TreatmentFinished` `treatment_finished` TINYINT (1) NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults`
+CHANGE `TreatmentFinished` `treatment_finished` TINYINT(1) NULL DEFAULT NULL;
 
-ALTER TABLE `club_feet` CHANGE `TreatmentEvaluation` `treatment_evaluation` TINYINT (1) NULL DEFAULT NULL;
+ALTER TABLE `club_feet`
+CHANGE `TreatmentEvaluation` `treatment_evaluation` TINYINT(1) NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `TreatmentEvaluation` `treatment_evaluation` TINYINT (1) NULL DEFAULT NULL;
+ALTER TABLE `other_consults`
+CHANGE `TreatmentEvaluation` `treatment_evaluation` TINYINT(1) NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consults` CHANGE `TreatmentEvaluation` `treatment_evaluation` TINYINT (1) NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults`
+CHANGE `TreatmentEvaluation` `treatment_evaluation` TINYINT(1) NULL DEFAULT NULL;
 
-ALTER TABLE `club_feet` CHANGE `suggestedForSurgery` `suggested_for_surgery` TINYINT (1) NULL DEFAULT NULL;
+ALTER TABLE `club_feet`
+CHANGE `suggestedForSurgery` `suggested_for_surgery` TINYINT(1) NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `suggestedForSurgery` `suggested_for_surgery` TINYINT (1) NULL DEFAULT NULL;
+ALTER TABLE `other_consults`
+CHANGE `suggestedForSurgery` `suggested_for_surgery` TINYINT(1) NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consults` CHANGE `suggestedForSurgery` `suggested_for_surgery` TINYINT (1) NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults`
+CHANGE `suggestedForSurgery` `suggested_for_surgery` TINYINT(1) NULL DEFAULT NULL;
 
 DROP VIEW consults;
 

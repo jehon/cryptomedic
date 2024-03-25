@@ -1,65 +1,50 @@
 -- Center
-ALTER TABLE `bills` CHANGE `Center` `center` VARCHAR(40) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `bills`
+CHANGE `Center` `center` VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `club_feet` CHANGE `Center` `center` VARCHAR(40) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `club_feet`
+CHANGE `Center` `center` VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `Center` `center` VARCHAR(40) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `other_consults`
+CHANGE `Center` `center` VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consults` CHANGE `Center` `center` VARCHAR(40) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults`
+CHANGE `Center` `center` VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
 -- ExaminerName
-ALTER TABLE `appointments` CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `appointments`
+CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `bills` CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `bills`
+CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `club_feet` CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `club_feet`
+CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `other_consults`
+CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `payments` CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `payments`
+CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consults` CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults`
+CHANGE `ExaminerName` `examiner` VARCHAR(127) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
 -- Comments
-ALTER TABLE `club_feet` CHANGE `Comments` `comments` MEDIUMTEXT CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `club_feet`
+CHANGE `Comments` `comments` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `other_consults` CHANGE `Comments` `comments` MEDIUMTEXT CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `other_consults`
+CHANGE `Comments` `comments` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `payments` CHANGE `Notes` `comments` MEDIUMTEXT CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `payments`
+CHANGE `Notes` `comments` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `pictures` CHANGE `Comment` `comments` MEDIUMTEXT CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `pictures`
+CHANGE `Comment` `comments` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `ricket_consults` CHANGE `Comments` `comments` MEDIUMTEXT CHARACTER
-SET
-  utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults`
+CHANGE `Comments` `comments` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
 DROP VIEW consults;
 
