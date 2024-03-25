@@ -21,6 +21,7 @@ class BrowsersController extends Controller {
     }
 
     static public function stats() {
+        BrowsersController::clean();
         $res = "";
 
         $browsers = DB::select("
