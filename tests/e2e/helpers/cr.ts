@@ -14,9 +14,9 @@ function crUrl(segment: string = ""): string {
 
 export function crDebugHooks(page: Page) {
   // Listen for all console logs
-  page.on("console", (msg) =>
-    console.info("Error from browser: ", { type: msg.type(), text: msg.text() })
-  );
+  // page.on("console", (msg) =>
+  //   console.info("Error from browser: ", { type: msg.type(), text: msg.text() })
+  // );
 
   page.on("console", async (msg) => {
     const msgArgs = msg.args();
@@ -25,9 +25,11 @@ export function crDebugHooks(page: Page) {
     );
     console.warn(
       "Error from browser: ",
-      msg.type(),
-      msg.text(),
-      JSON.stringify(logValues, null, 2)
+      JSON.stringify(
+        { type: msg.type(), text: msg.text(), logs: logValues },
+        null,
+        2
+      )
     );
   });
 

@@ -46,7 +46,11 @@
       </div>
       @if (f.submitted && isLoginFailed) {
         <div class="form-group">
-          <div class="alert alert-danger" role="alert">
+          <div
+            data-testId="login-error"
+            class="alert alert-danger"
+            role="alert"
+          >
             Login failed: {{ errorMessage }}
           </div>
         </div>

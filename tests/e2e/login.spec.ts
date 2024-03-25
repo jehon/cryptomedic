@@ -2,8 +2,6 @@ import { expect, test } from "@playwright/test";
 import { LOGINS, PASSWORD, crDebugHooks, crInit } from "./helpers/cr";
 
 test("login and go to home", async ({ page }) => {
-  crDebugHooks(page);
-
   // See playwright.config.ts:
   await crInit(page);
 
