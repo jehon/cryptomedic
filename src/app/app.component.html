@@ -1,18 +1,17 @@
 <div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark justify-content-between">
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a [routerLink]="['/home']" class="nav-link">Home </a>
-      </li>
-      <li class="nav-item">
-        <a [routerLink]="['/home2']" class="nav-link">Home 2</a>
-      </li>
-      <li class="nav-item">
-        <a [routerLink]="['/home3']" class="nav-link">Home 3</a>
-      </li>
-    </ul>
-    <span>
-      @if (authService.isAuthenticated()) {
+  @if (authService.isAuthenticated()) {
+    <nav
+      class="navbar navbar-expand navbar-dark bg-dark justify-content-between"
+    >
+      <ul class="navbar-nav mr-auto" routerLinkActive="active">
+        <li class="nav-item">
+          <a [routerLink]="['/home']" class="nav-link">Home </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/patients']" class="nav-link">Patients</a>
+        </li>
+      </ul>
+      <span>
         <span id="current-user" class="navbar-text">
           {{ authService.currentUser!.username }}
         </span>
@@ -24,9 +23,9 @@
         >
           <i class="bi bi-box-arrow-right"></i>
         </button>
-      }
-    </span>
-  </nav>
+      </span>
+    </nav>
+  }
 
   <div id="top">
     <router-outlet></router-outlet>
