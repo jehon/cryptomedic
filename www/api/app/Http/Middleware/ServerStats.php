@@ -46,10 +46,10 @@ class ServerStats {
 		$res = DB::table('server_stats')->upsert(
 			[
 				// Insert data
-				"device" => $device,
 				"key" => $path,
 				"params" => $paramStr,
-				"counter" => 1
+				"counter" => 1,
+				"counter_$device" => 1
 			],
 			[
 				// Key that identify the unique records - ignored for mysql
@@ -57,7 +57,8 @@ class ServerStats {
 			],
 			[
 				// Update data
-				"counter" => DB::raw('counter + 1')
+				"counter" => DB::raw("`counter` + 1"),
+				"counter_$device" => DB::raw("`counter_$device` + 1")
 			]
 		);
 
