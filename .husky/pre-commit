@@ -1,4 +1,4 @@
 
 echo "** Running husky pre-commit hook..."
 
-"$(npm root)"/.bin/lint-staged
+"$(npm root)"/.bin/lint-staged >/dev/null
