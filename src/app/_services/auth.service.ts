@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, map, of, throwError } from "rxjs";
-import BackendAuthInterface from "./backend.auth";
+import BackendAuthInterface from "./auth.backend";
 
 @Injectable({
   providedIn: "root"
