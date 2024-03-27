@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
   standalone: true,
@@ -6,10 +6,6 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"]
 })
-export class HomeComponent implements OnInit {
-  content?: string;
-
+export class HomeComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }
