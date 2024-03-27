@@ -90,6 +90,7 @@ Route::group(array('middleware' => 'authenticated'), function() {
 
   CRSecurity::ifHasPersmission('folder.read', function() {
     Route::resource('folder', "FolderController", [ "only" => [ "index" ]]);
+    Route::get('patients/{id}', "PatientsController@show");
 
     Route::get('folder/{model}/{id}', [
       "uses" => "FolderController@show"

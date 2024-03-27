@@ -11,7 +11,7 @@ export default class PatientsService {
 
   load(id: string): Observable<Patient> {
     return this.http
-      .get<{ [key: string]: Patient }>("/api/folder/Patient/" + id)
-      .pipe(map((json) => Object.assign(new Patient(), json["folder"])));
+      .get<{ [key: string]: Patient }>("/api/patients/" + id)
+      .pipe(map((json) => Object.assign(new Patient(), json)));
   }
 }
