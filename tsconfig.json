@@ -34,6 +34,5 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["legacy"], // Legacy
   "exclude": ["node_modules"] // Legacy
 }
