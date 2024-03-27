@@ -1,3 +1,4 @@
+import { JsonPipe } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import Patient from "../business/patient";
 import PatientsService from "../patients.service";
@@ -5,7 +6,7 @@ import PatientsService from "../patients.service";
 @Component({
   selector: "app-patient-summary",
   standalone: true,
-  imports: [],
+  imports: [JsonPipe],
   templateUrl: "./patient-summary.component.html",
   styleUrl: "./patient-summary.component.css"
 })
