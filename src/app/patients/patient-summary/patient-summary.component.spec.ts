@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { JsonPipe } from "@angular/common";
 import { PatientSummaryComponent } from "./patient-summary.component";
 
 describe("PatientSummaryComponent", () => {
@@ -8,7 +9,7 @@ describe("PatientSummaryComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PatientSummaryComponent]
+      imports: [PatientSummaryComponent, JsonPipe]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PatientSummaryComponent);

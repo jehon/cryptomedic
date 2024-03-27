@@ -13,7 +13,7 @@ class PatientsController extends FicheController {
 	}
 
 	public function show($id) {
-        return Patient::with("appointment")->findOrFail($id);
+        return Patient::with("appointment", "bill", "club_foot", "other_consult", "picture", "ricket_consult", "surgery")->findOrFail($id);
     }
 
 	public function store() {
