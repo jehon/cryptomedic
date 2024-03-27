@@ -1,3 +1,5 @@
+/* eslint-env node*/
+
 import { PlaywrightTestConfig, defineConfig, devices } from "@playwright/test";
 
 /**
@@ -28,7 +30,7 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   ]
 };
 
-if (process.env.CI) {
+if (process.env["CI"]) {
   if (config.reporter instanceof Array) {
     config.reporter.push(["github"]);
     config.reporter.push([
