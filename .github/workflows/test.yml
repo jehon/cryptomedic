@@ -74,6 +74,8 @@ jobs:
 
       - run: make github
 
+      - run: make dependencies
+
       - run: make "${{ matrix.target }}"
           
   tests-e2e:
