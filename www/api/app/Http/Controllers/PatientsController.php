@@ -12,6 +12,10 @@ class PatientsController extends FicheController {
 		return "App\\Model\\Patient";
 	}
 
+	public function show($id) {
+        return Patient::with("appointment")->findOrFail($id);
+    }
+
 	public function store() {
 	    $data = Request::except('_type');
 	    $data = Patient::cannonize($data);

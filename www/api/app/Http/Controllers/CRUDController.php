@@ -14,7 +14,7 @@ abstract class CRUDController extends Controller {
 
     // show = Read
     public function show($id) {
-        return getObjectById($id);
+        return static::getObjectById($id);
     }
 
     // POST = create

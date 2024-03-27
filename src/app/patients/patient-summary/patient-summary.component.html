@@ -1,4 +1,6 @@
 <p>patient-summary works! {{ id }}</p>
 <div>
-  details: {{ folder?.getId() }} - {{ folder?.getPatient()?.entry_year }}
+  details: {{ patient?.id }} - {{ patient?.entry_year }}.{{
+    patient?.entry_order
+  }}
 </div>

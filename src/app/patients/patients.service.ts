@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
-import Folder from "../../../legacy/react/business/folder";
+import Patient from "./business/patient";
 
 @Injectable({
   providedIn: "root"
@@ -9,9 +9,9 @@ import Folder from "../../../legacy/react/business/folder";
 export default class PatientsService {
   constructor(private http: HttpClient) {}
 
-  load(id: string): Observable<Folder> {
+  load(id: string): Observable<Patient> {
     return this.http
-      .get<{ [key: string]: string }>("/api/folder/Patient/" + id)
-      .pipe(map((json) => new Folder(json["folder"])));
+      .get<{ [key: string]: Patient }>("/api/folder/Patient/" + id)
+      .pipe(map((json) => Object.assign(new Patient(), json["folder"])));
   }
 }

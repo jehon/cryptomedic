@@ -2,9 +2,15 @@
 
 namespace App\Model;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class Patient extends CryptomedicModel {
   public function isLocked() {
     return false;
+  }
+
+  public function appointment(): HasMany {
+      return $this->hasMany(Appointment::class);
   }
 
   public function getDependantsRecords() {

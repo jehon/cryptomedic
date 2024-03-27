@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import Folder from "../../../../legacy/react/business/folder";
+import Patient from "../business/patient";
 import PatientsService from "../patients.service";
 
 @Component({
@@ -11,7 +11,7 @@ import PatientsService from "../patients.service";
 })
 export class PatientSummaryComponent {
   #id: string = "";
-  folder?: Folder;
+  patient?: Patient;
 
   constructor(private patientsService: PatientsService) {}
 
@@ -26,8 +26,8 @@ export class PatientSummaryComponent {
   }
 
   getFolder(): void {
-    this.patientsService.load(this.id).subscribe((val: Folder) => {
-      this.folder = val;
+    this.patientsService.load(this.id).subscribe((val: Patient) => {
+      this.patient = val;
     });
   }
 }
