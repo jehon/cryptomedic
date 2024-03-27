@@ -6,11 +6,11 @@ export default class Patient extends Pojo {
   name: string = "";
   sex?: "Male" | "Female";
   year_of_birth?: string;
-  phone?: string;
-  address_comments?: string;
+  phone: string = "";
+  address_comments: string = "";
   address_district?: string;
   address_upazilla?: string;
   address_union?: string;
-  pathology?: string;
-  comments?: string;
+  pathology: string = "";
+  comments: string = "";
 }

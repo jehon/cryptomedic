@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import AuthService from "../_services/auth.service";
 
@@ -19,18 +19,25 @@ export class LoginComponent implements OnInit {
   };
   isLoginFailed = false;
   errorMessage = "";
-  redirect: string = "/";
+  redirectTo$: string = "/";
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private toastr: ToastrService,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.redirect = this.route.snapshot.queryParamMap.get("redirectTo") ?? "/";
     this.checkRoute();
+  }
+
+  @Input()
+  set redirectTo(redirectTo: string) {
+    this.redirectTo$ = redirectTo;
+  }
+
+  get redirectTo(): string {
+    return this.redirectTo$;
   }
 
   onSubmit(): void {
@@ -50,7 +57,7 @@ export class LoginComponent implements OnInit {
 
   checkRoute() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate([this.redirect]);
+      this.router.navigate([this.redirectTo]);
     }
   }
 }

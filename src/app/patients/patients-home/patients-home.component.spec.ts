@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { RouterLink, RouterModule } from "@angular/router";
+import routes from "../../app.routes";
 import { PatientsHomeComponent } from "./patients-home.component";
 
 describe("PatientsHomeComponent", () => {
@@ -8,7 +10,7 @@ describe("PatientsHomeComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PatientsHomeComponent]
+      imports: [PatientsHomeComponent, RouterLink, RouterModule.forRoot(routes)]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PatientsHomeComponent);
