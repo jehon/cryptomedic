@@ -121,12 +121,16 @@ services:
   mail:
     # https://github.com/maildev/maildev
     image: maildev/maildev
-    environment:
-      # Not working with healthcheck: - MAILDEV_BASE_PATHNAME=/maildev/
-      - MAILDEV_WEB_PORT=1080
     expose:
+      - 1080
       - 1025
-      - 8025
+    healthcheck:
+      # See https://github.com/maildev/maildev/issues/484
+      test: wget -O - http://127.0.0.1:1080/healthz || exit 1
+      start_period: 5s
+      interval: 1s
+      timeout: 1s
+      retries: 10
     labels:
       - traefik.enable=true
       # https://github.com/maildev/maildev/issues/402
