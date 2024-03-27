@@ -6,6 +6,9 @@ export PATH := $(ROOT)/bin:$(PATH)
 TMP := tmp
 ACCEPTANCE := live-from-production
 
+# To disable husky scripts
+export HUSKY=0
+
 # Defaults value for Dev:
 ## For patching, we need a ref to the local server
 export CRYPTOMEDIC_LOCAL_HTTP_PORT = 8085

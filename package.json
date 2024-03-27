@@ -121,6 +121,6 @@
     ]
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky || true"
   }
 }
