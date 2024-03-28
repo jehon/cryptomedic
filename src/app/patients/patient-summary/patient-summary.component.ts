@@ -1,12 +1,13 @@
 import { JsonPipe } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import Patient from "../business/patient";
+import { PanelComponent } from "../file-panel/file-panel.component";
 import PatientsService from "../patients.service";
 
 @Component({
   selector: "app-patient-summary",
   standalone: true,
-  imports: [JsonPipe],
+  imports: [JsonPipe, PanelComponent],
   templateUrl: "./patient-summary.component.html",
   styleUrl: "./patient-summary.component.css"
 })

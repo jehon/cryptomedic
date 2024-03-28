@@ -1,10 +1,10 @@
 import { Attribute, Component, Input, TemplateRef } from "@angular/core";
 
 @Component({
-  selector: "app-panel",
+  selector: "app-file-panel",
   standalone: true,
-  templateUrl: "./panel.component.html",
-  styleUrl: "./panel.component.css"
+  templateUrl: "./file-panel.component.html",
+  styleUrl: "./file-panel.component.css"
 })
 export class PanelComponent {
   @Input() actions?: TemplateRef<any>;
