@@ -13,4 +13,8 @@ export default class Patient extends Pojo {
   address_union?: string;
   pathology: string = "";
   comments: string = "";
+
+  override getObjectName(): string {
+    return "patient";
+  }
 }

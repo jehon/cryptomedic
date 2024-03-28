@@ -3,4 +3,12 @@ export default class Pojo {
   created_at: Date = new Date();
   updated_at: Date = new Date();
   last_user: string = "";
+
+  getObjectName(): string {
+    return "pojo";
+  }
+
+  get uuid(): string {
+    return this.getObjectName() + "." + this.id;
+  }
 }
