@@ -14,7 +14,7 @@ export default class Patient extends Pojo {
   pathology: string = "";
   comments: string = "";
 
-  override getObjectName(): string {
+  override getTechnicalName(): string {
     return "patient";
   }
 }

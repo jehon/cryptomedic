@@ -1,5 +1,8 @@
 <div class="header" data-uid="123" (click)="toggleOpen()">
-  <label>Label</label>
+  <label>
+    <img src="{{ icon }}" alt="{{ file.getTechnicalName() }}" class="inline" />
+    {{ label }}
+  </label>
   <ng-content select="[headers]"></ng-content>
 </div>
 @if (statusOpenend) {

@@ -1,6 +1,6 @@
 import { Attribute, Component, Input } from "@angular/core";
+import { icons } from "../../generic/constants";
 import Pojo from "../business/abstracts/pojo";
-import Patient from "../business/patient";
 
 @Component({
   selector: "app-file-panel",
@@ -13,12 +13,19 @@ export class FilePanelComponent {
 
   constructor(
     @Attribute("label") public label: string,
-    @Attribute("opened") public statusOpenend: boolean = false,
-    @Attribute("patient") public patient?: Patient,
-    @Attribute("patient") public header?: string
+    @Attribute("opened") public statusOpenend: boolean = false
   ) {}
 
   toggleOpen() {
     this.statusOpenend = !this.statusOpenend;
+  }
+
+  get icon(): string {
+    if (this.file) {
+      return icons.models[
+        (this.file.getTechnicalName() as keyof typeof icons.models) ?? ""
+      ];
+    }
+    return "";
   }
 }

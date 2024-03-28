@@ -4,11 +4,11 @@ export default class Pojo {
   updated_at: Date = new Date();
   last_user: string = "";
 
-  getObjectName(): string {
+  getTechnicalName(): string {
     return "pojo";
   }
 
   get uuid(): string {
-    return this.getObjectName() + "." + this.id;
+    return this.getTechnicalName() + "." + this.id;
   }
 }
