@@ -1,4 +1,3 @@
-import { JsonPipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import {
   NavigationEnd,
@@ -10,11 +9,12 @@ import { ToastrService } from "ngx-toastr";
 import { filter } from "rxjs";
 import AuthService from "./_services/auth.service";
 import { HttpService } from "./_services/http.service";
+import { WaitingComponent } from "./generic/waiting/waiting.component";
 
 @Component({
   standalone: true,
   selector: "app-root",
-  imports: [RouterOutlet, RouterLink, JsonPipe],
+  imports: [RouterOutlet, RouterLink, WaitingComponent],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css"
 })

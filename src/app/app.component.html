@@ -31,8 +31,6 @@
     <router-outlet></router-outlet>
   </div>
   @if (httpService.running > 0) {
-    <div data-testid="global-wait" class="cr-above">
-      <div class="spinner-border" role="status"></div>
-    </div>
+    <app-waiting></app-waiting>
   }
 </div>
