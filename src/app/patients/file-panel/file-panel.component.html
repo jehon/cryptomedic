@@ -1,13 +1,9 @@
-<div class="header" (click)="onClick()">
-  @if (label) {
-    <label>{{ label }}</label>
-  }
-  {{ header }}
+<div class="header" data-uid="123" (click)="toggleOpen()">
+  <label>Label</label>
+  <ng-content select="[headers]"></ng-content>
 </div>
 @if (statusOpenend) {
-  @if (actions) {
-    <div class="button-group">{{ actions }}</div>
-  }
+  <div class="button-group">Actions</div>
   <div data-role="body" class="body">
     <ng-content></ng-content>
   </div>

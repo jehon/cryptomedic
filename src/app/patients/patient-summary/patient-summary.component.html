@@ -1,26 +1,14 @@
-<pre>
-  {{ patient | json }}
-</pre>
-<app-file-panel></app-file-panel>
+@if (!patient) {
+  <div>Loading</div>
+} @else {
+  <app-file-panel [file]="patient" opened="true">
+    <ng-container headers>
+      <span> {{ patient.entry_year }}-{{ patient.entry_order }} </span>
+      <span className="no-mobile">{{ patient.name }}</span>
+      <span className="no-mobile">{{ patient.year_of_birth }}</span>
+    </ng-container>
 
-<!-- 
-<FilePanel
-closed={!opened}
-file={file}
-folder={folder}
-onUpdate={onUpdate}
-header={
-  <>
-    <span>
-      {file.entry_year}-{file.entry_order}
-    </span>
-    <span className="no-mobile">{file.name}</span>
-    <span className="no-mobile">{file.year_of_birth}</span>
-  </>
-}
->
-<>
-  <TwoColumns>
+    <!-- <TwoColumns>
     <Panel fixed label="Identification">
       <IO.Number label="Entry Year" value={file.entry_year} />
       <IO.Number label="Entry Order" value={file.entry_order} />
@@ -42,6 +30,9 @@ header={
       <IO.String label="Upazilla" value={file.address_upazilla} />
       <IO.String label="Address Comments" value={file.address_comments} />
     </Panel>
-  </TwoColumns>
-</>
-</FilePanel> -->
+  </TwoColumns> -->
+  </app-file-panel>
+}
+<pre>
+  {{ patient | json }}
+</pre>

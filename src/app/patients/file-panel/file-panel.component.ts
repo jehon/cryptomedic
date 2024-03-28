@@ -1,4 +1,6 @@
-import { Attribute, Component, Input, TemplateRef } from "@angular/core";
+import { Attribute, Component, Input } from "@angular/core";
+import Pojo from "../business/abstracts/pojo";
+import Patient from "../business/patient";
 
 @Component({
   selector: "app-file-panel",
@@ -6,16 +8,17 @@ import { Attribute, Component, Input, TemplateRef } from "@angular/core";
   templateUrl: "./file-panel.component.html",
   styleUrl: "./file-panel.component.css"
 })
-export class PanelComponent {
-  @Input() actions?: TemplateRef<any>;
-  @Input() header?: TemplateRef<any>;
+export class FilePanelComponent {
+  @Input() file: Pojo = new Pojo();
 
   constructor(
     @Attribute("label") public label: string,
-    @Attribute("status-opened") public statusOpenend: boolean
+    @Attribute("opened") public statusOpenend: boolean = false,
+    @Attribute("patient") public patient?: Patient,
+    @Attribute("patient") public header?: string
   ) {}
 
-  onClick() {
+  toggleOpen() {
     this.statusOpenend = !this.statusOpenend;
   }
 }
