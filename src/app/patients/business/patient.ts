@@ -1,3 +1,4 @@
+import Appointment from "./Appointment";
 import Pojo from "./abstracts/pojo";
 
 export default class Patient extends Pojo {
@@ -14,7 +15,17 @@ export default class Patient extends Pojo {
   pathology: string = "";
   comments: string = "";
 
+  appointment: Appointment[] = [];
+
   override getTechnicalName(): string {
     return "patient";
+  }
+
+  getDependencies() {
+    return [];
+  }
+
+  isLocked() {
+    return false;
   }
 }
