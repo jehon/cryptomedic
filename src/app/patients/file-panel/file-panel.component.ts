@@ -1,12 +1,14 @@
 import { Attribute, Component, Input } from "@angular/core";
 import { icons } from "../../generic/constants";
+import { DateComponent } from "../../generic/date/date.component";
 import Pojo from "../business/abstracts/pojo";
 
 @Component({
   selector: "app-file-panel",
   standalone: true,
   templateUrl: "./file-panel.component.html",
-  styleUrl: "./file-panel.component.css"
+  styleUrl: "./file-panel.component.css",
+  imports: [DateComponent]
 })
 export class FilePanelComponent {
   @Input() file: Pojo = new Pojo();
