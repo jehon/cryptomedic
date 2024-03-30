@@ -138,6 +138,7 @@ jobs:
       - run: echo "ok"
 
   deploy:
+    environment: production
     needs: 
       - valid
     runs-on: ubuntu-latest
