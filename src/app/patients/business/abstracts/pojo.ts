@@ -7,6 +7,10 @@ export default class Pojo {
   last_user: string = "";
   date: StringDate = "";
 
+  normalize(): this {
+    return this;
+  }
+
   getTechnicalName(): string {
     return "pojo";
   }

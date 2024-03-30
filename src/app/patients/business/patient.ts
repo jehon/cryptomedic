@@ -17,6 +17,10 @@ export default class Patient extends Pojo {
 
   appointment: Appointment[] = [];
 
+  override normalize(): this {
+    return this;
+  }
+
   override getTechnicalName(): string {
     return "patient";
   }
