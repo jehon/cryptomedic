@@ -1,5 +1,5 @@
-import Appointment from "./Appointment";
 import Pojo from "./abstracts/pojo";
+import Appointment from "./appointment";
 
 export default class Patient extends Pojo {
   entry_year: string = "";
