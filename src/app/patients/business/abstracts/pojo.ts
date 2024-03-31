@@ -1,4 +1,5 @@
 export type StringDate = string;
+export type StringBoolean = string;
 
 export default class Pojo {
   id: string = "";
