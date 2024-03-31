@@ -16,7 +16,7 @@ export default class PatientsService {
       this.http
         .get<{ [key: string]: Patient }>("/api/patients/" + id)
         // https://www.npmjs.com/package/class-transformer#plaintoclass
-        .pipe(map((json) => plainToClass(Patient, json)))
+        .pipe(map((json) => plainToClass(Patient, json).normalize()))
     );
   }
 }

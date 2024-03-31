@@ -21,6 +21,9 @@ export default class Patient extends Pojo {
   appointment: Appointment[] = [];
 
   override normalize(): this {
+    this.getDependencies().map((e) => {
+      e.patient = this;
+    });
     return this;
   }
 
