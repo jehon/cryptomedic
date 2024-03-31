@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { plainToClass } from "class-transformer";
+import "reflect-metadata";
 import { Observable, map } from "rxjs";
 import Patient from "./business/patient";
 

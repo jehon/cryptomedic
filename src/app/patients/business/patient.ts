@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import Pojo from "./abstracts/pojo";
 import Appointment from "./appointment";
 
@@ -15,6 +16,7 @@ export default class Patient extends Pojo {
   pathology: string = "";
   comments: string = "";
 
+  @Type(() => Appointment)
   appointment: Appointment[] = [];
 
   override normalize(): this {
