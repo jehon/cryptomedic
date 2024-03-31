@@ -21,7 +21,7 @@ export default class Patient extends Pojo {
   appointment: Appointment[] = [];
 
   override normalize(): this {
-    this.getDependencies().map((e) => {
+    this.getRelated().map((e) => {
       e.patient = this;
     });
     return this;
@@ -31,7 +31,7 @@ export default class Patient extends Pojo {
     return "patient";
   }
 
-  getDependencies(): PatientRelated[] {
+  getRelated(): PatientRelated[] {
     return [...this.appointment].toSorted(patientRelatedOrder);
   }
 
