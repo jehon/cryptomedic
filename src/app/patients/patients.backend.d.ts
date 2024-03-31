@@ -1,5 +1,3 @@
-export interface Patient {}
-
 export interface Price {
   id: number;
   created_at: string;
