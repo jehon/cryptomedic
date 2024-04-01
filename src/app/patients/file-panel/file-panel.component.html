@@ -1,21 +1,27 @@
-<div class="header" data-uid="123" (click)="toggleOpen()">
-  <label>
-    <img src="{{ icon }}" alt="{{ file.getTechnicalName() }}" class="inline" />
-    {{ label }}
-  </label>
-  <ng-content select="[headers]"></ng-content>
-</div>
-@if (statusOpenend) {
-  <div class="body">
-    <div class="technical">
-      <div>{{ file.getTechnicalName() }}#{{ file.id }}</div>
-      <div>created at <app-date [value]="file.created_at"></app-date></div>
-      <div>updated at <app-date [value]="file.updated_at"></app-date></div>
-      <div>by {{ file.last_user }}</div>
-    </div>
-    <div class="button-group">Actions</div>
-    <div data-role="body" class="body">
-      <ng-content></ng-content>
-    </div>
+<div class="panel">
+  <div data-uid="123" (click)="toggleOpen()">
+    <label>
+      <img
+        src="{{ icon }}"
+        alt="{{ file.getTechnicalName() }}"
+        class="inline"
+      />
+      {{ label }}
+    </label>
+    <ng-content select="[headers]"></ng-content>
   </div>
-}
+  @if (statusOpenend) {
+    <div class="body">
+      <div class="technical">
+        <div>{{ file.getTechnicalName() }}#{{ file.id }}</div>
+        <div>created at <app-date [value]="file.created_at"></app-date></div>
+        <div>updated at <app-date [value]="file.updated_at"></app-date></div>
+        <div>by {{ file.last_user }}</div>
+      </div>
+      <div class="button-group">Actions</div>
+      <div data-role="body" class="body">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  }
+</div>
