@@ -2,6 +2,12 @@ import { Type } from "class-transformer";
 import PatientRelated from "./abstracts/patient-related";
 import Pojo from "./abstracts/pojo";
 import Appointment from "./appointment";
+import Bill from "./bill";
+import ConsultClubfoot from "./consult-clubfoot";
+import ConsultOther from "./consult-other";
+import ConsultRicket from "./consult-ricket";
+import Picture from "./picture";
+import Surgery from "./surgery";
 
 export default class Patient extends Pojo {
   entry_year: string = "";
@@ -20,6 +26,24 @@ export default class Patient extends Pojo {
   @Type(() => Appointment)
   appointment: Appointment[] = [];
 
+  @Type(() => Bill)
+  bill: Bill[] = [];
+
+  @Type(() => ConsultClubfoot)
+  clubfoot: ConsultClubfoot[] = [];
+
+  @Type(() => ConsultOther)
+  other_consult: ConsultOther[] = [];
+
+  @Type(() => ConsultRicket)
+  ricket_consult: ConsultRicket[] = [];
+
+  @Type(() => Picture)
+  picture: Picture[] = [];
+
+  @Type(() => Surgery)
+  surgery: Surgery[] = [];
+
   override normalize(): this {
     // this.getRelated().map((e) => {
     //   e.patient = this;
@@ -32,7 +56,15 @@ export default class Patient extends Pojo {
   }
 
   getRelated(): PatientRelated[] {
-    return [...this.appointment].toSorted(patientRelatedOrder);
+    return [
+      ...this.appointment,
+      ...this.bill,
+      ...this.clubfoot,
+      ...this.other_consult,
+      ...this.ricket_consult,
+      ...this.picture,
+      ...this.surgery
+    ].toSorted(patientRelatedOrder);
   }
 
   isLocked() {
