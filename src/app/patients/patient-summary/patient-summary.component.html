@@ -8,9 +8,10 @@
       <span className="no-mobile">{{ patient.year_of_birth }}</span>
     </ng-container>
 
-    <!-- <TwoColumns>
-    <Panel fixed label="Identification">
-      <IO.Number label="Entry Year" value={file.entry_year} />
+    <div class="two-columns">
+      <div class="panel">
+        <div>Identification</div>
+        <!-- <IO.Number label="Entry Year" value={file.entry_year} />
       <IO.Number label="Entry Order" value={file.entry_order} />
       <IO.String label="Name" value={file.name} />
       <IO.String label="Sex" value={file.sex} />
@@ -21,16 +22,17 @@
         variable
       />
       <IO.String label="Pathology" value={file.pathology} />
-      <IO.Text label="Comments" value={file.comments} />
-    </Panel>
-    <Panel fixed label="Address">
-      <IO.String width={1} label="Phone" value={file.phone} />
+      <IO.Text label="Comments" value={file.comments} /> -->
+      </div>
+      <div class="panel">
+        <div>Address</div>
+        <!-- <IO.String width={1} label="Phone" value={file.phone} />
       <IO.String label="District" value={file.address_district} />
       <IO.String label="Union" value={file.address_union} />
       <IO.String label="Upazilla" value={file.address_upazilla} />
-      <IO.String label="Address Comments" value={file.address_comments} />
-    </Panel>
-  </TwoColumns> -->
+      <IO.String label="Address Comments" value={file.address_comments} /> -->
+      </div>
+    </div>
   </app-file-panel>
   <app-file-panel
     *ngFor="let file of patient.getRelated()"
