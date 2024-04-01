@@ -1,7 +1,7 @@
 @if (!patient) {
   <div>Loading</div>
 } @else {
-  <app-file-panel [file]="patient" opened="true">
+  <app-file-panel [file]="patient" [opened]="true">
     <ng-container headers>
       <span> {{ patient.entry_year }}-{{ patient.entry_order }} </span>
       <span className="no-mobile">{{ patient.name }}</span>
@@ -32,7 +32,16 @@
     </Panel>
   </TwoColumns> -->
   </app-file-panel>
-}
-<pre>
+  <app-file-panel
+    *ngFor="let file of patient.getRelated()"
+    [file]="file"
+    [opened]="false"
+  >
+    {{ file.uuid }}
+  </app-file-panel>
+
+  <pre>
   {{ patient | json }}
-</pre>
+</pre
+  >
+}
