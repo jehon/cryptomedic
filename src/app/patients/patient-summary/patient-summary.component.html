@@ -1,7 +1,7 @@
 @if (!patient) {
   <div>Loading</div>
 } @else {
-  <app-file-panel [file]="patient" opened="true" label="Patient">
+  <app-file-panel [file]="patient" opened="true">
     <ng-container headers>
       <span> {{ patient.entry_year }}-{{ patient.entry_order }} </span>
       <span className="no-mobile">{{ patient.name }}</span>

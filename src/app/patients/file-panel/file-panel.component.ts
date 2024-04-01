@@ -1,4 +1,5 @@
 import { Attribute, Component, Input } from "@angular/core";
+import { technical2Human } from "../../_helpers/strings";
 import { icons } from "../../generic/constants";
 import { DateComponent } from "../../generic/date/date.component";
 import Pojo from "../business/abstracts/pojo";
@@ -13,10 +14,7 @@ import Pojo from "../business/abstracts/pojo";
 export class FilePanelComponent {
   @Input() file: Pojo = new Pojo();
 
-  constructor(
-    @Attribute("label") public label: string,
-    @Attribute("opened") public statusOpenend: boolean = false
-  ) {}
+  constructor(@Attribute("opened") public statusOpenend: boolean = false) {}
 
   toggleOpen() {
     this.statusOpenend = !this.statusOpenend;
@@ -29,5 +27,9 @@ export class FilePanelComponent {
       ];
     }
     return "";
+  }
+
+  get label(): string {
+    return technical2Human(this.file.getTechnicalName());
   }
 }
