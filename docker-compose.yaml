@@ -66,6 +66,8 @@ services:
       - traefik.http.routers.static.rule=PathPrefix(`/dev`)
 
   database:
+    profiles:
+      - reset
     image: mysql:${MYSQL_VERSION}
     restart: always
     environment:
