@@ -11,26 +11,54 @@
     <div class="two-columns">
       <div class="panel">
         <div>Identification</div>
-        <!-- <IO.Number label="Entry Year" value={file.entry_year} />
-      <IO.Number label="Entry Order" value={file.entry_order} />
-      <IO.String label="Name" value={file.name} />
-      <IO.String label="Sex" value={file.sex} />
-      <IO.Number label="Year of birth" value={file.year_of_birth} />
-      <IO.String
-        label="Age today"
-        value={file.actualAge() as string}
-        variable
-      />
-      <IO.String label="Pathology" value={file.pathology} />
-      <IO.Text label="Comments" value={file.comments} /> -->
+        <div>
+          <app-io
+            type="string"
+            label="Entry Year"
+            [value]="patient.entry_year"
+          />
+          <app-io
+            type="string"
+            label="Entry Order"
+            [value]="patient.entry_order"
+          />
+          <app-io type="string" label="Name" [value]="patient.name" />
+          <app-io type="list" label="Sex" [value]="patient.sex" />
+          <app-io
+            type="number"
+            label="Year of birth"
+            [value]="patient.year_of_birth"
+          />
+          <app-io
+            type="number"
+            label="Age today"
+            [value]="patient.ageAtReference()"
+          />
+          <app-io type="string" label="Pathology" [value]="patient.pathology" />
+          <app-io type="note" label="Comments" [value]="patient.comments" />
+        </div>
       </div>
       <div class="panel">
         <div>Address</div>
-        <!-- <IO.String width={1} label="Phone" value={file.phone} />
-      <IO.String label="District" value={file.address_district} />
-      <IO.String label="Union" value={file.address_union} />
-      <IO.String label="Upazilla" value={file.address_upazilla} />
-      <IO.String label="Address Comments" value={file.address_comments} /> -->
+        <div>
+          <app-io type="string" label="Phone" [value]="patient.phone" />
+          <app-io
+            type="list"
+            label="District"
+            [value]="patient.address_district"
+          />
+          <app-io type="list" label="Union" [value]="patient.address_union" />
+          <app-io
+            type="list"
+            label="Upazilla"
+            [value]="patient.address_upazilla"
+          />
+          <app-io
+            type="note"
+            label="Address Comments"
+            [value]="patient.address_comments"
+          />
+        </div>
       </div>
     </div>
   </app-file-panel>

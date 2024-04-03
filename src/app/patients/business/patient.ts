@@ -1,4 +1,5 @@
 import { Type } from "class-transformer";
+import { string2date } from "../../_helpers/date";
 import PatientRelated from "./abstracts/patient-related";
 import Pojo from "./abstracts/pojo";
 import Appointment from "./appointment";
@@ -69,6 +70,30 @@ export default class Patient extends Pojo {
 
   isLocked() {
     return false;
+  }
+
+  ageAtReference(reference: Date = new Date()): string {
+    if (!this.year_of_birth || !reference) {
+      return "?";
+    }
+
+    // We have to take -1 for the month difference to be ok
+    const birth_date = string2date(this.year_of_birth + "", -1);
+    if (!birth_date) {
+      return "?";
+    }
+
+    const days = new Date(
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      reference.getTime() - birth_date.getTime()
+    );
+    const res = { years: days.getFullYear() - 1900, months: days.getMonth() };
+    return res.years + "y" + res.months + "m";
   }
 }
 
