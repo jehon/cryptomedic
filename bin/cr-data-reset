@@ -20,6 +20,7 @@ header_end
 # Reset database
 header_begin "cr-data-reset - Mysql - restoring initial base"
 # --wait: for the service to be healthy
+docker compose down database
 docker compose up --force-recreate database \
     --detach --wait --renew-anon-volumes 
 header_end
