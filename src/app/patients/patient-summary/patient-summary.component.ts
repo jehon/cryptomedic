@@ -1,14 +1,14 @@
 import { JsonPipe, NgFor } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { IoComponent } from "../../generic/io-string/io.component";
 import Patient from "../business/patient";
 import { FilePanelComponent } from "../file-panel/file-panel.component";
+import { PatientFicheComponent } from "../patient-fiche/patient-fiche.component";
 import PatientsService from "../patients.service";
 
 @Component({
   selector: "app-patient-summary",
   standalone: true,
-  imports: [JsonPipe, FilePanelComponent, NgFor, IoComponent],
+  imports: [JsonPipe, PatientFicheComponent, FilePanelComponent, NgFor],
   templateUrl: "./patient-summary.component.html",
   styleUrl: "./patient-summary.component.css"
 })
@@ -21,14 +21,14 @@ export class PatientSummaryComponent {
   @Input()
   set id(id: string) {
     this.#id = id;
-    this.getFolder();
+    this.getData();
   }
 
   get id() {
     return this.#id;
   }
 
-  getFolder(): void {
+  getData(): void {
     this.patientsService.load(this.id).subscribe((val: Patient) => {
       this.patient = val;
     });
