@@ -1,0 +1,66 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
+  /* stylelint-disable-next-line plugin/no-unsupported-browser-features -- reported as partial support */
+  column-gap: 10px;
+
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  & > label {
+    width: 25%;
+    text-align: right;
+    font-size: smaller;
+    color: gray;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  /* &.note {
+    font-size: smaller;
+  }
+ */
+
+  & > .content {
+    flex-grow: 1;
+    text-align: left;
+    color: green;
+    background-color: white;
+    max-width: 100%;
+    overflow-wrap: break-word;
+
+    .io-function-error {
+      color: gray;
+    }
+
+    /* pre {
+      overflow-wrap: break-word;
+    } */
+
+    /* .io-img {
+      position: relative;
+      height: 100%;
+      width: 100%;
+
+      img[data-role="image"] {
+        object-fit: contain;
+        height: 100%;
+        width: 100%;
+
+        transition: transform 1s ease;
+      }
+
+      img[data-decorator] {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        object-fit: contain;
+        background-color: gray;
+        border-radius: 10px;
+        padding: 5px;
+      }
+    } */
+  }
+}
