@@ -31,7 +31,7 @@ export default class Patient extends Pojo {
   bill: Bill[] = [];
 
   @Type(() => ConsultClubfoot)
-  clubfoot: ConsultClubfoot[] = [];
+  club_foot: ConsultClubfoot[] = [];
 
   @Type(() => ConsultOther)
   other_consult: ConsultOther[] = [];
@@ -60,7 +60,7 @@ export default class Patient extends Pojo {
     return [
       ...this.appointment,
       ...this.bill,
-      ...this.clubfoot,
+      ...this.club_foot,
       ...this.other_consult,
       ...this.ricket_consult,
       ...this.picture,
