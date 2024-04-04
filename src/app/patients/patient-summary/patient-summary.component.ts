@@ -2,13 +2,13 @@ import { JsonPipe, NgFor } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import Patient from "../business/patient";
 import { FilePanelComponent } from "../file-panel/file-panel.component";
-import { PatientFicheComponent } from "../patient-fiche/patient-fiche.component";
+import { PatientFileComponent } from "../patient-file/patient-file.component";
 import PatientsService from "../patients.service";
 
 @Component({
   selector: "app-patient-summary",
   standalone: true,
-  imports: [JsonPipe, PatientFicheComponent, FilePanelComponent, NgFor],
+  imports: [JsonPipe, PatientFileComponent, FilePanelComponent, NgFor],
   templateUrl: "./patient-summary.component.html",
   styleUrl: "./patient-summary.component.css"
 })

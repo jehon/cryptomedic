@@ -7,10 +7,10 @@ import { FilePanelComponent } from "../file-panel/file-panel.component";
   selector: "app-patient-file",
   standalone: true,
   imports: [FilePanelComponent, IoComponent],
-  templateUrl: "./patient-fiche.component.html",
-  styleUrl: "./patient-fiche.component.css"
+  templateUrl: "./patient-file.component.html",
+  styleUrl: "./patient-file.component.css"
 })
-export class PatientFicheComponent {
+export class PatientFileComponent {
   @Input()
   file?: Patient;
 }
