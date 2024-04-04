@@ -59,7 +59,7 @@
     "@types/pixelmatch": "5.2.6",
     "@types/pngjs": "6.0.4",
     "@types/react": "18.2.74",
-    "@types/react-dom": "18.2.23",
+    "@types/react-dom": "18.2.24",
     "@types/string": "0.0.34",
     "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.5.0",
