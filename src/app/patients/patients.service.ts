@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { plainToClass } from "class-transformer";
 import "reflect-metadata";
-import { Observable, Subject, map } from "rxjs";
+import { BehaviorSubject, Observable, map } from "rxjs";
 import Patient from "./business/patient";
 
 @Injectable({
@@ -10,11 +10,11 @@ import Patient from "./business/patient";
 })
 export default class PatientsService {
   #patient?: Patient;
-  #observablePatient: Subject<Patient> = new Subject();
+  #observablePatient = new BehaviorSubject<Patient | undefined>(undefined);
 
   constructor(private http: HttpClient) {}
 
-  getPatientObservable(): Observable<Patient> {
+  getPatientObservable(): Observable<Patient | undefined> {
     return this.#observablePatient;
   }
 

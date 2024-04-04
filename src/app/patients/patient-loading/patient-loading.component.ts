@@ -10,21 +10,23 @@ import PatientsService from "../patients.service";
   templateUrl: "./patient-loading.component.html"
 })
 export class PatientLoadingComponent implements OnInit {
+  #id: string = "id";
   patient?: Patient;
 
   constructor(private patientsService: PatientsService) {}
 
-  @Input()
+  @Input("id")
   set id(id: string) {
-    this.patientsService.load(this.id);
+    this.#id = id;
+    this.patientsService.load(id);
   }
 
   get id() {
-    return this.patient?.id ?? "";
+    return this.#id;
   }
 
   ngOnInit(): void {
-    this.patientsService.getPatientObservable().subscribe((val: Patient) => {
+    this.patientsService.getPatientObservable().subscribe((val?: Patient) => {
       this.patient = val;
     });
   }
