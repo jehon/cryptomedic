@@ -29,8 +29,9 @@ export class PatientSummaryComponent {
   }
 
   getData(): void {
-    this.patientsService.load(this.id).subscribe((val: Patient) => {
+    this.patientsService.getPatientObservable().subscribe((val: Patient) => {
       this.patient = val;
     });
+    this.patientsService.load(this.#id);
   }
 }
