@@ -1,6 +1,10 @@
 import Consult from "./abstracts/consult";
 
 export default class ConsultClubfoot extends Consult {
+  override getTechnicalName(): string {
+    return "consult_clubfoot";
+  }
+
   pain_left?: number;
   pain_right?: number;
   walking_floor_contact_left?: number;
