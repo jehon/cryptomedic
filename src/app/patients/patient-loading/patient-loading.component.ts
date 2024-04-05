@@ -7,7 +7,8 @@ import PatientsService from "../patients.service";
   selector: "app-patient-loading",
   standalone: true,
   imports: [RouterOutlet],
-  templateUrl: "./patient-loading.component.html"
+  templateUrl: "./patient-loading.component.html",
+  styleUrl: "./patient-loading.component.css"
 })
 export class PatientLoadingComponent implements OnInit {
   #id: string = "id";

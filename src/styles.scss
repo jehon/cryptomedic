@@ -3,8 +3,9 @@
     - separator
 */
 :root {
-  --color-around-green: green;
-  --panel-min-width: 150px;
+  // --color-around-green: green;
+  // --panel-min-width: 150px;
+  --summary-max-width: 800px;
 }
 
 @import "bootstrap5/scss/bootstrap.scss";
