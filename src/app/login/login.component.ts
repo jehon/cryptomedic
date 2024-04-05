@@ -57,7 +57,8 @@ export class LoginComponent implements OnInit {
 
   checkRoute() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate([this.redirectTo]);
+      // Use this to avoid url encoded redirect
+      this.router.navigateByUrl(this.redirectTo);
     }
   }
 }
