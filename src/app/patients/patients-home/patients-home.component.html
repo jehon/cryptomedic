@@ -1,2 +1,10 @@
 <p>Patients Home!</p>
-<a [routerLink]="['/patients', 100]" class="nav-link">Patient 1</a>
+<div class="button-group">
+  <a class="btn btn-primary" [routerLink]="['/patients', 100]">Patient 1</a>
+  <a
+    class="btn btn-primary"
+    [routerLink]="['/patients', 100]"
+    [queryParams]="{ view: 'appointment.100' }"
+    >Patient 1 => appointment.100</a
+  >
+</div>

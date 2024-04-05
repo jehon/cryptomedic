@@ -27,10 +27,11 @@ $bootstrap-icons-font-src: "../node_modules/bootstrap-icons/font/bootstrap-icons
   @extend .justify-content-end;
 
   width: 100%;
-}
+  gap: 5px;
 
-.button-group > button {
-  flex-grow: 1;
+  & > button {
+    flex-grow: 1;
+  }
 }
 
 ////////////////////////////////////////
