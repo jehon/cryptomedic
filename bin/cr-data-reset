@@ -21,6 +21,8 @@ header_end
 header_begin "cr-data-reset - Mysql - restoring initial base"
 # --wait: for the service to be healthy
 docker compose down database
+# TODO: database volume? 
+# docker volume rm -f cryptomedic_database || true
 docker compose up --force-recreate database \
     --detach --wait --renew-anon-volumes 
 header_end

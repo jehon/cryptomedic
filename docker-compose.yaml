@@ -91,6 +91,7 @@ services:
     expose:
       - 3306
     volumes:
+      # TODO: database volume?
       # - type: volume
       #   source: database
       #   target: /var/lib/mysql
@@ -167,3 +168,6 @@ services:
     working_dir: /app
     volumes:
       - .:/app
+# TODO: database volume?
+# volumes:
+#   database:
