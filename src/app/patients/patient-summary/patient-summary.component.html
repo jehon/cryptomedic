@@ -1,7 +1,7 @@
 @if (!patient) {
   <div>Initializing...</div>
 } @else {
-  <app-patient-file [file]="patient"></app-patient-file>
+  <app-patient-file [file]="patient" [opened]="!view"></app-patient-file>
   <app-file-panel
     *ngFor="let file of patient.getRelated()"
     [file]="file"

@@ -13,4 +13,7 @@ import { FilePanelComponent } from "../file-panel/file-panel.component";
 export class PatientFileComponent {
   @Input()
   file?: Patient;
+
+  @Input()
+  opened: boolean = false;
 }
