@@ -8,6 +8,9 @@
       [file]="$any(file)"
       [opened]="file.uuid == view"
     />
+  </span>
+  <hr />
+  <span *ngFor="let file of patient.getRelated()">
     <app-file-panel [file]="file" [opened]="file.uuid == view">
       {{ file.uuid }}
     </app-file-panel>
