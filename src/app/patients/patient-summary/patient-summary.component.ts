@@ -1,6 +1,5 @@
 import { JsonPipe, NgFor } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
 import Patient from "../business/patient";
 import { FilePanelComponent } from "../file-panel/file-panel.component";
 import { PatientFileComponent } from "../patient-file/patient-file.component";
@@ -18,10 +17,7 @@ export class PatientSummaryComponent {
   patient?: Patient;
   #view: string = "";
 
-  constructor(
-    private patientsService: PatientsService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private patientsService: PatientsService) {}
 
   @Input()
   set id(id: string) {
@@ -38,7 +34,7 @@ export class PatientSummaryComponent {
     this.#view = viewUUID;
   }
 
-  get viewUUID() {
+  get view() {
     return this.#view;
   }
 

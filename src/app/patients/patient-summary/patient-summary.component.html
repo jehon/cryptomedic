@@ -5,7 +5,7 @@
   <app-file-panel
     *ngFor="let file of patient.getRelated()"
     [file]="file"
-    [opened]="false"
+    [opened]="file.uuid == view"
   >
     {{ file.uuid }}
   </app-file-panel>
