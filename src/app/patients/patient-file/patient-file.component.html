@@ -1,7 +1,7 @@
 @if (!file) {
   <div>Loading...</div>
 } @else {
-  <app-file-panel [file]="file" [opened]="opened">
+  <app-file-panel [file]="file" [opened]="opened" [model]="'patient'">
     <ng-container headers>
       <span>{{ file.entry_year }}-{{ file.entry_order }}</span>
       <span className="no-mobile">{{ file.name }}</span>
@@ -24,11 +24,7 @@
             label="Year of birth"
             [value]="file.year_of_birth"
           />
-          <app-io
-            type="number"
-            label="Age today"
-            [value]="file.ageAtReference()"
-          />
+          <app-io type="number" label="Age today" [value]="ageAtReference()" />
           <app-io type="string" label="Pathology" [value]="file.pathology" />
           <app-io type="note" label="Comments" [value]="file.comments" />
         </div>
@@ -42,12 +38,12 @@
             label="District"
             [value]="file.address_district"
           />
-          <app-io type="list" label="Union" [value]="file.address_union" />
           <app-io
             type="list"
             label="Upazilla"
             [value]="file.address_upazilla"
           />
+          <app-io type="list" label="Union" [value]="file.address_union" />
           <app-io
             type="note"
             label="Address Comments"

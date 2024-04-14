@@ -14,6 +14,7 @@ import Pojo from "../business/abstracts/pojo";
 export class FilePanelComponent {
   @Input() file: Pojo = new Pojo();
   @Input("opened") statusOpenend: boolean = false;
+  @Input() model: string = "";
 
   toggleOpen() {
     this.statusOpenend = !this.statusOpenend;
@@ -21,14 +22,12 @@ export class FilePanelComponent {
 
   get icon(): string {
     if (this.file) {
-      return icons.models[
-        (this.file.getTechnicalName() as keyof typeof icons.models) ?? ""
-      ];
+      return icons.models[(this.model as keyof typeof icons.models) ?? ""];
     }
     return "";
   }
 
   get label(): string {
-    return technical2Human(this.file.getTechnicalName());
+    return technical2Human(this.model ?? "");
   }
 }
