@@ -24,7 +24,6 @@ import PatientsService from "../patients.service";
 export class PatientSummaryComponent {
   #id: string = "";
   patient?: Patient;
-  #view: string = "";
 
   constructor(private patientsService: PatientsService) {}
 
@@ -36,15 +35,6 @@ export class PatientSummaryComponent {
 
   get id() {
     return this.#id;
-  }
-
-  @Input()
-  set view(viewUUID: string) {
-    this.#view = viewUUID;
-  }
-
-  get view() {
-    return this.#view;
   }
 
   getData(): void {

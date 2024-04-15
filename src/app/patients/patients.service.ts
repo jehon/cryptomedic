@@ -30,7 +30,7 @@ export default class PatientsService {
     this.http
       .get("/api/patients/" + id)
       // https://www.npmjs.com/package/class-transformer#plaintoclass
-      .pipe(map((json: any) => plainToClass(Patient, json).normalize()))
+      .pipe(map((json: any) => plainToClass(Patient, json)))
       .subscribe((patient: Patient) => {
         this.#patient = patient;
         this.#observablePatient.next(this.#patient);

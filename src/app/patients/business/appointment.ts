@@ -8,8 +8,4 @@ export default class Appointment extends PatientRelated {
   examiner: string = "";
   purpose: string = "";
   center: string = "";
-
-  isLocked() {
-    return false;
-  }
 }

@@ -1,17 +1,16 @@
 @if (!patient) {
   <div>Initializing...</div>
 } @else {
-  <app-patient-file [file]="patient" [opened]="!view"></app-patient-file>
+  <app-patient-file [file]="patient"></app-patient-file>
   <span *ngFor="let file of getRelated()">
     <app-appointment-file
       *ngIf="file.getTechnicalName() == 'appointment'"
       [file]="$any(file)"
-      [opened]="file.uuid == view"
     />
   </span>
   <hr />
   <span *ngFor="let file of getRelated()">
-    <app-file-panel [file]="file" [opened]="file.uuid == view">
+    <app-file-panel [file]="file">
       {{ file.uuid }}
     </app-file-panel>
   </span>

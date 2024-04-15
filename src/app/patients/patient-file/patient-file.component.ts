@@ -15,9 +15,6 @@ export class PatientFileComponent {
   @Input()
   file?: Patient;
 
-  @Input()
-  opened: boolean = false;
-
   ageAtReference(reference: Date = new Date()): string {
     if (!this.file) {
       return "?";

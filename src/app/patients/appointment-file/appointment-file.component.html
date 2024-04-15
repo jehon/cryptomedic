@@ -1,7 +1,7 @@
 @if (!file) {
   <div>Loading...</div>
 } @else {
-  <app-file-panel [file]="file" [opened]="opened" [model]="'appointment'">
+  <app-file-panel [file]="file" [model]="'appointment'">
     <ng-container headers>
       <span>{{ file.center }}</span>
     </ng-container>

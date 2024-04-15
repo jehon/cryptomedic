@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { technical2Human } from "../../_helpers/strings";
 import { icons } from "../../generic/constants";
 import { DateComponent } from "../../generic/date/date.component";
@@ -11,13 +11,24 @@ import Pojo from "../business/abstracts/pojo";
   styleUrl: "./file-panel.component.css",
   imports: [DateComponent]
 })
-export class FilePanelComponent {
+export class FilePanelComponent implements OnInit {
   @Input() file: Pojo = new Pojo();
-  @Input("opened") statusOpenend: boolean = false;
   @Input() model: string = "";
 
+  statusOpened: boolean = false;
+  view: string = "undefined";
+
+  ngOnInit(): void {
+    // So easier...
+    this.view = window.location.hash.substring(1);
+
+    if (this.view == this.file.uuid) {
+      this.statusOpened = true;
+    }
+  }
+
   toggleOpen() {
-    this.statusOpenend = !this.statusOpenend;
+    this.statusOpened = !this.statusOpened;
   }
 
   get icon(): string {
