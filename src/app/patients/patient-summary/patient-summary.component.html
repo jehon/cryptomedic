@@ -7,9 +7,27 @@
       @case ("appointment") {
         <app-appointment [file]="$any(file)" />
       }
+      @case ("bill") {
+        <app-bill [file]="$any(file)" />
+      }
+      @case ("consult_clubfoot") {
+        <app-consult-clubfoot [file]="$any(file)" />
+      }
+      @case ("consult_other") {
+        <app-consult-other [file]="$any(file)" />
+      }
+      @case ("consult_ricket") {
+        <app-consult-ricket [file]="$any(file)" />
+      }
+      @case ("picture") {
+        <app-picture [file]="$any(file)" />
+      }
+      @case ("surgery") {
+        <app-surgery [file]="$any(file)" />
+      }
       @default {
         <app-file-panel [file]="file">
-          {{ file.uuid }}
+          UNKNOWN: {{ file.uuid }}
         </app-file-panel>
       }
     }

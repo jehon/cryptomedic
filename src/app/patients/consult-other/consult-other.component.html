@@ -1,0 +1,13 @@
+@if (!file) {
+  <div>Loading...</div>
+} @else {
+  <app-file-panel [file]="file" [model]="'consult_other'">
+    <ng-container headers>TODO </ng-container>
+    <div class="two-columns">
+      <div class="panel">
+        <div>Informations</div>
+        <div>TODO</div>
+      </div>
+    </div>
+  </app-file-panel>
+}

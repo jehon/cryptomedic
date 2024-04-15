@@ -44,7 +44,7 @@ addModel("payment", {
 });
 addModel("picture");
 addModel("surgery", {
-  icon: "model_surgery.svg"
+  icon: "model_surgery.png"
 });
 
 export default deepFreeze(constants);
