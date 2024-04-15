@@ -1,4 +1,4 @@
-import { JsonPipe, NgFor, NgIf } from "@angular/common";
+import { JsonPipe, NgFor } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { AppointmentFileComponent } from "../appointment-file/appointment-file.component";
 import PatientRelated from "../business/abstracts/patient-related";
@@ -15,7 +15,6 @@ import PatientsService from "../patients.service";
     PatientFileComponent,
     FilePanelComponent,
     NgFor,
-    NgIf,
     AppointmentFileComponent
   ],
   templateUrl: "./patient-summary.component.html",
