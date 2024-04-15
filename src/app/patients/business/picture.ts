@@ -16,18 +16,4 @@ export default class Picture extends PatientRelated {
   // getThumbnailUrl() {
   //   return "/api/picture/" + this.id + "/thumbnail";
   // }
-
-  // // Legacy
-  // validate(res) {
-  //   res = super.validate(res);
-
-  //   if (!this.fileContent && !this.file) {
-  //     res.pictureRequired = true;
-  //   }
-
-  //   if (this.date > new Date().toISOString()) {
-  //     res.dateInTheFuture = true;
-  //   }
-  //   return res;
-  // }
 }

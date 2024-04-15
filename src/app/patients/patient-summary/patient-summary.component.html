@@ -5,7 +5,7 @@
   @for (file of getRelated(); track file.uuid) {
     @switch (file.getTechnicalName()) {
       @case ("appointment") {
-        <app-appointment-file [file]="$any(file)" />
+        <app-appointment [file]="$any(file)" />
       }
       @default {
         <app-file-panel [file]="file">

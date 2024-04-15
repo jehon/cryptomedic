@@ -11,14 +11,4 @@ export default class Surgery extends PatientRelated {
   report_side_left?: string;
   report_procedure?: string;
   follow_up_complication?: string;
-
-  // // Legacy
-  // validate(res) {
-  //   res = super.validate(res);
-
-  //   if (this.date > new Date().toISOString()) {
-  //     res.dateInTheFuture = true;
-  //   }
-  //   return res;
-  // }
 }

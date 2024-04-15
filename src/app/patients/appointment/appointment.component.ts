@@ -5,16 +5,13 @@ import Appointment from "../business/appointment";
 import { FilePanelComponent } from "../file-panel/file-panel.component";
 
 @Component({
-  selector: "app-appointment-file",
+  selector: "app-appointment",
   standalone: true,
   imports: [FilePanelComponent, IoComponent, NgSwitchCase],
-  templateUrl: "./appointment-file.component.html",
-  styleUrl: "./appointment-file.component.css"
+  templateUrl: "./appointment.component.html",
+  styleUrl: "./appointment.component.css"
 })
-export class AppointmentFileComponent {
+export class AppointmentComponent {
   @Input()
   file?: Appointment;
-
-  @Input()
-  opened: boolean = false;
 }
