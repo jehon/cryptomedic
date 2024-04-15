@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { technical2Human } from "../../_helpers/strings";
-import { icons } from "../../generic/constants";
+import constants from "../../generic/constants";
 import { DateComponent } from "../../generic/date/date.component";
 import Pojo from "../business/abstracts/pojo";
 
@@ -32,13 +31,10 @@ export class FilePanelComponent implements OnInit {
   }
 
   get icon(): string {
-    if (this.file) {
-      return icons.models[(this.model as keyof typeof icons.models) ?? ""];
-    }
-    return "";
+    return constants.models[this.model]?.icon ?? "";
   }
 
   get label(): string {
-    return technical2Human(this.model ?? "");
+    return constants.models[this.model]?.label ?? "";
   }
 }
