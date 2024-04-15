@@ -137,10 +137,11 @@ database-update-base-sql:
 	bin/cr-database-backup
 
 lint: global-lint-prettier
+.PHONY: global-lint-prettier
 global-lint-prettier: $(FRONTEND_DEPENDENCIES_MARK)
 	node_modules/.bin/prettier --check .
 
-lint: global-lint-prettier-fix
+.PHONY: global-lint-prettier-fix
 global-lint-prettier-fix: $(FRONTEND_DEPENDENCIES_MARK)
 	node_modules/.bin/prettier --write .
 
