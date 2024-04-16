@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { string2date } from "../../_helpers/date";
-import { IoComponent } from "../../generic/io-string/io.component";
+import { IoComponent } from "../../generic/io/io.component";
 import Patient from "../business/patient";
 import { FilePanelComponent } from "../file-panel/file-panel.component";
 

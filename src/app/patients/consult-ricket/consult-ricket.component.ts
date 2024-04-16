@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { IoComponent } from "../../generic/io-string/io.component";
+import { IoComponent } from "../../generic/io/io.component";
 import ConsultRicket from "../business/consult-ricket";
 import { FilePanelComponent } from "../file-panel/file-panel.component";
 
