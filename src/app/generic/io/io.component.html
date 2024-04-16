@@ -1,5 +1,16 @@
 @if (value) {
-  <label>{{ label }}</label>
+  <label>
+    @if (left) {
+      <img src="/static/img/side_left.svg" alt="Left" />
+    }
+    @if (right) {
+      <img src="/static/img/side_right.svg" alt="Right" />
+    }
+    {{ label }}
+    @if (required) {
+      *
+    }
+  </label>
   <div class="content">
     @if (edit) {
       @switch (type) {

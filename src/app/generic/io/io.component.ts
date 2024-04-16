@@ -1,4 +1,4 @@
-import { Attribute, Component, Input, OnInit } from "@angular/core";
+import { Attribute, Component, ElementRef, Input, OnInit } from "@angular/core";
 
 export type FieldType =
   | "string"
@@ -28,10 +28,10 @@ export class IoComponent implements OnInit {
   @Input() edit: boolean = false;
 
   constructor(
+    private el: ElementRef,
     @Attribute("type") public type: FieldType,
     @Attribute("label") public label: string,
     @Attribute("readonly") public readonly: boolean = false,
-    @Attribute("required") public required: boolean = false,
     @Attribute("list-name") public listName: string = ""
   ) {}
 
@@ -41,5 +41,17 @@ export class IoComponent implements OnInit {
         `IO Component: Type ${this.type} is not a recognized type`
       );
     }
+  }
+
+  get left(): boolean {
+    return this.el.nativeElement.hasAttribute("left");
+  }
+
+  get right(): boolean {
+    return this.el.nativeElement.hasAttribute("right");
+  }
+
+  get required(): boolean {
+    return this.el.nativeElement.hasAttribute("required");
   }
 }
