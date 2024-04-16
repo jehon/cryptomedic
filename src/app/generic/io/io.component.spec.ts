@@ -13,6 +13,7 @@ describe("IoStringComponent", () => {
 
     fixture = TestBed.createComponent(IoComponent);
     component = fixture.componentInstance;
+    component.type = "string";
     fixture.detectChanges();
   });
 
