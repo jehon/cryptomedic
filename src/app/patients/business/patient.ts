@@ -1,4 +1,5 @@
 import { Type } from "class-transformer";
+import { StringList, StringText } from "../../generic/io/io.component";
 import Pojo from "./abstracts/pojo";
 import Appointment from "./appointment";
 import Bill from "./bill";
@@ -12,15 +13,15 @@ export default class Patient extends Pojo {
   entry_year: number = 0;
   entry_order: number = 0;
   name: string = "";
-  sex?: "Male" | "Female";
-  year_of_birth?: string;
+  sex?: StringList;
+  year_of_birth?: number;
   phone?: string;
-  address_comments?: string;
+  address_comments?: StringText;
   address_district?: string;
   address_upazilla?: string;
   address_union?: string;
   pathology?: string;
-  comments?: string;
+  comments?: StringText;
 
   @Type(() => Appointment)
   appointment: Appointment[] = [];
