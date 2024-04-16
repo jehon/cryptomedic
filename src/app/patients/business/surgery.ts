@@ -7,8 +7,8 @@ export default class Surgery extends PatientRelated {
 
   report_diagnostic?: string;
   report_surgeon?: string;
-  report_side_right?: string;
-  report_side_left?: string;
+  report_side_right?: boolean;
+  report_side_left?: boolean;
   report_procedure?: string;
-  follow_up_complication?: string;
+  follow_up_complication?: string; // text
 }

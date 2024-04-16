@@ -1,6 +1,6 @@
 // import { getPref } from "../../utils/prefs.js";
+import { StringBoolean } from "../../../generic/io/io.component";
 import PatientRelated from "./patient-related";
-import { StringBoolean } from "./pojo";
 
 export default class Timed extends PatientRelated {
   examiner: string = "";

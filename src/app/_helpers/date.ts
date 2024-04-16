@@ -1,4 +1,4 @@
-import { StringDate } from "../patients/business/abstracts/pojo";
+import { StringDate } from "../generic/io/io.component";
 
 export function string2date(
   date_string: StringDate,

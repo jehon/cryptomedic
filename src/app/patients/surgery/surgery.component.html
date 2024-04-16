@@ -22,23 +22,23 @@
         <div>Report</div>
         <div>
           <app-io
-            type="text"
+            type="string"
             label="Diagnostic"
             [value]="file.report_diagnostic"
           />
-          <app-io type="text" label="Surgeon" [value]="file.report_surgeon" />
+          <app-io type="string" label="Surgeon" [value]="file.report_surgeon" />
           <app-io
-            type="text"
+            type="boolean"
             label="Right Side"
             [value]="file.report_side_right"
           />
           <app-io
-            type="text"
+            type="boolean"
             label="Left Side"
             [value]="file.report_side_left"
           />
           <app-io
-            type="text"
+            type="string"
             label="Procedure"
             [value]="file.report_procedure"
           />

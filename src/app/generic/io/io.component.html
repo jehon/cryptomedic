@@ -1,6 +1,20 @@
 @if (value) {
   <label>{{ label }}</label>
   <div class="content">
-    {{ value }}
+    @switch (type) {
+      @case ("boolean") {
+        @if (value) {
+          <img src="/static/img/boolean-true.gif" alt="Yes" />
+        } @else {
+          <img src="/static/img/boolean-false.gif" alt="No" />;
+        }
+      }
+      @case ("text") {
+        <pre>{{ value }}</pre>
+      }
+      @default {
+        {{ value }}
+      }
+    }
   </div>
 }

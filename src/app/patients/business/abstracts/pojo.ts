@@ -1,5 +1,4 @@
-export type StringDate = string;
-export type StringBoolean = string;
+import { StringDate } from "../../../generic/io/io.component";
 
 export const ModelSymbol = Symbol("model");
 
