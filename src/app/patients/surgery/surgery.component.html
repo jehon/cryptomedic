@@ -2,11 +2,47 @@
   <div>Loading...</div>
 } @else {
   <app-file-panel [file]="file" [model]="'surgery'">
-    <ng-container headers>TODO </ng-container>
+    <ng-container headers>
+      <span>{{ file.report_diagnostic }}</span>
+      <span>{{ file.report_surgeon }}</span>
+    </ng-container>
     <div class="two-columns">
       <div class="panel">
         <div>Informations</div>
-        <div>TODO</div>
+        <div>
+          <app-io type="date" label="Date" [value]="file.date" />
+          <app-io
+            type="text"
+            label="Hospital Follow up"
+            [value]="file.follow_up_complication"
+          />
+        </div>
+      </div>
+      <div class="panel">
+        <div>Report</div>
+        <div>
+          <app-io
+            type="text"
+            label="Diagnostic"
+            [value]="file.report_diagnostic"
+          />
+          <app-io type="text" label="Surgeon" [value]="file.report_surgeon" />
+          <app-io
+            type="text"
+            label="Right Side"
+            [value]="file.report_side_right"
+          />
+          <app-io
+            type="text"
+            label="Left Side"
+            [value]="file.report_side_left"
+          />
+          <app-io
+            type="text"
+            label="Procedure"
+            [value]="file.report_procedure"
+          />
+        </div>
       </div>
     </div>
   </app-file-panel>
