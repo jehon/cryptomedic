@@ -1,19 +1,27 @@
 @if (value) {
   <label>{{ label }}</label>
   <div class="content">
-    @switch (type) {
-      @case ("boolean") {
-        @if (value) {
-          <img src="/static/img/boolean-true.gif" alt="Yes" />
-        } @else {
-          <img src="/static/img/boolean-false.gif" alt="No" />;
+    @if (edit) {
+      @switch (type) {
+        @default {
+          EDIT MODE type {{ type }} for {{ value }}
         }
       }
-      @case ("text") {
-        <pre>{{ value }}</pre>
-      }
-      @default {
-        {{ value }}
+    } @else {
+      @switch (type) {
+        @case ("boolean") {
+          @if (value) {
+            <img src="/static/img/boolean-true.gif" alt="Yes" />
+          } @else {
+            <img src="/static/img/boolean-false.gif" alt="No" />;
+          }
+        }
+        @case ("text") {
+          <pre>{{ value }}</pre>
+        }
+        @default {
+          {{ value }}
+        }
       }
     }
   </div>

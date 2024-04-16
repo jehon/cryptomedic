@@ -25,7 +25,7 @@ export class IoComponent implements OnInit {
   @Input() value: any = "";
   // @Input() left: boolean = false;
   // @Input() right: boolean = false;
-  // @Input() edit: boolean = false;
+  @Input() edit: boolean = false;
 
   constructor(
     @Attribute("type") public type: FieldType,
