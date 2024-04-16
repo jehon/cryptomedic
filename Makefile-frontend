@@ -98,9 +98,6 @@ $(FRONTEND_PUBLISHED)/frontend/ng1x.html: \
 	CRYPTOMEDIC_DEV=true node_modules/.bin/webpack
 	@touch "$@"
 
-frontend-build-ng:
-	/usr/bin/watch "make $(FRONTEND_PUBLISHED)/frontend-ng/index.html" src/
-
 $(FRONTEND_PUBLISHED)/frontend-ng/index.html: \
 		$(FRONTEND_DEPENDENCIES_MARK) \
 		tsconfig.json tsconfig.app.json angular.json \
