@@ -1,3 +1,4 @@
+import { StringText } from "../../generic/io/io.component";
 import PatientRelated from "./abstracts/patient-related";
 
 export default class Surgery extends PatientRelated {
@@ -10,5 +11,5 @@ export default class Surgery extends PatientRelated {
   report_side_right?: boolean;
   report_side_left?: boolean;
   report_procedure?: string;
-  follow_up_complication?: string; // text
+  follow_up_complication?: StringText;
 }

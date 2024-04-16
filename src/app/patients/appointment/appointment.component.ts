@@ -12,4 +12,6 @@ import { FilePanelComponent } from "../file-panel/file-panel.component";
 export class AppointmentComponent {
   @Input()
   file?: Appointment;
+
+  // TODO: Plan in 3 / 6 months
 }

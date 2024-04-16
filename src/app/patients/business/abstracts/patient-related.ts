@@ -5,5 +5,5 @@ import Pojo from "./pojo";
 export default abstract class PatientRelated extends Pojo {
   patient_id: string = "";
   patient?: Patient;
-  date: StringDate = "";
+  date: StringDate = ""; // required
 }

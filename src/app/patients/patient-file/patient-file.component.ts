@@ -15,6 +15,9 @@ export class PatientFileComponent {
   @Input()
   file?: Patient;
 
+  // TODO: calculate date of birth based on age
+  // TODO: update upazilla & union list based on district & upazilla
+
   ageAtReference(reference: Date = new Date()): string {
     if (!this.file) {
       return "?";

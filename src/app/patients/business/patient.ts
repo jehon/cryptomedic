@@ -9,18 +9,18 @@ import Picture from "./picture";
 import Surgery from "./surgery";
 
 export default class Patient extends Pojo {
-  entry_year: string = "";
-  entry_order: string = "";
+  entry_year: number = 0;
+  entry_order: number = 0;
   name: string = "";
   sex?: "Male" | "Female";
   year_of_birth?: string;
-  phone: string = "";
-  address_comments: string = "";
+  phone?: string;
+  address_comments?: string;
   address_district?: string;
   address_upazilla?: string;
   address_union?: string;
-  pathology: string = "";
-  comments: string = "";
+  pathology?: string;
+  comments?: string;
 
   @Type(() => Appointment)
   appointment: Appointment[] = [];

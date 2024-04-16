@@ -1,3 +1,4 @@
+import { StringList, StringText } from "../../generic/io/io.component";
 import PatientRelated from "./abstracts/patient-related";
 
 export default class Appointment extends PatientRelated {
@@ -5,7 +6,7 @@ export default class Appointment extends PatientRelated {
     return "appointment";
   }
 
-  examiner: string = "";
-  purpose: string = "";
-  center: string = "";
+  center: StringList = "";
+  examiner: StringList = ""; // TODO: used or not?
+  purpose: StringText = "";
 }
