@@ -1,8 +1,9 @@
+import constants from "../../generic/constants";
 import Consult from "./abstracts/consult";
 
 export default class ConsultRicket extends Consult {
   override getTechnicalName(): string {
-    return "consult_ricket";
+    return constants.models.consult_ricket.name;
   }
 
   cross_left_T?: string;

@@ -24,10 +24,17 @@ export class FilePanelComponent implements OnInit {
     if (this.view == this.file.uuid) {
       this.statusOpened = true;
     }
+
+    if (this.model == constants.models.patient.name && this.view == "") {
+      this.statusOpened = true;
+    }
   }
 
   toggleOpen() {
     this.statusOpened = !this.statusOpened;
+    if (this.statusOpened) {
+      window.location.hash = this.file.uuid;
+    }
   }
 
   get icon(): string {

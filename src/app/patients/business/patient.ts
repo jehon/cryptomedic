@@ -1,4 +1,5 @@
 import { Type } from "class-transformer";
+import constants from "../../generic/constants";
 import { StringList, StringText } from "../../generic/io/io.component";
 import Pojo from "./abstracts/pojo";
 import Appointment from "./appointment";
@@ -10,6 +11,10 @@ import Picture from "./picture";
 import Surgery from "./surgery";
 
 export default class Patient extends Pojo {
+  override getTechnicalName(): string {
+    return constants.models.patient.name;
+  }
+
   entry_year: number = 0;
   entry_order: number = 0;
   name: string = "";

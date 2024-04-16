@@ -1,8 +1,9 @@
+import constants from "../../generic/constants";
 import PatientRelated from "./abstracts/patient-related";
 
 export default class Picture extends PatientRelated {
   override getTechnicalName(): string {
-    return "picture";
+    return constants.models.picture.name;
   }
 
   type: string = "";

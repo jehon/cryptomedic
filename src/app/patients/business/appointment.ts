@@ -1,9 +1,10 @@
+import constants from "../../generic/constants";
 import { StringList, StringText } from "../../generic/io/io.component";
 import PatientRelated from "./abstracts/patient-related";
 
 export default class Appointment extends PatientRelated {
   override getTechnicalName(): string {
-    return "appointment";
+    return constants.models.appointment.name;
   }
 
   center: StringList = "";

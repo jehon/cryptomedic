@@ -1,9 +1,10 @@
+import constants from "../../generic/constants";
 import { StringText } from "../../generic/io/io.component";
 import PatientRelated from "./abstracts/patient-related";
 
 export default class Surgery extends PatientRelated {
   override getTechnicalName(): string {
-    return "surgery";
+    return constants.models.surgery.name;
   }
 
   report_diagnostic?: string;

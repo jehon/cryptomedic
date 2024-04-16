@@ -1,8 +1,9 @@
+import constants from "../../generic/constants";
 import PatientRelated from "./abstracts/patient-related";
 
 export default class Bill extends PatientRelated {
   override getTechnicalName() {
-    return "bill";
+    return constants.models.bill.name;
   }
 
   price_id: string = "";

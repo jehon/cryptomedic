@@ -1,8 +1,9 @@
+import constants from "../../generic/constants";
 import Consult from "./abstracts/consult";
 
 export default class ConsultClubfoot extends Consult {
   override getTechnicalName(): string {
-    return "consult_clubfoot";
+    return constants.models.consult_clubfoot.name;
   }
 
   pain_left?: number;
