@@ -29,7 +29,7 @@
         "allow": ["warn", "error", "info", "assert"]
       }
     ],
-    "no-warning-comments": "off",
+    "no-warning-comments": ["error", { "terms": ["xxx", "no-commit"]}],
     "quote-props": ["warn", "as-needed"],
     "@typescript-eslint/no-unused-vars": [
       "error",
