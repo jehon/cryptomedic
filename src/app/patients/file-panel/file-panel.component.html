@@ -27,13 +27,11 @@
           @if (editMode) {
             <button class="btn btn-success" (click)="doSave()">Save</button>
             <button class="btn btn-warning" (click)="doCancel()">Cancel</button>
-            <button
-              *ngIf="authService.has('folder.delete')"
-              class="btn btn-danger"
-              (click)="doDelete()"
-            >
-              Delete
-            </button>
+            @if (authService.has("folder.delete") && file.canDelete()) {
+              <button class="btn btn-danger" (click)="doDelete()">
+                Delete
+              </button>
+            }
             <app-confirm></app-confirm>
           } @else {
             <button

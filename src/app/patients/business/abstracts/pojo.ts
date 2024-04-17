@@ -8,10 +8,6 @@ export default class Pojo {
     return "pojo";
   }
 
-  getTitle(): string {
-    return this.getTechnicalName();
-  }
-
   id: string = "";
   created_at: StringDate = "";
   updated_at: StringDate = "";
@@ -21,9 +17,17 @@ export default class Pojo {
     return this.getTechnicalName() + "." + this.id;
   }
 
+  getTitle(): string {
+    return this.getTechnicalName();
+  }
+
   isLocked() {
     const dlock = new Date(this.updated_at);
     dlock.setDate(dlock.getDate() + constants.freezeDays);
     return dlock < new Date();
+  }
+
+  canDelete(): boolean {
+    return true;
   }
 }

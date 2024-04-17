@@ -2,7 +2,7 @@
   <div>Initializing...</div>
 } @else {
   <app-patient-file [file]="patient"></app-patient-file>
-  @for (file of getRelated(); track file.uuid) {
+  @for (file of patient.getRelated(); track file.uuid) {
     @switch (file.getTechnicalName()) {
       @case ("appointment") {
         <app-appointment [file]="$any(file)" />

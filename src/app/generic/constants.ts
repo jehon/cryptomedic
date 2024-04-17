@@ -4,6 +4,7 @@ type ModelDescription = {
   name: string;
   icon: string;
   label: string;
+  remoteName: string;
 };
 
 const constants = {
@@ -22,13 +23,19 @@ function technical2Human(technical: string): string {
     .join(" ");
 }
 
-function addModel(model: string, opts: { icon?: string; label?: string } = {}) {
+function addModel(
+  model: string,
+  opts: { icon?: string; label?: string; remote?: string } = {}
+) {
   constants.models[model] = {
     name: model,
     icon: "/static/img/" + (opts.icon ?? `model_${model}.svg`),
-    label: opts.label ?? technical2Human(model)
+    label: opts.label ?? technical2Human(model),
+    remoteName: opts.remote ?? model
   };
 }
+
+// TODO: normalize all constants
 
 addModel("appointment", {
   icon: "model_appointment.gif"
