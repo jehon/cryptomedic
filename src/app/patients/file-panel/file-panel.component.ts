@@ -8,6 +8,7 @@ import {
   ViewChild
 } from "@angular/core";
 import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import AuthService from "../../_services/auth.service";
 import {
   ConfirmComponent,
@@ -45,7 +46,8 @@ export class FilePanelComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private patientsService: PatientsService
+    private patientsService: PatientsService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -99,6 +101,7 @@ export class FilePanelComponent implements OnInit {
       .then(async () => {
         await this.patientsService.unlockFile(this.file);
         this.goMode(true);
+        this.toastr.success(`File ${this.file.getTitle()} unlocked`);
       }, doNothing);
   }
 
@@ -107,6 +110,7 @@ export class FilePanelComponent implements OnInit {
       .show(`Delete ${this.file.getTitle()}?`)
       .then(async () => {
         const result = await this.patientsService.deleteFile(this.file);
+        this.toastr.success(`File ${this.file.getTitle()} deleted`);
 
         if (!result) {
           // If delete patient -> go home afterward
