@@ -15,32 +15,35 @@
         <div>by {{ file.last_user }}</div>
       </div>
       <div class="button-group">
-        @if (editMode) {
-          <button class="btn btn-success" (click)="doSave()">Save</button>
-          <button class="btn btn-warning" (click)="doCancel()">Cancel</button>
-          <button
-            *ngIf="authService.has('folder.delete')"
-            class="btn btn-danger"
-            (click)="doDelete()"
-          >
-            Delete
-          </button>
-          <app-confirm></app-confirm>
+        @if (file.isLocked()) {
+          @if (authService.has("folder.unlock")) {
+            <button class="btn btn-outline-secondary" (click)="doUnlock()">
+              Unlock
+            </button>
+          } @else {
+            <span>File is locked</span>
+          }
         } @else {
-          <button
-            *ngIf="authService.has('folder.edit')"
-            class="btn btn-outline-primary"
-            (click)="goEdit()"
-          >
-            Edit
-          </button>
-          <button
-            *ngIf="authService.has('folder.unlock')"
-            class="btn btn-outline-secondary"
-            (click)="doUnlock()"
-          >
-            Unlock
-          </button>
+          @if (editMode) {
+            <button class="btn btn-success" (click)="doSave()">Save</button>
+            <button class="btn btn-warning" (click)="doCancel()">Cancel</button>
+            <button
+              *ngIf="authService.has('folder.delete')"
+              class="btn btn-danger"
+              (click)="doDelete()"
+            >
+              Delete
+            </button>
+            <app-confirm></app-confirm>
+          } @else {
+            <button
+              *ngIf="authService.has('folder.edit')"
+              class="btn btn-outline-primary"
+              (click)="goEdit()"
+            >
+              Edit
+            </button>
+          }
         }
       </div>
       <div data-role="body" class="body">
