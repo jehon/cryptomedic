@@ -1,6 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {
+  Component,
+  ContentChildren,
+  Input,
+  OnInit,
+  QueryList
+} from "@angular/core";
 import constants from "../../generic/constants";
 import { DateComponent } from "../../generic/date/date.component";
+import { IoComponent } from "../../generic/io/io.component";
 import Pojo from "../business/abstracts/pojo";
 
 @Component({
@@ -17,6 +24,11 @@ export class FilePanelComponent implements OnInit {
   statusOpened: boolean = false;
   view: string = "undefined";
   editMode: boolean = false;
+
+  // To get info in ngContent
+  // @ContentChild(IoComponent) ioList!: QueryList<IoComponent>;
+  @ContentChildren(IoComponent, { descendants: true })
+  ioList!: QueryList<IoComponent>;
 
   ngOnInit(): void {
     // So easier...
@@ -46,15 +58,26 @@ export class FilePanelComponent implements OnInit {
     return constants.models[this.model]?.label ?? "";
   }
 
+  goMode(edit: boolean): void {
+    this.editMode = edit;
+    this.ioList.forEach((el) => (el.edit = edit));
+  }
+
   goEdit() {
-    this.editMode = true;
+    this.goMode(true);
   }
 
   doCancel() {
-    this.editMode = false;
+    this.goMode(false);
+  }
+
+  doSave() {
+    this.goMode(false);
+  }
+
+  doUnlock() {
+    this.goMode(true);
   }
 
   doDelete() {}
-  doSave() {}
-  doUnlock() {}
 }
