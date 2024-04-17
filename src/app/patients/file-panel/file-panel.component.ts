@@ -16,6 +16,7 @@ export class FilePanelComponent implements OnInit {
 
   statusOpened: boolean = false;
   view: string = "undefined";
+  editMode: boolean = false;
 
   ngOnInit(): void {
     // So easier...
@@ -44,4 +45,16 @@ export class FilePanelComponent implements OnInit {
   get label(): string {
     return constants.models[this.model]?.label ?? "";
   }
+
+  goEdit() {
+    this.editMode = true;
+  }
+
+  doCancel() {
+    this.editMode = false;
+  }
+
+  doDelete() {}
+  doSave() {}
+  doUnlock() {}
 }
