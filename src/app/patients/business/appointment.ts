@@ -7,6 +7,10 @@ export default class Appointment extends PatientRelated {
     return constants.models.appointment.name;
   }
 
+  override getTitle(): string {
+    return `appointment of ${this.date} at ${this.center}`;
+  }
+
   center: StringList = "";
   examiner: StringList = ""; // TODO: used or not?
   purpose: StringText = "";

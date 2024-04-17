@@ -7,6 +7,10 @@ export default class Surgery extends PatientRelated {
     return constants.models.surgery.name;
   }
 
+  override getTitle(): string {
+    return `surgery of ${this.date} about ${this.report_procedure}`;
+  }
+
   report_diagnostic?: string;
   report_surgeon?: string;
   report_side_right?: boolean;

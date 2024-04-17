@@ -7,6 +7,10 @@ export default class Pojo {
     return "pojo";
   }
 
+  getTitle(): string {
+    return this.getTechnicalName();
+  }
+
   id: string = "";
   created_at: StringDate = "";
   updated_at: StringDate = "";

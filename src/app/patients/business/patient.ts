@@ -15,6 +15,10 @@ export default class Patient extends Pojo {
     return constants.models.patient.name;
   }
 
+  override getTitle(): string {
+    return `patient ${this.entry_year}.${this.entry_order} ${this.name}`;
+  }
+
   entry_year: number = 0;
   entry_order: number = 0;
   name: string = "";
