@@ -23,15 +23,12 @@ export type StringList = string;
 })
 export class IoComponent implements OnInit {
   @Input() value: any = "";
-  // @Input() left: boolean = false;
-  // @Input() right: boolean = false;
   @Input() edit: boolean = false;
 
   constructor(
     private el: ElementRef,
     @Attribute("type") public type: FieldType,
     @Attribute("label") public label: string,
-    @Attribute("readonly") public readonly: boolean = false,
     @Attribute("list-name") public listName: string = ""
   ) {}
 
@@ -53,5 +50,9 @@ export class IoComponent implements OnInit {
 
   get required(): boolean {
     return this.el.nativeElement.hasAttribute("required");
+  }
+
+  get readonly(): boolean {
+    return this.el.nativeElement.hasAttribute("read-only");
   }
 }

@@ -12,7 +12,7 @@
     }
   </label>
   <div class="content">
-    @if (edit) {
+    @if (edit && !readonly) {
       @switch (type) {
         @default {
           EDIT MODE type {{ type }} for {{ value }}
