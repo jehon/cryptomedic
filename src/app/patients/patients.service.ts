@@ -3,12 +3,15 @@ import { Injectable } from "@angular/core";
 import { plainToClass } from "class-transformer";
 import "reflect-metadata";
 import { BehaviorSubject, Observable, map } from "rxjs";
+import constants from "../generic/constants";
+import Pojo from "./business/abstracts/pojo";
 import Patient from "./business/patient";
 
 @Injectable({
   providedIn: "root"
 })
 export default class PatientsService {
+  #patientId?: string;
   #patient?: Patient;
   #observablePatient = new BehaviorSubject<Patient | undefined>(undefined);
 
@@ -26,6 +29,7 @@ export default class PatientsService {
     if (id == this.#patient?.id) {
       return;
     }
+    this.#patientId = id;
 
     this.http
       .get("/api/patients/" + id)
@@ -35,5 +39,19 @@ export default class PatientsService {
         this.#patient = patient;
         this.#observablePatient.next(this.#patient);
       });
+  }
+
+  deleteFile(file: Pojo) {
+    if (!this.#patientId) {
+      throw new Error("Invalid state: no patientId in PatientsService");
+    }
+    const id = this.#patientId;
+
+    this.dismiss();
+    this.http
+      .delete(
+        `/api/fiche/${constants.models[file.getTechnicalName()].remote}/${file.id}`
+      )
+      .subscribe(() => this.load(id));
   }
 }

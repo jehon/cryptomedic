@@ -16,6 +16,7 @@ import constants from "../../generic/constants";
 import { DateComponent } from "../../generic/date/date.component";
 import { IoComponent } from "../../generic/io/io.component";
 import Pojo from "../business/abstracts/pojo";
+import PatientsService from "../patients.service";
 
 @Component({
   selector: "app-file-panel",
@@ -40,7 +41,10 @@ export class FilePanelComponent implements OnInit {
   @ViewChild(ConfirmComponent)
   confirmComponent!: ConfirmComponent;
 
-  constructor(public authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    private patientsService: PatientsService
+  ) {}
 
   ngOnInit(): void {
     // So easier...
@@ -97,6 +101,10 @@ export class FilePanelComponent implements OnInit {
 
   doDelete() {
     this.confirmComponent.show(`Delete ${this.file.getTitle()}?`).then(() => {
+      if (!this.file.canDelete()) {
+        throw new Error(`File can not be deleted: ${this.file.uuid}`);
+      }
+      this.patientsService.deleteFile(this.file);
       this.goMode(false);
     }, doNothing);
   }

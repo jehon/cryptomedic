@@ -4,7 +4,7 @@ type ModelDescription = {
   name: string;
   icon: string;
   label: string;
-  remoteName: string;
+  remote: string;
 };
 
 const constants = {
@@ -31,28 +31,42 @@ function addModel(
     name: model,
     icon: "/static/img/" + (opts.icon ?? `model_${model}.svg`),
     label: opts.label ?? technical2Human(model),
-    remoteName: opts.remote ?? model
+    remote: opts.remote ?? model
   };
 }
 
 // TODO: normalize all constants
 
 addModel("appointment", {
-  icon: "model_appointment.gif"
+  icon: "model_appointment.gif",
+  remote: "appointments"
 });
-addModel("bill");
-addModel("consult_clubfoot");
-addModel("consult_other");
-addModel("consult_ricket");
+addModel("bill", {
+  remote: "bills"
+});
+addModel("consult_clubfoot", {
+  remote: "clubfeet"
+});
+addModel("consult_other", {
+  remote: "otherconsults"
+});
+addModel("consult_ricket", {
+  remote: "ricketconsults"
+});
 addModel("patient", {
-  icon: "model_patient.gif"
+  icon: "model_patient.gif",
+  remote: "patients"
 });
 addModel("payment", {
-  icon: "payment.gif"
+  icon: "payment.gif",
+  remote: "payments"
 });
-addModel("picture");
+addModel("picture", {
+  remote: "pictures"
+});
 addModel("surgery", {
-  icon: "model_surgery.png"
+  icon: "model_surgery.png",
+  remote: "surgeries"
 });
 
 export default deepFreeze(constants);
