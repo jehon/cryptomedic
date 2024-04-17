@@ -1,3 +1,4 @@
+import { NgIf } from "@angular/common";
 import {
   Component,
   ContentChildren,
@@ -5,6 +6,7 @@ import {
   OnInit,
   QueryList
 } from "@angular/core";
+import AuthService from "../../_services/auth.service";
 import constants from "../../generic/constants";
 import { DateComponent } from "../../generic/date/date.component";
 import { IoComponent } from "../../generic/io/io.component";
@@ -15,7 +17,7 @@ import Pojo from "../business/abstracts/pojo";
   standalone: true,
   templateUrl: "./file-panel.component.html",
   styleUrl: "./file-panel.component.css",
-  imports: [DateComponent]
+  imports: [DateComponent, NgIf]
 })
 export class FilePanelComponent implements OnInit {
   @Input() file: Pojo = new Pojo();
@@ -29,6 +31,8 @@ export class FilePanelComponent implements OnInit {
   // @ContentChild(IoComponent) ioList!: QueryList<IoComponent>;
   @ContentChildren(IoComponent, { descendants: true })
   ioList!: QueryList<IoComponent>;
+
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
     // So easier...

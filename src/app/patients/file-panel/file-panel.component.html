@@ -14,7 +14,34 @@
         <div>updated at <app-date [value]="file.updated_at"></app-date></div>
         <div>by {{ file.last_user }}</div>
       </div>
-      <div class="button-group">Actions</div>
+      <div class="button-group">
+        @if (editMode) {
+          <button class="btn btn-success" (click)="doSave()">Save</button>
+          <button class="btn btn-warning" (click)="doCancel()">Cancel</button>
+          <button
+            *ngIf="authService.has('folder.delete')"
+            class="btn btn-danger"
+            (click)="doDelete()"
+          >
+            Delete
+          </button>
+        } @else {
+          <button
+            *ngIf="authService.has('folder.edit')"
+            class="btn btn-outline-primary"
+            (click)="goEdit()"
+          >
+            Edit
+          </button>
+          <button
+            *ngIf="authService.has('folder.unlock')"
+            class="btn btn-outline-secondary"
+            (click)="doUnlock()"
+          >
+            Unlock
+          </button>
+        }
+      </div>
       <div data-role="body" class="body">
         <ng-content></ng-content>
       </div>
