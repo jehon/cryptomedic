@@ -6,4 +6,11 @@ export default abstract class PatientRelated extends Pojo {
   patient_id: string = "";
   patient?: Patient;
   date: StringDate = ""; // required
+
+  override isLocked(): boolean {
+    if (new Date(this.date) > new Date()) {
+      return false;
+    }
+    return super.isLocked();
+  }
 }

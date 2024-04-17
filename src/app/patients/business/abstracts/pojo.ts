@@ -1,3 +1,4 @@
+import constants from "../../../generic/constants";
 import { StringDate } from "../../../generic/io/io.component";
 
 export const ModelSymbol = Symbol("model");
@@ -18,5 +19,11 @@ export default class Pojo {
 
   get uuid(): string {
     return this.getTechnicalName() + "." + this.id;
+  }
+
+  isLocked() {
+    const dlock = new Date(this.updated_at);
+    dlock.setDate(dlock.getDate() + constants.freezeDays);
+    return dlock < new Date();
   }
 }

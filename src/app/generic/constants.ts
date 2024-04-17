@@ -7,7 +7,8 @@ type ModelDescription = {
 };
 
 const constants = {
-  models: {} as Record<string, ModelDescription>
+  models: {} as Record<string, ModelDescription>,
+  freezeDays: 35
 };
 
 function technical2Human(technical: string): string {

@@ -19,6 +19,10 @@ export default class Patient extends Pojo {
     return `patient ${this.entry_year}.${this.entry_order} ${this.name}`;
   }
 
+  override isLocked(): boolean {
+    return false;
+  }
+
   entry_year: number = 0;
   entry_order: number = 0;
   name: string = "";
