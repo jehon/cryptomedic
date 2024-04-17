@@ -14,13 +14,13 @@
           <app-io
             type="string"
             label="Entry Year"
-            readonly
+            read-only
             [value]="file.entry_year"
           />
           <app-io
             type="string"
             label="Entry Order"
-            readonly
+            read-only
             [value]="file.entry_order"
           />
           <app-io type="string" label="Name" required [value]="file.name" />
@@ -33,7 +33,7 @@
           <app-io
             type="number"
             label="Age today"
-            readonly
+            read-only
             [value]="ageAtReference()"
           />
           <app-io
