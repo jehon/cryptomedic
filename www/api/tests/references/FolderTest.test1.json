@@ -31,10 +31,10 @@
                 "updated_at": "<timestamp>",
                 "last_user": "Thierry",
                 "patient_id": 1,
-                "examiner": "Ershad",
-                "purpose": null,
                 "date": "2015-04-28",
-                "center": null
+                "center": null,
+                "examiner": "Ershad",
+                "purpose": null
             }
         },
         {

@@ -31,10 +31,10 @@
                 "updated_at": "<timestamp>",
                 "last_user": "transfer",
                 "patient_id": 6,
-                "examiner": null,
-                "purpose": null,
                 "date": "2015-04-28",
-                "center": "Chakaria Disability Center"
+                "center": "Chakaria Disability Center",
+                "examiner": null,
+                "purpose": null
             }
         },
         {
