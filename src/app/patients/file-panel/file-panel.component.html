@@ -15,6 +15,7 @@
         <div>by {{ file.last_user }}</div>
       </div>
       <div class="button-group">
+        <app-confirm></app-confirm>
         @if (file.isLocked()) {
           @if (authService.has("folder.unlock")) {
             <button class="btn btn-outline-secondary" (click)="doUnlock()">
@@ -32,7 +33,6 @@
                 Delete
               </button>
             }
-            <app-confirm></app-confirm>
           } @else {
             <button
               *ngIf="authService.has('folder.edit')"

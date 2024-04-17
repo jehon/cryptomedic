@@ -126,6 +126,7 @@ Route::group(array('middleware' => 'authenticated'), function() {
       Route::resource('surgeries',             'SurgeriesController');
     });
 
+    // TODO: should be PUT
     CRSecurity::ifHasPersmission('folder.unlock', function() {
       Route::get('appointments/unlock/{id}',   'AppointmentsController@unlock');
       Route::get('bills/unlock/{id}',          'BillsController@unlock');

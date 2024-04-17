@@ -41,17 +41,45 @@ export default class PatientsService {
       });
   }
 
+  unlockFile(file: Pojo) {
+    if (!this.#patientId) {
+      throw new Error(
+        "Invalid state (Unlock): no patientId in PatientsService"
+      );
+    }
+    if (!file.isLocked()) {
+      throw new Error(
+        `Invalid state (Unlock): file is not locked ${file.uuid}`
+      );
+    }
+
+    this.dismiss();
+    // TODO: should be PUT
+    this.http
+      .get(
+        `/api/fiche/${constants.models[file.getTechnicalName()].remote}/unlock/${file.id}`
+      )
+      .subscribe(() => this.load(this.#patientId!));
+  }
+
   deleteFile(file: Pojo) {
     if (!this.#patientId) {
-      throw new Error("Invalid state: no patientId in PatientsService");
+      throw new Error(
+        "Invalid state (Delete): no patientId in PatientsService"
+      );
     }
-    const id = this.#patientId;
+
+    if (!file.canDelete()) {
+      throw new Error(
+        `Invalid state (Delete): file could not be deleted ${file.uuid}`
+      );
+    }
 
     this.dismiss();
     this.http
       .delete(
         `/api/fiche/${constants.models[file.getTechnicalName()].remote}/${file.id}`
       )
-      .subscribe(() => this.load(id));
+      .subscribe(() => this.load(this.#patientId!));
   }
 }

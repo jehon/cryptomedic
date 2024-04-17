@@ -95,6 +95,7 @@ export class FilePanelComponent implements OnInit {
     this.confirmComponent
       .show(`Unlock ${this.file.getTitle()}? All will have access to it.`)
       .then(() => {
+        this.patientsService.unlockFile(this.file);
         this.goMode(true);
       }, doNothing);
   }
