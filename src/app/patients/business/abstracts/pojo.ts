@@ -30,4 +30,8 @@ export default class Pojo {
   canDelete(): boolean {
     return true;
   }
+
+  isTop(): boolean {
+    return true;
+  }
 }

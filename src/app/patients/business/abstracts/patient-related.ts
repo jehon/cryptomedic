@@ -13,4 +13,8 @@ export default abstract class PatientRelated extends Pojo {
     }
     return super.isLocked();
   }
+
+  override isTop(): boolean {
+    return false;
+  }
 }

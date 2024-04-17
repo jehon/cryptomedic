@@ -7,6 +7,7 @@ import {
   QueryList,
   ViewChild
 } from "@angular/core";
+import { Router } from "@angular/router";
 import AuthService from "../../_services/auth.service";
 import {
   ConfirmComponent,
@@ -43,6 +44,7 @@ export class FilePanelComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
+    private router: Router,
     private patientsService: PatientsService
   ) {}
 
@@ -94,19 +96,25 @@ export class FilePanelComponent implements OnInit {
   doUnlock() {
     this.confirmComponent
       .show(`Unlock ${this.file.getTitle()}? All will have access to it.`)
-      .then(() => {
-        this.patientsService.unlockFile(this.file);
+      .then(async () => {
+        await this.patientsService.unlockFile(this.file);
         this.goMode(true);
       }, doNothing);
   }
 
   doDelete() {
-    this.confirmComponent.show(`Delete ${this.file.getTitle()}?`).then(() => {
-      if (!this.file.canDelete()) {
-        throw new Error(`File can not be deleted: ${this.file.uuid}`);
-      }
-      this.patientsService.deleteFile(this.file);
-      this.goMode(false);
-    }, doNothing);
+    this.confirmComponent
+      .show(`Delete ${this.file.getTitle()}?`)
+      .then(async () => {
+        const result = await this.patientsService.deleteFile(this.file);
+
+        if (!result) {
+          // If delete patient -> go home afterward
+          this.router.navigate(["/patients"]);
+        } else {
+          // Otherwise exit edit mode
+          this.goMode(false);
+        }
+      }, doNothing);
   }
 }
