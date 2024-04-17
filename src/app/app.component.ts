@@ -1,3 +1,4 @@
+import { NgIf } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import {
   NavigationEnd,
@@ -14,7 +15,7 @@ import { WaitingComponent } from "./generic/waiting/waiting.component";
 @Component({
   standalone: true,
   selector: "app-root",
-  imports: [RouterOutlet, RouterLink, WaitingComponent],
+  imports: [RouterOutlet, RouterLink, WaitingComponent, NgIf],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css"
 })

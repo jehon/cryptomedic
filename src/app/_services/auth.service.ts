@@ -54,4 +54,8 @@ export default class AuthService {
   isAuthenticated(): boolean {
     return !!this.currentUser;
   }
+
+  has(transaction: string): boolean {
+    return this.currentUser?.authorized.includes(transaction) ?? false;
+  }
 }
