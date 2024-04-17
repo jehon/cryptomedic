@@ -33,6 +33,7 @@ $bootstrap-icons-font-src: "../node_modules/bootstrap-icons/font/bootstrap-icons
   & > button {
     flex-basis: 100px;
     flex-grow: 1;
+    max-width: 200px;
   }
 }
 
