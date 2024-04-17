@@ -25,6 +25,7 @@
           >
             Delete
           </button>
+          <app-confirm></app-confirm>
         } @else {
           <button
             *ngIf="authService.has('folder.edit')"

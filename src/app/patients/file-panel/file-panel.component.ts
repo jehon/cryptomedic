@@ -4,9 +4,14 @@ import {
   ContentChildren,
   Input,
   OnInit,
-  QueryList
+  QueryList,
+  ViewChild
 } from "@angular/core";
 import AuthService from "../../_services/auth.service";
+import {
+  ConfirmComponent,
+  doNothing
+} from "../../generic/confirm/confirm.component";
 import constants from "../../generic/constants";
 import { DateComponent } from "../../generic/date/date.component";
 import { IoComponent } from "../../generic/io/io.component";
@@ -17,7 +22,7 @@ import Pojo from "../business/abstracts/pojo";
   standalone: true,
   templateUrl: "./file-panel.component.html",
   styleUrl: "./file-panel.component.css",
-  imports: [DateComponent, NgIf]
+  imports: [DateComponent, NgIf, ConfirmComponent]
 })
 export class FilePanelComponent implements OnInit {
   @Input() file: Pojo = new Pojo();
@@ -31,6 +36,9 @@ export class FilePanelComponent implements OnInit {
   // @ContentChild(IoComponent) ioList!: QueryList<IoComponent>;
   @ContentChildren(IoComponent, { descendants: true })
   ioList!: QueryList<IoComponent>;
+
+  @ViewChild(ConfirmComponent)
+  confirmComponent!: ConfirmComponent;
 
   constructor(public authService: AuthService) {}
 
@@ -80,8 +88,16 @@ export class FilePanelComponent implements OnInit {
   }
 
   doUnlock() {
-    this.goMode(true);
+    this.confirmComponent
+      .show(`Unlock ${this.file.getTitle()}? All will have access to it.`)
+      .then(() => {
+        this.goMode(true);
+      }, doNothing);
   }
 
-  doDelete() {}
+  doDelete() {
+    this.confirmComponent.show(`Delete ${this.file.getTitle()}?`).then(() => {
+      this.goMode(false);
+    }, doNothing);
+  }
 }
