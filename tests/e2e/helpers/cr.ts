@@ -47,7 +47,7 @@ export async function crInit(
   opts: {
     page?: string;
     login?: string;
-  } = { login: LOGINS.PHYSIO, page: "" }
+  } = {}
 ) {
   if (opts.login) {
     await page.request

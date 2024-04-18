@@ -3,7 +3,7 @@ import { LOGINS, PASSWORD, crInit } from "./helpers/cr";
 
 test("login and go to home", async ({ page }) => {
   // See playwright.config.ts:
-  await crInit(page, { login: null });
+  await crInit(page);
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Cryptomedic/);
@@ -27,7 +27,7 @@ test("login and go to home", async ({ page }) => {
 
 test("login incorrect", async ({ page }) => {
   // See playwright.config.ts:
-  await crInit(page, { login: null });
+  await crInit(page);
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Cryptomedic/);
