@@ -12,6 +12,10 @@ function crUrl(segment: string = ""): string {
   return `http://localhost:8085/built/frontend-ng/${segment}`;
 }
 
+function crUrlAPI(segment: string = ""): string {
+  return `http://localhost:8085/api${segment}`;
+}
+
 export function crDebugHooks(page: Page) {
   // Listen for all console logs
   // page.on("console", (msg) =>
@@ -38,8 +42,33 @@ export function crDebugHooks(page: Page) {
   );
 }
 
-export async function crInit(page: Page, url: string = "") {
-  await page.goto(crUrl(url));
+export async function crInit(
+  page: Page,
+  opts: {
+    url?: string;
+    login?: string;
+  } = {}
+) {
+  if (opts.login) {
+    crDebugHooks(page);
+    // console.log(crUrlAPI("/auth/mylogin"));
+    await page.request
+      .post(crUrlAPI("/auth/mylogin"), {
+        data: {
+          username: opts.login,
+          password: PASSWORD
+        }
+      })
+      .then((resp) => {
+        if (resp.status() != 200) {
+          throw new Error(
+            "Server responded with invalid status: " + resp.status()
+          );
+        }
+      });
+  }
+
+  await page.goto(crUrl(opts.url ?? ""));
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Cryptomedic/);
@@ -49,6 +78,10 @@ export async function crInit(page: Page, url: string = "") {
 
   // App is initialized
   await expect(page.getByTestId("initial-loader")).toHaveCount(0);
+
+  if (opts.login) {
+    await expect(page.locator("#current-user")).toContainText(opts.login);
+  }
 
   return crReady(page);
 }
