@@ -46,7 +46,7 @@ export async function crInit(
   page: Page,
   opts: {
     page?: string;
-    login: string | null;
+    login?: string;
   } = { login: LOGINS.PHYSIO, page: "" }
 ) {
   if (opts.login) {
@@ -64,6 +64,8 @@ export async function crInit(
           );
         }
       });
+  } else {
+    await page.request.post(crUrlAPI("/auth/logout"));
   }
 
   await page.goto(crUrl(opts.page ?? ""));

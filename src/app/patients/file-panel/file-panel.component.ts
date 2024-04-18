@@ -2,6 +2,7 @@ import { NgIf } from "@angular/common";
 import {
   Component,
   ContentChildren,
+  HostBinding,
   Input,
   OnInit,
   QueryList,
@@ -31,9 +32,13 @@ export class FilePanelComponent implements OnInit {
   @Input() file: Pojo = new Pojo();
   @Input() model: string = "";
 
+  @HostBinding("attr.data-opened")
   statusOpened: boolean = false;
-  view: string = "undefined";
+
+  @HostBinding("attr.data-edit")
   editMode: boolean = false;
+
+  view: string = "undefined";
 
   // To get info in ngContent
   // @ContentChild(IoComponent) ioList!: QueryList<IoComponent>;

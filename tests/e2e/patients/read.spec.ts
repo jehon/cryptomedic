@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
-import { crDebugHooks, crInit } from "../helpers/cr";
+import { crInit } from "../helpers/cr";
 
 test("patient page", async ({ page }) => {
-  await crInit(page);
-  crDebugHooks(page);
+  await crInit(page, { page: "/patients/1" });
+  // crDebugHooks(page);
 });
