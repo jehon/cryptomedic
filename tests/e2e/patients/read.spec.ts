@@ -18,6 +18,36 @@ test("appointment", async ({ page }) => {
   await panel.expectFieldValue("Examiner", "Ershad");
 });
 
+// test("bill", async ({ page }) => {
+// const panel = await crPatientFile(page, PATIENT_ID, "bill.1");
+// await panel.expectFieldValue("Date", "2015-04-28");
+// await panel.expectFieldValue("Examiner", "Ershad");
+// });
+
+// test("consult-clubfoot", async ({ page }) => {
+//   const panel = await crPatientFile(page, PATIENT_ID, "consult-clubfoot.xxx");
+//   await panel.expectFieldValue("Date", "2015-04-28");
+//   await panel.expectFieldValue("Examiner", "Ershad");
+// });
+
+// test("consult-other", async ({ page }) => {
+//   const panel = await crPatientFile(page, PATIENT_ID, "consult-other.1");
+//   await panel.expectFieldValue("Date", "2015-04-28");
+//   await panel.expectFieldValue("Examiner", "Ershad");
+// });
+
+// test("consult-ricket", async ({ page }) => {
+//   const panel = await crPatientFile(page, PATIENT_ID, "consult-ricket.13");
+//   await panel.expectFieldValue("Date", "2015-04-28");
+//   await panel.expectFieldValue("Examiner", "Ershad");
+// });
+
+// test("picture", async ({ page }) => {
+//   const panel = await crPatientFile(page, PATIENT_ID, "picture.2");
+//   await panel.expectFieldValue("Date", "2015-04-28");
+//   await panel.expectFieldValue("Examiner", "Ershad");
+// });
+
 test("surgery", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID, "surgery.5");
   await panel.expectFieldValue("Date", "2014-01-02");
