@@ -56,11 +56,26 @@ export class FilePanelComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // So easier...
-    this.view = window.location.hash.substring(1);
+    /*
+      !!! We use the HASH to enable the mode on this page
+      available modes:
+         <empty>      => patient (isTop)
+         <uuid>       => read mode on uuid
+         <uuid>|edit  => edit mode
+    */
 
-    if (this.view == this.file.uuid) {
+    // So easier than the Angular way of it... but no auto refresh :=/
+    this.view = window.location.hash.substring(1);
+    const viewParameters = decodeURIComponent(this.view).split("|");
+    if (viewParameters[0] == "") {
+      if (this.file.isTop()) {
+        this.statusOpened = true;
+      }
+    } else if (viewParameters[0] == this.file.uuid) {
       this.statusOpened = true;
+      if (viewParameters[1] == "edit") {
+        this.editMode = true;
+      }
     }
 
     if (this.model == constants.models.patient.name && this.view == "") {
