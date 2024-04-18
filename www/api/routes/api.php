@@ -33,7 +33,8 @@ Route::post('auth/mylogin', "AuthController@postMylogin");
 Route::get('auth/logout', "AuthController@getLogout");
 
 // Without effect
-Route::get('admin/priceFields', "PricesController@priceFields");
+// TODO: not working
+// Route::get('admin/priceFields', "PricesController@priceFields");
 Route::get('browsers/clean', 'BrowsersController@clean');
 Route::get('browsers/stats', 'BrowsersController@stats');
 
