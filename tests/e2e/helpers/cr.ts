@@ -45,13 +45,11 @@ export function crDebugHooks(page: Page) {
 export async function crInit(
   page: Page,
   opts: {
-    url?: string;
-    login?: string;
-  } = {}
+    page?: string;
+    login: string | null;
+  } = { login: LOGINS.PHYSIO, page: "" }
 ) {
   if (opts.login) {
-    crDebugHooks(page);
-    // console.log(crUrlAPI("/auth/mylogin"));
     await page.request
       .post(crUrlAPI("/auth/mylogin"), {
         data: {
@@ -68,7 +66,7 @@ export async function crInit(
       });
   }
 
-  await page.goto(crUrl(opts.url ?? ""));
+  await page.goto(crUrl(opts.page ?? ""));
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Cryptomedic/);
