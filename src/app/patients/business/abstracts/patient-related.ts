@@ -1,3 +1,5 @@
+import { ageWhen } from "../../../_helpers/date";
+import { normalizeDate } from "../../../generic/date/date.component";
 import { StringDate } from "../../../generic/io/io.component";
 import Patient from "../patient";
 import Pojo from "./pojo";
@@ -31,5 +33,12 @@ export default abstract class PatientRelated extends Pojo {
       throw new Error(`Patient not defined on this ${this.uuid}`);
     }
     return this[PATIENT];
+  }
+
+  getAgeAtThatTime() {
+    return ageWhen(
+      normalizeDate(this.getPatient().year_of_birth),
+      normalizeDate(this.date)
+    );
   }
 }

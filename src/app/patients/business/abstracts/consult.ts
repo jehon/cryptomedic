@@ -5,9 +5,9 @@ import PatientRelated from "./patient-related";
 export default class Timed extends PatientRelated {
   examiner: string = "";
   center: string = "";
-  weight_kg: string = "";
-  height_cm: string = "";
-  brachial_circumference_cm: string = "";
+  weight_kg?: number;
+  height_cm?: number;
+  brachial_circumference_cm?: number;
   comments: string = "";
   suggested_for_surgery: StringBoolean = "";
   treatment_evaluation: string = "";
@@ -36,4 +36,70 @@ export default class Timed extends PatientRelated {
 
   //     return res;
   //   }
+
+  #sexStr() {
+    if (this.getPatient().sex === "Male") {
+      return "m";
+    }
+    if (this.getPatient().sex === "Female") {
+      return "f";
+    }
+    return null;
+  }
+
+  // wh() {
+  //   if (!this.isNotZero("height_cm")) {
+  //     throw new DataMissingException("Height");
+  //   }
+  //   if (!this.isNotZero("weight_kg")) {
+  //     throw new DataMissingException("Weight");
+  //   }
+  //   return this.weight_kg / this.height_cm;
+  // }
+
+  // bmi() {
+  //   if (!this.isNotZero("height_cm")) {
+  //     throw new DataMissingException("Height");
+  //   }
+  //   if (!this.isNotZero("weight_kg")) {
+  //     throw new DataMissingException("Weight");
+  //   }
+  //   return (10000 * this.weight_kg) / (this.height_cm * this.height_cm);
+  // }
+
+  // getWeightSd() {
+  //   return stdDeviationFor(
+  //     this.getPatient().sexStr(),
+  //     "weight_kg",
+  //     this.getAgeAtThatTime(),
+  //     this.weight_kg
+  //   );
+  // }
+
+  // getHeightSd() {
+  //   return stdDeviationFor(
+  //     this.getPatient().sexStr(),
+  //     "height_cm",
+  //     this.getAgeAtThatTime(),
+  //     this.height_cm
+  //   );
+  // }
+
+  // getWHSd() {
+  //   return stdDeviationFor(
+  //     this.getPatient().sexStr(),
+  //     "wh",
+  //     this.height_cm,
+  //     this.weight_kg
+  //   );
+  // }
+
+  // getBMISd() {
+  //   return stdDeviationFor(
+  //     this.getPatient().sexStr(),
+  //     "bmi",
+  //     this.getAgeAtThatTime(),
+  //     this.bmi()
+  //   );
+  // }
 }

@@ -6,6 +6,30 @@
     <div class="two-columns">
       <div class="panel">
         <div>Informations</div>
+        <div>
+          <app-io type="date" label="Date" required [value]="file.date" />
+          <app-io
+            type="list"
+            label="Center"
+            list-name="Centers"
+            [value]="file.center"
+          />
+          <app-io
+            type="list"
+            label="Examiner"
+            list-name="Examiners"
+            [value]="file.examiner"
+          />
+          <app-io
+            type="number"
+            readonly
+            label="Age at consultation time"
+            [value]="file.getAgeAtThatTime()"
+          />
+        </div>
+      </div>
+      <div class="panel">
+        <div>Nutritional data</div>
         <div>TODO</div>
       </div>
     </div>
