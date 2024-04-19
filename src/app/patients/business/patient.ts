@@ -20,7 +20,7 @@ export default class Patient extends Pojo {
   entry_order: number = 0;
   name: string = "";
   sex?: StringList;
-  year_of_birth?: number;
+  year_of_birth?: string;
   phone?: string;
   address_comments?: StringText;
   address_district?: string;
