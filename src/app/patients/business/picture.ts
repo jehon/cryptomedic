@@ -10,9 +10,9 @@ export default class Picture extends PatientRelated {
   file: string = "";
   comments: string = "";
 
-  // getPictureUrl() {
-  //   return "/api/picture/" + this.id;
-  // }
+  getPictureUrl() {
+    return "/api/picture/" + this.id;
+  }
 
   // getThumbnailUrl() {
   //   return "/api/picture/" + this.id + "/thumbnail";
