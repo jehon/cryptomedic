@@ -1,4 +1,4 @@
-export function deepFreeze(o: any) {
+export function deepFreeze<T extends Record<any, any>>(o: T): T {
   Object.freeze(o);
   if (o === undefined) {
     return o;

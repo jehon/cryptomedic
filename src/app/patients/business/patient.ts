@@ -13,7 +13,7 @@ import Surgery from "./surgery";
 
 export default class Patient extends Pojo {
   override getTechnicalName(): string {
-    return constants.models.patient.name;
+    return constants.models["patient"].name;
   }
 
   entry_year: number = 0;

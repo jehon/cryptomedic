@@ -3,7 +3,7 @@ import PatientRelated from "./abstracts/patient-related";
 
 export default class Picture extends PatientRelated {
   override getTechnicalName(): string {
-    return constants.models.picture.name;
+    return constants.models["picture"].name;
   }
 
   type: string = "";

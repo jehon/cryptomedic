@@ -3,7 +3,7 @@ import PatientRelated from "./abstracts/patient-related";
 
 export default class Bill extends PatientRelated {
   override getTechnicalName() {
-    return constants.models.bill.name;
+    return constants.models["bill"].name;
   }
 
   price_id: string = "";

@@ -4,7 +4,7 @@ import PatientRelated from "./abstracts/patient-related";
 
 export default class Surgery extends PatientRelated {
   override getTechnicalName(): string {
-    return constants.models.surgery.name;
+    return constants.models["surgery"].name;
   }
 
   override getTitle(): string {

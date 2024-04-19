@@ -78,7 +78,7 @@ export class FilePanelComponent implements OnInit {
       }
     }
 
-    if (this.model == constants.models.patient.name && this.view == "") {
+    if (this.model == constants.models["patient"].name && this.view == "") {
       this.statusOpened = true;
     }
   }
