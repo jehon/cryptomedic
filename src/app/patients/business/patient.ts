@@ -58,6 +58,10 @@ export default class Patient extends Pojo {
     return false;
   }
 
+  override canDelete(): boolean {
+    return this.getRelated().length == 0;
+  }
+
   getRelated(): PatientRelated[] {
     return [
       ...this.appointment,
@@ -67,11 +71,12 @@ export default class Patient extends Pojo {
       ...this.ricket_consult,
       ...this.picture,
       ...this.surgery
-    ].toSorted(patientRelatedOrder);
-  }
-
-  override canDelete(): boolean {
-    return this.getRelated().length == 0;
+    ]
+      .toSorted(patientRelatedOrder)
+      .map((patientRelated: PatientRelated) => {
+        patientRelated.setPatient(this);
+        return patientRelated;
+      });
   }
 }
 

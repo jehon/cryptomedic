@@ -2,10 +2,14 @@ import { StringDate } from "../../../generic/io/io.component";
 import Patient from "../patient";
 import Pojo from "./pojo";
 
+const PATIENT = Symbol("patient");
+
 export default abstract class PatientRelated extends Pojo {
   patient_id: string = "";
-  patient?: Patient;
   date: StringDate = ""; // required
+
+  // Must be instanciated just after constructor
+  [PATIENT]?: Patient;
 
   override isLocked(): boolean {
     if (new Date(this.date) > new Date()) {
@@ -16,5 +20,16 @@ export default abstract class PatientRelated extends Pojo {
 
   override isTop(): boolean {
     return false;
+  }
+
+  setPatient(patient: Patient) {
+    this[PATIENT] = patient;
+  }
+
+  getPatient(): Patient {
+    if (!this[PATIENT]) {
+      throw new Error(`Patient not defined on this ${this.uuid}`);
+    }
+    return this[PATIENT];
   }
 }
