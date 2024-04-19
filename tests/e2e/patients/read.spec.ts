@@ -42,11 +42,11 @@ test("appointment", async ({ page }) => {
 //   await panel.expectFieldValue("Examiner", "Ershad");
 // });
 
-// test("picture", async ({ page }) => {
-//   const panel = await crPatientFile(page, PATIENT_ID, "picture.2");
-//   await panel.expectFieldValue("Date", "2015-04-28");
-//   await panel.expectFieldValue("Examiner", "Ershad");
-// });
+test("picture", async ({ page }) => {
+  const panel = await crPatientFile(page, PATIENT_ID, "picture.2");
+  await panel.expectFieldValue("Date", "2014-11-04");
+  await panel.expectFieldValue("Type");
+});
 
 test("surgery", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID, "surgery.5");
