@@ -1,4 +1,5 @@
 // import { getPref } from "../../utils/prefs.js";
+import { round } from "../../../_helpers/numbers";
 import { StringBoolean } from "../../../generic/io/io.component";
 import PatientRelated from "./patient-related";
 
@@ -37,43 +38,36 @@ export default class Timed extends PatientRelated {
   //     return res;
   //   }
 
-  #sexStr() {
-    if (this.getPatient().sex === "Male") {
-      return "m";
+  wh() {
+    if (!this.height_cm) {
+      return "?";
     }
-    if (this.getPatient().sex === "Female") {
-      return "f";
+    if (!this.weight_kg) {
+      return "?";
     }
-    return null;
+    return round(this.weight_kg / this.height_cm, 0.01);
   }
 
-  // wh() {
-  //   if (!this.isNotZero("height_cm")) {
-  //     throw new DataMissingException("Height");
-  //   }
-  //   if (!this.isNotZero("weight_kg")) {
-  //     throw new DataMissingException("Weight");
-  //   }
-  //   return this.weight_kg / this.height_cm;
-  // }
-
-  // bmi() {
-  //   if (!this.isNotZero("height_cm")) {
-  //     throw new DataMissingException("Height");
-  //   }
-  //   if (!this.isNotZero("weight_kg")) {
-  //     throw new DataMissingException("Weight");
-  //   }
-  //   return (10000 * this.weight_kg) / (this.height_cm * this.height_cm);
-  // }
+  bmi() {
+    if (!this.height_cm) {
+      return "?";
+    }
+    if (!this.weight_kg) {
+      return "?";
+    }
+    return round(
+      (10000 * this.weight_kg) / (this.height_cm * this.height_cm),
+      0.01
+    );
+  }
 
   // getWeightSd() {
-  //   return stdDeviationFor(
-  //     this.getPatient().sexStr(),
-  //     "weight_kg",
-  //     this.getAgeAtThatTime(),
-  //     this.weight_kg
-  //   );
+  // return stdDeviationFor(
+  //   this.#sexStr(),
+  //   "weight_kg",
+  //   this.getAgeAtThatTime(),
+  //   this.weight_kg
+  // );
   // }
 
   // getHeightSd() {
