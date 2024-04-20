@@ -30,5 +30,5 @@ export function ageWhen(birth?: Date, when?: Date): string {
   // We have to take one month less for the range to be ok
   const days = new Date(0, 0, 0, 0, 0, 0, when.getTime() - birth.getTime());
   const res = { years: days.getFullYear() - 1900, months: days.getMonth() };
-  return res.years + "y" + res.months + "m";
+  return (res.years + "y" + res.months + "m").replace("y0m", "y");
 }
