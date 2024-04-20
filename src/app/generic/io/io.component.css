@@ -21,10 +21,17 @@
     }
   }
 
-  /* &.note {
+  &[note] {
     font-size: smaller;
+
+    & > label {
+      color: gray;
+    }
+
+    & > .content {
+      color: gray;
+    }
   }
- */
 
   & > .content {
     flex-grow: 1;
@@ -40,31 +47,6 @@
 
     /* pre {
       overflow-wrap: break-word;
-    } */
-
-    /* .io-img {
-      position: relative;
-      height: 100%;
-      width: 100%;
-
-      img[data-role="image"] {
-        object-fit: contain;
-        height: 100%;
-        width: 100%;
-
-        transition: transform 1s ease;
-      }
-
-      img[data-decorator] {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-
-        object-fit: contain;
-        background-color: gray;
-        border-radius: 10px;
-        padding: 5px;
-      }
     } */
   }
 }
