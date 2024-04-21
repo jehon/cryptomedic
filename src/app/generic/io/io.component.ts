@@ -40,6 +40,10 @@ export class IoComponent implements OnInit {
     }
   }
 
+  get empty(): boolean {
+    return this.value === "?" || !this.value;
+  }
+
   get left(): boolean {
     return this.el.nativeElement.hasAttribute("left");
   }
