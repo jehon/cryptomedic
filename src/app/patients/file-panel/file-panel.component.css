@@ -1,3 +1,10 @@
 .button-group > button {
   max-width: 200px;
 }
+
+.separator {
+  width: 100%;
+  background-color: lightgray;
+  border: black 1px dashed;
+  text-align: center;
+}
