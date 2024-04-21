@@ -19,6 +19,7 @@ import constants from "../../generic/constants";
 import { DateComponent } from "../../generic/date/date.component";
 import { IoComponent } from "../../generic/io/io.component";
 import Pojo from "../business/abstracts/pojo";
+import { ConsultComponent } from "../consult/consult.component";
 import PatientsService from "../patients.service";
 
 @Component({
@@ -44,6 +45,9 @@ export class FilePanelComponent implements OnInit {
   // @ContentChild(IoComponent) ioList!: QueryList<IoComponent>;
   @ContentChildren(IoComponent, { descendants: true })
   ioList!: QueryList<IoComponent>;
+
+  @ContentChildren(ConsultComponent, { descendants: true })
+  consultComponent!: QueryList<ConsultComponent>;
 
   @ViewChild(ConfirmComponent)
   confirmComponent!: ConfirmComponent;
@@ -101,6 +105,7 @@ export class FilePanelComponent implements OnInit {
   goMode(edit: boolean): void {
     this.editMode = edit;
     this.ioList.forEach((el) => (el.edit = edit));
+    this.consultComponent.forEach((el) => (el.edit = edit));
   }
 
   goEdit() {
