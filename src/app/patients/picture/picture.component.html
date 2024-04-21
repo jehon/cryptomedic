@@ -2,7 +2,9 @@
   <div>Loading...</div>
 } @else {
   <app-file-panel [file]="file" [model]="'picture'">
-    <ng-container headers>TODO </ng-container>
+    <ng-container headers
+      ><span>{{ file.type }}</span></ng-container
+    >
     <div class="two-columns">
       <div class="panel">
         <div>Informations</div>
