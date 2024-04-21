@@ -5,10 +5,10 @@ export default interface BackendAuthInterface {
   group: string;
   name: string;
   email: string;
-  prices: Map<string, Price>;
-  lists: Map<string, (string | number)[]>;
-  codes: Map<string, string>;
-  associations: Map<string, string[]>;
+  prices: Record<string, Price>;
+  lists: Record<string, (string | number)[]>;
+  codes: Record<string, string>;
+  associations: Record<string, string[]>;
   authorized: string[];
   supported: string;
 }
