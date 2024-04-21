@@ -1,3 +1,3 @@
-export function round(n: number, radix: number = 2) {
-  return "" + Math.round(n / radix) * radix;
+export function round(n: number, radix: number = 0.01): string {
+  return n.toFixed(-Math.log10(radix)).replace(/\.0+$/g, "");
 }
