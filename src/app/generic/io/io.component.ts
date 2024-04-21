@@ -1,4 +1,5 @@
 import { Attribute, Component, ElementRef, Input, OnInit } from "@angular/core";
+import { SideComponent } from "../side/side.component";
 
 export type FieldType =
   | "string"
@@ -17,7 +18,7 @@ export type StringList = string;
 @Component({
   selector: "app-io",
   standalone: true,
-  imports: [],
+  imports: [SideComponent],
   templateUrl: "./io.component.html",
   styleUrl: "./io.component.css"
 })

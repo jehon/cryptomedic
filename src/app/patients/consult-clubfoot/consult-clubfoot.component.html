@@ -3,14 +3,20 @@
 } @else {
   <app-file-panel [file]="file" [model]="'consult_clubfoot'">
     <ng-container headers>
-      <app-io type="number" right read-only [value]="file.getPiraniRight()" />
-      <app-io type="number" left read-only [value]="file.getPiraniLeft()" />
+      <span>
+        <app-side side="right" />
+        {{ file.getPiraniRight() }}
+      </span>
+      <span>
+        <app-side side="left" />
+        {{ file.getPiraniLeft() }}
+      </span>
     </ng-container>
     <app-consult [file]="file">
       <div class="two-columns">
         <div class="panel">
           <div>
-            <img src="/static/img/side_right.svg" alt="Right" />
+            <app-side side="right" />
             <span>Pirani Right (&lt; 3 years)</span>
             <span>{{ file.getPiraniRight() }}</span>
           </div>
@@ -64,7 +70,7 @@
         </div>
         <div class="panel">
           <div>
-            <img src="/static/img/side_left.svg" alt="Left" />
+            <app-side side="left" />
             <span>Pirani Left (&lt; 3 years)</span>
             <span>{{ file.getPiraniLeft() }}</span>
           </div>
@@ -120,7 +126,7 @@
       <div class="two-columns">
         <div class="panel">
           <div>
-            <img src="/static/img/side_right.svg" alt="Right" />
+            <app-side side="right" />
             <span>Pirani Right (&gt; 3 years)</span>
           </div>
           <div>
@@ -173,7 +179,7 @@
         </div>
         <div class="panel">
           <div>
-            <img src="/static/img/side_left.svg" alt="Left" />
+            <app-side side="left" />
             <span>Pirani Left (&lt; 3 years)</span>
           </div>
           <div>

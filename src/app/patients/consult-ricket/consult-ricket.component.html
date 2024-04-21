@@ -2,7 +2,16 @@
   <div>Loading...</div>
 } @else {
   <app-file-panel [file]="file" [model]="'consult_ricket'">
-    <ng-container headers>TODO </ng-container>
+    <ng-container headers>
+      <span>
+        <app-side side="right" />
+        {{ file.right_leg }}/{{ file.right_leg_angle }}</span
+      >
+      <span>
+        <app-side side="left" />
+        {{ file.left_leg }}/{{ file.left_leg_angle }}</span
+      >
+    </ng-container>
     <app-consult [file]="file">
       <div class="two-columns">
         <div class="panel">
@@ -44,7 +53,7 @@
       <div class="two-columns">
         <div class="panel">
           <div>
-            <img src="/static/img/side_right.svg" alt="Right" />
+            <app-side side="right" />
             <span>Right</span>
           </div>
           <div>
@@ -73,10 +82,7 @@
           </div>
         </div>
         <div class="panel">
-          <div>
-            <img src="/static/img/side_left.svg" alt="Left" />
-            <span>Left</span>
-          </div>
+          <div><app-side side="left" /> <span>Left</span></div>
           <div>
             <app-io
               type="list"

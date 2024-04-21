@@ -1,10 +1,10 @@
 @if (!empty || edit) {
   <label>
     @if (left) {
-      <img src="/static/img/side_left.svg" alt="Left" />
+      <app-side side="left" />
     }
     @if (right) {
-      <img src="/static/img/side_right.svg" alt="Right" />
+      <app-side side="right" />
     }
     {{ label }}
     @if (required && edit) {
