@@ -15,7 +15,7 @@
     @if (edit && !readonly) {
       @switch (type) {
         @default {
-          EDIT MODE type {{ type }} for {{ value }}
+          {{ type }}{{ listName ? "#" + listName : "" }} = {{ value }}
         }
       }
     } @else {
