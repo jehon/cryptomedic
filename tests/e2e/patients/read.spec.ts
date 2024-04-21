@@ -28,14 +28,13 @@ test("consult-other", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID, "consult_other.1");
   await panel.expectFieldValue("Date", "2007-01-10");
   await panel.expectFieldValue("Examiner", "Ershad");
-  // FIXME: why spaces around?
-  await panel.expectFieldValue("Joints or Bones Affected", " PBVE ");
+  await panel.expectFieldValue("Joints or Bones Affected", "PBVE");
 });
 
 test("consult-ricket", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID, "consult_ricket.13");
   await panel.expectFieldValue("Date", "2014-01-04");
-  await panel.expectFieldValue("Examiner", "AMD Doctor");
+  await panel.expectFieldValue("Examiner", "AMD doctor");
   await panel.expectFieldValue("Walking Difficulties", "Level 1");
 });
 

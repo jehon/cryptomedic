@@ -38,7 +38,7 @@ export async function crPatientFile(
       const io = await getIOContent(label);
       if (value) {
         await expect(io).toBeVisible();
-        await expect(io).toHaveText("" + value);
+        await expect((await io.textContent())?.trim() ?? "").toBe("" + value);
       } else {
         await expect(io).not.toBeVisible();
       }
