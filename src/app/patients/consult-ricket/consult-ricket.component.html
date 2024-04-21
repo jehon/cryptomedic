@@ -3,11 +3,98 @@
 } @else {
   <app-file-panel [file]="file" [model]="'consult_ricket'">
     <ng-container headers>TODO </ng-container>
-    <div class="two-columns">
-      <div class="panel">
-        <div>Informations</div>
-        <div>TODO</div>
+    <app-consult [file]="file">
+      <div class="two-columns">
+        <div class="panel">
+          <div>Informations</div>
+          <div>
+            <app-io
+              type="list"
+              list-name="WalkingCapacities"
+              label="Walking Difficulties"
+              [value]="file.walking_difficulties"
+            />
+            <app-io
+              type="list"
+              list-name="Pain"
+              label="Pain"
+              [value]="file.pain"
+            />
+            <app-io
+              type="list"
+              list-name="Eval03"
+              label="Wrist Enlargement"
+              [value]="file.wrist_enlargement"
+            />
+            <app-io
+              type="list"
+              list-name="Eval03"
+              label="Rib Heading"
+              [value]="file.rib_heading"
+            />
+            <app-io
+              type="number"
+              label="IMIC Distance"
+              [value]="file.IMIC_distance"
+            />
+            <app-io type="string" label="X-Ray" [value]="file.xray" />
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="two-columns">
+        <div class="panel">
+          <div>
+            <img src="/static/img/side_right.svg" alt="Right" />
+            <span>Right</span>
+          </div>
+          <div>
+            <app-io
+              type="list"
+              list-name="LegAnalysis"
+              label="Leg"
+              [value]="file.right_leg"
+            />
+            <app-io
+              type="number"
+              label="Leg Angle"
+              [value]="file.right_leg_angle"
+            />
+            <div class="separator">Cross</div>
+            <app-io
+              type="number"
+              label="Cross T"
+              [value]="file.cross_right_T"
+            />
+            <app-io
+              type="number"
+              label="Cross F"
+              [value]="file.cross_right_F"
+            />
+          </div>
+        </div>
+        <div class="panel">
+          <div>
+            <img src="/static/img/side_left.svg" alt="Left" />
+            <span>Left</span>
+          </div>
+          <div>
+            <app-io
+              type="list"
+              list-name="LegAnalysis"
+              label="Leg"
+              [value]="file.left_leg"
+            />
+            <app-io
+              type="number"
+              label="Leg Angle"
+              [value]="file.left_leg_angle"
+            />
+            <div class="separator">Cross</div>
+            <app-io type="number" label="Cross T" [value]="file.cross_left_T" />
+            <app-io type="number" label="Cross F" [value]="file.cross_left_F" />
+          </div>
+        </div>
+      </div>
+    </app-consult>
   </app-file-panel>
 }

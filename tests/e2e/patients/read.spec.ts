@@ -32,11 +32,12 @@ test("consult-other", async ({ page }) => {
   await panel.expectFieldValue("Joints or Bones Affected", " PBVE ");
 });
 
-// test("consult-ricket", async ({ page }) => {
-//   const panel = await crPatientFile(page, PATIENT_ID, "consult_ricket.13");
-//   await panel.expectFieldValue("Date", "2015-04-28");
-//   await panel.expectFieldValue("Examiner", "Ershad");
-// });
+test("consult-ricket", async ({ page }) => {
+  const panel = await crPatientFile(page, PATIENT_ID, "consult_ricket.13");
+  await panel.expectFieldValue("Date", "2014-01-04");
+  await panel.expectFieldValue("Examiner", "AMD Doctor");
+  await panel.expectFieldValue("Walking Difficulties", "Level 1");
+});
 
 test("picture", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID, "picture.2");
