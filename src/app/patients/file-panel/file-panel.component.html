@@ -5,6 +5,9 @@
       {{ label }}
     </label>
     <ng-content select="[headers]"></ng-content>
+    @if ($any(file).date) {
+      <span>{{ $any(file).date }}</span>
+    }
   </div>
   @if (statusOpened) {
     <div class="body" attr.data-testId="{{ file.uuid }}-content">
