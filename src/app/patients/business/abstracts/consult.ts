@@ -3,7 +3,7 @@ import { round } from "../../../_helpers/numbers";
 import { StringBoolean } from "../../../generic/io/io.component";
 import PatientRelated from "./patient-related";
 
-export default class Timed extends PatientRelated {
+export default class Consult extends PatientRelated {
   examiner: string = "";
   center: string = "";
   weight_kg?: number;

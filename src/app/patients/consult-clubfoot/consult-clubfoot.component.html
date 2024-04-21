@@ -6,297 +6,225 @@
       <app-io type="number" right read-only [value]="file.getPiraniRight()" />
       <app-io type="number" left read-only [value]="file.getPiraniLeft()" />
     </ng-container>
-    <div class="two-columns">
-      <div class="panel">
-        <div>Informations</div>
-        <div>
-          <app-io type="date" label="Date" required [value]="file.date" />
-          <app-io
-            type="list"
-            label="Center"
-            list-name="Centers"
-            [value]="file.center"
-          />
-          <app-io
-            type="list"
-            label="Examiner"
-            list-name="Examiners"
-            [value]="file.examiner"
-          />
-          <app-io
-            type="number"
-            read-only
-            label="Age at consultation time"
-            [value]="file.getAgeAtThatTime()"
-          />
+    <app-consult [file]="file">
+      <div class="two-columns">
+        <div class="panel">
+          <div>
+            <img src="/static/img/side_right.svg" alt="Right" />
+            <span>Pirani Right (&lt; 3 years)</span>
+            <span>{{ file.getPiraniRight() }}</span>
+          </div>
+          <div>
+            <div class="separator">Mid Foot</div>
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Curved Lateral Border"
+              [value]="file.curved_lateral_border_right"
+            />
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Medial Crease"
+              [value]="file.medial_crease_right"
+            />
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Talar Head Coverage"
+              [value]="file.talar_head_coverage_right"
+            />
+            <div class="separator">Hind Foot</div>
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Posterior Crease"
+              [value]="file.posterior_crease_right"
+            />
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Rigid Equinus"
+              [value]="file.rigid_equinus_right"
+            />
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Empty Heel"
+              [value]="file.empty_heel_right"
+            />
+            <div class="separator">Score</div>
+            <app-io
+              type="number"
+              read-only
+              label="Pirani Score"
+              [value]="file.getPiraniRight()"
+            />
+          </div>
+        </div>
+        <div class="panel">
+          <div>
+            <img src="/static/img/side_left.svg" alt="Left" />
+            <span>Pirani Left (&lt; 3 years)</span>
+            <span>{{ file.getPiraniLeft() }}</span>
+          </div>
+          <div>
+            <div class="separator">Mid Foot</div>
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Curved Lateral Border"
+              [value]="file.curved_lateral_border_left"
+            />
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Medial Crease"
+              [value]="file.medial_crease_left"
+            />
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Talar Head Coverage"
+              [value]="file.talar_head_coverage_left"
+            />
+            <div class="separator">Hind Foot</div>
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Posterior Crease"
+              [value]="file.posterior_crease_left"
+            />
+            <app-io
+              type="list"
+              list-name="Pirani"
+              label="Rigid Equinus"
+              [value]="file.rigid_equinus_left"
+            />
+            <app-io
+              type="list"
+              label="Empty Heel"
+              list-name="Pirani"
+              [value]="file.empty_heel_left"
+            />
+            <div class="separator">Score</div>
+            <app-io
+              type="number"
+              read-only
+              label="Pirani Score"
+              [value]="file.getPiraniLeft()"
+            />
+          </div>
         </div>
       </div>
-      <div class="panel">
-        <div>Nutritional data</div>
-        <div>
-          <app-io type="number" label="Heigth (cm)" [value]="file.height_cm" />
-          <app-io type="number" label="Weight (kg)" [value]="file.weight_kg" />
-          <app-io
-            type="number"
-            label="Brachial Circumference (cm)"
-            [value]="file.brachial_circumference_cm"
-          />
-          <app-io
-            type="number"
-            read-only
-            note
-            label="W/H"
-            [value]="file.wh()"
-          />
-          <app-io
-            type="number"
-            read-only
-            note
-            label="BMI"
-            [value]="file.bmi()"
-          />
+      <div class="two-columns">
+        <div class="panel">
+          <div>
+            <img src="/static/img/side_right.svg" alt="Right" />
+            <span>Pirani Right (&gt; 3 years)</span>
+          </div>
+          <div>
+            <app-io type="list" label="Pain" [value]="file.pain_right" />
+            <app-io
+              type="list"
+              list-name="Eval02"
+              label="Walking Floor Contact"
+              [value]="file.walking_floor_contact_right"
+            />
+            <app-io
+              type="list"
+              list-name="Eval02"
+              label="Walking First Contact"
+              [value]="file.walking_first_contact_right"
+            />
+            <app-io
+              type="list"
+              list-name="Eval02"
+              label="Jumping One Leg"
+              [value]="file.jumping_one_leg_right"
+            />
+            <app-io type="list" label="Run" [value]="file.run_right" />
+            <app-io
+              type="number"
+              label="Adduction Angle"
+              [value]="file.adduction_angle_right"
+            />
+            <app-io
+              type="number"
+              label="Hind Foot Angle W"
+              [value]="file.hind_foot_angle_W_right"
+            />
+            <app-io
+              type="number"
+              label="Dorsal Flexion Max"
+              [value]="file.dorsal_flexion_max_right"
+            />
+            <app-io
+              type="number"
+              label="Plantar Flexion Max"
+              [value]="file.plantar_flexion_max_right"
+            />
+            <app-io
+              type="boolean"
+              label="Muscular Inbalance"
+              [value]="file.muscular_inbalance_right"
+            />
+          </div>
+        </div>
+        <div class="panel">
+          <div>
+            <img src="/static/img/side_left.svg" alt="Left" />
+            <span>Pirani Left (&lt; 3 years)</span>
+          </div>
+          <div>
+            <app-io type="list" label="Pain" [value]="file.pain_left" />
+            <app-io
+              type="list"
+              list-name="Eval02"
+              label="Walking Floor Contact"
+              [value]="file.walking_floor_contact_left"
+            />
+            <app-io
+              type="list"
+              list-name="Eval02"
+              label="Walking First Contact"
+              [value]="file.walking_first_contact_left"
+            />
+            <app-io
+              type="list"
+              list-name="Eval02"
+              label="Jumping One Leg"
+              [value]="file.jumping_one_leg_left"
+            />
+            <app-io type="list" label="Run" [value]="file.run_left" />
+            <app-io
+              type="number"
+              label="Adduction Angle"
+              [value]="file.adduction_angle_left"
+            />
+            <app-io
+              type="number"
+              label="Hind Foot Angle W"
+              [value]="file.hind_foot_angle_W_left"
+            />
+            <app-io
+              type="number"
+              label="Dorsal Flexion Max"
+              [value]="file.dorsal_flexion_max_left"
+            />
+            <app-io
+              type="number"
+              label="Plantar Flexion Max"
+              [value]="file.plantar_flexion_max_left"
+            />
+            <app-io
+              type="boolean"
+              label="Muscular Inbalance"
+              [value]="file.muscular_inbalance_left"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <div class="two-columns">
-      <div class="panel">
-        <div>
-          <img src="/static/img/side_right.svg" alt="Right" />
-          <span>Pirani Right (&lt; 3 years)</span>
-          <span>{{ file.getPiraniRight() }}</span>
-        </div>
-        <div>
-          <div class="separator">Mid Foot</div>
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Curved Lateral Border"
-            [value]="file.curved_lateral_border_right"
-          />
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Medial Crease"
-            [value]="file.medial_crease_right"
-          />
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Talar Head Coverage"
-            [value]="file.talar_head_coverage_right"
-          />
-          <div class="separator">Hind Foot</div>
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Posterior Crease"
-            [value]="file.posterior_crease_right"
-          />
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Rigid Equinus"
-            [value]="file.rigid_equinus_right"
-          />
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Empty Heel"
-            [value]="file.empty_heel_right"
-          />
-          <div class="separator">Score</div>
-          <app-io
-            type="number"
-            read-only
-            label="Pirani Score"
-            [value]="file.getPiraniRight()"
-          />
-        </div>
-      </div>
-      <div class="panel">
-        <div>
-          <img src="/static/img/side_left.svg" alt="Left" />
-          <span>Pirani Left (&lt; 3 years)</span>
-          <span>{{ file.getPiraniLeft() }}</span>
-        </div>
-        <div>
-          <div class="separator">Mid Foot</div>
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Curved Lateral Border"
-            [value]="file.curved_lateral_border_left"
-          />
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Medial Crease"
-            [value]="file.medial_crease_left"
-          />
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Talar Head Coverage"
-            [value]="file.talar_head_coverage_left"
-          />
-          <div class="separator">Hind Foot</div>
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Posterior Crease"
-            [value]="file.posterior_crease_left"
-          />
-          <app-io
-            type="list"
-            list-name="Pirani"
-            label="Rigid Equinus"
-            [value]="file.rigid_equinus_left"
-          />
-          <app-io
-            type="list"
-            label="Empty Heel"
-            list-name="Pirani"
-            [value]="file.empty_heel_left"
-          />
-          <div class="separator">Score</div>
-          <app-io
-            type="number"
-            read-only
-            label="Pirani Score"
-            [value]="file.getPiraniLeft()"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="two-columns">
-      <div class="panel">
-        <div>
-          <img src="/static/img/side_right.svg" alt="Right" />
-          <span>Pirani Right (&gt; 3 years)</span>
-        </div>
-        <div>
-          <app-io type="list" label="Pain" [value]="file.pain_right" />
-          <app-io
-            type="list"
-            list-name="Eval02"
-            label="Walking Floor Contact"
-            [value]="file.walking_floor_contact_right"
-          />
-          <app-io
-            type="list"
-            list-name="Eval02"
-            label="Walking First Contact"
-            [value]="file.walking_first_contact_right"
-          />
-          <app-io
-            type="list"
-            list-name="Eval02"
-            label="Jumping One Leg"
-            [value]="file.jumping_one_leg_right"
-          />
-          <app-io type="list" label="Run" [value]="file.run_right" />
-          <app-io
-            type="number"
-            label="Adduction Angle"
-            [value]="file.adduction_angle_right"
-          />
-          <app-io
-            type="number"
-            label="Hind Foot Angle W"
-            [value]="file.hind_foot_angle_W_right"
-          />
-          <app-io
-            type="number"
-            label="Dorsal Flexion Max"
-            [value]="file.dorsal_flexion_max_right"
-          />
-          <app-io
-            type="number"
-            label="Plantar Flexion Max"
-            [value]="file.plantar_flexion_max_right"
-          />
-          <app-io
-            type="boolean"
-            label="Muscular Inbalance"
-            [value]="file.muscular_inbalance_right"
-          />
-        </div>
-      </div>
-      <div class="panel">
-        <div>
-          <img src="/static/img/side_left.svg" alt="Left" />
-          <span>Pirani Left (&lt; 3 years)</span>
-        </div>
-        <div>
-          <app-io type="list" label="Pain" [value]="file.pain_left" />
-          <app-io
-            type="list"
-            list-name="Eval02"
-            label="Walking Floor Contact"
-            [value]="file.walking_floor_contact_left"
-          />
-          <app-io
-            type="list"
-            list-name="Eval02"
-            label="Walking First Contact"
-            [value]="file.walking_first_contact_left"
-          />
-          <app-io
-            type="list"
-            list-name="Eval02"
-            label="Jumping One Leg"
-            [value]="file.jumping_one_leg_left"
-          />
-          <app-io type="list" label="Run" [value]="file.run_left" />
-          <app-io
-            type="number"
-            label="Adduction Angle"
-            [value]="file.adduction_angle_left"
-          />
-          <app-io
-            type="number"
-            label="Hind Foot Angle W"
-            [value]="file.hind_foot_angle_W_left"
-          />
-          <app-io
-            type="number"
-            label="Dorsal Flexion Max"
-            [value]="file.dorsal_flexion_max_left"
-          />
-          <app-io
-            type="number"
-            label="Plantar Flexion Max"
-            [value]="file.plantar_flexion_max_left"
-          />
-          <app-io
-            type="boolean"
-            label="Muscular Inbalance"
-            [value]="file.muscular_inbalance_left"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="panel">
-      <div>Conclusions</div>
-      <div>
-        <app-io type="text" label="Comments" [value]="file.comments" />
-        <app-io
-          type="boolean"
-          label="Suggested for surgery"
-          [value]="file.suggested_for_surgery"
-        />
-        <app-io
-          type="list"
-          list-name="TreatmentEvaluation"
-          label="Treatment Evaluation"
-          [value]="file.treatment_evaluation"
-        />
-        <app-io
-          type="boolean"
-          label="Treatment Finished"
-          [value]="file.treatment_finished"
-        />
-      </div>
-    </div>
+    </app-consult>
   </app-file-panel>
 }
