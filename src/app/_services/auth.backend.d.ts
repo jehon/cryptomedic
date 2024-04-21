@@ -1,4 +1,4 @@
-import { Price } from "../patients/patients.backend";
+import Price from "../patients/business/price";
 
 export default interface BackendAuthInterface {
   username: string;
