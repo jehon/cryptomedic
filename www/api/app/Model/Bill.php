@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class Bill extends CryptomedicModel {
 	const CAT_CONSULT = "consult";
 	const CAT_MEDECINE = "medecine";
@@ -12,6 +14,10 @@ class Bill extends CryptomedicModel {
 	public static $categories = [self::CAT_CONSULT, self::CAT_MEDECINE, self::CAT_OTHER, self::CAT_WORKSHOP, self::CAT_SURGICAL];
 	public static $translations = [];
 
+	public function payment(): HasMany {
+		return $this->hasMany(Payment::class);
+	}
+	
 	public function getDependantsRecords() {
 		$list = [];
 
