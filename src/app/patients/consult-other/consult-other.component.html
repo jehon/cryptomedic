@@ -2,12 +2,67 @@
   <div>Loading...</div>
 } @else {
   <app-file-panel [file]="file" [model]="'consult_other'">
-    <ng-container headers>TODO </ng-container>
-    <div class="two-columns">
-      <div class="panel">
-        <div>Informations</div>
-        <div>TODO</div>
+    <ng-container headers>
+      <span>{{ file.side }}</span>
+    </ng-container>
+    <app-consult [file]="file">
+      <div class="two-columns">
+        <div class="panel">
+          <div>Orthopedic Data</div>
+          <div>
+            <app-io
+              type="list"
+              list-name="Side"
+              label="Side"
+              [value]="file.side"
+            />
+            <app-io
+              type="string"
+              label="Joints or Bones Affected"
+              [value]="file.joints_or_bones_affected"
+            />
+            <app-io type="string" label="Deformity" [value]="file.deformity" />
+            <app-io
+              type="string"
+              label="Articulation Mobility"
+              [value]="file.articulation_mobility"
+            />
+            <app-io
+              type="string"
+              label="Muscle Strength"
+              [value]="file.muscle_strength"
+            />
+            <app-io
+              type="list"
+              list-name="Pain"
+              label="Pain"
+              [value]="file.muscle_strength"
+            />
+            <app-io
+              type="list"
+              list-name="WalkingCapacities"
+              label="Walk"
+              [value]="file.walk"
+            />
+            <app-io type="string" label="X-Ray" [value]="file.xray" />
+          </div>
+        </div>
+        <div class="panel">
+          <div>Comments</div>
+          <div>
+            <app-io
+              type="text"
+              label="Activities Performed by the Patient"
+              [value]="file.performed"
+            />
+            <app-io
+              type="text"
+              label="Activities NOT Performed by the Patient"
+              [value]="file.not_performed"
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </app-consult>
   </app-file-panel>
 }
