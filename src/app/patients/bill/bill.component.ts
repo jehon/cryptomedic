@@ -25,6 +25,7 @@ export class BillComponent {
   }
 
   getRatioSalary(): number {
+    // Used on read-only mode too
     if (!this.file) {
       return NaN;
     }
@@ -37,104 +38,103 @@ export class BillComponent {
     );
   }
 
-  getSocialLevelCalculated(): number {
-    /**
-     From TC:
-     Level 0 is when the familial ration is                            FR <= social_level_threshold_1
-     Level 1 is when the familial ration is social_level_threshold_1 < FR <= social_level_threshold_2
-     Level 2 is when the familial ration is social_level_threshold_2 < FR <= social_level_threshold_3
-     Level 3 is when the familial ration is social_level_threshold_3 < FR <= social_level_threshold_4
-     Level 4 is when the familial ration is social_level_threshold_4 < FR
-     */
-    if (this.getPrice()) {
-      const rs = this.getRatioSalary();
-      if (!isNaN(rs) && rs > 0) {
-        if (rs <= this.getPrice()!["social_level_threshold_1"]) {
-          return 0;
-        }
-        if (rs <= this.getPrice()!["social_level_threshold_2"]) {
-          return 1;
-        }
-        if (rs <= this.getPrice()!["social_level_threshold_3"]) {
-          return 2;
-        }
-        if (rs <= this.getPrice()!["social_level_threshold_4"]) {
-          return 3;
-        }
-      }
-    }
-
-    // Default
-    return 4;
-  }
-
-  getTotalReal(): number {
-    if (!this.getPrice()) {
-      return 0;
-    }
-
-    let total = 0;
-    //   for (const i in this.price) {
-    //     if (i[0] === "_") {
-    //       continue;
-    //     }
-    //     if (i === "id") {
-    //       continue;
-    //     }
-    //     if (i === "created_at") {
-    //       continue;
-    //     }
-    //     if (i === "updated_at") {
-    //       continue;
-    //     }
-    //     if (i === "last_user") {
-    //       continue;
-    //     }
-    //     if (i === "date_from") {
-    //       continue;
-    //     }
-    //     if (i === "date_to") {
-    //       continue;
-    //     }
-    //     if (i === "controller") {
-    //       continue;
-    //     }
-    //     if (i === "locked") {
-    //       continue;
-    //     }
-    //     if (i === "dlocked") {
-    //       continue;
-    //     }
-    //     if (i.startsWith("social_level_")) {
-    //       continue;
-    //     }
-    //     if (this.price[i] < 0) {
-    //       continue;
-    //     }
-    //     if (typeof this[i] === "undefined") {
-    //       continue;
-    //     }
-    //     if (this[i] <= 0) {
-    //       continue;
-    //     }
-    //     total += this.price[i] * this[i];
-    //   } //, this);
-
-    total += 0;
-
-    return total;
-  }
-
   getPercentageAccordingToSocialLevel() {
-    const sl = this.getSocialLevelCalculated();
+    // Used on read-only mode too
+    const sl = this.file?.social_level;
     return this.getPrice()!["social_level_percentage_" + sl] * 100;
   }
 
-  getTotalAsked(): number {
-    return Math.round(
-      (this.getPercentageAccordingToSocialLevel() / 100) * this.getTotalReal()
-    );
-  }
+  // getSocialLevelCalculated(): number {
+  //   /**
+  //    From TC:
+  //    Level 0 is when the familial ration is                            FR <= social_level_threshold_1
+  //    Level 1 is when the familial ration is social_level_threshold_1 < FR <= social_level_threshold_2
+  //    Level 2 is when the familial ration is social_level_threshold_2 < FR <= social_level_threshold_3
+  //    Level 3 is when the familial ration is social_level_threshold_3 < FR <= social_level_threshold_4
+  //    Level 4 is when the familial ration is social_level_threshold_4 < FR
+  //    */
+  //   if (this.getPrice()) {
+  //     const rs = this.getRatioSalary();
+  //     if (!isNaN(rs) && rs > 0) {
+  //       if (rs <= this.getPrice()!["social_level_threshold_1"]) {
+  //         return 0;
+  //       }
+  //       if (rs <= this.getPrice()!["social_level_threshold_2"]) {
+  //         return 1;
+  //       }
+  //       if (rs <= this.getPrice()!["social_level_threshold_3"]) {
+  //         return 2;
+  //       }
+  //       if (rs <= this.getPrice()!["social_level_threshold_4"]) {
+  //         return 3;
+  //       }
+  //     }
+  //   }
+
+  //   // Default
+  //   return 4;
+  // }
+
+  // getTotalReal(): number {
+  //   if (!this.getPrice()) {
+  //     return 0;
+  //   }
+
+  //   const total = 0;
+  //   //   for (const i in this.price) {
+  //   //     if (i[0] === "_") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i === "id") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i === "created_at") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i === "updated_at") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i === "last_user") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i === "date_from") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i === "date_to") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i === "controller") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i === "locked") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i === "dlocked") {
+  //   //       continue;
+  //   //     }
+  //   //     if (i.startsWith("social_level_")) {
+  //   //       continue;
+  //   //     }
+  //   //     if (this.price[i] < 0) {
+  //   //       continue;
+  //   //     }
+  //   //     if (typeof this[i] === "undefined") {
+  //   //       continue;
+  //   //     }
+  //   //     if (this[i] <= 0) {
+  //   //       continue;
+  //   //     }
+  //   //     total += this.price[i] * this[i];
+  //   //   } //, this);
+
+  //   return total;
+  // }
+
+  // getTotalAsked(): number {
+  //   return Math.round(
+  //     (this.getPercentageAccordingToSocialLevel() / 100) * this.getTotalReal()
+  //   );
+  // }
 
   // constructor(
   //   {
