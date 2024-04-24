@@ -32,12 +32,12 @@ export type StringList = string;
 export class IoComponent implements OnInit {
   @Input() value: any = "";
   @Input() edit: boolean = false;
+  @Input("list-name") listName: string = "";
   @Input() label: string = "";
 
   constructor(
     private el: ElementRef,
-    @Attribute("type") public type: FieldType,
-    @Attribute("list-name") public listName: string = ""
+    @Attribute("type") public type: FieldType
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +46,8 @@ export class IoComponent implements OnInit {
         `IO Component: Type ${this.type} is not a recognized type`
       );
     }
+    // Trick to have label set definitively...
+    this.el.nativeElement.setAttribute("label", this.label);
   }
 
   @HostBinding("hidden")

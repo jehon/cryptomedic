@@ -18,11 +18,13 @@ test("appointment", async ({ page }) => {
   await panel.expectFieldValue("Examiner", "Ershad");
 });
 
-// test("bill", async ({ page }) => {
-// const panel = await crPatientFile(page, PATIENT_ID, "bill.1");
-// await panel.expectFieldValue("Date", "2015-04-28");
-// await panel.expectFieldValue("Examiner", "Ershad");
-// });
+test("bill", async ({ page }) => {
+  const panel = await crPatientFile(page, PATIENT_ID, "bill.1");
+  await panel.expectFieldValue("Date", "2011-06-09");
+  await panel.expectFieldValue("consult CDC consultation physio", "1");
+  await panel.expectFieldValue("consult other");
+  await panel.expectFieldValue("Price to be asked to the patient", 6720);
+});
 
 test("consult-other", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID, "consult_other.1");
