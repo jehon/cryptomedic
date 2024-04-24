@@ -44,6 +44,39 @@ export class BillComponent {
     return this.getPrice()!["social_level_percentage_" + sl] * 100;
   }
 
+  getBillLines(): string[] {
+    if (!this.file) {
+      return [];
+    }
+
+    if (!this.file.price_id) {
+      return [];
+    }
+
+    const price = this.authService.currentUser?.prices[this.file.price_id];
+
+    if (!price) {
+      return [];
+    }
+
+    return Object.keys(price as Record<string, number>)
+      .filter(
+        (k) =>
+          ![
+            "id",
+            "created_at",
+            "updated_at",
+            "last_user",
+            "date_from",
+            "date_to"
+          ].includes(k)
+      )
+      .filter((k) => !k.startsWith("_"))
+      .filter((k) => !k.startsWith("social_level"))
+      .filter((k) => price[k] >= 0)
+      .sort();
+  }
+
   // getSocialLevelCalculated(): number {
   //   /**
   //    From TC:

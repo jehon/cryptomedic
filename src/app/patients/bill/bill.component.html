@@ -78,6 +78,18 @@
         </div>
       </div>
     </div>
+
+    <div class="two-columns">
+      <div class="panel">
+        <div>Lines</div>
+        <div>
+          @for (line of getBillLines(); track line) {
+            <app-io type="number" [label]="line" [value]="file[line]" />
+          }
+        </div>
+      </div>
+    </div>
+
     <div class="panel">
       <div>Payments</div>
       <div>
