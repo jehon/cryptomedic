@@ -84,7 +84,11 @@
         <div>Lines</div>
         <div>
           @for (line of getBillLines(); track line) {
-            <app-io type="number" [label]="line" [value]="file[line]" />
+            <app-io
+              type="number"
+              [label]="line.split('_').join(' ')"
+              [value]="file[line]"
+            />
           }
         </div>
       </div>
