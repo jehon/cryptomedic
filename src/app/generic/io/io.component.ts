@@ -51,6 +51,10 @@ export class IoComponent implements OnInit {
   }
 
   @HostBinding("hidden")
+  get hidden(): boolean {
+    return this.empty && !this.edit;
+  }
+
   get empty(): boolean {
     return this.value === "?" || !this.value;
   }
