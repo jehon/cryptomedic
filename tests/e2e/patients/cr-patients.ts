@@ -25,9 +25,7 @@ export async function crPatientFile(
   await expect(content).toBeVisible();
 
   const getIOContent = async (label: string) => {
-    const io = content.locator(`[label='${label}']`);
-    await expect(io).toBeVisible();
-    return io.locator(".content");
+    return content.locator(`[label='${label}']`);
   };
 
   return {
@@ -36,9 +34,11 @@ export async function crPatientFile(
      */
     async expectFieldValue(label: string, value?: string | number) {
       const io = await getIOContent(label);
+
       if (value) {
-        await expect(io).toBeVisible();
-        await expect((await io.textContent())?.trim() ?? "").toBe("" + value);
+        const ioc = io.locator(".content");
+        await expect(ioc).toBeVisible();
+        await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
       } else {
         await expect(io).not.toBeVisible();
       }
