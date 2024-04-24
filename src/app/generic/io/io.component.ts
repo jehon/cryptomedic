@@ -1,11 +1,4 @@
-import {
-  Attribute,
-  Component,
-  ElementRef,
-  HostBinding,
-  Input,
-  OnInit
-} from "@angular/core";
+import { Attribute, Component, ElementRef, Input, OnInit } from "@angular/core";
 import { SideComponent } from "../side/side.component";
 
 export type FieldType =
@@ -30,10 +23,12 @@ export type StringList = string;
   styleUrl: "./io.component.css"
 })
 export class IoComponent implements OnInit {
-  @Input() value: any = "";
-  @Input() edit: boolean = false;
+  #label: string = "";
+  #value: any = "";
+  #edit: boolean = false;
+  hidden: boolean = false;
+
   @Input("list-name") listName: string = "";
-  @Input() label: string = "";
 
   constructor(
     private el: ElementRef,
@@ -46,17 +41,45 @@ export class IoComponent implements OnInit {
         `IO Component: Type ${this.type} is not a recognized type`
       );
     }
+  }
+
+  @Input()
+  set label(l: string) {
+    this.#label = l;
+
     // Trick to have label set definitively...
     this.el.nativeElement.setAttribute("label", this.label);
   }
 
-  @HostBinding("hidden")
-  get hidden(): boolean {
-    return this.empty && !this.edit;
+  get label(): string {
+    return this.#label;
   }
 
-  get empty(): boolean {
-    return this.value === "?" || !this.value;
+  @Input() set value(v: any) {
+    this.#value = v;
+    this.#calculateHidden();
+  }
+
+  get value(): any {
+    return this.#value;
+  }
+
+  hasValue(): boolean {
+    return this.value !== "?" && this.value;
+  }
+
+  @Input() set edit(v: any) {
+    this.#edit = v;
+    this.#calculateHidden();
+  }
+
+  get edit(): any {
+    return this.#edit;
+  }
+
+  #calculateHidden() {
+    this.hidden = !this.hasValue() && !this.edit;
+    this.el.nativeElement.toggleAttribute("hidden", this.hidden);
   }
 
   get left(): boolean {
