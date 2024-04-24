@@ -14,6 +14,9 @@
   <div class="content">
     @if (edit && !readonly) {
       @switch (type) {
+        @case ("string") {
+          <input [(ngModel)]="value" />
+        }
         @default {
           {{ type }}{{ listName ? "#" + listName : "" }} = {{ value }}
         }

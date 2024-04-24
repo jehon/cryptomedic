@@ -1,4 +1,6 @@
+import { CommonModule } from "@angular/common";
 import { Attribute, Component, ElementRef, Input, OnInit } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { SideComponent } from "../side/side.component";
 
 export type FieldType =
@@ -18,7 +20,7 @@ export type StringList = string;
 @Component({
   selector: "app-io",
   standalone: true,
-  imports: [SideComponent],
+  imports: [SideComponent, CommonModule, FormsModule],
   templateUrl: "./io.component.html",
   styleUrl: "./io.component.css"
 })
