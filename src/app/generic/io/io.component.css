@@ -1,4 +1,8 @@
 :host {
+  &[hidden] {
+    display: none;
+  }
+
   display: flex;
   flex-direction: row;
   padding: 5px 10px;

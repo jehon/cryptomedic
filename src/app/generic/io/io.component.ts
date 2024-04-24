@@ -1,4 +1,11 @@
-import { Attribute, Component, ElementRef, Input, OnInit } from "@angular/core";
+import {
+  Attribute,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnInit
+} from "@angular/core";
 import { SideComponent } from "../side/side.component";
 
 export type FieldType =
@@ -25,11 +32,11 @@ export type StringList = string;
 export class IoComponent implements OnInit {
   @Input() value: any = "";
   @Input() edit: boolean = false;
+  @Input() label: string = "";
 
   constructor(
     private el: ElementRef,
     @Attribute("type") public type: FieldType,
-    @Attribute("label") public label: string,
     @Attribute("list-name") public listName: string = ""
   ) {}
 
@@ -41,6 +48,7 @@ export class IoComponent implements OnInit {
     }
   }
 
+  @HostBinding("hidden")
   get empty(): boolean {
     return this.value === "?" || !this.value;
   }
