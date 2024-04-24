@@ -7,8 +7,11 @@ set -o pipefail
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 header_begin "cr-data-reset: reset folder structure"
-# TODO: this erase sessions too
-rsync -a --delete live-for-test/ live/
+# Keep the sessions open
+rsync --archive --delete \
+    --exclude laravel/sessions/ \
+    live-for-test/ live/
+exit 0
 
 chmod -R a+rwX "live/"
 
