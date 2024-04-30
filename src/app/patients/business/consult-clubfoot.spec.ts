@@ -1,6 +1,6 @@
 import ConsultClubfoot from "./consult-clubfoot";
 
-describe("consult-clubfoot", async () => {
+describe("consult-clubfoot", () => {
   it("Pirani", () => {
     const file = new ConsultClubfoot();
 

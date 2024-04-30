@@ -40,8 +40,8 @@ export function fromBirthDateTo(date: Date | null, reference = new Date()) {
     throw new DataMissingException("reference");
   }
 
-  let years = reference.getFullYear() - date.getFullYear();
-  let months = reference.getMonth() - date.getMonth();
+  const years = reference.getFullYear() - date.getFullYear();
+  const months = reference.getMonth() - date.getMonth();
 
   return years + months / 12;
 }

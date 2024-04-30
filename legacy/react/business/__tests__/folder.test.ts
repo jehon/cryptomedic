@@ -21,7 +21,7 @@ beforeEach(async () => {
 });
 
 test("sould instanciate folder", () => {
-  let fnew = new Folder();
+  const fnew = new Folder();
   expect(fnew.getPatient()).toBeInstanceOf(Patient);
   expect(fnew.getId()).toEqual(-1);
 });
@@ -72,7 +72,7 @@ test("should return null if element is not found (Otherconsult 0)", () => {
 });
 
 test("should give patient related files", () => {
-  let list = f.getFilesRelatedToPatient();
+  const list = f.getFilesRelatedToPatient();
   expect(list.length).toBe(6);
 
   list.forEach((e) => {
@@ -115,7 +115,7 @@ test("should give patient related files", () => {
 });
 
 test("should give bill related files", () => {
-  let list = f.getFilesRelatedToBill(1);
+  const list = f.getFilesRelatedToBill(1);
   expect(list.length).toBe(1);
 
   let i = -1;

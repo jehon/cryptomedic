@@ -25,7 +25,7 @@ export default class PatientsService {
     this.#patient = undefined;
   }
 
-  async load(id: string): Promise<Patient> {
+  load(id: string): Promise<Patient> {
     if (this.#patient?.id == id) {
       return Promise.resolve(this.#patient);
     }

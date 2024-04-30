@@ -1,16 +1,16 @@
-import { test, expect } from "@jest/globals";
+import { expect, test } from "@jest/globals";
 
-import Consult from "../consult.js";
-import Patient from "../../patient.js";
-import RicketConsult from "../../consult-ricket.js";
 import { DataMissingException } from "../../../utils/exceptions.js";
+import RicketConsult from "../../consult-ricket.js";
+import Patient from "../../patient.js";
+import Consult from "../consult.js";
 
 import { loadReferenceFolder, RefFolder1 } from "../../../test-helper";
 import Folder from "../../folder.js";
 
 test("with ricketConsult_13", async function () {
-  let folder = await loadReferenceFolder(RefFolder1);
-  let c = folder.getByTypeAndId(RicketConsult, 13);
+  const folder = await loadReferenceFolder(RefFolder1);
+  const c = folder.getByTypeAndId(RicketConsult, 13);
 
   expect(c).toBeInstanceOf(RicketConsult);
   expect(c).toBeInstanceOf(Consult);
@@ -30,9 +30,9 @@ test("with ricketConsult_13", async function () {
 });
 
 test("with patient with sex", function () {
-  let f = new Folder();
-  let p = new Patient({ id: 123, sex: "Male" } as any, f);
-  var c = new Consult({ patient_id: 123 }, f);
+  const f = new Folder();
+  const p = new Patient({ id: 123, sex: "Male" } as any, f);
+  const c = new Consult({ patient_id: 123 }, f);
   f.list.push(p);
   f.list.push(c);
 

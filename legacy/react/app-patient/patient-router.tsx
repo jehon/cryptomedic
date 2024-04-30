@@ -5,11 +5,7 @@ import Folder from "../business/folder";
 import FolderElement from "./folder-element";
 import { getFolder } from "./loaders";
 
-export async function patientLoader({
-  params
-}: {
-  params: any;
-}): Promise<Folder> {
+export function patientLoader({ params }: { params: any }): Promise<Folder> {
   return getFolder(params.folderId);
 }
 

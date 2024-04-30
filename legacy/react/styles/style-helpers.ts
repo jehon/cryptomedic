@@ -1,7 +1,7 @@
 import React from "react";
 
-export let defaultWidthBox: string = "calc(min(100%, 300px))";
-export let defaultWidthScreen: string = "calc(min(100%, 800px))";
+export const defaultWidthBox: string = "calc(min(100%, 300px))";
+export const defaultWidthScreen: string = "calc(min(100%, 800px))";
 
 // const integrities: Record<string, string> = {
 //   "5.3.1":

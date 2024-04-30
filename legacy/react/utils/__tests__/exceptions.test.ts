@@ -8,7 +8,7 @@ import {
 } from "../exceptions.js";
 
 test("should inherit from Error", function () {
-  var ae = new ApplicationException("my message");
+  const ae = new ApplicationException("my message");
 
   expect(ae instanceof Error).toBeTruthy();
   expect(ae instanceof ApplicationException).toBeTruthy();
@@ -16,7 +16,7 @@ test("should inherit from Error", function () {
 });
 
 test("should have DataMissingException", function () {
-  var ae = new DataMissingException("data");
+  const ae = new DataMissingException("data");
 
   expect(ae instanceof ApplicationException).toBeTruthy();
   expect(ae instanceof Error).toBeTruthy();
@@ -26,7 +26,7 @@ test("should have DataMissingException", function () {
 });
 
 test("should have DataInvalidException", function () {
-  var ae = new DataInvalidException("data");
+  const ae = new DataInvalidException("data");
 
   expect(ae instanceof ApplicationException).toBeTruthy();
   expect(ae instanceof Error).toBeTruthy();
@@ -35,7 +35,7 @@ test("should have DataInvalidException", function () {
 });
 
 test("should have DataOutOfBoundException", function () {
-  var ae = new DataOutOfBoundException("data", 5, [0, 1]);
+  const ae = new DataOutOfBoundException("data", 5, [0, 1]);
 
   expect(ae instanceof ApplicationException).toBeTruthy();
   expect(ae instanceof Error).toBeTruthy();

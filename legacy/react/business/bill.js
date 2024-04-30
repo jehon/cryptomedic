@@ -134,7 +134,9 @@ export default class Bill extends Timed {
         if (rs <= this.price.social_level_threshold_4) {
           return 3;
         }
-      } catch (e) {}
+      } catch (_e) {
+        // expected
+      }
     }
 
     // Default

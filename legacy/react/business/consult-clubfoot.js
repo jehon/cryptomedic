@@ -153,7 +153,7 @@ export default class ConsultClubfoot extends Consult {
         f(this.rigid_equinus_left) +
         f(this.empty_heel_left)
       );
-    } catch (e) {
+    } catch (_e) {
       return "undefined";
     }
   }
@@ -169,7 +169,7 @@ export default class ConsultClubfoot extends Consult {
         f(this.rigid_equinus_right) +
         f(this.empty_heel_right)
       );
-    } catch (e) {
+    } catch (_e) {
       return "undefined";
     }
   }

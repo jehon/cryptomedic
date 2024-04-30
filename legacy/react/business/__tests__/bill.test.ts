@@ -1,8 +1,8 @@
 import { expect, test } from "@jest/globals";
-import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
+import { RefFolder1, loadReferenceFolder } from "../../test-helper";
 
-import Folder from "../folder";
 import Bill from "../bill.js";
+import Folder from "../folder";
 
 let f: Folder = new Folder();
 
@@ -12,7 +12,7 @@ beforeEach(async () => {
 });
 
 test("should give the correct model", function () {
-  let b = new Bill();
+  const b = new Bill();
 
   expect(b.getModel()).toBe("Bill");
 });

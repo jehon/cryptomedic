@@ -54,7 +54,7 @@ export default class XUserStatus extends HTMLElement {
     this.unregisterListener = null;
   }
 
-  async doLogout() {
+  doLogout() {
     return this[requestor]
       .request(logoutBuilder())
       .then(() => setSession())

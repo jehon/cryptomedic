@@ -3,7 +3,7 @@ import Folder from "../business/folder";
 import { ServerRequestError, TransportRequestError } from "../utils/exceptions";
 import nullify from "../utils/nullify";
 
-async function request({
+function request({
   url,
   method,
   data,
@@ -70,13 +70,13 @@ async function request({
   );
 }
 
-export async function getFolder(id: string): Promise<Folder> {
+export function getFolder(id: string): Promise<Folder> {
   return request({ url: ["folder", "Patient", id] })
     .then((json) => json.folder)
     .then((json) => new Folder(json));
 }
 
-export async function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
+export function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
   // See www/api/app/Http/Controllers/FicheController.php
   return request({
     url: ["fiche", file.getServerRessource(), "unlock", file.id]
