@@ -28,10 +28,10 @@ describe("tests/unit/x-input-picture-test.js", function () {
         element()._generatePreview(
           XInputPicture.dataURItoBlob(invalidImg, "test.txt")
         );
-        // eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
+        // xx-eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
         expect(console.error).toHaveBeenCalled();
 
-        // eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
+        // xx-eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
         expect(window.alert).toHaveBeenCalled();
       });
 

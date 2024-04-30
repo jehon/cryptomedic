@@ -118,7 +118,7 @@ describe(fn(import.meta.url), function () {
           listName: "unknownList"
         });
         expect(el.getAttribute("mode")).toBe("empty");
-        // eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
+        // xx-eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
         expect(console.error).toHaveBeenCalled();
       });
 

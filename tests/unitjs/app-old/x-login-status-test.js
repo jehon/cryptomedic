@@ -53,7 +53,7 @@ describe(fn(import.meta.url), function () {
 
             spyOn(XUserStatus.prototype, "doLogout").and.callThrough();
             fireOn(element().querySelector("#logout"), "click");
-            // eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
+            // xx-eslint-disable-next-line jasmine/prefer-toHaveBeenCalledWith
             expect(XUserStatus.prototype.doLogout).toHaveBeenCalled();
           });
         });

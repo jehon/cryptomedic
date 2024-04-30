@@ -19,7 +19,7 @@ export function mockNoResponse(cb = (_result) => ({})) {
   let result = {};
 
   if (!("calls" in XRequestor.prototype._rawRequest)) {
-    /* eslint-disable-next-line jasmine/no-unsafe-spy */
+    /* xx-eslint-disable-next-line jasmine/no-unsafe-spy */
     spyOn(XRequestor.prototype, "_rawRequest");
   }
 

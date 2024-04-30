@@ -61,7 +61,7 @@ frontend-lint: frontend-lint-es frontend-lint-css frontend-lint-html
 
 .PHONY: frontend-lint-es
 frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
-	node_modules/.bin/eslint --ext .js,.ts,.tsx .
+	node_modules/.bin/eslint .
 
 .PHONY: frontend-lint-css
 frontend-lint-css: $(FRONTEND_DEPENDENCIES_MARK)
