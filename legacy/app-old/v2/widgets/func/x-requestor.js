@@ -111,7 +111,7 @@ export default class XRequestor extends HTMLElement {
     }
   }
 
-  async _rawRequest(options) {
+  _rawRequest(options) {
     return axios(options);
   }
 
@@ -125,7 +125,7 @@ export default class XRequestor extends HTMLElement {
    * @property {object} [data] of the request (GET param will be taken from here)
    * @returns {Promise} that resolve whith the request
    */
-  async request(opts) {
+  request(opts) {
     this.reset();
     this.setAttribute("running", "running");
     this._stopWaiting = overlayWaiting("Requesting");

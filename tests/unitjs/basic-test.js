@@ -1,4 +1,4 @@
-import { fn, loadReference, extractPath, RefFolder1 } from "./test-lib.js";
+import { RefFolder1, extractPath, fn, loadReference } from "./test-lib.js";
 
 describe(fn(import.meta.url), function () {
   it("should be true", () => {
@@ -9,7 +9,7 @@ describe(fn(import.meta.url), function () {
     expect(loadReference).not.toBeNull();
   });
 
-  it("should load references", async () => {
+  it("should load references", () => {
     const ref = loadReference(RefFolder1);
     expect(ref).not.toBeUndefined();
     expect(ref.folder).not.toBeUndefined();

@@ -106,7 +106,7 @@ export default class XPageLogin extends HTMLElement {
     this.removeAttribute("error");
   }
 
-  async doLogin() {
+  doLogin() {
     if (this._requestor.isRequesting()) {
       return -1;
     }
@@ -143,7 +143,7 @@ export default class XPageLogin extends HTMLElement {
       });
   }
 
-  async doLoginCheck() {
+  doLoginCheck() {
     // 401: not authenticated
     this.setAttribute("requesting", "doLoginCheck");
     return this._requestor

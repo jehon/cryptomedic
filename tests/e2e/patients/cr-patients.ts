@@ -4,11 +4,11 @@ import { LOGINS, crInit } from "../helpers/cr";
 
 export { crInit } from "../helpers/cr";
 
-export async function crPatientInit(
+export function crPatientInit(
   page: Page,
   segment: string,
   { login = LOGINS.PHYSIO }: { login?: string } = {}
-) {
+): Promise<void> {
   return crInit(page, { page: segment, login: login });
 }
 
@@ -24,7 +24,7 @@ export async function crPatientFile(
   const content = page.getByTestId(`${uuid}-content`);
   await expect(content).toBeVisible();
 
-  const getIOContent = async (label: string) => {
+  const getIOContent = (label: string) => {
     return content.locator(`[label='${label}']`);
   };
 

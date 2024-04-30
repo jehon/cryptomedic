@@ -66,7 +66,7 @@ export default function FolderElement({
         onUpdate={folderUpdatedCallback}
       ></PatientElement>
       {(folder.getFilesRelatedToPatient() as PatientRelated[]).map(
-        (file: PatientRelated, index: number) => {
+        (file: PatientRelated) => {
           if (file instanceof Appointment) {
             return (
               <AppointmentElement
