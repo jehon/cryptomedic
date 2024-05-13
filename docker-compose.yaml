@@ -14,7 +14,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
     ports:
-      # TODO: Using variable here does not work
+      # Note: Using variable here does not work
       - published: 8085
         target: 80
         mode: host
