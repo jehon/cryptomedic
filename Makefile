@@ -67,7 +67,7 @@ global-dump:
 	@echo "SHELL:                          $(SHELL)"
 	@echo "PATH:                           $(PATH)"
 	@echo "arch:                           $(shell arch)"
-	@echo "CRYPTOMEDIC_DOCKER_SOCKET:      $(CRYPTOMEDIC_DOCKER_SOCKET)" 
+	@echo "CRYPTOMEDIC_DOCKER_SOCKET:      $(CRYPTOMEDIC_DOCKER_SOCKET)"
 	@echo "ACCEPTANCE:                     $(ACCEPTANCE)"
 	@echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:  $(CRYPTOMEDIC_DEPLOY_FILES_HOST)"
 	@echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:    $(CRYPTOMEDIC_DEPLOY_WEB_HOST)"
@@ -78,7 +78,6 @@ global-dump:
 # @echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
 # @echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
 # @echo "MySQL user:                     $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
-# @echo "Chrome:                         $(shell google-chrome --version 2>&1 )"
 
 .PHONY: clear
 clear: cls
