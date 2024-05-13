@@ -74,7 +74,7 @@ try {
     ensureFolderEmpty("tmp/integration/webTemp/");
     ensureFolderEmpty("live/laravel/cache/");
     ensureFolderEmpty("live/laravel/views/");
-    @mkdir("live/laravel/sessions/", 0777, true);
+    mkdir(constant("CR_PRJ_ROOT") . "/live/laravel/sessions/", "0777", true);
 
     echo "\nDone " . basename(__FILE__) . "\n";
     http_response_code(200);
