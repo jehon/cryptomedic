@@ -12,9 +12,7 @@ CREATE SCHEMA cryptomedic;
 -- ---------------------------------------
 -- CREATE USER IF NOT EXISTS 'phpmyadmin' IDENTIFIED BY 'phpmyadmin'";
 -- GRANT ALL PRIVILEGES ON *.* TO phpmyadmin";
-CREATE USER IF NOT EXISTS 'mysql_cryptomedic_username' IDENTIFIED BY 'password';
-
-SET PASSWORD FOR mysql_cryptomedic_username = PASSWORD ('mysql_cryptomedic_password');
+CREATE USER IF NOT EXISTS 'mysql_cryptomedic_username' IDENTIFIED BY 'mysql_cryptomedic_password';
 
 GRANT ALL PRIVILEGES ON cryptomedic.* TO mysql_cryptomedic_username;
 
