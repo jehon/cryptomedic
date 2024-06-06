@@ -41,7 +41,7 @@
     "rxjs": "7.8.1",
     "tslib": "^2.3.0",
     "use-immer": "0.9.0",
-    "zone.js": "0.14.6"
+    "zone.js": "0.14.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "17.3.8",
