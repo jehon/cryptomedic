@@ -18,9 +18,6 @@ services:
       - published: 8085
         target: 80
         mode: host
-      # - published: 8086
-      #   target: 8080
-      #   mode: host
     volumes:
       - type: bind
         source: ${CRYPTOMEDIC_DOCKER_SOCKET:-/var/run/docker.sock}
@@ -30,14 +27,6 @@ services:
       - traefik.protocol=http
       - traefik.enable=true
       - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
-
-      # - traefik.http.routers.traeffik_api.rule=PathPrefix(`/traefik/api`)
-      # - traefik.http.routers.traeffik_api.service=api@internal
-      # - traefik.http.routers.traeffik_api.middlewares=jhstriproot@docker
-
-      # - traefik.http.routers.traeffik_dashboard.rule=PathPrefix(`/traefik/dashboard/`)
-      # - traefik.http.routers.traeffik_dashboard.service=dashboard@internal
-      # - traefik.http.routers.traeffik_dashboard.middlewares=jhstriproot@docker
 
   web:
     # https://hub.docker.com/_/php
@@ -93,7 +82,6 @@ services:
     expose:
       - 3306
     volumes:
-      # TODO: database volume?
       # - type: volume
       #   source: database
       #   target: /var/lib/mysql
@@ -153,6 +141,3 @@ services:
     working_dir: /app
     volumes:
       - .:/app
-# TODO: database volume?
-# volumes:
-#   database:
