@@ -91,32 +91,6 @@ services:
 
   ################################################################
   #
-  # Dev services
-  #
-  ################################################################
-
-  mail:
-    # https://github.com/maildev/maildev
-    image: maildev/maildev
-    expose:
-      - 1080
-      - 1025
-    healthcheck:
-      # See https://github.com/maildev/maildev/issues/484
-      test: wget -O - http://127.0.0.1:1080/healthz || exit 1
-      start_period: 5s
-      interval: 1s
-      timeout: 1s
-      retries: 10
-    labels:
-      - traefik.enable=true
-      # https://github.com/maildev/maildev/issues/402
-      - traefik.http.routers.mail.rule=PathPrefix(`/mail`)
-      - traefik.http.routers.mail.middlewares=jhstriproot@docker
-      - traefik.http.services.mail.loadbalancer.server.port=1080
-
-  ################################################################
-  #
   # Tools / commands
   #
   ################################################################

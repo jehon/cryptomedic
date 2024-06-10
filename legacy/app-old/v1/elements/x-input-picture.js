@@ -73,7 +73,7 @@ export default class XInputPicture extends XWaiting {
     if (!file.type.match(/image.*/)) {
       console.error("Not a picture?");
       alert(
-        "Are you sure it is a picture? If it is a picture, please send it by email to marielineet.jean@gmail.com to debug the application. Thank you"
+        "Are you sure it is a picture? If it is a picture, please send it by email to jeanhonlet@gmail.com to debug the application. Thank you"
       );
     }
 

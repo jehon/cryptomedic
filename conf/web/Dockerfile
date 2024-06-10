@@ -3,8 +3,6 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-apache
 
-RUN apt update && apt install --yes ssmtp
-
 RUN a2enmod expires rewrite
 
 RUN rm -fr /etc/apache2/sites-enabled/*.conf
