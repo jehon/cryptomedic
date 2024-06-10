@@ -1,9 +1,9 @@
 // @ts-check
 
 import eslint from "@eslint/js";
+import pluginCypress from "eslint-plugin-cypress/flat";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-
 const config = [
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
@@ -61,6 +61,9 @@ const config = [
     files: ["tests/cypress/**"],
     // https://github.com/cypress-io/eslint-plugin-cypress/issues/155
     // See plugin:cypress/recommended
+    plugins: {
+      cypress: pluginCypress
+    },
     languageOptions: {
       globals: {
         ...globals.browser,
