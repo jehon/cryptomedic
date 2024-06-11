@@ -13,8 +13,8 @@ RUN chmod +x /usr/local/bin/install-php-extensions
 # mbstring, xml already installed
 RUN install-php-extensions pdo_mysql xdebug intl gd
 
-# RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/
-
+RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/ \
+    && chmod +x /composer.phar
 ADD . /
 
 # All files created by the server will be ugo+rw and folders will be ugo+rwx

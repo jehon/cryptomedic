@@ -94,14 +94,6 @@ services:
   # Tools / commands
   #
   ################################################################
-  composer:
-    profiles:
-      - tools
-    image: composer:latest
-    working_dir: /app
-    volumes:
-      - ./:/app
-
   cypress:
     profiles:
       - tools

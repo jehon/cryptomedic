@@ -9,6 +9,6 @@ FOLDER="$(realpath --relative-to="$CR_PRJ_DIR" "$(pwd)")"
 
 docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
     --workdir "/app/$FOLDER" \
-    composer \
+    web /composer.phar \
     --no-interaction \
     "$@"
