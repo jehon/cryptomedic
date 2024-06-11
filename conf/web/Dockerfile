@@ -7,6 +7,8 @@ RUN a2enmod expires rewrite
 
 RUN rm -fr /etc/apache2/sites-enabled/*.conf
 
+RUN apt update && apt install --yes git
+
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions
 
