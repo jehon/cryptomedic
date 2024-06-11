@@ -15,6 +15,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions
 # mbstring, xml already installed
 RUN install-php-extensions pdo_mysql xdebug intl gd
 
+ENV HOME=/tmp
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/ \
     && chmod +x /composer.phar
 ADD . /
