@@ -3,6 +3,9 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-apache
 
+ENV HOME=/home/runner
+RUN mkdir -p "$HOME" && chmod a+rwx "$HOME"
+
 RUN a2enmod expires rewrite
 
 RUN rm -fr /etc/apache2/sites-enabled/*.conf
@@ -15,7 +18,6 @@ RUN chmod +x /usr/local/bin/install-php-extensions
 # mbstring, xml already installed
 RUN install-php-extensions pdo_mysql xdebug intl gd
 
-ENV HOME=/tmp
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/ \
     && chmod +x /composer.phar
 ADD . /
