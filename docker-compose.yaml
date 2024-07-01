@@ -89,6 +89,23 @@ services:
         source: conf/database/dev/
         target: /docker-entrypoint-initdb.d/
 
+  phpmyadmin:
+    # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+    image: phpmyadmin/phpmyadmin:${PHPMYADMIN_VERSION}
+    environment:
+      PMA_HOST: database
+      PMA_USER: root
+      # PMA_PASSWORD: mysql_root_password
+      # Force lang:
+      # <?php $cfg['Lang']='en';
+      PMA_USER_CONFIG_BASE64: PD9waHAgJGNmZ1snTGFuZyddPSdlbic7
+    expose:
+      - 80
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.phpmyadmin.rule=PathPrefix(`/phpmyadmin`)
+      - traefik.http.routers.phpmyadmin.middlewares=jhstriproot@docker
+
   ################################################################
   #
   # Tools / commands
