@@ -82,9 +82,9 @@ services:
     expose:
       - 3306
     volumes:
-      # - type: volume
-      #   source: database
-      #   target: /var/lib/mysql
+      - type: volume
+        source: database
+        target: /var/lib/mysql
       - type: bind
         source: conf/database/dev/
         target: /docker-entrypoint-initdb.d/
@@ -107,3 +107,6 @@ services:
     working_dir: /app
     volumes:
       - .:/app
+
+volumes:
+  database:

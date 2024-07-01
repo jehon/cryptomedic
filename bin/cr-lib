@@ -7,6 +7,7 @@ export CR_SCRIPT_DIR
 export CR_PRJ_DIR
 export CR_TMP
 export CR_REL_PATH
+export DC_PROJECT_NAME
 export SSH_KNOWN_HOSTS="$HOME/.ssh/known_hosts"
 
 export DEBIAN_FRONTEND=noninteractive
@@ -17,6 +18,8 @@ export DEBIAN_FRONTEND=noninteractive
 CR_SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 CR_PRJ_DIR="$(dirname "$CR_SCRIPT_DIR")"
 CR_TMP="$CR_PRJ_DIR/tmp"
+
+DC_PROJECT_NAME="$(docker compose config --format json | jq -r ".name")"
 
 CR_REL_PATH="$(realpath --relative-to "$CR_PRJ_DIR" "$(pwd)")"
 
@@ -81,14 +84,14 @@ progress() {
     fi
 }
 
-declare -a CR_DOCKER_ARGS=( "--no-TTY" )
+declare -a CR_DOCKER_ARGS=("--no-TTY")
 export CR_DOCKER_ARGS
-if ! docker info -f "{{println .SecurityOptions}}" | grep rootless >& /dev/null; then
+if ! docker info -f "{{println .SecurityOptions}}" | grep rootless >&/dev/null; then
     # We are in a docker rootfull environment
     # echo "Rootfull environment"
-    CR_DOCKER_ARGS+=( "--user" "$(id -u)" )
+    CR_DOCKER_ARGS+=("--user" "$(id -u)")
 fi
 
-declare -a CR_DOCKER_ARGS_RUN=( "--rm" "--quiet-pull" "--interactive=false" "--no-deps" )
-CR_DOCKER_ARGS_RUN+=( "${CR_DOCKER_ARGS[@]}" )
+declare -a CR_DOCKER_ARGS_RUN=("--rm" "--quiet-pull" "--interactive=false" "--no-deps")
+CR_DOCKER_ARGS_RUN+=("${CR_DOCKER_ARGS[@]}")
 export CR_DOCKER_ARGS_RUN
