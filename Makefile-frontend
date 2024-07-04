@@ -110,13 +110,20 @@ $(FRONTEND_PUBLISHED)/frontend-ng/index.html: \
 dev: frontend-dev
 .PHONY: frontend-dev
 frontend-dev: \
+		$(FRONTEND_PUBLISHED)/.htaccess
+
+	@mkdir -p "$(dir $@)"
+	CRYPTOMEDIC_DEV=true node_modules/.bin/webpack --watch
+	@touch "$@"
+
+dev: frontend-dev-ng
+.PHONY: frontend-dev-ng
+frontend-dev-ng: \
 		$(FRONTEND_PUBLISHED)/frontend/ng1x.html \
 		$(FRONTEND_PUBLISHED)/.htaccess
 
 	@mkdir -p "$(dir $@)"
-# node_modules/.bin/ng serve
 	node_modules/.bin/ng build --watch
-# --configuration development
 	@touch "$@"
 
 $(FRONTEND_PUBLISHED)/.htaccess: src/build.htaccess
