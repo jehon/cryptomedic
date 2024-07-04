@@ -28,7 +28,7 @@ export default function AppointmentElement({
       header={<span>{file.center}</span>}
     >
       <TwoColumns>
-        <Panel fixed label="Informations">
+        <Panel fixed label="Information">
           <IO.Date label="Date" value={file.date as Date} />
           <IO.String label="Center" value={file.center as string} />
           <IO.String label="Examiner" value={file.examiner as string} />

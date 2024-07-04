@@ -33,6 +33,21 @@ export default function BillElement({
           <span>paid: {file.getTotalAlreadyPaid()}</span>
         </>
       }
+      footer={
+        <>
+          <Panel label="Payments">
+            {file.getPayments().map((payment: Payment) => {
+              return (
+                <IO.Number
+                  key={payment.uid()}
+                  label={payment.date}
+                  value={payment.amount}
+                />
+              );
+            })}
+          </Panel>
+        </>
+      }
     >
       <TwoColumns>
         <Panel fixed label="Informations">
@@ -76,17 +91,6 @@ export default function BillElement({
         {file.items.map((line) => {
           return (
             <IO.Number key={line.key} label={line.key} value={line.value} />
-          );
-        })}
-      </Panel>
-      <Panel label="Payments">
-        {file.getPayments().map((payment: Payment) => {
-          return (
-            <IO.Number
-              key={payment.uid()}
-              label={payment.date}
-              value={payment.amount}
-            />
           );
         })}
       </Panel>

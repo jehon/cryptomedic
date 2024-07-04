@@ -17,6 +17,7 @@ export default function FilePanel({
   folder,
   header,
   children,
+  footer,
   closed,
   onUpdate
 }: {
@@ -24,6 +25,7 @@ export default function FilePanel({
   folder: Folder;
   header?: React.ReactNode;
   children: React.ReactNode;
+  footer?: React.ReactNode;
   closed?: boolean;
   onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
@@ -108,7 +110,8 @@ export default function FilePanel({
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
         <div>by {file.last_user}</div>
       </div>
-      {children}
+      <form id="file">{children}</form>
+      {footer}
     </Panel>
   );
 }
