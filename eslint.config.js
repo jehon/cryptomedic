@@ -1,7 +1,6 @@
 // @ts-check
 
 import eslint from "@eslint/js";
-import pluginCypress from "eslint-plugin-cypress/flat";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 const config = [
@@ -61,9 +60,6 @@ const config = [
     files: ["tests/cypress/**"],
     // https://github.com/cypress-io/eslint-plugin-cypress/issues/155
     // See plugin:cypress/recommended
-    plugins: {
-      cypress: pluginCypress
-    },
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -91,16 +87,6 @@ const config = [
     }
   },
   {
-    // TODO: add @testing-library/jest-dom
-    // "plugins": ["jest-dom"],
-    // "extends": ["react-app", "plugin:jest-dom/recommended"],
-    // "env": {
-    //   "node": false,
-    //   "browser": true
-    // },
-    // "rules": {
-    //   "jsx-a11y/img-redundant-alt": 0
-    // }
     files: ["legacy/react/**"],
     rules: {
       "@typescript-eslint/no-unused-vars": "off"
