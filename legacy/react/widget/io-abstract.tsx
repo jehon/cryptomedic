@@ -22,7 +22,7 @@ export default function IOAbstract<T>(
     onChange
   }: {
     renderOutput: { (value: T): React.ReactNode };
-    renderInput?: { (value: T, required?: boolean): React.ReactNode };
+    renderInput?: { (value: T): React.ReactNode };
     onChange?: () => T;
   }
 ): React.ReactNode {
@@ -37,7 +37,7 @@ export default function IOAbstract<T>(
   };
   renderInput = renderInput || renderOutput;
 
-  // All execpt read without value
+  // All except read without value
   if (!props.edit && !props.value) {
     return null;
   }
@@ -52,9 +52,7 @@ export default function IOAbstract<T>(
         }}
       ></label>
       <div className="content" data-variable={props.variable ? "variable" : ""}>
-        {props.edit
-          ? renderOutput(props.value)
-          : renderInput(props.value, props.required)}
+        {props.edit ? renderOutput(props.value) : renderInput(props.value)}
       </div>
     </div>
   );
