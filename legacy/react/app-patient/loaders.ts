@@ -86,4 +86,14 @@ export function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
     .then((json) => file.createNewInstance(json));
 }
 
+export function folderFileDelete<T extends Pojo>(file: T): Promise<Folder> {
+  // See www/api/app/Http/Controllers/FicheController.php
+  return request({
+    url: ["fiche", file.getServerRessource(), file.id],
+    method: "DELETE"
+  })
+    .then((json) => json.folder)
+    .then((json) => new Folder(json));
+}
+
 // See legacy/app-old/v1/elements/cryptomedic-data-service.js

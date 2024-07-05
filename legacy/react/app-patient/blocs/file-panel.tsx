@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";
@@ -8,7 +8,7 @@ import ActionButton, { ActionStyles } from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import Panel from "../../widget/panel";
 import Restricted from "../../widget/restricted";
-import { folderFileUnlock } from "../loaders";
+import { folderFileDelete, folderFileUnlock } from "../loaders";
 
 export type FolderUpdateCallback = (folder: Folder) => void;
 
@@ -29,6 +29,18 @@ export default function FilePanel({
   closed?: boolean;
   onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
+  const [editState, updateEditState] = useState(false);
+
+  const doUnlock = () => {
+    folderFileUnlock(file)
+      .then((file) => folder.withFile(file))
+      .then((newFolder) => onUpdate(newFolder));
+  };
+
+  const doDelete = () => {
+    folderFileDelete(file).then((folder) => onUpdate(folder));
+  };
+
   return (
     <Panel
       dataRole={file.uid()}
@@ -70,11 +82,7 @@ export default function FilePanel({
                   style={ActionStyles.Alternate}
                   buttonText="Unlock"
                   discrete={true}
-                  onOk={() =>
-                    folderFileUnlock<typeof file>(file)
-                      .then((file) => folder.withFile(file))
-                      .then((newFolder) => onUpdate(newFolder))
-                  }
+                  onOk={() => doUnlock()}
                 >
                   <div>
                     Are you sure you want to unlock the File {file.getModel()}?
@@ -84,21 +92,40 @@ export default function FilePanel({
                 </ActionConfirm>
               </Restricted>
             )
+          ) : // File is not locked
+          editState ? (
+            <>
+              <ActionButton
+                style={ActionStyles.Cancel}
+                onClick={() => updateEditState(false)}
+              />
+              <ActionConfirm
+                style={ActionStyles.Delete}
+                buttonText="Delete"
+                discrete={true}
+                onOk={() => doDelete()}
+              >
+                <div>
+                  Are you sure you want to DELETE the File {file.getModel()}?
+                </div>
+              </ActionConfirm>
+            </>
           ) : (
-            // File is not locked
-            <></>
+            <>
+              <ActionButton
+                style={ActionStyles.Edit}
+                text="Edit"
+                linkTo={[
+                  "folder",
+                  "" + folder.getId(),
+                  "file",
+                  file.getModel(),
+                  "" + file.getId(),
+                  "edit"
+                ]}
+              />
+            </>
           )}
-          <ActionButton
-            style={ActionStyles.Edit}
-            linkTo={[
-              "folder",
-              "" + folder.getId(),
-              "file",
-              file.getModel(),
-              "" + file.getId(),
-              "edit"
-            ]}
-          />
         </>
       }
     >
