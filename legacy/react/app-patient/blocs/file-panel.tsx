@@ -7,6 +7,7 @@ import { icons } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import ActionButton, { ActionStyles } from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
+import { notifySuccess } from "../../widget/notification";
 import Panel from "../../widget/panel";
 import Restricted from "../../widget/restricted";
 import { folderFileDelete, folderFileUnlock } from "../loaders";
@@ -35,15 +36,23 @@ export default function FilePanel({
   const doUnlock = () => {
     folderFileUnlock(file)
       .then((file) => folder.withFile(file))
+      .then(notifySuccess("File unlocked"))
       .then((newFolder) => onUpdate(newFolder));
   };
 
   const doSave = () => {
-    updateEditState(false);
+    Promise.resolve()
+      .then(notifySuccess("File saved"))
+      .then((f) => {
+        updateEditState(false);
+        return f;
+      });
   };
 
   const doDelete = () => {
-    folderFileDelete(file).then((folder) => onUpdate(folder));
+    folderFileDelete(file)
+      .then(notifySuccess("File deleted"))
+      .then((folder) => onUpdate(folder));
   };
 
   return (
