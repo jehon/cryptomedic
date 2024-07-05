@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";
+import Patient from "../../business/patient";
 import { icons } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import ActionButton, { ActionStyles } from "../../widget/action-button";
@@ -10,7 +11,7 @@ import Panel from "../../widget/panel";
 import Restricted from "../../widget/restricted";
 import { folderFileDelete, folderFileUnlock } from "../loaders";
 
-export type FolderUpdateCallback = (folder: Folder) => void;
+export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
 export default function FilePanel({
   file,
@@ -35,6 +36,10 @@ export default function FilePanel({
     folderFileUnlock(file)
       .then((file) => folder.withFile(file))
       .then((newFolder) => onUpdate(newFolder));
+  };
+
+  const doSave = () => {
+    updateEditState(false);
   };
 
   const doDelete = () => {
@@ -96,19 +101,29 @@ export default function FilePanel({
           editState ? (
             <>
               <ActionButton
+                style={ActionStyles.Confirm}
+                text="Save"
+                onClick={() => doSave()}
+              />
+              <ActionButton
                 style={ActionStyles.Cancel}
                 onClick={() => updateEditState(false)}
               />
-              <ActionConfirm
-                style={ActionStyles.Delete}
-                buttonText="Delete"
-                discrete={true}
-                onOk={() => doDelete()}
-              >
-                <div>
-                  Are you sure you want to DELETE the File {file.getModel()}?
-                </div>
-              </ActionConfirm>
+              {file instanceof PatientRelated &&
+                (!(file instanceof Patient) ||
+                  folder.getFilesRelatedToPatient().length == 0) && (
+                  <ActionConfirm
+                    style={ActionStyles.Delete}
+                    buttonText="Delete"
+                    discrete={true}
+                    onOk={() => doDelete()}
+                  >
+                    <div>
+                      Are you sure you want to DELETE the File {file.getModel()}
+                      ?
+                    </div>
+                  </ActionConfirm>
+                )}
             </>
           ) : (
             <>

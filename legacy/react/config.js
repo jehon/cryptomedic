@@ -42,3 +42,7 @@ export const icons = {
     Surgery: "/static/img/model_surgery.png"
   }
 };
+
+export const urls = {
+  home: "/built/frontend/ng1x.html"
+};

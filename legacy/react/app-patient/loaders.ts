@@ -86,14 +86,19 @@ export function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
     .then((json) => file.createNewInstance(json));
 }
 
-export function folderFileDelete<T extends Pojo>(file: T): Promise<Folder> {
+export function folderFileDelete<T extends Pojo>(
+  file: T
+): Promise<Folder | undefined> {
   // See www/api/app/Http/Controllers/FicheController.php
-  return request({
-    url: ["fiche", file.getServerRessource(), file.id],
-    method: "DELETE"
-  })
-    .then((json) => json.folder)
-    .then((json) => new Folder(json));
+  return (
+    request({
+      url: ["fiche", file.getServerRessource(), file.id],
+      method: "DELETE"
+    })
+      .then((json) => json.folder)
+      // TODO: Should have a better return from server when nothing remain!
+      .then((json) => (json && json.length > 0 ? new Folder(json) : undefined))
+  );
 }
 
 // See legacy/app-old/v1/elements/cryptomedic-data-service.js
