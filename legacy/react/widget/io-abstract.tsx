@@ -52,7 +52,7 @@ export default function IOAbstract<T>(
         }}
       ></label>
       <div className="content" data-variable={props.variable ? "variable" : ""}>
-        {props.edit ? renderOutput(props.value) : renderInput(props.value)}
+        {props.edit ? renderInput(props.value) : renderOutput(props.value)}
       </div>
     </div>
   );
