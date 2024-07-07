@@ -1,9 +1,11 @@
 import React from "react";
 
+import { toTitleCase } from "../utils/strings";
 import "./io.css";
 
 export type IOParams<T> = {
-  label: string;
+  name?: string;
+  label?: string;
   value: T;
   width?: number;
   edit?: boolean;
@@ -37,7 +39,7 @@ export default function IOAbstract<T>(
   };
   renderInput = renderInput || renderOutput;
 
-  // All except read without value
+  // Hide if not value and output mode
   if (!props.edit && !props.value) {
     return null;
   }
@@ -46,11 +48,10 @@ export default function IOAbstract<T>(
 
   return (
     <div className={"io" + (props.note ? " note" : "")} data-role={props.label}>
-      <label
-        dangerouslySetInnerHTML={{
-          __html: props.label + (props.required ? "*" : "")
-        }}
-      ></label>
+      <label>
+        {props.label ? props.label : toTitleCase(props.name || "")}
+        {props.required ? "*" : ""}
+      </label>
       <div className="content" data-variable={props.variable ? "variable" : ""}>
         {props.edit ? renderInput(props.value) : renderOutput(props.value)}
       </div>

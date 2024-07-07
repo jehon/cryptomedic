@@ -38,25 +38,37 @@ export default function PatientElement({
       <>
         <TwoColumns>
           <Panel fixed label="Identification">
-            <IO.Number label="Entry Year" value={file.entry_year} />
-            <IO.Number label="Entry Order" value={file.entry_order} />
-            <IO.String label="Name" value={file.name} />
-            <IO.String label="Sex" value={file.sex} />
-            <IO.Number label="Year of birth" value={file.year_of_birth} />
+            <IO.Number name="entry_year" value={file.entry_year} />
+            <IO.Number name="entry_order" value={file.entry_order} />
+            <IO.String name="name" value={file.name} />
+            <IO.String name="sex" value={file.sex} />
+            <IO.Number name="year_of_birth" value={file.year_of_birth} />
             <IO.String
               label="Age today"
               value={file.actualAge() as string}
               variable
             />
-            <IO.String label="Pathology" value={file.pathology} />
-            <IO.Text label="Comments" value={file.comments} />
+            <IO.String name="pathology" value={file.pathology} />
+            <IO.Text name="comments" value={file.comments} />
           </Panel>
           <Panel fixed label="Address">
-            <IO.String width={1} label="Phone" value={file.phone} />
-            <IO.String label="District" value={file.address_district} />
-            <IO.String label="Union" value={file.address_union} />
-            <IO.String label="Upazilla" value={file.address_upazilla} />
-            <IO.String label="Address Comments" value={file.address_comments} />
+            <IO.String name="phone" value={file.phone} width={1} />
+            <IO.String
+              name="address_district"
+              label="District"
+              value={file.address_district}
+            />
+            <IO.String
+              name="address_union"
+              label="Union"
+              value={file.address_union}
+            />
+            <IO.String
+              name="address_upazilla"
+              label="Upazilla"
+              value={file.address_upazilla}
+            />
+            <IO.String name="address_comments" value={file.address_comments} />
           </Panel>
         </TwoColumns>
       </>
