@@ -7,7 +7,7 @@ export default function IOString(options: IOParams<Optional<string>>) {
     renderOutput: (value) => <div>{value}</div>,
     renderInput: (value: Optional<string>) => (
       <div>
-        <input name={options.name} defaultValue={value as string} />
+        <input name={options.name} defaultValue={value ?? ""} />
       </div>
     )
   });
