@@ -66,7 +66,7 @@ const resultsFolder = args.results!;
 const stylesJSON = path.join(resultsFolder, "styles.json");
 const differenceFolder = path.join(resultsFolder, "differences");
 
-fs.mkdirSync(differenceFolder);
+fs.mkdirSync(differenceFolder, { recursive: true });
 
 // Add the run
 globSync("**/*.png", { cwd: screenshotsFolder }).map((f) => {
