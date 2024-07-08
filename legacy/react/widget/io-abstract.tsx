@@ -8,7 +8,6 @@ export type IOParams<T> = {
   label?: string;
   readonly?: boolean;
   value: T;
-  width?: number;
   required?: boolean;
   note?: boolean;
   left?: boolean;

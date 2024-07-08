@@ -62,7 +62,7 @@ export default function PatientElement({
             <IO.Text name="comments" value={file.comments} />
           </Panel>
           <Panel fixed label="Address">
-            <IO.String name="phone" value={file.phone} width={1} />
+            <IO.String name="phone" value={file.phone} />
             <IO.String
               name="address_district"
               label="District"
