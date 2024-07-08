@@ -1,7 +1,10 @@
-import React from "react";
+import React, { createContext, useContext } from "react";
 
 import { toTitleCase } from "../utils/strings";
 import "./io.css";
+
+// Will be initiated at higher level
+export const EditContext = createContext(false);
 
 export type IOParams<T> = {
   name?: string;
@@ -37,7 +40,8 @@ export default function IOAbstract<T>(
   };
   renderInput = renderInput || renderOutput;
 
-  const edit = location.search == "?edit" && !props.readonly;
+  // ReadOnly always prevent edit mode
+  const edit = useContext(EditContext) && !props.readonly;
 
   // Hide if not value and output mode
   if (!edit && !props.value) {

@@ -7,6 +7,7 @@ import { icons } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import ActionButton, { ActionStyles } from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
+import { EditContext } from "../../widget/io-abstract";
 import { notifySuccess } from "../../widget/notification";
 import Panel from "../../widget/panel";
 import Restricted from "../../widget/restricted";
@@ -115,7 +116,8 @@ export default function FilePanel({
                   onOk={() => doUnlock()}
                 >
                   <div>
-                    Are you sure you want to unlock the File {file.getModel()}?
+                    Are you sure you want to unlock the File {file.getModel()}
+                    ?
                     <br />
                     Anybody will then be able to edit it.
                   </div>
@@ -168,7 +170,9 @@ export default function FilePanel({
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
         <div>by {file.last_user}</div>
       </div>
-      <form id="file">{children}</form>
+      <EditContext.Provider value={editState}>
+        <form id="file">{children}</form>
+      </EditContext.Provider>
       {footer}
     </Panel>
   );
