@@ -15,7 +15,7 @@ export type IOParams<T> = {
   note?: boolean;
   left?: boolean;
   right?: boolean;
-  variable?: boolean;
+  e2eExcluded?: boolean;
   onChange?: (arg: T) => void;
 };
 
@@ -35,7 +35,7 @@ export default function IOAbstract<T>(
     note: false, // TODO: Check usage
     left: false, // TODO: Check usage
     right: false, // TODO: Check usage
-    variable: false, // TODO: Check usage
+    e2eExcluded: false, // Wether the data should be excluded from e2e
     ...props
   };
   renderInput = renderInput || renderOutput;
@@ -56,7 +56,7 @@ export default function IOAbstract<T>(
         {props.label ? props.label : toTitleCase(props.name || "")}
         {props.required ? "*" : ""}
       </label>
-      <div className="content" data-variable={props.variable ? "variable" : ""}>
+      <div className="content" data-e2e={props.e2eExcluded ? "excluded" : ""}>
         {edit ? renderInput(props.value) : renderOutput(props.value)}
       </div>
     </div>

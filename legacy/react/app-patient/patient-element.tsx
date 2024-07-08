@@ -55,7 +55,7 @@ export default function PatientElement({
             <IO.String
               label="Age today"
               value={file.actualAge() as string}
-              variable
+              e2eExcluded
               readonly
             />
             <IO.String name="pathology" value={file.pathology} />

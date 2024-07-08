@@ -21,7 +21,7 @@
 
 body[screenshot="e2e"] {
   [variable],
-  [data-variable="variable"] {
+  [data-e2e="excluded"] {
     background-color: black;
     color: black;
   }
