@@ -191,5 +191,11 @@ integration-update-playwright-browsers:
 .PHONY: integration-update-playwright-snapshots
 update: integration-update-playwright-snapshots
 integration-update-playwright-snapshots:
-	bin/cr-github-get-artifacts
 	node --import=tsx bin/cr-update-playwright-snapshots.ts
+
+.PHONY: integration-update-from-github
+integration-update-from-github:
+	bin/cr-github-get-artifacts
+	make integration-update-playwright-snapshots
+	make integration-update-references-styles-desktop
+	make integration-update-references-styles-mobile

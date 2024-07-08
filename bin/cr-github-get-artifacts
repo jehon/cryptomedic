@@ -17,14 +17,16 @@ cd "$TMP_GH"
 header_begin "Getting latest ended run"
 # https://cli.github.com/manual/gh_run_list
 # gh run list --branch main --limit 1 --workflow .github/workflows/test.yml
-RUN_ID="$( gh run list --status completed --branch main --limit 1 --workflow .github/workflows/test.yml --json databaseId --jq ".[0].databaseId" )"
+RUN_ID="$(gh run list --status completed --branch main --limit 1 --workflow .github/workflows/test.yml --json databaseId --jq ".[0].databaseId")"
+PAGER="" gh run view "$RUN_ID"
 echo "RUN_ID: $RUN_ID"
 header_end
 
 get_flavor() {
     FLAVOR="$1"
+    echo "* getting $FLAVOR"
     (
-        mkdir "${FLAVOR}"        
+        mkdir "${FLAVOR}"
         cd "${FLAVOR}"
         gh run download "$RUN_ID" --name "integration-${FLAVOR}"
     )
