@@ -47,7 +47,11 @@ export default function PatientElement({
             <IO.Number name="entry_order" value={file.entry_order} />
             <IO.String name="name" value={file.name} />
             <IO.String name="sex" value={file.sex} />
-            <IO.Number name="year_of_birth" value={file.year_of_birth} />
+            <IO.Number
+              name="year_of_birth"
+              label="Year of Birth"
+              value={file.year_of_birth}
+            />
             <IO.String
               label="Age today"
               value={file.actualAge() as string}
