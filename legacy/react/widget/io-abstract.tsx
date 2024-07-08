@@ -32,10 +32,10 @@ export default function IOAbstract<T>(
   props = {
     readonly: false,
     required: false,
-    note: false,
-    left: false,
-    right: false,
-    variable: false,
+    note: false, // TODO: Check usage
+    left: false, // TODO: Check usage
+    right: false, // TODO: Check usage
+    variable: false, // TODO: Check usage
     ...props
   };
   renderInput = renderInput || renderOutput;
