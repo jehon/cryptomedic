@@ -6,7 +6,11 @@ export default function IOString(options: IOParams<Optional<string>>) {
   return IOAbstract<Optional<string>>(options, {
     renderOutput: (value) => <div>{value}</div>,
     renderInput: (value: Optional<string>) => (
-      <input name={options.name} defaultValue={value ?? ""} />
+      <input
+        className="form-control"
+        name={options.name}
+        defaultValue={value ?? ""}
+      />
     )
   });
 }

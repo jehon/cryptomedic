@@ -18,6 +18,7 @@ export default function IONumber(
     ),
     renderInput: (value: Optional<number>) => (
       <input
+        className="form-control"
         name={options.name}
         defaultValue={(value ?? 0) + ""}
         type="number"

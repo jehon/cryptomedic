@@ -15,6 +15,7 @@ export default function IOText(options: IOParams<string>) {
     renderOutput: (value) => <pre>{value}</pre>,
     renderInput: (value: Optional<string>) => (
       <textarea
+        className="form-control"
         name={options.name}
         defaultValue={value ?? ""}
         onKeyUp={(event) => adjust(event.target as HTMLTextAreaElement)}
