@@ -38,7 +38,12 @@ export default function PatientElement({
       <>
         <TwoColumns>
           <Panel fixed label="Identification">
-            <IO.Number name="entry_year" value={file.entry_year} />
+            <IO.Number
+              name="entry_year"
+              value={file.entry_year}
+              min={1980}
+              max={2100}
+            />
             <IO.Number name="entry_order" value={file.entry_order} />
             <IO.String name="name" value={file.name} />
             <IO.String name="sex" value={file.sex} />
@@ -47,6 +52,7 @@ export default function PatientElement({
               label="Age today"
               value={file.actualAge() as string}
               variable
+              readonly
             />
             <IO.String name="pathology" value={file.pathology} />
             <IO.Text name="comments" value={file.comments} />
@@ -68,7 +74,7 @@ export default function PatientElement({
               label="Upazilla"
               value={file.address_upazilla}
             />
-            <IO.String name="address_comments" value={file.address_comments} />
+            <IO.Text name="address_comments" value={file.address_comments} />
           </Panel>
         </TwoColumns>
       </>

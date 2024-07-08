@@ -6,9 +6,9 @@ import "./io.css";
 export type IOParams<T> = {
   name?: string;
   label?: string;
+  readonly?: boolean;
   value: T;
   width?: number;
-  edit?: boolean;
   required?: boolean;
   note?: boolean;
   left?: boolean;
@@ -29,7 +29,7 @@ export default function IOAbstract<T>(
   }
 ): React.ReactNode {
   props = {
-    edit: false,
+    readonly: false,
     required: false,
     note: false,
     left: false,
@@ -39,7 +39,7 @@ export default function IOAbstract<T>(
   };
   renderInput = renderInput || renderOutput;
 
-  const edit = false;
+  const edit = location.search == "?edit" && !props.readonly;
 
   // Hide if not value and output mode
   if (!edit && !props.value) {
