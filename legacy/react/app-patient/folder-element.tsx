@@ -58,8 +58,12 @@ export default function FolderElement({
         />
       </ButtonsGroup>
       <Panel key="key-dates" label="Key dates">
-        <IO.Date label="Last seen" value={folder.getLastSeen()} />
-        <IO.Date label="Next appointment" value={folder.getNextAppoinment()} />
+        <IO.Date label="Last seen" value={folder.getLastSeen()} readonly />
+        <IO.Date
+          label="Next appointment"
+          value={folder.getNextAppoinment()}
+          readonly
+        />
       </Panel>
       <PatientElement
         key={(folder.getPatient() as Patient).uid()}
