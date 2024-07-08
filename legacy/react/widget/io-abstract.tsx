@@ -39,8 +39,10 @@ export default function IOAbstract<T>(
   };
   renderInput = renderInput || renderOutput;
 
+  const edit = false;
+
   // Hide if not value and output mode
-  if (!props.edit && !props.value) {
+  if (!edit && !props.value) {
     return null;
   }
 
@@ -53,7 +55,7 @@ export default function IOAbstract<T>(
         {props.required ? "*" : ""}
       </label>
       <div className="content" data-variable={props.variable ? "variable" : ""}>
-        {props.edit ? renderInput(props.value) : renderOutput(props.value)}
+        {edit ? renderInput(props.value) : renderOutput(props.value)}
       </div>
     </div>
   );
