@@ -16,10 +16,7 @@ export default function IODate(
 ) {
   return IOAbstract(options, {
     renderOutput: (value) => (
-      <div>
-        {typeof value}
-        {date2HumanString(normalizeDate(value))}
-      </div>
+      <div>{date2HumanString(normalizeDate(value))}</div>
     ),
     renderInput: (value) => (
       <input
