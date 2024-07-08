@@ -52,7 +52,11 @@ export default function IOAbstract<T>(
 
   return (
     <div
-      className={"io " + (props.note ? "io-note " : "")}
+      className={
+        "io " +
+        (props.note ? "io-note " : "") +
+        (edit ? "io-input" : "io-output")
+      }
       data-role={props.label}
     >
       <label>
