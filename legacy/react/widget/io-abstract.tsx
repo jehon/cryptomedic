@@ -51,7 +51,10 @@ export default function IOAbstract<T>(
   // TODO: handle left / right
 
   return (
-    <div className={"io" + (props.note ? " note" : "")} data-role={props.label}>
+    <div
+      className={"io " + (props.note ? "io-note " : "")}
+      data-role={props.label}
+    >
       <label>
         {props.label ? props.label : toTitleCase(props.name || "")}
         {props.required ? "*" : ""}

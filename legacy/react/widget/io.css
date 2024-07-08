@@ -8,10 +8,6 @@
   flex-wrap: wrap;
   justify-content: space-between;
 
-  &.note {
-    font-size: smaller;
-  }
-
   & > label {
     width: 25%;
     text-align: right;
@@ -61,5 +57,9 @@
         padding: 5px;
       }
     }
+  }
+
+  &.io-note {
+    font-size: smaller;
   }
 }
