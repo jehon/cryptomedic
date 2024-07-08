@@ -33,11 +33,27 @@ export default function FilePanel({
 }): React.ReactNode {
   const [editState, updateEditState] = useState(false);
 
+  const goEdit = (file: Pojo) => {
+    if (location.search == "?dev") {
+      updateEditState(true);
+      return;
+    }
+    location.hash = [
+      "folder",
+      "" + folder.getId(),
+      "file",
+      file.getModel(),
+      "" + file.getId(),
+      "edit"
+    ].join("/");
+  };
+
   const doUnlock = () => {
     folderFileUnlock(file)
       .then((file) => folder.withFile(file))
       .then(notifySuccess("File unlocked"))
-      .then((newFolder) => onUpdate(newFolder));
+      .then((newFolder) => onUpdate(newFolder))
+      .then(() => goEdit(file));
   };
 
   const doSave = () => {
@@ -135,20 +151,11 @@ export default function FilePanel({
                 )}
             </>
           ) : (
-            <>
-              <ActionButton
-                style={ActionStyles.Edit}
-                text="Edit"
-                linkTo={[
-                  "folder",
-                  "" + folder.getId(),
-                  "file",
-                  file.getModel(),
-                  "" + file.getId(),
-                  "edit"
-                ]}
-              />
-            </>
+            <ActionButton
+              style={ActionStyles.Edit}
+              text="Edit"
+              onClick={() => goEdit(file)}
+            />
           )}
         </>
       }
