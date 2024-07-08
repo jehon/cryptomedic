@@ -34,7 +34,7 @@ export default function SurgeryElement({
     >
       <TwoColumns>
         <Panel fixed label="Informations">
-          <IO.Date label="Date" value={file.date as Date} />
+          <IO.Date label="Date" value={file.date} />
           <IO.Text
             label="Comments"
             value={file.follow_up_complication as string}

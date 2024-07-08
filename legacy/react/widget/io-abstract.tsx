@@ -14,18 +14,17 @@ export type IOParams<T> = {
   left?: boolean;
   right?: boolean;
   variable?: boolean;
+  onChange?: (arg: T) => void;
 };
 
 export default function IOAbstract<T>(
   props: IOParams<T>,
   {
     renderOutput,
-    renderInput,
-    onChange
+    renderInput
   }: {
     renderOutput: { (value: T): React.ReactNode };
     renderInput?: { (value: T): React.ReactNode };
-    onChange?: () => T;
   }
 ): React.ReactNode {
   props = {

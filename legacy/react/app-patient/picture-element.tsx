@@ -24,7 +24,7 @@ export default function PictureElement({
       <TwoColumns>
         <Panel fixed label="Informations">
           <IO.String label="Type" value={file.type as string} />
-          <IO.Date label="Date" value={file.date as Date} />
+          <IO.Date label="Date" value={file.date} />
           <IO.String label="File" value={file.file as string} />
           <IO.Text label="Comments" value={file.comments as string} />
         </Panel>

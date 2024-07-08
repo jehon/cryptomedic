@@ -3,13 +3,14 @@ import { Optional } from "../utils/generic-types";
 import IOAbstract, { IOParams } from "./io-abstract";
 
 export default function IOString(options: IOParams<Optional<string>>) {
-  return IOAbstract<Optional<string>>(options, {
+  return IOAbstract(options, {
     renderOutput: (value) => <div>{value}</div>,
-    renderInput: (value: Optional<string>) => (
+    renderInput: (value) => (
       <input
         className="form-control"
         name={options.name}
         defaultValue={value ?? ""}
+        onBlur={(evt) => options.onChange && options.onChange(evt.target.value)}
       />
     )
   });

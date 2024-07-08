@@ -2,12 +2,12 @@ import React from "react";
 
 import Consult from "../../business/abstracts/consult";
 
-import TwoColumns from "../../widget/two-columns";
-import Panel from "../../widget/panel";
 import IO from "../../widget/io";
+import Panel from "../../widget/panel";
+import TwoColumns from "../../widget/two-columns";
 
-import { roundTo } from "../../utils/strings";
 import { yearsToYM } from "../../utils/date";
+import { roundTo } from "../../utils/strings";
 
 export default function ConsultAbstractIntroduction({
   file
@@ -17,7 +17,7 @@ export default function ConsultAbstractIntroduction({
   return (
     <TwoColumns>
       <Panel fixed label="Informations">
-        <IO.Date label="Date" value={file.date as Date} />
+        <IO.Date label="Date" value={file.date} />
         <IO.String label="Examiner" value={file.examiner as string} />
         <IO.List label="Center" value={file.center as string} />
         <IO.Function

@@ -29,7 +29,7 @@ export default function AppointmentElement({
     >
       <TwoColumns>
         <Panel fixed label="Information">
-          <IO.Date label="Date" value={file.date as Date} />
+          <IO.Date label="Date" value={file.date} />
           <IO.String label="Center" value={file.center as string} />
           <IO.String label="Examiner" value={file.examiner as string} />
         </Panel>
