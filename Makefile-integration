@@ -197,11 +197,11 @@ integration-update-playwright-snapshots:
 integration-update-from-github:
 	bin/cr-github-get-artifacts
 	@echo
-	@echo "** playwright-snapshots"
-	make integration-update-playwright-snapshots
-	@echo
 	@echo "** styles-desktop"
 	make integration-update-references-styles-desktop
 	@echo
 	@echo "** styles-mobile"
 	make integration-update-references-styles-mobile
+	@echo
+	@echo "** playwright-snapshots"
+	make integration-update-playwright-snapshots
