@@ -54,6 +54,19 @@
         padding: 5px;
       }
     }
+
+    /* For radio buttons specifically */
+    & > .align {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      & > input[type="radio"] {
+        height: 2em;
+        width: 20px;
+        margin-right: 5px;
+      }
+    }
   }
 
   &.io-note {
