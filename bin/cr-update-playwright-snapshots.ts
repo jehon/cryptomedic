@@ -9,14 +9,16 @@ const outputDir = "tmp/integration/playwright/test-results/";
 const OS = "linux";
 
 //
-// tests/e2e  /login.spec.ts-snapshots/login-and-go-to-home-1-Firefox-linux.png
-// {sourceDir}
+// How to map the full path into variables?
+//
+// ? tests/e2e  /login.spec.ts-snapshots/login-and-go-to-home-1-Firefox-linux.png
+// = {sourceDir}/{snapshotsDir}         /{snapshots[]}
 //
 //   ==> login.spec.ts-snapshots/login-and-go-to-home-1-Firefox-linux.png
 //
-//   login     .spec.ts
-//   {filename        }
-//   {testName}
+// ? |login     .spec.ts
+// = |{filename        }
+// = |{testName}.spec.ts
 //
 //   {testName}.spec.ts-snapshots/{name}-{browser}-{os}.png
 //   {filename        }
@@ -56,37 +58,47 @@ const testsList: OriginalTest[] = await Promise.all(
 //  {est}-{testName          }-{project}/
 //
 const testsResultList = await Promise.all(
-  (await fs.promises.readdir(outputDir)).map(async (dirname) => {
-    const testName = testsList.filter((t) => dirname.startsWith(t.testName))[0]
-      .testName;
-    const project = projectsList.filter((p) => dirname.endsWith(p))[0];
-    const subtestName = dirname
-      .replace(testName + "-", "")
-      .replace("-" + project, "");
+  (await fs.promises.readdir(outputDir))
+    .map(async (dirname) => {
+      if (dirname.startsWith(".")) {
+        return undefined;
+      }
 
-    const snapshots = (await fs.promises.readdir(path.join(outputDir, dirname)))
-      .filter((n) => n.includes("-actual"))
-      .map((filename) => {
-        const basename = filename.replace("-actual.png", "");
-        const matchingTest: OriginalTest = testsList.filter(
-          (to) => to.testName == testName
-        )[0];
-        const expectedPath = path.join(
-          matchingTest.snapshotsDir,
-          basename + "-" + project + "-" + OS + ".png"
-        );
-        return {
-          filepath: path.join(outputDir, dirname, filename),
-          filename,
-          basename,
-          testName,
-          matchingTest,
-          expectedPath
-        };
-      });
-    return { dirname, testName, subtestName, project, snapshots };
-  })
+      const testName = testsList.filter((t) =>
+        dirname.startsWith(t.testName)
+      )[0].testName;
+      const project = projectsList.filter((p) => dirname.endsWith(p))[0];
+      const subtestName = dirname
+        .replace(testName + "-", "")
+        .replace("-" + project, "");
+
+      const snapshots = (
+        await fs.promises.readdir(path.join(outputDir, dirname))
+      )
+        .filter((n) => n.includes("-actual"))
+        .map((filename) => {
+          const basename = filename.replace("-actual.png", "");
+          const matchingTest: OriginalTest = testsList.filter(
+            (to) => to.testName == testName
+          )[0];
+          const expectedPath = path.join(
+            matchingTest.snapshotsDir,
+            basename + "-" + project + "-" + OS + ".png"
+          );
+          return {
+            filepath: path.join(outputDir, dirname, filename),
+            filename,
+            basename,
+            testName,
+            matchingTest,
+            expectedPath
+          };
+        });
+      return { dirname, testName, subtestName, project, snapshots };
+    })
+    .filter((v) => v == undefined) // Filter undefined/ null
 );
+// console.log({ testsList, testsResultList });
 
 const oneToOne = testsResultList
   .map((tr) =>
