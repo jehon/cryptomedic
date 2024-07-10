@@ -101,7 +101,7 @@
     "stylelint": "16.6.1",
     "stylelint-config-standard": "36.0.1",
     "stylelint-no-unsupported-browser-features": "8.0.1",
-    "ts-jest": "29.2.1",
+    "ts-jest": "29.2.2",
     "ts-loader": "9.5.1",
     "tsx": "4.16.2",
     "typescript-eslint": "7.16.0",
