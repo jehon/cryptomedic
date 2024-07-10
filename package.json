@@ -66,7 +66,7 @@
     "@types/string": "0.0.34",
     "axios-mock-adapter": "1.22.0",
     "babel-plugin-transform-commonjs": "1.1.6",
-    "browserslist": "4.23.1",
+    "browserslist": "4.23.2",
     "chalk": "5.3.0",
     "css-loader": "7.1.2",
     "escape-string-regexp": "5.0.0",
