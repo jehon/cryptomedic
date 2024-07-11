@@ -34,7 +34,9 @@ export function buildSelect(
       onBlur={(evt) => onChange(evt.target.value)}
     >
       {Object.entries(list).map(([v, k]) => (
-        <option value={v}>{k}</option>
+        <option key={k} value={v}>
+          {k}
+        </option>
       ))}
     </select>
   );
@@ -46,7 +48,7 @@ export function buildRadios(
   onChange: (val: string) => void = () => {}
 ) {
   return Object.entries(list).map(([v, k]) => (
-    <div className="align">
+    <div className="align" key={k}>
       <input
         className="form-control"
         name={name}
