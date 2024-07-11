@@ -1,5 +1,5 @@
-export function dbg(data) {
+export function promiseLog(data) {
   // eslint-disable-next-line no-console
-  console.log(data);
+  console.trace(data);
   return data;
 }
