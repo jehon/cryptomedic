@@ -18,7 +18,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions
 
 # mbstring, xml already installed
-RUN install-php-extensions pdo_mysql xdebug intl gd
+RUN install-php-extensions pdo_mysql xdebug intl gd zip
 
 #
 # All files created by the server will be ugo+rw and folders will be ugo+rwx

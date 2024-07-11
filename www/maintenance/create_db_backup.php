@@ -187,6 +187,27 @@ fwrite($fileHandler, "-- Generating backup done\n");
 fwrite($fileHandler, "\n");
 fclose($fileHandler);
 
+/**
+ * Zipping the file
+ */
+echo "\n";
+$zipFile = $backup_file . ".zip";
+echo "Zipping the file to $zipFile\n";
+echo "\n";
+if (file_exists($zipFile)) {
+    unlink($zipFile);
+}
+
+$zip = new ZipArchive();
+if ($zip->open($zipFile, ZipArchive::CREATE) === true) {
+    $zip->addFile($backup_file);
+    $zip->close();
+}
+unlink($backup_file);
+echo "\n";
+echo "Zipping the file done\n";
+echo "\n";
+
 echo "\n";
 echo "\n";
 echo "Generating backup done\n";
