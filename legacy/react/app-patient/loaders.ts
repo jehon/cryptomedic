@@ -101,4 +101,12 @@ export function folderFileDelete<T extends Pojo>(
   );
 }
 
+export function folderFileSave<T extends Pojo>(file: T, data: any): Promise<T> {
+  return request({
+    url: ["fiche", file.getServerRessource(), file.id],
+    method: "POST",
+    data
+  }).then((json) => json.folder);
+}
+
 // See legacy/app-old/v1/elements/cryptomedic-data-service.js
