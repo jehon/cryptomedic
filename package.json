@@ -49,7 +49,7 @@
     "@angular-devkit/build-angular": "17.3.8",
     "@angular/cli": "17.3.8",
     "@angular/compiler-cli": "17.3.11",
-    "@babel/cli": "7.24.7",
+    "@babel/cli": "7.24.8",
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
     "@eslint/js": "8.57.0",
