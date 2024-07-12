@@ -26,6 +26,10 @@ export default class ConsultClubfoot extends Consult {
     return model;
   }
 
+  getTechnicalName() {
+    return "consult_clubfoot";
+  }
+
   // Legacy
   getServerRessource() {
     return "clubfeet";

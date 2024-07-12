@@ -30,7 +30,7 @@ context("Actions", () => {
       getByDataRole("summary")
         .should("be.visible")
         .within(() => {
-          getByDataRole("Patient-1")
+          getByDataRole("patient.1")
             .should("be.visible")
             .within(() => {
               getByDataRole("header")

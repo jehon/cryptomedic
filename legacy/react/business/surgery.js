@@ -12,6 +12,10 @@ export default class Surgery extends Timed {
     return model;
   }
 
+  getTechnicalName() {
+    return "surgery";
+  }
+
   // Legacy
   getServerRessource() {
     return "surgeries";

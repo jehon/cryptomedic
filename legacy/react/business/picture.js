@@ -12,6 +12,10 @@ export default class Picture extends PatientRelated {
     return model;
   }
 
+  getTechnicalName() {
+    return "picture";
+  }
+
   type;
   file;
   date;

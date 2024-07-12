@@ -12,6 +12,10 @@ export default class Price extends Pojo {
     return model;
   }
 
+  getTechnicalName() {
+    return "price";
+  }
+
   // Legacy
   static getBaseUrl() {
     return "admin/prices";

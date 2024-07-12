@@ -12,6 +12,10 @@ export default class Payment extends Pojo {
     return model;
   }
 
+  getTechnicalName() {
+    return "payment";
+  }
+
   bill_id;
   date;
   amount;

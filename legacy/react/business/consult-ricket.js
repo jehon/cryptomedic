@@ -12,6 +12,10 @@ export default class ConsultRicket extends Consult {
     return model;
   }
 
+  getTechnicalName() {
+    return "consult_ricket";
+  }
+
   cross_left_T;
   right_leg;
   pain;

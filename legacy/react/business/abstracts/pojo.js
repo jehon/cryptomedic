@@ -40,6 +40,10 @@ export default class Pojo {
       .requestWithData(data);
   }
 
+  getTechnicalName() {
+    return "pojo";
+  }
+
   id;
   created_at;
   updated_at;
@@ -69,7 +73,7 @@ export default class Pojo {
   }
 
   uid() {
-    return `${this.getModel()}-${this.id}`;
+    return `${this.getTechnicalName()}.${this.id}`;
   }
 
   // TODO: abstract

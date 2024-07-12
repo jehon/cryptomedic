@@ -12,14 +12,17 @@ test("with data loading at construction time", function () {
     id: 123,
     created_at: new Date(),
     updated_at: new Date(),
-    last_user: "data1"
+    last_user: "data1",
+    getTechnicalName() {
+      return "data";
+    }
   });
 
   expect(data.id).toBe(123);
 
   data.id = 123;
   data.getModel = () => "Data";
-  expect(data.uid()).toBe("Data-123");
+  expect(data.uid()).toBe("data.123");
 });
 
 test("would interpret notSet correctly", function () {

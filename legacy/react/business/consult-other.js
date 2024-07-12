@@ -12,6 +12,10 @@ export default class ConsultOther extends Consult {
     return model;
   }
 
+  getTechnicalName() {
+    return "consult_other";
+  }
+
   side;
   joints_or_bones_affected;
   deformity;

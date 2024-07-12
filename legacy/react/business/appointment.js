@@ -12,6 +12,10 @@ export default class Appointment extends PatientRelated {
     return model;
   }
 
+  getTechnicalName() {
+    return "appointment";
+  }
+
   // We could not inherit from Timed because Timed implies a date in the past
 
   examiner;

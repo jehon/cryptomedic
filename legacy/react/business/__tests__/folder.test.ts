@@ -32,11 +32,11 @@ test("should have loaded Mock data", () => {
 });
 
 test("should give the patient", function () {
-  expect(f.getByUid("Patient")).toBeInstanceOf(Patient);
+  expect(f.getByUid("patient.1")).toBeInstanceOf(Patient);
   expect(f.getPatient()).toBeInstanceOf(Patient);
 });
 
-test("should instanciate classes", () => {
+test("should instantiate classes", () => {
   expect(f.getPatient()).toBeInstanceOf(Patient);
   expect(f.getPatient().id).toBe(1);
 
@@ -60,14 +60,14 @@ test("should instanciate classes", () => {
   expect(() => Folder.create(f, "AnythingInvalid", {})).toThrow();
 });
 
-test("should query specific element (Otherconsult 1)", () => {
+test("should query specific element (consult_other.1)", () => {
   expect(f.getByTypeAndId(ConsultOther, 1)).toBeInstanceOf(ConsultOther);
   expect(f.getByTypeAndId(ConsultOther, 1)?.id).toBe(1);
 
-  expect(f.getByUid("OtherConsult-1")?.id).toBe(1);
+  expect(f.getByUid("consult_other.1")?.id).toBe(1);
 });
 
-test("should return null if element is not found (Otherconsult 0)", () => {
+test("should return null if element is not found (consult_other.0)", () => {
   expect(f.getByTypeAndId(ConsultOther, 0)).toBeNull();
 });
 
@@ -230,7 +230,7 @@ test("getLastSeen", function () {
 
 test("Copy with new file", function () {
   expect(f.getId()).toBe("1");
-  const fap = f.getByUid("Appointment-2");
+  const fap = f.getByUid("appointment.2");
   expect(fap).toBeInstanceOf(Appointment);
   expect(fap.purpose).toBe(null);
 
@@ -238,13 +238,13 @@ test("Copy with new file", function () {
     new Appointment({ id: 2, examiner: "test", purpose: "test" })
   );
   expect(f2).toBeInstanceOf(Folder);
-  const fap2 = f2.getByUid("Appointment-2");
+  const fap2 = f2.getByUid("appointment.2");
   expect(fap2).toBeInstanceOf(Appointment);
   expect(fap2.purpose).toBe("test");
   expect(fap2.purpose).toBe("test");
 
   // Initial
-  const fap3 = f.getByUid("Appointment-2");
+  const fap3 = f.getByUid("appointment.2");
   expect(fap3).toBeInstanceOf(Appointment);
   expect(fap3.purpose).toBe(null);
 });

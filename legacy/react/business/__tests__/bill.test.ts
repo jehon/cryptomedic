@@ -18,7 +18,7 @@ test("should give the correct model", function () {
 });
 
 test("with folder1", function () {
-  const b = f.getByUid("Bill-1") as Bill;
+  const b = f.getByUid("bill.1") as Bill;
   expect(b.getId()).toBe(1);
 
   // consult_CDC_consultation_physio

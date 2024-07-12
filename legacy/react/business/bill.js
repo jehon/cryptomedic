@@ -14,6 +14,10 @@ export default class Bill extends Timed {
     return model;
   }
 
+  getTechnicalName() {
+    return "bill";
+  }
+
   getRelated() {
     return {
       Payment: "bill_id"
