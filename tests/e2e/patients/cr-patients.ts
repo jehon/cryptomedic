@@ -16,7 +16,6 @@ export async function crPatientFile(
   page: Page,
   patient_id: string | number,
   uuid: string = `patient.${patient_id}`
-  //   only: boolean = true
 ) {
   await crPatientInit(page, `/patients/${patient_id}#${uuid}`);
   await expect(page.getByTestId(`${uuid}-open`)).toBeVisible();
