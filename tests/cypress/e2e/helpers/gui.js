@@ -26,7 +26,7 @@ export function getByDataRole(dataRole) {
 }
 
 export function getByTestId(testId) {
-  return cy.get(`[data-test-id="${testId}"]`);
+  return cy.get(`[data-testid="${testId}"]`);
 }
 
 export function expectFieldContain(field, value) {

@@ -47,7 +47,7 @@ export default function FolderElement({
   return (
     <div
       data-role="summary"
-      data-test-id={"folder-" + folder.getId()}
+      data-testid={"folder-" + folder.getId()}
       style={{ width: defaultWidthScreen, margin: "0 auto" }}
     >
       <ButtonsGroup>
