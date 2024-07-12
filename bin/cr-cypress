@@ -19,11 +19,11 @@ run_cypress_raw() {
         --volume "$CR_PRJ_DIR:/workdir" \
         --workdir /workdir/tests \
         --env HOME=/root \
-        -e DISPLAY \
-        -v /tmp/.X11-unix:/tmp/.X11-unix \
         --entrypoint "cypress" \
         cypress \
         "$@"
+    #        -e DISPLAY \
+    #        -v /tmp/.X11-unix:/tmp/.X11-unix \
 }
 
 run_cypress() {
