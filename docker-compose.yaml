@@ -78,7 +78,7 @@ services:
       start_period: 5s
       interval: 1s
       timeout: 1s
-      retries: 20
+      retries: 30
     expose:
       - 3306
     volumes:
