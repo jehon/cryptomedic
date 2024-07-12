@@ -52,7 +52,7 @@ export default function ctrl_folder($scope, $routeParams) {
    *  '/folder/123/file/Bills/456       view the sub file
    *  '/folder/123/file/Bills/456/edit  edit the sub file
    *  '/folder/123/file/Bills           add a bill
-   *  '/folder/123/summary
+   *  '/folder/123/summary/*            REACT
    *  '/folder/123/graphics
    *  '/folder/123/addfile
    *
