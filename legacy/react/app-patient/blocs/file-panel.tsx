@@ -162,7 +162,7 @@ export default function FilePanel({
         </>
       }
     >
-      <div className="technical">
+      <div className="technical" test-dataid={file.uid() + "-open"}>
         <div>
           {file.getModel()}#{file.id}
         </div>

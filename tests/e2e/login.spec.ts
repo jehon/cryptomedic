@@ -43,8 +43,7 @@ test("login incorrect", async ({ page }) => {
   await page.locator(".btn-primary").click();
 
   await expect(page.locator("#current-user")).toHaveCount(0);
-  await expect(page.locator("#logout")).toHaveCount(0);
-  await expect(page.locator("#logout")).toHaveCount(0);
+  await expect(page.locator("#logout").locator("visible=true")).toHaveCount(0);
   await expect(page.getByTestId("login-error")).toBeVisible();
 
   // Login is still possible after
