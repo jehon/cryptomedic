@@ -10,9 +10,9 @@ test("login and go to home", async ({ page }) => {
 
   await page.waitForURL(/\/login/);
   await expect(page.locator("#current-user")).toHaveCount(0);
-  await expect(page.locator("#logout")).toHaveCount(0);
+  await expect(page.locator("#logout").locator("visible=true")).toHaveCount(0);
 
-  await page.getByLabel("Username").fill(LOGINS.RO);
+  await page.locator("input[name='username']").fill(LOGINS.RO);
   await page.getByLabel("Password").fill(PASSWORD);
 
   await expect(page).toHaveScreenshot();
@@ -34,11 +34,11 @@ test("login incorrect", async ({ page }) => {
 
   await page.waitForURL(/\/login/);
   await expect(page.locator("#current-user")).toHaveCount(0);
-  await expect(page.locator("#logout")).toHaveCount(0);
+  await expect(page.locator("#logout").locator("visible=true")).toHaveCount(0);
 
   // Incorrect login
 
-  await page.getByLabel("Username").fill(LOGINS.RO);
+  await page.locator("[name='username']").fill(LOGINS.RO);
   await page.getByLabel("Password").fill("incorrect");
   await page.locator(".btn-primary").click();
 
