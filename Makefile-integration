@@ -173,11 +173,11 @@ integration-test-playwright-styles: $(INTEGRATION_TEST_TMP)/playwright/.tested
 	@true
 
 .PHONY: integration-test-playwright-headed
-integration-test-playwright-headed: \
+integration-test-playwright-ui: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(HOME)/.cache/ms-playwright
 
-	node_modules/.bin/playwright test --headed
+	node_modules/.bin/playwright test --ui
 
 $(HOME)/.cache/ms-playwright:
 	node_modules/.bin/playwright install
