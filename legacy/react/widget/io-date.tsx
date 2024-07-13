@@ -18,8 +18,9 @@ export default function IODate(
     renderOutput: (value) => (
       <div>{date2HumanString(normalizeDate(value))}</div>
     ),
-    renderInput: (value) => (
+    renderInput: (uuid: string, value) => (
       <input
+        id={uuid}
         className="form-control"
         name={options.name}
         defaultValue={(value ?? 0) + ""}

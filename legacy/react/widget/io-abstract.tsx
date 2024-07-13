@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-
+import generateUUID from "../utils/generate-uuid";
 import { toTitleCase } from "../utils/strings";
 import "./io.css";
 
@@ -26,7 +26,7 @@ export default function IOAbstract<T>(
     renderInput
   }: {
     renderOutput: { (value: T): React.ReactNode };
-    renderInput?: { (value: T): React.ReactNode };
+    renderInput?: { (uuid: string, value: T): React.ReactNode };
   }
 ): React.ReactNode {
   props = {
@@ -38,7 +38,11 @@ export default function IOAbstract<T>(
     e2eExcluded: false, // Wether the data should be excluded from e2e
     ...props
   };
-  renderInput = renderInput || renderOutput;
+
+  if (!renderInput) {
+    renderInput = (uuid: string, value: T): React.ReactNode =>
+      renderOutput(value);
+  }
 
   // ReadOnly always prevent edit mode
   const edit = useContext(EditContext) && !props.readonly;
@@ -50,6 +54,7 @@ export default function IOAbstract<T>(
 
   // TODO: handle left / right
 
+  const uuid = generateUUID();
   return (
     <div
       className={
@@ -59,12 +64,12 @@ export default function IOAbstract<T>(
       }
       data-role={props.label}
     >
-      <label>
+      <label htmlFor={uuid}>
         {props.label ? props.label : toTitleCase(props.name || "")}
         {props.required ? "*" : ""}
       </label>
       <div className="content" data-e2e={props.e2eExcluded ? "excluded" : ""}>
-        {edit ? renderInput(props.value) : renderOutput(props.value)}
+        {edit ? renderInput(uuid, props.value) : renderOutput(props.value)}
       </div>
     </div>
   );

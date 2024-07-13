@@ -21,6 +21,7 @@ export function canonizeList(
 }
 
 export function buildSelect(
+  uuid: string,
   list: Record<string, string>,
   value: string,
   name: string,
@@ -28,6 +29,7 @@ export function buildSelect(
 ) {
   return (
     <select
+      id={uuid}
       className="form-control"
       name={name}
       defaultValue={value ?? ""}
@@ -42,14 +44,16 @@ export function buildSelect(
   );
 }
 export function buildRadios(
+  uuid: string,
   list: Record<string, string>,
   value: string,
   name: string,
   onChange: (val: string) => void = () => {}
 ) {
-  return Object.entries(list).map(([v, k]) => (
+  return Object.entries(list).map(([v, k], i) => (
     <div className="align" key={k}>
       <input
+        id={uuid + "." + i}
         className="form-control"
         name={name}
         defaultChecked={value === k}
@@ -57,7 +61,7 @@ export function buildRadios(
         onBlur={(evt) => onChange(k)}
         type="radio"
       />
-      <span>{v}</span>
+      <label htmlFor={uuid + "." + i}>{v}</label>
     </div>
   ));
 }
@@ -75,9 +79,21 @@ export default function IOList(
 
   return IOAbstract<Optional<string>>(options, {
     renderOutput: (value) => <div>{value}</div>,
-    renderInput: (value) =>
+    renderInput: (uuid: string, value) =>
       Object.keys(list).length > 4
-        ? buildSelect(list, value ?? "", options.name ?? "", options.onChange)
-        : buildRadios(list, value ?? "", options.name ?? "", options.onChange)
+        ? buildSelect(
+            uuid,
+            list,
+            value ?? "",
+            options.name ?? "",
+            options.onChange
+          )
+        : buildRadios(
+            uuid,
+            list,
+            value ?? "",
+            options.name ?? "",
+            options.onChange
+          )
   });
 }

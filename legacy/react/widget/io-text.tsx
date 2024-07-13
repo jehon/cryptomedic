@@ -13,8 +13,9 @@ export default function IOText(options: IOParams<StringText>) {
 
   return IOAbstract(options, {
     renderOutput: (value) => <pre>{value}</pre>,
-    renderInput: (value) => (
+    renderInput: (uuid: string, value) => (
       <textarea
+        id={uuid}
         className="form-control"
         name={options.name}
         defaultValue={value ?? ""}

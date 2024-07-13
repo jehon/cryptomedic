@@ -24,8 +24,9 @@ export default function IONumber(
           : "" + value}
       </div>
     ),
-    renderInput: (value: Optional<number>) => (
+    renderInput: (uuid: string, value: Optional<number>) => (
       <input
+        id={uuid}
         className="form-control"
         name={options.name}
         defaultValue={(value ?? 0) + ""}

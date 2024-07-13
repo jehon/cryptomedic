@@ -5,8 +5,9 @@ import IOAbstract, { IOParams } from "./io-abstract";
 export default function IOString(options: IOParams<Optional<string>>) {
   return IOAbstract(options, {
     renderOutput: (value) => <div>{value}</div>,
-    renderInput: (value) => (
+    renderInput: (uuid: string, value) => (
       <input
+        id={uuid}
         className="form-control"
         name={options.name}
         defaultValue={value ?? ""}
