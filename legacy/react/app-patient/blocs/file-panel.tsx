@@ -162,7 +162,7 @@ export default function FilePanel({
         </>
       }
     >
-      <div className="technical" data-testid={file.uid() + "-open"}>
+      <div className="technical">
         <div>
           {file.getModel()}#{file.id}
         </div>
@@ -171,7 +171,9 @@ export default function FilePanel({
         <div>by {file.last_user}</div>
       </div>
       <EditContext.Provider value={editState}>
-        <form id="file">{children}</form>
+        <form id="file" data-testid={"file-" + file.uid() + "-form"}>
+          {children}
+        </form>
       </EditContext.Provider>
       {footer}
     </Panel>
