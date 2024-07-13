@@ -34,18 +34,38 @@ export default function SurgeryElement({
     >
       <TwoColumns>
         <Panel fixed label="Informations">
-          <IO.Date label="Date" value={file.date} />
+          <IO.Date name="date" value={file.date} />
           <IO.Text
-            label="Comments"
+            name="follow_up_complication"
             value={file.follow_up_complication as string}
           />
         </Panel>
         <Panel fixed label="Report">
-          <IO.String label="File" value={file.report_diagnostic as string} />
-          <IO.String label="File" value={file.report_surgeon as string} />
-          <IO.String label="File" value={file.report_side_right as string} />
-          <IO.String label="File" value={file.report_side_left as string} />
-          <IO.String label="File" value={file.report_procedure as string} />
+          <IO.String
+            name="report_diagnostic"
+            label="Diagnostic"
+            value={file.report_diagnostic as string}
+          />
+          <IO.String
+            name="report_surgeon"
+            label="Surgeon"
+            value={file.report_surgeon as string}
+          />
+          <IO.String
+            name="report_side_right"
+            label="Side Right"
+            value={file.report_side_right as string}
+          />
+          <IO.String
+            name="report_side_left"
+            label="Side Left"
+            value={file.report_side_left as string}
+          />
+          <IO.String
+            name="report_procedure"
+            label="Procedure"
+            value={file.report_procedure as string}
+          />
         </Panel>
       </TwoColumns>
     </FilePanel>

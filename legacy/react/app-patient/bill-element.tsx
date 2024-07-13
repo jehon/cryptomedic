@@ -90,7 +90,7 @@ export default function BillElement({
       <Panel label="Bill Lines">
         {file.items.map((line) => {
           return (
-            <IO.Number key={line.key} label={line.key} value={line.value} />
+            <IO.Number key={line.key} name={line.key} value={line.value} />
           );
         })}
       </Panel>
