@@ -66,7 +66,8 @@ integration-test-open: $(INTEGRATION_BUILT_MARK)
 update: integration-update-references-styles
 integration-update-references-styles: \
 	integration-update-references-styles-mobile \
-	integration-update-references-styles-desktop 
+	integration-update-references-styles-desktop \
+	integration-update-playwright-snapshots
 
 ##############################
 #
