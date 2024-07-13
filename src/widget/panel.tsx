@@ -11,7 +11,8 @@ export default function Panel(
     actions,
     children,
     fixed,
-    dataRole
+    dataRole,
+    onToggle
   }: {
     header?: React.ReactNode;
     label?: string;
@@ -20,13 +21,15 @@ export default function Panel(
     fixed?: boolean;
     children: React.ReactNode;
     dataRole?: string;
+    onToggle?: (state: boolean) => void;
   } = {
     header: null,
     label: "",
     closed: false,
     fixed: false,
     children: null,
-    dataRole: ""
+    dataRole: "",
+    onToggle: () => {}
   }
 ): React.ReactNode {
   const [statusOpened, toggleOpened] = React.useState(!closed);
@@ -45,7 +48,9 @@ export default function Panel(
 
   function onOpenClose() {
     if (!fixed) {
-      toggleOpened(!statusOpened);
+      const newState = !statusOpened;
+      toggleOpened(newState);
+      onToggle && onToggle(newState);
     }
   }
 

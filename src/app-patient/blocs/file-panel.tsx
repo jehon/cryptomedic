@@ -76,6 +76,12 @@ export default function FilePanel({
     <Panel
       dataRole={file.uid()}
       closed={closed}
+      onToggle={(_opened) => {
+        // TODO: when angular router is out
+        // if (opened) {
+        //   location.hash = `/folder/${folder.getId()}/summary/${file.uid()}`;
+        // }
+      }}
       header={
         <>
           <span className="first">
@@ -163,9 +169,7 @@ export default function FilePanel({
       }
     >
       <div className="technical">
-        <div>
-          {file.getModel()}#{file.id}
-        </div>
+        <div>{file.uid()}</div>
         <div>created at {date2HumanString(normalizeDate(file.created_at))}</div>
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
         <div>by {file.last_user}</div>
