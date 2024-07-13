@@ -22,6 +22,7 @@ export type IOProps<T> = {
   readonly?: boolean;
   value: T;
   required?: boolean;
+  noLabel?: boolean;
   note?: boolean;
   left?: boolean;
   right?: boolean;
@@ -42,7 +43,8 @@ export default function IOAbstract<T>(
   props = {
     readonly: false,
     required: false,
-    note: false, // TODO: Check usage
+    noLabel: false,
+    note: false,
     left: false, // TODO: Check usage
     right: false, // TODO: Check usage
     e2eExcluded: false, // Wether the data should be excluded from e2e
@@ -74,10 +76,12 @@ export default function IOAbstract<T>(
       }
       data-role={getLabel(props)}
     >
-      <label htmlFor={uuid}>
-        {getLabel(props)}
-        {props.required ? "*" : ""}
-      </label>
+      {props.noLabel || (
+        <label htmlFor={uuid}>
+          {getLabel(props)}
+          {props.required ? "*" : ""}
+        </label>
+      )}
       <div className="content" data-e2e={props.e2eExcluded ? "excluded" : ""}>
         {edit ? renderInput(uuid, props.value) : renderOutput(props.value)}
       </div>

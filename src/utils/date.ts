@@ -52,3 +52,7 @@ export function yearsToYM(y: number): string {
 
   return (yy > 0 ? yy + "Y" : "") + (mm > 0 ? mm + "M" : "");
 }
+
+export function outputDate(value: string | Date | null): string {
+  return date2HumanString(normalizeDate(value));
+}

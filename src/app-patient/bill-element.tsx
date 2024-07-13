@@ -6,6 +6,9 @@ import Folder from "../business/folder";
 import Payment from "../business/payment";
 import { roundTo } from "../utils/strings";
 import IO from "../widget/io";
+import IODate from "../widget/io-date";
+import IONumber from "../widget/io-number";
+import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
@@ -36,21 +39,38 @@ export default function BillElement({
       footer={
         <>
           <Panel label="Payments">
-            {file.getPayments().map((payment: Payment) => {
-              return (
-                <IO.Number
-                  key={payment.uid()}
-                  label={payment.date}
-                  value={payment.amount}
-                />
-              );
-            })}
+            {file.getPayments().length == 0 ? (
+              <div>No payment received</div>
+            ) : (
+              <table>
+                <thead>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Comments</th>
+                </thead>
+                <tbody>
+                  {file.getPayments().map((payment: Payment) => (
+                    <tr key={payment.uid()}>
+                      <td>
+                        <IODate value={payment.date} noLabel />
+                      </td>
+                      <td>
+                        <IONumber value={payment.amount} noLabel />
+                      </td>
+                      <td>
+                        <IOString value={payment.comments} noLabel note />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </Panel>
         </>
       }
     >
       <TwoColumns>
-        <Panel fixed label="Informations">
+        <Panel fixed label="Information">
           <IO.Date label="Date" value={file.date} />
           <IO.String label="Examiner" value={file.examiner as string} />
           <IO.String label="Center" value={file.center as string} />

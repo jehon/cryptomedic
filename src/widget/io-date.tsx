@@ -1,5 +1,5 @@
 import React from "react";
-import { date2HumanString, normalizeDate } from "../utils/date";
+import { outputDate } from "../utils/date";
 import { Optional } from "../utils/generic-types";
 import { StringDate } from "../utils/types";
 import IOAbstract, { IOProps } from "./io-abstract";
@@ -15,9 +15,7 @@ export default function IODate(
   } & IOProps<Optional<StringDate | Date>>
 ) {
   return IOAbstract(props, {
-    renderOutput: (value) => (
-      <div>{date2HumanString(normalizeDate(value))}</div>
-    ),
+    renderOutput: (value) => <div>{outputDate(value)}</div>,
     renderInput: (uuid: string, value) => (
       <input
         id={uuid}
