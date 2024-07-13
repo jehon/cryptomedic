@@ -145,11 +145,15 @@ export default function ConsultClubfootElement({
         </Panel>
       </TwoColumns>
       <TwoColumns>
-        <Panel fixed label="Pirani Right (> 3 years)">
-          <div className="with-image">
-            <ImgSideRight></ImgSideRight>
-            Right side
-          </div>
+        <Panel
+          fixed
+          header={
+            <>
+              <ImgSideRight></ImgSideRight>
+              <span>Pirani Right (&gt; 3 years)</span>
+            </>
+          }
+        >
           <IO.List right label="Pain" value={file.pain_right}></IO.List>
           <IO.List
             right
@@ -166,7 +170,7 @@ export default function ConsultClubfootElement({
             label="Jumping One Leg"
             value={file.jumping_one_leg_right}
           ></IO.List>
-          <IO.List right label="Empty Heel" value={file.run_right}></IO.List>
+          <IO.List right label="Run" value={file.run_right}></IO.List>
           <IO.Number
             right
             label="Adduction Angle"
@@ -194,11 +198,15 @@ export default function ConsultClubfootElement({
           ></IO.Boolean>
         </Panel>
 
-        <Panel fixed label="Pirani Left (> 3 years)">
-          <div className="with-image">
-            <ImgSideLeft></ImgSideLeft>
-            Left side
-          </div>
+        <Panel
+          fixed
+          header={
+            <>
+              <ImgSideLeft></ImgSideLeft>
+              <span>Pirani Left (&gt; 3 years)</span>
+            </>
+          }
+        >
           <IO.List left label="Pain" value={file.pain_left}></IO.List>
           <IO.List
             left
@@ -215,7 +223,7 @@ export default function ConsultClubfootElement({
             label="Jumping One Leg"
             value={file.jumping_one_leg_left}
           ></IO.List>
-          <IO.List left label="Empty Heel" value={file.run_left}></IO.List>
+          <IO.List left label="Run" value={file.run_left}></IO.List>
           <IO.Number
             left
             label="Adduction Angle"

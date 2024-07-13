@@ -69,14 +69,14 @@ export default function PatientElement({
               value={file.address_district}
             />
             <IO.String
-              name="address_union"
-              label="Union"
-              value={file.address_union}
-            />
-            <IO.String
               name="address_upazilla"
               label="Upazilla"
               value={file.address_upazilla}
+            />
+            <IO.String
+              name="address_union"
+              label="Union"
+              value={file.address_union}
             />
             <IO.Text name="address_comments" value={file.address_comments} />
           </Panel>
