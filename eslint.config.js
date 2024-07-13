@@ -50,11 +50,6 @@ const config = [
         withHtml: true
       }
     }
-    // rules: {
-    //   "jasmine/no-spec-dupes": "off",
-    //   "jasmine/new-line-before-expect": "off",
-    //   "jasmine/no-expect-in-setup-teardown": "off"
-    // }
   },
   {
     files: ["tests/cypress/**"],
@@ -78,16 +73,18 @@ const config = [
       globals: {
         ...globals.browser
       }
-    }
-  },
-  {
-    files: ["legacy/app-old/**"],
+    },
     rules: {
       "@typescript-eslint/no-unused-vars": "off"
     }
   },
   {
-    files: ["legacy/react/**"],
+    files: ["src/**"],
+    languageOptions: {
+      globals: {
+        ...globals.browser
+      }
+    },
     rules: {
       "@typescript-eslint/no-unused-vars": "off"
     }
