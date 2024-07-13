@@ -9,7 +9,7 @@ export const LOGINS = {
 export const PASSWORD = "p";
 
 function crUrl(segment: string = ""): string {
-  return `http://localhost:8085/built/frontend-ng/${segment}`;
+  return `http://localhost:8085/built/frontend/ng1x.html#${segment}`;
 }
 
 function crUrlAPI(segment: string = ""): string {
@@ -76,11 +76,11 @@ export async function crInit(
   // Body is loading
   await expect(page.getByTestId("top-level")).toBeVisible();
 
-  // App is initialized
-  await expect(page.getByTestId("initial-loader")).toHaveCount(0);
+  // // App is initialized
+  // await expect(page.getByTestId("initial-loader")).toHaveCount(0);
 
   if (opts.login) {
-    await expect(page.locator("#current-user")).toContainText(opts.login);
+    await expect(page.locator("#user")).toContainText(opts.login);
   }
 
   return crReady(page);

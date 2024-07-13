@@ -4,12 +4,17 @@ import { LOGINS, crInit } from "../helpers/cr";
 
 export { crInit } from "../helpers/cr";
 
-export function crPatientInit(
+export async function crPatientInit(
   page: Page,
-  segment: string,
+  patient_id: string,
+  segment: string = "",
   { login = LOGINS.PHYSIO }: { login?: string } = {}
 ): Promise<void> {
-  return crInit(page, { page: segment, login: login });
+  await crInit(page, {
+    page: `/folder/${patient_id}/summary/` + segment,
+    login: login
+  });
+  await page.getByTestId(`folder-${patient_id}`).waitFor({ state: "visible" });
 }
 
 export async function crPatientFile(
@@ -17,15 +22,12 @@ export async function crPatientFile(
   patient_id: string | number,
   uuid: string = `patient.${patient_id}`
 ) {
-  await crPatientInit(page, `/patients/${patient_id}#${uuid}`);
-  await expect(page.getByTestId(`${uuid}-open`)).toBeVisible();
-
-  const content = page.getByTestId(`${uuid}-content`);
+  await crPatientInit(page, "" + patient_id, uuid);
+  const content = await page.getByTestId(`file-${uuid}-form`);
   await expect(content).toBeVisible();
 
-  const getIOContent = (label: string) => {
-    return content.locator(`[label='${label}']`);
-  };
+  const getIOContent = (label: string) =>
+    content.locator(`[data-role='${label}']`);
 
   return {
     /**
@@ -35,6 +37,8 @@ export async function crPatientFile(
       const io = await getIOContent(label);
 
       if (value) {
+        await expect(io).toBeVisible();
+
         const ioc = io.locator(".content");
         await expect(ioc).toBeVisible();
         await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
