@@ -34,5 +34,5 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src"]
+  "include": ["legacy/react"]
 }

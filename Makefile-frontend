@@ -19,7 +19,6 @@ frontend-clean: frontend-clean-files
 clean-files: frontend-clean-files
 frontend-clean-files:
 	rm -fr "$(ROOT)/$(TMP)/frontend"
-	rm -fr "$(ROOT)/$(TMP)/frontend-ng"
 
 	rm -f "$(ROOT)/www/index.html"
 	rm -fr "$(ROOT)/$(FRONTEND_PUBLISHED)"
@@ -77,7 +76,6 @@ frontend-build: $(FRONTEND_BUILT_MARK)
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild due to the recursive dependencies
 $(FRONTEND_BUILT_MARK): \
 		$(FRONTEND_PUBLISHED)/frontend/ng1x.html \
-		$(FRONTEND_PUBLISHED)/frontend-ng/index.html \
 		$(FRONTEND_PUBLISHED)/.htaccess
 
 	@mkdir -p "$(dir $@)"
@@ -91,20 +89,11 @@ $(FRONTEND_PUBLISHED)/frontend/ng1x.html: \
 		$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js \
 		$(FRONTEND_BUILD_TMP)/platform.js \
 		webpack.config.js \
-		tsconfig.json tsconfig.app.json
+		tsconfig.json
 
 	@mkdir -p "$(dir $@)"
 # TODO: should not be here... (need rework of getHTMLNameOfClass)
 	CRYPTOMEDIC_DEV=true node_modules/.bin/webpack
-	@touch "$@"
-
-$(FRONTEND_PUBLISHED)/frontend-ng/index.html: \
-		$(FRONTEND_DEPENDENCIES_MARK) \
-		tsconfig.json tsconfig.app.json angular.json \
-		$(shell find src/ )
-
-	@mkdir -p "$(dir $@)"
-	node_modules/.bin/ng build
 	@touch "$@"
 
 dev: frontend-dev
@@ -114,16 +103,6 @@ frontend-dev: \
 
 	@mkdir -p "$(dir $@)"
 	CRYPTOMEDIC_DEV=true node_modules/.bin/webpack --watch
-	@touch "$@"
-
-dev: frontend-dev-ng
-.PHONY: frontend-dev-ng
-frontend-dev-ng: \
-		$(FRONTEND_PUBLISHED)/frontend/ng1x.html \
-		$(FRONTEND_PUBLISHED)/.htaccess
-
-	@mkdir -p "$(dir $@)"
-	node_modules/.bin/ng build --watch
 	@touch "$@"
 
 $(FRONTEND_PUBLISHED)/.htaccess: src/build.htaccess
@@ -146,22 +125,12 @@ $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_
 
 .PHONY: frontend-test
 test: frontend-test
-frontend-test: \
-		frontend-test-ng \
-		frontend-test-legacy
-		
-.PHONY: frontend-test-legacy
-frontend-test-legacy:
+frontend-test:
 	node_modules/.bin/jest
-
-.PHONY: frontend-test-ng
-frontend-test-ng: $(FRONTEND_DEPENDENCIES_MARK)
-	node_modules/.bin/ng test --no-watch --no-progress --browsers ChromeHeadless
 
 .PHONY: frontend-update-references
 update: frontend-update-references
 frontend-update-references: $(FRONTEND_BUILT_MARK)
-
 
 .PHONY: frontend-github
 github: frontend-github
