@@ -23,10 +23,23 @@ export function tryOrMessage(fn: () => any, msg?: string): string {
 }
 
 function _canonize(text: string): string[] {
-  return text
-    .split(/([ _-]|(?=[A-Z]))/g)
-    .filter((v) => v && ![" ", "_", "-"].includes(v))
-    .map((v) => v.toLowerCase());
+  return (
+    text
+      .split(/([ _-]|(?=[A-Z]))/g)
+      .filter((v) => v && ![" ", "_", "-"].includes(v))
+      .reduce((acc: string[], val: string) => {
+        // We agglomerate successive ABC
+        const l = acc.length - 1;
+        if (l > 0 && val.match(/^[A-Z]+$/g) && acc[l].match(/^[A-Z]+$/g)) {
+          acc[l] += val;
+        } else {
+          acc.push(val);
+        }
+        return acc;
+      }, [])
+      // Reduce only if not fully uppercase (ex: CDC)
+      .map((v) => (v.match(/^[A-Z]+$/) ? v : v.toLowerCase()))
+  );
 }
 
 function toUpperWordCase(text: string): string {

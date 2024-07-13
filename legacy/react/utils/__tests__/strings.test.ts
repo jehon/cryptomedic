@@ -11,6 +11,9 @@ test("padLeftTrim", () => {
 
 test("toAttributeCase (kebab case)", function () {
   expect(toAttributeCase("abcDefGhi")).toBe("abc-def-ghi");
+
+  expect(toAttributeCase("abc_def_ghi")).toBe("abc-def-ghi");
+  expect(toAttributeCase("abc_DEF_ghi")).toBe("abc-DEF-ghi");
 });
 
 test("toTitleCase (english case)", function () {
