@@ -1,7 +1,7 @@
 import React from "react";
 import { Optional } from "../utils/generic-types";
 import { roundTo } from "../utils/strings";
-import IOAbstract, { IOParams } from "./io-abstract";
+import IOAbstract, { IOProps } from "./io-abstract";
 
 function canonize(str: string): Optional<number> {
   const pi = parseInt(str);
@@ -10,17 +10,17 @@ function canonize(str: string): Optional<number> {
 }
 
 export default function IONumber(
-  options: {
+  props: {
     precision?: number;
     min?: string | number;
     max?: string | number;
-  } & IOParams<Optional<number>>
+  } & IOProps<Optional<number>>
 ) {
-  return IOAbstract<Optional<number>>(options, {
+  return IOAbstract<Optional<number>>(props, {
     renderOutput: (value) => (
       <div>
-        {options.precision && value
-          ? roundTo(value, options.precision)
+        {props.precision && value
+          ? roundTo(value, props.precision)
           : "" + value}
       </div>
     ),
@@ -28,14 +28,14 @@ export default function IONumber(
       <input
         id={uuid}
         className="form-control"
-        name={options.name}
+        name={props.name}
         defaultValue={(value ?? 0) + ""}
         onBlur={(evt) =>
-          options.onChange && options.onChange(canonize(evt.target.value))
+          props.onChange && props.onChange(canonize(evt.target.value))
         }
         type="number"
-        min={"" + options.min}
-        max={"" + options.max}
+        min={"" + props.min}
+        max={"" + props.max}
       />
     )
   });

@@ -6,7 +6,17 @@ import "./io.css";
 // Will be initiated at higher level
 export const EditContext = createContext(false);
 
-export type IOParams<T> = {
+function getLabel(props: IOProps<any>) {
+  if (props.label) {
+    return props.label;
+  }
+  if (props.name) {
+    return toTitleCase(props.name);
+  }
+  return generateUUID();
+}
+
+export type IOProps<T> = {
   name?: string;
   label?: string;
   readonly?: boolean;
@@ -20,7 +30,7 @@ export type IOParams<T> = {
 };
 
 export default function IOAbstract<T>(
-  props: IOParams<T>,
+  props: IOProps<T>,
   {
     renderOutput,
     renderInput
@@ -62,10 +72,10 @@ export default function IOAbstract<T>(
         (props.note ? "io-note " : "") +
         (edit ? "io-input" : "io-output")
       }
-      data-role={props.label}
+      data-role={getLabel(props)}
     >
       <label htmlFor={uuid}>
-        {props.label ? props.label : toTitleCase(props.name || "")}
+        {getLabel(props)}
         {props.required ? "*" : ""}
       </label>
       <div className="content" data-e2e={props.e2eExcluded ? "excluded" : ""}>

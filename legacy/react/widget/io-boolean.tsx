@@ -1,14 +1,14 @@
 import { Optional } from "../utils/generic-types";
 import { ImgBooleanFalse, ImgBooleanTrue } from "./images";
-import IOAbstract, { IOParams } from "./io-abstract";
+import IOAbstract, { IOProps } from "./io-abstract";
 import { buildRadios } from "./io-list";
 
 export type StringBoolean = string | number;
 
 export default function IOBoolean(
-  options: IOParams<Optional<StringBoolean | boolean>>
+  props: IOProps<Optional<StringBoolean | boolean>>
 ) {
-  return IOAbstract(options, {
+  return IOAbstract(props, {
     renderOutput: (value) => (value ? ImgBooleanTrue() : ImgBooleanFalse()),
     renderInput: (uuid: string, value) =>
       buildRadios(
@@ -18,8 +18,8 @@ export default function IOBoolean(
           No: "0"
         },
         value == undefined ? "" : value ? "1" : "0",
-        options.name ?? "",
-        options.onChange
+        props.name ?? "",
+        props.onChange
       )
   });
 }

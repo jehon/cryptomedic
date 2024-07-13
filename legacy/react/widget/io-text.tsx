@@ -1,8 +1,8 @@
 import React from "react";
 import { StringText } from "../utils/types";
-import IOAbstract, { IOParams } from "./io-abstract";
+import IOAbstract, { IOProps } from "./io-abstract";
 
-export default function IOText(options: IOParams<StringText>) {
+export default function IOText(props: IOProps<StringText>) {
   const adjust = (element: HTMLTextAreaElement) => {
     // const lines = element.value.split("\n").length;
     // element.setAttribute("rows", lines);
@@ -11,16 +11,16 @@ export default function IOText(options: IOParams<StringText>) {
     element.style.height = "calc(" + element.scrollHeight + "px + 2em)";
   };
 
-  return IOAbstract(options, {
+  return IOAbstract(props, {
     renderOutput: (value) => <pre>{value}</pre>,
     renderInput: (uuid: string, value) => (
       <textarea
         id={uuid}
         className="form-control"
-        name={options.name}
+        name={props.name}
         defaultValue={value ?? ""}
         onKeyUp={(event) => adjust(event.target as HTMLTextAreaElement)}
-        onBlur={(evt) => options.onChange && options.onChange(evt.target.value)}
+        onBlur={(evt) => props.onChange && props.onChange(evt.target.value)}
       />
     )
   });

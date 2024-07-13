@@ -2,7 +2,7 @@ import React from "react";
 import { Optional } from "../utils/generic-types";
 import { toTitleCase } from "../utils/strings";
 import { StringList } from "../utils/types";
-import IOAbstract, { IOParams } from "./io-abstract";
+import IOAbstract, { IOProps } from "./io-abstract";
 
 // In other part of the application, it could be a mapping
 // Ex: io-boolean, search panels
@@ -67,33 +67,21 @@ export function buildRadios(
 }
 
 export default function IOList(
-  options: { list?: string[] | Record<string, string> } & IOParams<
+  props: { list?: string[] | Record<string, string> } & IOProps<
     Optional<StringList>
   >
 ) {
   // TODO: List should be mandatory and thus ?? {} not necessary anymore
   const list: Record<string, string> = canonizeList(
-    options.list ?? {},
-    options.required
+    props.list ?? {},
+    props.required
   );
 
-  return IOAbstract<Optional<string>>(options, {
+  return IOAbstract<Optional<string>>(props, {
     renderOutput: (value) => <div>{value}</div>,
     renderInput: (uuid: string, value) =>
       Object.keys(list).length > 4
-        ? buildSelect(
-            uuid,
-            list,
-            value ?? "",
-            options.name ?? "",
-            options.onChange
-          )
-        : buildRadios(
-            uuid,
-            list,
-            value ?? "",
-            options.name ?? "",
-            options.onChange
-          )
+        ? buildSelect(uuid, list, value ?? "", props.name ?? "", props.onChange)
+        : buildRadios(uuid, list, value ?? "", props.name ?? "", props.onChange)
   });
 }

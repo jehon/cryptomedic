@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { IOParams } from "./io-abstract";
 import { Optional } from "../utils/generic-types";
+import { IOProps } from "./io-abstract";
 
 // For styling, see io.css
 
-export default function IOPicture(props: IOParams<Optional<string>>) {
+export default function IOPicture(props: IOProps<Optional<string>>) {
   const [top, setTop] = useState(false);
 
   const value = props.value;

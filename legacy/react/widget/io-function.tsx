@@ -1,10 +1,10 @@
 import React from "react";
-import IOAbstract, { IOParams } from "./io-abstract";
+import IOAbstract, { IOProps } from "./io-abstract";
 
 type T = () => string;
 
-export default function IOFunction(options: IOParams<T>) {
-  return IOAbstract<T>(options, {
+export default function IOFunction(props: IOProps<T>) {
+  return IOAbstract<T>(props, {
     renderOutput: (value) => {
       try {
         return <div>{value()}</div>;

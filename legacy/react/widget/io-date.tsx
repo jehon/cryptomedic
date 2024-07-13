@@ -2,19 +2,19 @@ import React from "react";
 import { date2HumanString, normalizeDate } from "../utils/date";
 import { Optional } from "../utils/generic-types";
 import { StringDate } from "../utils/types";
-import IOAbstract, { IOParams } from "./io-abstract";
+import IOAbstract, { IOProps } from "./io-abstract";
 
 function canonize(str: string): Optional<StringDate> {
   return str;
 }
 
 export default function IODate(
-  options: {
+  props: {
     min?: string;
     max?: string;
-  } & IOParams<Optional<StringDate | Date>>
+  } & IOProps<Optional<StringDate | Date>>
 ) {
-  return IOAbstract(options, {
+  return IOAbstract(props, {
     renderOutput: (value) => (
       <div>{date2HumanString(normalizeDate(value))}</div>
     ),
@@ -22,14 +22,14 @@ export default function IODate(
       <input
         id={uuid}
         className="form-control"
-        name={options.name}
+        name={props.name}
         defaultValue={(value ?? 0) + ""}
         onBlur={(evt) =>
-          options.onChange && options.onChange(canonize(evt.target.value))
+          props.onChange && props.onChange(canonize(evt.target.value))
         }
         type="date"
-        min={options.min}
-        max={options.max}
+        min={props.min}
+        max={props.max}
       />
     )
   });
