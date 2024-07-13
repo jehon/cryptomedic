@@ -29,7 +29,7 @@ export default function PictureElement({
           <IO.Text label="Comments" value={file.comments as string} />
         </Panel>
         <Panel fixed label="Image">
-          <IO.Image label="Picture" value={file.getThumbnailUrl() as string} />
+          <IO.Image label="Picture" value={file.getPictureUrl() as string} />
         </Panel>
       </TwoColumns>
     </FilePanel>

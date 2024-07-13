@@ -33,10 +33,6 @@ export default class Picture extends PatientRelated {
     return "/api/picture/" + this.id;
   }
 
-  getThumbnailUrl() {
-    return "/api/picture/" + this.id + "/thumbnail";
-  }
-
   // Legacy
   validate(res) {
     res = super.validate(res);
