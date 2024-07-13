@@ -82,7 +82,7 @@ export default function BillElement({
           />
           <IO.Number label="Price asked" value={file.total_asked} />
           <IO.Function
-            label="Received"
+            label="Payments Received (see below)"
             value={() => roundTo(file.getTotalAlreadyPaid(), 0)}
           />
         </Panel>

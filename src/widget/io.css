@@ -16,11 +16,13 @@
   }
 
   & > .content {
-    flex-grow: 1;
+    /* flex-grow: 1; */
     text-align: left;
     background-color: white;
     max-width: 100%;
     overflow-wrap: break-word;
+
+    width: calc(100% - 25% - 10px);
 
     .io-function-error {
       color: gray;

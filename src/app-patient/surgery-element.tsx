@@ -33,14 +33,8 @@ export default function SurgeryElement({
       }
     >
       <TwoColumns>
-        <Panel fixed label="Informations">
-          <IO.Date name="date" value={file.date} />
-          <IO.Text
-            name="follow_up_complication"
-            value={file.follow_up_complication as string}
-          />
-        </Panel>
         <Panel fixed label="Report">
+          <IO.Date name="date" value={file.date} />
           <IO.String
             name="report_diagnostic"
             label="Diagnostic"
@@ -65,6 +59,12 @@ export default function SurgeryElement({
             name="report_procedure"
             label="Procedure"
             value={file.report_procedure as string}
+          />
+        </Panel>
+        <Panel fixed label="Hospitalization Follow-up">
+          <IO.Text
+            name="follow_up_complication"
+            value={file.follow_up_complication as string}
           />
         </Panel>
       </TwoColumns>

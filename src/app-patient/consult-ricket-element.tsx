@@ -56,6 +56,11 @@ export default function ConsultRicketElement({
           ></IO.List>
           <IO.List label="Rib Heading" value={file.rib_heading}></IO.List>
           <IO.Text left label="XRay" value={file.xray}></IO.Text>
+          <IO.Number
+            right
+            label="IMIC Distance"
+            value={file.IMIC_distance}
+          ></IO.Number>
         </Panel>
       </TwoColumns>
       <TwoColumns>
@@ -82,11 +87,6 @@ export default function ConsultRicketElement({
             right
             label="Cross Right F"
             value={file.cross_right_F}
-          ></IO.Number>
-          <IO.Number
-            right
-            label="IMIC Distance"
-            value={file.IMIC_distance}
           ></IO.Number>
         </Panel>
         <Panel
