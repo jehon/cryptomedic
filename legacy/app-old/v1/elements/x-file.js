@@ -4,7 +4,7 @@ import {
   ApplicationException,
   DataInvalidException,
   DataMissingException
-} from "../../../react/utils/exceptions.js";
+} from "../../../../src/utils/exceptions.js";
 import JHElement from "./jh-element.js";
 
 export default class XFile extends JHElement {

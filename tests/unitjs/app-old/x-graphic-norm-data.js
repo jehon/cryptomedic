@@ -1,5 +1,5 @@
-import Folder from "../../../legacy/react/business/folder.js";
 import amd_stats from "../../../legacy/app-old/v2/js/amd_stats.js";
+import Folder from "../../../src/business/folder.js";
 
 export let male = new Folder([
   {

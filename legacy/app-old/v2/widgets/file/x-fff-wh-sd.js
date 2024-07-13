@@ -1,4 +1,4 @@
-import { stdDeviationFor } from "../../../../react/utils/standard-deviation.js";
+import { stdDeviationFor } from "../../../../../src/utils/standard-deviation.js";
 import XWithFile from "./x-with-file.js";
 
 export default class XFffWhSd extends XWithFile {

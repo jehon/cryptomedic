@@ -3,13 +3,13 @@ import XFffAge, {
   fromBirthDateTo
 } from "../../../legacy/app-old/v2/widgets/file/x-fff-age.js";
 
+import Folder from "../../../src/business/folder.js";
 import {
   fn,
   loadReference,
   RefFolder1,
   RefFolder1RicketConsult13
 } from "./athelpers.js";
-import Folder from "../../../legacy/react/business/folder.js";
 
 describe(fn(import.meta.url), function () {
   describe("fromBirthDateTo", function () {

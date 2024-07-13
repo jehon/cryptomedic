@@ -58,7 +58,7 @@ export function buildRadios(
         name={name}
         defaultChecked={value === k}
         value="1"
-        onBlur={(evt) => onChange(k)}
+        onBlur={() => onChange(k)}
         type="radio"
       />
       <label htmlFor={uuid + "." + i}>{v}</label>

@@ -33,9 +33,9 @@ export function bridgeTo(
     }
 
     attributeChangedCallback(
-      attributeName: string,
-      oldValue: string,
-      newValue: string
+      _attributeName: string,
+      _oldValue: string,
+      _newValue: string
     ) {
       this.render();
     }

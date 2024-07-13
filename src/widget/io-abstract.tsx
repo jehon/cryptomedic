@@ -50,7 +50,7 @@ export default function IOAbstract<T>(
   };
 
   if (!renderInput) {
-    renderInput = (uuid: string, value: T): React.ReactNode =>
+    renderInput = (_uuid: string, value: T): React.ReactNode =>
       renderOutput(value);
   }
 

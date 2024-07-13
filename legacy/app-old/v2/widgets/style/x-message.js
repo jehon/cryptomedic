@@ -1,4 +1,4 @@
-import { messages, spacing } from "../../../../react/config.js";
+import { messages, spacing } from "../../../../../src/config.js";
 import {
   createElementWithObject,
   createElementWithTag

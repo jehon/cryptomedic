@@ -1,8 +1,8 @@
 import "../../../legacy/app-old/v2/widgets/func/x-messages.js";
-import { messages } from "../../../legacy/react/config.js";
+import { messages } from "../../../src/config.js";
 
-import { fn } from "./athelpers.js";
 import XMessage from "../../../legacy/app-old/v2/widgets/style/x-message.js";
+import { fn } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {
   const el = new XMessage();

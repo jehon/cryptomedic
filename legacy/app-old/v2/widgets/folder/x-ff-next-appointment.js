@@ -1,5 +1,5 @@
-import Appointment from "../../../../react/business/appointment.js";
-import { messages } from "../../../../react/config.js";
+import Appointment from "../../../../../src/business/appointment.js";
+import { messages } from "../../../../../src/config.js";
 import date2CanonicString from "../../js/date2CanonicString.js";
 import { getRouteToFolderAdd, setRoute } from "../../js/router.js";
 import "../func/x-buttons.js";

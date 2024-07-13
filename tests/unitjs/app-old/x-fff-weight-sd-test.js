@@ -5,8 +5,8 @@ import {
   RefFolder1RicketConsult13
 } from "./athelpers.js";
 
-import Folder from "../../../legacy/react/business/folder.js";
 import XFffWeightSd from "../../../legacy/app-old/v2/widgets/file/x-fff-weight-sd.js";
+import Folder from "../../../src/business/folder.js";
 
 let testFolder;
 

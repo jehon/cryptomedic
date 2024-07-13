@@ -1,6 +1,6 @@
 /* istanbul ignore file: TODO */
 
-import amd_stats from "../../../../react/utils/amd_stats.js";
+import amd_stats from "../../../../../src/utils/amd_stats.js";
 import XGraphic from "./x-graphic.js";
 
 export default class XGraphicWeight extends XGraphic {

@@ -1,8 +1,5 @@
 import { test } from "@playwright/test";
-import {
-  date2HumanString,
-  normalizeDate
-} from "../../../legacy/react/utils/date";
+import { date2HumanString, normalizeDate } from "../../../src/utils/date";
 import { crPatientFile } from "./cr-patients";
 
 const PATIENT_ID = 1;

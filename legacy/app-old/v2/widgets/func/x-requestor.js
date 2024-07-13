@@ -5,7 +5,7 @@ import { routeToLogin } from "../../js/router.js";
 import { setSession } from "../../js/session.js";
 
 import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
-import nullify from "../../../../react/utils/nullify.js";
+import nullify from "../../../../../src/utils/nullify.js";
 import {
   createElementsFromHTML,
   createElementWithObject,
@@ -17,8 +17,8 @@ import {
 } from "../../js/overlay-builder.js";
 import XLabel from "../style/x-label.js";
 
-import { TransportRequestError } from "../../../../react/utils/exceptions.js";
-export { TransportRequestError } from "../../../../react/utils/exceptions.js";
+import { TransportRequestError } from "../../../../../src/utils/exceptions.js";
+export { TransportRequestError } from "../../../../../src/utils/exceptions.js";
 
 /**
  * @param {number} code - http code

@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 /* eslint-disable */
 
-import Folder from "../../react/business/folder.js";
-import { extractPrefsFile } from "../../react/utils/prefs.js";
+import Folder from "../../../src/business/folder.js";
+import { extractPrefsFile } from "../../../src/utils/prefs.js";
 import date2CanonicString from "../v2/js/date2CanonicString.js";
 import { formGetContent } from "../v2/js/form.js";
 import getDataService from "../v2/js/getDataService.js";
@@ -13,7 +13,7 @@ import { fromBirthDate } from "../v2/widgets/file/x-fff-age.js";
 
 import "../v2/pages/x-page-folder.js";
 
-import { registryGet } from "../../react/business/registry.js";
+import { registryGet } from "../../../src/business/registry.js";
 import "../v2/pages/blocks/x-folder-graphics.js";
 import "../v2/widgets/file/x-fff-bmi-sd.js";
 import "../v2/widgets/file/x-fff-bmi.js";

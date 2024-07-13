@@ -17,4 +17,4 @@ import "./v2/widgets/x-user-status.js";
 import "./v1/mainApp.js";
 
 // React components and application
-import "../react/react.tsx";
+import "../../src/react.tsx";

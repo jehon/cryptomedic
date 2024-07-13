@@ -1,6 +1,6 @@
 import "./blocks/x-patient-by-reference.js";
 
-import { icons } from "../../../react/config.js";
+import { icons } from "../../../../src/config.js";
 import {
   createElementsFromHTML,
   createElementWithObject,

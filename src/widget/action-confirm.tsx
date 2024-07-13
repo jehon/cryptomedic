@@ -4,24 +4,24 @@ import ActionButton, { ActionStyle, ActionStyles } from "./action-button";
 import Popup from "./popup";
 
 export default function ActionConfirm({
+  buttonText,
   style,
   discrete,
-  buttonText,
   title,
   onOk,
   children
 }: {
-  style?: ActionStyle;
-  discrete?: boolean;
   buttonText: string;
   title?: string;
+  style?: ActionStyle;
+  discrete?: boolean;
   onOk: () => void;
   children: React.ReactNode;
 }): React.ReactNode {
   const [isOpen, doOpen] = useState(false);
 
   style = style ?? ActionStyles.View;
-  title = title ?? "Confirm";
+  title = title ?? buttonText;
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function ActionConfirm({
         onClick={() => doOpen(true)}
       ></ActionButton>
       {isOpen ? (
-        <Popup title="Confirmation" style={style}>
+        <Popup title={title} style={style}>
           {children}
           <ButtonsGroup>
             <ActionButton
