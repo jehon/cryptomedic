@@ -14,7 +14,7 @@ import { fromBirthDate } from "../v2/widgets/file/x-fff-age.js";
 import "../v2/pages/x-page-folder.js";
 
 import { registryGet } from "../../../src/business/registry.js";
-import "../v2/pages/blocks/x-folder-graphics.js";
+// import "../v2/pages/blocks/x-folder-graphics.js";
 import "../v2/widgets/file/x-fff-bmi-sd.js";
 import "../v2/widgets/file/x-fff-bmi.js";
 import "../v2/widgets/file/x-fff-height-sd.js";
@@ -53,7 +53,6 @@ export default function ctrl_folder($scope, $routeParams) {
    *  '/folder/123/file/Bills/456/edit  edit the sub file
    *  '/folder/123/file/Bills           add a bill
    *  '/folder/123/summary/*            REACT
-   *  '/folder/123/graphics
    *  '/folder/123/addfile
    *
    */
