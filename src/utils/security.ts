@@ -2,9 +2,9 @@ import { useSyncExternalStore } from "react";
 
 import { getSession, onSession } from "../../legacy/app-old/v2/js/session";
 
-export function useRequiresTransaction(role?: string) {
+export function useRequiresTransaction(transaction?: string) {
   function getSnapshot(): boolean {
-    if (!role) {
+    if (!transaction) {
       return true;
     }
 
@@ -17,7 +17,7 @@ export function useRequiresTransaction(role?: string) {
       return false;
     }
 
-    return authorized.includes(role);
+    return authorized.includes(transaction);
   }
 
   function subscribe(callback: () => void) {

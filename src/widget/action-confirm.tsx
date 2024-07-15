@@ -12,7 +12,7 @@ export default function ActionConfirm(
 ): React.ReactNode {
   const [isOpen, doOpen] = useState(false);
 
-  props.title = props.title ?? props.action;
+  const title = props.title ?? props.action;
 
   return (
     <>
@@ -21,9 +21,10 @@ export default function ActionConfirm(
         discrete={props.discrete}
         action={props.action}
         onOk={() => doOpen(true)}
+        requires={props.requires}
       ></ActionButton>
       {isOpen ? (
-        <Popup title={props.title} style={props.style}>
+        <Popup title={title} style={props.style}>
           {props.children}
           <ButtonsGroup>
             <ActionButton

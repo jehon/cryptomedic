@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./action-button.css";
+import Restricted from "./restricted";
 
 export type ActionStyleType = keyof typeof ActionStyles;
 
@@ -10,6 +11,7 @@ export type ButtonActionProps = {
   action?: string;
   onOk?: () => void;
   linkTo?: string | string[];
+  requires?: string;
 };
 
 export const ActionStyles = {
@@ -55,13 +57,15 @@ export default function ActionButton(
     });
 
   return (
-    <div
-      className={
-        " action-button " + as.css + (props.discrete ? " discrete " : "")
-      }
-      onClick={onOk}
-    >
-      {action}
-    </div>
+    <Restricted requires={props.requires}>
+      <div
+        className={
+          " action-button " + as.css + (props.discrete ? " discrete " : "")
+        }
+        onClick={onOk}
+      >
+        {action}
+      </div>
+    </Restricted>
   );
 }

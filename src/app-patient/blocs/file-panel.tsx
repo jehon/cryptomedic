@@ -10,7 +10,6 @@ import ActionConfirm from "../../widget/action-confirm";
 import { EditContext } from "../../widget/io-abstract";
 import { notifySuccess } from "../../widget/notification";
 import Panel from "../../widget/panel";
-import Restricted from "../../widget/restricted";
 import { folderFileDelete, folderFileUnlock } from "../loaders";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
@@ -114,21 +113,20 @@ export default function FilePanel({
           {file.isLocked() ? (
             // File is locked
             file instanceof PatientRelated && (
-              <Restricted requiresTransaction="folder.unlock">
-                <ActionConfirm
-                  style="Alternate"
-                  action="Unlock"
-                  discrete={true}
-                  onOk={() => doUnlock()}
-                >
-                  <div>
-                    Are you sure you want to unlock the File {file.getModel()}
-                    ?
-                    <br />
-                    Anybody will then be able to edit it.
-                  </div>
-                </ActionConfirm>
-              </Restricted>
+              <ActionConfirm
+                style="Alternate"
+                action="Unlock"
+                discrete={true}
+                onOk={() => doUnlock()}
+                requires="folder.unlock"
+              >
+                <div>
+                  Are you sure you want to unlock the File {file.getModel()}
+                  ?
+                  <br />
+                  Anybody will then be able to edit it.
+                </div>
+              </ActionConfirm>
             )
           ) : // File is not locked
           editState ? (
@@ -149,6 +147,7 @@ export default function FilePanel({
                     style="Delete"
                     discrete={true}
                     onOk={() => doDelete()}
+                    requires="folder.delete"
                   >
                     <div>
                       Are you sure you want to DELETE the File {file.getModel()}
@@ -158,7 +157,11 @@ export default function FilePanel({
                 )}
             </>
           ) : (
-            <ActionButton style="Edit" onOk={() => goEdit(file)} />
+            <ActionButton
+              style="Edit"
+              onOk={() => goEdit(file)}
+              requires="folder.edit"
+            />
           )}
         </>
       }
