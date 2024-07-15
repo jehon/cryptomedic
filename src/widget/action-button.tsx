@@ -2,9 +2,14 @@ import React from "react";
 
 import "./action-button.css";
 
-export type ActionStyle = {
-  css: string;
-  text: string;
+export type ActionStyleType = keyof typeof ActionStyles;
+
+export type ButtonActionProps = {
+  style?: ActionStyleType;
+  discrete?: boolean;
+  action?: string;
+  onOk?: () => void;
+  linkTo?: string | string[];
 };
 
 export const ActionStyles = {
@@ -34,37 +39,29 @@ export const ActionStyles = {
   } as const
 };
 
-export default function ActionButton({
-  style,
-  discrete,
-  text,
-  onClick,
-  linkTo
-}: {
-  style?: ActionStyle;
-  discrete?: boolean;
-  text?: string;
-  onClick?: () => void;
-  linkTo?: string | string[];
-}): React.ReactNode {
-  style = style ?? ActionStyles.View;
-  text = text ?? style.text;
-  linkTo = linkTo ?? "";
-  if (Array.isArray(linkTo)) {
-    linkTo = "#/" + linkTo.join("/");
-  }
-  onClick =
-    onClick ??
+export default function ActionButton(
+  props: ButtonActionProps
+): React.ReactNode {
+  const as = ActionStyles[props.style ?? "View"];
+  const action = props.action ?? as.text;
+  const linkToRaw = props.linkTo ?? "";
+  const linkTo = Array.isArray(linkToRaw)
+    ? "#/" + linkToRaw.join("/")
+    : linkToRaw;
+  const onOk =
+    props.onOk ??
     (() => {
       document.location.href = linkTo as string;
     });
 
   return (
     <div
-      className={" action-button " + style.css + (discrete ? " discrete " : "")}
-      onClick={onClick}
+      className={
+        " action-button " + as.css + (props.discrete ? " discrete " : "")
+      }
+      onClick={onOk}
     >
-      {text}
+      {action}
     </div>
   );
 }

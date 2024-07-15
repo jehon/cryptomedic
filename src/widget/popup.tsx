@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ActionStyle } from "./action-button";
+import { ActionStyles, ActionStyleType } from "./action-button";
 import "./popup.css";
 
 export default function Popup({
@@ -9,12 +9,12 @@ export default function Popup({
   children
 }: {
   title?: string;
-  style?: ActionStyle;
+  style?: ActionStyleType;
   children: React.ReactNode;
 }) {
   return (
     <div className="popup">
-      <div className={"box " + style?.css}>
+      <div className={"box " + (style ? ActionStyles[style].css : "")}>
         <h2>{title}</h2>
         {children}
       </div>

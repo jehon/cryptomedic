@@ -1,53 +1,44 @@
 import React, { useState } from "react";
 import ButtonsGroup from "../styles/buttons-group";
-import ActionButton, { ActionStyle, ActionStyles } from "./action-button";
+import ActionButton, { ButtonActionProps } from "./action-button";
 import Popup from "./popup";
 
-export default function ActionConfirm({
-  buttonText,
-  style,
-  discrete,
-  title,
-  onOk,
-  children
-}: {
-  buttonText: string;
-  title?: string;
-  style?: ActionStyle;
-  discrete?: boolean;
-  onOk: () => void;
-  children: React.ReactNode;
-}): React.ReactNode {
+export default function ActionConfirm(
+  props: {
+    title?: string;
+    children: React.ReactNode;
+    onOk: () => void;
+  } & ButtonActionProps
+): React.ReactNode {
   const [isOpen, doOpen] = useState(false);
 
-  style = style ?? ActionStyles.View;
-  title = title ?? buttonText;
+  props.title = props.title ?? props.action;
 
   return (
     <>
       <ActionButton
-        style={style}
-        discrete={discrete}
-        text={buttonText}
-        onClick={() => doOpen(true)}
+        style={props.style}
+        discrete={props.discrete}
+        action={props.action}
+        onOk={() => doOpen(true)}
       ></ActionButton>
       {isOpen ? (
-        <Popup title={title} style={style}>
-          {children}
+        <Popup title={props.title} style={props.style}>
+          {props.children}
           <ButtonsGroup>
             <ActionButton
-              style={ActionStyles.Cancel}
+              style="Cancel"
               discrete={true}
-              text="Cancel"
-              onClick={() => doOpen(false)}
+              action="Cancel"
+              onOk={() => doOpen(false)}
             />
             <ActionButton
-              style={style}
-              discrete={discrete}
-              text={buttonText}
-              onClick={() => {
+              style={props.style}
+              discrete={props.discrete}
+              action={props.action}
+              onOk={() => {
                 doOpen(false);
-                onOk();
+                props.onOk();
               }}
             />
           </ButtonsGroup>

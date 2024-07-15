@@ -5,7 +5,7 @@ import Folder from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
-import ActionButton, { ActionStyles } from "../../widget/action-button";
+import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import { EditContext } from "../../widget/io-abstract";
 import { notifySuccess } from "../../widget/notification";
@@ -116,8 +116,8 @@ export default function FilePanel({
             file instanceof PatientRelated && (
               <Restricted requiresTransaction="folder.unlock">
                 <ActionConfirm
-                  style={ActionStyles.Alternate}
-                  buttonText="Unlock"
+                  style="Alternate"
+                  action="Unlock"
                   discrete={true}
                   onOk={() => doUnlock()}
                 >
@@ -134,20 +134,19 @@ export default function FilePanel({
           editState ? (
             <>
               <ActionButton
-                style={ActionStyles.Confirm}
-                text="Save"
-                onClick={() => doSave()}
+                style="Confirm"
+                action="Save"
+                onOk={() => doSave()}
               />
               <ActionButton
-                style={ActionStyles.Cancel}
-                onClick={() => updateEditState(false)}
+                style="Cancel"
+                onOk={() => updateEditState(false)}
               />
               {file instanceof PatientRelated &&
                 (!(file instanceof Patient) ||
                   folder.getFilesRelatedToPatient().length == 0) && (
                   <ActionConfirm
-                    style={ActionStyles.Delete}
-                    buttonText="Delete"
+                    style="Delete"
                     discrete={true}
                     onOk={() => doDelete()}
                   >
@@ -159,11 +158,7 @@ export default function FilePanel({
                 )}
             </>
           ) : (
-            <ActionButton
-              style={ActionStyles.Edit}
-              text="Edit"
-              onClick={() => goEdit(file)}
-            />
+            <ActionButton style="Edit" onOk={() => goEdit(file)} />
           )}
         </>
       }

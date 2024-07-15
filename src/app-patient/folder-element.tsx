@@ -12,7 +12,7 @@ import Surgery from "../business/surgery";
 import * as config from "../config.js";
 import ButtonsGroup from "../styles/buttons-group";
 import { defaultWidthScreen } from "../styles/style-helpers";
-import ActionButton, { ActionStyles } from "../widget/action-button";
+import ActionButton from "../widget/action-button";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import AppointmentElement from "./appointment-element";
@@ -52,8 +52,8 @@ export default function FolderElement({
     >
       <ButtonsGroup>
         <ActionButton
-          style={ActionStyles.Alternate}
-          text="Add"
+          style="Alternate"
+          action="Add"
           linkTo={["folder", "" + folder.getId(), "addfile"]}
         />
       </ButtonsGroup>
