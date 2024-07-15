@@ -14,7 +14,7 @@ export async function crPatientInit(
     page: `/folder/${patient_id}/summary/` + segment,
     login: login
   });
-  await page.getByTestId(`folder-${patient_id}`).waitFor({ state: "visible" });
+  await expect(page.getByTestId(`folder-${patient_id}`)).toBeVisible();
 }
 
 export async function crPatientFile(
