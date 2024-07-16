@@ -194,10 +194,12 @@ update: integration-update-playwright-snapshots
 integration-update-playwright-snapshots:
 	node --import=tsx bin/cr-update-playwright-snapshots.ts
 
-.PHONY: integration-update-from-github
-integration-update-from-github:
+.PHONY: integration-update-download-github
+integration-update-download-github:
 	bin/cr-github-get-artifacts
-	@echo
+
+.PHONY: integration-update-to-commit
+integration-update-to-commit:
 	@echo "** styles-desktop"
 	make integration-update-references-styles-desktop
 	@echo
