@@ -35,6 +35,7 @@ const router = createHashRouter([
     element: <RouteLoading element={<PatientRouter />} />
   },
   {
+    // Under !patient! route
     path: "/patient/:folderId/:selectedUid?",
     loader: patientLoader,
     element: <RouteLoading element={<PatientRouter />} />
