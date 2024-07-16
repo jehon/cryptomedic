@@ -141,8 +141,8 @@ frontend-migration-status: clear
 	@echo ""
 
 	@echo "********** In src folders ******************"
-	@grep --recursive --include "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "warn"
+	@grep --recursive --include "*.js" --fixed-strings "../legacy/" src/ | jh-tag-stdin "warn"
 	@echo ""
 
-	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "/../legacy/" src/ | jh-tag-stdin "ko:deps"
+	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "../legacy/" src/ | jh-tag-stdin "ko:deps"
 	@echo ""
