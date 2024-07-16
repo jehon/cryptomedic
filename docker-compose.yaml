@@ -119,7 +119,7 @@ services:
     environment:
       HOME: /tmp
       LANG: C.UTF-8
-      DBUS_SESSION_BUS_ADDRESS:
+      # DBUS_SESSION_BUS_ADDRESS:
       CYPRESS_BASE_URL: http://web/
     working_dir: /app
     volumes:
