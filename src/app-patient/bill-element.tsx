@@ -41,6 +41,16 @@ export default function BillElement({
       footer={
         <>
           <Panel label="Payments">
+            <ButtonsGroup>
+              <ActionButton
+                style="Add"
+                linkTo={`#/folder/${folder.getId()}/file/Bill/${file.getId()}`}
+              />
+              <ActionButton
+                style="Edit"
+                linkTo={`#/folder/${folder.getId()}/file/Bill/${file.getId()}`}
+              />
+            </ButtonsGroup>
             {file.getPayments().length == 0 ? (
               <div>No payment received</div>
             ) : (
@@ -110,16 +120,6 @@ export default function BillElement({
         </Panel>
       </TwoColumns>
       <Panel label="Bill Lines">
-        <ButtonsGroup>
-          <ActionButton
-            style="Add"
-            linkTo={`#/folder/${folder.getId()}/file/Bill/${file.getId()}`}
-          />
-          <ActionButton
-            style="Edit"
-            linkTo={`#/folder/${folder.getId()}/file/Bill/${file.getId()}`}
-          />
-        </ButtonsGroup>
         {file.items.map((line) => {
           return (
             <IO.Number key={line.key} name={line.key} value={line.value} />
