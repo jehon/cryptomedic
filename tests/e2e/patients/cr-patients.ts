@@ -23,13 +23,16 @@ export async function crPatientFile(
   uuid: string = `patient.${patient_id}`
 ) {
   await crPatientInit(page, "" + patient_id, uuid);
-  const content = await page.getByTestId(`file-${uuid}-form`);
-  await expect(content).toBeVisible();
+  const panel = await page.getByTestId(uuid);
+  const form = await page.getByTestId(`file-${uuid}-form`);
+  await expect(form).toBeVisible();
 
   const getIOContent = (label: string) =>
-    content.locator(`[data-role='${label}']`);
+    form.locator(`[data-role='${label}']`);
 
   return {
+    panel,
+    form,
     /**
      * If value is not defined, it is expected to be empty and invisible
      */
