@@ -15,6 +15,10 @@ export type ButtonActionProps = {
 };
 
 export const ActionStyles = {
+  Add: {
+    css: "action-alternate",
+    text: "Add"
+  } as const,
   Alternate: {
     css: "action-alternate",
     text: "Alternate"

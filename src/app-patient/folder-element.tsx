@@ -52,8 +52,7 @@ export default function FolderElement({
     >
       <ButtonsGroup>
         <ActionButton
-          style="Alternate"
-          action="Add"
+          style="Add"
           linkTo={["folder", "" + folder.getId(), "addfile"]}
         />
       </ButtonsGroup>
