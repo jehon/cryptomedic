@@ -4,7 +4,9 @@ import Bill from "../business/bill";
 import Folder from "../business/folder";
 
 import Payment from "../business/payment";
+import ButtonsGroup from "../styles/buttons-group";
 import { roundTo } from "../utils/strings";
+import ActionButton from "../widget/action-button";
 import IO from "../widget/io";
 import IODate from "../widget/io-date";
 import IONumber from "../widget/io-number";
@@ -108,6 +110,16 @@ export default function BillElement({
         </Panel>
       </TwoColumns>
       <Panel label="Bill Lines">
+        <ButtonsGroup>
+          <ActionButton
+            style="Add"
+            linkTo={`#/folder/${folder.getId()}/file/Bill/${file.getId()}`}
+          />
+          <ActionButton
+            style="Edit"
+            linkTo={`#/folder/${folder.getId()}/file/Bill/${file.getId()}`}
+          />
+        </ButtonsGroup>
         {file.items.map((line) => {
           return (
             <IO.Number key={line.key} name={line.key} value={line.value} />
