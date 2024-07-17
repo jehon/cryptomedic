@@ -6,7 +6,7 @@ import {
   patientFilesRead2014_103,
   patientFilesRead2014_105
 } from "./helpers/e2e-entrynumber-assigned.js";
-import { getByDataRole } from "./helpers/gui.js";
+import { getByDataRole, getByTestId } from "./helpers/gui.js";
 import { patientSelectFile, patientgo } from "./helpers/patients.js";
 import TableIterator from "./helpers/table-iterator.js";
 
@@ -30,7 +30,7 @@ context("Actions", () => {
       getByDataRole("summary")
         .should("be.visible")
         .within(() => {
-          getByDataRole("patient.1")
+          getByTestId("patient.1")
             .should("be.visible")
             .within(() => {
               getByDataRole("header")
