@@ -73,7 +73,7 @@ export default function FilePanel({
 
   return (
     <Panel
-      dataRole={file.uid()}
+      testid={file.uid()}
       closed={closed}
       onToggle={(_opened) => {
         // TODO: when angular router is out
