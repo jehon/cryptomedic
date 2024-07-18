@@ -42,3 +42,4 @@ rsync --itemize-changes --recursive \
 header_end
 
 echo "Done with success"
+date
