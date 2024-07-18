@@ -46,7 +46,7 @@ if (process.env["CI"]) {
 if (process.env["UPDATE"]) {
   // Set by .envrc on dev
   process.stdout.write("\n\n\n**** Disabling snapshot comparison ****\n\n\n\n");
-  config.ignoreSnapshots = false;
+  config.ignoreSnapshots = true;
 }
 
 export default defineConfig(config);
