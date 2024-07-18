@@ -11,8 +11,10 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   retries: 0,
   timeout: 10 * 1000,
   outputDir: "tmp/integration/playwright/test-results/",
-  reporter: [["list"]],
-  ignoreSnapshots: false,
+  reporter: [
+    ["list"],
+    ["html", { outputFolder: "tmp/integration/playwright/report" }]
+  ],
   projects: [
     {
       name: "Firefox",
@@ -32,20 +34,11 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
 if (process.env["CI"]) {
   if (config.reporter instanceof Array) {
     config.reporter.push(["github"]);
-    config.reporter.push([
-      "html",
-      { outputFolder: "tmp/integration/playwright/report" }
-    ]);
   }
   config.workers = 1;
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   config.forbidOnly = true;
-}
-
-if (process.env["UPDATE"]) {
-  // Set by .envrc on dev
-  config.ignoreSnapshots = true;
 }
 
 export default defineConfig(config);
