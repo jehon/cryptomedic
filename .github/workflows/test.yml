@@ -160,7 +160,7 @@ jobs:
 
       - run: make dependencies
 
-      - run: make integration-test-playwright-run
+      - run: make integration-test-playwright-run-update
         env:
             UPDATE: 1
 

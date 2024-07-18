@@ -168,6 +168,19 @@ $(INTEGRATION_TEST_TMP)/playwright/.tested: \
 	node_modules/.bin/playwright test
 	@touch "$@"
 
+
+.PHONY: integration-test-playwright-run-update
+integration-test-playwright-run-update: \
+		$(INTEGRATION_BUILT_MARK) \
+		$(shell find tests/e2e/ -name "*.ts") \
+		playwright.config.ts \
+		$(HOME)/.cache/ms-playwright
+
+	@mkdir -p "$(dir $@)"
+	bin/cr-data-reset
+	node_modules/.bin/playwright test --ignore-snapshots
+	@touch "$@"
+
 .PHONY: integration-test-playwright-styles
 integration-test-playwright-styles: $(INTEGRATION_TEST_TMP)/playwright/.tested
 	@true
