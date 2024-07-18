@@ -162,6 +162,8 @@ jobs:
 
       - run: make integration-update-references-playwright
 
+      - run: git status
+
       - name: Upload reference images
         if: always()
         uses: actions/upload-artifact@v4
