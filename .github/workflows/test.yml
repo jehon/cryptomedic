@@ -128,6 +128,47 @@ jobs:
           name: integration-${{ matrix.flavor }}
           path: tmp/integration/${{ matrix.flavor }}
 
+  update-e2e:
+    needs: 
+      - build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      # https://github.com/marketplace/actions/setup-chrome
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: deploy
+          path: .
+
+      - run: ./setup.sh
+
+      - run: make github
+
+      - run: make dc-build
+
+      - run: make start
+
+      - run: make dependencies
+
+      - run: make integration-update-references-playwright
+
+      - name: Upload reference images
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-playwright-update
+          path: tests/e2e/**/*.png
+
   valid:
     # placeholder for validation of PR
     needs: 
