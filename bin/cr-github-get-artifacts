@@ -5,14 +5,7 @@ set -o pipefail
 
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
-# We replace the local integration (e2e test results)
-# by those of github
-TMP_GH="$CR_TMP/integration/"
-echo "TMP_GH: $TMP_GH"
-
-rm -fr "$TMP_GH"
-mkdir -p "$TMP_GH"
-cd "$TMP_GH"
+# We replace the local integration (e2e test results) by those of github
 
 header_begin "Getting latest ended run"
 # https://cli.github.com/manual/gh_run_list
@@ -22,20 +15,31 @@ PAGER="" gh run view "$RUN_ID"
 echo "RUN_ID: $RUN_ID"
 header_end
 
-get_flavor() {
-    FLAVOR="$1"
-    echo "* getting $FLAVOR"
+get_artifact() {
+    artifactName="$1"
+    destination="$2"
+    echo "* getting ${artifactName}"
+    echo "    -> ${destination}"
+
     (
-        mkdir "${FLAVOR}"
-        cd "${FLAVOR}"
-        gh run download "$RUN_ID" --name "integration-${FLAVOR}"
+        rm -fr "${destination}"
+        mkdir -p "${destination}"
+        gh run download "$RUN_ID" --name "${artifactName}" --dir "${destination}"
     )
 }
 
 header_begin "Copying files locally"
-get_flavor "desktop"
-get_flavor "mobile"
-get_flavor "playwright"
+get_artifact "integration-desktop" "$CR_TMP/integration/desktop"
+get_artifact "integration-mobile" "$CR_TMP/integration/mobile"
+get_artifact "integration-playwright" "$CR_TMP/integration/playwright"
+get_artifact "integration-playwright-update" "$CR_TMP/integration/playwright-update"
+header_end
+
+header_begin "Reintegrate playwright references"
+rsync --itemize-changes --recursive \
+    --omit-dir-times \
+    --checksum \
+    "$CR_TMP/integration/playwright-update/" "tests/e2e/"
 header_end
 
 echo "Done with success"
