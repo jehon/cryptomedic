@@ -164,7 +164,7 @@ $(INTEGRATION_TEST_TMP)/playwright/.tested: \
 		$(HOME)/.cache/ms-playwright
 
 	@mkdir -p "$(dir $@)"
-	cr-data-reset
+	bin/cr-data-reset
 	node_modules/.bin/playwright test
 	@touch "$@"
 
