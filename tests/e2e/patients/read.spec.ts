@@ -40,8 +40,8 @@ test("consult-other", async ({ page }) => {
   await panel.expectFieldValue("Date", ds("2007-01-10"));
   await panel.expectFieldValue("Examiner", "Ershad");
   await panel.expectFieldValue("Joints or Bones Affected", "PBVE");
-  await expect(panel.form).toHaveScreenshot("form");
-  await expect(panel.panel).toHaveScreenshot("panel");
+  await expect(panel.form).toHaveScreenshot();
+  await expect(panel.panel).toHaveScreenshot();
 });
 
 test("consult-ricket", async ({ page }) => {
