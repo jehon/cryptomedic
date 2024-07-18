@@ -177,7 +177,7 @@ integration-test-playwright-run-update: \
 		$(HOME)/.cache/ms-playwright
 
 	bin/cr-data-reset
-	node_modules/.bin/playwright test --ignore-snapshots
+	node_modules/.bin/playwright test --update-snapshots
 
 .PHONY: integration-test-playwright-styles
 integration-test-playwright-styles: $(INTEGRATION_TEST_TMP)/playwright/.tested
