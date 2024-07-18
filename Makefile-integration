@@ -172,18 +172,6 @@ $(INTEGRATION_TEST_TMP)/playwright/.tested: \
 integration-test-playwright-styles: $(INTEGRATION_TEST_TMP)/playwright/.tested
 	@true
 
-.PHONY: integration-update-references-playwright
-update: integration-update-references-playwright
-integration-update-references-playwright: \
-		$(INTEGRATION_BUILT_MARK) \
-		$(shell find tests/e2e/ -name "*.ts") \
-		playwright.config.ts \
-		$(HOME)/.cache/ms-playwright
-
-	@mkdir -p "$(INTEGRATION_TEST_TMP)/playwright"
-	cr-data-reset
-	node_modules/.bin/playwright test --ignore-snapshots
-
 .PHONY: integration-test-playwright-headed
 integration-test-playwright-ui: \
 		$(INTEGRATION_BUILT_MARK) \
@@ -200,22 +188,16 @@ integration-update-playwright-browsers:
 	rm -fr $(HOME)/.cache/ms-playwright
 	$(MAKE) $(HOME)/.cache/ms-playwright
 
-.PHONY: integration-update-playwright-snapshots
-update: integration-update-playwright-snapshots
-integration-update-playwright-snapshots:
-	node --import=tsx bin/cr-update-playwright-snapshots.ts
-
 .PHONY: integration-update-download-github
 integration-update-download-github:
 	bin/cr-github-get-artifacts
 
 .PHONY: integration-update-to-commit
 integration-update-to-commit:
+	@echo
 	@echo "** styles-desktop"
 	make integration-update-references-styles-desktop
 	@echo
 	@echo "** styles-mobile"
 	make integration-update-references-styles-mobile
 	@echo
-	@echo "** playwright-snapshots"
-	make integration-update-playwright-snapshots

@@ -160,7 +160,9 @@ jobs:
 
       - run: make dependencies
 
-      - run: make integration-update-references-playwright
+      - run: make integration-test-playwright-run
+        env:
+            UPDATE: 1
 
       - run: git status
 

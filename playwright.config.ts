@@ -12,8 +12,7 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   timeout: 10 * 1000,
   outputDir: "tmp/integration/playwright/test-results/",
   reporter: [["list"]],
-  // Enable snapshots only on CI
-  ignoreSnapshots: true,
+  ignoreSnapshots: false,
   projects: [
     {
       name: "Firefox",
@@ -42,7 +41,10 @@ if (process.env["CI"]) {
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   config.forbidOnly = true;
+}
 
+if (process.env["UPDATE"]) {
+  // Set by .envrc on dev
   config.ignoreSnapshots = false;
 }
 
