@@ -39,6 +39,8 @@ if (process.env["CI"]) {
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   config.forbidOnly = true;
+  // } else {
+  //   config.ignoreSnapshots = true;
 }
 
 export default defineConfig(config);
