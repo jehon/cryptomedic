@@ -665,7 +665,7 @@ reports[REPORT_ACTIVITY] = {
       .addDetail("last_treat_result", {
         headers: ["Result"]
       })
-      .addDetail("last_treat_finished", { headers: ["Done ?", null] })
+      .addDetail("last_treat_finished", { headers: ["Treat. Finish", null] })
 
       .addDetail(
         (data) =>
