@@ -166,7 +166,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: integration-playwright-update
+          name: integration-playwright-updated-snapshots
           path: tests/e2e/**/*.png
 
   valid:

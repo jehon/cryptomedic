@@ -32,14 +32,13 @@ header_begin "Copying files locally"
 get_artifact "integration-desktop" "$CR_TMP/integration/desktop"
 get_artifact "integration-mobile" "$CR_TMP/integration/mobile"
 get_artifact "integration-playwright" "$CR_TMP/integration/playwright"
-get_artifact "integration-playwright-update" "$CR_TMP/integration/playwright-update"
+get_artifact "integration-playwright-updated-snapshots" "$CR_TMP/integration/integration-playwright-updated-snapshots"
 header_end
 
 header_begin "Reintegrate playwright references"
 rsync --itemize-changes --recursive \
     --omit-dir-times \
-    --checksum \
-    "$CR_TMP/integration/playwright-update/" "tests/e2e/"
+    "$CR_TMP/integration/integration-playwright-updated-snapshots/" "tests/e2e/"
 header_end
 
 echo "Done with success"
