@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 /* eslint-disable */
 
-import Payment from "../../../src/business/payment.js";
 import { extractPrefsFile } from "../../../src/utils/prefs.js";
+import Payment from "../../business/payment.js";
 import { formGetContent } from "../v2/js/form.js";
 import getDataService from "../v2/js/getDataService.js";
 import { getSession, onSession } from "../v2/js/session.js";

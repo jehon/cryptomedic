@@ -1,7 +1,7 @@
 import { fn, loadReference, RefFolder1 } from "./athelpers.js";
 
 import XFfPatientRelated from "../../../legacy/app-old/v2/widgets/folder/x-ff-patient-related.js";
-import Folder from "../../../src/business/folder.js";
+import Folder from "../../business/folder.js";
 
 let testFolder;
 

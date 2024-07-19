@@ -1,4 +1,4 @@
-import Folder from "../../../src/business/folder.js";
+import Folder from "../../business/folder.js";
 
 const folder = new Folder([
   {

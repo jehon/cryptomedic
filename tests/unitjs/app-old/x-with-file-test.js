@@ -6,7 +6,7 @@ import {
 } from "./athelpers.js";
 
 import XWithFile from "../../../legacy/app-old/v2/widgets/file/x-with-file.js";
-import Folder from "../../../src/business/folder.js";
+import Folder from "../../business/folder.js";
 
 let testFolder;
 let file;

@@ -1,5 +1,5 @@
 import XGraphic from "../../../legacy/app-old/v2/widgets/folder/x-graphic.js";
-import Folder from "../../../src/business/folder.js";
+import Folder from "../../business/folder.js";
 import { fn, loadReference, RefFolder1 } from "./athelpers.js";
 
 describe(fn(import.meta.url), function () {
