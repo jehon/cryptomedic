@@ -674,7 +674,7 @@ reports[REPORT_ACTIVITY] = {
                 value: "Money collected on bills from previous months",
                 translated: "Complementary payments"
               })
-            : data.price_consult ?? 0,
+            : (data.price_consult ?? 0),
         {
           headers: ["Consult", "Price", "", "", ""],
           footers: ["total", XTable.MACROS.sum]
@@ -682,27 +682,30 @@ reports[REPORT_ACTIVITY] = {
       )
 
       .addDetail(
-        (data) => (data.complementary ? null : data.price_medecine ?? 0),
+        (data) => (data.complementary ? null : (data.price_medecine ?? 0)),
         { headers: ["Medicine"], footers: [null, XTable.MACROS.sum] }
       )
       .addDetail(
-        (data) => (data.complementary ? null : data.price_surgical ?? 0),
+        (data) => (data.complementary ? null : (data.price_surgical ?? 0)),
         { headers: ["Surgical"], footers: [null, XTable.MACROS.sum] }
       )
       .addDetail(
-        (data) => (data.complementary ? null : data.price_workshop ?? 0),
+        (data) => (data.complementary ? null : (data.price_workshop ?? 0)),
         { headers: ["Workshop"], footers: [null, XTable.MACROS.sum] }
       )
       .addDetail(
-        (data) => (data.complementary ? null : data.price_other ?? 0),
+        (data) => (data.complementary ? null : (data.price_other ?? 0)),
         { headers: ["Others"], footers: [null, XTable.MACROS.sum] }
       )
-      .addDetail((data) => (data.complementary ? null : data.total_real ?? 0), {
-        headers: ["Full"],
-        footers: [null, XTable.MACROS.sum]
-      })
       .addDetail(
-        (data) => (data.complementary ? null : data.total_asked ?? 0),
+        (data) => (data.complementary ? null : (data.total_real ?? 0)),
+        {
+          headers: ["Full"],
+          footers: [null, XTable.MACROS.sum]
+        }
+      )
+      .addDetail(
+        (data) => (data.complementary ? null : (data.total_asked ?? 0)),
         { headers: ["Asked"], footers: [null, XTable.MACROS.sum] }
       )
       .addDetail("total_paid", {

@@ -254,7 +254,7 @@ export default class XTable extends HTMLElement {
       iResult[BODY] = data.map((d, j) =>
         iDetail.body instanceof Function
           ? iDetail.body(d, j, context)
-          : d[iDetail.body] ?? ""
+          : (d[iDetail.body] ?? "")
       );
 
       iResult[HEADER] = [
