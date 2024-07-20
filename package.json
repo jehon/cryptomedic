@@ -109,6 +109,7 @@
     ]
   },
   "scripts": {
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "postinstall": "touch node_modules/.dependencies"
   }
 }
