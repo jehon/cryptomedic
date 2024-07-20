@@ -1,9 +1,9 @@
 import {
-  setSession,
-  onSession,
+  getAuthorized,
   getSession,
   getUsername,
-  getAuthorized
+  onSession,
+  setSession
 } from "../../../legacy/app-old/v2/js/session.js";
 
 import { fn, loadReference } from "./athelpers.js";
@@ -112,7 +112,7 @@ describe(fn(import.meta.url), function () {
       // expect(res.length).toBe(i + 1);
       // expect(res[i]).toBe(true);
 
-      refSession.authorized;
+      refSession.authorized();
       setSession(); // false
       i++;
       expect(res.length).toBe(i + 1);

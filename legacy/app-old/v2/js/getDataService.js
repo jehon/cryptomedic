@@ -1,7 +1,4 @@
-/* istanbul ignore file */
-/* eslint-disable */
-
-import { onSession, getUsername } from "./session.js";
+import { getUsername, onSession } from "./session.js";
 
 /**
  * @param cssSelector

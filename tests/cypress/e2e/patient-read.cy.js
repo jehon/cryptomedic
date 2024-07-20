@@ -42,7 +42,7 @@ context("Actions", () => {
         });
 
       // TODO: We need to wait for image to be loaded...
-      cy.wait(1000); // eslint-disable-line
+      cy.wait(1000);
       cy.crCompareSnapshot("patient_2000_1_summary");
 
       patientSelectFile("OtherConsult", 1);

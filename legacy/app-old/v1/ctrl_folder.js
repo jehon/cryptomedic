@@ -1,6 +1,3 @@
-/* istanbul ignore file */
-/* eslint-disable */
-
 import { extractPrefsFile } from "../../../src/utils/prefs.js";
 import Folder from "../../business/folder.js";
 import date2CanonicString from "../v2/js/date2CanonicString.js";

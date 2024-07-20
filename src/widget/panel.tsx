@@ -40,7 +40,7 @@ export default function Panel({
     if (!fixed) {
       const newState = !statusOpened;
       toggleOpened(newState);
-      onToggle && onToggle(newState);
+      if (onToggle) onToggle(newState);
     }
   }
 

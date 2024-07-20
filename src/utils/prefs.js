@@ -1,6 +1,3 @@
-/* istanbul ignore file */
-/* eslint-disable */
-
 export function setPref(part, data) {
   let res = {};
   if (sessionStorage.cryptomedicPrefs) {

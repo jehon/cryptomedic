@@ -18,7 +18,7 @@ Cypress.Commands.add("crCompareSnapshot", (name = "") => {
   });
 
   // TODO: clean-up this wait, but don't know how to do that otherwise
-  cy.wait(100); /* eslint-disable-line */
+  cy.wait(100);
 
   var testName = ""
     .concat(Cypress.spec.name.replace(".js", ""))

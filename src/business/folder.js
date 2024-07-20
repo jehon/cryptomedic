@@ -132,7 +132,6 @@ export default class Folder extends Pojo {
   getByFieldValue(field, value) {
     let res = [];
     for (let i in this.list) {
-      // eslint-disable-next-line eqeqeq
       if (this.list[i][field] == value) {
         res.push(this.list[i]);
       }

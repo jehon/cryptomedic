@@ -17,7 +17,7 @@ export default function setPropertyOn(root, name, value) {
       try {
         el[prop] = value;
       } catch (_e) {
-        true;
+        // ok
       }
     });
   }
@@ -27,7 +27,7 @@ export default function setPropertyOn(root, name, value) {
       try {
         el[prop] = value;
       } catch (_e) {
-        true;
+        // ok
       }
     });
   }

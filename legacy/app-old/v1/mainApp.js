@@ -1,6 +1,3 @@
-/* istanbul ignore file */
-/* eslint-disable */
-
 // *** Legacy ***
 
 // AngularJS
