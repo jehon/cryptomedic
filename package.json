@@ -67,7 +67,7 @@
     "identity-obj-proxy": "3.0.0",
     "imports-loader": "5.0.0",
     "jasmine": "5.2.0",
-    "jasmine-core": "5.1.2",
+    "jasmine-core": "5.2.0",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
