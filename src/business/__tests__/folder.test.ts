@@ -125,11 +125,6 @@ test("should give bill related files", () => {
   expect(list[i].bill_id).toBe(1);
 });
 
-test("should keep extra data", () => {
-  f.setHeader("newKey", 14);
-  expect(f.getHeader("newKey")).toBe(14);
-});
-
 describe("order", function () {
   // const resEqual  = (a, b) => { expect(Folder.ordering(a, b)).toBe(0); };
   const resFirst = (a: Folder, b: Folder) => {

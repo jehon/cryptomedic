@@ -18,20 +18,11 @@ export default class Folder extends Pojo {
     return new (registryGet(type))(data, folder);
   }
 
-  // Legacy
-  getModel() {
-    return "Folder";
-  }
-
-  /** @type {[key: string]: any} */
-  headers;
-
   /** @type {Array<PatientRelated|Patient>} */
   list;
 
   constructor(listing = {}) {
     super();
-    this.headers = {};
     this.list = [];
 
     // create the objects
@@ -189,16 +180,6 @@ export default class Folder extends Pojo {
    */
   getFilesRelatedToBill(id) {
     return this.getByFieldValue("bill_id", id).sort(Folder.ordering);
-  }
-
-  // Legacy
-  setHeader(key, value) {
-    this.headers[key] = value;
-  }
-
-  // Legacy
-  getHeader(key) {
-    return this.headers[key];
   }
 
   /**
