@@ -68,7 +68,6 @@
     "imports-loader": "5.0.0",
     "jasmine": "5.2.0",
     "jasmine-core": "5.2.0",
-    "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
     "karma": "6.4.3",
