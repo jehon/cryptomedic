@@ -57,20 +57,6 @@ export function bridgeTo(
       });
       this.#root.render(this.#element);
     }
-
-    // //
-    // // For ctrl_folder
-    // //
-
-    // set folder(f: any) {
-    //   this.set("folder", f);
-    //   this.render();
-    // }
-
-    // set file(f: any) {
-    //   this.set("file", f);
-    //   this.render();
-    // }
   };
   customElements.define(tag, el);
 
