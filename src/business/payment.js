@@ -36,7 +36,7 @@ export default class Payment extends Pojo {
 
   // Legacy
   getRelatedBill() {
-    return this.getFolder().getByUid("Bo;;Bill-" + this.bill_id);
+    return this.getFolder().getByUid("Bill-" + this.bill_id);
   }
 }
 

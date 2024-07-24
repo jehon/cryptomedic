@@ -119,7 +119,6 @@ export default class Folder extends Pojo {
     return null;
   }
 
-  // Legacy
   getByFieldValue(field, value) {
     let res = [];
     for (let i in this.list) {
