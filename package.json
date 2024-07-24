@@ -89,7 +89,7 @@
     "ts-jest": "29.2.3",
     "ts-loader": "9.5.1",
     "tsx": "4.16.2",
-    "typescript-eslint": "8.0.0-alpha.49",
+    "typescript-eslint": "8.0.0-alpha.54",
     "watch": "1.0.2",
     "webpack": "5.93.0",
     "webpack-cli": "5.1.4"
