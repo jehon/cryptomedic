@@ -8,11 +8,12 @@ const config: Config = {
   verbose: true,
   rootDir: "src",
   showSeed: true,
-  extensionsToTreatAsEsm: [...defaults.extensionsToTreatAsEsm, ".ts"],
+  extensionsToTreatAsEsm: [...defaults.extensionsToTreatAsEsm, ".ts", ".tsx"],
   preset: "ts-jest/presets/js-with-ts",
   moduleNameMapper: {
     "\\.css$": "identity-obj-proxy"
-  }
+  },
+  testEnvironment: "jsdom"
 };
 
 export default config;

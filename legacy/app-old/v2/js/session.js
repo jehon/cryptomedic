@@ -1,4 +1,4 @@
-import duix from "../../../../node_modules/duix/index.js";
+import duix from "../../../../node_modules/duix/build.js";
 import { routeToLogin } from "./router.js";
 const SESSION = "session";
 
@@ -31,25 +31,6 @@ export function deepFreeze(object) {
 export function deepCopy(object) {
   return JSON.parse(JSON.stringify(object));
 }
-
-// /**
-//  *
-//  * @param {function(any): any} valueCb - Extract the value from the session
-//  * @param {function(any, any): any} cb - The callback that will be called with the new value
-//  */
-// export function filterOnValue(valueCb, cb) {
-//     let oldValue = Symbol('undefined'); // To make the difference between undefined and never initialized
-//     return duix.subscribe(SESSION, session => {
-//         let newValue = valueCb(session);
-//         if (oldValue === newValue) {
-//             return;
-//         }
-//         cb(newValue, oldValue);
-//         oldValue = newValue;
-//     }, {
-//         fireImmediately: true
-//     });
-// }
 
 /**
  * @param {object} session - the object to be stored

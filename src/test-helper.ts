@@ -1,4 +1,4 @@
-import Folder from "./business/folder";
+import Folder from "./business/folder.js";
 
 export const RefFolder1 = "FolderTest.test1.json";
 export const RefFolder1RicketConsult13 = "RicketConsult-13";
