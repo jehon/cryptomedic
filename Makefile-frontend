@@ -127,7 +127,7 @@ $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_
 
 .PHONY: frontend-test
 test: frontend-test
-frontend-test:
+frontend-test: $(FRONTEND_DEPENDENCIES_MARK)
 	node_modules/.bin/jest
 
 .PHONY: frontend-github
