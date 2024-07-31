@@ -26,7 +26,7 @@ export default function BillLine(props: {
     >
       <label htmlFor={uuid}>{label}*</label>
       <div className="content">{props.value}</div>
-      <div>{props.price} €</div>
+      <div className="annexe">{props.price} €</div>
     </div>
   );
 }
