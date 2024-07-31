@@ -1,3 +1,4 @@
+import { getSession } from "../../legacy/app-old/v2/js/session.js";
 import { DataMissingException } from "../utils/exceptions.js";
 import Timed from "./abstracts/timed.js";
 import Price from "./price.js";
@@ -92,6 +93,17 @@ export default class Bill extends Timed {
     }
   }
 
+  getPricesList() {
+    return getSession()?.prices ?? null;
+  }
+
+  getPrice() {
+    if (!this.price_id) {
+      return null;
+    }
+    return this.getPricesList()?.[this.price_id] ?? null;
+  }
+
   getTotalForCategory(category) {
     return this.items
       .filter((item) => item.category === category)
@@ -119,23 +131,23 @@ export default class Bill extends Timed {
      Level 4 is when the familial ration is social_level_threshold_4 < FR
      */
 
-    if (this.price) {
+    if (this.getPrice()) {
       try {
         const rs = this.ratioSalary();
 
-        if (rs <= this.price.social_level_threshold_1) {
+        if (rs <= this.getPrice().social_level_threshold_1) {
           return 0;
         }
 
-        if (rs <= this.price.social_level_threshold_2) {
+        if (rs <= this.getPrice().social_level_threshold_2) {
           return 1;
         }
 
-        if (rs <= this.price.social_level_threshold_3) {
+        if (rs <= this.getPrice().social_level_threshold_3) {
           return 2;
         }
 
-        if (rs <= this.price.social_level_threshold_4) {
+        if (rs <= this.getPrice().social_level_threshold_4) {
           return 3;
         }
       } catch (_e) {
@@ -149,13 +161,13 @@ export default class Bill extends Timed {
 
   // Legacy
   calculate_total_real() {
-    if (!this.price) {
+    if (!this.getPrice()) {
       this.total_real = 0;
       this.total_asked = 0;
       return -1;
     }
     var total = 0;
-    for (var i in this.price) {
+    for (var i in this.getPrice()) {
       if (i[0] === "_") {
         continue;
       }
@@ -189,7 +201,7 @@ export default class Bill extends Timed {
       if (i.startsWith("social_level_")) {
         continue;
       }
-      if (this.price[i] < 0) {
+      if (this.getPrice()[i] < 0) {
         continue;
       }
       if (typeof this[i] === "undefined") {
@@ -198,7 +210,7 @@ export default class Bill extends Timed {
       if (this[i] <= 0) {
         continue;
       }
-      total += this.price[i] * this[i];
+      total += this.getPrice()[i] * this[i];
     } //, this);
     this.total_real = total;
     this.total_asked = this.total_real * this.calculate_percentage_asked();
@@ -207,7 +219,7 @@ export default class Bill extends Timed {
 
   // Legacy
   calculate_percentage_asked() {
-    if (!this.price) {
+    if (!this.getPrice()) {
       //console.warn('calculate_percentage_asked(): no price id');
       return 1;
     }
@@ -216,28 +228,30 @@ export default class Bill extends Timed {
       //console.warn('calculate_percentage_asked(): no social level');
       return 1;
     }
-    if (typeof this.price["social_level_percentage_" + sl] == "undefined") {
+    if (
+      typeof this.getPrice()["social_level_percentage_" + sl] == "undefined"
+    ) {
       //console.warn('calculate_percentage_asked(): no social level in price for sl ' + sl);
       return 1;
     }
-    var perc = this.price["social_level_percentage_" + sl];
-    // console.log("price", this.price, sl, perc)
+    var perc = this.getPrice()["social_level_percentage_" + sl];
+    // console.log("price", this.getPrice(), sl, perc)
     return perc;
   }
 
   // Legacy
   getPriceFor(key) {
-    if (!this.price) return 0;
-    if (!this.price[key]) return 0;
-    return this.price[key];
+    if (!this.getPrice()) return 0;
+    if (!this.getPrice()[key]) return 0;
+    return this.getPrice()[key];
   }
 
   // Legacy
   getTotalFor(key) {
-    if (!this.price) return 0;
-    if (!this.price[key]) return 0;
+    if (!this.getPrice()) return 0;
+    if (!this.getPrice()[key]) return 0;
     if (!this[key]) return 0;
-    return this.price[key] * this[key];
+    return this.getPrice()[key] * this[key];
   }
 
   getTotalAlreadyPaid() {
@@ -249,10 +263,10 @@ export default class Bill extends Timed {
   }
 
   // Legacy
-  calculatePriceId(prices) {
+  calculatePriceId() {
+    const prices = this.getPricesList();
     if (typeof this.date == "undefined" || !this.date || !prices) {
       this.price_id = 0;
-      this.price = false;
       return 0;
     }
     this.price_id = -1;
@@ -263,7 +277,6 @@ export default class Bill extends Timed {
         (p["date_to"] == null || p["date_to"] > this.date)
       ) {
         this.price_id = i;
-        this.price = prices[i];
       }
     }
     if (this.price_id < 0) {
