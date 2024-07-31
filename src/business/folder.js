@@ -4,7 +4,14 @@ import Patient from "./patient.js";
 
 // Enrich the registry:
 import { produce } from "immer";
+import "./bill.js";
+import "./consult-clubfoot.js";
+import "./consult-other.js";
+import "./consult-ricket.js";
+import "./payment.js";
+import "./picture.js";
 import { registryGet } from "./registry.js";
+import "./surgery.js";
 
 export default class Folder extends Pojo {
   static create(folder, type, data = {}) {

@@ -9,7 +9,6 @@ import "./main.css";
 /* Application */
 import PatientRouter, { patientLoader } from "./app-patient/patient-router";
 import { bridgeTo } from "./bridge";
-import "./from-js";
 import ErrorPage from "./widget/error-page";
 import RouteLoading from "./widget/route-loading";
 
