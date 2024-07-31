@@ -1,14 +1,7 @@
 import { produce } from "immer";
 import PatientRelated from "./abstracts/patient-related.js";
 import Appointment from "./appointment.js";
-import "./bill.js";
-import "./consult-clubfoot.js";
-import "./consult-other.js";
-import "./consult-ricket.js";
-import "./payment.js";
-import "./picture.js";
 import { registrySet } from "./registry.js";
-import "./surgery.js";
 
 const model = "Patient";
 
