@@ -25,9 +25,16 @@ if (!function_exists("App\price")) {
     ng-class='{ "not-mode-read": !currentFile()["$name"] }'
   >
   <div ng-if="currentFile().getPriceFor('$name')<=1">1x</div>
-  <div>
+  <div ng-if="currentFile().getPriceFor('$name')<=1">
 EOD;
         (new t($item, ["inline" => "style='width: 4em' step=1 min=0"]))
+            ->value()
+            ->p();
+        echo <<<EOD
+  </div>
+  <div ng-if="currentFile().getPriceFor('$name')>1">
+EOD;
+        (new t($item, ["inline" => "style='width: 4em' step=1 min=0 max=2"]))
             ->value()
             ->p();
         echo <<<EOD
