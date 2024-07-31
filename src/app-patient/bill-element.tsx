@@ -13,6 +13,7 @@ import IONumber from "../widget/io-number";
 import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import BillLine from "./blocs/bill-line";
 import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
 
 export default function BillElement({
@@ -56,9 +57,11 @@ export default function BillElement({
             ) : (
               <table>
                 <thead>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Comments</th>
+                  <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Comments</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {file.getPayments().map((payment: Payment) => (
@@ -120,11 +123,14 @@ export default function BillElement({
         </Panel>
       </TwoColumns>
       <Panel label="Bill Lines">
-        {file.items.map((line) => {
-          return (
-            <IO.Number key={line.key} name={line.key} value={line.value} />
-          );
-        })}
+        {file.items.map((line) => (
+          <BillLine
+            key={line.key}
+            name={line.key}
+            value={line.value}
+            price={file.getPriceFor(line.key)}
+          />
+        ))}
       </Panel>
     </FilePanel>
   );
