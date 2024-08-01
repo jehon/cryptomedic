@@ -11,6 +11,7 @@ import { EditContext } from "../../widget/io-abstract";
 import { notifySuccess } from "../../widget/notification";
 import Panel from "../../widget/panel";
 import { folderFileDelete, folderFileUnlock } from "../loaders";
+import { routeToFolderFile } from "../patient-router";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
@@ -32,6 +33,10 @@ export default function FilePanel({
   onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   const [editState, updateEditState] = useState(false);
+
+  const goToPatientFile = () => {
+    document.location = routeToFolderFile(folder, file);
+  };
 
   const goEdit = (file: Pojo) => {
     if (location.search == "?dev") {
@@ -166,7 +171,7 @@ export default function FilePanel({
         </>
       }
     >
-      <div className="technical">
+      <div className="technical" onClick={goToPatientFile}>
         <div>{file.uid()}</div>
         <div>created at {date2HumanString(normalizeDate(file.created_at))}</div>
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
