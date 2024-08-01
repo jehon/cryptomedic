@@ -1,0 +1,32 @@
+.payment-line {
+  display: flex;
+  flex-wrap: wrap;
+
+  border-bottom: gray solid 1px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  & > * {
+    flex-grow: 0;
+  }
+
+  /* Date */
+  & > *:nth-child(1) {
+    flex-basis: 175px;
+    flex-grow: 0;
+  }
+
+  /* Amount */
+  & > *:nth-child(2) {
+    flex-basis: 100px;
+    flex-grow: 0;
+  }
+
+  /* Comment */
+  & > *:nth-child(3) {
+    flex-basis: 100px;
+    flex-grow: 1;
+  }
+}

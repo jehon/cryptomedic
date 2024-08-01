@@ -13,6 +13,7 @@ import IONumber from "../widget/io-number";
 import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import "./bill-element.css";
 import BillLine from "./blocs/bill-line";
 import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
 
@@ -55,30 +56,13 @@ export default function BillElement({
             {file.getPayments().length == 0 ? (
               <div>No payment received</div>
             ) : (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Amount</th>
-                    <th>Comments</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {file.getPayments().map((payment: Payment) => (
-                    <tr key={payment.uid()}>
-                      <td>
-                        <IODate value={payment.date} noLabel />
-                      </td>
-                      <td>
-                        <IONumber value={payment.amount} noLabel />
-                      </td>
-                      <td>
-                        <IOString value={payment.comments} noLabel note />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              file.getPayments().map((payment: Payment) => (
+                <div key={payment.uid()} className="payment-line">
+                  <IODate value={payment.date} noLabel />
+                  <IONumber value={payment.amount} noLabel />
+                  <IOString value={payment.comments} noLabel note />
+                </div>
+              ))
             )}
           </Panel>
         </>
