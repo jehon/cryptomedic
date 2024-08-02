@@ -42,7 +42,7 @@ export default function BillElement({
       }
       footer={
         <>
-          <Panel label="Payments">
+          <Panel fixed label="Payments">
             <ButtonsGroup>
               <ActionButton
                 style="Add"
@@ -106,7 +106,7 @@ export default function BillElement({
           />
         </Panel>
       </TwoColumns>
-      <Panel label="Bill Lines">
+      <Panel fixed label="Bill Lines">
         {file.items.map((line) => (
           <BillLine
             key={line.key}
