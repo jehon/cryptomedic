@@ -42,7 +42,7 @@ export default function BillElement({
       }
       footer={
         <>
-          <Panel fixed label="Payments">
+          <Panel fixed label="Payments" testid={file.uid() + ".payments"}>
             <ButtonsGroup>
               <ActionButton
                 style="Add"
@@ -57,7 +57,11 @@ export default function BillElement({
               <div>No payment received</div>
             ) : (
               file.getPayments().map((payment: Payment) => (
-                <div key={payment.uid()} className="payment-line">
+                <div
+                  key={payment.uid()}
+                  className="payment-line"
+                  data-testid={payment.uid()}
+                >
                   <IODate value={payment.date} noLabel />
                   <IONumber value={payment.amount} noLabel />
                   <IOString value={payment.comments} noLabel note />
