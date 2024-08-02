@@ -49,7 +49,7 @@ export default function Panel({
       <div data-role="header" className="header" onClick={onOpenClose}>
         {fixed || (
           <div id="triangle" className={statusOpened ? "opened" : "closed"}>
-            ⏵
+            &#9205;
           </div>
         )}
         <div id="custom">
