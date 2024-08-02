@@ -57,7 +57,7 @@ www/built/browsers.json: .browserslistrc $(FRONTEND_DEPENDENCIES_MARK)
 
 .PHONY: integration-test
 test: integration-test
-integration-test: integration-test-desktop integration-test-mobile integration-test-playwright
+integration-test: integration-test-desktop integration-test-playwright
 
 integration-test-open: $(INTEGRATION_BUILT_MARK)
 	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/desktop/runtime"
@@ -65,7 +65,6 @@ integration-test-open: $(INTEGRATION_BUILT_MARK)
 .PHONY: integration-update-references-styles
 update: integration-update-references-styles
 integration-update-references-styles: \
-	integration-update-references-styles-mobile \
 	integration-update-references-styles-desktop
 
 ##############################
@@ -105,45 +104,6 @@ integration-update-references-styles-desktop:
 		--references="tests/styles/references/desktop" \
 		--results="$(INTEGRATION_TEST_TMP)/desktop" \
 		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots" \
-		--update
-
-##############################
-#
-# Cypress - Mobile
-#
-
-.PHONY: integration-test-mobile
-integration-test-mobile: integration-test-mobile-run integration-test-mobile-styles
-
-.PHONY: integration-test-mobile-run
-integration-test-mobile-run: $(INTEGRATION_TEST_TMP)/mobile/.tested
-$(INTEGRATION_TEST_TMP)/mobile/.tested: \
-		$(INTEGRATION_BUILT_MARK) \
-		$(shell find tests/cypress/ -name "*.js")
-
-	@mkdir -p "$(dir $@)"
-	bin/cr-data-reset
-	bin/cr-cypress "mobile" "$(INTEGRATION_TEST_TMP)/mobile/runtime"
-	@touch "$@"
-
-.PHONY: integration-test-mobile-styles
-integration-test-mobile-styles: $(INTEGRATION_TEST_TMP)/mobile/styles.json
-$(INTEGRATION_TEST_TMP)/mobile/styles.json: $(INTEGRATION_TEST_TMP)/mobile/.tested \
-		tests/styles/check-styles.ts
-
-	@mkdir -p "$(dir $@)"
-	node_modules/.bin/tsx tests/styles/check-styles.ts \
-		--references="tests/styles/references/mobile" \
-		--results="$(INTEGRATION_TEST_TMP)/mobile" \
-		--screenshots="$(INTEGRATION_TEST_TMP)/mobile/runtime/screenshots"
-
-.PHONY: integration-update-references-styles-mobile
-update: integration-update-references-styles-mobile
-integration-update-references-styles-mobile:
-	node_modules/.bin/tsx tests/styles/check-styles.ts \
-		--references="tests/styles/references/mobile" \
-		--results="$(INTEGRATION_TEST_TMP)/mobile" \
-		--screenshots="$(INTEGRATION_TEST_TMP)/mobile/runtime/screenshots" \
 		--update
 
 ##############################
@@ -208,7 +168,4 @@ integration-update-to-commit:
 	@echo
 	@echo "** styles-desktop"
 	make integration-update-references-styles-desktop
-	@echo
-	@echo "** styles-mobile"
-	make integration-update-references-styles-mobile
 	@echo

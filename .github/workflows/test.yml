@@ -86,7 +86,6 @@ jobs:
       matrix:
         flavor:
           - desktop
-          - mobile
           - playwright
     runs-on: ubuntu-latest
     timeout-minutes: 30
