@@ -47,8 +47,15 @@ export default function Panel({
   return (
     <div className="panel" data-role="panel" data-testid={testid}>
       <div data-role="header" className="header" onClick={onOpenClose}>
-        {label ? <label>{label}</label> : null}
-        {header}
+        {fixed || (
+          <div id="triangle" className={statusOpened ? "opened" : "closed"}>
+            ⏵
+          </div>
+        )}
+        <div id="custom">
+          {label ? <label>{label}</label> : null}
+          {header}
+        </div>
       </div>
       {statusOpened ? (
         <>

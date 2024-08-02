@@ -8,6 +8,14 @@
 
   min-width: var(--panel-min-width);
 
+  img {
+    height: 1.5em;
+  }
+
+  * {
+    text-align: center;
+  }
+
   & > * {
     width: 100%;
   }
@@ -15,22 +23,37 @@
   & > .header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-
     padding: 0.75em;
 
     background-color: rgb(0 0 0 / 3%);
 
-    & > label {
-      text-align: center;
+    & > * {
+      flex-grow: 1;
     }
 
-    & > .first * {
-      padding-right: 1em;
+    #triangle {
+      width: 2em;
+      flex-grow: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      transition-property: transform;
+      transition-duration: 0.25s;
+
+      &.opened {
+        transform: rotate(0.25turn);
+      }
     }
 
-    & > img {
-      height: 1.5em;
+    #custom {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      & > .first * {
+        padding-right: 1em;
+      }
     }
   }
 
