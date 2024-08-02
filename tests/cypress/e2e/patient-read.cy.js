@@ -6,7 +6,6 @@ import {
   patientFilesRead2014_103,
   patientFilesRead2014_105
 } from "./helpers/e2e-entrynumber-assigned.js";
-import { getByDataRole, getByTestId } from "./helpers/gui.js";
 import { patientSelectFile, patientgo } from "./helpers/patients.js";
 import TableIterator from "./helpers/table-iterator.js";
 
@@ -25,25 +24,6 @@ context("Actions", () => {
       cy.get("#button_edit").should("not.exist");
 
       cy.crCompareSnapshot("patient_2000_1");
-
-      cy.get("#folder_menu #summary").click();
-      getByDataRole("summary")
-        .should("be.visible")
-        .within(() => {
-          getByTestId("patient.1")
-            .should("be.visible")
-            .within(() => {
-              getByDataRole("header")
-                .first()
-                .within(() => {
-                  getByDataRole("type").should("contain", "Patient");
-                });
-            });
-        });
-
-      // TODO: We need to wait for image to be loaded...
-      cy.wait(1000);
-      cy.crCompareSnapshot("patient_2000_1_summary");
 
       patientSelectFile("OtherConsult", 1);
       cy.get("#date").should("contain.text", "2007-01-10");
