@@ -13,7 +13,6 @@
     "angular": "1.8.3",
     "angular-route": "1.8.3",
     "axios": "1.7.3",
-    "bootstrap-icons": "1.11.3",
     "bootstrap4": "npm:bootstrap@4.6.2",
     "bootstrap5": "npm:bootstrap@5.3.3",
     "class-transformer": "0.5.1",
