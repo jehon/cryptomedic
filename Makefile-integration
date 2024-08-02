@@ -66,8 +66,7 @@ integration-test-open: $(INTEGRATION_BUILT_MARK)
 update: integration-update-references-styles
 integration-update-references-styles: \
 	integration-update-references-styles-mobile \
-	integration-update-references-styles-desktop \
-	integration-update-playwright-snapshots
+	integration-update-references-styles-desktop
 
 ##############################
 #
@@ -202,6 +201,7 @@ integration-update-playwright-browsers:
 .PHONY: integration-update-download-github
 integration-update-download-github:
 	bin/cr-github-get-artifacts
+	@echo "To update cypress snapshots, run make integration-update-to-commit"
 
 .PHONY: integration-update-to-commit
 integration-update-to-commit:
