@@ -64,6 +64,7 @@ export default function SurgeryElement({
         <Panel fixed label="Hospitalization Follow-up">
           <IO.Text
             name="follow_up_complication"
+            label="Follow-Up Complications"
             value={file.follow_up_complication as string}
           />
         </Panel>

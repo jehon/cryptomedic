@@ -26,9 +26,9 @@ export default function ConsultAbstractIntroduction({
         />
       </Panel>
       <Panel fixed label="Nutritional data">
-        <IO.Number label="Weitght (kg)" value={file.weight_kg as number} />
+        <IO.Number label="Weight (kg)" value={file.weight_kg as number} />
         <IO.Function
-          label="Weitght sd"
+          label="Weight sd"
           note
           value={() => roundTo(file.getWeightSd())}
         />
