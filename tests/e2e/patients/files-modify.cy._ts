@@ -2,16 +2,19 @@ import {
   crApiFicheDelete,
   crApiFolderGet,
   crApiLogin
-} from "./helpers/cr-api.js";
+} from "../../cypress/e2e/helpers/cr-api.js";
 import {
   crFormFillIn,
   crLoginInBackground,
   crPage,
   crReady
-} from "./helpers/cr.js";
-import { patientFilesCrud } from "./helpers/e2e-entrynumber-assigned.js";
-import { guiAcceptAlert, guiHashStartWith } from "./helpers/gui.js";
-import { patientgo } from "./helpers/patients.js";
+} from "../../cypress/e2e/helpers/cr.js";
+import { patientFilesCrud } from "../../cypress/e2e/helpers/e2e-entrynumber-assigned.js";
+import {
+  guiAcceptAlert,
+  guiHashStartWith
+} from "../../cypress/e2e/helpers/gui.js";
+import { patientgo } from "../../cypress/e2e/helpers/patients.js";
 
 function checkFileAdd(type, inputData, checkCb) {
   crPage().within(() => {

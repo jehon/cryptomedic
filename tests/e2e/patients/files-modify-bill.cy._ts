@@ -2,10 +2,10 @@ import {
   crApiFicheDelete,
   crApiFolderGet,
   crApiLogin
-} from "./helpers/cr-api.js";
-import { crLoginInBackground, crReady } from "./helpers/cr.js";
-import { patientFilesCrud } from "./helpers/e2e-entrynumber-assigned.js";
-import { patientgo } from "./helpers/patients.js";
+} from "../../cypress/e2e/helpers/cr-api.js";
+import { crLoginInBackground, crReady } from "../../cypress/e2e/helpers/cr.js";
+import { patientFilesCrud } from "../../cypress/e2e/helpers/e2e-entrynumber-assigned.js";
+import { patientgo } from "../../cypress/e2e/helpers/patients.js";
 
 context("Actions", () => {
   beforeEach(() => {

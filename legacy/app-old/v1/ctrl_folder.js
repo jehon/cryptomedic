@@ -12,6 +12,7 @@ import "../v2/pages/x-page-folder.js";
 
 import { registryGet } from "../../business/registry.js";
 // import "../v2/pages/blocks/x-folder-graphics.js";
+import { _canonize } from "../v2/js/string-utils.js";
 import "../v2/widgets/file/x-fff-bmi-sd.js";
 import "../v2/widgets/file/x-fff-bmi.js";
 import "../v2/widgets/file/x-fff-height-sd.js";
@@ -43,13 +44,13 @@ export default function ctrl_folder($scope, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
    *
-   *  '/folder/123                      view the patient file
+   *  '/folder/123                      ->REACT view the patient file
    *  '/folder/123/edit                 edit the patient  (page ~> mode)
    *  '/folder/                         add a patient     (page ~> mode)
-   *  '/folder/123/file/Bills/456       view the sub file
+   *  '/folder/123/file/Bills/456       ->REACT view the sub file
    *  '/folder/123/file/Bills/456/edit  edit the sub file
    *  '/folder/123/file/Bills           add a bill
-   *  '/folder/123/summary/*            REACT
+   *  '/folder/123/summary/*            ->REACT
    *  '/folder/123/addfile
    *
    */
@@ -108,6 +109,36 @@ export default function ctrl_folder($scope, $routeParams) {
       // Adding a file
       $scope.mode = "add";
     }
+  }
+
+  // Redirect to React
+  if ($scope.mode == "read") {
+    // Redirect to React
+    let subtype = $scope.subtype ? _canonize($scope.subtype).join("_") : false;
+    switch ($scope.subtype) {
+      case "ClubFoot":
+        subtype = "consult_clubfoot";
+        break;
+      case "OtherConsult":
+        subtype = "consult_other";
+        break;
+      case "RicketConsult":
+        subtype = "consult_ricket";
+        break;
+    }
+
+    const reactRoute =
+      `/folder/${$scope.patient_id}/summary` +
+      ($scope.subtype ? `/${subtype}.${$scope.subid}` : "");
+
+    // console.log({
+    //   reactRoute,
+    //   id: $scope.patient_id,
+    //   osubtype: $scope.subtype,
+    //   subtype,
+    //   subid: $scope.subid
+    // });
+    goThere(reactRoute);
   }
 
   var cachedCurrentFile = null;
