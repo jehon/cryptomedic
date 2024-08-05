@@ -1,8 +1,7 @@
 import { Page } from "playwright-core";
 import { expect } from "playwright/test";
 import { LOGINS, crInit } from "../helpers/cr";
-
-export { crInit } from "../helpers/cr";
+export { crInit, outputDate } from "../helpers/cr";
 
 export async function crPatientInit(
   page: Page,

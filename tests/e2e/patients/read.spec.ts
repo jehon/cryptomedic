@@ -1,6 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { outputDate } from "../helpers/cr";
-import { crPatientFile } from "./cr-patients";
+import { crPatientFile, outputDate } from "./cr-patients";
 
 const PATIENT_ID_2001_001 = 1;
 // !! Manque le ClubFoot
