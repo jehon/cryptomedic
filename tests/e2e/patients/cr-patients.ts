@@ -1,7 +1,7 @@
 import { Page } from "playwright-core";
 import { expect } from "playwright/test";
-import { LOGINS, crInit } from "../helpers/cr";
-export { crInit, outputDate } from "../helpers/cr";
+import { LOGINS, crApi, crInit } from "../helpers/cr";
+export { crInit, crLegacyInput, outputDate } from "../helpers/cr";
 
 export async function crPatientInit(
   page: Page,
@@ -50,4 +50,20 @@ export async function crPatientFile(
     },
     async setFieldValue(_field: string, _value: string) {}
   };
+}
+
+export function crApiPatientDelete(
+  page: Page,
+  entry_year: number,
+  entry_order: number
+): Promise<void> {
+  return crApi(page, `reference/${entry_year}/${entry_order}`).then(
+    (folder) =>
+      folder?.id > 0
+        ? crApi(page, `fiche/patients/${folder.id}`, { method: "delete" })
+        : true,
+    () => {
+      // If the file is not found, it's ok
+    }
+  );
 }
