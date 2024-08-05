@@ -1,4 +1,4 @@
-import { Page, expect } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
 export { outputDate } from "../../../src/utils/date";
 
 export const LOGINS = {
@@ -109,4 +109,17 @@ export async function crReady(
   //   // No ToastR
   //   await expect(page.getByRole("alert")).toHaveCount(0);
   // }
+}
+
+export async function crLegacyInput(
+  page: Page | Locator,
+  selector: string,
+  value: string | number
+) {
+  const el = page.locator(selector);
+  await expect(el).toBeVisible();
+  const input = el.locator("input");
+  await expect(input).toBeVisible();
+  await input.fill("" + value);
+  await expect(input).toHaveValue("" + value);
 }
