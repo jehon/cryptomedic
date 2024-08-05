@@ -1,4 +1,5 @@
 import { Page, expect } from "@playwright/test";
+export { outputDate } from "../../../src/utils/date";
 
 export const LOGINS = {
   PHYSIO: "murshed",

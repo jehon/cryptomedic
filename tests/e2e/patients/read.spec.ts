@@ -1,8 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { date2HumanString, normalizeDate } from "../../../src/utils/date";
+import { outputDate } from "../helpers/cr";
 import { crPatientFile } from "./cr-patients";
-
-const ds = (v) => date2HumanString(normalizeDate(v));
 
 const PATIENT_ID_2001_001 = 1;
 // !! Manque le ClubFoot
@@ -22,7 +20,7 @@ test("2001-001.patient.1", async ({ page }) => {
 
 test("2001-001.appointment.2", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID_2001_001, "appointment.2");
-  await panel.expectFieldValue("Date", ds("2015-04-28"));
+  await panel.expectFieldValue("Date", outputDate("2015-04-28"));
   await panel.expectFieldValue("Examiner", "Ershad");
   await expect(panel.form).toHaveScreenshot();
   await expect(panel.panel).toHaveScreenshot();
@@ -30,7 +28,7 @@ test("2001-001.appointment.2", async ({ page }) => {
 
 test("2001-001.bill.1", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID_2001_001, "bill.1");
-  await panel.expectFieldValue("Date", ds("2011-06-09"));
+  await panel.expectFieldValue("Date", outputDate("2011-06-09"));
   await panel.expectFieldValue("Consult CDC Consultation Physio", "1");
   await panel.expectFieldValue("Consult Other");
   await panel.expectFieldValue("Price asked", 6720);
@@ -44,7 +42,7 @@ test("2001-001.consult-other.1", async ({ page }) => {
     PATIENT_ID_2001_001,
     "consult_other.1"
   );
-  await panel.expectFieldValue("Date", ds("2007-01-10"));
+  await panel.expectFieldValue("Date", outputDate("2007-01-10"));
   await panel.expectFieldValue("Examiner", "Ershad");
 
   await panel.expectFieldValue("Weight (kg)", "29");
@@ -72,7 +70,7 @@ test("2001-001.consult-ricket.13", async ({ page }) => {
     PATIENT_ID_2001_001,
     "consult_ricket.13"
   );
-  await panel.expectFieldValue("Date", ds("2014-01-04"));
+  await panel.expectFieldValue("Date", outputDate("2014-01-04"));
   await panel.expectFieldValue("Examiner", "AMD doctor");
   await panel.expectFieldValue("Walking difficulties", "Level 1");
   await expect(panel.form).toHaveScreenshot();
@@ -81,7 +79,7 @@ test("2001-001.consult-ricket.13", async ({ page }) => {
 
 test("2001-001.picture.2", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID_2001_001, "picture.2");
-  await panel.expectFieldValue("Date", ds("2014-11-04"));
+  await panel.expectFieldValue("Date", outputDate("2014-11-04"));
   await panel.expectFieldValue("File", "10_2014-11-06_15-32-45.JPG");
   await panel.expectFieldValue("Type");
   await expect(panel.form).toHaveScreenshot();
@@ -90,7 +88,7 @@ test("2001-001.picture.2", async ({ page }) => {
 
 test("2001-001.surgery.5", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID_2001_001, "surgery.5");
-  await panel.expectFieldValue("Date", ds("2014-01-02"));
+  await panel.expectFieldValue("Date", outputDate("2014-01-02"));
   await panel.expectFieldValue("Diagnostic", "test");
   await panel.expectFieldValue("Follow-Up Complications", "nothing");
   await expect(panel.form).toHaveScreenshot();
@@ -102,7 +100,7 @@ test("2001-001.surgery.5", async ({ page }) => {
 //       and add some data to it
 test("2001-001.consult_clubfoot.1", async ({ page }) => {
   const panel = await crPatientFile(page, 5, "consult_clubfoot.1");
-  await panel.expectFieldValue("Date", ds("2015-01-10"));
+  await panel.expectFieldValue("Date", outputDate("2015-01-10"));
   await panel.expectFieldValue("Examiner", "Ershad");
   await panel.expectFieldValue("Age at consultation time", "2Y");
   await expect(panel.form).toHaveScreenshot();
