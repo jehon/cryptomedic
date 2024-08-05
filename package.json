@@ -33,7 +33,7 @@
     "toastr": "2.1.4",
     "tslib": "2.6.3",
     "use-immer": "0.10.0",
-    "zone.js": "0.14.8"
+    "zone.js": "0.14.10"
   },
   "devDependencies": {
     "@babel/cli": "7.24.8",
