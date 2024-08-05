@@ -17,6 +17,24 @@ function crUrlAPI(segment: string = ""): string {
   return `http://localhost:8085/api${segment}`;
 }
 
+export function crApi(
+  page: Page,
+  url: string,
+  options: {
+    method?: "get" | "post" | "delete";
+    data?: any;
+  } = {}
+) {
+  return page.request[options.method ?? "get"](crUrlAPI(url), {
+    data: options.data ?? {}
+  }).then((resp) => {
+    if (resp.status() != 200) {
+      throw new Error("Server responded with invalid status: " + resp.status());
+    }
+    return resp.json();
+  });
+}
+
 export function crDebugHooks(page: Page) {
   // Listen for all console logs
   // page.on("console", (msg) =>
@@ -51,20 +69,13 @@ export async function crInit(
   } = {}
 ) {
   if (opts.login) {
-    await page.request
-      .post(crUrlAPI("/auth/mylogin"), {
-        data: {
-          username: opts.login,
-          password: PASSWORD
-        }
-      })
-      .then((resp) => {
-        if (resp.status() != 200) {
-          throw new Error(
-            "Server responded with invalid status: " + resp.status()
-          );
-        }
-      });
+    await crApi(page, "/auth/mylogin", {
+      method: "post",
+      data: {
+        username: opts.login,
+        password: PASSWORD
+      }
+    });
   } else {
     await page.request.post(crUrlAPI("/auth/logout"));
   }
