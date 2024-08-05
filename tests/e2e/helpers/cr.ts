@@ -24,7 +24,7 @@ export function crApi(
     method?: "get" | "post" | "delete";
     data?: any;
   } = {}
-) {
+): Promise<any> {
   return page.request[options.method ?? "get"](crUrlAPI(url), {
     data: options.data ?? {}
   }).then((resp) => {
@@ -35,7 +35,7 @@ export function crApi(
   });
 }
 
-export function crDebugHooks(page: Page) {
+export function crDebugHooks(page: Page): void {
   // Listen for all console logs
   // page.on("console", (msg) =>
   //   console.info("Error from browser: ", { type: msg.type(), text: msg.text() })
@@ -67,7 +67,7 @@ export async function crInit(
     page?: string;
     login?: string;
   } = {}
-) {
+): Promise<void> {
   if (opts.login) {
     await crApi(page, "/auth/mylogin", {
       method: "post",
@@ -101,7 +101,7 @@ export async function crInit(
 export async function crReady(
   page: Page
   // options: { forScreenshot?: boolean } = {}
-) {
+): Promise<void> {
   // No global spinning wheel anymore
   await expect(page.getByTestId("global-wait")).toHaveCount(0);
 
@@ -111,11 +111,31 @@ export async function crReady(
   // }
 }
 
+export async function expectFieldValue(
+  where: Page | Locator,
+  label: string,
+  value?: string | number
+): Promise<void> {
+  const getIOContent = (label: string) =>
+    where.locator(`[data-role='${label}']`);
+
+  const io = await getIOContent(label);
+
+  if (value) {
+    await expect(io).toBeVisible();
+
+    const ioc = io.locator(".content");
+    await expect(ioc).toBeVisible();
+    await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
+  } else {
+    await expect(io).not.toBeVisible();
+  }
+}
 export async function crLegacyInput(
   page: Page | Locator,
   selector: string,
   value: string | number
-) {
+): Promise<void> {
   const el = page.locator(selector);
   await expect(el).toBeVisible();
   const input = el.locator("input");
