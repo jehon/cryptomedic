@@ -1,7 +1,5 @@
 on:
   push:
-    # branches:
-    # - main
   pull_request:
     branches:
       - main
@@ -73,9 +71,8 @@ jobs:
           path: .
 
       - run: make github
-
       - run: make dependencies
-
+      - run: make start
       - run: make "${{ matrix.target }}"
           
   tests-e2e:
@@ -107,17 +104,11 @@ jobs:
           path: .
 
       - run: ./setup.sh
-
       - run: make github
-
       - run: make dc-build
-
       - run: make start
-
       - run: make dependencies
-
       - run: make integration-test-${{ matrix.flavor }}-run
-
       - run: make integration-test-${{ matrix.flavor }}-styles
 
       - name: Upload styles

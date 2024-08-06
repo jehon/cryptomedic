@@ -58,16 +58,12 @@ backend-update-dependencies:
 
 .PHONY: backend-test
 test: backend-test
-backend-test: $(BACKEND_DEPENDENCIES_MARK) \
-		dc-up
-
-	bin/cr-data-reset
+backend-test: $(BACKEND_DEPENDENCIES_MARK)
 	cd "$(BACKEND_ROOT)" && $(ROOT)/bin/cr-phpunit
 
 .PHONY: backend-update-references
 update: backend-update-references
 backend-update-references: $(BACKEND_DEPENDENCIES_MARK)
-	bin/cr-data-reset
 	cd "$(BACKEND_ROOT)" && COMMIT=1 $(ROOT)/bin/cr-phpunit
 
 .PHONY: backend-github
