@@ -150,7 +150,7 @@ jobs:
 
       - run: make dependencies
 
-      - run: make integration-test-playwright-run-update
+      - run: make integration-update-playwright
         env:
             UPDATE: 1
 

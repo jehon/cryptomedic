@@ -128,8 +128,8 @@ $(INTEGRATION_TEST_TMP)/playwright/.tested: \
 	@touch "$@"
 
 
-.PHONY: integration-test-playwright-run-update
-integration-test-playwright-run-update: \
+.PHONY: integration-update-playwright
+integration-update-playwright: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/e2e/ -name "*.ts") \
 		playwright.config.ts \
