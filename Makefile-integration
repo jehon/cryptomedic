@@ -29,6 +29,8 @@ integration-dump:
 clean: integration-clean
 integration-clean: integration-clean-files
 	rm -fr "$(ROOT)/$(TMP)/integration"
+# Playwright browser cache
+	rm -fr "$(HOME)/.cache/ms-playwright"
 
 .PHONY: integration-clean-files
 clean: integration-clean-files
@@ -155,7 +157,6 @@ $(HOME)/.cache/ms-playwright:
 .PHONY: integration-update-playwright-browsers
 update: integration-update-playwright-browsers
 integration-update-playwright-browsers:
-	rm -fr $(HOME)/.cache/ms-playwright
 	$(MAKE) $(HOME)/.cache/ms-playwright
 
 .PHONY: integration-update-download-github
