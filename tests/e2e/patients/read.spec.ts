@@ -20,7 +20,6 @@ test("2001-001.patient.1", async ({ page }) => {
 test("2001-001.appointment.2", async ({ page }) => {
   const panel = await crPatientFile(page, PATIENT_ID_2001_001, "appointment.2");
   await panel.expectFieldValue("Date", outputDate("2015-04-28"));
-  await panel.expectFieldValue("Examiner", "Ershad");
   await expect(panel.form).toHaveScreenshot();
   await expect(panel.panel).toHaveScreenshot();
 });

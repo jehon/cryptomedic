@@ -813,7 +813,6 @@ reports[REPORT_CONSULTATIONS] = {
       )
       .addDetail("name", { headers: ["Name"] })
       .addDetail("phone", { headers: ["Phone"] })
-      .addDetail("examiner", { headers: ["Appointment from"] })
       .addDetail("purpose", { headers: ["Purpose"] })
       .end()
 };

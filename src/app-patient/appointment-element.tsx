@@ -31,7 +31,6 @@ export default function AppointmentElement({
         <Panel fixed label="Information">
           <IO.Date label="Date" value={file.date} />
           <IO.String label="Center" value={file.center as string} />
-          <IO.String label="Examiner" value={file.examiner as string} />
         </Panel>
         <Panel fixed label="Objective">
           <IO.Text label="Purpose" value={file.purpose as string} />
