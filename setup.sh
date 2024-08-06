@@ -17,8 +17,10 @@ root_or_sudo() {
 
 echo "* Installing packages..."
 root_or_sudo apt update
+# libevent-2.1-7t64: playwright
 root_or_sudo apt install --quiet --yes \
-    curl lftp sshfs sshpass
+    curl lftp sshfs sshpass \
+    libevent-2.1-7t64
 echo "* Installing packages done"
 
 if type direnv >&/dev/null; then
