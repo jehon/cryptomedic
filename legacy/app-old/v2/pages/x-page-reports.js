@@ -960,7 +960,7 @@ reports[REPORT_SURGICAL] = {
       .addDetail("last_treat_result", {
         headers: ["Result"]
       })
-      .addDetail("last_treat_finished", { headers: ["Done ?"] })
+      .addDetail("last_treat_finished", { headers: ["Treat. Finished"] })
 
       .addDetail("price_consult", {
         headers: ["Consult", "Price", "", "", ""],
