@@ -900,8 +900,8 @@ reports[REPORT_SURGICAL] = {
   // TODO: legend
   generator: (xtable) => {
     xtable
-      .addHeaders(6)
-      .addFooters(2)
+      .addHeaders(1)
+      .addFooters(1)
       .addDetail(
         (data, i) =>
           createElementWithTag(
@@ -910,32 +910,25 @@ reports[REPORT_SURGICAL] = {
             `#${i + 1}`
           ),
         {
-          headers: [
-            "N",
-            "",
-            (_col, context) => "Daily report of " + context.params.when,
-            "SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR",
-            "Name of the project: Rickets in cox' Bazar",
-            "SARPV - AMD - KDM 2"
-          ],
-          footers: ["", ""]
+          headers: ["N"],
+          footers: [""]
         }
       )
       .addDetail("date", { headers: ["Date"] })
       .addDetail("center", { headers: ["Place"] })
       .addDetail("patient_reference", { headers: ["Record n#"] })
       .addDetail("patient_name", {
-        headers: ["Patient Name", "Identity", "When"]
+        headers: ["Patient Name"]
       })
       .addDetail(
         (data) => createElementWithObject(XAge, { value: data.year_of_birth }),
         {
-          headers: ["Age", null, (_col, context) => context.params.when]
+          headers: ["Age"]
         }
       )
       .addDetail("sex", { headers: ["M/F"] })
       .addDetail("sl_family_salary", {
-        headers: ["Tk income", "SEL"]
+        headers: ["Tk income"]
       })
       .addDetail("sl_number_of_household_members", { headers: ["Nb pers"] })
       .addDetail(
@@ -952,47 +945,50 @@ reports[REPORT_SURGICAL] = {
 
       .addDetail(
         (data) => createElementWithObject(XCodage, { value: data.pathology }),
-        { headers: ["Diagno", "Medical"] }
+        { headers: ["Diagno"] }
       )
       .addDetail("last_seen", {
-        headers: ["Last seen", "Surgical"]
+        headers: ["Last seen"]
       })
       .addDetail("last_treat_result", {
         headers: ["Result"]
       })
-      .addDetail("last_treat_finished", { headers: ["Treat. Finished"] })
+      .addDetail("last_treat_finished", {
+        headers: ["Treat. Finished"],
+        footers: ["total "]
+      })
 
       .addDetail("price_consult", {
-        headers: ["Consult", "Price", "", "", ""],
-        footers: ["total", XTable.MACROS.sum]
+        headers: ["Consult"],
+        footers: [XTable.MACROS.sum]
       })
       .addDetail("price_medecine", {
         headers: ["Medicine"],
-        footers: [null, XTable.MACROS.sum]
+        footers: [XTable.MACROS.sum]
       })
       .addDetail("price_surgical", {
         headers: ["Surgical"],
-        footers: [null, XTable.MACROS.sum]
+        footers: [XTable.MACROS.sum]
       })
       .addDetail("price_workshop", {
         headers: ["Workshop"],
-        footers: [null, XTable.MACROS.sum]
+        footers: [XTable.MACROS.sum]
       })
       .addDetail("price_other", {
         headers: ["Others"],
-        footers: [null, XTable.MACROS.sum]
+        footers: [XTable.MACROS.sum]
       })
       .addDetail("total_real", {
         headers: ["Full"],
-        footers: [null, XTable.MACROS.sum]
+        footers: [XTable.MACROS.sum]
       })
       .addDetail("total_asked", {
         headers: ["Asked"],
-        footers: [null, XTable.MACROS.sum]
+        footers: [XTable.MACROS.sum]
       })
       .addDetail("total_paid", {
         headers: ["Paid"],
-        footers: [null, XTable.MACROS.sum]
+        footers: [XTable.MACROS.sum]
       })
       .end();
   }
