@@ -234,16 +234,6 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
           }),
 
           createMenu({
-            title: "Bug reporting",
-            versalIcon: "/static/img/bug.jpeg",
-            html: `
-If you find a bug, please email to jeanhonlet@gmail.com.<br>
-Thanks
-                    `,
-            toLocation: "mailto:jeanhonlet@gmail.com?subject=Cryptomedic%20bug:"
-          }),
-
-          createMenu({
             title: "Prices",
             restrictedBy: "price.edit",
             id: "menu_prices",
