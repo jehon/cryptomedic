@@ -83,13 +83,11 @@ export default function ConsultRicketElement({
           <IO.Number
             right
             name="cross_right_T"
-            label="Cross Right T"
             value={file.cross_right_T}
           ></IO.Number>
           <IO.Number
             right
             name="cross_right_F"
-            label="Cross Right F"
             value={file.cross_right_F}
           ></IO.Number>
         </Panel>

@@ -28,7 +28,6 @@ export type IOPropsReadonly<T> = {
 
 export type IOProps<T> = IOPropsReadonly<T> & {
   name?: string;
-  readonly?: boolean;
   required?: boolean;
   onChange?: (arg: T) => void;
 };
@@ -44,7 +43,6 @@ export default function IOAbstract<T>(
   }
 ): React.ReactNode {
   const calculatedProps: IOProps<T> = {
-    readonly: false,
     required: false,
     noLabel: false,
     note: false,
@@ -55,6 +53,22 @@ export default function IOAbstract<T>(
   };
 
   const writable = !!calculatedProps.name;
+  if (writable) {
+    if (
+      calculatedProps.label &&
+      calculatedProps.label == toTitleCase(calculatedProps.name ?? "")
+    ) {
+      throw new Error(
+        `IOAbstract: do not specify label equivalent to name (${JSON.stringify(calculatedProps)})`
+      );
+    }
+
+    if (!renderInput) {
+      throw new Error(
+        `IOAbstract: Need the Input for non-readonly inputs (${JSON.stringify(calculatedProps)}}`
+      );
+    }
+  }
 
   // ReadOnly always prevent edit mode
   const edit = useContext(EditContext) && writable;

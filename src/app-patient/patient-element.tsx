@@ -62,12 +62,8 @@ export default function PatientElement({
 
       {/* ------------ Key dates  --------------------*/}
       <Panel key="key-dates" label="Key dates">
-        <IO.Date label="Last seen" value={folder.getLastSeen()} readonly />
-        <IO.Date
-          label="Next appointment"
-          value={folder.getNextAppoinment()}
-          readonly
-        />
+        <IO.Date label="Last seen" value={folder.getLastSeen()} />
+        <IO.Date label="Next appointment" value={folder.getNextAppoinment()} />
       </Panel>
 
       {/* ------------ Patient file  --------------------*/}
@@ -107,7 +103,6 @@ export default function PatientElement({
                 label="Age today"
                 value={patient.actualAge() as string}
                 e2eExcluded
-                readonly
               />
               <IO.String name="pathology" value={patient.pathology} />
               <IO.Text name="comments" value={patient.comments} />
