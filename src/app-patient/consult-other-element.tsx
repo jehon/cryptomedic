@@ -33,27 +33,28 @@ export default function ConsultOtherElement({
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns>
         <Panel label="Orthopedic data">
-          <IO.List label="Side" value={file.side}></IO.List>
+          <IO.List name="side" value={file.side}></IO.List>
           <IO.String
+            name="joints_or_bones_affected"
             label="Joints or Bones Affected"
             value={file.joints_or_bones_affected}
           ></IO.String>
-          <IO.String label="Deformity" value={file.deformity}></IO.String>
+          <IO.String name="deformity" value={file.deformity}></IO.String>
           <IO.String
-            label="Articulation Mobility"
+            name="articulation_mobility"
             value={file.articulation_mobility}
           ></IO.String>
           <IO.String
-            label="Muscle Strength"
+            name="muscle_strength"
             value={file.muscle_strength}
           ></IO.String>
-          <IO.List label="Pain" value={file.pain}></IO.List>
-          <IO.List label="Walk" value={file.walk}></IO.List>
-          <IO.String label="XRay" value={file.xray}></IO.String>
+          <IO.List name="pain" value={file.pain}></IO.List>
+          <IO.List name="walk" value={file.walk}></IO.List>
+          <IO.String name="xray" label="XRay" value={file.xray}></IO.String>
         </Panel>
         <Panel label="Orthopedic observations">
-          <IO.Text label="Performed" value={file.performed}></IO.Text>
-          <IO.Text label="Not Performed" value={file.not_performed}></IO.Text>
+          <IO.Text name="performed" value={file.performed}></IO.Text>
+          <IO.Text name="not performed" value={file.not_performed}></IO.Text>
         </Panel>
       </TwoColumns>
       <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>

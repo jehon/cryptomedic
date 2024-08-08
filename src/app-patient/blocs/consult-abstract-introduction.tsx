@@ -17,29 +17,38 @@ export default function ConsultAbstractIntroduction({
   return (
     <TwoColumns>
       <Panel fixed label="Informations">
-        <IO.Date label="Date" value={file.date} />
-        <IO.String label="Examiner" value={file.examiner as string} />
-        <IO.List label="Center" value={file.center as string} />
+        <IO.Date name="date" value={file.date} />
+        <IO.String name="examiner" value={file.examiner as string} />
+        <IO.List name="center" value={file.center as string} />
         <IO.Function
           label="Age at consultation time"
           value={() => yearsToYM(file.getAgeAtThatTime())}
         />
       </Panel>
       <Panel fixed label="Nutritional data">
-        <IO.Number label="Weight (kg)" value={file.weight_kg as number} />
+        <IO.Number
+          name="weight_kg"
+          label="Weight (kg)"
+          value={file.weight_kg as number}
+        />
         <IO.Function
           label="Weight sd"
           note
           value={() => roundTo(file.getWeightSd())}
         />
-        <IO.Number label="Height (cm)" value={file.height_cm as number} />
+        <IO.Number
+          name="height_cm"
+          label="Height (cm)"
+          value={file.height_cm as number}
+        />
         <IO.Function
           label="Height sd"
           note
           value={() => roundTo(file.getHeightSd())}
         />
         <IO.Number
-          label="Brachial Circumference (c.m)"
+          name="brachial_circumference_cm"
+          label="Brachial Circumference (cm)"
           value={file.brachial_circumference_cm as number}
         />
         <IO.Function
