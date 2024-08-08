@@ -16,17 +16,21 @@ function getLabel(props: IOProps<any>) {
   return generateUUID();
 }
 
-export type IOProps<T> = {
-  name?: string;
+export type IOPropsReadonly<T> = {
   label?: string;
-  readonly?: boolean;
   value: T;
-  required?: boolean;
   noLabel?: boolean;
   note?: boolean;
   left?: boolean;
   right?: boolean;
   e2eExcluded?: boolean;
+};
+
+export type IOProps<T> = IOPropsReadonly<T> & {
+  name?: string;
+  label?: string;
+  readonly?: boolean;
+  required?: boolean;
   onChange?: (arg: T) => void;
 };
 
