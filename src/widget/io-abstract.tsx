@@ -28,7 +28,6 @@ export type IOPropsReadonly<T> = {
 
 export type IOProps<T> = IOPropsReadonly<T> & {
   name?: string;
-  label?: string;
   readonly?: boolean;
   required?: boolean;
   onChange?: (arg: T) => void;
@@ -44,7 +43,7 @@ export default function IOAbstract<T>(
     renderInput?: { (uuid: string, value: T): React.ReactNode };
   }
 ): React.ReactNode {
-  props = {
+  const calculatedProps: IOProps<T> = {
     readonly: false,
     required: false,
     noLabel: false,
@@ -55,16 +54,13 @@ export default function IOAbstract<T>(
     ...props
   };
 
-  if (!renderInput) {
-    renderInput = (_uuid: string, value: T): React.ReactNode =>
-      renderOutput(value);
-  }
+  const writable = !!calculatedProps.name;
 
   // ReadOnly always prevent edit mode
-  const edit = useContext(EditContext) && !props.readonly;
+  const edit = useContext(EditContext) && writable;
 
   // Hide if not value and output mode
-  if (!edit && !props.value) {
+  if (!edit && !calculatedProps.value) {
     return null;
   }
 
@@ -75,19 +71,24 @@ export default function IOAbstract<T>(
     <div
       className={
         "io " +
-        (props.note ? "io-note " : "") +
+        (calculatedProps.note ? "io-note " : "") +
         (edit ? "io-input" : "io-output")
       }
-      data-role={getLabel(props)}
+      data-role={getLabel(calculatedProps)}
     >
-      {props.noLabel || (
+      {calculatedProps.noLabel || (
         <label htmlFor={uuid}>
-          {getLabel(props)}
-          {props.required ? "*" : ""}
+          {getLabel(calculatedProps)}
+          {calculatedProps.required ? "*" : ""}
         </label>
       )}
-      <div className="content" data-e2e={props.e2eExcluded ? "excluded" : ""}>
-        {edit ? renderInput(uuid, props.value) : renderOutput(props.value)}
+      <div
+        className="content"
+        data-e2e={calculatedProps.e2eExcluded ? "excluded" : ""}
+      >
+        {edit
+          ? renderInput!(uuid, calculatedProps.value)
+          : renderOutput(calculatedProps.value)}
       </div>
     </div>
   );
