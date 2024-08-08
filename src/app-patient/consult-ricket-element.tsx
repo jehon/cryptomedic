@@ -46,18 +46,19 @@ export default function ConsultRicketElement({
       <TwoColumns>
         <Panel label="Ricket Data">
           <IO.List
-            label="Walking difficulties"
+            name="walking_difficulties"
             value={file.walking_difficulties}
           ></IO.List>
           <IO.List label="Pain" value={file.pain}></IO.List>
           <IO.List
-            label="Wrist Enlargement"
+            name="wrist_enlargement"
             value={file.wrist_enlargement}
           ></IO.List>
-          <IO.List label="Rib Heading" value={file.rib_heading}></IO.List>
-          <IO.Text left label="XRay" value={file.xray}></IO.Text>
+          <IO.List name="rib_heading" value={file.rib_heading}></IO.List>
+          <IO.Text left name="xray" label="XRay" value={file.xray}></IO.Text>
           <IO.Number
             right
+            name="IMIC_distance"
             label="IMIC Distance"
             value={file.IMIC_distance}
           ></IO.Number>
@@ -75,16 +76,19 @@ export default function ConsultRicketElement({
           <IO.List right label="Leg" value={file.right_leg}></IO.List>
           <IO.Number
             right
+            name="right_leg_angle"
             label="Leg Angle"
             value={file.right_leg_angle}
           ></IO.Number>
           <IO.Number
             right
+            name="cross_right_T"
             label="Cross Right T"
             value={file.cross_right_T}
           ></IO.Number>
           <IO.Number
             right
+            name="cross_right_F"
             label="Cross Right F"
             value={file.cross_right_F}
           ></IO.Number>
@@ -100,13 +104,25 @@ export default function ConsultRicketElement({
           <IO.List left label="Leg" value={file.left_leg}></IO.List>
           <IO.Number
             left
+            name="left_leg_angle"
             label="Leg Angle"
             value={file.left_leg_angle}
           ></IO.Number>
-          <IO.Number left label="Cross T" value={file.cross_left_T}></IO.Number>
-          <IO.Number left label="Cross F" value={file.cross_left_F}></IO.Number>
           <IO.Number
             left
+            name="cross_left_T"
+            label="Cross T"
+            value={file.cross_left_T}
+          ></IO.Number>
+          <IO.Number
+            left
+            name="cross_left_F"
+            label="Cross F"
+            value={file.cross_left_F}
+          ></IO.Number>
+          <IO.Number
+            left
+            name="IMIC_distance"
             label="IMIC Distance"
             value={file.IMIC_distance}
           ></IO.Number>

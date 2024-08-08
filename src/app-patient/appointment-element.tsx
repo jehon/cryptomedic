@@ -29,11 +29,11 @@ export default function AppointmentElement({
     >
       <TwoColumns>
         <Panel fixed label="Information">
-          <IO.Date label="Date" value={file.date} />
-          <IO.String label="Center" value={file.center as string} />
+          <IO.Date name="date" value={file.date} />
+          <IO.String name="center" value={file.center as string} />
         </Panel>
         <Panel fixed label="Objective">
-          <IO.Text label="Purpose" value={file.purpose as string} />
+          <IO.Text name="purpose" value={file.purpose as string} />
         </Panel>
       </TwoColumns>
     </FilePanel>

@@ -74,16 +74,18 @@ export default function BillElement({
     >
       <TwoColumns>
         <Panel fixed label="Information">
-          <IO.Date label="Date" value={file.date} />
-          <IO.String label="Examiner" value={file.examiner as string} />
-          <IO.String label="Center" value={file.center as string} />
+          <IO.Date name="date" value={file.date} />
+          <IO.String name="examiner" value={file.examiner as string} />
+          <IO.String name="center" value={file.center as string} />
         </Panel>
         <Panel fixed label="Totals">
           <IO.Number
+            name="sl_family_salary"
             label="Family Salary"
             value={file.sl_family_salary as number}
           />
           <IO.Number
+            name="sl_number_of_household_members"
             label="Number of Houslehold Members"
             value={file.sl_number_of_household_members as number}
           />
@@ -103,7 +105,11 @@ export default function BillElement({
             label="Percentage asked"
             value={() => roundTo(file.calculate_percentage_asked(), 0)}
           />
-          <IO.Number label="Price asked" value={file.total_asked} />
+          <IO.Number
+            name="total_asked"
+            label="Price asked"
+            value={file.total_asked}
+          />
           <IO.Function
             label="Payments Received (see below)"
             value={() => roundTo(file.getTotalAlreadyPaid(), 0)}

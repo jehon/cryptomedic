@@ -23,10 +23,10 @@ export default function PictureElement({
     <FilePanel closed={!opened} file={file} folder={folder} onUpdate={onUpdate}>
       <TwoColumns>
         <Panel fixed label="Informations">
-          <IO.String label="Type" value={file.type as string} />
-          <IO.Date label="Date" value={file.date} />
-          <IO.String label="File" value={file.file as string} />
-          <IO.Text label="Comments" value={file.comments as string} />
+          <IO.String name="type" value={file.type as string} />
+          <IO.Date name="date" value={file.date} />
+          <IO.String name="file" value={file.file as string} />
+          <IO.Text name="comments" value={file.comments as string} />
         </Panel>
         <Panel fixed label="Image">
           <IO.Image label="Picture" value={file.getPictureUrl() as string} />
