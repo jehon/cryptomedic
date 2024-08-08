@@ -39,7 +39,7 @@ class ReportSurgicalController extends ReportController
           COUNT(surgeries.id) as consults,
 
           MAX(last_consult.date) AS last_seen,
-          GROUP_CONCAT(last_consult.treatment_evaluation SEPARATOR '###') AS last_treat_result,
+          last_consult.treatment_evaluation AS last_treat_result,
           ANY_VALUE(last_consult.treatment_finished) AS last_treat_finished
 
         FROM patients
