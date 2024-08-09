@@ -82,7 +82,7 @@ class ReportStatisticalController extends ReportController {
 
 		// Social levels
 		$res = $this->runSqlWithNamedParameter("SELECT CAST(SUM(sl_family_salary) / COUNT(*) AS DECIMAL) as income,
-				SUM(sl_number_of_household_members) / COUNT(*) as nbhous
+				AVG(sl_number_of_household_members) as nbhous
 				FROM bills
 				WHERE {$this->filter} ");
 		$res = array_pop($res);
