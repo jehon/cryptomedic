@@ -22,7 +22,7 @@ export default function PictureElement({
   return (
     <FilePanel closed={!opened} file={file} folder={folder} onUpdate={onUpdate}>
       <TwoColumns>
-        <Panel fixed label="Informations">
+        <Panel fixed label="Information">
           <IO.String name="type" value={file.type as string} />
           <IO.Date name="date" value={file.date} />
           <IO.String name="file" value={file.file as string} />

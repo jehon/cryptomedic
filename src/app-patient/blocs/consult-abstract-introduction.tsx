@@ -16,7 +16,7 @@ export default function ConsultAbstractIntroduction({
 }): React.ReactNode {
   return (
     <TwoColumns>
-      <Panel fixed label="Informations">
+      <Panel fixed label="Information">
         <IO.Date name="date" value={file.date} />
         <IO.String name="examiner" value={file.examiner as string} />
         <IO.List name="center" value={file.center as string} />
