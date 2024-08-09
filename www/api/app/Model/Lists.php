@@ -2,8 +2,7 @@
 
 namespace App\Model;
 
-use DB;
-use Exception;
+use Illuminate\Support\Facades\DB;
 
 class Lists {
     static $dataListings = [
