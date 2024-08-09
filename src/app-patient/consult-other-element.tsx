@@ -6,6 +6,7 @@ import Folder from "../business/folder";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
+import { getList } from "../utils/config";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
@@ -33,7 +34,11 @@ export default function ConsultOtherElement({
       <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
       <TwoColumns>
         <Panel label="Orthopedic data">
-          <IO.List name="side" value={file.side}></IO.List>
+          <IO.List
+            name="side"
+            value={file.side}
+            list={getList("Side")}
+          ></IO.List>
           <IO.String
             name="joints_or_bones_affected"
             label="Joints or Bones Affected"
@@ -48,8 +53,16 @@ export default function ConsultOtherElement({
             name="muscle_strength"
             value={file.muscle_strength}
           ></IO.String>
-          <IO.List name="pain" value={file.pain}></IO.List>
-          <IO.List name="walk" value={file.walk}></IO.List>
+          <IO.List
+            name="pain"
+            value={file.pain}
+            list={getList("Pain")}
+          ></IO.List>
+          <IO.List
+            name="walk"
+            value={file.walk}
+            list={getList("WalkingCapacities")}
+          ></IO.List>
           <IO.String name="xray" label="XRay" value={file.xray}></IO.String>
         </Panel>
         <Panel label="Orthopedic observations">

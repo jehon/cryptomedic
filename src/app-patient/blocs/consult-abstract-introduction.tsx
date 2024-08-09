@@ -6,6 +6,7 @@ import IO from "../../widget/io";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
 
+import { getList } from "../../utils/config";
 import { yearsToYM } from "../../utils/date";
 import { roundTo } from "../../utils/strings";
 
@@ -19,7 +20,11 @@ export default function ConsultAbstractIntroduction({
       <Panel fixed label="Information">
         <IO.Date name="date" value={file.date} />
         <IO.String name="examiner" value={file.examiner as string} />
-        <IO.List name="center" value={file.center as string} />
+        <IO.List
+          name="center"
+          value={file.center as string}
+          list={getList("Centers")}
+        />
         <IO.Function
           label="Age at consultation time"
           value={() => yearsToYM(file.getAgeAtThatTime())}

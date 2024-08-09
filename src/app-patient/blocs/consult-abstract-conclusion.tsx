@@ -2,6 +2,7 @@ import React from "react";
 
 import Consult from "../../business/abstracts/consult";
 
+import { getList } from "../../utils/config";
 import IO from "../../widget/io";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
@@ -26,6 +27,7 @@ export default function ConsultAbstractConclusion({
         <IO.List
           name="treatment_evaluation"
           value={file.treatment_evaluation}
+          list={getList("TreatmentEvaluation")}
         />
         <IO.Boolean
           name="treatment_finished"
