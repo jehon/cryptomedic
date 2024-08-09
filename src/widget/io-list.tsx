@@ -61,7 +61,7 @@ export function buildRadios(
         onBlur={() => onChange(k)}
         type="radio"
       />
-      <label htmlFor={uuid + "." + i}>{v}</label>
+      <label htmlFor={uuid + "." + i}>{k}</label>
     </div>
   ));
 }
@@ -74,7 +74,7 @@ export default function IOList(
   // TODO: List should be mandatory and thus ?? {} not necessary anymore
   const list: Record<string, string> = canonizeList(
     props.list ?? {},
-    props.required
+    !props.required
   );
 
   return IOAbstract<Optional<string>>(props, {
