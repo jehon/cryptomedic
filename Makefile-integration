@@ -125,7 +125,6 @@ $(INTEGRATION_TEST_TMP)/playwright/.tested: \
 		$(HOME)/.cache/ms-playwright
 
 	@mkdir -p "$(dir $@)"
-	bin/cr-data-reset
 	node_modules/.bin/playwright test
 	@touch "$@"
 
@@ -137,7 +136,6 @@ integration-update-playwright: \
 		playwright.config.ts \
 		$(HOME)/.cache/ms-playwright
 
-#	bin/cr-data-reset
 	node_modules/.bin/playwright test --update-snapshots
 
 .PHONY: integration-test-playwright-styles
