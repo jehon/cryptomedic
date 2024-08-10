@@ -84,7 +84,6 @@ $(INTEGRATION_TEST_TMP)/desktop/.tested: \
 		$(shell find tests/cypress/ -name "*.js")
 
 	@mkdir -p "$(dir $@)"
-	bin/cr-data-reset
 	bin/cr-cypress "desktop" "$(INTEGRATION_TEST_TMP)/desktop/runtime"
 	@touch "$@"
 
