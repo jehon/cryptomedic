@@ -6,17 +6,18 @@ import nullify from "../utils/nullify";
 function request({
   url,
   method,
+  form,
   data,
   allowed
 }: {
   url: string[];
   method?: string;
-  data?: any;
+  data?: Record<string, any>;
+  form?: FormData;
   allowed?: number[];
 }) {
   url = url || ["/"];
   method = method || "GET";
-  data = nullify(data);
 
   if (url[0] !== "/") {
     url = ["/", "api", ...url];
@@ -27,7 +28,9 @@ function request({
 
   const strUrl =
     url.join("/").replaceAll("//", "/") +
-    (method === "GET" ? "?" + new URLSearchParams(data).toString() : "");
+    (method === "GET"
+      ? "?" + new URLSearchParams(nullify(data)).toString()
+      : "");
 
   return fetch(strUrl, {
     method,
@@ -36,7 +39,12 @@ function request({
     headers: {
       "Content-Type": "application/json"
     },
-    body: method === "GET" ? null : JSON.stringify(data)
+    body:
+      method === "GET"
+        ? null
+        : // TODO: Pass the FormData directly (required for pictures?)
+          //       but requires change at backend
+          JSON.stringify(nullify(Object.fromEntries(form || new FormData())))
   }).then(
     (response) => {
       if (
@@ -101,11 +109,14 @@ export function folderFileDelete<T extends Pojo>(
   );
 }
 
-export function folderFileSave<T extends Pojo>(file: T, data: any): Promise<T> {
+export function folderFileSave<T extends Pojo>(
+  file: T,
+  form: FormData
+): Promise<T> {
   return request({
     url: ["fiche", file.getServerRessource(), file.id],
     method: "PUT",
-    data
+    form
   }).then((json) => json.folder);
 }
 
