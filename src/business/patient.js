@@ -122,11 +122,7 @@ export default class Patient extends PatientRelated {
     this.comments = comments;
   }
 
-  // Legacy
   sexStr() {
-    if (!this.isNotZero("sex")) {
-      return null;
-    }
     if (this.sex === "Male") {
       return "m";
     }

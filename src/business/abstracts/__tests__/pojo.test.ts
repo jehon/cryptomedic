@@ -28,11 +28,7 @@ test("with data loading at construction time", function () {
 test("would interpret notSet correctly", function () {
   const data = new Pojo({});
   expect(data.last_user).toBeUndefined();
-  expect(data.isSet("last_user")).toBeFalsy();
-  expect(data.isNotZero("last_user")).toBeFalsy();
 
   data.last_user = "someone";
   expect(data.last_user).toBe("someone");
-  expect(data.isSet("last_user")).toBeTruthy();
-  expect(data.isNotZero("last_user")).toBeTruthy();
 });

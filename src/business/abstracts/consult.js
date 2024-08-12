@@ -1,7 +1,7 @@
 import Timed from "./timed.js";
 
-import { DataMissingException } from "../../utils/exceptions.js";
 import { fromBirthDateTo, normalizeDate } from "../../utils/date-old.js";
+import { DataMissingException } from "../../utils/exceptions.js";
 import { stdDeviationFor } from "../../utils/standard-deviation.js";
 
 export default class Consult extends Timed {
@@ -71,20 +71,20 @@ export default class Consult extends Timed {
   }
 
   wh() {
-    if (!this.isNotZero("height_cm")) {
+    if (!this.height_cm) {
       throw new DataMissingException("Height");
     }
-    if (!this.isNotZero("weight_kg")) {
+    if (!this.weight_kg) {
       throw new DataMissingException("Weight");
     }
     return this.weight_kg / this.height_cm;
   }
 
   bmi() {
-    if (!this.isNotZero("height_cm")) {
+    if (!this.height_cm) {
       throw new DataMissingException("Height");
     }
-    if (!this.isNotZero("weight_kg")) {
+    if (!this.weight_kg) {
       throw new DataMissingException("Weight");
     }
     return (10000 * this.weight_kg) / (this.height_cm * this.height_cm);

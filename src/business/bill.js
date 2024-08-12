@@ -105,7 +105,7 @@ export default class Bill extends Timed {
   }
 
   ratioSalary() {
-    if (!this.isNotZero("sl_number_of_household_members")) {
+    if (!this.sl_number_of_household_members) {
       throw new DataMissingException("sl_number_of_household_members");
     }
 

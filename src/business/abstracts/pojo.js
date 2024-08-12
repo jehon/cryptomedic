@@ -63,28 +63,6 @@ export default class Pojo {
   }
 
   // Legacy
-  isSet(field) {
-    if (typeof this[field] == "undefined") {
-      return false;
-    }
-    if (this[field] == null) {
-      return false;
-    }
-    return true;
-  }
-
-  // Legacy
-  isNotZero(field) {
-    if (!this.isSet(field)) {
-      return false;
-    }
-    if (this[field] === 0) {
-      return false;
-    }
-    return true;
-  }
-
-  // Legacy
   isLocked() {
     return false;
   }
