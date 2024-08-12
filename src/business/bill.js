@@ -19,12 +19,6 @@ export default class Bill extends Timed {
     return "bill";
   }
 
-  getRelated() {
-    return {
-      Payment: "bill_id"
-    };
-  }
-
   price_id;
   sl_family_salary;
   sl_number_of_household_members;

@@ -123,19 +123,6 @@ export default class Patient extends PatientRelated {
   }
 
   // Legacy
-  getRelated() {
-    return {
-      Appointment: "patient_id",
-      Bill: "patient_id",
-      ClubFoot: "patient_id",
-      OtherConsult: "patient_id",
-      Picture: "patient_id",
-      RicketConsult: "patient_id",
-      Surgery: "patient_id"
-    };
-  }
-
-  // Legacy
   sexStr() {
     if (!this.isNotZero("sex")) {
       return null;
@@ -150,7 +137,7 @@ export default class Patient extends PatientRelated {
   }
 
   actualAge(reference = new Date()) {
-    if (!this.isSet("year_of_birth")) {
+    if (!this.year_of_birth) {
       return null;
     }
     var birth = this.year_of_birth;

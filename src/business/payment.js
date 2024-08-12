@@ -33,11 +33,6 @@ export default class Payment extends Pojo {
     this.amount = amount;
     this.comments = comments;
   }
-
-  // Legacy
-  getRelatedBill() {
-    return this.getFolder().getByUid("Bill-" + this.bill_id);
-  }
 }
 
 registrySet(model, Payment);
