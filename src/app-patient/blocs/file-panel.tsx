@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";
@@ -10,7 +10,7 @@ import ActionConfirm from "../../widget/action-confirm";
 import { EditContext } from "../../widget/io-abstract";
 import { notifySuccess } from "../../widget/notification";
 import Panel from "../../widget/panel";
-import { folderFileDelete, folderFileUnlock } from "../loaders";
+import { folderFileDelete, folderFileSave, folderFileUnlock } from "../loaders";
 import { routeToFolderFile } from "../patient-router";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
@@ -33,6 +33,7 @@ export default function FilePanel({
   onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   const [editState, updateEditState] = useState(false);
+  const formRef = useRef(null);
 
   const goToPatientFile = () => {
     document.location = routeToFolderFile(folder, file);
@@ -62,9 +63,11 @@ export default function FilePanel({
   };
 
   const doSave = () => {
-    Promise.resolve()
+    const data = new FormData(formRef.current!);
+    folderFileSave(file, data)
       .then(notifySuccess("File saved"))
       .then((f) => {
+        onUpdate(f);
         updateEditState(false);
         return f;
       });
@@ -178,7 +181,11 @@ export default function FilePanel({
         <div>by {file.last_user}</div>
       </div>
       <EditContext.Provider value={editState}>
-        <form id="file" data-testid={"file-" + file.uid() + "-form"}>
+        <form
+          id="file"
+          data-testid={"file-" + file.uid() + "-form"}
+          ref={formRef}
+        >
           {children}
         </form>
       </EditContext.Provider>
@@ -186,3 +193,5 @@ export default function FilePanel({
     </Panel>
   );
 }
+
+// TODO: use new Form "action"

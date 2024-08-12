@@ -109,15 +109,14 @@ export function folderFileDelete<T extends Pojo>(
   );
 }
 
-export function folderFileSave<T extends Pojo>(
-  file: T,
-  form: FormData
-): Promise<T> {
+export function folderFileSave(file: Pojo, form: FormData): Promise<Folder> {
   return request({
     url: ["fiche", file.getServerRessource(), file.id],
     method: "PUT",
     form
-  }).then((json) => json.folder);
+  })
+    .then((json) => json.folder)
+    .then((json) => new Folder(json));
 }
 
 // See legacy/app-old/v1/elements/cryptomedic-data-service.js
