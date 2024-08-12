@@ -137,13 +137,8 @@ describe("order", function () {
     expect(Folder.ordering(a, b)).toBeLessThan(0);
     expect(Folder.ordering(b, a)).toBeGreaterThan(0);
   };
-  const build = (basis: object, data = {}, model = "anything"): Folder => {
-    return Object.assign({}, basis, data, {
-      getModel: function () {
-        return model;
-      }
-    }) as Folder;
-  };
+  const build = (basis: object, data = {}): Folder =>
+    Object.assign({}, basis, data) as Folder;
 
   test("order by id", function () {
     const basis = {};
@@ -159,20 +154,6 @@ describe("order", function () {
     resFirst(build(basis, { id: "25" }), o2);
     resFirst(build(basis, { id: "25" }), build(basis, { id: "20" }));
     resFirst(build(basis, { id: "25" }), build(basis, { id: "3" }));
-  });
-
-  test("order by getModel", function () {
-    const basis = {};
-    const o1 = build(basis, {}, "a");
-    const o2 = build(basis, {}, "b");
-    const o3 = build(basis, {}, "c");
-
-    resFirst(o1, o2);
-    resFirst(o1, o3);
-    resFirst(o2, o3);
-
-    // If id is present at one side, it take precedence...
-    resFirst(o2, build({ id: "25" }, "a"));
   });
 
   test("order by Date", function () {
@@ -201,7 +182,7 @@ describe("order", function () {
     const basis = {};
     const o1 = build(basis, {});
     const o2 = build(basis, { date: "2000-01-01" });
-    const o3 = build(basis, { id: "25" }, "a");
+    const o3 = build(basis, { id: "25" });
     const o4 = build(basis, { id: "25", date: "2000-01-01" });
 
     resFirst(o1, o2);

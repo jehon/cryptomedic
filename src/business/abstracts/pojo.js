@@ -3,8 +3,12 @@ import { immerable } from "immer";
 export default class Pojo {
   [immerable] = true;
 
-  getTechnicalName() {
+  static getTechnicalName() {
     return "pojo";
+  }
+
+  static getModel() {
+    return "Pojo";
   }
 
   id;
@@ -36,22 +40,14 @@ export default class Pojo {
   }
 
   uid() {
-    return `${this.getTechnicalName()}.${this.id}`;
-  }
-
-  // TODO: abstract
-  /**
-   * @returns {string}
-   */
-  getModel() {
-    throw new Error("getModel is not implemented");
+    return `${this.constructor.getTechnicalName()}.${this.id}`;
   }
 
   /**
    * @returns {string}
    */
   getTitle() {
-    return this.getModel();
+    return this.constructor.getModel();
   }
 
   // Legacy
@@ -68,7 +64,7 @@ export default class Pojo {
   }
 
   getServerRessource() {
-    return this.getModel().toLowerCase() + "s";
+    return this.constructor.getModel().toLowerCase() + "s";
   }
 
   createNewInstance(json) {

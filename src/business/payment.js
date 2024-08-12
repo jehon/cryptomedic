@@ -8,11 +8,7 @@ export default class Payment extends Pojo {
     return model;
   }
 
-  getModel() {
-    return model;
-  }
-
-  getTechnicalName() {
+  static getTechnicalName() {
     return "payment";
   }
 

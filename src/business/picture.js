@@ -8,11 +8,7 @@ export default class Picture extends PatientRelated {
     return model;
   }
 
-  getModel() {
-    return model;
-  }
-
-  getTechnicalName() {
+  static getTechnicalName() {
     return "picture";
   }
 

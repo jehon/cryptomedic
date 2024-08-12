@@ -4,7 +4,7 @@ import PatientRelated from "./patient-related.js";
 // TODO: Use mixins https://www.typescriptlang.org/docs/handbook/mixins.html
 
 export default class Timed extends PatientRelated {
-  getModel() {
+  static getModel() {
     return "Consult";
   }
 

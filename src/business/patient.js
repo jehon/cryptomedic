@@ -59,8 +59,10 @@ function ordering(o1, o2) {
   }
 
   // Both 'type' are present
-  if (o1.getModel() < o2.getModel()) return 40 * o1First;
-  if (o1.getModel() > o2.getModel()) return 40 * o2First;
+  if (o1.constructor.getModel() < o2.constructor.getModel())
+    return 40 * o1First;
+  if (o1.constructor.getModel() > o2.constructor.getModel())
+    return 40 * o2First;
 
   return 0;
 }
@@ -70,11 +72,7 @@ export default class Patient extends PatientRelated {
     return model;
   }
 
-  getModel() {
-    return model;
-  }
-
-  getTechnicalName() {
+  static getTechnicalName() {
     return "patient";
   }
 

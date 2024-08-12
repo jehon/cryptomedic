@@ -8,11 +8,7 @@ export default class Surgery extends Timed {
     return model;
   }
 
-  getModel() {
-    return model;
-  }
-
-  getTechnicalName() {
+  static getTechnicalName() {
     return "surgery";
   }
 

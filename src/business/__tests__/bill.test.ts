@@ -14,7 +14,7 @@ beforeEach(async () => {
 test("should give the correct model", function () {
   const b = new Bill();
 
-  expect(b.getModel()).toBe("Bill");
+  expect((b.constructor as typeof Bill).getModel()).toBe("Bill");
 });
 
 test("with folder1", function () {

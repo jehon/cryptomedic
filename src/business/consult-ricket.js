@@ -8,11 +8,7 @@ export default class ConsultRicket extends Consult {
     return model;
   }
 
-  getModel() {
-    return model;
-  }
-
-  getTechnicalName() {
+  static getTechnicalName() {
     return "consult_ricket";
   }
 

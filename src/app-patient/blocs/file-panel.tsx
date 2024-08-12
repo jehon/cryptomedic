@@ -43,7 +43,7 @@ export default function FilePanel({
     if (location.search != "?dev") {
       if (
         // TODO: migrate all this progressively
-        file.getModel() in
+        (file.constructor as typeof PatientRelated).getModel() in
         [
           "Appointment",
           "Bill",
@@ -61,7 +61,7 @@ export default function FilePanel({
           "folder",
           "" + folder.getId(),
           "file",
-          file.getModel(),
+          (file.constructor as typeof PatientRelated).getModel(),
           "" + file.getId(),
           "edit"
         ].join("/");
@@ -113,7 +113,7 @@ export default function FilePanel({
             <img
               src={
                 icons.models[
-                  (file.getModel() as keyof typeof icons.models) ?? ""
+                  (file.getTitle() as keyof typeof icons.models) ?? ""
                 ]
               }
               alt={file.getTitle()}
@@ -147,8 +147,7 @@ export default function FilePanel({
                 requires="folder.unlock"
               >
                 <div>
-                  Are you sure you want to unlock the File {file.getModel()}
-                  ?
+                  Are you sure you want to unlock the File {file.getTitle()}?
                   <br />
                   Anybody will then be able to edit it.
                 </div>
@@ -176,7 +175,7 @@ export default function FilePanel({
                     requires="folder.delete"
                   >
                     <div>
-                      Are you sure you want to DELETE the File {file.getModel()}
+                      Are you sure you want to DELETE the File {file.getTitle()}
                       ?
                     </div>
                   </ActionConfirm>

@@ -12,16 +12,13 @@ test("with data loading at construction time", function () {
     id: 123,
     created_at: new Date(),
     updated_at: new Date(),
-    last_user: "data1",
-    getTechnicalName() {
-      return "data";
-    }
+    last_user: "data1"
   });
 
   expect(data.id).toBe(123);
 
   data.id = 123;
-  data.getModel = () => "Data";
+  (data.constructor as typeof Pojo).getModel = () => "Data";
   expect(data.uid()).toBe("data.123");
 });
 

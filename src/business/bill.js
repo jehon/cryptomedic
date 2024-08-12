@@ -11,11 +11,7 @@ export default class Bill extends Timed {
     return model;
   }
 
-  getModel() {
-    return model;
-  }
-
-  getTechnicalName() {
+  static getTechnicalName() {
     return "bill";
   }
 

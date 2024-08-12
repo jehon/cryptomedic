@@ -8,11 +8,7 @@ export default class Appointment extends PatientRelated {
     return model;
   }
 
-  getModel() {
-    return model;
-  }
-
-  getTechnicalName() {
+  static getTechnicalName() {
     return "appointment";
   }
 
