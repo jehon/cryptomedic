@@ -71,6 +71,8 @@ img.inline {
   object-fit: contain;
 }
 
+/* TODO: Color codes - to be put in SCSS */
+
 .action-view {
   background-color: #5bc0de;
   border-color: #46b8da;

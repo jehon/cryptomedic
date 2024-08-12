@@ -4,6 +4,7 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 
 /* Styles */
 import "bootstrap4/dist/css/bootstrap.min.css";
+import "bootstrap4/dist/js/bootstrap";
 import "./main.css";
 
 /* Application */

@@ -48,6 +48,8 @@ export const ActionStyles = {
 export default function ActionButton(
   props: ButtonActionProps
 ): React.ReactNode {
+  // https://getbootstrap.com/docs/4.0/components/buttons/
+
   const as = ActionStyles[props.style ?? "View"];
   const action = props.action ?? as.text;
   const linkToRaw = props.linkTo ?? "";
@@ -63,9 +65,7 @@ export default function ActionButton(
   return (
     <Restricted requires={props.requires}>
       <div
-        className={
-          " action-button " + as.css + (props.discrete ? " discrete " : "")
-        }
+        className={"btn " + as.css + (props.discrete ? " discrete " : "")}
         onClick={onOk}
       >
         {action}
