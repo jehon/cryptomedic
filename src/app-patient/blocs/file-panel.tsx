@@ -15,6 +15,22 @@ import { routeToFolderFile } from "../patient-router";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
+// TODO: migrate all this progressively
+export function isTodoMigration(type: Pojo) {
+  return [
+    "Appointment",
+    "Bill",
+    "ClubFoot",
+    "OtherConsult",
+    "RicketConsult",
+    "Patient",
+    "Payment",
+    "Picture",
+    "Price",
+    "Surgery"
+  ].includes((type.constructor as typeof Pojo).getModel());
+}
+
 export default function FilePanel({
   file,
   folder,
@@ -43,19 +59,7 @@ export default function FilePanel({
     if (location.search != "?dev") {
       if (
         // TODO: migrate all this progressively
-        (file.constructor as typeof PatientRelated).getModel() in
-        [
-          "Appointment",
-          "Bill",
-          "ClubFoot",
-          "OtherConsult",
-          "RicketConsult",
-          "Patient",
-          "Payment",
-          "Picture",
-          "Price",
-          "Surgery"
-        ]
+        isTodoMigration(file)
       ) {
         location.hash = [
           "folder",
