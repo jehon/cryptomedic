@@ -1,10 +1,16 @@
 import React from "react";
-import "./buttons-group.css";
 
 export default function ButtonsGroup({
   children
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="buttons-group">{children}</div>;
+  // https://getbootstrap.com/docs/4.0/components/button-group/
+  return (
+    <div className="text-right">
+      <div className="buttons btn-group" role="group">
+        {children}
+      </div>
+    </div>
+  );
 }
