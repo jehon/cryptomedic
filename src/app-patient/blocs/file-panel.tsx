@@ -40,18 +40,36 @@ export default function FilePanel({
   };
 
   const goEdit = (file: Pojo) => {
-    if (location.search == "?dev") {
-      updateEditState(true);
-      return;
+    if (location.search != "?dev") {
+      if (
+        // TODO: migrate all this progressively
+        file.getModel() in
+        [
+          "Appointment",
+          "Bill",
+          "ClubFoot",
+          "OtherConsult",
+          "RicketConsult",
+          "Patient",
+          "Payment",
+          "Picture",
+          "Price",
+          "Surgery"
+        ]
+      ) {
+        location.hash = [
+          "folder",
+          "" + folder.getId(),
+          "file",
+          file.getModel(),
+          "" + file.getId(),
+          "edit"
+        ].join("/");
+        return;
+      }
     }
-    location.hash = [
-      "folder",
-      "" + folder.getId(),
-      "file",
-      file.getModel(),
-      "" + file.getId(),
-      "edit"
-    ].join("/");
+
+    updateEditState(true);
   };
 
   const doUnlock = () => {
