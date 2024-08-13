@@ -16,7 +16,12 @@ import { routeToFolderFile } from "../patient-router";
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
 // TODO: migrate all this progressively
-export function isTodoMigration(type: Pojo) {
+export function isTodoMigration(type: typeof Pojo) {
+  if (location.search == "?dev") {
+    console.warn("In dev mode for", type.getTechnicalName());
+    return false;
+  }
+
   return [
     "Appointment",
     "Bill",
@@ -28,7 +33,7 @@ export function isTodoMigration(type: Pojo) {
     "Picture",
     "Price",
     "Surgery"
-  ].includes(type.getStatic().getModel());
+  ].includes(type.getModel());
 }
 
 export default function FilePanel({
@@ -56,21 +61,19 @@ export default function FilePanel({
   };
 
   const goEdit = (file: Pojo) => {
-    if (location.search != "?dev") {
-      if (
-        // TODO: migrate all this progressively
-        isTodoMigration(file)
-      ) {
-        location.hash = [
-          "folder",
-          "" + folder.getId(),
-          "file",
-          file.getStatic().getModel(),
-          "" + file.getId(),
-          "edit"
-        ].join("/");
-        return;
-      }
+    if (
+      // TODO: migrate all this progressively
+      isTodoMigration(file.getStatic())
+    ) {
+      location.hash = [
+        "folder",
+        "" + folder.getId(),
+        "file",
+        file.getStatic().getModel(),
+        "" + file.getId(),
+        "edit"
+      ].join("/");
+      return;
     }
 
     updateEditState(true);

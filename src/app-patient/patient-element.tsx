@@ -46,12 +46,12 @@ export default function PatientElement({
   }
 
   const addOne = function (type: typeof PatientRelated) {
-    if (isTodoMigration(new type())) {
+    if (isTodoMigration(type)) {
       location.hash = `#/folder/${folder.getId()}/file/${type.getModel()}`;
       return;
     }
     // TODO: new way to add stuff
-    location.hash = `#/home`;
+    location.hash = `#/folder/${folder.getId()}/file/${type.getModel()}`;
   };
 
   return (
