@@ -261,9 +261,9 @@ export default class Folder extends Pojo {
     }
 
     // Both 'type' are present
-    if (o1.getStatic().getModel() < o2.getStatic().getModel())
+    if (o1.getStatic().getTitle() < o2.getStatic().getTitle())
       return 40 * o1First;
-    if (o1.getStatic().getModel() > o2.getStatic().getModel())
+    if (o1.getStatic().getTitle() > o2.getStatic().getTitle())
       return 40 * o2First;
 
     return 0;

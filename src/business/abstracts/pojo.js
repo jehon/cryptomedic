@@ -11,6 +11,10 @@ export default class Pojo {
     return "Pojo";
   }
 
+  static getTitle() {
+    return this.getModel();
+  }
+
   /**
    * @returns {typeof Pojo}
    */
@@ -48,13 +52,6 @@ export default class Pojo {
 
   uid() {
     return `${this.getStatic().getTechnicalName()}.${this.id}`;
-  }
-
-  /**
-   * @returns {string}
-   */
-  getTitle() {
-    return this.getStatic().getModel();
   }
 
   // Legacy

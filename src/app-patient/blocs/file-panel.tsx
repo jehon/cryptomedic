@@ -117,10 +117,11 @@ export default function FilePanel({
             <img
               src={
                 icons.models[
-                  (file.getTitle() as keyof typeof icons.models) ?? ""
+                  (file.getStatic().getTitle() as keyof typeof icons.models) ??
+                    ""
                 ]
               }
-              alt={file.getTitle()}
+              alt={file.getStatic().getTitle()}
               className="inline"
             />
             {
@@ -132,7 +133,7 @@ export default function FilePanel({
               ) : null
             }
             <span data-role="type" className="no-mobile">
-              {file.getTitle()}
+              {file.getStatic().getTitle()}
             </span>
           </span>
           {header}
@@ -151,7 +152,8 @@ export default function FilePanel({
                 requires="folder.unlock"
               >
                 <div>
-                  Are you sure you want to unlock the File {file.getTitle()}?
+                  Are you sure you want to unlock the File{" "}
+                  {file.getStatic().getTitle()}?
                   <br />
                   Anybody will then be able to edit it.
                 </div>
@@ -179,8 +181,8 @@ export default function FilePanel({
                     requires="folder.delete"
                   >
                     <div>
-                      Are you sure you want to DELETE the File {file.getTitle()}
-                      ?
+                      Are you sure you want to DELETE the File{" "}
+                      {file.getStatic().getTitle()}?
                     </div>
                   </ActionConfirm>
                 )}
