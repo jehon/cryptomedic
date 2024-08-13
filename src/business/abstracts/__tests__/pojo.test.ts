@@ -18,8 +18,7 @@ test("with data loading at construction time", function () {
   expect(data.id).toBe(123);
 
   data.id = 123;
-  (data.constructor as typeof Pojo).getModel = () => "Data";
-  expect(data.uid()).toBe("data.123");
+  expect(data.uid()).toBe("pojo.123");
 });
 
 test("would interpret notSet correctly", function () {
