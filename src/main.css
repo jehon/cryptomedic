@@ -71,6 +71,10 @@ img.inline {
   object-fit: contain;
 }
 
+.btn {
+  min-width: calc(min(30%, 125px));
+}
+
 /* TODO: Color codes - to be put in SCSS */
 
 .action-view {
