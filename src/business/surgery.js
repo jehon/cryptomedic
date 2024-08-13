@@ -13,7 +13,7 @@ export default class Surgery extends Timed {
   }
 
   // Legacy
-  getServerRessource() {
+  getServerResource() {
     return "surgeries";
   }
 

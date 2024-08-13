@@ -11,6 +11,13 @@ export default class Pojo {
     return "Pojo";
   }
 
+  /**
+   * @returns {typeof Pojo}
+   */
+  getStatic() {
+    return this.constructor;
+  }
+
   id;
   created_at;
   updated_at;
@@ -40,14 +47,14 @@ export default class Pojo {
   }
 
   uid() {
-    return `${this.constructor.getTechnicalName()}.${this.id}`;
+    return `${this.getStatic().getTechnicalName()}.${this.id}`;
   }
 
   /**
    * @returns {string}
    */
   getTitle() {
-    return this.constructor.getModel();
+    return this.getStatic().getModel();
   }
 
   // Legacy
@@ -63,8 +70,8 @@ export default class Pojo {
     return false;
   }
 
-  getServerRessource() {
-    return this.constructor.getModel().toLowerCase() + "s";
+  getServerResource() {
+    return this.getStatic().getModel().toLowerCase() + "s";
   }
 
   createNewInstance(json) {

@@ -28,7 +28,7 @@ export function isTodoMigration(type: Pojo) {
     "Picture",
     "Price",
     "Surgery"
-  ].includes((type.constructor as typeof Pojo).getModel());
+  ].includes(type.getStatic().getModel());
 }
 
 export default function FilePanel({
@@ -65,7 +65,7 @@ export default function FilePanel({
           "folder",
           "" + folder.getId(),
           "file",
-          (file.constructor as typeof PatientRelated).getModel(),
+          file.getStatic().getModel(),
           "" + file.getId(),
           "edit"
         ].join("/");

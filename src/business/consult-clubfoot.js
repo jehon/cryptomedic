@@ -27,7 +27,7 @@ export default class ConsultClubfoot extends Consult {
   }
 
   // Legacy
-  getServerRessource() {
+  getServerResource() {
     return "clubfeet";
   }
 
