@@ -11,13 +11,12 @@ import Surgery from "../business/surgery";
 import * as config from "../config.js";
 import ButtonsGroup from "../styles/buttons-group";
 import { defaultWidthScreen } from "../styles/style-helpers";
-import ActionButton from "../widget/action-button";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import AppointmentElement from "./appointment-element";
 import BillElement from "./bill-element";
-import FilePanel from "./blocs/file-panel";
+import FilePanel, { isTodoMigration } from "./blocs/file-panel";
 import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOtherElement from "./consult-other-element";
 import ConsultRicketElement from "./consult-ricket-element";
@@ -46,6 +45,15 @@ export default function PatientElement({
     return <div>No folder selected</div>;
   }
 
+  const addOne = function (type: typeof PatientRelated) {
+    if (isTodoMigration(new type())) {
+      location.hash = `#/folder/${folder.getId()}/file/${type.getModel()}`;
+      return;
+    }
+    // TODO: new way to add stuff
+    location.hash = `#/home`;
+  };
+
   return (
     <div
       data-role="summary"
@@ -54,10 +62,39 @@ export default function PatientElement({
     >
       {/* ------------ Header  --------------------*/}
       <ButtonsGroup>
-        <ActionButton
-          style="Add"
-          linkTo={["folder", "" + folder.getId(), "addfile"]}
-        />
+        <button
+          id="btnAddSelector"
+          type="button"
+          className="action-alternate btn btn-secondary dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Add
+        </button>
+        <div
+          className="dropdown-menu dropdown-menu-right text-right"
+          aria-labelledby="btnGroupDrop1"
+        >
+          {[
+            Appointment,
+            Bill,
+            ConsultClubfoot,
+            ConsultOther,
+            ConsultRicket,
+            Picture,
+            Surgery
+          ].map((type) => (
+            <a
+              className="dropdown-item"
+              key={type.getTechnicalName()}
+              onClick={() => addOne(type)}
+              data-testid={"add-" + type.getTechnicalName()}
+            >
+              {type.getTitle()}
+            </a>
+          ))}
+        </div>
       </ButtonsGroup>
 
       {/* ------------ Key dates  --------------------*/}
