@@ -117,7 +117,7 @@ export default function FilePanel({
             <img
               src={
                 icons.models[
-                  (file.getStatic().getTitle() as keyof typeof icons.models) ??
+                  (file.getStatic().getModel() as keyof typeof icons.models) ??
                     ""
                 ]
               }

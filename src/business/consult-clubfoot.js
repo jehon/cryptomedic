@@ -26,6 +26,10 @@ export default class ConsultClubfoot extends Consult {
     return "consult_clubfoot";
   }
 
+  static getTitle() {
+    return "Consult. Clubfoot";
+  }
+
   // Legacy
   getServerResource() {
     return "clubfeet";
