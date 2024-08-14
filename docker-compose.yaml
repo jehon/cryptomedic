@@ -115,7 +115,7 @@ services:
     profiles:
       - tools
     # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/12/Dockerfile
-    image: cypress/included:13.13.2
+    image: cypress/included:13.13.3
     environment:
       HOME: /tmp
       LANG: C.UTF-8
