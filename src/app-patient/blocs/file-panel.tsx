@@ -93,7 +93,7 @@ export default function FilePanel({
 
   const doSave = () => {
     const data = new FormData(formRef.current!);
-    folderFileSave(file, data)
+    folderFileSave(file, data, addMode)
       .then(notifySuccess("File saved"))
       .then((f) => {
         onUpdate(f);
@@ -105,6 +105,10 @@ export default function FilePanel({
   };
 
   const doCancel = () => {
+    if (addMode) {
+      // Remove the newly added file, that we don't want to keep
+      onUpdate(folder.withoutFile(file));
+    }
     updateEditState(false);
   };
 
@@ -113,6 +117,12 @@ export default function FilePanel({
       .then(notifySuccess("File deleted"))
       .then((folder) => onUpdate(folder));
   };
+
+  if (addMode) {
+    if (editState == false) {
+      updateEditState(true);
+    }
+  }
 
   return (
     <Panel
@@ -220,6 +230,16 @@ export default function FilePanel({
           data-testid={"file-" + file.uid() + "-form"}
           ref={formRef}
         >
+          {file.getParentField() && (
+            <input
+              type="hidden"
+              name={file.getParentField()}
+              value={file.getParentId()}
+            />
+          )}
+          {file.updated_at && (
+            <input type="hidden" name="updated_at" value={file.updated_at} />
+          )}
           {children}
         </form>
       </EditContext.Provider>

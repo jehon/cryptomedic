@@ -109,10 +109,18 @@ export function folderFileDelete<T extends Pojo>(
   );
 }
 
-export function folderFileSave(file: Pojo, form: FormData): Promise<Folder> {
+export function folderFileSave(
+  file: Pojo,
+  form: FormData,
+  addMode: boolean
+): Promise<Folder> {
   return request({
-    url: ["fiche", file.getServerResource(), file.id],
-    method: "PUT",
+    url: [
+      "fiche",
+      file.getServerResource(),
+      ...(addMode ? [] : [file.getId()])
+    ],
+    method: addMode ? "POST" : "PUT",
     form
   })
     .then((json) => json.folder)

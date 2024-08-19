@@ -75,4 +75,18 @@ export default class Pojo {
     // See https://stackoverflow.com/a/73328117/1954789
     return new (Object.getPrototypeOf(this).constructor)(json);
   }
+
+  /**
+   * @returns {string | undefined}
+   */
+  getParentField() {
+    return undefined;
+  }
+
+  /**
+   * @returns {string | number | undefined}
+   */
+  getParentId() {
+    return undefined;
+  }
 }

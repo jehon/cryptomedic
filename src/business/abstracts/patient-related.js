@@ -44,4 +44,12 @@ export default class PatientRelated extends Pojo {
     dlock.setDate(dlock.getDate() + 35);
     return dlock < new Date();
   }
+
+  getParentField() {
+    return "patient_id";
+  }
+
+  getParentId() {
+    return this.patient_id;
+  }
 }
