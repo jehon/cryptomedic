@@ -3,7 +3,8 @@ BACKEND_ROOT = www/api
 BACKEND_DEPENDENCIES_MARK = $(BACKEND_ROOT)/vendor/.built
 BACKEND_BUILT_MARK = $(BACKEND_DEPENDENCIES_MARK)
 
-backend: clear clean-files dc-build dc-up backend-dump backend-dependencies backend-test ok
+backend: clear backend-dump backend-dependencies backend-test lint ok
+backend-full: clear clean-files dc-build dc-up backend-dump backend-dependencies backend-test ok
 
 .PHONY: backend-clean
 backend-clean: backend-clean-files

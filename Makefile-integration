@@ -13,7 +13,8 @@ INTEGRATION_BUILT_MARK=$(INTEGRATION_TEST_TMP)/.built
 #   - $(INTEGRATION_TEST_TMP)/{flavor}/styles.json
 #
 
-integration: clear clean-files dc-build dc-up integration-dump integration-test ok
+integration: clear integration-dump integration-test ok
+integration-full: clear clean-files dc-build dc-up integration-dump integration-test ok
 
 .PHONY: integration-dump
 dump: integration-dump

@@ -5,8 +5,8 @@ FRONTEND_PUBLISHED = www/built
 FRONTEND_BUILT_MARK = $(FRONTEND_PUBLISHED)/.built
 FRONTEND_BUILD_TMP = legacy/built
 
-frontend: clear clean-files dc-build dc-up frontend-dump frontend-dependencies frontend-lint frontend-build frontend-test ok
-frontend-quick: frontend-dump frontend-dependencies frontend-lint frontend-build frontend-test ok
+frontend: frontend-dump frontend-dependencies frontend-test frontend-lint ok
+frontend-full: clear clean-files dc-build dc-up frontend-dump frontend-dependencies frontend-lint frontend-build frontend-test ok
 
 .PHONY: frontend-clean
 clean: frontend-clean
