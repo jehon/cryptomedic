@@ -42,18 +42,18 @@ export default class Folder extends Pojo {
     // We remove and add in one run
     // to avoid building twice the folder
     //
-    return produce(this.withoutFile(file.uid()), (draft) => {
+    return produce(this.withoutFile(file), (draft) => {
       draft.list.push(file);
     });
   }
 
   /**
    *
-   * @param {string} uid
+   * @param {Pojo} file
    * @returns {Folder}
    */
-  withoutFile(uid) {
-    const i = this.list.findIndex((val) => val.uid() === uid);
+  withoutFile(file) {
+    const i = this.list.findIndex((val) => val.uid() === file.uid());
     if (i < 0) {
       return this;
     }

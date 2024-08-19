@@ -56,6 +56,8 @@ export default function FilePanel({
   const [editState, updateEditState] = useState(false);
   const formRef = useRef(null);
 
+  const addMode = !file.getId();
+
   const goToPatientFile = () => {
     document.location = patientRouterToFile(folder, file);
   };
@@ -76,7 +78,9 @@ export default function FilePanel({
       return;
     }
 
-    updateEditState(true);
+    if (editState == false) {
+      updateEditState(true);
+    }
   };
 
   const doUnlock = () => {
@@ -93,9 +97,15 @@ export default function FilePanel({
       .then(notifySuccess("File saved"))
       .then((f) => {
         onUpdate(f);
-        updateEditState(false);
+        if (editState == true) {
+          updateEditState(false);
+        }
         return f;
       });
+  };
+
+  const doCancel = () => {
+    updateEditState(false);
   };
 
   const doDelete = () => {
@@ -170,11 +180,9 @@ export default function FilePanel({
                 action="Save"
                 onOk={() => doSave()}
               />
-              <ActionButton
-                style="Cancel"
-                onOk={() => updateEditState(false)}
-              />
+              <ActionButton style="Cancel" onOk={() => doCancel()} />
               {file instanceof PatientRelated &&
+                !addMode &&
                 (!(file instanceof Patient) ||
                   folder.getFilesRelatedToPatient().length == 0) && (
                   <ActionConfirm
