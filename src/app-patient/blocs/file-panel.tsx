@@ -60,7 +60,7 @@ export default function FilePanel({
     document.location = patientRouterToFile(folder, file);
   };
 
-  const goEdit = (file: Pojo) => {
+  const goEdit = () => {
     if (
       // TODO: migrate all this progressively
       isTodoMigration(file.getStatic())
@@ -84,7 +84,7 @@ export default function FilePanel({
       .then((file) => folder.withFile(file))
       .then(notifySuccess("File unlocked"))
       .then((newFolder) => onUpdate(newFolder))
-      .then(() => goEdit(file));
+      .then(() => goEdit());
   };
 
   const doSave = () => {
@@ -193,7 +193,7 @@ export default function FilePanel({
           ) : (
             <ActionButton
               style="Edit"
-              onOk={() => goEdit(file)}
+              onOk={() => goEdit()}
               requires="folder.edit"
             />
           )}
