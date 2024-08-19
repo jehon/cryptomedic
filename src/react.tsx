@@ -8,7 +8,7 @@ import "bootstrap4/dist/js/bootstrap";
 import "./main.css";
 
 /* Application */
-import PatientRouter, { patientLoader } from "./app-patient/patient-router";
+import { patientRouterConfig } from "./app-patient/patient-router";
 import { bridgeTo } from "./bridge";
 import ErrorPage from "./widget/error-page";
 import RouteLoading from "./widget/route-loading";
@@ -29,18 +29,7 @@ const router = createHashRouter([
       />
     )
   },
-  {
-    // TODO: Temporary
-    path: "/folder/:folderId/summary/:selectedUid?",
-    loader: patientLoader,
-    element: <RouteLoading element={<PatientRouter />} />
-  },
-  {
-    // Under !patient! route
-    path: "/patient/:folderId/:selectedUid?",
-    loader: patientLoader,
-    element: <RouteLoading element={<PatientRouter />} />
-  }
+  ...patientRouterConfig()
 ]);
 
 bridgeTo("x-react-router", RouterProvider, {

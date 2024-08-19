@@ -11,7 +11,7 @@ import { EditContext } from "../../widget/io-abstract";
 import { notifySuccess } from "../../widget/notification";
 import Panel from "../../widget/panel";
 import { folderFileDelete, folderFileSave, folderFileUnlock } from "../loaders";
-import { routeToFolderFile } from "../patient-router";
+import { patientRouterToFile } from "../patient-router";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
@@ -57,7 +57,7 @@ export default function FilePanel({
   const formRef = useRef(null);
 
   const goToPatientFile = () => {
-    document.location = routeToFolderFile(folder, file);
+    document.location = patientRouterToFile(folder, file);
   };
 
   const goEdit = (file: Pojo) => {
@@ -111,7 +111,7 @@ export default function FilePanel({
       onToggle={(_opened) => {
         // TODO: when angular router is out
         // if (opened) {
-        //   location.hash = `/folder/${folder.getId()}/summary/${file.uid()}`;
+        //   location.hash = routeToFolderFile(folder, file);
         // }
       }}
       header={
