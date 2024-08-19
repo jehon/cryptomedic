@@ -51,7 +51,7 @@ export default class Pojo {
   }
 
   uid() {
-    return `${this.getStatic().getTechnicalName()}.${this.id}`;
+    return `${this.getStatic().getTechnicalName()}.${this.id ?? "add"}`;
   }
 
   // Legacy

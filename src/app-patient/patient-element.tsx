@@ -20,6 +20,7 @@ import FilePanel, { isTodoMigration } from "./blocs/file-panel";
 import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOtherElement from "./consult-other-element";
 import ConsultRicketElement from "./consult-ricket-element";
+import { patientRouterToFile } from "./patient-router";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
 
@@ -50,8 +51,10 @@ export default function PatientElement({
       location.hash = `#/folder/${folder.getId()}/file/${type.getModel()}`;
       return;
     }
-    // TODO: new way to add stuff
-    location.hash = `#/folder/${folder.getId()}/file/${type.getModel()}`;
+    const nf = new type();
+    nf.registerParent(folder);
+    folderUpdated(folder.withFile(nf));
+    location.hash = patientRouterToFile(folder, nf);
   };
 
   return (
