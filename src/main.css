@@ -7,9 +7,9 @@
   --panel-min-width: 150px;
 }
 
-/** 
- * On laptop 
- * 
+/**
+ * On laptop
+ *
  * From 990 to 1600
  */
 
@@ -69,6 +69,16 @@ img.inline {
   background-color: gray;
 
   object-fit: contain;
+
+  & > * {
+    background-color: white;
+    max-width: calc(min(800px, 100%));
+    max-height: 100%;
+    margin: auto;
+
+    scrollbar-width: 5px;
+    overflow: auto;
+  }
 }
 
 .btn {
