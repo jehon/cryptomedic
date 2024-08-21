@@ -28,6 +28,7 @@ export default function IODate(
         type="date"
         min={props.min}
         max={props.max}
+        required={props.required}
       />
     )
   });
