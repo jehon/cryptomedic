@@ -7,6 +7,7 @@ export default function Panel({
   header,
   label,
   closed,
+  fullscreen,
   actions,
   children,
   fixed,
@@ -17,6 +18,7 @@ export default function Panel({
   label?: string;
   actions?: React.ReactNode;
   closed?: boolean;
+  fullscreen?: boolean;
   fixed?: boolean;
   children: React.ReactNode;
   testid?: string;
@@ -45,26 +47,28 @@ export default function Panel({
   }
 
   return (
-    <div className="panel" data-role="panel" data-testid={testid}>
-      <div data-role="header" className="header" onClick={onOpenClose}>
-        {fixed || (
-          <div id="triangle" className={statusOpened ? "opened" : "closed"}>
-            &#9205;
+    <div className={fullscreen ? "fullscreen" : ""}>
+      <div className="panel" data-role="panel" data-testid={testid}>
+        <div data-role="header" className="header" onClick={onOpenClose}>
+          {fixed || (
+            <div id="triangle" className={statusOpened ? "opened" : "closed"}>
+              &#9205;
+            </div>
+          )}
+          <div id="custom">
+            {label ? <label>{label}</label> : null}
+            {header}
           </div>
-        )}
-        <div id="custom">
-          {label ? <label>{label}</label> : null}
-          {header}
         </div>
+        {statusOpened ? (
+          <>
+            {actions ? <ButtonsGroup>{actions}</ButtonsGroup> : null}
+            <div data-role="body" className="body">
+              {children}
+            </div>
+          </>
+        ) : null}
       </div>
-      {statusOpened ? (
-        <>
-          {actions ? <ButtonsGroup>{actions}</ButtonsGroup> : null}
-          <div data-role="body" className="body">
-            {children}
-          </div>
-        </>
-      ) : null}
     </div>
   );
 }
