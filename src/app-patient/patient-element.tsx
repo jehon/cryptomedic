@@ -24,6 +24,15 @@ import { patientRouterToFile } from "./patient-router";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
 
+export function type2Class(type: string): typeof PatientRelated {
+  switch (type) {
+    case "appointment":
+      return Appointment;
+    default:
+      throw new Error(`Unknown type: ${type} in type2Class in patient-element`);
+  }
+}
+
 export default function PatientElement({
   folder: givenPatient,
   selectedUid
@@ -56,6 +65,14 @@ export default function PatientElement({
     folderUpdated(folder.withFile(nf));
     location.hash = patientRouterToFile(folder, nf);
   };
+
+  if (selectedUid?.endsWith(".add")) {
+    if (folder.list.filter((f) => f.uid() == selectedUid).length == 0) {
+      const typeName = selectedUid.replace(".add", "");
+      const typeClass = type2Class(typeName);
+      addOne(typeClass);
+    }
+  }
 
   return (
     <div

@@ -100,6 +100,7 @@ export default function FilePanel({
         if (editState == true) {
           updateEditState(false);
         }
+        location.hash = patientRouterToFile(folder);
         return f;
       });
   };
