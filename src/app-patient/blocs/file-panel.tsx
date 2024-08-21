@@ -128,6 +128,7 @@ export default function FilePanel({
     <Panel
       testid={file.uid()}
       closed={closed}
+      fullscreen={editState}
       onToggle={(_opened) => {
         // TODO: when angular router is out
         // if (opened) {
