@@ -4,8 +4,9 @@ import { ServerRequestError, TransportRequestError } from "../utils/exceptions";
 import nullify from "../utils/nullify";
 
 export type CRUDType = "POST" | "GET" | "PUT" | "DELETE";
-export const CRUD: Record<string, CRUDType> = {
+export const CRUD = {
   create: "POST",
+  submit: "POST",
   read: "GET",
   update: "PUT",
   delete: "DELETE"

@@ -1,5 +1,6 @@
 import { Page } from "playwright-core";
 import { expect } from "playwright/test";
+import { CRUD } from "../../../src/app-patient/loaders";
 import {
   LOGINS,
   crApi,
@@ -52,7 +53,7 @@ export function crApiPatientDelete(
   return crApi(page, `/reference/${entry_year}/${entry_order}`).then(
     (folder) =>
       folder?.id > 0
-        ? crApi(page, `/fiche/patients/${folder.id}`, { method: "delete" })
+        ? crApi(page, `/fiche/patients/${folder.id}`, { method: CRUD.delete })
         : true,
     () => {
       // If the file is not found, it's ok

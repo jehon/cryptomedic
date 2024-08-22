@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
+import { CRUD, CRUDType } from "../../../src/app-patient/loaders";
 export { outputDate } from "../../../src/utils/date";
 
 export const LOGINS = {
@@ -21,13 +22,16 @@ export function crApi(
   page: Page,
   url: string,
   options: {
-    method?: "get" | "post" | "delete";
+    method?: CRUDType;
     data?: any;
   } = {}
 ): Promise<any> {
-  return page.request[options.method ?? "get"](crUrlAPI(url), {
-    data: options.data ?? {}
-  }).then((resp) => {
+  return page.request[(options.method ?? CRUD.read).toLowerCase()](
+    crUrlAPI(url),
+    {
+      data: options.data ?? {}
+    }
+  ).then((resp) => {
     if (resp.status() != 200) {
       throw new Error("Server responded with invalid status: " + resp.status());
     }
@@ -70,7 +74,7 @@ export async function crInit(
 ): Promise<void> {
   if (opts.login) {
     await crApi(page, "/auth/mylogin", {
-      method: "post",
+      method: CRUD.submit,
       data: {
         username: opts.login,
         password: PASSWORD
