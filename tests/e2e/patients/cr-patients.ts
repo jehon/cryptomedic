@@ -38,9 +38,8 @@ export async function crPatientFile(
     /**
      * If value is not defined, it is expected to be empty and invisible
      */
-    expectFieldValue: (label: string, value?: string | number) =>
-      expectFieldValue(form, label, value),
-    setFieldValue: (label: string, value: string, type?) =>
+    expectFieldValue: (label, value?) => expectFieldValue(form, label, value),
+    setFieldValue: (label, value, type?) =>
       setFieldValue(form, label, value, type)
   };
 }
