@@ -1,16 +1,8 @@
 import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";
+import { CRUD } from "../constants";
 import { ServerRequestError, TransportRequestError } from "../utils/exceptions";
 import nullify from "../utils/nullify";
-
-export type CRUDType = "POST" | "GET" | "PUT" | "DELETE";
-export const CRUD = {
-  create: "POST" as CRUDType,
-  submit: "POST" as CRUDType,
-  read: "GET" as CRUDType,
-  update: "PUT" as CRUDType,
-  delete: "DELETE" as CRUDType
-};
 
 function request({
   url,

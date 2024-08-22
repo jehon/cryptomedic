@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { CRUD, CRUDType } from "../../../src/app-patient/loaders";
+import { CRUD, CRUDType } from "../../../src/constants";
 export { outputDate } from "../../../src/utils/date";
 
 export const LOGINS = {

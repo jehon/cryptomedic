@@ -1,6 +1,6 @@
 import { Page } from "playwright-core";
 import { expect } from "playwright/test";
-import { CRUD } from "../../../src/app-patient/loaders";
+import { CRUD } from "../../../src/constants";
 import {
   LOGINS,
   crApi,
