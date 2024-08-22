@@ -3,7 +3,8 @@ import Folder from "../business/folder";
 import { ServerRequestError, TransportRequestError } from "../utils/exceptions";
 import nullify from "../utils/nullify";
 
-export const CRUD = {
+export type CRUDType = "POST" | "GET" | "PUT" | "DELETE";
+export const CRUD: Record<string, CRUDType> = {
   create: "POST",
   read: "GET",
   update: "PUT",
