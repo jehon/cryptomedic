@@ -105,8 +105,11 @@ export default function FilePanel({
         .then(notifySuccess("File created"))
         .then(
           passThrough((json) => {
-            // TODO: route to the newly created file
-            location.hash = patientRouterToFile(json.folder);
+            // Route to the newly created file
+            location.hash = patientRouterToFile(
+              json.folder,
+              json.folder.getByTypeAndId(file.constructor, json.newKey)
+            );
           })
         )
         .then((json) => json.folder);
