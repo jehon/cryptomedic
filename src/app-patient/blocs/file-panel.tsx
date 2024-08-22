@@ -5,12 +5,18 @@ import Folder from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
+import { passThrough } from "../../utils/promises";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import { EditContext } from "../../widget/io-abstract";
 import { notifySuccess } from "../../widget/notification";
 import Panel from "../../widget/panel";
-import { folderFileDelete, folderFileSave, folderFileUnlock } from "../loaders";
+import {
+  folderFileCreate,
+  folderFileDelete,
+  folderFileUnlock,
+  folderFileUpdate
+} from "../loaders";
 import { patientRouterToFile } from "../patient-router";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
@@ -91,18 +97,28 @@ export default function FilePanel({
       .then(() => goEdit());
   };
 
-  const doSave = () => {
+  const doSave = async () => {
     const data = new FormData(formRef.current!);
-    folderFileSave(file, data, addMode)
-      .then(notifySuccess("File saved"))
-      .then((f) => {
-        onUpdate(f);
-        if (editState == true) {
-          updateEditState(false);
-        }
-        location.hash = patientRouterToFile(folder);
-        return f;
-      });
+    let nFolder;
+    if (addMode) {
+      nFolder = await folderFileCreate(file, data)
+        .then(notifySuccess("File created"))
+        .then(
+          passThrough((json) => {
+            // TODO: route to the newly created file
+            location.hash = patientRouterToFile(json.folder);
+          })
+        )
+        .then((json) => json.folder);
+    } else {
+      nFolder = await folderFileUpdate(file, data).then(
+        notifySuccess("File saved")
+      );
+    }
+    onUpdate(nFolder);
+    if (editState == true) {
+      updateEditState(false);
+    }
   };
 
   const doCancel = () => {
