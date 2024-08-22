@@ -137,13 +137,13 @@ export async function setFieldValue(
   where: Page | Locator,
   label: string,
   value: string,
-  type?: "" | "textarea" | "select"
+  type: "" | "textarea" | "select" = ""
 ): Promise<void> {
   const io = expectField(where, label);
   await expect(io).toBeVisible();
 
   const ioc = io.locator(".content");
-  await expect(ioc).toBeDefined();
+  await expect(ioc).toBeVisible();
 
   switch (type) {
     case "":
