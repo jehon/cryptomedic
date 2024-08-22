@@ -119,7 +119,7 @@ export function folderFileCreate(
     form
   }).then((json) => ({
     newKey: "" + json.newKey,
-    folder: new Folder(json)
+    folder: new Folder(json.folder)
   }));
 }
 
