@@ -1,5 +1,6 @@
 import * as toastr from "toastr";
 import "toastr/build/toastr.min.css";
+import { passThrough } from "../utils/promises";
 
 // https://github.com/CodeSeven/toastr
 // https://codeseven.github.io/toastr/demo.html
@@ -13,8 +14,5 @@ export default function showNotification(): Toastr {
 }
 
 export function notifySuccess<T>(message: string): (a: T) => T {
-  return (a: T) => {
-    showNotification().success(message);
-    return a;
-  };
+  return passThrough(() => showNotification().success(message));
 }
