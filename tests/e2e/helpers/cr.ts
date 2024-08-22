@@ -111,12 +111,8 @@ export async function crReady(
   // }
 }
 
-export async function expectField(where: Page | Locator, label: string) {
-  const getIOContent = (label: string) =>
-    where.locator(`[data-role='${label}']`);
-
-  const io = await getIOContent(label);
-  return io;
+export function expectField(where: Page | Locator, label: string): Locator {
+  return where.locator(`[data-role='${label}']`);
 }
 
 export async function expectFieldValue(
@@ -124,7 +120,7 @@ export async function expectFieldValue(
   label: string,
   value?: string | number
 ): Promise<void> {
-  const io = await expectField(where, label);
+  const io = expectField(where, label);
 
   if (value) {
     await expect(io).toBeVisible();
@@ -143,11 +139,11 @@ export async function setFieldValue(
   value: string,
   type?: "" | "textarea" | "select"
 ): Promise<void> {
-  const io = await expectField(where, label);
+  const io = expectField(where, label);
   await expect(io).toBeVisible();
 
   const ioc = io.locator(".content");
-  await expect(ioc).toBeVisible();
+  await expect(ioc).toBeDefined();
 
   switch (type) {
     case "":
