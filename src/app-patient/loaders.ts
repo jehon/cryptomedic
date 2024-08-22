@@ -3,6 +3,13 @@ import Folder from "../business/folder";
 import { ServerRequestError, TransportRequestError } from "../utils/exceptions";
 import nullify from "../utils/nullify";
 
+export const CRUD = {
+  create: "POST",
+  read: "GET",
+  update: "PUT",
+  delete: "DELETE"
+};
+
 function request({
   url,
   method,
@@ -17,7 +24,7 @@ function request({
   allowed?: number[];
 }) {
   url = url || ["/"];
-  method = method || "GET";
+  method = method || CRUD.read;
 
   if (url[0] !== "/") {
     url = ["/", "api", ...url];
@@ -101,7 +108,7 @@ export function folderFileDelete<T extends Pojo>(
   return (
     request({
       url: ["fiche", file.getServerResource(), file.id],
-      method: "DELETE"
+      method: CRUD.delete
     })
       .then((json) => json.folder)
       // TODO: Should have a better return from server when nothing remain!
@@ -115,7 +122,7 @@ export function folderFileCreate(
 ): Promise<{ folder: Folder; newKey: string }> {
   return request({
     url: ["fiche", file.getServerResource()],
-    method: "POST",
+    method: CRUD.create,
     form
   }).then((json) => ({
     newKey: "" + json.newKey,
@@ -126,7 +133,7 @@ export function folderFileCreate(
 export function folderFileUpdate(file: Pojo, form: FormData): Promise<Folder> {
   return request({
     url: ["fiche", file.getServerResource(), file.getId()],
-    method: "PUT",
+    method: CRUD.update,
     form
   })
     .then((json) => json.folder)
