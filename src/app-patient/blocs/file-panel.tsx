@@ -60,7 +60,7 @@ export default function FilePanel({
   onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   const [editState, updateEditState] = useState(false);
-  const formRef = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const addMode = !file.getId();
 
@@ -98,6 +98,11 @@ export default function FilePanel({
   };
 
   const doSave = async () => {
+    if (!formRef.current!.checkValidity()) {
+      formRef.current!.requestSubmit();
+      return;
+    }
+
     const data = new FormData(formRef.current!);
     let nFolder;
     if (addMode) {
