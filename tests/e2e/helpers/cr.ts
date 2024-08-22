@@ -111,15 +111,20 @@ export async function crReady(
   // }
 }
 
+export async function expectField(where: Page | Locator, label: string) {
+  const getIOContent = (label: string) =>
+    where.locator(`[data-role='${label}']`);
+
+  const io = await getIOContent(label);
+  return io;
+}
+
 export async function expectFieldValue(
   where: Page | Locator,
   label: string,
   value?: string | number
 ): Promise<void> {
-  const getIOContent = (label: string) =>
-    where.locator(`[data-role='${label}']`);
-
-  const io = await getIOContent(label);
+  const io = await expectField(where, label);
 
   if (value) {
     await expect(io).toBeVisible();
@@ -131,6 +136,37 @@ export async function expectFieldValue(
     await expect(io).not.toBeVisible();
   }
 }
+
+export async function setFieldValue(
+  where: Page | Locator,
+  label: string,
+  value: string,
+  type?: "" | "textarea" | "select"
+): Promise<void> {
+  const io = await expectField(where, label);
+  await expect(io).toBeVisible();
+
+  const ioc = io.locator(".content");
+  await expect(ioc).toBeVisible();
+
+  switch (type) {
+    case "":
+      await expect(ioc.locator("input")).toBeVisible();
+      await ioc.locator("input").fill("" + value);
+      break;
+    case "textarea":
+      await expect(ioc.locator("textarea")).toBeVisible();
+      await ioc.locator("textarea").fill("" + value);
+      break;
+    case "select":
+      await expect(ioc.locator("select")).toBeVisible();
+      await ioc.locator("select").selectOption({ label: "" + value });
+      break;
+    default:
+      throw new Error("Unknown type: " + type);
+  }
+}
+
 export async function crLegacyInput(
   page: Page | Locator,
   selector: string,

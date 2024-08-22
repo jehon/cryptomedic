@@ -1,6 +1,12 @@
 import { Page } from "playwright-core";
 import { expect } from "playwright/test";
-import { LOGINS, crApi, crInit, expectFieldValue } from "../helpers/cr";
+import {
+  LOGINS,
+  crApi,
+  crInit,
+  expectFieldValue,
+  setFieldValue
+} from "../helpers/cr";
 export { crInit, crLegacyInput, outputDate } from "../helpers/cr";
 
 export async function crPatientInit(
@@ -34,7 +40,8 @@ export async function crPatientFile(
      */
     expectFieldValue: (label: string, value?: string | number) =>
       expectFieldValue(form, label, value),
-    async setFieldValue(_field: string, _value: string) {}
+    setFieldValue: (label: string, value: string, type?) =>
+      setFieldValue(form, label, value, type)
   };
 }
 
