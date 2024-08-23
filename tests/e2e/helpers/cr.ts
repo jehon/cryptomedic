@@ -39,6 +39,16 @@ export function crApi(
   });
 }
 
+export function crApiLogin(page: Page, login: string = LOGINS.PHYSIO) {
+  return crApi(page, "/auth/mylogin", {
+    method: CRUD.submit,
+    data: {
+      username: login,
+      password: PASSWORD
+    }
+  });
+}
+
 export function crDebugHooks(page: Page): void {
   // Listen for all console logs
   // page.on("console", (msg) =>
@@ -69,21 +79,8 @@ export async function crInit(
   page: Page,
   opts: {
     page?: string;
-    login?: string;
   } = {}
 ): Promise<void> {
-  if (opts.login) {
-    await crApi(page, "/auth/mylogin", {
-      method: CRUD.submit,
-      data: {
-        username: opts.login,
-        password: PASSWORD
-      }
-    });
-  } else {
-    await page.request.post(crUrlAPI("/auth/logout"));
-  }
-
   await page.goto(crUrl(opts.page ?? ""));
 
   // Expect a title "to contain" a substring.

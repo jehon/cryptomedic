@@ -1,12 +1,14 @@
 import { expect, test } from "@playwright/test";
-import { crLegacyInput, LOGINS } from "../helpers/cr";
+import { crApiLogin, crLegacyInput } from "../helpers/cr";
 import { crApiPatientDelete, crInit } from "./cr-patients";
 
 test("create-reference-2002", async ({ page }) => {
+  await crApiLogin(page);
+
   const GenerateYear = 2002;
   const GenerateOrder = 1234;
 
-  await crInit(page, { page: "/home", login: LOGINS.PHYSIO });
+  await crInit(page, { page: "/home" });
   await crApiPatientDelete(page, GenerateYear, GenerateOrder);
 
   const patientByReferencePanel = page.locator("x-patient-by-reference");
@@ -45,9 +47,11 @@ test("create-reference-2002", async ({ page }) => {
 });
 
 test("generate-reference", async ({ page }) => {
+  await crApiLogin(page);
+
   const GenerateYear = 2003;
 
-  await crInit(page, { page: "/home", login: LOGINS.PHYSIO });
+  await crInit(page, { page: "/home" });
 
   // entry_order will be set automatically to 10.000
   await crApiPatientDelete(page, GenerateYear, 10000);

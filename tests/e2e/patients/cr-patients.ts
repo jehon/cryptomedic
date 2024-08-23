@@ -45,6 +45,17 @@ export async function crPatientFile(
   };
 }
 
+export function crApiFileUpdate(
+  page: Page,
+  route: string,
+  data: any
+): Promise<void> {
+  return crApi(page, `/fiche/${route}/${data.id}`, {
+    method: CRUD.update,
+    data
+  });
+}
+
 export function crApiPatientDelete(
   page: Page,
   entry_year: number,

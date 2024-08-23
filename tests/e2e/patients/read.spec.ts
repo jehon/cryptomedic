@@ -1,10 +1,13 @@
 import { expect, test } from "@playwright/test";
+import { crApiLogin } from "../helpers/cr";
 import { crPatientFile, outputDate } from "./cr-patients";
 
 const PATIENT_ID_2001_001 = 1;
 // !! Manque le ClubFoot
 
 test("2001-001.patient.1", async ({ page }) => {
+  await crApiLogin(page);
+
   const panel = await crPatientFile(page, PATIENT_ID_2001_001);
   await panel.expectFieldValue("Entry Year", 2000);
   await panel.expectFieldValue("Entry Order", 1);
@@ -18,6 +21,8 @@ test("2001-001.patient.1", async ({ page }) => {
 });
 
 test("2001-001.bill.1", async ({ page }) => {
+  await crApiLogin(page);
+
   const panel = await crPatientFile(page, PATIENT_ID_2001_001, "bill.1");
   await panel.expectFieldValue("Date", outputDate("2011-06-09"));
   await panel.expectFieldValue("Consult CDC Consultation Physio", "1");
@@ -28,6 +33,8 @@ test("2001-001.bill.1", async ({ page }) => {
 });
 
 test("2001-001.consult-other.1", async ({ page }) => {
+  await crApiLogin(page);
+
   const panel = await crPatientFile(
     page,
     PATIENT_ID_2001_001,
@@ -56,6 +63,8 @@ test("2001-001.consult-other.1", async ({ page }) => {
 });
 
 test("2001-001.consult-ricket.13", async ({ page }) => {
+  await crApiLogin(page);
+
   const panel = await crPatientFile(
     page,
     PATIENT_ID_2001_001,
@@ -69,6 +78,8 @@ test("2001-001.consult-ricket.13", async ({ page }) => {
 });
 
 test("2001-001.picture.2", async ({ page }) => {
+  await crApiLogin(page);
+
   const panel = await crPatientFile(page, PATIENT_ID_2001_001, "picture.2");
   await panel.expectFieldValue("Date", outputDate("2014-11-04"));
   await panel.expectFieldValue("File", "10_2014-11-06_15-32-45.JPG");
@@ -78,6 +89,8 @@ test("2001-001.picture.2", async ({ page }) => {
 });
 
 test("2001-001.surgery.5", async ({ page }) => {
+  await crApiLogin(page);
+
   const panel = await crPatientFile(page, PATIENT_ID_2001_001, "surgery.5");
   await panel.expectFieldValue("Date", outputDate("2014-01-02"));
   await panel.expectFieldValue("Diagnostic", "test");
@@ -90,6 +103,8 @@ test("2001-001.surgery.5", async ({ page }) => {
 // TODO: add this on 1st file
 //       and add some data to it
 test("2001-001.consult_clubfoot.1", async ({ page }) => {
+  await crApiLogin(page);
+
   const panel = await crPatientFile(page, 5, "consult_clubfoot.1");
   await panel.expectFieldValue("Date", outputDate("2015-01-10"));
   await panel.expectFieldValue("Examiner", "Ershad");
@@ -100,11 +115,15 @@ test("2001-001.consult_clubfoot.1", async ({ page }) => {
 
 const PATIENT_ID_2014_103 = 3;
 test("2014-103.patient", async ({ page }) => {
+  await crApiLogin(page);
+
   const panel = await crPatientFile(page, PATIENT_ID_2014_103);
   await panel.expectFieldValue("Entry Year", 2014);
 });
 
 test("2014-103.bill.2", async ({ page }) => {
+  await crApiLogin(page);
+
   const panel = await crPatientFile(page, PATIENT_ID_2014_103, "bill.2");
   await panel.expectFieldValue("Family Salary", 4500);
   const paymentPanel = await page.getByTestId("bill.2.payments");
