@@ -1,24 +1,16 @@
 import { Page } from "playwright-core";
 import { expect } from "playwright/test";
 import { CRUD } from "../../../src/constants";
-import {
-  LOGINS,
-  crApi,
-  crInit,
-  expectFieldValue,
-  setFieldValue
-} from "../helpers/cr";
+import { crApi, crInit, expectFieldValue, setFieldValue } from "../helpers/cr";
 export { crInit, crLegacyInput, outputDate } from "../helpers/cr";
 
 export async function crPatientInit(
   page: Page,
   patient_id: string,
-  segment: string = "",
-  { login = LOGINS.PHYSIO }: { login?: string } = {}
+  segment: string = ""
 ): Promise<void> {
   await crInit(page, {
-    page: `/folder/${patient_id}/summary/` + segment,
-    login: login
+    page: `/folder/${patient_id}/summary/` + segment
   });
   await expect(page.getByTestId(`folder-${patient_id}`)).toBeVisible();
 }
