@@ -13,7 +13,8 @@ const config: Config = {
   moduleNameMapper: {
     "\\.css$": "identity-obj-proxy"
   },
-  testEnvironment: "jsdom"
+  testEnvironment: "jsdom",
+  testMatch: ["**/__tests__/**/*.[jt]s?(x)"]
 };
 
 export default config;
