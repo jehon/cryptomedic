@@ -1,5 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { CRUD, CRUDType } from "../../../src/constants";
+import { CRUD, CRUDType, JsonData } from "../../../src/constants";
 export { outputDate } from "../../../src/utils/date";
 
 export const LOGINS = {
@@ -25,7 +25,7 @@ export function crApi(
     method?: CRUDType;
     data?: any;
   } = {}
-): Promise<Record<string, any>> {
+): Promise<JsonData> {
   //
   // https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-post
   //

@@ -1,3 +1,5 @@
+export type JsonData = Record<string, any>;
+
 export type CRUDType = "POST" | "GET" | "PUT" | "DELETE";
 export const CRUD = {
   create: "POST" as CRUDType,

@@ -41,7 +41,7 @@ export function crApiFileUpdate(
   page: Page,
   route: string,
   data: any
-): Promise<void> {
+): Promise<JsonData> {
   return crApi(page, `/fiche/${route}/${data.id}`, {
     method: CRUD.update,
     data
