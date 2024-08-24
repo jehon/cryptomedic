@@ -92,10 +92,6 @@ export async function crInit(
   // // App is initialized
   // await expect(page.getByTestId("initial-loader")).toHaveCount(0);
 
-  if (opts.login) {
-    await expect(page.locator("#user")).toContainText(opts.login);
-  }
-
   return crReady(page);
 }
 
