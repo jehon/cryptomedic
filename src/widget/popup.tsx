@@ -13,7 +13,7 @@ export default function Popup({
   children: React.ReactNode;
 }) {
   return (
-    <div className="popup">
+    <div className="popup" data-testid="popup">
       <div className={"box " + (style ? ActionStyles[style].css : "")}>
         <h2>{title}</h2>
         {children}
