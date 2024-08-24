@@ -42,6 +42,10 @@ export function crApiFileUpdate(
   route: string,
   data: any
 ): Promise<JsonData> {
+  // ? optimistic locking ?
+  // const initData = await crApi(page, `/fiche/${route}/${data.id}`);
+  // data["updated_at"] = initData["updated_at"];
+
   return crApi(page, `/fiche/${route}/${data.id}`, {
     method: CRUD.update,
     data
