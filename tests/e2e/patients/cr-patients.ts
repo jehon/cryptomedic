@@ -1,6 +1,6 @@
 import { Page } from "playwright-core";
 import { expect } from "playwright/test";
-import { CRUD } from "../../../src/constants";
+import { CRUD, JsonData } from "../../../src/constants";
 import { crApi, crInit, expectFieldValue, setFieldValue } from "../helpers/cr";
 export { crInit, crLegacyInput, outputDate } from "../helpers/cr";
 
@@ -53,13 +53,15 @@ export function crApiPatientDelete(
   entry_year: number,
   entry_order: number
 ): Promise<void> {
-  return crApi(page, `/reference/${entry_year}/${entry_order}`).then(
-    (folder) =>
-      folder?.id > 0
-        ? crApi(page, `/fiche/patients/${folder.id}`, { method: CRUD.delete })
-        : true,
-    () => {
-      // If the file is not found, it's ok
-    }
-  );
+  return crApi(page, `/reference/${entry_year}/${entry_order}`)
+    .then(
+      (folder) =>
+        folder?.id > 0
+          ? crApi(page, `/fiche/patients/${folder.id}`, { method: CRUD.delete })
+          : undefined,
+      () => {
+        // If the file is not found, it's ok
+      }
+    )
+    .then(() => undefined);
 }
