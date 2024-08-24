@@ -25,7 +25,12 @@ export function crApi(
     method?: CRUDType;
     data?: any;
   } = {}
-): Promise<any> {
+): Promise<Record<string, any>> {
+  //
+  // https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-post
+  //
+  // Return the response object (json)
+  //
   return page.request[(options.method ?? CRUD.read).toLowerCase()](
     crUrlAPI(url),
     {
