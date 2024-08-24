@@ -29,7 +29,6 @@ export function isTodoMigration(type: typeof Pojo) {
   }
 
   return [
-    "Appointment",
     "Bill",
     "ClubFoot",
     "OtherConsult",
