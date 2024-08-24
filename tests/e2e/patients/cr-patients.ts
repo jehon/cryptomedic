@@ -1,4 +1,4 @@
-import { Page } from "playwright-core";
+import { Locator, Page } from "playwright-core";
 import { expect } from "playwright/test";
 import { CRUD, JsonData } from "../../../src/constants";
 import { crApi, crInit, expectFieldValue, setFieldValue } from "../helpers/cr";
@@ -8,11 +8,13 @@ export async function crPatientInit(
   page: Page,
   patient_id: string,
   segment: string = ""
-): Promise<void> {
+): Promise<Locator> {
   await crInit(page, {
     page: `/folder/${patient_id}/summary/` + segment
   });
-  await expect(page.getByTestId(`folder-${patient_id}`)).toBeVisible();
+  const panel = page.getByTestId(`folder-${patient_id}`);
+  await expect(panel).toBeVisible();
+  return panel;
 }
 
 export async function crPatientFile(
