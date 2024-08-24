@@ -14,7 +14,7 @@ const config: Config = {
     "\\.css$": "identity-obj-proxy"
   },
   testEnvironment: "jsdom",
-  testMatch: ["**/__tests__/**/*.[jt]s?(x)"]
+  testMatch: ["**/__tests__/**/*.spec.[jt]s?(x)"]
 };
 
 export default config;
