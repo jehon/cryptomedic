@@ -1,4 +1,4 @@
-import { Locator, Page, expect } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { CRUD, CRUDType } from "../../../src/constants";
 export { outputDate } from "../../../src/utils/date";
 
