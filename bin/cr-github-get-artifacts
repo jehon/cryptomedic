@@ -28,16 +28,16 @@ get_artifact() {
     )
 }
 
-header_begin "Copying files locally"
+header_begin "Playwright"
 get_artifact "integration-playwright-updated-snapshots" "$CR_TMP/integration/integration-playwright-updated-snapshots"
-get_artifact "integration-playwright" "$CR_TMP/integration/playwright"
-get_artifact "integration-desktop" "$CR_TMP/integration/desktop"
-header_end
-
-header_begin "Reintegrate playwright references"
 rsync --itemize-changes --recursive \
     --omit-dir-times --checksum \
     "$CR_TMP/integration/integration-playwright-updated-snapshots/" "tests/e2e/"
+header_end
+
+header_begin "Cypress"
+get_artifact "integration-playwright" "$CR_TMP/integration/playwright"
+get_artifact "integration-desktop" "$CR_TMP/integration/desktop"
 header_end
 
 echo "Done with success"
