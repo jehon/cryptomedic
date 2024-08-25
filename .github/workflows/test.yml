@@ -54,6 +54,35 @@ jobs:
           - dump
           - lint
           - frontend-test
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+
+      # https://github.com/actions/setup-node
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: deploy
+          path: .
+
+      - run: make github
+      - run: make dependencies
+      - run: make "${{ matrix.target }}"
+
+  tests-unit-with-backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs:
+      - build
+    strategy:
+      # Do not stop the rest of the matrix in case of failure
+      fail-fast: false
+      matrix:
+        target:
           - backend-test
 
     steps:
@@ -74,9 +103,9 @@ jobs:
       - run: make dependencies
       - run: make start
       - run: make "${{ matrix.target }}"
-          
+
   tests-e2e:
-    needs: 
+    needs:
       - build
     strategy:
       fail-fast: false
@@ -119,7 +148,7 @@ jobs:
           path: tmp/integration/${{ matrix.flavor }}
 
   update-e2e:
-    needs: 
+    needs:
       - build
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -165,7 +194,7 @@ jobs:
 
   valid:
     # placeholder for validation of PR
-    needs: 
+    needs:
       - tests-unit
       - tests-e2e
     runs-on: ubuntu-latest
@@ -174,7 +203,7 @@ jobs:
 
   deploy:
     environment: production
-    needs: 
+    needs:
       - valid
     runs-on: ubuntu-latest
     timeout-minutes: 20
