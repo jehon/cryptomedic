@@ -141,7 +141,7 @@ frontend-test-node: $(FRONTEND_DEPENDENCIES_MARK)
 #
 # Check reporters: https://nodejs.org/api/test.html#test-reporters
 # --experimental-test-coverage
-	node --import tsx/esm --test "**/*.test.ts"
+	node --import tsx/esm --test "src/**/*.test.ts"
 
 .PHONY: frontend-github
 github: frontend-github
