@@ -78,7 +78,13 @@ global-dump:
 	@echo "CRYPTOMEDIC_DEPLOY_WEB_PORT:    $(CRYPTOMEDIC_DEPLOY_WEB_PORT)"
 	@echo "CRYPTOMEDIC_LOCAL_HTTP_PORT:    $(CRYPTOMEDIC_LOCAL_HTTP_PORT)"
 	@echo "------------------------------------------"
-	@echo "Docker:                         $(shell docker info -f "{{println .SecurityOptions}}")"
+	@echo "Docker:                         $(shell docker --version)"
+	@echo "Docker compose:                 $(shell docker compose version)"
+	@echo "Docker security:                $(shell docker info -f "{{println .SecurityOptions}})"
+	@echo "lsb release:"
+	lsb_release -a
+	@echo "docker version:"
+	docker version
 # @echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
 # @echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
 # @echo "MySQL user:                     $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
