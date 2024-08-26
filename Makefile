@@ -48,6 +48,10 @@ ok:
 .PHONY: update
 .PHONY: github
 
+include Makefile-backend
+include Makefile-frontend
+include Makefile-integration
+
 #
 # Debug options:
 #   --warn-undefined-variables
@@ -205,7 +209,3 @@ www/built/release_version.txt:
 update: update-references-browsers
 update-references-browsers:
 	node_modules/.bin/browserslist --update-db
-
-include Makefile-backend
-include Makefile-frontend
-include Makefile-integration
