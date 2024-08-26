@@ -1,0 +1,124 @@
+stages:
+  - build
+  - test
+  - validate
+  - deploy
+
+variables:
+  NO_CLEAR: "yes"
+
+default:
+  timeout: 10m
+
+before_script:
+  - apt-get update
+  - apt-get install -y curl
+
+build:
+  stage: build
+  image: docker:dind
+  script:
+    - ./setup.sh
+    - make build
+  artifacts:
+    paths:
+      - .ovhconfig
+      - www
+
+tests-unit:
+  stage: test
+  image: docker:dind
+  parallel:
+    matrix:
+      - target:
+        - dump
+        - lint
+        - frontend-test
+  script:
+    - make github
+    - make $target
+
+tests-unit-with-backend:
+  stage: test
+  image: docker:dind
+  parallel:
+    matrix:
+      - target:
+        - backend-test
+  script:
+    - make github
+    - make dependencies
+    - make start
+    - make $target
+
+tests-e2e:
+  stage: test
+  image: docker:dind
+  parallel:
+    matrix:
+      - flavor:
+        - desktop
+        - playwright
+  script:
+    - ./setup.sh
+    - make github
+    - make dc-build
+    - make start
+    - make dependencies
+    - make integration-test-${flavor}-run
+    - make integration-test-${flavor}-styles
+  artifacts:
+    when: always
+    paths:
+      - tmp/integration/$flavor
+
+update-e2e:
+  stage: test
+  image: ubuntu:latest
+  script:
+    - ./setup.sh
+    - make github
+    - make dc-build
+    - make start
+    - make dependencies
+    - UPDATE=1 make integration-update-playwright
+    - git status
+  artifacts:
+    when: always
+    paths:
+      - tests/e2e/**/*.png
+
+valid:
+  stage: validate
+  image: ubuntu:latest
+  needs:
+    - tests-unit
+    - tests-e2e
+    - tests-unit-with-backend
+  script:
+    - echo "ok"
+
+# deploy:
+#   stage: deploy
+#   environment:
+#     name: production
+#   rules:
+#     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+#       when: never
+#     - when: on_success
+#   script:
+#     - ./setup.sh
+#     - make github
+#     - make build
+#     - make deploy
+#   variables:
+#     CRYPTOMEDIC_DEPLOY_WEB_HOST: $CRYPTOMEDIC_DEPLOY_WEB_HOST
+#     CRYPTOMEDIC_DEPLOY_WEB_PORT: $CRYPTOMEDIC_DEPLOY_WEB_PORT
+#     CRYPTOMEDIC_DEPLOY_WEB_TOKEN: $CRYPTOMEDIC_DEPLOY_WEB_TOKEN
+#     CRYPTOMEDIC_DEPLOY_FILES_HOST: $CRYPTOMEDIC_DEPLOY_FILES_HOST
+#     CRYPTOMEDIC_DEPLOY_FILES_USER: $CRYPTOMEDIC_DEPLOY_FILES_USER
+#     CRYPTOMEDIC_DEPLOY_FILES_PASSWORD: $CRYPTOMEDIC_DEPLOY_FILES_PASSWORD
+#   artifacts:
+#     when: always
+#     paths:
+#       - tmp/deploy.log
