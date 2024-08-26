@@ -4,21 +4,29 @@ stages:
   - validate
   - deploy
 
-variables:
-  NO_CLEAR: "yes"
-
 default:
   timeout: 10m
 
-before_script:
-  - apt-get update
-  - apt-get install -y curl
+.docker:
+  image: ubuntu:latest
+  variables:
+    NO_CLEAR: "yes"
+    DOCKER_HOST: "tcp://docker"
+  services:
+    - name: docker:dind
+      alias: docker
+  before_script:
+    - apt-get update
+    - apt-get install -y curl
+    - curl -fsSL https://deb.nodesource.com/setup_22.x | bash
+    - apt-get install -y docker.io nodejs
+    - ./setup.sh
 
 build:
   stage: build
-  image: docker:dind
+  extends: .docker
   script:
-    - ./setup.sh
+    - make dump
     - make build
   artifacts:
     paths:
