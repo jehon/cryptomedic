@@ -19,6 +19,7 @@
   }
 }
 
+/* TODO: only data-e2e="excluded" */
 body[screenshot="e2e"] {
   [variable],
   [data-e2e="excluded"] {

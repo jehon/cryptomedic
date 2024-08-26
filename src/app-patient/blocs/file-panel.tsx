@@ -243,7 +243,7 @@ export default function FilePanel({
         </>
       }
     >
-      <div className="technical" onClick={goToPatientFile}>
+      <div className="technical" data-e2e="excluded" onClick={goToPatientFile}>
         <div>{file.uid()}</div>
         <div>created at {date2HumanString(normalizeDate(file.created_at))}</div>
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
