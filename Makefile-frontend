@@ -52,7 +52,7 @@ $(FRONTEND_DEPENDENCIES_MARK): package-lock.json
 	@touch "$@"
 
 package-lock.json: package.json
-	npm install --package-lock-only
+	npm install --package-lock-only --ignore-scripts
 	@touch "$@"
 
 .PHONY: frontend-lint
