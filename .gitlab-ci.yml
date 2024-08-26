@@ -5,10 +5,10 @@ stages:
   - deploy
 
 default:
-  timeout: 10m
+  timeout: 15m
 
 .docker:
-  image: ubuntu:latest
+  image: debian:testing
   variables:
     NO_CLEAR: "yes"
     DOCKER_HOST: "tcp://docker"
@@ -17,9 +17,14 @@ default:
       alias: docker
   before_script:
     - apt-get update
-    - apt-get install -y curl
+    - apt-get install -y curl lsb-release
     - curl -fsSL https://deb.nodesource.com/setup_22.x | bash
-    - apt-get install -y docker.io nodejs
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu noble stable" > /etc/apt/sources.list.d/docker.list
+#    - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list
+    - apt-get update
+    - apt-get install -y nodejs
+    - apt-get install -y  docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     - ./setup.sh
 
 build:
@@ -35,7 +40,7 @@ build:
 
 tests-unit:
   stage: test
-  image: docker:dind
+  extends: .docker
   parallel:
     matrix:
       - target:
@@ -48,7 +53,7 @@ tests-unit:
 
 tests-unit-with-backend:
   stage: test
-  image: docker:dind
+  extends: .docker
   parallel:
     matrix:
       - target:
@@ -61,7 +66,7 @@ tests-unit-with-backend:
 
 tests-e2e:
   stage: test
-  image: docker:dind
+  extends: .docker
   parallel:
     matrix:
       - flavor:
@@ -82,7 +87,7 @@ tests-e2e:
 
 update-e2e:
   stage: test
-  image: ubuntu:latest
+  extends: .docker
   script:
     - ./setup.sh
     - make github
