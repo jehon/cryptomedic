@@ -28,7 +28,12 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
       name: "Mobile Chrome",
       use: { ...devices["Pixel 5"] }
     }
-  ]
+  ],
+  expect: {
+    toHaveScreenshot: {
+      stylePath: "tests/e2e/e2e.css"
+    }
+  }
 };
 
 if (process.env["CI"]) {

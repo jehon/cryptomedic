@@ -1,0 +1,13 @@
+/* TODO: only data-e2e="excluded" */
+[data-e2e="excluded"],
+[variable] {
+  background-color: black !important;
+  color: black !important;
+  width: 100px;
+  height: 20px;
+}
+
+[variable] {
+  background-color: purple !important;
+  color: purple !important;
+}
