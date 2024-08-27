@@ -31,7 +31,7 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   ],
   expect: {
     toHaveScreenshot: {
-      stylePath: "tests/e2e/e2e.css"
+      stylePath: ["tests/e2e/e2e.css"]
     }
   }
 };
