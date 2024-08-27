@@ -18,3 +18,6 @@ import "./v1/mainApp.js";
 
 // React components and application
 import "../../src/react.tsx";
+import { routeToLogin } from "./v2/js/router.js";
+
+routeToLogin();

@@ -1,5 +1,4 @@
 import duix from "../../../../node_modules/duix/build.js";
-import { routeToLogin } from "./router.js";
 const SESSION = "session";
 
 // Thanks to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
@@ -83,5 +82,3 @@ export const getCurrentFolder = () => duix.get(FOLDER);
 export const onCurrentFolder = (cb) => duix.subscribe(FOLDER, cb);
 
 setSession();
-
-routeToLogin();
