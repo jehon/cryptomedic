@@ -45,7 +45,7 @@ function request({
         ? null
         : // TODO: Pass the FormData directly (required for pictures?)
           //       but requires change at backend
-          JSON.stringify(nullify(Object.fromEntries(form || new FormData())))
+          JSON.stringify(form ? nullify(Object.fromEntries(form)) : null)
   }).then(
     (response) => {
       if (

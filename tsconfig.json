@@ -26,7 +26,7 @@
     "target": "esnext",
     "module": "esnext",
     "useDefineForClassFields": false,
-    "lib": ["ES2023", "dom"]
+    "lib": ["ES2023", "dom", "DOM.Iterable"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
