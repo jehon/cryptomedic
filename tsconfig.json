@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "jsx": "react", // Legacy
+    "jsx": "react-jsx",
     // Add default import for modules
     // @see https://www.typescriptlang.org/tsconfig#esModuleInterop
     "esModuleInterop": true,
@@ -11,7 +11,6 @@
     "resolveJsonModule": true, // Legacy
     // "sourceMap": true,
     "allowJs": true,
-    "outDir": "./www/built/angular/",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
@@ -27,12 +26,6 @@
     "module": "esnext",
     "useDefineForClassFields": false,
     "lib": ["ES2023", "dom", "DOM.Iterable"]
-  },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
   },
   "include": ["src"]
 }
