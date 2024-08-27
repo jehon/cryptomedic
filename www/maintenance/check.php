@@ -37,13 +37,13 @@ ob_flush();
 $ip = "135.125.106.114";
 $username = "test";
 $password = "test";
-if (in_array($_REQUEST, "ip")) {
+if (in_array("ip", $_REQUEST)) {
     $ip = $_REQUEST["ip"];
 }
-if (in_array($_REQUEST, "username")) {
+if (in_array("username", $_REQUEST)) {
     $username = $_REQUEST["username"];
 }
-if (in_array($_REQUEST, "password")) {
+if (in_array("password", $_REQUEST)) {
     $password = $_REQUEST["password"];
 }
 $dsn = "mysql:host=$ip;dbname=" . $myconfig["database"]["schema"];
