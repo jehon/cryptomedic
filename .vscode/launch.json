@@ -5,36 +5,26 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "ng serve",
-      "type": "chrome",
+      "name": "Launch node unit test",
+      "type": "node",
       "request": "launch",
-      "preLaunchTask": "npm: start",
-      "url": "http://localhost:4200/"
-    },
-    {
-      "name": "ng test",
-      "type": "chrome",
-      "request": "launch",
-      "preLaunchTask": "npm: test",
-      "url": "http://localhost:9876/debug.html"
+
+      "program": "${file}",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--import",
+        "tsx/esm",
+        "--test"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     },
     {
       "name": "Listen for PHP server",
       "type": "php",
       "request": "launch"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "test-e2e current file",
-      "skipFiles": ["<node_internals>/**"],
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run-script", "test-e2e", "--test", "${relativeFile}"],
-      "env": {
-        "E2E_FULL": "1"
-      },
-      "port": 9515
     }
   ]
 }
