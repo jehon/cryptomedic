@@ -1,10 +1,11 @@
-import { expect, test } from "@jest/globals";
+import { expect } from "expect";
+import test from "node:test";
 
-import RicketConsult from "../../consult-ricket.js";
-import Patient from "../../patient.js";
-import PatientRelated from "../patient-related.js";
+import RicketConsult from "../consult-ricket.js";
+import Patient from "../patient.js";
+import PatientRelated from "./patient-related.js";
 
-import { loadReferenceFolder, RefFolder1 } from "../../../test-helper";
+import { loadReferenceFolder, RefFolder1 } from "../../test-helper.js";
 
 test("with TestFolder.test1.json", async function () {
   // Go through the rest_service !!!

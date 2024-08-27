@@ -1,6 +1,7 @@
-import { expect, test } from "@jest/globals";
+import { expect } from "expect";
+import test from "node:test";
 
-import Pojo from "../pojo.js";
+import Pojo from "./pojo.js";
 
 test("with empty loader", function () {
   const data = new Pojo({});
