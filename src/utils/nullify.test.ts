@@ -1,6 +1,7 @@
-import { expect, test } from "@jest/globals";
+import { expect } from "expect";
+import test from "node:test";
 
-import nullify from "../nullify";
+import nullify from "./nullify";
 
 test("should nullify string", () => {
   expect(nullify("")).toEqual("");

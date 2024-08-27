@@ -1,11 +1,12 @@
-import { expect, test } from "@jest/globals";
+import { expect } from "expect";
+import test from "node:test";
 
 import {
   ApplicationException,
   DataInvalidException,
   DataMissingException,
   DataOutOfBoundException
-} from "../exceptions.js";
+} from "./exceptions.js";
 
 test("should inherit from Error", function () {
   const ae = new ApplicationException("my message");
