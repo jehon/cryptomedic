@@ -1,18 +1,19 @@
-import { beforeEach, expect, test } from "@jest/globals";
+import { expect } from "expect";
+import test, { beforeEach } from "node:test";
 
-import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
+import { loadReferenceFolder, RefFolder1 } from "../test-helper";
 
-import Pojo from "../abstracts/pojo";
-import Appointment from "../appointment.js";
-import Bill from "../bill.js";
-import ConsultClubfoot from "../consult-clubfoot.js";
-import ConsultOther from "../consult-other.js";
-import ConsultRicket from "../consult-ricket.js";
-import Folder from "../folder.js";
-import Patient from "../patient.js";
-import Payment from "../payment.js";
-import Picture from "../picture.js";
-import Surgery from "../surgery.js";
+import Pojo from "./abstracts/pojo";
+import Appointment from "./appointment.js";
+import Bill from "./bill.js";
+import ConsultClubfoot from "./consult-clubfoot.js";
+import ConsultOther from "./consult-other.js";
+import ConsultRicket from "./consult-ricket.js";
+import Folder from "./folder.js";
+import Patient from "./patient.js";
+import Payment from "./payment.js";
+import Picture from "./picture.js";
+import Surgery from "./surgery.js";
 
 let f: Folder = new Folder();
 
@@ -126,7 +127,7 @@ test("should give bill related files", () => {
   expect(list[i].bill_id).toBe(1);
 });
 
-describe("order", function () {
+test("order", async function (t) {
   const resFirst = (a: Pojo, b: Pojo) => {
     expect(Folder.ordering(a, a)).toBe(0);
     expect(Folder.ordering(b, b)).toBe(0);
@@ -135,7 +136,7 @@ describe("order", function () {
     expect(Folder.ordering(b, a)).toBeGreaterThan(0);
   };
 
-  test("order by id", function () {
+  await t.test("order by id", function () {
     const o1 = new Pojo();
     const o2 = new Pojo({ id: 2 });
     const o3 = new Pojo({ id: 1 });
@@ -149,7 +150,7 @@ describe("order", function () {
     resFirst(o25, o2);
   });
 
-  test("order by Date", function () {
+  await t.test("order by Date", function () {
     const o1 = new Pojo({});
     const o2 = new Pojo({ date: "2010-01-01" });
     const o3 = new Pojo({ date: "2000-01-01" });
@@ -159,7 +160,7 @@ describe("order", function () {
     resFirst(o2, o3);
   });
 
-  test("order by created_at", function () {
+  await t.test("order by created_at", function () {
     const o1 = new Pojo({}); // New element
     const o2 = new Pojo({ id: 1, created_at: "2010-01-01" });
     const o3 = new Pojo({ id: 1, created_at: "2000-01-01" });
@@ -168,7 +169,7 @@ describe("order", function () {
     resFirst(o2, o3);
   });
 
-  test("order by new > date > model > id", function () {
+  await t.test("order by new > date > model > id", function () {
     const o1 = new Pojo({});
     const o2 = new Pojo({ date: "2000-01-01" });
     const o3 = new Pojo({ id: "25" });

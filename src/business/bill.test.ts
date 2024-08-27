@@ -1,8 +1,9 @@
-import { beforeEach, expect, test } from "@jest/globals";
-import { RefFolder1, loadReferenceFolder } from "../../test-helper";
+import { expect } from "expect";
+import test, { beforeEach } from "node:test";
+import { RefFolder1, loadReferenceFolder } from "../test-helper";
 
-import Bill from "../bill.js";
-import Folder from "../folder.js";
+import Bill from "./bill.js";
+import Folder from "./folder.js";
 
 let f: Folder = new Folder();
 
