@@ -1,5 +1,4 @@
 /* Packages */
-import React from "react";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
 /* Styles */

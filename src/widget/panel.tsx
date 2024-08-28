@@ -1,5 +1,4 @@
 import React from "react";
-
 import ButtonsGroup from "../styles/buttons-group";
 import "./panel.css";
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./action-button.css";
 import Restricted from "./restricted";
 

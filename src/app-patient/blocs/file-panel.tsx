@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Folder from "../../business/folder";

@@ -1,5 +1,3 @@
-import React from "react";
-
 import Folder from "../business/folder";
 import Surgery from "../business/surgery";
 

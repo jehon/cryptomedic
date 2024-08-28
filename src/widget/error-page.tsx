@@ -1,4 +1,3 @@
-import React from "react";
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
 // https://github.com/remix-run/react-router/discussions/9628#discussioncomment-5555901

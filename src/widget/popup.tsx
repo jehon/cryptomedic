@@ -1,5 +1,3 @@
-import React from "react";
-
 import { ActionStyles, ActionStyleType } from "./action-button";
 import "./popup.css";
 

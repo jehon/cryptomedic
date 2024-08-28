@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PatientRelated from "../business/abstracts/patient-related";
 import Appointment from "../business/appointment";
 import Bill from "../business/bill";

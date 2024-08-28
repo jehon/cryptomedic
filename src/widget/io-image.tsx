@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Optional } from "../utils/generic-types";
 import { IOProps } from "./io-abstract";
 import "./io-image.css";

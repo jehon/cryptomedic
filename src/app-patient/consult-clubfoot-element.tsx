@@ -1,5 +1,3 @@
-import React from "react";
-
 import ConsultClubfoot from "../business/consult-clubfoot";
 import Folder from "../business/folder";
 

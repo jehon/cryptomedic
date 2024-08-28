@@ -1,4 +1,3 @@
-import React from "react";
 import IOAbstract, { IOPropsReadonly } from "./io-abstract";
 
 type T = () => string;

@@ -1,5 +1,3 @@
-import React from "react";
-
 import ConsultOther from "../business/consult-other";
 import Folder from "../business/folder";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { outputDate } from "../utils/date";
 import { Optional } from "../utils/generic-types";
 import { StringDate } from "../utils/types";

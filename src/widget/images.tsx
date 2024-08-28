@@ -1,5 +1,3 @@
-import React from "react";
-
 export function ImgSideLeft() {
   return <img src="/static/img/side_left.svg" alt="Left" />;
 }

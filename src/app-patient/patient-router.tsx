@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useLoaderData, useParams } from "react-router-dom";
 import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";

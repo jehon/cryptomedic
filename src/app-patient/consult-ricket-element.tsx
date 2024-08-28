@@ -1,5 +1,3 @@
-import React from "react";
-
 import ConsultRicket from "../business/consult-ricket";
 import Folder from "../business/folder";
 

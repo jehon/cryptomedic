@@ -1,5 +1,3 @@
-import React from "react";
-
 export const defaultWidthBox: string = "calc(min(100%, 300px))";
 export const defaultWidthScreen: string = "calc(min(100%, 800px))";
 

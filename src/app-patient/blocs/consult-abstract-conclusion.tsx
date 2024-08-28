@@ -1,5 +1,3 @@
-import React from "react";
-
 import Consult from "../../business/abstracts/consult";
 
 import { getList } from "../../utils/config";

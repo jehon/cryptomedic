@@ -1,4 +1,3 @@
-import React from "react";
 import { StringText } from "../utils/types";
 import IOAbstract, { IOProps } from "./io-abstract";
 

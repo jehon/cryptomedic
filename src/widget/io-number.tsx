@@ -1,4 +1,3 @@
-import React from "react";
 import { Optional } from "../utils/generic-types";
 import { roundTo } from "../utils/strings";
 import IOAbstract, { IOProps } from "./io-abstract";

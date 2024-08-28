@@ -1,4 +1,3 @@
-import React from "react";
 import { Optional } from "../utils/generic-types";
 import { toTitleCase } from "../utils/strings";
 import { StringList } from "../utils/types";
