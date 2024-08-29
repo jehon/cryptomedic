@@ -80,11 +80,14 @@ global-dump:
 	@echo "------------------------------------------"
 	@echo "Docker:                         $(shell docker --version)"
 	@echo "Docker compose:                 $(shell docker compose version)"
-	@echo "Docker security:                $(shell docker info -f "{{println .SecurityOptions}})"
-	@echo "lsb release:"
+	@echo "Docker security:                $(shell docker info -f "{{println .SecurityOptions}}" )"
+	@echo ""
+	@echo "+++ lsb release +++"
 	lsb_release -a
-	@echo "docker version:"
+	@echo ""
+	@echo "+++ docker version +++"
 	docker version
+	@echo ""
 # @echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
 # @echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
 # @echo "MySQL user:                     $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
