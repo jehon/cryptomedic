@@ -2,6 +2,8 @@ import { expect, Locator, Page } from "@playwright/test";
 import { CRUD, CRUDType, JsonData } from "../../../src/constants";
 export { outputDate } from "../../../src/utils/date";
 
+const WebBaseUrl = "http://localhost:8085";
+
 export const LOGINS = {
   PHYSIO: "murshed",
   RO: "readonly",
@@ -11,11 +13,11 @@ export const LOGINS = {
 export const PASSWORD = "p";
 
 function crUrl(segment: string = ""): string {
-  return `http://localhost:8085/built/frontend/ng1x.html#${segment}`;
+  return `${WebBaseUrl}/built/frontend/ng1x.html#${segment}`;
 }
 
 function crUrlAPI(segment: string = ""): string {
-  return `http://localhost:8085/api${segment}`;
+  return `${WebBaseUrl}/api${segment}`;
 }
 
 export function crApi(
