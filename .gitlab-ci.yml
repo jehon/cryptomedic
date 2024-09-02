@@ -19,6 +19,12 @@ build:
   services:
     - name: docker:dind
   script:
+    - |
+      echo "BUILDER_DOCKER_BASE: $BUILDER_DOCKER_BASE"
+      echo "BUILDER_DOCKER_TEST: $BUILDER_DOCKER_TEST"
+      echo "DOCKER_TLS_CERTDIR:  $DOCKER_TLS_CERTDIR"
+      echo "DOCKER_TLS_VERIFY:   $DOCKER_TLS_VERIFY"
+    - env
     - make dump
     - make build
   artifacts:
