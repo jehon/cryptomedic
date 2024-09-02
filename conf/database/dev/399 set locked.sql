@@ -1,5 +1,5 @@
-UPDATE appointment
+UPDATE appointments
 SET
-  modified_at = NOW()
+  updated_at = NOW()
 WHERE
   id = 101;
