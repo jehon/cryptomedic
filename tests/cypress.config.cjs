@@ -7,7 +7,7 @@ module.exports = defineConfig({
   viewportHeight: 800,
   video: false,
   e2e: {
-    // TODO: use external variable CRYPTOMEDIC_DEV_HTTP_PORT
+    // Note: BaseUrl is overriden in docker-compose
     baseUrl: "http://localhost:8085",
     supportFile: "cypress/support/e2e.js",
     setupNodeEvents(on, _config) {
