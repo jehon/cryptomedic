@@ -1,6 +1,9 @@
 include:
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/default@main
 
+variables:
+  CRYPTOMEDIC_DEV_HTTP_HOST: docker
+
 stages:
   - build
   - test
