@@ -1,0 +1,128 @@
+include:
+  - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/default@main
+
+stages:
+  - build
+  - test
+  - validate
+  - deploy
+
+default:
+  timeout: 15m
+
+build:
+  stage: build
+  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+  services:
+    - name: docker:dind
+  script:
+    - make dump
+    - make build
+  artifacts:
+    paths:
+      - .ovhconfig
+      - www
+
+tests-unit:
+  stage: test
+  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+  parallel:
+    matrix:
+      - target:
+        - dump
+        - lint
+        - frontend-test
+  script:
+    - make github
+    - make $target
+
+tests-unit-with-backend:
+  stage: test
+  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+  services:
+    - name: docker:dind
+  parallel:
+    matrix:
+      - target:
+        - backend-test
+  script:
+    - make github
+    - make dependencies
+    - make start
+    - make $target
+
+tests-e2e:
+  stage: test
+  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+  services:
+    - name: docker:dind
+  parallel:
+    matrix:
+      - flavor:
+        - desktop
+        - playwright
+  script:
+    - ./setup.sh
+    - make github
+    - make dc-build
+    - make start
+    - make dependencies
+    - make integration-test-${flavor}-run
+    - make integration-test-${flavor}-styles
+  artifacts:
+    when: always
+    paths:
+      - tmp/integration/$flavor
+
+update-e2e:
+  stage: test
+  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+  services:
+    - name: docker:dind
+  script:
+    - ./setup.sh
+    - make github
+    - make dc-build
+    - make start
+    - make dependencies
+    - UPDATE=1 make integration-update-playwright
+    - git status
+  artifacts:
+    when: always
+    paths:
+      - tests/e2e/**/*.png
+
+valid:
+  stage: validate
+  image: alpine
+  needs:
+    - tests-unit
+    - tests-e2e
+    - tests-unit-with-backend
+  script:
+    - echo "ok"
+
+# deploy:
+#   stage: deploy
+#   environment:
+#     name: production
+#   rules:
+#     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+#       when: never
+#     - when: on_success
+#   script:
+#     - ./setup.sh
+#     - make github
+#     - make build
+#     - make deploy
+#   variables:
+#     CRYPTOMEDIC_DEPLOY_WEB_HOST: $CRYPTOMEDIC_DEPLOY_WEB_HOST
+#     CRYPTOMEDIC_DEPLOY_WEB_PORT: $CRYPTOMEDIC_DEPLOY_WEB_PORT
+#     CRYPTOMEDIC_DEPLOY_WEB_TOKEN: $CRYPTOMEDIC_DEPLOY_WEB_TOKEN
+#     CRYPTOMEDIC_DEPLOY_FILES_HOST: $CRYPTOMEDIC_DEPLOY_FILES_HOST
+#     CRYPTOMEDIC_DEPLOY_FILES_USER: $CRYPTOMEDIC_DEPLOY_FILES_USER
+#     CRYPTOMEDIC_DEPLOY_FILES_PASSWORD: $CRYPTOMEDIC_DEPLOY_FILES_PASSWORD
+#   artifacts:
+#     when: always
+#     paths:
+#       - tmp/deploy.log
