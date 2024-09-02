@@ -2,7 +2,7 @@ import { expect, Locator, Page } from "@playwright/test";
 import { CRUD, CRUDType, JsonData } from "../../../src/constants";
 export { outputDate } from "../../../src/utils/date";
 
-const WebBaseUrl = "http://localhost:8085";
+const WebBaseUrl = `http://${process.env.CRYPTOMEDIC_DEV_HTTP_HOST}:8085`;
 
 export const LOGINS = {
   PHYSIO: "murshed",
