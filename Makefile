@@ -86,7 +86,8 @@ global-dump:
 	lsb_release -a
 	@echo ""
 	@echo "+++ docker version +++"
-	docker version
+# This can fail if the docker server is not running (see CI)
+	docker version || true
 	@echo ""
 # @echo "MySQL:                          $(shell QUIET=y bin/cr-mysql --version 2>&1 )"
 # @echo "MySQL Server:                   $(shell QUIET=y bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
