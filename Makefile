@@ -11,10 +11,11 @@ export HUSKY=0
 
 # Defaults value for Dev:
 ## For patching, we need a ref to the local server
-export CRYPTOMEDIC_LOCAL_HTTP_PORT = 8085
+export CRYPTOMEDIC_DEV_HTTP_PORT = 8085
+export CRYPTOMEDIC_DEV_HTTP_HOST ?= localhost
 ## Where to deploy
-export CRYPTOMEDIC_DEPLOY_WEB_HOST ?= localhost
-export CRYPTOMEDIC_DEPLOY_WEB_PORT ?= $(CRYPTOMEDIC_LOCAL_HTTP_PORT)
+export CRYPTOMEDIC_DEPLOY_WEB_HOST ?= $(CRYPTOMEDIC_HTTP_DEPLOY_HOST)
+export CRYPTOMEDIC_DEPLOY_WEB_PORT ?= $(CRYPTOMEDIC_DEV_HTTP_PORT)
 export CRYPTOMEDIC_DEPLOY_WEB_TOKEN ?= secret
 export DBUPDATEPWD := secret # From config.php
 export CRYPTOMEDIC_DOCKER_SOCKET := $(shell docker context inspect | jq -r .[0].Endpoints.docker.Host | sed "s^unix://^^")
@@ -76,7 +77,8 @@ global-dump:
 	@echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:  $(CRYPTOMEDIC_DEPLOY_FILES_HOST)"
 	@echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:    $(CRYPTOMEDIC_DEPLOY_WEB_HOST)"
 	@echo "CRYPTOMEDIC_DEPLOY_WEB_PORT:    $(CRYPTOMEDIC_DEPLOY_WEB_PORT)"
-	@echo "CRYPTOMEDIC_LOCAL_HTTP_PORT:    $(CRYPTOMEDIC_LOCAL_HTTP_PORT)"
+	@echo "CRYPTOMEDIC_DEV_HTTP_PORT:      $(CRYPTOMEDIC_DEV_HTTP_PORT)"
+	@echo "CRYPTOMEDIC_DEV_HTTP_HOST:      $(CRYPTOMEDIC_DEV_HTTP_HOST)"
 	@echo "------------------------------------------"
 	@echo "Docker:                         $(shell docker --version)"
 	@echo "Docker compose:                 $(shell docker compose version)"
@@ -121,8 +123,8 @@ dc-build:
 
 .PHONY: start
 start: dc-up dependencies build reset
-	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_LOCAL_HTTP_PORT)/"
-	@echo "Test page: http://localhost:$(CRYPTOMEDIC_LOCAL_HTTP_PORT)/dev/"
+	@echo "Open browser: http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/"
+	@echo "Test page: http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/dev/"
 	@echo -n "Official port: "
 	@docker compose port proxy 80
 
@@ -166,7 +168,7 @@ global-lint-prettier-fix: $(FRONTEND_DEPENDENCIES_MARK)
 acceptance: $(ACCEPTANCE)/.done dc-up
 	cr-mysql -e "DROP DATABASE cryptomedic; CREATE DATABASE cryptomedic"
 	cr-mysql --database=cryptomedic < "$(ACCEPTANCE)"/backups/backup.sql
-	cr-refresh-structure "http://localhost:$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
+	cr-refresh-structure "http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
 	rsync -itr --delete "$(ACCEPTANCE)"/storage/ live/storage
 
 $(ACCEPTANCE)/.done:

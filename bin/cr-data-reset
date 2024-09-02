@@ -32,5 +32,5 @@ docker compose up --force-recreate database \
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"
-cr-refresh-structure "http://localhost:${CRYPTOMEDIC_DEPLOY_WEB_PORT}/" "secret"
+cr-refresh-structure "http://${CRYPTOMEDIC_DEV_HTTP_HOST}:${CRYPTOMEDIC_DEPLOY_WEB_PORT}/" "secret"
 header_end

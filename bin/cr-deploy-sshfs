@@ -19,10 +19,10 @@ if [ -n "$1" ]; then
     PART="${1%/}/"
 fi
 
-LOCAL_MOUNT="$( realpath tmp/remote )"
+LOCAL_MOUNT="$(realpath tmp/remote)"
 
 header_begin "Dump infos"
-echo "CRYPTOMEDIC_LOCAL_HTTP_PORT:        ${CRYPTOMEDIC_LOCAL_HTTP_PORT}"
+echo "CRYPTOMEDIC_DEV_HTTP_PORT:          ${CRYPTOMEDIC_DEV_HTTP_PORT}"
 echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:        ${CRYPTOMEDIC_DEPLOY_WEB_HOST}"
 echo "CRYPTOMEDIC_DEPLOY_WEB_PORT:        ${CRYPTOMEDIC_DEPLOY_WEB_PORT}"
 echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:     '${CRYPTOMEDIC_DEPLOY_FILES_HOST}'"
@@ -57,9 +57,9 @@ header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
 
 (
     # Note: See "Cleaning local" above for managed exclusions
-cat <<EOS
-    $( generate_sync_command "" ) --file=.ovhconfig;
-    $( generate_sync_command "www/" );
+    cat <<EOS
+    $(generate_sync_command "") --file=.ovhconfig;
+    $(generate_sync_command "www/");
     quit
 EOS
 ) | cr_lftp "sftp://${CRYPTOMEDIC_DEPLOY_FILES_USER}:${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}"
