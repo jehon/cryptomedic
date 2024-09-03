@@ -35,7 +35,7 @@
     "zone.js": "0.14.10"
   },
   "devDependencies": {
-    "@babel/cli": "7.24.8",
+    "@babel/cli": "7.25.6",
     "@commitlint/cli": "19.4.1",
     "@commitlint/config-conventional": "19.4.1",
     "@eslint/js": "9.9.1",
