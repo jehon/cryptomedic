@@ -57,7 +57,7 @@ export default function ActionButton(
   const onOk =
     props.onOk ??
     (() => {
-      document.location.href = linkTo as string;
+      document.location.href = linkTo;
     });
 
   return (

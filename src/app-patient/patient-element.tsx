@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import PatientRelated from "../business/abstracts/patient-related";
 import Appointment from "../business/appointment";
 import Bill from "../business/bill";
@@ -20,7 +21,7 @@ import FilePanel, { isTodoMigration } from "./blocs/file-panel";
 import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOtherElement from "./consult-other-element";
 import ConsultRicketElement from "./consult-ricket-element";
-import { patientRouterToFile } from "./patient-router";
+import { patientRouterToFileAdd } from "./patient-router";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
 
@@ -28,6 +29,18 @@ export function type2Class(type: string): typeof PatientRelated {
   switch (type) {
     case "appointment":
       return Appointment;
+    case "bill":
+      return Bill;
+    case "consult_clubfoot":
+      return ConsultClubfoot;
+    case "consult_other":
+      return ConsultOther;
+    case "consult_ricket":
+      return ConsultRicket;
+    case "picture":
+      return Picture;
+    case "surgery":
+      return Surgery;
     default:
       throw new Error(`Unknown type: ${type} in type2Class in patient-element`);
   }
@@ -57,22 +70,17 @@ export default function PatientElement({
     return <div>No folder selected</div>;
   }
 
-  const addOne = function (type: typeof PatientRelated) {
-    if (isTodoMigration(type)) {
-      location.hash = `#/folder/${folder.getId()}/file/${type.getModel()}`;
+  if (selectedUid?.endsWith(".add")) {
+    const typeName = selectedUid.replace(".add", "");
+    const typeClass = type2Class(typeName);
+    if (isTodoMigration(typeClass)) {
+      location.hash = `/folder/${folder.getId()}/file/${typeClass.getModel()}`;
       return;
     }
-    const nf = new type();
-    nf.registerParent(folder);
-    folderUpdated(folder.withFile(nf));
-    location.hash = patientRouterToFile(folder, nf);
-  };
-
-  if (selectedUid?.endsWith(".add")) {
     if (folder.list.filter((f) => f.uid() == selectedUid).length == 0) {
-      const typeName = selectedUid.replace(".add", "");
-      const typeClass = type2Class(typeName);
-      addOne(typeClass);
+      const nf = new typeClass();
+      nf.registerParent(folder);
+      folderUpdated(folder.withFile(nf));
     }
   }
 
@@ -107,14 +115,14 @@ export default function PatientElement({
             Picture,
             Surgery
           ].map((type) => (
-            <a
+            <Link
               className="dropdown-item"
               key={type.getTechnicalName()}
-              onClick={() => addOne(type)}
               data-testid={"add-" + type.getTechnicalName()}
+              to={patientRouterToFileAdd(folder, type)}
             >
               {type.getTitle()}
-            </a>
+            </Link>
           ))}
         </div>
       </ButtonsGroup>

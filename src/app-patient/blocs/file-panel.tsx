@@ -64,7 +64,7 @@ export default function FilePanel({
   const addMode = !file.getId();
 
   const goToPatientFile = () => {
-    document.location = "#" + patientRouterToFile(folder, file);
+    document.location.hash = patientRouterToFile(folder, file);
   };
 
   const goEdit = () => {
@@ -132,6 +132,9 @@ export default function FilePanel({
     if (addMode) {
       // Remove the newly added file, that we don't want to keep
       onUpdate(folder.withoutFile(file));
+      document.location.hash = patientRouterToFile(folder);
+    } else {
+      document.location.hash = patientRouterToFile(folder, file);
     }
     updateEditState(false);
   };
