@@ -35,10 +35,12 @@ export function type2Class(type: string): typeof PatientRelated {
 
 export default function PatientElement({
   folder: givenPatient,
-  selectedUid
+  selectedUid,
+  mode
 }: {
   folder: Folder;
   selectedUid?: string;
+  mode?: string;
 }): React.ReactNode {
   const [folder, folderUpdated] = useState<Folder>(givenPatient);
   const patient = folder.getPatient();

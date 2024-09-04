@@ -9,6 +9,10 @@ export function patientRouterToFile(f: Folder, p?: Pojo) {
   return `#/folder/${f.getId()}/summary/${p?.uid() ?? ""}`;
 }
 
+export function patientRouterToFileAdd(f: Folder, type: typeof Pojo) {
+  return `/folder/${f.getId()}/summary/${type.getTechnicalName()}/add`;
+}
+
 export function patientRouterConfig() {
   return [
     {
