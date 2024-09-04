@@ -130,8 +130,9 @@ export default function FilePanel({
 
   const doCancel = () => {
     if (addMode) {
+      // This is not necessary because the top folder will reload anyway
       // Remove the newly added file, that we don't want to keep
-      onUpdate(folder.withoutFile(file));
+      // onUpdate(folder.withoutFile(file));
       document.location.hash = patientRouterToFile(folder);
     } else {
       document.location.hash = patientRouterToFile(folder, file);
