@@ -13,13 +13,13 @@ export function patientRouterConfig() {
   return [
     {
       // TODO: Temporary
-      path: "/folder/:folderId/summary/:selectedUid?",
+      path: "/folder/:folderId/summary/:selectedUid?/:mode?",
       loader: patientLoader,
       element: <RouteLoading element={<PatientRouter />} />
     },
     {
       // Under !patient! route
-      path: "/patient/:folderId/:selectedUid?",
+      path: "/patient/:folderId/:selectedUid?/:mode?",
       loader: patientLoader,
       element: <RouteLoading element={<PatientRouter />} />
     }
@@ -32,7 +32,9 @@ export function patientLoader({ params }: { params: any }): Promise<Folder> {
 
 export default function PatientRouter(): React.ReactNode {
   const folder = useLoaderData() as Folder;
-  const { selectedUid } = useParams();
+  const { selectedUid, mode } = useParams();
 
-  return <PatientElement folder={folder} selectedUid={selectedUid} />;
+  return (
+    <PatientElement folder={folder} selectedUid={selectedUid} mode={mode} />
+  );
 }
