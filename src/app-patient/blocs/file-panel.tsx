@@ -64,7 +64,7 @@ export default function FilePanel({
   const addMode = !file.getId();
 
   const goToPatientFile = () => {
-    document.location = patientRouterToFile(folder, file);
+    document.location = "#" + patientRouterToFile(folder, file);
   };
 
   const goEdit = () => {

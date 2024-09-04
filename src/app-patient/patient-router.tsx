@@ -6,7 +6,7 @@ import { getFolder } from "./loaders";
 import PatientElement from "./patient-element";
 
 export function patientRouterToFile(f: Folder, p?: Pojo) {
-  return `#/folder/${f.getId()}/summary/` + (p?.uid() ?? "");
+  return `#/folder/${f.getId()}/summary/${p?.uid() ?? ""}`;
 }
 
 export function patientRouterConfig() {
