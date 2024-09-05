@@ -2,13 +2,13 @@ import { expect, test } from "@playwright/test";
 import { crApiLogin } from "../helpers/cr";
 import { crPatientFile, outputDate } from "./cr-patients";
 
-const PATIENT_ID_2001_001 = 1;
+const PATIENT_ID_2000_001 = 1;
 // !! Manque le ClubFoot
 
 test("2001-001.patient.1", async ({ page }) => {
   await crApiLogin(page);
 
-  const panel = await crPatientFile(page, PATIENT_ID_2001_001);
+  const panel = await crPatientFile(page, PATIENT_ID_2000_001);
   await panel.expectFieldValue("Entry Year", 2000);
   await panel.expectFieldValue("Entry Order", 1);
   await panel.expectFieldValue("Phone");
@@ -23,7 +23,7 @@ test("2001-001.patient.1", async ({ page }) => {
 test("2001-001.bill.1", async ({ page }) => {
   await crApiLogin(page);
 
-  const panel = await crPatientFile(page, PATIENT_ID_2001_001, "bill.1");
+  const panel = await crPatientFile(page, PATIENT_ID_2000_001, "bill.1");
   await panel.expectFieldValue("Date", outputDate("2011-06-09"));
   await panel.expectFieldValue("Consult CDC Consultation Physio", "1");
   await panel.expectFieldValue("Consult Other");
@@ -37,7 +37,7 @@ test("2001-001.consult-other.1", async ({ page }) => {
 
   const panel = await crPatientFile(
     page,
-    PATIENT_ID_2001_001,
+    PATIENT_ID_2000_001,
     "consult_other.1"
   );
   await panel.expectFieldValue("Date", outputDate("2007-01-10"));
@@ -67,7 +67,7 @@ test("2001-001.consult-ricket.13", async ({ page }) => {
 
   const panel = await crPatientFile(
     page,
-    PATIENT_ID_2001_001,
+    PATIENT_ID_2000_001,
     "consult_ricket.13"
   );
   await panel.expectFieldValue("Date", outputDate("2014-01-04"));
@@ -80,7 +80,7 @@ test("2001-001.consult-ricket.13", async ({ page }) => {
 test("2001-001.picture.2", async ({ page }) => {
   await crApiLogin(page);
 
-  const panel = await crPatientFile(page, PATIENT_ID_2001_001, "picture.2");
+  const panel = await crPatientFile(page, PATIENT_ID_2000_001, "picture.2");
   await panel.expectFieldValue("Date", outputDate("2014-11-04"));
   await panel.expectFieldValue("File", "10_2014-11-06_15-32-45.JPG");
   await panel.expectFieldValue("Type");
@@ -91,7 +91,7 @@ test("2001-001.picture.2", async ({ page }) => {
 test("2001-001.surgery.5", async ({ page }) => {
   await crApiLogin(page);
 
-  const panel = await crPatientFile(page, PATIENT_ID_2001_001, "surgery.5");
+  const panel = await crPatientFile(page, PATIENT_ID_2000_001, "surgery.5");
   await panel.expectFieldValue("Date", outputDate("2014-01-02"));
   await panel.expectFieldValue("Diagnostic", "test");
   await panel.expectFieldValue("Follow-Up Complications", "nothing");
