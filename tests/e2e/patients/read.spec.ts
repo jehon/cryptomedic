@@ -5,7 +5,7 @@ import { crPatientFile, outputDate } from "./cr-patients";
 const PATIENT_ID_2000_001 = 1;
 // !! Manque le ClubFoot
 
-test("2001-001.patient.1", async ({ page }) => {
+test("2000-001.patient.1", async ({ page }) => {
   await crApiLogin(page);
 
   const panel = await crPatientFile(page, PATIENT_ID_2000_001);
@@ -20,7 +20,7 @@ test("2001-001.patient.1", async ({ page }) => {
   await expect(panel.panel).toHaveScreenshot();
 });
 
-test("2001-001.bill.1", async ({ page }) => {
+test("2000-001.bill.1", async ({ page }) => {
   await crApiLogin(page);
 
   const panel = await crPatientFile(page, PATIENT_ID_2000_001, "bill.1");
@@ -32,7 +32,7 @@ test("2001-001.bill.1", async ({ page }) => {
   await expect(panel.panel).toHaveScreenshot();
 });
 
-test("2001-001.consult-other.1", async ({ page }) => {
+test("2000-001.consult-other.1", async ({ page }) => {
   await crApiLogin(page);
 
   const panel = await crPatientFile(
@@ -62,7 +62,7 @@ test("2001-001.consult-other.1", async ({ page }) => {
   await expect(panel.panel).toHaveScreenshot();
 });
 
-test("2001-001.consult-ricket.13", async ({ page }) => {
+test("2000-001.consult-ricket.13", async ({ page }) => {
   await crApiLogin(page);
 
   const panel = await crPatientFile(
@@ -77,7 +77,7 @@ test("2001-001.consult-ricket.13", async ({ page }) => {
   await expect(panel.panel).toHaveScreenshot();
 });
 
-test("2001-001.picture.2", async ({ page }) => {
+test("2000-001.picture.2", async ({ page }) => {
   await crApiLogin(page);
 
   const panel = await crPatientFile(page, PATIENT_ID_2000_001, "picture.2");
@@ -88,7 +88,7 @@ test("2001-001.picture.2", async ({ page }) => {
   await expect(panel.panel).toHaveScreenshot();
 });
 
-test("2001-001.surgery.5", async ({ page }) => {
+test("2000-001.surgery.5", async ({ page }) => {
   await crApiLogin(page);
 
   const panel = await crPatientFile(page, PATIENT_ID_2000_001, "surgery.5");
@@ -102,7 +102,7 @@ test("2001-001.surgery.5", async ({ page }) => {
 // ----------------
 // TODO: add this on 1st file
 //       and add some data to it
-test("2001-001.consult_clubfoot.1", async ({ page }) => {
+test("2000-001.consult_clubfoot.1", async ({ page }) => {
   await crApiLogin(page);
 
   const panel = await crPatientFile(page, 5, "consult_clubfoot.1");

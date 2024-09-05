@@ -19,6 +19,7 @@ import appointmentElementGenerator from "./appointment-element";
 import billElementGenerator from "./bill-element";
 import FilePanel, { isTodoMigration } from "./blocs/file-panel";
 import consultClubfootElementGenerator from "./consult-clubfoot-element";
+import consultOtherElementGenerator from "./consult-other-element";
 import consultRicketElementGenerator from "./consult-ricket-element";
 import { patientRouterToFileAdd } from "./patient-router";
 import pictureElementGenerator from "./picture-element";
@@ -216,6 +217,9 @@ export default function PatientElement({
           }
           if (file instanceof ConsultClubfoot) {
             return consultClubfootElementGenerator(file, commonProps);
+          }
+          if (file instanceof ConsultOther) {
+            return consultOtherElementGenerator(file, commonProps);
           }
           if (file instanceof ConsultRicket) {
             return consultRicketElementGenerator(file, commonProps);
