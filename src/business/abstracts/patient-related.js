@@ -24,12 +24,12 @@ export default class PatientRelated extends Pojo {
   }
 
   getParent() {
-    return this.getPatient();
+    return this.getFolder();
   }
 
   // Legacy
   /**
-   * @returns {Patient|null}
+   * @returns {Patient}
    */
   getPatient() {
     return this.getFolder().getPatient();
