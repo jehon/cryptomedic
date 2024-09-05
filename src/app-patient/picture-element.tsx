@@ -1,24 +1,20 @@
-import Folder from "../business/folder";
 import Picture from "../business/picture";
 
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
+import patientRelatedElementGenerator, {
+  PatientRelatedElementGeneratorProps
+} from "./patient-related-element-generator";
 
-export default function PictureElement({
-  file,
-  folder,
-  opened,
-  onUpdate
-}: {
-  file: Picture;
-  folder: Folder;
-  opened?: boolean;
-  onUpdate: FolderUpdateCallback;
-}): React.ReactNode {
-  return (
-    <FilePanel closed={!opened} file={file} folder={folder} onUpdate={onUpdate}>
+export default function pictureElementGenerator(
+  file: Picture,
+  props: PatientRelatedElementGeneratorProps
+) {
+  return patientRelatedElementGenerator<Picture>(file, props, {
+    // TODO: Picture header
+    // header: <>{file.type}</>,
+    body: (
       <TwoColumns>
         <Panel fixed label="Information">
           <IO.String name="type" value={file.type as string} />
@@ -30,6 +26,6 @@ export default function PictureElement({
           <IO.Image label="Picture" value={file.getPictureUrl() as string} />
         </Panel>
       </TwoColumns>
-    </FilePanel>
-  );
+    )
+  });
 }

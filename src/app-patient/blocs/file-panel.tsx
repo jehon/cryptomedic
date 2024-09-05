@@ -43,21 +43,22 @@ export function isTodoMigration(type: typeof Pojo) {
 
 export default function FilePanel({
   file,
-  folder,
   header,
   children,
   footer,
   closed,
-  onUpdate
+  onUpdate,
+  edit
 }: {
-  file: Pojo;
-  folder: Folder;
+  file: PatientRelated;
   header?: React.ReactNode;
   children: React.ReactNode;
   footer?: React.ReactNode;
   closed?: boolean;
   onUpdate: FolderUpdateCallback;
+  edit?: boolean;
 }): React.ReactNode {
+  const folder: Folder = file.getParent();
   const [editState, updateEditState] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 

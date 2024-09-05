@@ -1,5 +1,4 @@
 import Bill from "../business/bill";
-import Folder from "../business/folder";
 
 import Payment from "../business/payment";
 import ButtonsGroup from "../styles/buttons-group";
@@ -13,117 +12,109 @@ import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
 import BillLine from "./blocs/bill-line";
-import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
+import patientRelatedElementGenerator, {
+  PatientRelatedElementGeneratorProps
+} from "./patient-related-element-generator";
 
-export default function BillElement({
-  file,
-  folder,
-  opened,
-  onUpdate
-}: {
-  file: Bill;
-  folder: Folder;
-  opened?: boolean;
-  onUpdate: FolderUpdateCallback;
-}): React.ReactNode {
-  return (
-    <FilePanel
-      closed={!opened}
-      file={file}
-      folder={folder}
-      onUpdate={onUpdate}
-      header={
-        <>
-          <span>total: {file.total_real}</span>
-          <span>paid: {file.getTotalAlreadyPaid()}</span>
-        </>
-      }
-      footer={
-        <>
-          <Panel fixed label="Payments" testid={file.uid() + ".payments"}>
-            <ButtonsGroup>
-              <ActionButton
-                style="Add"
-                linkTo={`#/folder/${folder.getId()}/file/Bill/${file.getId()}`}
-              />
-              <ActionButton
-                style="Edit"
-                linkTo={`#/folder/${folder.getId()}/file/Bill/${file.getId()}`}
-              />
-            </ButtonsGroup>
-            {file.getPayments().length == 0 ? (
-              <div>No payment received</div>
-            ) : (
-              file.getPayments().map((payment: Payment) => (
-                <div
-                  key={payment.uid()}
-                  className="payment-line"
-                  data-testid={payment.uid()}
-                >
-                  <IODate value={payment.date} noLabel />
-                  <IONumber value={payment.amount} noLabel />
-                  <IOString value={payment.comments} noLabel note />
-                </div>
-              ))
-            )}
+export default function billElementGenerator(
+  file: Bill,
+  props: PatientRelatedElementGeneratorProps
+) {
+  return patientRelatedElementGenerator<Bill>(file, props, {
+    header: (
+      <>
+        <span>total: {file.total_real}</span>
+        <span>paid: {file.getTotalAlreadyPaid()}</span>
+      </>
+    ),
+    body: (
+      <>
+        <TwoColumns>
+          <Panel fixed label="Information">
+            <IO.Date name="date" value={file.date} />
+            <IO.String name="examiner" value={file.examiner as string} />
+            <IO.String name="center" value={file.center as string} />
           </Panel>
-        </>
-      }
-    >
-      <TwoColumns>
-        <Panel fixed label="Information">
-          <IO.Date name="date" value={file.date} />
-          <IO.String name="examiner" value={file.examiner as string} />
-          <IO.String name="center" value={file.center as string} />
+          <Panel fixed label="Totals">
+            <IO.Number
+              name="sl_family_salary"
+              label="Family Salary"
+              value={file.sl_family_salary as number}
+            />
+            <IO.Number
+              name="sl_number_of_household_members"
+              label="Number of Houslehold Members"
+              value={file.sl_number_of_household_members as number}
+            />
+            <IO.Function
+              label="Salary Ratio"
+              value={() => roundTo(file.ratioSalary(), 0)}
+            />
+            <IO.Function
+              label="Social Level (calculated)"
+              value={() => roundTo(file.social_level_calculated(), 0)}
+            />
+            <IO.Function
+              label="Raw Calculated Total"
+              value={() => roundTo(file.calculate_total_real(), 0)}
+            />
+            <IO.Function
+              label="Percentage asked"
+              value={() => roundTo(file.calculate_percentage_asked(), 0)}
+            />
+            <IO.Number
+              name="total_asked"
+              label="Price asked"
+              value={file.total_asked}
+            />
+            <IO.Function
+              label="Payments Received (see below)"
+              value={() => roundTo(file.getTotalAlreadyPaid(), 0)}
+            />
+          </Panel>
+        </TwoColumns>
+        <Panel fixed label="Bill Lines">
+          {file.items.map((line) => (
+            <BillLine
+              key={line.key}
+              name={line.key}
+              value={line.value}
+              price={file.getPriceFor(line.key)}
+            />
+          ))}
         </Panel>
-        <Panel fixed label="Totals">
-          <IO.Number
-            name="sl_family_salary"
-            label="Family Salary"
-            value={file.sl_family_salary as number}
-          />
-          <IO.Number
-            name="sl_number_of_household_members"
-            label="Number of Houslehold Members"
-            value={file.sl_number_of_household_members as number}
-          />
-          <IO.Function
-            label="Salary Ratio"
-            value={() => roundTo(file.ratioSalary(), 0)}
-          />
-          <IO.Function
-            label="Social Level (calculated)"
-            value={() => roundTo(file.social_level_calculated(), 0)}
-          />
-          <IO.Function
-            label="Raw Calculated Total"
-            value={() => roundTo(file.calculate_total_real(), 0)}
-          />
-          <IO.Function
-            label="Percentage asked"
-            value={() => roundTo(file.calculate_percentage_asked(), 0)}
-          />
-          <IO.Number
-            name="total_asked"
-            label="Price asked"
-            value={file.total_asked}
-          />
-          <IO.Function
-            label="Payments Received (see below)"
-            value={() => roundTo(file.getTotalAlreadyPaid(), 0)}
-          />
+      </>
+    ),
+    footer: (
+      <>
+        <Panel fixed label="Payments" testid={file.uid() + ".payments"}>
+          <ButtonsGroup>
+            <ActionButton
+              style="Add"
+              linkTo={`#/folder/${file.getParent().getId()}/file/Bill/${file.getId()}`}
+            />
+            <ActionButton
+              style="Edit"
+              linkTo={`#/folder/${file.getParent().getId()}/file/Bill/${file.getId()}`}
+            />
+          </ButtonsGroup>
+          {file.getPayments().length == 0 ? (
+            <div>No payment received</div>
+          ) : (
+            file.getPayments().map((payment: Payment) => (
+              <div
+                key={payment.uid()}
+                className="payment-line"
+                data-testid={payment.uid()}
+              >
+                <IODate value={payment.date} noLabel />
+                <IONumber value={payment.amount} noLabel />
+                <IOString value={payment.comments} noLabel note />
+              </div>
+            ))
+          )}
         </Panel>
-      </TwoColumns>
-      <Panel fixed label="Bill Lines">
-        {file.items.map((line) => (
-          <BillLine
-            key={line.key}
-            name={line.key}
-            value={line.value}
-            price={file.getPriceFor(line.key)}
-          />
-        ))}
-      </Panel>
-    </FilePanel>
-  );
+      </>
+    )
+  });
 }

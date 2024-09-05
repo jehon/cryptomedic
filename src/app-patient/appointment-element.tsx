@@ -1,31 +1,20 @@
 import Appointment from "../business/appointment";
-import Folder from "../business/folder";
 
 import { getList } from "../utils/config";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
+import patientRelatedElementGenerator, {
+  PatientRelatedElementGeneratorProps
+} from "./patient-related-element-generator";
 
-export default function AppointmentElement({
-  file,
-  folder,
-  opened,
-  onUpdate
-}: {
-  file: Appointment;
-  folder: Folder;
-  opened?: boolean;
-  onUpdate: FolderUpdateCallback;
-}): React.ReactNode {
-  return (
-    <FilePanel
-      closed={!opened}
-      file={file}
-      folder={folder}
-      onUpdate={onUpdate}
-      header={<span>{file.center}</span>}
-    >
+export default function appointmentElementGenerator(
+  file: Appointment,
+  props: PatientRelatedElementGeneratorProps
+) {
+  return patientRelatedElementGenerator<Appointment>(file, props, {
+    header: <span>{file.center}</span>,
+    body: (
       <TwoColumns>
         <Panel fixed label="Information">
           <IO.Date name="date" value={file.date} required />
@@ -39,6 +28,6 @@ export default function AppointmentElement({
           <IO.Text name="purpose" value={file.purpose as string} />
         </Panel>
       </TwoColumns>
-    </FilePanel>
-  );
+    )
+  });
 }

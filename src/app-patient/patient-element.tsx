@@ -15,15 +15,14 @@ import { defaultWidthScreen } from "../styles/style-helpers";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import AppointmentElement from "./appointment-element";
-import BillElement from "./bill-element";
+import appointmentElementGenerator from "./appointment-element";
+import billElementGenerator from "./bill-element";
 import FilePanel, { isTodoMigration } from "./blocs/file-panel";
-import ConsultClubfootElement from "./consult-clubfoot-element";
-import ConsultOtherElement from "./consult-other-element";
-import ConsultRicketElement from "./consult-ricket-element";
+import consultClubfootElementGenerator from "./consult-clubfoot-element";
+import consultRicketElementGenerator from "./consult-ricket-element";
 import { patientRouterToFileAdd } from "./patient-router";
-import PictureElement from "./picture-element";
-import SurgeryElement from "./surgery-element";
+import pictureElementGenerator from "./picture-element";
+import surgeryElementGenerator from "./surgery-element";
 
 export function type2Class(type: string): typeof PatientRelated {
   switch (type) {
@@ -137,7 +136,6 @@ export default function PatientElement({
       <FilePanel
         closed={patient.uid() !== selectedUid && !!selectedUid}
         file={patient}
-        folder={folder}
         onUpdate={folderUpdatedCallback}
         header={
           <>
@@ -204,82 +202,29 @@ export default function PatientElement({
 
       {(folder.getFilesRelatedToPatient() as PatientRelated[]).map(
         (file: PatientRelated) => {
+          const commonProps = {
+            selectedUid,
+            mode,
+            onUpdate: folderUpdatedCallback
+          };
+
           if (file instanceof Appointment) {
-            return (
-              <AppointmentElement
-                key={file.uid()}
-                folder={folder}
-                file={file}
-                opened={file.uid() === selectedUid}
-                onUpdate={folderUpdatedCallback}
-              ></AppointmentElement>
-            );
+            return appointmentElementGenerator(file, commonProps);
           }
           if (file instanceof Bill) {
-            return (
-              <BillElement
-                key={file.uid()}
-                folder={folder}
-                file={file}
-                opened={file.uid() === selectedUid}
-                onUpdate={folderUpdatedCallback}
-              ></BillElement>
-            );
+            return billElementGenerator(file, commonProps);
           }
           if (file instanceof ConsultClubfoot) {
-            return (
-              <ConsultClubfootElement
-                key={file.uid()}
-                folder={folder}
-                file={file}
-                opened={file.uid() === selectedUid}
-                onUpdate={folderUpdatedCallback}
-              ></ConsultClubfootElement>
-            );
-          }
-          if (file instanceof ConsultOther) {
-            return (
-              <ConsultOtherElement
-                key={file.uid()}
-                folder={folder}
-                file={file}
-                opened={file.uid() === selectedUid}
-                onUpdate={folderUpdatedCallback}
-              ></ConsultOtherElement>
-            );
+            return consultClubfootElementGenerator(file, commonProps);
           }
           if (file instanceof ConsultRicket) {
-            return (
-              <ConsultRicketElement
-                key={file.uid()}
-                folder={folder}
-                file={file}
-                opened={file.uid() === selectedUid}
-                onUpdate={folderUpdatedCallback}
-              ></ConsultRicketElement>
-            );
+            return consultRicketElementGenerator(file, commonProps);
           }
           if (file instanceof Picture) {
-            return (
-              <PictureElement
-                key={file.uid()}
-                folder={folder}
-                file={file}
-                opened={file.uid() === selectedUid}
-                onUpdate={folderUpdatedCallback}
-              ></PictureElement>
-            );
+            return pictureElementGenerator(file, commonProps);
           }
           if (file instanceof Surgery) {
-            return (
-              <SurgeryElement
-                key={file.uid()}
-                folder={folder}
-                file={file}
-                opened={file.uid() === selectedUid}
-                onUpdate={folderUpdatedCallback}
-              ></SurgeryElement>
-            );
+            return surgeryElementGenerator(file, commonProps);
           }
           return null;
         }
