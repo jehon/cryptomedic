@@ -22,6 +22,8 @@ export default class Pojo {
     return this.constructor;
   }
 
+  // [key: string]: string
+
   id;
   created_at;
   updated_at;

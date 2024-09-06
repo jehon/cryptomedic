@@ -4,42 +4,45 @@ import Patient from "./patient.js";
 
 // Enrich the registry:
 import { produce } from "immer";
+import PatientRelated from "./abstracts/patient-related.js";
 import "./bill.js";
 import "./consult-clubfoot.js";
 import "./consult-other.js";
 import "./consult-ricket.js";
 import "./payment.js";
+import Payment from "./payment.js";
 import "./picture.js";
 import { registryGet } from "./registry.js";
 import "./surgery.js";
 
+export type PatientRelatedClass = typeof PatientRelated;
+
 export default class Folder extends Pojo {
-  static create(folder, type, data = {}) {
+  static create(folder: Folder, type: string, data = {}) {
     return new (registryGet(type))(data, folder);
   }
 
-  /** @type {Array<PatientRelated|Patient>} */
-  list;
+  list: PatientRelated[];
 
-  constructor(listing = []) {
+  constructor(listing: any = []) {
     const id =
-      "" + (listing.filter((v) => v.type == "Patient").pop()?.id ?? -1);
+      "" +
+      (listing
+        .filter(
+          (v: { type: string; [key: string]: string }) => v.type == "Patient"
+        )
+        .pop()?.id ?? -1);
     super({ id });
     this.list = [];
 
     // create the objects
-    for (let i in listing) {
-      let v = listing[i];
+    for (const i in listing) {
+      const v = listing[i];
       this.list.push(Folder.create(this, v.type, v.record));
     }
   }
 
-  /**
-   *
-   * @param {Pojo} file
-   * @returns {Folder}
-   */
-  withFile(file) {
+  withFile(file: PatientRelated): Folder {
     //
     // We remove and add in one run
     // to avoid building twice the folder
@@ -49,12 +52,7 @@ export default class Folder extends Pojo {
     });
   }
 
-  /**
-   *
-   * @param {Pojo} file
-   * @returns {Folder}
-   */
-  withoutFile(file) {
+  withoutFile(file: PatientRelated): Folder {
     const i = this.list.findIndex((val) => val.uid() === file.uid());
     if (i < 0) {
       return this;
@@ -65,85 +63,72 @@ export default class Folder extends Pojo {
     });
   }
 
-  // Legacy
-  getListByType(type) {
+  getListByType<T extends PatientRelated>(type: typeof PatientRelated): T[] {
     console.assert(
       type instanceof Function,
       "getListByType[type/1] expect a class"
     );
-    let res = [];
-    for (let i in this.list) {
+    const res = [];
+    for (const i in this.list) {
       if (this.list[i] instanceof type) {
-        res.push(this.list[i]);
+        res.push(this.list[i] as T);
       }
     }
     return res;
   }
 
-  // Legacy
-  /**
-   *
-   * @returns {PatientRelated|null}
-   */
-  getByTypeAndId(type, id) {
+  getByTypeAndId<T extends PatientRelated>(
+    type: PatientRelatedClass,
+    id: string
+  ): T {
     const list = this.getListByType(type);
     for (const i in list) {
       if (list[i].id + "" === id + "") {
-        return list[i];
+        return list[i] as T;
       }
     }
-    return null;
+    throw new Error(`Could not find ${type}#${id}} in getByTypeAndId`);
   }
 
-  // Legacy
-  /**
-   *
-   * @param {string} uid - see Pojo#uid
-   * @returns {PatientRelated|null} a file or null
-   */
-  getByUid(uid) {
+  getByUid<T extends PatientRelated>(uid: string): T {
     if (uid === "Patient") {
-      return this.getPatient();
+      return this.getPatient() as PatientRelated as T;
     }
     for (const i in this.list) {
       if (this.list[i].uid && this.list[i].uid() === uid) {
-        return this.list[i];
+        return this.list[i] as T;
       }
     }
-    return null;
+    throw new Error(`Could not find ${uid}} in getByUid`);
   }
 
-  getByFieldValue(field, value) {
-    let res = [];
-    for (let i in this.list) {
-      if (this.list[i][field] == value) {
-        res.push(this.list[i]);
+  getByFieldValue(field: string, value: string): PatientRelated[] {
+    const res = [];
+    for (const i in this.list) {
+      if (
+        // TODO: simplify after Pojo.ts
+        ((this.list[i] as unknown as { [key: string]: string })[
+          field
+        ] as string) == value
+      ) {
+        res.push(this.list[i] as PatientRelated);
       }
     }
     return res;
   }
 
-  // Legacy
-  /**
-   *
-   * @returns {Patient}
-   */
-  getPatient() {
-    let list = this.getListByType(Patient);
+  getPatient(): Patient {
+    const list = this.getListByType(Patient);
     if (list.length === 0) {
       // Always have a patient
-      let p = new Patient();
+      const p = new Patient();
       this.list.push(p);
       return p;
     }
-    return list[0];
+    return list[0] as Patient;
   }
 
-  /**
-   *
-   * @returns {Array<PatientRelated>} file
-   */
-  getFilesRelatedToPatient() {
+  getFilesRelatedToPatient(): PatientRelated[] {
     if (!this.getPatient().id) {
       return [];
     }
@@ -152,63 +137,44 @@ export default class Folder extends Pojo {
       .filter((v) => !(v instanceof Patient));
   }
 
-  // Legacy
-  /**
-   *
-   * @param {number} i is the index of the file
-   * @returns {PatientRelated|null} file
-   */
-  getFileRelatedToPatient(i) {
-    let list = this.getFilesRelatedToPatient();
+  getFileRelatedToPatient(i: number): PatientRelated {
+    const list = this.getFilesRelatedToPatient();
     if (list.length > i) {
       return list[i];
     }
-    return null;
+    throw new Error(`Could not find ${i}} in getFileRelatedToPatient`);
   }
 
-  // Legacy
-  /**
-   *
-   * @returns {Array<Payment>}
-   */
-  getFilesRelatedToBill(id) {
-    return this.getByFieldValue("bill_id", id).sort(Folder.ordering);
+  // TODO: move this to bill
+  getFilesRelatedToBill(id: string): Payment[] {
+    return this.getByFieldValue("bill_id", id).sort(
+      Folder.ordering
+    ) as unknown as Payment[];
   }
 
-  /**
-   * Search the next but closest apointment
-   *
-   * @returns {Date|null}
-   */
-  getNextAppoinment() {
+  getNextAppointment(): Date | undefined {
     const today = new Date();
-    return this.getListByType(Appointment)
+    return this.getListByType<Appointment>(Appointment)
       .map((v) => v.date)
       .map((d) => new Date(d))
       .filter((d) => d > today)
-      .reduce((prev, d) => (!prev || d < prev ? d : prev), null);
+      .sort((a, b) => b.getTime() - a.getTime()) // Bigger at top
+      .shift();
   }
 
-  /**
-   * Search the next but closest apointment
-   *
-   * @returns {Date|null}
-   */
-  getLastSeen() {
+  getLastSeen(): Date | undefined {
     const today = new Date();
-    return (
-      this.list
-        // We take everything except Appointment
-        .filter((v) => !(v instanceof Appointment))
-        .map((v) => v.date)
-        .filter((d) => d)
-        .map((d) => new Date(d))
-        .filter((d) => d < today)
-        .reduce((last, d) => (!last || d > last ? d : last), null)
-    );
+    return this.list
+      .filter((v) => !(v instanceof Appointment)) // We take everything except Appointment
+      .map((v) => "date" in v && v.date)
+      .filter((d) => d)
+      .map((d) => new Date(d as string))
+      .filter((d) => d < today)
+      .sort((a, b) => a.getTime() - b.getTime())
+      .pop();
   }
 
-  static ordering(o1, o2) {
+  static ordering(o1: PatientRelated, o2: PatientRelated) {
     const o1First = -1;
     const o2First = 1;
 
@@ -226,18 +192,21 @@ export default class Folder extends Pojo {
       return 10 * o2First;
     }
 
-    // What to do if one 'date' is missing
-    if (typeof o1.date == "undefined" && typeof o2.date != "undefined") {
-      return 20 * o1First;
-    }
-    if (typeof o2.date == "undefined" && typeof o1.date != "undefined") {
-      return 20 * o2First;
-    }
-
-    // Both 'date' are present
-    if (typeof o1.date != "undefined" && typeof o2.date != "undefined") {
-      if (o1.date < o2.date) return 30 * o2First;
-      if (o1.date > o2.date) return 30 * o1First;
+    if ("date" in o1 && o1.date != undefined) {
+      if ("date" in o2 && o2.date != undefined) {
+        // Both 'date' are present
+        if (o1.date < o2.date) return 30 * o2First;
+        if (o1.date > o2.date) return 30 * o1First;
+      } else {
+        return 20 * o2First;
+      }
+    } else {
+      if ("date" in o2 && o2.date != undefined) {
+        return 20 * o1First;
+      } else {
+        // Both 'date' are absent
+        // Not deciding here
+      }
     }
 
     if (

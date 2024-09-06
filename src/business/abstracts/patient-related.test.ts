@@ -16,7 +16,7 @@ test("with TestFolder.test1.json", async function () {
   expect(folder.getPatient().year_of_birth).toBe("1998");
   expect(folder.getPatient().actualAge(new Date("2014-01-01"))).toBe("16y0m");
 
-  const rc = folder.getByTypeAndId(RicketConsult, 13);
+  const rc = folder.getByTypeAndId<RicketConsult>(RicketConsult, "13");
 
   expect(rc).toBeInstanceOf(PatientRelated);
   expect(rc).toBeInstanceOf(RicketConsult);
@@ -27,7 +27,7 @@ test("with TestFolder.test1.json", async function () {
 
 test("with ricketConsult_13", async function () {
   const folder = await loadReferenceFolder(RefFolder1);
-  const rc = folder.getByTypeAndId(RicketConsult, 13);
+  const rc = folder.getByTypeAndId<RicketConsult>(RicketConsult, "13")!;
 
   // Male
 

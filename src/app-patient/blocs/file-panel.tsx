@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
-import Folder from "../../business/folder";
+import Folder, { PatientRelatedClass } from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
@@ -113,7 +113,10 @@ export default function FilePanel({
             // Route to the newly created file
             location.hash = patientRouterToFile(
               json.folder,
-              json.folder.getByTypeAndId(file.constructor, json.newKey)
+              json.folder.getByTypeAndId(
+                file.constructor as PatientRelatedClass,
+                json.newKey
+              )
             );
           })
         )

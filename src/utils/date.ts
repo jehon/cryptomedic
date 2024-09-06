@@ -2,9 +2,15 @@ import { DataMissingException } from "./exceptions.js";
 
 export const InvalidDate = "Invalid date";
 
-export function normalizeDate(d: string | Date | null) {
+export function normalizeDate(
+  d: string | Date | null | undefined
+): Date | undefined {
   if (d == null) {
-    return null;
+    return undefined;
+  }
+
+  if (d == undefined) {
+    return undefined;
   }
 
   if (d instanceof Date) {
@@ -14,7 +20,7 @@ export function normalizeDate(d: string | Date | null) {
   return new Date(d);
 }
 
-export function date2HumanString(value: Date | null) {
+export function date2HumanString(value: Date | undefined): string {
   if (value == null) {
     return "";
   }
@@ -31,7 +37,10 @@ export function date2HumanString(value: Date | null) {
   }).format(value);
 }
 
-export function fromBirthDateTo(date: Date | null, reference = new Date()) {
+export function fromBirthDateTo(
+  date: Date | null,
+  reference = new Date()
+): number {
   if (date == null) {
     throw new DataMissingException("date");
   }
@@ -53,6 +62,6 @@ export function yearsToYM(y: number): string {
   return (yy > 0 ? yy + "Y" : "") + (mm > 0 ? mm + "M" : "");
 }
 
-export function outputDate(value: string | Date | null): string {
+export function outputDate(value: string | Date | undefined): string {
   return date2HumanString(normalizeDate(value));
 }

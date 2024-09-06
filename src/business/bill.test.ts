@@ -3,7 +3,7 @@ import test, { beforeEach } from "node:test";
 import { RefFolder1, loadReferenceFolder } from "../test-helper";
 
 import Bill from "./bill.js";
-import Folder from "./folder.js";
+import Folder from "./folder";
 
 let f: Folder = new Folder();
 

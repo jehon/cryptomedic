@@ -1,9 +1,8 @@
 import { outputDate } from "../utils/date";
-import { Optional } from "../utils/generic-types";
 import { StringDate } from "../utils/types";
 import IOAbstract, { IOProps } from "./io-abstract";
 
-function canonize(str: string): Optional<StringDate> {
+function canonize(str: string): StringDate | undefined {
   return str;
 }
 
@@ -11,7 +10,7 @@ export default function IODate(
   props: {
     min?: string;
     max?: string;
-  } & IOProps<Optional<StringDate | Date>>
+  } & IOProps<StringDate | Date | undefined>
 ) {
   return IOAbstract(props, {
     renderOutput: (value) => <div>{outputDate(value)}</div>,

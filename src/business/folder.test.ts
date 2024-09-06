@@ -3,13 +3,14 @@ import test, { beforeEach } from "node:test";
 
 import { loadReferenceFolder, RefFolder1 } from "../test-helper";
 
-import Pojo from "./abstracts/pojo";
+import assert from "assert";
+import PatientRelated from "./abstracts/patient-related";
 import Appointment from "./appointment.js";
 import Bill from "./bill.js";
 import ConsultClubfoot from "./consult-clubfoot.js";
 import ConsultOther from "./consult-other.js";
 import ConsultRicket from "./consult-ricket.js";
-import Folder from "./folder.js";
+import Folder from "./folder";
 import Patient from "./patient.js";
 import Payment from "./payment.js";
 import Picture from "./picture.js";
@@ -63,14 +64,14 @@ test("should instantiate classes", () => {
 });
 
 test("should query specific element (consult_other.1)", () => {
-  expect(f.getByTypeAndId(ConsultOther, 1)).toBeInstanceOf(ConsultOther);
-  expect(f.getByTypeAndId(ConsultOther, 1)?.id).toBe(1);
+  expect(f.getByTypeAndId(ConsultOther, "1")).toBeInstanceOf(ConsultOther);
+  expect(f.getByTypeAndId(ConsultOther, "1")?.id).toBe(1);
 
   expect(f.getByUid("consult_other.1")?.id).toBe(1);
 });
 
 test("should return null if element is not found (consult_other.0)", () => {
-  expect(f.getByTypeAndId(ConsultOther, 0)).toBeNull();
+  assert.throws(() => f.getByTypeAndId(ConsultOther, "0"));
 });
 
 test("should give patient related files", () => {
@@ -113,11 +114,11 @@ test("should give patient related files", () => {
   expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as ConsultOther).id);
 
   // And out of bounds...
-  expect(f.getFileRelatedToPatient(1000)).toBeNull();
+  assert.throws(() => f.getFileRelatedToPatient(1000));
 });
 
 test("should give bill related files", () => {
-  const list = f.getFilesRelatedToBill(1);
+  const list = f.getFilesRelatedToBill("1");
   expect(list.length).toBe(1);
 
   let i = -1;
@@ -128,7 +129,7 @@ test("should give bill related files", () => {
 });
 
 test("order", async function (t) {
-  const resFirst = (a: Pojo, b: Pojo) => {
+  const resFirst = (a: PatientRelated, b: PatientRelated) => {
     expect(Folder.ordering(a, a)).toBe(0);
     expect(Folder.ordering(b, b)).toBe(0);
 
@@ -137,23 +138,23 @@ test("order", async function (t) {
   };
 
   await t.test("order by id", function () {
-    const o1 = new Pojo();
-    const o2 = new Pojo({ id: 2 });
-    const o3 = new Pojo({ id: 1 });
+    const o1 = new PatientRelated();
+    const o2 = new PatientRelated({ id: 2 });
+    const o3 = new PatientRelated({ id: 1 });
 
     resFirst(o1, o2);
     resFirst(o1, o3);
     resFirst(o2, o3);
 
     // Test string completely...
-    const o25 = new Pojo({ id: "25" });
+    const o25 = new PatientRelated({ id: "25" });
     resFirst(o25, o2);
   });
 
   await t.test("order by Date", function () {
-    const o1 = new Pojo({});
-    const o2 = new Pojo({ date: "2010-01-01" });
-    const o3 = new Pojo({ date: "2000-01-01" });
+    const o1 = new PatientRelated({});
+    const o2 = new PatientRelated({ date: "2010-01-01" });
+    const o3 = new PatientRelated({ date: "2000-01-01" });
 
     resFirst(o1, o2);
     resFirst(o1, o3);
@@ -161,19 +162,19 @@ test("order", async function (t) {
   });
 
   await t.test("order by created_at", function () {
-    const o1 = new Pojo({}); // New element
-    const o2 = new Pojo({ id: 1, created_at: "2010-01-01" });
-    const o3 = new Pojo({ id: 1, created_at: "2000-01-01" });
+    const o1 = new PatientRelated({}); // New element
+    const o2 = new PatientRelated({ id: 1, created_at: "2010-01-01" });
+    const o3 = new PatientRelated({ id: 1, created_at: "2000-01-01" });
     resFirst(o1, o2);
     resFirst(o1, o3);
     resFirst(o2, o3);
   });
 
   await t.test("order by new > date > model > id", function () {
-    const o1 = new Pojo({});
-    const o2 = new Pojo({ date: "2000-01-01" });
-    const o3 = new Pojo({ id: "25" });
-    const o4 = new Pojo({ id: "25", date: "2000-01-01" });
+    const o1 = new PatientRelated({});
+    const o2 = new PatientRelated({ date: "2000-01-01" });
+    const o3 = new PatientRelated({ id: "25" });
+    const o4 = new PatientRelated({ id: "25", date: "2000-01-01" });
 
     resFirst(o1, o2);
     resFirst(o1, o3);
@@ -182,21 +183,21 @@ test("order", async function (t) {
   });
 });
 
-test("getNextAppoinment", function () {
-  expect(new Folder().getNextAppoinment()).toBeNull();
+test("getNextAppointment", function () {
+  expect(new Folder().getNextAppointment()).toBeUndefined();
 
   f.list.push(new Appointment({ date: "2100-01-01" }));
-  expect(f.getNextAppoinment()).toEqual(new Date("2100-01-01"));
+  expect(f.getNextAppointment()).toEqual(new Date("2100-01-01"));
 });
 
 test("getLastSeen", function () {
-  expect(new Folder().getLastSeen()).toBeNull();
+  expect(new Folder().getLastSeen()).toBeUndefined();
   expect(f.getLastSeen()).toEqual(new Date("2014-11-04"));
 });
 
 test("Copy with new file", function () {
   expect(f.getId()).toBe("1");
-  const fap = f.getByUid("appointment.2");
+  const fap = f.getByUid<Appointment>("appointment.2");
   expect(fap).toBeInstanceOf(Appointment);
   expect(fap.purpose).toBe(null);
 
@@ -204,13 +205,13 @@ test("Copy with new file", function () {
     new Appointment({ id: 2, examiner: "test", purpose: "test" })
   );
   expect(f2).toBeInstanceOf(Folder);
-  const fap2 = f2.getByUid("appointment.2");
+  const fap2 = f2.getByUid<Appointment>("appointment.2");
   expect(fap2).toBeInstanceOf(Appointment);
   expect(fap2.purpose).toBe("test");
   expect(fap2.purpose).toBe("test");
 
   // Initial
-  const fap3 = f.getByUid("appointment.2");
+  const fap3 = f.getByUid<Appointment>("appointment.2");
   expect(fap3).toBeInstanceOf(Appointment);
   expect(fap3.purpose).toBe(null);
 });

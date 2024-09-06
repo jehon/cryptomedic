@@ -7,11 +7,11 @@ import Patient from "../patient.js";
 import Consult from "./consult.js";
 
 import { loadReferenceFolder, RefFolder1 } from "../../test-helper.js";
-import Folder from "../folder.js";
+import Folder from "../folder";
 
 test("with ricketConsult_13", async function () {
   const folder = await loadReferenceFolder(RefFolder1);
-  const c = folder.getByTypeAndId(RicketConsult, 13);
+  const c = folder.getByTypeAndId<RicketConsult>(RicketConsult, "13");
 
   expect(c).toBeInstanceOf(RicketConsult);
   expect(c).toBeInstanceOf(Consult);

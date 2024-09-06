@@ -130,7 +130,7 @@ export default function PatientElement({
       {/* ------------ Key dates  --------------------*/}
       <Panel key="key-dates" label="Key dates">
         <IO.Date label="Last seen" value={folder.getLastSeen()} />
-        <IO.Date label="Next appointment" value={folder.getNextAppoinment()} />
+        <IO.Date label="Next appointment" value={folder.getNextAppointment()} />
       </Panel>
 
       {/* ------------ Patient file  --------------------*/}
