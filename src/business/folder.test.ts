@@ -3,9 +3,9 @@ import test, { beforeEach } from "node:test";
 
 import { loadReferenceFolder, RefFolder1 } from "../test-helper";
 
-import assert from "assert";
+import assert from "node:assert";
 import PatientRelated from "./abstracts/patient-related";
-import Appointment from "./appointment.js";
+import Appointment from "./appointment";
 import Bill from "./bill.js";
 import ConsultClubfoot from "./consult-clubfoot.js";
 import ConsultOther from "./consult-other.js";
@@ -199,10 +199,10 @@ test("Copy with new file", function () {
   expect(f.getId()).toBe("1");
   const fap = f.getByUid<Appointment>("appointment.2");
   expect(fap).toBeInstanceOf(Appointment);
-  expect(fap.purpose).toBe(null);
+  assert.equal(fap.purpose, "");
 
   const f2 = f.withFile(
-    new Appointment({ id: 2, examiner: "test", purpose: "test" })
+    new Appointment({ id: "2", examiner: "test", purpose: "test" })
   );
   expect(f2).toBeInstanceOf(Folder);
   const fap2 = f2.getByUid<Appointment>("appointment.2");
@@ -213,5 +213,5 @@ test("Copy with new file", function () {
   // Initial
   const fap3 = f.getByUid<Appointment>("appointment.2");
   expect(fap3).toBeInstanceOf(Appointment);
-  expect(fap3.purpose).toBe(null);
+  assert.equal(fap3.purpose, "");
 });

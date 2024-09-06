@@ -7,7 +7,7 @@ INTEGRATION_BUILT_MARK=$(INTEGRATION_TEST_TMP)/.built
 #   - tests/styles/references/{flavor}:                    references for screenshots     (flat)
 #   - $(INTEGRATION_TEST_TMP)/{flavor}runtime/screenshots: screenshot taken during test   (by folders)
 #   - $(INTEGRATION_TEST_TMP)/{flavor}/.tested:            mark
-# 
+#
 # integration-test-{flavor}-styles:
 #   - $(INTEGRATION_TEST_TMP)/{flavor}/differences
 #   - $(INTEGRATION_TEST_TMP)/{flavor}/styles.json
@@ -101,7 +101,7 @@ $(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/desktop/.te
 
 .PHONY: integration-update-references-styles-desktop
 update: integration-update-references-styles-desktop
-integration-update-references-styles-desktop: 
+integration-update-references-styles-desktop:
 	node_modules/.bin/tsx tests/styles/check-styles.ts \
 		--references="tests/styles/references/desktop" \
 		--results="$(INTEGRATION_TEST_TMP)/desktop" \

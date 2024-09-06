@@ -1,5 +1,5 @@
 import Pojo from "./abstracts/pojo.js";
-import Appointment from "./appointment.js";
+import Appointment from "./appointment";
 import Patient from "./patient.js";
 
 // Enrich the registry:
