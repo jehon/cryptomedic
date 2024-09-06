@@ -25,7 +25,7 @@ beforeEach(async () => {
 test("sould instanciate folder", () => {
   const fnew = new Folder();
   expect(fnew.getPatient()).toBeInstanceOf(Patient);
-  expect(fnew.getId()).toEqual(-1);
+  expect(fnew.getId()).toEqual("-1");
 });
 
 test("should have loaded Mock data", () => {

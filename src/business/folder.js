@@ -21,8 +21,10 @@ export default class Folder extends Pojo {
   /** @type {Array<PatientRelated|Patient>} */
   list;
 
-  constructor(listing = {}) {
-    super();
+  constructor(listing = []) {
+    const id =
+      "" + (listing.filter((v) => v.type == "Patient").pop()?.id ?? -1);
+    super({ id });
     this.list = [];
 
     // create the objects
@@ -61,14 +63,6 @@ export default class Folder extends Pojo {
     return produce(this, (draft) => {
       draft.list.splice(i, 1);
     });
-  }
-
-  getId() {
-    const patient = this.getPatient();
-    if (patient.id) {
-      return patient.id + "";
-    }
-    return -1;
   }
 
   // Legacy
@@ -153,9 +147,9 @@ export default class Folder extends Pojo {
     if (!this.getPatient().id) {
       return [];
     }
-    return this.getByFieldValue("patient_id", this.getPatient().id).sort(
-      Folder.ordering
-    );
+    return this.getByFieldValue("patient_id", this.getPatient().id)
+      .sort(Folder.ordering)
+      .filter((v) => !(v instanceof Patient));
   }
 
   // Legacy
