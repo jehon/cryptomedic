@@ -1,15 +1,15 @@
 import { useLoaderData, useParams } from "react-router-dom";
-import Pojo from "../business/abstracts/pojo";
+import PatientRelated from "../business/abstracts/patient-related";
 import Folder from "../business/folder";
 import RouteLoading from "../widget/route-loading";
 import { getFolder } from "./loaders";
 import PatientElement from "./patient-element";
 
-export function patientRouterToFile(f: Folder, p?: Pojo) {
+export function patientRouterToFile(f: Folder, p?: PatientRelated) {
   return `/folder/${f.getId()}/summary/${p?.uid() ?? ""}`;
 }
 
-export function patientRouterToFileAdd(f: Folder, type: typeof Pojo) {
+export function patientRouterToFileAdd(f: Folder, type: typeof PatientRelated) {
   return `/folder/${f.getId()}/summary/${type.getTechnicalName()}.add`;
 }
 
