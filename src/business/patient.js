@@ -10,61 +10,6 @@ import "./surgery.js";
 
 const model = "Patient";
 
-function ordering(o1, o2) {
-  const o1First = -1;
-  const o2First = 1;
-
-  const o1id = parseInt(o1.id);
-  const o2id = parseInt(o2.id);
-
-  // Return 1 if o1 > o2 (o1 - o2) (o1 est après o2)
-  // Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
-
-  // What to do if one 'id' is missing
-  if (isNaN(o1id) && !isNaN(o2id)) {
-    return 10 * o1First;
-  }
-  if (isNaN(o2id) && !isNaN(o1id)) {
-    return 10 * o2First;
-  }
-
-  // What to do if one 'date' is missing
-  if (typeof o1.date == "undefined" && typeof o2.date != "undefined") {
-    return 20 * o1First;
-  }
-  if (typeof o2.date == "undefined" && typeof o1.date != "undefined") {
-    return 20 * o2First;
-  }
-
-  // Both 'date' are present
-  if (typeof o1.date != "undefined" && typeof o2.date != "undefined") {
-    if (o1.date < o2.date) return 30 * o2First;
-    if (o1.date > o2.date) return 30 * o1First;
-  }
-
-  if (
-    typeof o1.created_at != "undefined" &&
-    typeof o2.created_at != "undefined"
-  ) {
-    if (o1.created_at < o2.created_at) return 40 * o2First;
-    if (o1.created_at > o2.created_at) return 40 * o1First;
-  }
-
-  // Both 'id' are present
-  if (!isNaN(o1id) && !isNaN(o2id)) {
-    if (o1id > o2id) return 50 * o1First;
-    if (o1id < o2id) return 50 * o2First;
-  }
-
-  // Both 'type' are present
-  if (o1.getStatic().getTitle() < o2.getStatic().getTitle())
-    return 40 * o1First;
-  if (o1.getStatic().getTitle() > o2.getStatic().getTitle())
-    return 40 * o2First;
-
-  return 0;
-}
-
 export default class Patient extends PatientRelated {
   static getModel() {
     return model;
