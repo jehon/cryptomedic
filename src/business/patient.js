@@ -46,9 +46,9 @@ export default class Patient extends PatientRelated {
       comments,
       ...others
     } = {},
-    _folder = null
+    folder = null
   ) {
-    super(others);
+    super(others, folder);
     this.entry_year = entry_year;
     this.entry_order = entry_order;
     this.name = name;
