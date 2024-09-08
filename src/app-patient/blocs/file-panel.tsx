@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
+import Timed from "../../business/abstracts/timed";
 import Folder, { PatientRelatedClass } from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons } from "../../config";
@@ -59,10 +60,10 @@ export default function FilePanel({
   edit?: boolean;
 }): React.ReactNode {
   const folder: Folder = file.getParent();
-  const [editState, updateEditState] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const addMode = !file.getId();
+  const editMode = addMode || (edit ?? false);
 
   const goToPatientFile = () => {
     document.location.hash = patientRouterToFile(folder, file);
@@ -84,9 +85,7 @@ export default function FilePanel({
       return;
     }
 
-    if (editState == false) {
-      updateEditState(true);
-    }
+    document.location.hash = "#" + patientRouterToFile(folder, file, "edit");
   };
 
   const doUnlock = () => {
@@ -97,7 +96,7 @@ export default function FilePanel({
       .then(() => goEdit());
   };
 
-  const doSave = async () => {
+  const doSave = () => {
     if (!formRef.current!.checkValidity()) {
       formRef.current!.requestSubmit();
       return;
@@ -106,7 +105,7 @@ export default function FilePanel({
     const data = new FormData(formRef.current!);
     let nFolder;
     if (addMode) {
-      nFolder = await folderFileCreate(file, data)
+      return folderFileCreate(file, data)
         .then(notifySuccess("File created"))
         .then(
           passThrough((json) => {
@@ -120,15 +119,18 @@ export default function FilePanel({
             );
           })
         )
-        .then((json) => json.folder);
+        .then((json) => json.folder)
+        .then((nFolder) => onUpdate(nFolder));
     } else {
-      nFolder = await folderFileUpdate(file, data).then(
-        notifySuccess("File saved")
-      );
-    }
-    onUpdate(nFolder);
-    if (editState == true) {
-      updateEditState(false);
+      return folderFileUpdate(file, data)
+        .then(notifySuccess("File saved"))
+        .then(
+          passThrough(
+            () =>
+              (document.location.hash = "#" + patientRouterToFile(folder, file))
+          )
+        )
+        .then((nFolder) => onUpdate(nFolder));
     }
   };
 
@@ -141,26 +143,23 @@ export default function FilePanel({
     } else {
       document.location.hash = patientRouterToFile(folder, file);
     }
-    updateEditState(false);
   };
 
-  const doDelete = () => {
+  const doDelete = () =>
     folderFileDelete(file)
       .then(notifySuccess("File deleted"))
+      .then(
+        passThrough(
+          () => (document.location.hash = "#" + patientRouterToFile(folder))
+        )
+      )
       .then((folder) => onUpdate(folder));
-  };
-
-  if (addMode) {
-    if (editState == false) {
-      updateEditState(true);
-    }
-  }
 
   return (
     <Panel
       testid={file.uid()}
       closed={closed}
-      fullscreen={editState}
+      fullscreen={editMode}
       onToggle={(_opened) => {
         // TODO: when angular router is out
         // if (opened) {
@@ -180,14 +179,11 @@ export default function FilePanel({
               alt={file.getStatic().getTitle()}
               className="inline"
             />
-            {
-              // TODO: use interface?
-              "date" in file ? (
-                <span className="no-mobile">
-                  {date2HumanString(normalizeDate(file["date"] as Date))}
-                </span>
-              ) : null
-            }
+            {file instanceof Timed ? (
+              <span className="no-mobile">
+                {date2HumanString(normalizeDate(file["date"] as Date))}
+              </span>
+            ) : null}
             <span data-role="type" className="no-mobile">
               {file.getStatic().getTitle()}
             </span>
@@ -216,7 +212,7 @@ export default function FilePanel({
               </ActionConfirm>
             )
           ) : // File is not locked
-          editState ? (
+          editMode ? (
             <>
               <ActionButton
                 style="Confirm"
@@ -235,7 +231,7 @@ export default function FilePanel({
                     requires="folder.delete"
                   >
                     <div>
-                      Are you sure you want to DELETE the File{" "}
+                      Are you sure you want to DELETE the File
                       {file.getStatic().getTitle()}?
                     </div>
                   </ActionConfirm>
@@ -257,7 +253,7 @@ export default function FilePanel({
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
         <div>by {file.last_user}</div>
       </div>
-      <EditContext.Provider value={editState}>
+      <EditContext.Provider value={editMode}>
         <form
           id="file"
           data-testid={"file-" + file.uid() + "-form"}
