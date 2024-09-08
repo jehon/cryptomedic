@@ -5,8 +5,12 @@ import RouteLoading from "../widget/route-loading";
 import { getFolder } from "./loaders";
 import PatientElement from "./patient-element";
 
-export function patientRouterToFile(f: Folder, p?: PatientRelated) {
-  return `/folder/${f.getId()}/summary/${p?.uid() ?? ""}`;
+export function patientRouterToFile(
+  f: Folder,
+  p?: PatientRelated,
+  mode?: "edit"
+) {
+  return `/folder/${f.getId()}/summary/${p?.uid() ?? ""}${mode ? `/${mode}` : ""}`;
 }
 
 export function patientRouterToFileAdd(f: Folder, type: typeof PatientRelated) {
