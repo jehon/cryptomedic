@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { crApiLogin } from "../helpers/cr";
+import { crApiLogin, crExpectUrl } from "../helpers/cr";
 import { crApiFileUpdate, crPatientFile, outputDate } from "./cr-patients";
 
 // See 320 test appointment.sql for data
@@ -15,21 +15,40 @@ test("2000-001.appointment.2", async ({ page }) => {
 test("2010-001 create and delete appointment", async ({ page }) => {
   await crApiLogin(page);
 
-  // TODO: this is not exactly what users do
+  // TODO: Click on stuff
   const panel = await crPatientFile(page, 102, "appointment.add");
-  await expect(panel.panel).toBeVisible();
 
-  // Not acceptable form...
+  // Add
+  await expect(panel.panel).toBeVisible();
+  await crExpectUrl(
+    page,
+    new RegExp(/.*#\/folder\/102\/summary\/appointment.add/)
+  );
+
+  // Edit: Not acceptable form...
   await panel.panel.getByText("Save").click();
   await expect(panel.panel.getByText("Edit")).not.toBeVisible();
 
+  // Edit: Save
   await panel.setFieldValue("Date", "2022-05-06");
   await panel.panel.getByText("Save").click();
-  await expect(page.getByText("Edit")).toBeVisible();
-  await page.getByText("Edit").click();
-  await page.getByText("Delete").click();
+  await crExpectUrl(
+    page,
+    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+/)
+  );
 
-  // Wait for the popup
+  // Saved
+  await expect(page.getByText("Edit")).toBeVisible();
+
+  // Edit again
+  await page.getByText("Edit").click();
+  await crExpectUrl(
+    page,
+    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+\/edit/)
+  );
+
+  // Delete
+  await page.getByText("Delete").click();
   const popup = page.getByTestId("popup");
   await expect(popup).toBeVisible();
   const popupActions = popup.getByRole("group");
@@ -37,12 +56,16 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   await expect(popupActions.getByText("Cancel")).toBeVisible();
   await expect(popupActions.getByText("Delete")).toBeVisible();
   await popupActions.getByText("Delete").click();
+
+  // Deleted
+  await crExpectUrl(page, new RegExp(/.*#\/folder\/102\/summary/));
   await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0);
 });
 
 test("2010-001 update appointment", async ({ page }) => {
   await crApiLogin(page);
 
+  // Load
   await crApiFileUpdate(page, "appointments", {
     id: 101,
     center: "",
@@ -50,21 +73,34 @@ test("2010-001 update appointment", async ({ page }) => {
     purpose: "test data"
   });
   const panel = await crPatientFile(page, 102, "appointment.101");
+  await crExpectUrl(
+    page,
+    new RegExp(/.*#\/folder\/102\/summary\/appointment\.102/)
+  );
+
   await panel.expectFieldValue("Date", outputDate("2024-01-02"));
   await panel.expectFieldValue("Center");
   await panel.expectFieldValue("Purpose", "test data");
 
+  // Edit
   await panel.panel.getByText("Edit").click();
+  await crExpectUrl(
+    page,
+    new RegExp(/.*#\/folder\/102\/summary\/appointment\.102\/edit/)
+  );
   await expect(panel.panel.getByText("Save")).toBeVisible();
-
   await panel.setFieldValue("Date", "2024-10-11");
   await panel.setFieldValue("Center", "Chakaria Disability Center", "select");
   await panel.setFieldValue("Purpose", "test running", "textarea");
   await expect(panel.panel).toHaveScreenshot();
-
   await panel.panel.getByText("Save").click();
-  await expect(panel.panel.getByText("Edit")).toBeVisible();
 
+  // Saved
+  await crExpectUrl(
+    page,
+    new RegExp(/.*#\/folder\/102\/summary\/appointment\.102/)
+  );
+  await expect(panel.panel.getByText("Edit")).toBeVisible();
   await expect(panel.panel).toHaveScreenshot();
   await panel.expectFieldValue("Date", outputDate("2024-10-11"));
   await panel.expectFieldValue("Center", "Chakaria Disability Center");
