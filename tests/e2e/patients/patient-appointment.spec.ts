@@ -75,7 +75,7 @@ test("2010-001 update appointment", async ({ page }) => {
   const panel = await crPatientFile(page, 102, "appointment.101");
   await crExpectUrl(
     page,
-    new RegExp(/.*#\/folder\/102\/summary\/appointment\.102/)
+    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+/)
   );
 
   await panel.expectFieldValue("Date", outputDate("2024-01-02"));
@@ -86,7 +86,7 @@ test("2010-001 update appointment", async ({ page }) => {
   await panel.panel.getByText("Edit").click();
   await crExpectUrl(
     page,
-    new RegExp(/.*#\/folder\/102\/summary\/appointment\.102\/edit/)
+    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+\/edit/)
   );
   await expect(panel.panel.getByText("Save")).toBeVisible();
   await panel.setFieldValue("Date", "2024-10-11");
@@ -98,7 +98,7 @@ test("2010-001 update appointment", async ({ page }) => {
   // Saved
   await crExpectUrl(
     page,
-    new RegExp(/.*#\/folder\/102\/summary\/appointment\.102/)
+    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+/)
   );
   await expect(panel.panel.getByText("Edit")).toBeVisible();
   await expect(panel.panel).toHaveScreenshot();

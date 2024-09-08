@@ -1,9 +1,9 @@
-import PatientRelated from "./abstracts/patient-related.js";
+import Timed from "./abstracts/timed.js";
 import { registrySet } from "./registry.js";
 
 const model = "Picture";
 
-export default class Picture extends PatientRelated {
+export default class Picture extends Timed {
   static getModel() {
     return model;
   }
@@ -14,14 +14,12 @@ export default class Picture extends PatientRelated {
 
   type;
   file;
-  date;
   comments;
 
-  constructor({ type, file, date, comments, ...others } = {}, folder = null) {
+  constructor({ type, file, comments, ...others } = {}, folder = null) {
     super(others, folder);
     this.type = type;
     this.file = file;
-    this.date = date;
     this.comments = comments;
   }
 
