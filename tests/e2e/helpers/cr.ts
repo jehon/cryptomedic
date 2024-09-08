@@ -102,6 +102,10 @@ export async function crInit(
   return crReady(page);
 }
 
+export async function crExpectUrl(page: Page, r: string | RegExp) {
+  await expect(page).toHaveURL(r);
+}
+
 export async function crReady(
   page: Page
   // options: { forScreenshot?: boolean } = {}
