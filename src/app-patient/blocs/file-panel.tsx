@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
+import Timed from "../../business/abstracts/timed";
 import Folder, { PatientRelatedClass } from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons } from "../../config";
@@ -178,7 +179,7 @@ export default function FilePanel({
               alt={file.getStatic().getTitle()}
               className="inline"
             />
-            {"date" in file ? (
+            {file instanceof Timed ? (
               <span className="no-mobile">
                 {date2HumanString(normalizeDate(file["date"] as Date))}
               </span>

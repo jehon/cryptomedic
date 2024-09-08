@@ -1,10 +1,9 @@
-import { StringDate, StringList } from "../utils/types.js";
-import PatientRelated from "./abstracts/patient-related.js";
+import Timed from "./abstracts/timed.js";
 import { registrySet } from "./registry.js";
 
 const model = "Appointment";
 
-export default class Appointment extends PatientRelated {
+export default class Appointment extends Timed {
   static override getModel() {
     return model;
   }
@@ -15,10 +14,7 @@ export default class Appointment extends PatientRelated {
 
   // We could not inherit from Timed because Timed implies a date in the past
 
-  examiner: StringList = "";
   purpose: string = "";
-  date: StringDate = "";
-  center: StringList = "";
 
   /**
    *
@@ -27,10 +23,7 @@ export default class Appointment extends PatientRelated {
    */
   constructor(
     {
-      examiner,
       purpose,
-      date,
-      center,
       ...others
     }: {
       examiner?: string;
@@ -42,10 +35,7 @@ export default class Appointment extends PatientRelated {
     folder = null
   ) {
     super(others, folder);
-    this.examiner = examiner || "";
     this.purpose = purpose || "";
-    this.date = date || "";
-    this.center = center || "";
   }
 
   override isLocked() {
