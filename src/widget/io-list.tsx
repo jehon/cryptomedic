@@ -1,4 +1,3 @@
-import { Optional } from "../utils/generic-types";
 import { toTitleCase } from "../utils/strings";
 import { StringList } from "../utils/types";
 import IOAbstract, { IOProps } from "./io-abstract";
@@ -67,7 +66,7 @@ export function buildRadios(
 
 export default function IOList(
   props: { list?: string[] | Record<string, string> } & IOProps<
-    Optional<StringList>
+    StringList | undefined
   >
 ) {
   // TODO: List should be mandatory and thus ?? {} not necessary anymore
@@ -76,7 +75,7 @@ export default function IOList(
     !props.required
   );
 
-  return IOAbstract<Optional<string>>(props, {
+  return IOAbstract<string | undefined>(props, {
     renderOutput: (value) => <div>{value}</div>,
     renderInput: (uuid: string, value) =>
       Object.keys(list).length > 4
