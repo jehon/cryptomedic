@@ -2,8 +2,8 @@ import { useLoaderData, useParams } from "react-router-dom";
 import PatientRelated from "../business/abstracts/patient-related";
 import Folder from "../business/folder";
 import RouteLoading from "../widget/route-loading";
+import FolderElement from "./folder-element";
 import { getFolder } from "./loaders";
-import PatientElement from "./patient-element";
 
 export function patientRouterToFile(
   f: Folder,
@@ -43,6 +43,6 @@ export default function PatientRouter(): React.ReactNode {
   const { selectedUid, mode } = useParams();
 
   return (
-    <PatientElement folder={folder} selectedUid={selectedUid} mode={mode} />
+    <FolderElement folder={folder} selectedUid={selectedUid} mode={mode} />
   );
 }

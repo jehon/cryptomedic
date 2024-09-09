@@ -46,7 +46,7 @@ export function type2Class(type: string): typeof PatientRelated {
   }
 }
 
-export default function PatientElement({
+export default function FolderElement({
   folder: initialFolder,
   selectedUid,
   mode
@@ -153,39 +153,42 @@ export default function PatientElement({
             <Panel fixed label="Identification">
               <IO.Number
                 name="entry_year"
-                value={patient.entry_year}
+                value={parseInt(patient.entry_year)}
                 min={1980}
                 max={2100}
               />
-              <IO.Number name="entry_order" value={patient.entry_order} />
+              <IO.Number
+                name="entry_order"
+                value={parseInt(patient.entry_order)}
+              />
               <IO.String name="name" value={patient.name} />
-              <IO.String name="sex" value={patient.sex} />
-              <IO.String
+              <IO.List name="sex" value={patient.sex} />
+              <IO.Number
                 name="year_of_birth"
                 label="Year of Birth"
-                value={patient.year_of_birth}
+                value={parseInt(patient.year_of_birth ?? "")}
               />
               <IO.String
                 label="Age today"
                 value={patient.actualAge() as string}
                 e2eExcluded
               />
-              <IO.String name="pathology" value={patient.pathology} />
+              <IO.List name="pathology" value={patient.pathology} />
               <IO.Text name="comments" value={patient.comments} />
             </Panel>
             <Panel fixed label="Address">
-              <IO.String name="phone" value={patient.phone} />
-              <IO.String
+              <IO.String name="phone" value={patient.phone ?? ""} />
+              <IO.List
                 name="address_district"
                 label="District"
                 value={patient.address_district}
               />
-              <IO.String
+              <IO.List
                 name="address_upazilla"
                 label="Upazilla"
                 value={patient.address_upazilla}
               />
-              <IO.String
+              <IO.List
                 name="address_union"
                 label="Union"
                 value={patient.address_union}
