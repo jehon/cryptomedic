@@ -5,6 +5,7 @@ import Timed from "../../business/abstracts/timed";
 import Folder, { PatientRelatedClass } from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons } from "../../config";
+import { routeTo } from "../../react";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { passThrough } from "../../utils/promises";
 import ActionButton from "../../widget/action-button";
@@ -65,10 +66,7 @@ export default function FilePanel({
   const addMode = !file.getId();
   const editMode = addMode || (edit ?? false);
 
-  const goToPatientFile = () => {
-    document.location.hash = patientRouterToFile(folder, file);
-  };
-
+  const goToPatientFile = () => routeTo(patientRouterToFile(folder, file));
   const goEdit = () => {
     if (
       // TODO: migrate all this progressively
@@ -85,7 +83,7 @@ export default function FilePanel({
       return;
     }
 
-    document.location.hash = "#" + patientRouterToFile(folder, file, "edit");
+    routeTo(patientRouterToFile(folder, file, "edit"));
   };
 
   const doUnlock = () => {
@@ -124,12 +122,7 @@ export default function FilePanel({
     } else {
       return folderFileUpdate(file, data)
         .then(notifySuccess("File saved"))
-        .then(
-          passThrough(
-            () =>
-              (document.location.hash = "#" + patientRouterToFile(folder, file))
-          )
-        )
+        .then(passThrough(() => routeTo(patientRouterToFile(folder, file))))
         .then((nFolder) => onUpdate(nFolder));
     }
   };
@@ -139,20 +132,16 @@ export default function FilePanel({
       // This is not necessary because the top folder will reload anyway
       // Remove the newly added file, that we don't want to keep
       // onUpdate(folder.withoutFile(file));
-      document.location.hash = patientRouterToFile(folder);
+      routeTo(patientRouterToFile(folder));
     } else {
-      document.location.hash = patientRouterToFile(folder, file);
+      routeTo(patientRouterToFile(folder, file));
     }
   };
 
   const doDelete = () =>
     folderFileDelete(file)
       .then(notifySuccess("File deleted"))
-      .then(
-        passThrough(
-          () => (document.location.hash = "#" + patientRouterToFile(folder))
-        )
-      )
+      .then(passThrough(() => routeTo(patientRouterToFile(folder))))
       .then((folder) => onUpdate(folder));
 
   return (
