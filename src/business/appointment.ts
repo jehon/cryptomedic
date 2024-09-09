@@ -1,3 +1,4 @@
+import { StringDate } from "../utils/types.js";
 import Timed from "./abstracts/timed.js";
 import { registrySet } from "./registry.js";
 
@@ -28,9 +29,9 @@ export default class Appointment extends Timed {
     }: {
       examiner?: string;
       purpose?: string;
-      date?: string;
+      date?: StringDate;
       center?: string;
-      [key: string]: string | undefined;
+      [key: string]: any | undefined;
     } = {},
     folder = null
   ) {
