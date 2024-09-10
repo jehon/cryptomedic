@@ -53,6 +53,8 @@ INSERT INTO `appointments` VALUES (6,'1980-01-01 00:00:00','2015-05-10 04:29:15'
 INSERT INTO `appointments` VALUES (7,'1980-01-01 00:00:00','2015-05-07 16:53:30','murshed',5,'Ershad',NULL,'2014-04-21','Ukhia');
 INSERT INTO `appointments` VALUES (8,'1980-01-01 00:00:00','2015-05-07 16:49:28','murshed',5,'AMD doctor',NULL,'2014-03-21','Ukhia');
 INSERT INTO `appointments` VALUES (100,'2023-08-30 16:53:04','2023-08-30 17:40:54','jehon',100,'Ershad',NULL,'2120-06-01','Forcibly Displaced Myanmar Nationals');
+INSERT INTO `appointments` VALUES (101,'1980-01-01 00:00:00','1980-01-01 00:00:00','test-appointment',102,'',NULL,'2024-01-02','test data');
+
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -488,6 +490,9 @@ INSERT INTO `patients` VALUES (6,'2014-10-28 07:13:29','2015-04-24 05:28:14','je
 INSERT INTO `patients` VALUES (7,'2014-08-04 18:31:40','2014-08-04 18:31:40','transfer',2001,4,'mozahar ahamed',NULL,'1996',NULL,'',NULL,NULL,NULL,'Other','');
 INSERT INTO `patients` VALUES (8,'2021-04-23 15:26:16','2021-04-23 20:46:30','murshed',1991,299,'crud patient',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 INSERT INTO `patients` VALUES (100,'2023-08-30 16:48:21','2023-08-30 17:27:13','jehon',2010,100,'free test','Male','2013-01','+32123123','at the end of the world','Chittagong','Chandanish','~ Other ~','Ricket','I have something to add');
+-- appointment
+INSERT INTO `patients` VALUES(102,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,1,'test appointment','','','','','','','','', '');
+
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
