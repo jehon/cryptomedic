@@ -1,5 +1,6 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { CRUD, CRUDType, JsonData } from "../../../src/constants";
+import { passThrough } from "../../../src/utils/promises";
 export { outputDate } from "../../../src/utils/date";
 
 const WebBaseUrl = `http://${process.env.CRYPTOMEDIC_DEV_HTTP_HOST}:8085`;
@@ -38,12 +39,17 @@ export function crApi(
     {
       data: options.data ?? {}
     }
-  ).then((resp) => {
-    if (resp.status() != 200) {
-      throw new Error("Server responded with invalid status: " + resp.status());
-    }
-    return resp.json();
-  });
+  )
+    .then(
+      passThrough((resp) => {
+        if (resp.status() != 200) {
+          throw new Error(
+            "Server responded with invalid status: " + resp.status()
+          );
+        }
+      })
+    )
+    .then((resp) => resp.json());
 }
 
 export function crApiLogin(page: Page, login: string = LOGINS.PHYSIO) {
