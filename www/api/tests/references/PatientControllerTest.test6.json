@@ -24,7 +24,7 @@
             "patient_id": 6,
             "date": "2015-04-28",
             "center": "Chakaria Disability Center",
-            "purpose": ""
+            "purpose": null
         }
     ],
     "bill": [],

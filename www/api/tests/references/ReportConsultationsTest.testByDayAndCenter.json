@@ -25,7 +25,7 @@
             "comments": "",
             "c_id": 1,
             "c_center": "Chakaria Disability Center",
-            "purpose": "",
+            "purpose": null,
             "c_date": "2015-04-28",
             "patient_id": 6
         }

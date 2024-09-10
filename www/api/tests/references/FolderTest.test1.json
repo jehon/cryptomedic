@@ -32,8 +32,8 @@
                 "last_user": "Thierry",
                 "patient_id": 1,
                 "date": "2015-04-28",
-                "center": "",
-                "purpose": ""
+                "center": null,
+                "purpose": null
             }
         },
         {
