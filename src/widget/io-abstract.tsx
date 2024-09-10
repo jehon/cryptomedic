@@ -6,19 +6,11 @@ import "./io.css";
 // Will be initiated at higher level
 export const EditContext = createContext(false);
 
-function getLabel(props: IOProps<any>) {
-  if (props.label) {
-    return props.label;
-  }
-  if (props.name) {
-    return toTitleCase(props.name);
-  }
-  return generateUUID();
-}
+export type IOPropsInput<T> = T | string | undefined;
 
 export type IOPropsReadonly<T> = {
   label?: string;
-  value: T;
+  value: IOPropsInput<T>;
   noLabel?: boolean;
   note?: boolean;
   left?: boolean;
@@ -32,14 +24,26 @@ export type IOProps<T> = IOPropsReadonly<T> & {
   onChange?: (arg: T) => void;
 };
 
+function getLabel(props: IOProps<any>) {
+  if (props.label) {
+    return props.label;
+  }
+  if (props.name) {
+    return toTitleCase(props.name);
+  }
+  return generateUUID();
+}
+
 export default function IOAbstract<T>(
   props: IOProps<T>,
   {
     renderOutput,
     renderInput
   }: {
-    renderOutput: { (value: T): React.ReactNode };
-    renderInput?: { (uuid: string, value: T): React.ReactNode };
+    renderOutput: { (value: IOPropsInput<T>): React.ReactNode };
+    renderInput?: {
+      (value: IOPropsInput<T>, uuid: string): React.ReactNode;
+    };
   }
 ): React.ReactNode {
   const calculatedProps: IOProps<T> = {
@@ -101,7 +105,7 @@ export default function IOAbstract<T>(
         data-e2e={calculatedProps.e2eExcluded ? "excluded" : ""}
       >
         {edit
-          ? renderInput!(uuid, calculatedProps.value)
+          ? renderInput!(calculatedProps.value, uuid)
           : renderOutput(calculatedProps.value)}
       </div>
     </div>

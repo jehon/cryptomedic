@@ -65,9 +65,7 @@ export function buildRadios(
 }
 
 export default function IOList(
-  props: { list?: string[] | Record<string, string> } & IOProps<
-    StringList | undefined
-  >
+  props: { list?: string[] | Record<string, string> } & IOProps<StringList>
 ) {
   // TODO: List should be mandatory and thus ?? {} not necessary anymore
   const list: Record<string, string> = canonizeList(
@@ -75,9 +73,9 @@ export default function IOList(
     !props.required
   );
 
-  return IOAbstract<string | undefined>(props, {
+  return IOAbstract<string>(props, {
     renderOutput: (value) => <div>{value}</div>,
-    renderInput: (uuid: string, value) =>
+    renderInput: (value, uuid) =>
       Object.keys(list).length > 4
         ? buildSelect(uuid, list, value ?? "", props.name ?? "", props.onChange)
         : buildRadios(uuid, list, value ?? "", props.name ?? "", props.onChange)

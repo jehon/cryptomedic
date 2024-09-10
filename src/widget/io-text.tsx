@@ -12,7 +12,7 @@ export default function IOText(props: IOProps<StringText>) {
 
   return IOAbstract(props, {
     renderOutput: (value) => <pre>{value}</pre>,
-    renderInput: (uuid: string, value) => (
+    renderInput: (value, uuid) => (
       <textarea
         id={uuid}
         className="form-control"

@@ -1,10 +1,16 @@
-import { Optional } from "../utils/generic-types";
 import { roundTo } from "../utils/strings";
-import IOAbstract, { IOProps } from "./io-abstract";
+import IOAbstract, { IOProps, IOPropsInput } from "./io-abstract";
 
-function canonize(str: string): Optional<number> {
+//
+// Always required
+//
+
+function canonize(str: IOPropsInput<number>): number {
+  if (typeof str == "number") return str;
+  if (str == undefined) return 0;
+
   const pi = parseInt(str);
-  if (isNaN(pi)) return null;
+  if (isNaN(pi)) return 0;
   return pi;
 }
 
@@ -13,29 +19,32 @@ export default function IONumber(
     precision?: number;
     min?: string | number;
     max?: string | number;
-  } & IOProps<Optional<number>>
+  } & IOProps<number>
 ) {
-  return IOAbstract<Optional<number>>(props, {
-    renderOutput: (value) => (
-      <div>
-        {props.precision && value
-          ? roundTo(value, props.precision)
-          : "" + value}
-      </div>
-    ),
-    renderInput: (uuid: string, value: Optional<number>) => (
-      <input
-        id={uuid}
-        className="form-control"
-        name={props.name}
-        defaultValue={(value ?? 0) + ""}
-        onBlur={(evt) =>
-          props.onChange && props.onChange(canonize(evt.target.value))
-        }
-        type="number"
-        min={"" + props.min}
-        max={"" + props.max}
-      />
-    )
-  });
+  return IOAbstract<number>(
+    { ...props, required: true },
+    {
+      renderOutput: (value) => (
+        <div>
+          {props.precision && value
+            ? roundTo(canonize(value), props.precision)
+            : "" + value}
+        </div>
+      ),
+      renderInput: (value, uuid) => (
+        <input
+          id={uuid}
+          className="form-control"
+          name={props.name}
+          defaultValue={(value ?? 0) + ""}
+          onBlur={(evt) =>
+            props.onChange && props.onChange(canonize(evt.target.value))
+          }
+          type="number"
+          min={"" + props.min}
+          max={"" + props.max}
+        />
+      )
+    }
+  );
 }
