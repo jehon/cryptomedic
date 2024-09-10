@@ -22,7 +22,7 @@ export default function IONumber(
   } & IOProps<number>
 ) {
   return IOAbstract<number>(
-    { ...props, required: true },
+    { ...props },
     {
       renderOutput: (value) => (
         <div>
