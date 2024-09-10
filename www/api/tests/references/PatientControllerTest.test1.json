@@ -23,8 +23,8 @@
             "last_user": "Thierry",
             "patient_id": 1,
             "date": "2015-04-28",
-            "center": null,
-            "purpose": null
+            "center": "",
+            "purpose": ""
         }
     ],
     "bill": [

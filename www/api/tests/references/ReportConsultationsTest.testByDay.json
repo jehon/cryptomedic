@@ -24,8 +24,8 @@
             "pathology": "ClubFoot",
             "comments": "",
             "c_id": 2,
-            "c_center": null,
-            "purpose": null,
+            "c_center": "",
+            "purpose": "",
             "c_date": "2015-04-28",
             "patient_id": 1
         },
@@ -48,7 +48,7 @@
             "comments": "Right leg metatarsus varus.",
             "c_id": 3,
             "c_center": "Ukhia",
-            "purpose": null,
+            "purpose": "",
             "c_date": "2015-04-28",
             "patient_id": 5
         },
@@ -71,7 +71,7 @@
             "comments": "",
             "c_id": 1,
             "c_center": "Chakaria Disability Center",
-            "purpose": null,
+            "purpose": "",
             "c_date": "2015-04-28",
             "patient_id": 6
         }
