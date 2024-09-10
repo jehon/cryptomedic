@@ -373,7 +373,7 @@ DROP TABLE IF EXISTS `consults`;
 /*!50001 DROP VIEW IF EXISTS `consults`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `consults` AS SELECT 
+/*!50001 CREATE VIEW `consults` AS SELECT
  1 AS `type`,
  1 AS `id`,
  1 AS `created_at`,
@@ -528,7 +528,7 @@ INSERT INTO `payments` VALUES (5,'2017-02-21 19:39:30','2017-02-24 17:17:24','jo
 INSERT INTO `payments` VALUES (6,'2017-02-24 17:17:29',NULL,'murshed',5,'2014-05-20','Murshed',156,NULL);
 INSERT INTO `payments` VALUES (7,'2017-02-24 17:17:29',NULL,'murshed',2,'2014-05-20','Murshed',113,NULL);
 INSERT INTO `payments` VALUES (100,'2023-08-30 16:49:01','2023-08-30 16:49:01','jehon',100,'2023-01-02','Thierry Craviari',100,NULL);
-INSERT INTO `payments` VALUES (101,'2023-08-30 16:49:08','2023-08-30 16:49:08','jehon',100,NULL,'Shetou',150,NULL);
+INSERT INTO `payments` VALUES (101,'2023-08-30 16:49:08','2023-08-30 16:49:08','jehon',100,'2023-01-10','Shetou',150,NULL);
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 UNLOCK TABLES;
 

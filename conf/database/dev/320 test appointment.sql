@@ -57,6 +57,6 @@ VALUES
     'test-appointment',
     '102',
     '2024-01-02',
-    NULL,
+    '',
     'test data'
   );
