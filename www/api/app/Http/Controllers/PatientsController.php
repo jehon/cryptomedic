@@ -18,7 +18,7 @@ class PatientsController extends FicheController {
 
 	public function store() {
 	    $data = Request::except('_type');
-	    $data = Patient::cannonize($data);
+	    $data = Patient::canonize($data);
 
 		// In case we create a patient, things are a bit more complicated!!!
 		// We do this only when we need to generate a reference
@@ -46,7 +46,7 @@ class PatientsController extends FicheController {
 			abort(500, "Could not update the created " . $this->getModelClass()->get_class());
 		}
 		$newObj = Patient::findOrFail($id);
-	 
+
 	    return response()->json([
     		'newKey' => $id,
     		'folder' => $newObj->getRoot()->getDependantsRecords()

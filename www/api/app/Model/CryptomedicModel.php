@@ -36,10 +36,10 @@ class CryptomedicModel extends Model {
 		return str_replace(["'", " ", "\""], "", $c);
 	}
 
-	static public function cannonize($data) {
+	static public function canonize($data) {
 		if (is_array($data)) {
 			foreach ($data as $k => $v) {
-				$res = static::cannonize($v);
+				$res = static::canonize($v);
 				$data[$k] = $res;
 			}
 		}
@@ -76,7 +76,7 @@ class CryptomedicModel extends Model {
 	}
 
 	static public function create(array $attributes = array()) {
-		$attributes = self::cannonize($attributes);
+		$attributes = self::canonize($attributes);
 		$attributes = self::filterData($attributes, false);
 
 		$m = new static($attributes);
@@ -201,7 +201,7 @@ class CryptomedicModel extends Model {
 			abort(403, "File is frozen");
 		}
 
-		$this->attributes = self::cannonize($this->attributes);
+		$this->attributes = self::canonize($this->attributes);
 		$this->attributes = self::filterData($this->attributes, false);
 		if ($this->isDirty()) {
 			$this->validate();
