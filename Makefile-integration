@@ -29,13 +29,14 @@ integration-dump:
 .PHONY: integration-clean
 clean: integration-clean
 integration-clean: integration-clean-files
-	rm -fr "$(ROOT)/$(TMP)/integration"
 # Playwright browser cache
 	rm -fr "$(HOME)/.cache/ms-playwright"
 
 .PHONY: integration-clean-files
 clean: integration-clean-files
+reset: integration-clean-files
 integration-clean-files:
+	rm -fr "$(ROOT)/$(TMP)/integration"
 	rm -fr "$(ROOT)/live/"
 	jh-kill-by-port 9515 || true
 # pkill chromedriver || true
