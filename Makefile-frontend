@@ -140,13 +140,10 @@ frontend-github:
 
 .PHONY: frontend-migration-status
 frontend-migration-status: clear
-	@echo "********** In legacy folders ******************"
-	@find src -name "*.js" -exec echo "** To: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ src/ ";" | jh-tag-stdin "to-js"
+	@echo "********** [Info] Legacy files that link to src files ******************"
+	@find src -name "*.js" -exec echo "** To src: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ src/ ";" | jh-tag-stdin "legacy-to-js"
 	@echo ""
 
-	@echo "********** In src folders ******************"
-	@grep --recursive --include "*.js" --fixed-strings "../legacy/" src/ | jh-tag-stdin "warn"
-	@echo ""
-
-	@grep --files-with-matches --recursive --exclude "*.js" --fixed-strings "../legacy/" src/ | jh-tag-stdin "ko:deps"
+	@echo "********** [Problem] Src files that link to legacy files ******************"
+	@grep --recursive --include "*.js" --include "*.ts" --fixed-strings "../legacy/" src/ | jh-tag-stdin "problem"
 	@echo ""
