@@ -2,10 +2,10 @@
 /* eslint-disable */
 
 import { extractPrefsFile } from "../../../src/utils/prefs.js";
+import { getSession, onSession } from "../../../src/utils/session.js";
 import Payment from "../../business/payment.js";
 import { formGetContent } from "../v2/js/form.js";
 import getDataService from "../v2/js/getDataService.js";
-import { getSession, onSession } from "../v2/js/session.js";
 import XFffSalaryRatio from "../v2/widgets/file/x-fff-salary-ratio.js";
 
 import XFolderBill from "../v2/pages/blocks/x-folder-bill.js";

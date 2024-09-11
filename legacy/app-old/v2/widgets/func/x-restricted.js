@@ -1,5 +1,5 @@
+import { getAuthorized, onSession } from "../../../../../src/utils/session.js";
 import { createElementWithTag } from "../../js/custom-element.js";
-import { getAuthorized, onSession } from "../../js/session.js";
 import { getPanelStyles } from "../style/x-panel.js";
 
 /**

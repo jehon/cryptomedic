@@ -1,8 +1,8 @@
 import axios from "../../../../built/axios.js";
 axios.defaults.timeout = 30 * 1000;
 
+import { setSession } from "../../../../../src/utils/session.js";
 import { routeToLogin } from "../../js/router.js";
-import { setSession } from "../../js/session.js";
 
 import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
 import nullify from "../../../../../src/utils/nullify.js";

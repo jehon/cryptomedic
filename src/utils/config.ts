@@ -1,4 +1,4 @@
-import { getSession } from "../../legacy/app-old/v2/js/session";
+import { getSession } from "./session";
 
 export function getList(listName: string): string[] {
   if (!getSession()) {

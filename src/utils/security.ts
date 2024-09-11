@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 
-import { getSession, onSession } from "../../legacy/app-old/v2/js/session";
+import { getSession, onSession } from "./session";
 
 export function useRequiresTransaction(transaction?: string) {
   function getSnapshot(): boolean {

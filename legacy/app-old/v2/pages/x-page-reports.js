@@ -1,5 +1,6 @@
 import ExcellentExport from "excellentexport";
 import { getPref, setPref } from "../../../../src/utils/prefs.js";
+import { getSession } from "../../../../src/utils/session.js";
 import { messages } from "../../../config.js";
 import XInputDate from "../../v1/elements/x-input-date.js";
 import {
@@ -13,7 +14,6 @@ import {
   getRouteToFolderFileByParams,
   getRouteToFolderPatient
 } from "../js/router.js";
-import { getSession } from "../js/session.js";
 import { toSentenceCase } from "../js/string-utils.js";
 import XInputList from "../widgets/data/x-input-list.js";
 import { reportQueryBuilder } from "../widgets/func/requests-reports.js";

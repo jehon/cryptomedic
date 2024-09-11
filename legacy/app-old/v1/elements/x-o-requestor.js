@@ -1,12 +1,12 @@
 /* istanbul ignore file */
 
 import JHElement from "./jh-element.js";
-import "./x-waiting.js";
 import "./x-o-overlay.js";
+import "./x-waiting.js";
 
+import { setSession } from "../../../../src/utils/session.js";
 import axios from "../../../built/axios.js";
 import { routeToLogin } from "../../v2/js/router.js";
-import { setSession } from "../../v2/js/session.js";
 
 const error = Symbol("error");
 const waiting = Symbol("waiting");

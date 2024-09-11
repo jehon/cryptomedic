@@ -4,7 +4,7 @@ import {
   ConfigurationMissingException,
   DataMissingException
 } from "../../../../src/utils/exceptions.js";
-import { getSession, onSession } from "../../v2/js/session.js";
+import { getSession, onSession } from "../../../../src/utils/session.js";
 import XFile from "./x-file.js";
 
 export default class XFileBill extends XFile {

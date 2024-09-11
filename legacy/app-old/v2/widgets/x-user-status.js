@@ -1,9 +1,13 @@
 import {
+  getUsername,
+  onSession,
+  setSession
+} from "../../../../src/utils/session.js";
+import {
   createElementWithObject,
   createElementWithTag
 } from "../js/custom-element.js";
 import { routeToLogin } from "../js/router.js";
-import { getUsername, onSession, setSession } from "../js/session.js";
 import { logoutBuilder } from "./func/requests-authenticator.js";
 import XRequestor from "./func/x-requestor.js";
 import "./style/x-button.js";

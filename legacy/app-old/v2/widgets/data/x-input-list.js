@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
+import { getSession } from "../../../../../src/utils/session.js";
 import { createElementWithTag } from "../../js/custom-element.js";
 import fireOn from "../../js/fire.js";
-import { getSession } from "../../js/session.js";
 
 let uuid = 1;
 

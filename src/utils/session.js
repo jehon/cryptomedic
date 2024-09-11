@@ -1,4 +1,4 @@
-import duix from "../../../../node_modules/duix/build.js";
+import duix from "duix";
 const SESSION = "session";
 
 // Thanks to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze

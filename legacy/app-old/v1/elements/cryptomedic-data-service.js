@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
 import nullify from "../../../../src/utils/nullify.js";
+import { setCurrentFolder } from "../../../../src/utils/session.js";
 import Folder from "../../../business/folder.js";
-import { setCurrentFolder } from "../../v2/js/session.js";
 import TimedMap from "../../v2/js/timedMap.js";
 import XRequestor from "./x-o-requestor.js";
 

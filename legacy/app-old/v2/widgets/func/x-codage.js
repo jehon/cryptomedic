@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
+import { getSession } from "../../../../../src/utils/session.js";
 import { createElementWithTag } from "../../js/custom-element.js";
-import { getSession } from "../../js/session.js";
 
 /**
  * Transform a "value" into a bgd code

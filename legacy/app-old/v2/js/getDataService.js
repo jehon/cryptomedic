@@ -1,4 +1,4 @@
-import { getUsername, onSession } from "./session.js";
+import { getUsername, onSession } from "../../../../src/utils/session.js";
 
 /**
  * @param cssSelector

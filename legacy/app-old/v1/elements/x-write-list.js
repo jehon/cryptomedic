@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
+import { getSession, onSession } from "../../../../src/utils/session.js";
 import JHElement from "./jh-element.js";
-import { onSession, getSession } from "../../v2/js/session.js";
 
 // We sync over "document" as our EventListener object:
 const XWriteListSetReferences = "XWriteList-setReferences";
