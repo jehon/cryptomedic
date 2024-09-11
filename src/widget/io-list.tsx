@@ -1,6 +1,7 @@
+import { useContext } from "react";
 import { toTitleCase } from "../utils/strings";
 import { StringList } from "../utils/types";
-import IOAbstract, { IOProps } from "./io-abstract";
+import IOAbstract, { EditContext, IOProps } from "./io-abstract";
 
 // In other part of the application, it could be a mapping
 // Ex: io-boolean, search panels
@@ -25,6 +26,7 @@ export function buildSelect(
   name: string,
   onChange: (val: string) => void = () => {}
 ) {
+  // Select always require a selected option to be chosen
   return (
     <select
       id={uuid}
@@ -58,6 +60,7 @@ export function buildRadios(
         value="1"
         onBlur={() => onChange(k)}
         type="radio"
+        required
       />
       <label htmlFor={uuid + "." + i}>{k}</label>
     </div>
@@ -68,10 +71,15 @@ export default function IOList(
   props: { list?: string[] | Record<string, string> } & IOProps<StringList>
 ) {
   // TODO: List should be mandatory and thus ?? {} not necessary anymore
+  const edit = useContext(EditContext);
+  if (!props.list && edit && props.name) {
+    throw new Error(`No list in ${props.name}}`);
+  }
   const list: Record<string, string> = canonizeList(
     props.list ?? {},
     !props.required
   );
+  // TODO: end
 
   return IOAbstract<string>(props, {
     renderOutput: (value) => <div>{value}</div>,
