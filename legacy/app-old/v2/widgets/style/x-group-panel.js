@@ -1,4 +1,4 @@
-import { spacing } from "../../../../../src/config.js";
+import { spacing } from "../../../../config.js";
 import { createElementWithTag } from "../../js/custom-element.js";
 import { getPanelStyles } from "./x-panel.js";
 

@@ -9,7 +9,7 @@ import ConsultRicket from "../business/consult-ricket";
 import Folder from "../business/folder";
 import Picture from "../business/picture";
 import Surgery from "../business/surgery";
-import * as config from "../config.js";
+import * as config from "../config";
 import ButtonsGroup from "../styles/buttons-group";
 import { defaultWidthScreen } from "../styles/style-helpers";
 import IO from "../widget/io";

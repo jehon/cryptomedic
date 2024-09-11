@@ -1,4 +1,4 @@
-import { icons, spacing } from "../../../../../src/config.js";
+import { icons, spacing } from "../../../../config.js";
 import { createElementWithTag } from "../../js/custom-element.js";
 import { setLocation, setRoute } from "../../js/router.js";
 

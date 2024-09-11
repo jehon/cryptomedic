@@ -1,6 +1,6 @@
 import ExcellentExport from "excellentexport";
-import { messages } from "../../../../src/config.js";
 import { getPref, setPref } from "../../../../src/utils/prefs.js";
+import { messages } from "../../../config.js";
 import XInputDate from "../../v1/elements/x-input-date.js";
 import {
   createElementWithObject,

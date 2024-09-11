@@ -1,5 +1,5 @@
-import { messages } from "../../../../../src/config.js";
 import Appointment from "../../../../business/appointment.js";
+import { messages } from "../../../../config.js";
 import date2CanonicString from "../../js/date2CanonicString.js";
 import { getRouteToFolderAdd, setRoute } from "../../js/router.js";
 import "../func/x-buttons.js";
@@ -28,7 +28,7 @@ export default class XFfNextAppointment extends XWithFolder {
 
                 #withoutAppointment {
                     display: flex;
-                    flex-direction: column;        
+                    flex-direction: column;
                 }
             </style>
             <x-group-panel class='related' title='Next Appointment'>

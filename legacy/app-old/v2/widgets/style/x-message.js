@@ -1,4 +1,4 @@
-import { messages, spacing } from "../../../../../src/config.js";
+import { messages, spacing } from "../../../../config.js";
 import {
   createElementWithObject,
   createElementWithTag
