@@ -141,7 +141,7 @@ frontend-github:
 .PHONY: frontend-migration-status
 frontend-migration-status: clear
 	@echo "********** [Info] Legacy files that link to src files ******************"
-	@find src -name "*.js" -exec echo "** To src: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ src/ ";" | jh-tag-stdin "legacy-to-js"
+	@find src -name "*.js" -exec echo "** Files importing: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ src/ ";" | jh-tag-stdin "legacy-to-js"
 	@echo ""
 
 	@echo "********** [Problem] Src files that link to legacy files ******************"
