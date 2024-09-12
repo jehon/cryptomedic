@@ -75,10 +75,10 @@ export default function IOAbstract<T>(
   }
 
   // ReadOnly always prevent edit mode
-  const edit = useContext(EditContext) && writable;
+  const editContext = useContext(EditContext) && writable;
 
   // Hide if not value and output mode
-  if (!edit && !calculatedProps.value) {
+  if (!editContext && !calculatedProps.value) {
     return null;
   }
 
@@ -90,7 +90,7 @@ export default function IOAbstract<T>(
       className={
         "io " +
         (calculatedProps.note ? "io-note " : "") +
-        (edit ? "io-input" : "io-output")
+        (editContext ? "io-input" : "io-output")
       }
       data-role={getLabel(calculatedProps)}
     >
@@ -104,7 +104,7 @@ export default function IOAbstract<T>(
         className="content"
         data-e2e={calculatedProps.e2eExcluded ? "excluded" : ""}
       >
-        {edit
+        {editContext
           ? renderInput!(calculatedProps.value, uuid)
           : renderOutput(calculatedProps.value)}
       </div>
