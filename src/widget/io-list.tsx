@@ -33,7 +33,7 @@ export function buildSelect(
       className="form-control"
       name={name}
       defaultValue={value ?? ""}
-      onBlur={(evt) => onChange(evt.target.value)}
+      onChange={(evt) => onChange(evt.target.value)}
     >
       {Object.entries(list).map(([v, k]) => (
         <option key={k} value={v}>

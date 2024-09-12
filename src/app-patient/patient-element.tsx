@@ -1,4 +1,6 @@
+import { useState } from "react";
 import Patient from "../business/patient";
+import { getList } from "../utils/config";
 
 import IO from "../widget/io";
 import Panel from "../widget/panel";
@@ -7,11 +9,30 @@ import patientRelatedElementGenerator, {
   PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
+function getListFor(category: string, value: string): string[] {
+  // "district.other"
+  //
+  try {
+    return getList(`${category}.${value}`);
+  } catch (_e) {
+    // acceptable
+  }
+  return getList(`${category}.other`);
+}
+
 export default function patientElementGenerator(
   file: Patient,
   props: PatientRelatedElementGeneratorProps
 ) {
   const patient = file;
+
+  const [upazillaList, upazillaListUpdate] = useState<string[]>(
+    getListFor("district", patient.address_district)
+  );
+  const [unionList, unionListUpdate] = useState<string[]>(
+    getListFor("upazilla", patient.address_upazilla)
+  );
+
   return patientRelatedElementGenerator<Patient>(file, props, {
     header: (
       <>
@@ -37,7 +58,7 @@ export default function patientElementGenerator(
               value={parseInt(patient.entry_order)}
             />
             <IO.String name="name" value={patient.name} />
-            <IO.List name="sex" value={patient.sex} />
+            <IO.List name="sex" value={patient.sex} list={getList("sex")} />
             <IO.Number
               name="year_of_birth"
               label="Year of Birth"
@@ -48,7 +69,11 @@ export default function patientElementGenerator(
               value={patient.actualAge() as string}
               e2eExcluded
             />
-            <IO.List name="pathology" value={patient.pathology} />
+            <IO.List
+              name="pathology"
+              value={patient.pathology}
+              list={getList("Pathologies")}
+            />
             <IO.Text name="comments" value={patient.comments} />
           </Panel>
           <Panel fixed label="Address">
@@ -57,16 +82,21 @@ export default function patientElementGenerator(
               name="address_district"
               label="District"
               value={patient.address_district}
+              list={getList("Districts")}
+              onChange={(v) => upazillaListUpdate(getListFor("district", v))}
             />
             <IO.List
               name="address_upazilla"
               label="Upazilla"
               value={patient.address_upazilla}
+              list={upazillaList}
+              onChange={(v) => unionListUpdate(getListFor("upazilla", v))}
             />
             <IO.List
               name="address_union"
               label="Union"
               value={patient.address_union}
+              list={unionList}
             />
             <IO.Text name="address_comments" value={patient.address_comments} />
           </Panel>
