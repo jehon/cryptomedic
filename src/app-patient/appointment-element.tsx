@@ -18,6 +18,15 @@ export default function appointmentElementGenerator(
       <TwoColumns>
         <Panel fixed label="Information">
           <IO.Date name="date" value={file.date} required />
+          {/*
+            TODO: relative time
+            - https://gitlab.com/catamphetamine/react-time-ago/-/issues/17
+            - https://gitlab.com/catamphetamine/javascript-time-ago/-/issues/8
+
+            <IO.Function
+            label="When"
+            value={() => }
+          /> */}
           <IO.List
             name="center"
             value={file.center as string}
