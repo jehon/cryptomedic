@@ -64,9 +64,9 @@ export default function patientElementGenerator(
               label="Year of Birth"
               value={parseInt(patient.year_of_birth ?? "")}
             />
-            <IO.String
+            <IO.Function
               label="Age today"
-              value={patient.actualAge() as string}
+              value={() => patient.actualAge() as string}
               e2eExcluded
             />
             <IO.List
