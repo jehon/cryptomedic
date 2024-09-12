@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { ButtonGroup } from "react-bootstrap";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Timed from "../../business/abstracts/timed";
@@ -94,7 +95,11 @@ export default function FilePanel({
       .then(() => goEdit());
   };
 
-  const doSave = () => {
+  const doSave = (e?: React.SyntheticEvent) => {
+    if (e) {
+      // If we are call as form submit
+      e.preventDefault();
+    }
     if (!formRef.current!.checkValidity()) {
       formRef.current!.requestSubmit();
       return;
@@ -203,12 +208,6 @@ export default function FilePanel({
           ) : // File is not locked
           editMode ? (
             <>
-              <ActionButton
-                style="Confirm"
-                action="Save"
-                onOk={() => doSave()}
-              />
-              <ActionButton style="Cancel" onOk={() => doCancel()} />
               {file instanceof PatientRelated &&
                 !addMode &&
                 (!(file instanceof Patient) ||
@@ -247,6 +246,7 @@ export default function FilePanel({
           id="file"
           data-testid={"file-" + file.uid() + "-form"}
           ref={formRef}
+          onSubmit={doSave}
         >
           {file.getParentField() && (
             <input
@@ -259,6 +259,12 @@ export default function FilePanel({
             <input type="hidden" name="updated_at" value={file.updated_at} />
           )}
           {children}
+          {editMode && (
+            <ButtonGroup>
+              <ActionButton style="Confirm" action="Save" onOk={doSave} />
+              <ActionButton style="Cancel" onOk={() => doCancel()} />
+            </ButtonGroup>
+          )}
         </form>
       </EditContext.Provider>
       {footer}

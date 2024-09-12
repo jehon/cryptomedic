@@ -27,13 +27,13 @@ export default function patientElementGenerator(
         <TwoColumns>
           <Panel fixed label="Identification">
             <IO.Number
-              name="entry_year"
+              label="Entry Year"
               value={parseInt(patient.entry_year)}
               min={1980}
               max={2100}
             />
             <IO.Number
-              name="entry_order"
+              label="Entry Order"
               value={parseInt(patient.entry_order)}
             />
             <IO.String name="name" value={patient.name} />

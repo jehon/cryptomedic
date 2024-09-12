@@ -5,6 +5,7 @@ export type ActionStyleType = keyof typeof ActionStyles;
 
 export type ButtonActionProps = {
   style?: ActionStyleType;
+  default?: boolean;
   discrete?: boolean;
   action?: string;
   onOk?: () => void;
@@ -62,12 +63,13 @@ export default function ActionButton(
 
   return (
     <Restricted requires={props.requires}>
-      <div
+      <button
         className={"btn " + as.css + (props.discrete ? " discrete " : "")}
         onClick={onOk}
+        {...(props.default ? { type: "submit" } : {})}
       >
         {action}
-      </div>
+      </button>
     </Restricted>
   );
 }
