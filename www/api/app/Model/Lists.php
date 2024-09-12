@@ -10,7 +10,7 @@ class Lists {
         "codes" => [],        // array(code => translation/value)
         "associations" => [], // key => list of associated values (ex: upazilla => [ districts ])
     ];
-    
+
     static function getAll(): array {
         return self::$dataListings;
     }
@@ -49,11 +49,16 @@ function withCode(string $value, string $code = null): string {
     return $value;
 }
 
+// TODO: remove associate !
 function associate(string $from, string $to): string {
     if (!array_key_exists($to, Lists::$dataListings['associations'])) {
         Lists::$dataListings['associations'][$to] = array();
     }
     array_push(Lists::$dataListings['associations'][$to], $from);
+    if (!array_key_exists($to, Lists::$dataListings['lists'])) {
+        Lists::$dataListings['lists'][$to] = [];
+    }
+    array_push(Lists::$dataListings['lists'][$to], $from);
     return $from;
 }
 

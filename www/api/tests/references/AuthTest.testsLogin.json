@@ -412,6 +412,25 @@
             "Bandarban",
             "~ Other ~"
         ],
+        "district.Cox's Bazar": [
+            "Chakaria",
+            "Cox's Bazar Sadar",
+            "Ukhia",
+            "Ramu",
+            "Pekua",
+            "Kutubdia",
+            "Moheshkhali",
+            "Teknaf"
+        ],
+        "district.Chittagong": [
+            "Chandanish",
+            "Patia",
+            "Shatkania",
+            "Lohagora"
+        ],
+        "district.other": [
+            "~ Other ~"
+        ],
         "Upazillas": [
             "Chakaria",
             "Chandanish",
@@ -425,6 +444,93 @@
             "Shatkania",
             "Teknaf",
             "Ukhia",
+            "~ Other ~"
+        ],
+        "upazilla.Teknaf": [
+            "Senmartin",
+            "Shabrang",
+            "Teknaf Sadar",
+            "Phourashava",
+            "Bahar Chara",
+            "Nhila",
+            "Hakkan"
+        ],
+        "upazilla.Pekua": [
+            "Pekua",
+            "Barobakia",
+            "Shilkhali",
+            "Taytang",
+            "Magnama",
+            "Rajakhali",
+            "Ujantia"
+        ],
+        "upazilla.Ukhia": [
+            "Halodia Palang",
+            "Ratna Palang",
+            "Raja Palang",
+            "Jalia Palang",
+            "Palang Khali"
+        ],
+        "upazilla.Ramu": [
+            "Chakmar Kul",
+            "Kawar Kup",
+            "Dakkin Mitachari",
+            "Juaria Nala",
+            "Photekarkul",
+            "Kochchapia",
+            "Rasid Nagar",
+            "Gorjania",
+            "RajarKool",
+            "Eidgar",
+            "Khonia Palang"
+        ],
+        "upazilla.Cox's Bazar Sadar": [
+            "Varoakhali",
+            "Chafuldhandi",
+            "Eidgha",
+            "Islamabad",
+            "Jalalabad",
+            "Jilongja",
+            "Khoroshkhol",
+            "Masuakhali",
+            "P.M. Khali",
+            "Pukkhali",
+            "Cos'x Bazar Sadar",
+            "Islampur"
+        ],
+        "upazilla.Moheshkhali": [
+            "Dhalghat",
+            "Kalamar Chara",
+            "Bara Moheshkhali",
+            "Hoanak",
+            "Shaplapur",
+            "Kutobzom",
+            "Chota Moheshkhali",
+            "Phour Shava",
+            "Matarbari"
+        ],
+        "upazilla.Chakaria": [
+            "Harbang",
+            "Baraitoly",
+            "Kayarbil",
+            "Lakkar Char",
+            "Kakara",
+            "Surajpur",
+            "Chiringa",
+            "Bomobil Chory",
+            "Fashia Khali",
+            "Dulahazara",
+            "Khutakhali",
+            "Shaharbil",
+            "Purbaboroveola",
+            "Passim .B Veola",
+            "B.M. Char",
+            "Badar Khali",
+            "Kona Khali",
+            "Demoshia",
+            "Phourashava"
+        ],
+        "upazilla.other": [
             "~ Other ~"
         ],
         "Unions": [
