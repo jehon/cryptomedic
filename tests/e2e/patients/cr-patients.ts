@@ -1,7 +1,8 @@
 import { Locator, Page } from "playwright-core";
 import { expect } from "playwright/test";
 import { CRUD, JsonData } from "../../../src/constants";
-import { crApi, crInit, expectFieldValue, setFieldValue } from "../helpers/cr";
+import { crApi, crInit } from "../helpers/cr";
+import { crForm } from "../helpers/cr-form";
 export { crInit, crLegacyInput, outputDate } from "../helpers/cr";
 
 export async function crPatientInit(
@@ -24,18 +25,10 @@ export async function crPatientFile(
 ) {
   await crPatientInit(page, "" + patient_id, uuid);
   const panel = await page.getByTestId(uuid);
-  const form = await page.getByTestId(`file-${uuid}-form`);
-  await expect(form).toBeVisible();
 
   return {
     panel,
-    form,
-    /**
-     * If value is not defined, it is expected to be empty and invisible
-     */
-    expectFieldValue: (label, value?) => expectFieldValue(form, label, value),
-    setFieldValue: (label, value, type?) =>
-      setFieldValue(form, label, value, type)
+    ...(await crForm(page, await page.getByTestId(`file-${uuid}-form`)))
   };
 }
 

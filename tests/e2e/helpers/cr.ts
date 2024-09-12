@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { APIResponse, expect, Locator, Page } from "@playwright/test";
 import { CRUD, CRUDType, JsonData } from "../../../src/constants";
 import { passThrough } from "../../../src/utils/promises";
 export { outputDate } from "../../../src/utils/date";
@@ -34,6 +34,7 @@ export function crApi(
   //
   // Return the response object (json)
   //
+
   return page.request[(options.method ?? CRUD.read).toLowerCase()](
     crUrlAPI(url),
     {
@@ -41,7 +42,7 @@ export function crApi(
     }
   )
     .then(
-      passThrough((resp) => {
+      passThrough<APIResponse>((resp) => {
         if (resp.status() != 200) {
           throw new Error(
             "Server responded with invalid status: " + resp.status()
@@ -123,58 +124,6 @@ export async function crReady(
   //   // No ToastR
   //   await expect(page.getByRole("alert")).toHaveCount(0);
   // }
-}
-
-export function expectField(where: Page | Locator, label: string): Locator {
-  return where.locator(`[data-role='${label}']`);
-}
-
-export async function expectFieldValue(
-  where: Page | Locator,
-  label: string,
-  value?: string | number
-): Promise<void> {
-  const io = expectField(where, label);
-
-  if (value) {
-    await expect(io).toBeVisible();
-
-    const ioc = io.locator(".content");
-    await expect(ioc).toBeVisible();
-    await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
-  } else {
-    await expect(io).not.toBeVisible();
-  }
-}
-
-export async function setFieldValue(
-  where: Page | Locator,
-  label: string,
-  value: string,
-  type: "" | "textarea" | "select" = ""
-): Promise<void> {
-  const io = expectField(where, label);
-  await expect(io).toBeVisible();
-
-  const ioc = io.locator(".content");
-  await expect(ioc).toBeVisible();
-
-  switch (type) {
-    case "":
-      await expect(ioc.locator("input")).toBeVisible();
-      await ioc.locator("input").fill("" + value);
-      break;
-    case "textarea":
-      await expect(ioc.locator("textarea")).toBeVisible();
-      await ioc.locator("textarea").fill("" + value);
-      break;
-    case "select":
-      await expect(ioc.locator("select")).toBeVisible();
-      await ioc.locator("select").selectOption({ label: "" + value });
-      break;
-    default:
-      throw new Error("Unknown type: " + type);
-  }
 }
 
 export async function crLegacyInput(
