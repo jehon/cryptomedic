@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { crExpectUrl } from "./cr";
 
 function expectField(where: Page | Locator, label: string): Locator {
   return where.locator(`[data-role='${label}']`);
@@ -52,7 +53,23 @@ async function setFieldValue(
   }
 }
 
-export async function crFile(page: Page, panelTestid: string) {
+async function goEdit(page: Page, baseUrl: string) {
+  await expect(page.getByText("Edit")).toBeVisible();
+  await page.getByText("Edit").click();
+
+  await crExpectUrl(page, new RegExp(`${baseUrl}[0-9]+[/]edit`));
+  await expect(page.getByText("Save")).toBeVisible();
+}
+
+async function doSave(page: Page, baseUrl: string) {
+  await expect(page.getByText("Save")).toBeVisible();
+  await page.getByText("Save").click();
+
+  await crExpectUrl(page, new RegExp(`${baseUrl}[0-9]`));
+  await expect(page.getByText("Edit")).toBeVisible();
+}
+
+export async function crFile(page: Page, panelTestid: string, baseUrl: string) {
   const panel = await page.getByTestId(panelTestid);
   await expect(panel).toBeVisible();
   const form = await panel.locator("form");
@@ -66,7 +83,8 @@ export async function crFile(page: Page, panelTestid: string) {
      */
     expectFieldValue: (label, value?) => expectFieldValue(form, label, value),
     setFieldValue: (label, value, type?) =>
-      setFieldValue(form, label, value, type)
-    // goEdit: (page, form) => goEdit(page, form)
+      setFieldValue(form, label, value, type),
+    goEdit: () => goEdit(page, baseUrl),
+    doSave: () => doSave(page, baseUrl)
   };
 }
