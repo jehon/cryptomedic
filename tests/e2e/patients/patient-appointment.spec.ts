@@ -29,16 +29,10 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   await panel.panel.getByText("Save").click();
   await expect(panel.panel.getByText("Edit")).not.toBeVisible();
 
-  // Add: Save
   await panel.setFieldValue("Date", "2022-05-06");
   await panel.doSave();
-
   await panel.goEdit();
-
-  // Delete
   await panel.doDelete();
-
-  // Deleted
   await crExpectUrl(
     page,
     new RegExp(".*" + escapeRegExp("#/folder/102/summary"))
