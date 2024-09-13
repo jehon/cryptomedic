@@ -52,10 +52,14 @@ async function setFieldValue(
   }
 }
 
-export async function crFile(_page: Page, form: Locator) {
+export async function crFile(page: Page, panelTestid: string) {
+  const panel = await page.getByTestId(panelTestid);
+  await expect(panel).toBeVisible();
+  const form = await panel.locator("form");
   await expect(form).toBeVisible();
 
   return {
+    panel,
     form,
     /**
      * If value is not defined, it is expected to be empty and invisible

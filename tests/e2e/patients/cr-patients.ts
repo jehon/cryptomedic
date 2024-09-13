@@ -24,12 +24,7 @@ export async function crPatientFile(
   uuid: string = `patient.${patient_id}`
 ) {
   await crPatientInit(page, "" + patient_id, uuid);
-  const panel = await page.getByTestId(uuid);
-
-  return {
-    panel,
-    ...(await crFile(page, await page.getByTestId(`file-${uuid}-form`)))
-  };
+  return crFile(page, uuid);
 }
 
 export function crApiFileUpdate(
