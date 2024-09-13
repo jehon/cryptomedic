@@ -44,6 +44,8 @@ export function isTodoMigration(type: typeof Pojo) {
   ].includes(type.getModel());
 }
 
+// TODO: make routing more abstract
+
 export default function FilePanel({
   file,
   header,
