@@ -94,7 +94,7 @@ update-e2e:
     - make dc-build
     - make start
     - make dependencies
-    - UPDATE=1 make integration-update-playwright
+    - make integration-update-playwright
     - git status
   artifacts:
     when: always

@@ -179,8 +179,6 @@ jobs:
       - run: make dependencies
 
       - run: make integration-update-playwright
-        env:
-            UPDATE: 1
 
       - run: git status
 

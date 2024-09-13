@@ -137,7 +137,7 @@ integration-update-playwright: \
 		playwright.config.ts \
 		$(HOME)/.cache/ms-playwright
 
-	node_modules/.bin/playwright test --update-snapshots
+	CI=1 node_modules/.bin/playwright test --update-snapshots
 
 .PHONY: integration-test-playwright-styles
 integration-test-playwright-styles: $(INTEGRATION_TEST_TMP)/playwright/.tested
