@@ -24,8 +24,10 @@ export async function crPatientFile(
   uuid: string = `patient.${patient_id}`
 ) {
   const type = uuid.split(".")[0];
+  const fileBaseUrl = `#/folder/${patient_id}/summary/${type}.`;
+
   await crPatientInit(page, "" + patient_id, uuid);
-  return crFile(page, uuid, `#/folder/${patient_id}/summary/${type}.`);
+  return crFile(page, uuid, fileBaseUrl);
 }
 
 export function crApiFileUpdate(
