@@ -53,23 +53,38 @@ async function setFieldValue(
   }
 }
 
-async function goEdit(page: Page, baseUrl: string) {
+async function goEdit(page: Page, fileBaseUrl: string) {
   await expect(page.getByText("Edit")).toBeVisible();
   await page.getByText("Edit").click();
 
-  await crExpectUrl(page, new RegExp(`${baseUrl}[0-9]+[/]edit`));
+  await crExpectUrl(page, new RegExp(`${fileBaseUrl}[0-9]+[/]edit`));
   await expect(page.getByText("Save")).toBeVisible();
 }
 
-async function doSave(page: Page, baseUrl: string) {
+async function doSave(page: Page, fileBaseUrl: string) {
   await expect(page.getByText("Save")).toBeVisible();
   await page.getByText("Save").click();
 
-  await crExpectUrl(page, new RegExp(`${baseUrl}[0-9]`));
+  await crExpectUrl(page, new RegExp(`${fileBaseUrl}[0-9]`));
   await expect(page.getByText("Edit")).toBeVisible();
 }
 
-export async function crFile(page: Page, panelTestid: string, baseUrl: string) {
+async function doDelete(page: Page) {
+  await page.getByText("Delete").click();
+  const popup = page.getByTestId("popup");
+  await expect(popup).toBeVisible();
+  const popupActions = popup.getByRole("group");
+  await expect(popupActions).toBeVisible();
+  await expect(popupActions.getByText("Cancel")).toBeVisible();
+  await expect(popupActions.getByText("Delete")).toBeVisible();
+  await popupActions.getByText("Delete").click();
+}
+
+export async function crFile(
+  page: Page,
+  panelTestid: string,
+  fileBaseUrl: string
+) {
   const panel = await page.getByTestId(panelTestid);
   await expect(panel).toBeVisible();
   const form = await panel.locator("form");
@@ -84,7 +99,8 @@ export async function crFile(page: Page, panelTestid: string, baseUrl: string) {
     expectFieldValue: (label, value?) => expectFieldValue(form, label, value),
     setFieldValue: (label, value, type?) =>
       setFieldValue(form, label, value, type),
-    goEdit: () => goEdit(page, baseUrl),
-    doSave: () => doSave(page, baseUrl)
+    goEdit: () => goEdit(page, fileBaseUrl),
+    doSave: () => doSave(page, fileBaseUrl),
+    doDelete: () => doDelete(page)
   };
 }

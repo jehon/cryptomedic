@@ -20,32 +20,23 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   const panel = await crPatientFile(page, 102, "appointment.add");
 
   // Add
-  await expect(panel.panel).toBeVisible();
   await crExpectUrl(
     page,
     new RegExp(".*" + escapeRegExp("#/folder/102/summary/appointment.") + "add")
   );
 
-  // Edit: Not acceptable form...
+  // Add: Not acceptable form...
   await panel.panel.getByText("Save").click();
   await expect(panel.panel.getByText("Edit")).not.toBeVisible();
 
-  // Edit: Save
+  // Add: Save
   await panel.setFieldValue("Date", "2022-05-06");
   await panel.doSave();
 
-  // Edit again
   await panel.goEdit();
 
   // Delete
-  await page.getByText("Delete").click();
-  const popup = page.getByTestId("popup");
-  await expect(popup).toBeVisible();
-  const popupActions = popup.getByRole("group");
-  await expect(popupActions).toBeVisible();
-  await expect(popupActions.getByText("Cancel")).toBeVisible();
-  await expect(popupActions.getByText("Delete")).toBeVisible();
-  await popupActions.getByText("Delete").click();
+  await panel.doDelete();
 
   // Deleted
   await crExpectUrl(
@@ -77,29 +68,13 @@ test("2010-001 update appointment", async ({ page }) => {
   await panel.expectFieldValue("Center");
   await panel.expectFieldValue("Purpose", "test data");
 
-  // Edit
-  await panel.panel.getByText("Edit").click();
-  await crExpectUrl(
-    page,
-    new RegExp(
-      ".*" + escapeRegExp("#/folder/102/summary/appointment.") + "[0-9]+\\/edit"
-    )
-  );
-  await expect(panel.panel.getByText("Save")).toBeVisible();
+  await panel.goEdit();
   await panel.setFieldValue("Date", "2024-10-11");
   await panel.setFieldValue("Center", "Chakaria Disability Center", "select");
   await panel.setFieldValue("Purpose", "test running", "textarea");
   await expect(panel.panel).toHaveScreenshot();
-  await panel.panel.getByText("Save").click();
 
-  // Saved
-  await crExpectUrl(
-    page,
-    new RegExp(
-      ".*" + escapeRegExp("#/folder/102/summary/appointment.") + "[0-9]+"
-    )
-  );
-  await expect(panel.panel.getByText("Edit")).toBeVisible();
+  await panel.doSave();
   await expect(panel.panel).toHaveScreenshot();
   await panel.expectFieldValue("Date", outputDate("2024-10-11"));
   await panel.expectFieldValue("Center", "Chakaria Disability Center");
