@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { escapeRegExp } from "../../../src/utils/strings";
 import { crApiLogin, crExpectUrl } from "../helpers/cr";
 import { crApiFileUpdate, crPatientFile, outputDate } from "./cr-patients";
 
@@ -22,7 +23,7 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   await expect(panel.panel).toBeVisible();
   await crExpectUrl(
     page,
-    new RegExp(/.*#\/folder\/102\/summary\/appointment.add/)
+    new RegExp(".*" + escapeRegExp("#/folder/102/summary/appointment.") + "add")
   );
 
   // Edit: Not acceptable form...
@@ -34,7 +35,9 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   await panel.panel.getByText("Save").click();
   await crExpectUrl(
     page,
-    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+/)
+    new RegExp(
+      ".*" + escapeRegExp("#/folder/102/summary/appointment.") + "[0-9]+"
+    )
   );
 
   // Saved
@@ -44,7 +47,9 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   await page.getByText("Edit").click();
   await crExpectUrl(
     page,
-    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+\/edit/)
+    new RegExp(
+      ".*" + escapeRegExp("#/folder/102/summary/appointment.") + "[0-9]+\\/edit"
+    )
   );
 
   // Delete
@@ -58,7 +63,10 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   await popupActions.getByText("Delete").click();
 
   // Deleted
-  await crExpectUrl(page, new RegExp(/.*#\/folder\/102\/summary/));
+  await crExpectUrl(
+    page,
+    new RegExp(".*" + escapeRegExp("#/folder/102/summary"))
+  );
   await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0);
 });
 
@@ -75,7 +83,9 @@ test("2010-001 update appointment", async ({ page }) => {
   const panel = await crPatientFile(page, 102, "appointment.101");
   await crExpectUrl(
     page,
-    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+/)
+    new RegExp(
+      ".*" + escapeRegExp("#/folder/102/summary/appointment.") + "[0-9]+"
+    )
   );
 
   await panel.expectFieldValue("Date", outputDate("2024-01-02"));
@@ -86,7 +96,9 @@ test("2010-001 update appointment", async ({ page }) => {
   await panel.panel.getByText("Edit").click();
   await crExpectUrl(
     page,
-    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+\/edit/)
+    new RegExp(
+      ".*" + escapeRegExp("#/folder/102/summary/appointment.") + "[0-9]+\\/edit"
+    )
   );
   await expect(panel.panel.getByText("Save")).toBeVisible();
   await panel.setFieldValue("Date", "2024-10-11");
@@ -98,7 +110,9 @@ test("2010-001 update appointment", async ({ page }) => {
   // Saved
   await crExpectUrl(
     page,
-    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+/)
+    new RegExp(
+      ".*" + escapeRegExp("#/folder/102/summary/appointment.") + "[0-9]+"
+    )
   );
   await expect(panel.panel.getByText("Edit")).toBeVisible();
   await expect(panel.panel).toHaveScreenshot();
