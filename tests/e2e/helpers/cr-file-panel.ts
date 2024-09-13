@@ -1,5 +1,4 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { crExpectUrl } from "./cr";
 
 function expectField(where: Page | Locator, label: string): Locator {
   return where.locator(`[data-role='${label}']`);
@@ -53,7 +52,7 @@ async function setFieldValue(
   }
 }
 
-export async function crForm(_page: Page, form: Locator) {
+export async function crFile(_page: Page, form: Locator) {
   await expect(form).toBeVisible();
 
   return {
@@ -64,14 +63,6 @@ export async function crForm(_page: Page, form: Locator) {
     expectFieldValue: (label, value?) => expectFieldValue(form, label, value),
     setFieldValue: (label, value, type?) =>
       setFieldValue(form, label, value, type)
+    // goEdit: (page, form) => goEdit(page, form)
   };
-}
-
-export async function crFormEdit(locator: Page | Locator) {
-  await locator.getByText("Edit").click();
-  await crExpectUrl(
-    "page" in locator ? (locator as Locator).page() : (locator as Page),
-    new RegExp(/.*#\/folder\/102\/summary\/appointment\.[0-9]+\/edit/)
-  );
-  await expect(locator.getByText("Save")).toBeVisible();
 }

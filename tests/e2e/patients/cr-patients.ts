@@ -2,7 +2,7 @@ import { Locator, Page } from "playwright-core";
 import { expect } from "playwright/test";
 import { CRUD, JsonData } from "../../../src/constants";
 import { crApi, crInit } from "../helpers/cr";
-import { crForm } from "../helpers/cr-form";
+import { crFile } from "../helpers/cr-file-panel";
 export { crInit, crLegacyInput, outputDate } from "../helpers/cr";
 
 export async function crPatientInit(
@@ -28,7 +28,7 @@ export async function crPatientFile(
 
   return {
     panel,
-    ...(await crForm(page, await page.getByTestId(`file-${uuid}-form`)))
+    ...(await crFile(page, await page.getByTestId(`file-${uuid}-form`)))
   };
 }
 
