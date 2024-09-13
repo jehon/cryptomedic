@@ -76,3 +76,8 @@ export function toAttributeCase(text: string): string {
 export function toTitleCase(text: string): string {
   return _canonize(text).map(toUpperWordCase).join(" ");
 }
+
+export function escapeRegExp(string: string): string {
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions#escaping
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+}

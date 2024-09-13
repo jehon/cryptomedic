@@ -1,6 +1,12 @@
 import assert from "node:assert";
 import test from "node:test";
-import { padLeftTrim, roundTo, toAttributeCase, toTitleCase } from "./strings";
+import {
+  escapeRegExp,
+  padLeftTrim,
+  roundTo,
+  toAttributeCase,
+  toTitleCase
+} from "./strings";
 
 // https://jestjs.io/fr/docs/expect
 test("padLeftTrim", () => {
@@ -24,4 +30,15 @@ test("roundTo", function () {
   assert.equal(roundTo(12.345, 0), "12");
   assert.equal(roundTo(12.345, 1), "12.3");
   assert.equal(roundTo(12.345, 5), "12.34500");
+});
+
+test("escapeRegExp", function () {
+  assert.equal(
+    new RegExp(escapeRegExp("/blabla/something")).test("/blabla/something"),
+    true
+  );
+  assert.equal(
+    new RegExp(escapeRegExp("/blabla/something")).test("_blabla_something"),
+    false
+  );
 });
