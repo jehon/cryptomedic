@@ -46,8 +46,12 @@ export default function Panel({
   }
 
   return (
-    <div className={fullscreen ? "fullscreen" : ""}>
-      <div className="panel" data-role="panel" data-testid={testid}>
+    <div className={fullscreen ? "fullscreen" : ""} data-testid={testid}>
+      <div
+        className="panel"
+        data-role="panel"
+        data-testid={testid + (statusOpened ? "/opened" : "/closed")}
+      >
         <div data-role="header" className="header" onClick={onOpenClose}>
           {fixed || (
             <div id="triangle" className={statusOpened ? "opened" : "closed"}>

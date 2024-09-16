@@ -12,7 +12,10 @@ class CrFile {
   ) {}
 
   async init(): Promise<CrFile> {
-    this.panel = await this.page.getByTestId(this.panelTestid);
+    // We take the data-role=panel to avoid the fullscreen overlay
+    this.panel = await this.page
+      .getByTestId(this.panelTestid)
+      .locator(">[data-role='panel']");
     await expect(this.panel).toBeVisible();
     this.form = await this.panel.locator("form");
     await expect(this.form).toBeVisible();

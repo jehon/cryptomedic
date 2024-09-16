@@ -13,11 +13,11 @@ export const LOGINS = {
 
 export const PASSWORD = "p";
 
-function crUrl(segment: string = ""): string {
+export function crUrl(segment: string = ""): string {
   return `${WebBaseUrl}/built/frontend/ng1x.html#${segment}`;
 }
 
-function crUrlAPI(segment: string = ""): string {
+export function crUrlAPI(segment: string = ""): string {
   return `${WebBaseUrl}/api${segment}`;
 }
 
