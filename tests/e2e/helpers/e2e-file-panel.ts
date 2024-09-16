@@ -63,7 +63,7 @@ export class E2EFilePanel {
     );
   }
 
-  async waitVisible(): Promise<E2EFilePanel> {
+  async waitVisible(): Promise<this> {
     await expect(this.panel).toBeVisible();
     await expect(this.form).toBeVisible();
     return this;
@@ -75,12 +75,12 @@ export class E2EFilePanel {
    *
    */
 
-  async go(): Promise<E2EFilePanel> {
+  async go(): Promise<this> {
     await this.e2ePatient.go();
     return this.doOpen();
   }
 
-  async doDelete(): Promise<E2EFilePanel> {
+  async doDelete(): Promise<this> {
     await this.waitVisible();
 
     await this.page.getByText("Delete").click();
@@ -95,7 +95,7 @@ export class E2EFilePanel {
     return this;
   }
 
-  async doOpen(): Promise<E2EFilePanel> {
+  async doOpen(): Promise<this> {
     await expect(this.panel).toBeVisible();
     await this.panel.click(); // the panel is the closed item
 
@@ -109,7 +109,7 @@ export class E2EFilePanel {
     return this.waitVisible();
   }
 
-  async doSave(): Promise<E2EFilePanel> {
+  async doSave(): Promise<this> {
     await this.waitVisible();
 
     await expect(this.page.getByText("Save")).toBeVisible();
@@ -124,7 +124,7 @@ export class E2EFilePanel {
     return this.waitVisible();
   }
 
-  async goEdit(): Promise<E2EFilePanel> {
+  async goEdit(): Promise<this> {
     await this.waitVisible();
 
     await expect(this.page.getByText("Edit")).toBeVisible();
@@ -150,7 +150,7 @@ export class E2EFilePanel {
     return this.form.locator(`[data-role='${label}']`);
   }
 
-  async expectFieldValue(label, value?): Promise<E2EFilePanel> {
+  async expectFieldValue(label, value?): Promise<this> {
     const io = await this.expectField(label);
 
     if (value) {
@@ -170,7 +170,7 @@ export class E2EFilePanel {
     label: string,
     value: string,
     type: "" | "textarea" | "select" = ""
-  ): Promise<E2EFilePanel> {
+  ): Promise<this> {
     const io = await this.expectField(label);
     await expect(io).toBeVisible();
 

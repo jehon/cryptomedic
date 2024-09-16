@@ -38,12 +38,13 @@ export class E2EPatient {
     return new E2EFilePanel(this, type, "" + fileId);
   }
 
-  async go() {
+  async go(): Promise<this> {
     await crInit(this.page, {
       page: `/folder/${this.id}/summary/`
     });
     const panel = await this.page.getByTestId(`folder-${this.id}`);
     await expect(panel).toBeVisible();
+    return this;
   }
 
   static apiDelete(
