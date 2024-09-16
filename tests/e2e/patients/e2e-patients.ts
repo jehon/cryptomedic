@@ -1,6 +1,7 @@
 import { Page } from "playwright-core";
 import { expect } from "playwright/test";
-import { crInit } from "../helpers/cr";
+import { CRUD } from "../../../src/constants";
+import { crApi, crInit } from "../helpers/cr";
 import { E2EFilePanel } from "../helpers/e2e-file-panel";
 export { crInit, crLegacyInput, outputDate } from "../helpers/cr";
 
@@ -43,5 +44,25 @@ export class E2EPatient {
     });
     const panel = await this.page.getByTestId(`folder-${this.id}`);
     await expect(panel).toBeVisible();
+  }
+
+  static apiDelete(
+    page: Page,
+    entry_year: number,
+    entry_order: number
+  ): Promise<void> {
+    return crApi(page, `/reference/${entry_year}/${entry_order}`)
+      .then(
+        (folder) =>
+          folder?.id > 0
+            ? crApi(page, `/fiche/patients/${folder.id}`, {
+                method: CRUD.delete
+              })
+            : undefined,
+        () => {
+          // If the file is not found, it's ok
+        }
+      )
+      .then(() => undefined);
   }
 }

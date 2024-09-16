@@ -1,24 +1,25 @@
 import { expect, test } from "@playwright/test";
 import { crApiLogin, outputDate } from "../helpers/cr";
-import { crPatientFile } from "./cr-patients";
+import { E2EPatient } from "./e2e-patients";
 
 test("2000-001.bill.1", async ({ page }) => {
   await crApiLogin(page);
+  const e2eFile = await new E2EPatient(page, 1).getFile("bill", 1).go();
 
-  const panel = await crPatientFile(page, 1, "bill.1");
-  await panel.expectFieldValue("Date", outputDate("2011-06-09"));
-  await panel.expectFieldValue("Consult CDC Consultation Physio", "1");
-  await panel.expectFieldValue("Consult Other");
-  await panel.expectFieldValue("Price asked", 6720);
-  await expect(panel.form).toHaveScreenshot();
-  await expect(panel.panel).toHaveScreenshot();
+  await e2eFile.expectFieldValue("Date", outputDate("2011-06-09"));
+  await e2eFile.expectFieldValue("Consult CDC Consultation Physio", "1");
+  await e2eFile.expectFieldValue("Consult Other");
+  await e2eFile.expectFieldValue("Price asked", 6720);
+  await expect(e2eFile.form).toHaveScreenshot();
+  await expect(e2eFile.panel).toHaveScreenshot();
 });
 
 test("2014-103.bill.2", async ({ page }) => {
   await crApiLogin(page);
 
-  const panel = await crPatientFile(page, 3, "bill.2");
-  await panel.expectFieldValue("Family Salary", 4500);
+  const e2eFile = await new E2EPatient(page, 3).getFile("bill", 2).go();
+
+  await e2eFile.expectFieldValue("Family Salary", 4500);
   const paymentPanel = await page.getByTestId("bill.2.payments");
   await expect(paymentPanel).toBeVisible();
   const payment2 = paymentPanel.getByTestId("payment.2");

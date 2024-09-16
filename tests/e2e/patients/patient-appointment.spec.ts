@@ -2,15 +2,17 @@ import { expect, test } from "@playwright/test";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { crApiLogin, crExpectUrl } from "../helpers/cr";
 import { crApiFileUpdate, crPatientFile, outputDate } from "./cr-patients";
+import { E2EPatient } from "./e2e-patients";
 
 // See 320 test appointment.sql for data
 
 test("2000-001.appointment.2", async ({ page }) => {
   await crApiLogin(page);
-  const panel = await crPatientFile(page, 1, "appointment.2");
-  await panel.expectFieldValue("Date", outputDate("2015-04-28"));
-  await expect(panel.form).toHaveScreenshot();
-  await expect(panel.panel).toHaveScreenshot();
+  const e2eFile = await new E2EPatient(page, 1).getFile("appointment", 2).go();
+
+  await e2eFile.expectFieldValue("Date", outputDate("2015-04-28"));
+  await expect(e2eFile.form).toHaveScreenshot();
+  await expect(e2eFile.panel).toHaveScreenshot();
 });
 
 test("2010-001 create and delete appointment", async ({ page }) => {

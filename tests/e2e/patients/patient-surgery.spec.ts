@@ -1,14 +1,14 @@
 import { expect, test } from "@playwright/test";
 import { crApiLogin, outputDate } from "../helpers/cr";
-import { crPatientFile } from "./cr-patients";
+import { E2EPatient } from "./e2e-patients";
 
 test("2000-001.surgery.5", async ({ page }) => {
   await crApiLogin(page);
+  const e2eFile = await new E2EPatient(page, 1).getFile("surgery", 5).go();
 
-  const panel = await crPatientFile(page, 1, "surgery.5");
-  await panel.expectFieldValue("Date", outputDate("2014-01-02"));
-  await panel.expectFieldValue("Diagnostic", "test");
-  await panel.expectFieldValue("Follow-Up Complications", "nothing");
-  await expect(panel.form).toHaveScreenshot();
-  await expect(panel.panel).toHaveScreenshot();
+  await e2eFile.expectFieldValue("Date", outputDate("2014-01-02"));
+  await e2eFile.expectFieldValue("Diagnostic", "test");
+  await e2eFile.expectFieldValue("Follow-Up Complications", "nothing");
+  await expect(e2eFile.form).toHaveScreenshot();
+  await expect(e2eFile.panel).toHaveScreenshot();
 });

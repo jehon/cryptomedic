@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { crApiLogin, crLegacyInput } from "../helpers/cr";
-import { crApiPatientDelete, crInit } from "./cr-patients";
+import { crApiLogin, crInit, crLegacyInput } from "../helpers/cr";
+import { E2EPatient } from "./e2e-patients";
 
 test("create-reference-2002", async ({ page }) => {
   await crApiLogin(page);
@@ -9,7 +9,7 @@ test("create-reference-2002", async ({ page }) => {
   const GenerateOrder = 1234;
 
   await crInit(page, { page: "/home" });
-  await crApiPatientDelete(page, GenerateYear, GenerateOrder);
+  await E2EPatient.apiDelete(page, GenerateYear, GenerateOrder);
 
   const patientByReferencePanel = page.locator("x-patient-by-reference");
   await expect(patientByReferencePanel).toBeVisible();
@@ -54,7 +54,7 @@ test("generate-reference", async ({ page }) => {
   await crInit(page, { page: "/home" });
 
   // entry_order will be set automatically to 10.000
-  await crApiPatientDelete(page, GenerateYear, 10000);
+  await E2EPatient.apiDelete(page, GenerateYear, 10000);
 
   const patientGenerateReferencePanel = page.locator("#autogenerate-reference");
   await expect(patientGenerateReferencePanel).toBeVisible();
