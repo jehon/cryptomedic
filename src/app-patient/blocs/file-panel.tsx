@@ -157,7 +157,7 @@ export default function FilePanel({
       closed={closed}
       fullscreen={editMode}
       onToggle={(_opened) => {
-        // TODO: when angular router is out
+        // TODO: when angular router is out (adapt e2e file panel goEdit too)
         // if (opened) {
         //   location.hash = routeToFolderFile(folder, file);
         // }
