@@ -1,8 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { crApiLogin, crExpectUrl } from "../helpers/cr";
-import { crApiFileUpdate, crPatientFile, outputDate } from "./cr-patients";
-import { E2EPatient } from "./e2e-patients";
+import { E2EPatient, outputDate } from "./e2e-patients";
 
 // See 320 test appointment.sql for data
 
@@ -45,34 +44,29 @@ test("2010-001 create and delete appointment", async ({ page }) => {
 test("2010-001 update appointment", async ({ page }) => {
   await crApiLogin(page);
 
-  // Load
-  await crApiFileUpdate(page, "appointments", {
-    id: 101,
+  const e2eFile = new E2EPatient(page, 102).getFile("appointment", 101);
+  await e2eFile.apiFileUpdate(101, {
+    id: "101",
     center: "",
     date: "2024-01-02",
     purpose: "test data"
   });
-  const panel = await crPatientFile(page, 102, "appointment.101");
-  await crExpectUrl(
-    page,
-    new RegExp(
-      ".*" + escapeRegExp("#/folder/102/summary/appointment.") + "[0-9]+"
-    )
-  );
 
-  await panel.expectFieldValue("Date", outputDate("2024-01-02"));
-  await panel.expectFieldValue("Center");
-  await panel.expectFieldValue("Purpose", "test data");
+  await e2eFile.go();
 
-  await panel.goEdit();
-  await panel.setFieldValue("Date", "2024-10-11");
-  await panel.setFieldValue("Center", "Chakaria Disability Center", "select");
-  await panel.setFieldValue("Purpose", "test running", "textarea");
-  await expect(panel.panel).toHaveScreenshot();
+  await e2eFile.expectFieldValue("Date", outputDate("2024-01-02"));
+  await e2eFile.expectFieldValue("Center");
+  await e2eFile.expectFieldValue("Purpose", "test data");
 
-  await panel.doSave();
-  await expect(panel.panel).toHaveScreenshot();
-  await panel.expectFieldValue("Date", outputDate("2024-10-11"));
-  await panel.expectFieldValue("Center", "Chakaria Disability Center");
-  await panel.expectFieldValue("Purpose", "test running");
+  await e2eFile.goEdit();
+  await e2eFile.setFieldValue("Date", "2024-10-11");
+  await e2eFile.setFieldValue("Center", "Chakaria Disability Center", "select");
+  await e2eFile.setFieldValue("Purpose", "test running", "textarea");
+  await expect(e2eFile.panel).toHaveScreenshot();
+
+  await e2eFile.doSave();
+  await expect(e2eFile.panel).toHaveScreenshot();
+  await e2eFile.expectFieldValue("Date", outputDate("2024-10-11"));
+  await e2eFile.expectFieldValue("Center", "Chakaria Disability Center");
+  await e2eFile.expectFieldValue("Purpose", "test running");
 });

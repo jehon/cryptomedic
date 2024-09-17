@@ -12,7 +12,7 @@
 */
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// 
+//
 //    Those routes are automatically prefixed with "/api" by laravel
 //
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -115,8 +115,8 @@ Route::group(array('middleware' => 'authenticated'), function() {
   });
 
   Route::group([ 'prefix' => '/fiche/' ], function() {
+    // Legacy routes
     CRSecurity::ifHasPersmission('folder.edit', function() {
-      Route::resource('appointments',          'AppointmentsController');
       Route::resource('bills',                 'BillsController');
       Route::resource('clubfeet' ,             'ClubFeetController');
       Route::resource('otherconsults',         'OtherConsultsController');
@@ -127,9 +127,9 @@ Route::group(array('middleware' => 'authenticated'), function() {
       Route::resource('surgeries',             'SurgeriesController');
     });
 
+    // Legacy routes
     // TODO: should be PUT
     CRSecurity::ifHasPersmission('folder.unlock', function() {
-      Route::get('appointments/unlock/{id}',   'AppointmentsController@unlock');
       Route::get('bills/unlock/{id}',          'BillsController@unlock');
       Route::get('clubfeet/unlock/{id}',       'ClubFeetController@unlock');
       Route::get('otherconsults/unlock/{id}',  'OtherConsultsController@unlock');
@@ -138,9 +138,34 @@ Route::group(array('middleware' => 'authenticated'), function() {
       Route::get('ricketconsults/unlock/{id}', 'RicketConsultsController@unlock');
       Route::get('surgeries/unlock/{id}',      'SurgeriesController@unlock');
     });
+
+    // New routes
+    CRSecurity::ifHasPersmission('folder.edit', function() {
+      Route::resource('appointment',             'AppointmentsController');
+      // Route::resource('bill',                    'BillsController');
+      // Route::resource('consult_clubfoot' ,       'ClubFeetController');
+      // Route::resource('consult_other',           'OtherConsultsController');
+      // Route::resource('consult_ricket',          'RicketConsultsController');
+      // Route::resource('patient',                 'PatientsController');
+      // Route::resource('picture',                 'PicturesController');
+      // Route::resource('payment',                 'PaymentsController');
+      // Route::resource('surgery',                 'SurgeriesController');
+    });
+
+    // New routes
+    CRSecurity::ifHasPersmission('folder.unlock', function() {
+      Route::put('appointment/unlock/{id}',      'AppointmentsController@unlock');
+      Route::put('bill/unlock/{id}',             'BillsController@unlock');
+      Route::put('consult_clubfoot/unlock/{id}', 'ClubFeetController@unlock');
+      Route::put('consult_other/unlock/{id}',    'OtherConsultsController@unlock');
+      Route::put('payment/unlock/{id}',          'PaymentsController@unlock');
+      Route::put('picture/unlock/{id}',          'PicturesController@unlock');
+      Route::put('consult_ricket/unlock/{id}',   'RicketConsultsController@unlock');
+      Route::put('surgery/unlock/{id}',          'SurgeriesController@unlock');
+    });
   });
 
   CRSecurity::ifHasPersmission('price.edit', function() {
     Route::resource('admin/prices',      'PricesController');
-  });  
+  });
 });

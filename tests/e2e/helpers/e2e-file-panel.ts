@@ -41,7 +41,7 @@ export class E2EFilePanel {
    */
 
   apiFileUpdate(id: string | number, data: Record<string, string>) {
-    return crApi(this.page, `${this.patient_id}/fiche//${this.type}/${id}`, {
+    return crApi(this.page, `/fiche/${this.type}/${id}`, {
       method: CRUD.update,
       data
     });

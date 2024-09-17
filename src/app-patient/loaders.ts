@@ -88,7 +88,7 @@ export function getFolder(id: string): Promise<Folder> {
 export function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
   // See www/api/app/Http/Controllers/FicheController.php
   return request({
-    url: ["fiche", file.getServerResource(), "unlock", file.id]
+    url: ["fiche", file.getStatic().getTechnicalName(), "unlock", file.id]
     // TODO: method: "PUT"
   })
     .then((json) => json.file)
@@ -101,7 +101,7 @@ export function folderFileDelete<T extends Pojo>(
   // See www/api/app/Http/Controllers/FicheController.php
   return (
     request({
-      url: ["fiche", file.getServerResource(), file.id],
+      url: ["fiche", file.getStatic().getTechnicalName(), file.id],
       method: CRUD.delete
     })
       .then((json) => json.folder)
@@ -115,7 +115,7 @@ export function folderFileCreate(
   form: FormData
 ): Promise<{ folder: Folder; newKey: string }> {
   return request({
-    url: ["fiche", file.getServerResource()],
+    url: ["fiche", file.getStatic().getTechnicalName()],
     method: CRUD.create,
     form
   }).then((json) => ({
@@ -126,7 +126,7 @@ export function folderFileCreate(
 
 export function folderFileUpdate(file: Pojo, form: FormData): Promise<Folder> {
   return request({
-    url: ["fiche", file.getServerResource(), file.getId()],
+    url: ["fiche", file.getStatic().getTechnicalName(), file.getId()],
     method: CRUD.update,
     form
   })
