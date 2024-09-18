@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { ButtonGroup } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Timed from "../../business/abstracts/timed";
@@ -65,6 +66,7 @@ export default function FilePanel({
 }): React.ReactNode {
   const folder: Folder = file.getParent();
   const formRef = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate();
 
   const addMode = !file.getId();
   const editMode = addMode || (edit ?? false);
@@ -156,9 +158,10 @@ export default function FilePanel({
       testid={file.uid()}
       closed={closed}
       fullscreen={editMode}
-      onToggle={(_opened) => {
-        // TODO: when angular router is out (adapt e2e file panel goEdit too)
+      onToggle={(opened) => {
         // if (opened) {
+        // TODO: when angular router is out (adapt e2e file panel goEdit too)
+        // navigate(patientRouterToFile(folder, file));
         //   location.hash = routeToFolderFile(folder, file);
         // }
       }}
