@@ -13,7 +13,10 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   outputDir: "tmp/integration/playwright/test-results/",
   reporter: [
     ["list"],
-    ["html", { outputFolder: "tmp/integration/playwright/report" }]
+    [
+      "html",
+      { outputFolder: "tmp/integration/playwright/report", open: "never" }
+    ]
   ],
   projects: [
     {
