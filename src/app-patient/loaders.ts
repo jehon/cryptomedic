@@ -1,3 +1,4 @@
+import { plainToInstance } from "class-transformer";
 import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";
 import { CRUD } from "../constants";
@@ -88,11 +89,11 @@ export function getFolder(id: string): Promise<Folder> {
 export function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
   // See www/api/app/Http/Controllers/FicheController.php
   return request({
-    url: ["fiche", file.getStatic().getTechnicalName(), "unlock", file.id]
-    // TODO: method: "PUT"
+    url: ["fiche", file.getStatic().getTechnicalName(), "unlock", file.id],
+    method: CRUD.update
   })
     .then((json) => json.file)
-    .then((json) => file.createNewInstance(json));
+    .then((json) => plainToInstance(file.constructor as new () => T, json));
 }
 
 export function folderFileDelete<T extends Pojo>(

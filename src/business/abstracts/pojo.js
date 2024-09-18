@@ -73,11 +73,6 @@ export default class Pojo {
     return this.getStatic().getModel().toLowerCase() + "s";
   }
 
-  createNewInstance(json) {
-    // See https://stackoverflow.com/a/73328117/1954789
-    return new (Object.getPrototypeOf(this).constructor)(json);
-  }
-
   /**
    * @returns {string | undefined}
    */
