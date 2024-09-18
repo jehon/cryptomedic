@@ -6,7 +6,7 @@ import Bill from "../business/bill";
 import ConsultClubfoot from "../business/consult-clubfoot";
 import ConsultOther from "../business/consult-other";
 import ConsultRicket from "../business/consult-ricket";
-import Folder from "../business/folder";
+import Folder, { type2Class } from "../business/folder";
 import Picture from "../business/picture";
 import Surgery from "../business/surgery";
 import * as config from "../config";
@@ -24,27 +24,6 @@ import patientElementGenerator from "./patient-element";
 import { patientRouterToFileAdd } from "./patient-router";
 import pictureElementGenerator from "./picture-element";
 import surgeryElementGenerator from "./surgery-element";
-
-export function type2Class(type: string): typeof PatientRelated {
-  switch (type) {
-    case "appointment":
-      return Appointment;
-    case "bill":
-      return Bill;
-    case "consult_clubfoot":
-      return ConsultClubfoot;
-    case "consult_other":
-      return ConsultOther;
-    case "consult_ricket":
-      return ConsultRicket;
-    case "picture":
-      return Picture;
-    case "surgery":
-      return Surgery;
-    default:
-      throw new Error(`Unknown type: ${type} in type2Class in patient-element`);
-  }
-}
 
 export default function FolderElement({
   folder: initialFolder,
@@ -72,7 +51,7 @@ export default function FolderElement({
 
   if (selectedUid?.endsWith(".add")) {
     const typeName = selectedUid.replace(".add", "");
-    const typeClass = type2Class(typeName);
+    const typeClass = type2Class(typeName) as typeof PatientRelated;
     if (isTodoMigration(typeClass)) {
       location.hash = `/folder/${folder.getId()}/file/${typeClass.getModel()}`;
       return;

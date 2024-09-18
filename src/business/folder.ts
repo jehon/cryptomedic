@@ -1,21 +1,57 @@
-import Pojo from "./abstracts/pojo.js";
-import Appointment from "./appointment";
-import Patient from "./patient.js";
-
-// Enrich the registry:
 import { produce } from "immer";
 import PatientRelated from "./abstracts/patient-related.js";
+import Pojo from "./abstracts/pojo.js";
+import Appointment from "./appointment";
 import "./bill.js";
+import Bill from "./bill.js";
 import "./consult-clubfoot.js";
+import ConsultClubfoot from "./consult-clubfoot.js";
 import "./consult-other.js";
+import ConsultOther from "./consult-other.js";
 import "./consult-ricket.js";
+import ConsultRicket from "./consult-ricket.js";
+import Patient from "./patient.js";
 import "./payment.js";
 import Payment from "./payment.js";
 import "./picture.js";
+import Picture from "./picture.js";
 import { registryGet } from "./registry.js";
 import "./surgery.js";
+import Surgery from "./surgery.js";
 
 export type PatientRelatedClass = typeof PatientRelated;
+
+export function type2Class(type: string): typeof Pojo {
+  switch (type) {
+    case "appointment":
+    case "Appointment":
+      return Appointment;
+    case "bill":
+    case "Bill":
+      return Bill;
+    case "consult_clubfoot":
+    case "ClubFoot":
+      return ConsultClubfoot;
+    case "consult_other":
+    case "OtherConsult":
+      return ConsultOther;
+    case "consult_ricket":
+    case "RicketConsult":
+      return ConsultRicket;
+    case "Patient":
+      return Patient;
+    case "Payment":
+      return Payment;
+    case "picture":
+    case "Picture":
+      return Picture;
+    case "surgery":
+    case "Surgery":
+      return Surgery;
+    default:
+      throw new Error(`Unknown type: ${type} in type2Class in patient-element`);
+  }
+}
 
 export default class Folder extends Pojo {
   static create(folder: Folder, type: string, data = {}) {
