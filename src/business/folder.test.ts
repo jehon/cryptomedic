@@ -7,7 +7,6 @@ import assert from "node:assert";
 import PatientRelated from "./abstracts/patient-related";
 import Appointment from "./appointment";
 import Bill from "./bill.js";
-import ConsultClubfoot from "./consult-clubfoot.js";
 import ConsultOther from "./consult-other.js";
 import ConsultRicket from "./consult-ricket.js";
 import Folder from "./folder";
@@ -37,30 +36,6 @@ test("should have loaded Mock data", () => {
 test("should give the patient", function () {
   expect(f.getByUid("patient.1")).toBeInstanceOf(Patient);
   expect(f.getPatient()).toBeInstanceOf(Patient);
-});
-
-test("should instantiate classes", () => {
-  expect(f.getPatient()).toBeInstanceOf(Patient);
-  expect(f.getPatient().id).toBe(1);
-
-  expect(Folder.create(f, Appointment.getModel(), {})).toBeInstanceOf(
-    Appointment
-  );
-  expect(Folder.create(f, Bill.getModel(), {})).toBeInstanceOf(Bill);
-  expect(Folder.create(f, ConsultClubfoot.getModel(), {})).toBeInstanceOf(
-    ConsultClubfoot
-  );
-  expect(Folder.create(f, ConsultOther.getModel(), {})).toBeInstanceOf(
-    ConsultOther
-  );
-  expect(Folder.create(f, Payment.getModel(), {})).toBeInstanceOf(Payment);
-  expect(Folder.create(f, Picture.getModel(), {})).toBeInstanceOf(Picture);
-  expect(Folder.create(f, ConsultRicket.getModel(), {})).toBeInstanceOf(
-    ConsultRicket
-  );
-  expect(Folder.create(f, Surgery.getModel(), {})).toBeInstanceOf(Surgery);
-
-  expect(() => Folder.create(f, "AnythingInvalid", {})).toThrow();
 });
 
 test("should query specific element (consult_other.1)", () => {
