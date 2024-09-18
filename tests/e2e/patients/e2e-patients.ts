@@ -66,4 +66,11 @@ export class E2EPatient {
       )
       .then(() => undefined);
   }
+
+  async doAdd(type: string): Promise<E2EFilePanel> {
+    await this.page.getByTestId("add").click();
+    await this.page.getByTestId("add-" + type).click();
+
+    return this.getFile(type, "add");
+  }
 }

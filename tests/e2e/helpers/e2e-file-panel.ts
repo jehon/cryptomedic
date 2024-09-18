@@ -109,15 +109,25 @@ export class E2EFilePanel {
     return this.waitVisible();
   }
 
-  async doSave(): Promise<this> {
+  async doSave(interceptAddedId: boolean = false): Promise<this> {
     await this.waitVisible();
 
     await expect(this.page.getByText("Save")).toBeVisible();
     await this.page.getByText("Save").click();
 
+    if (interceptAddedId) {
+      await crExpectUrl(
+        this.page,
+        new RegExp(`.*#${escapeRegExp(this.fileBaseUrl)}[0-9]`)
+      );
+      const url = await this.page.url();
+      const matches = /\.(?<id>[0-9]+)$/.exec(url);
+      this.id = matches?.groups?.id ?? "";
+    }
+
     await crExpectUrl(
       this.page,
-      new RegExp(`.*#${escapeRegExp(this.fileBaseUrl)}[0-9]`)
+      new RegExp(`.*#${escapeRegExp(this.fileBaseUrl)}${this.id}`)
     );
     await expect(this.page.getByText("Edit")).toBeVisible();
 

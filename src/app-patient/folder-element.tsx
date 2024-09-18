@@ -102,6 +102,7 @@ export default function FolderElement({
           id="btnAddSelector"
           type="button"
           className="action-alternate btn btn-secondary dropdown-toggle"
+          data-testid="add"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"

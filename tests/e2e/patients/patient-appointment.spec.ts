@@ -17,21 +17,16 @@ test("2000-001.appointment.2", async ({ page }) => {
 test("2010-001 create and delete appointment", async ({ page }) => {
   await crApiLogin(page);
 
-  // TODO: Click on stuff
-  const panel = await crPatientFile(page, 102, "appointment.add");
-
-  // Add
-  await crExpectUrl(
-    page,
-    new RegExp(".*" + escapeRegExp("#/folder/102/summary/appointment.") + "add")
-  );
+  const e2ePatient = await new E2EPatient(page, 102).go();
+  const panel = await e2ePatient.doAdd("appointment");
 
   // Add: Not acceptable form...
   await panel.panel.getByText("Save").click();
   await expect(panel.panel.getByText("Edit")).not.toBeVisible();
 
   await panel.setFieldValue("Date", "2022-05-06");
-  await panel.doSave();
+  await panel.doSave(true);
+
   await panel.goEdit();
   await panel.doDelete();
   await crExpectUrl(
