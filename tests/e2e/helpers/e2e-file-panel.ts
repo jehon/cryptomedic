@@ -58,7 +58,10 @@ export class E2EFilePanel {
     await crExpectUrl(
       this.page,
       new RegExp(
-        ".*" + escapeRegExp(`#/folder/${this.patient_id}/summary`) + fragment
+        "^.*" +
+          escapeRegExp(`#/folder/${this.patient_id}/summary`) +
+          fragment +
+          "$"
       )
     );
   }
@@ -118,7 +121,7 @@ export class E2EFilePanel {
     if (interceptAddedId) {
       await crExpectUrl(
         this.page,
-        new RegExp(`.*#${escapeRegExp(this.fileBaseUrl)}[0-9]`)
+        new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}[0-9]+$`)
       );
       const url = await this.page.url();
       const matches = /\.(?<id>[0-9]+)$/.exec(url);
@@ -127,7 +130,7 @@ export class E2EFilePanel {
 
     await crExpectUrl(
       this.page,
-      new RegExp(`.*#${escapeRegExp(this.fileBaseUrl)}${this.id}`)
+      new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}${this.id}$`)
     );
     await expect(this.page.getByText("Edit")).toBeVisible();
 
@@ -142,7 +145,7 @@ export class E2EFilePanel {
 
     await crExpectUrl(
       this.page,
-      new RegExp(`${this.fileBaseUrl}[0-9]+[/]edit`)
+      new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
     );
     await expect(this.page.getByText("Save")).toBeVisible();
 
