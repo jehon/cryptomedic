@@ -16,3 +16,13 @@ export function deepFreeze(object) {
 
   return Object.freeze(object);
 }
+
+export function removeNull(object) {
+  var propNames = Object.getOwnPropertyNames(object);
+  for (let name of propNames) {
+    if (object[name] == null || object[name] == undefined) {
+      delete object[name];
+    }
+  }
+  return object;
+}
