@@ -21,7 +21,9 @@ export default class Bill extends Timed {
   total_real;
   social_level;
   total_asked;
-  items;
+
+  // All other infos
+  others;
 
   /**
    *
@@ -48,7 +50,8 @@ export default class Bill extends Timed {
     this.total_real = total_real;
     this.social_level = social_level;
     this.total_asked = total_asked;
-    this.items = items;
+
+    this.others = others;
 
     if (!this.id) {
       // Initialize social level from last bill (if any)
@@ -70,17 +73,19 @@ export default class Bill extends Timed {
         }
       }
     }
+  }
 
-    // Build up the current items'list
-    this.items = [];
-    for (const key of Object.keys(others)) {
-      if (others[key] > 0) {
+  get items() {
+    let items = [];
+    for (const [key, value] of Object.entries(this)) {
+      if (value > 0) {
         const category = key.split("_")[0];
         if (Price.getCategories().includes(category)) {
-          this.items.push({ key, category, value: others[key] });
+          items.push({ key, category, value: value });
         }
       }
     }
+    return items;
   }
 
   getPricesList() {

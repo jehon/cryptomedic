@@ -1,9 +1,10 @@
-import Pojo from "./abstracts/pojo.js";
+import PatientRelated from "./abstracts/patient-related.js";
 import { registrySet } from "./registry.js";
 
 const model = "Payment";
 
-export default class Payment extends Pojo {
+// Todo: Payment is not a patient related
+export default class Payment extends PatientRelated {
   static getModel() {
     return model;
   }

@@ -168,9 +168,13 @@ export default class Folder extends Pojo {
     if (!this.getPatient().id) {
       return [];
     }
-    return this.getByFieldValue("patient_id", this.getPatient().id)
-      .sort(Folder.ordering)
-      .filter((v) => !(v instanceof Patient));
+    return (
+      this.getByFieldValue("patient_id", this.getPatient().id)
+        .sort(Folder.ordering)
+        .filter((v) => !(v instanceof Patient))
+        // TODO: this is not in the correct place
+        .filter((v) => !(v instanceof Payment))
+    );
   }
 
   getFileRelatedToPatient(i: number): PatientRelated {
