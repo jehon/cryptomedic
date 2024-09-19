@@ -30,11 +30,6 @@ export default class ConsultClubfoot extends Consult {
     return "Consult. Clubfoot";
   }
 
-  // Legacy
-  getServerResource() {
-    return "clubfeet";
-  }
-
   pain_left;
   pain_right;
   walking_floor_contact_left;

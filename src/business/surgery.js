@@ -12,11 +12,6 @@ export default class Surgery extends Timed {
     return "surgery";
   }
 
-  // Legacy
-  getServerResource() {
-    return "surgeries";
-  }
-
   date;
   report_diagnostic;
   report_surgeon;

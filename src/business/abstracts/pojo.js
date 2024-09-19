@@ -69,10 +69,6 @@ export default class Pojo {
     return false;
   }
 
-  getServerResource() {
-    return this.getStatic().getModel().toLowerCase() + "s";
-  }
-
   /**
    * @returns {string | undefined}
    */
