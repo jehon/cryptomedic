@@ -31,15 +31,15 @@ export const icons = {
   error: "/static/img/error.svg",
   logout: "/static/img/logout.gif",
   models: {
-    Appointment: "/static/img/model_appointment.gif",
-    Bill: "/static/img/model_bill.svg",
-    ClubFoot: "/static/img/model_consult_clubfoot.svg",
-    OtherConsult: "/static/img/model_consult_other.svg",
-    RicketConsult: "/static/img/model_consult_ricket.svg",
-    Patient: "/static/img/model_patient.gif",
-    Payment: "/static/img/payment.gif",
-    Picture: "/static/img/model_picture.svg",
-    Surgery: "/static/img/model_surgery.png"
+    appointment: "/static/img/model_appointment.gif",
+    bill: "/static/img/model_bill.svg",
+    consult_clubfoot: "/static/img/model_consult_clubfoot.svg",
+    consult_other: "/static/img/model_consult_other.svg",
+    consult_ricket: "/static/img/model_consult_ricket.svg",
+    patient: "/static/img/model_patient.gif",
+    payment: "/static/img/payment.gif",
+    picture: "/static/img/model_picture.svg",
+    surgery: "/static/img/model_surgery.png"
   }
 };
 

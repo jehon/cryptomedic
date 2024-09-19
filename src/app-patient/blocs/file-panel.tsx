@@ -33,16 +33,16 @@ export function isTodoMigration(type: typeof Pojo) {
   }
 
   return [
-    "Bill",
-    "ClubFoot",
-    "OtherConsult",
-    "RicketConsult",
-    "Patient",
-    "Payment",
-    "Picture",
-    "Price",
-    "Surgery"
-  ].includes(type.getModel());
+    "bill",
+    "consult_clubfoot",
+    "consult_other",
+    "consult_ricket",
+    "patient",
+    "payment",
+    "picture",
+    "price",
+    "surgery"
+  ].includes(type.getTechnicalName());
 }
 
 // TODO: make routing more abstract
@@ -171,8 +171,9 @@ export default function FilePanel({
             <img
               src={
                 icons.models[
-                  (file.getStatic().getModel() as keyof typeof icons.models) ??
-                    ""
+                  (file
+                    .getStatic()
+                    .getTechnicalName() as keyof typeof icons.models) ?? ""
                 ]
               }
               alt={file.getStatic().getTitle()}
