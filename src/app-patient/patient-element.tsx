@@ -59,10 +59,10 @@ export default function patientElementGenerator(
             />
             <IO.String name="name" value={patient.name} />
             <IO.List name="sex" value={patient.sex} list={getList("sex")} />
-            <IO.Number
+            <IO.String
               name="year_of_birth"
               label="Year of Birth"
-              value={parseInt(patient.year_of_birth ?? "")}
+              value={patient.year_of_birth}
             />
             <IO.Function
               label="Age today"
