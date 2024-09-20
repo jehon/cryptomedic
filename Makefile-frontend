@@ -57,7 +57,7 @@ package-lock.json: package.json
 
 .PHONY: frontend-lint
 lint: frontend-lint
-frontend-lint: frontend-lint-es frontend-lint-css frontend-lint-html frontend-lint-unused-exports
+frontend-lint: frontend-build frontend-lint-es frontend-lint-css frontend-lint-html frontend-lint-unused-exports
 
 .PHONY: frontend-lint-es
 frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
