@@ -57,7 +57,7 @@ package-lock.json: package.json
 
 .PHONY: frontend-lint
 lint: frontend-lint
-frontend-lint: frontend-lint-es frontend-lint-css frontend-lint-html
+frontend-lint: frontend-lint-es frontend-lint-css frontend-lint-html frontend-lint-unused-exports
 
 .PHONY: frontend-lint-es
 frontend-lint-es: $(FRONTEND_DEPENDENCIES_MARK)
@@ -70,6 +70,11 @@ frontend-lint-css: $(FRONTEND_DEPENDENCIES_MARK)
 .PHONY: frontend-lint-html
 frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
 	node_modules/.bin/htmlhint src/**/*.html legacy/**/*.html tests/**/*.html --format=compact
+
+.PHONY: frontend-lint-unused-exports
+frontend-lint-unused-exports: $(FRONTEND_DEPENDENCIES_MARK)
+# Todo: enforce ts-unused-exports analysis
+	node_modules/.bin/ts-unused-exports ./tsconfig.json || true
 
 .PHONY: frontend-build
 build: frontend-build
