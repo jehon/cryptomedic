@@ -1,5 +1,4 @@
 import Consult from "./abstracts/consult.js";
-import { registrySet } from "./registry.js";
 
 /**
  * @param {string|null} val the value to be parsed
@@ -173,5 +172,3 @@ export default class ConsultClubfoot extends Consult {
     }
   }
 }
-
-registrySet(model, ConsultClubfoot);

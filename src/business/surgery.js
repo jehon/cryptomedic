@@ -1,5 +1,4 @@
 import Timed from "./abstracts/timed.js";
-import { registrySet } from "./registry.js";
 
 const model = "Surgery";
 
@@ -53,5 +52,3 @@ export default class Surgery extends Timed {
     return res;
   }
 }
-
-registrySet(model, Surgery);

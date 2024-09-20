@@ -1,5 +1,4 @@
 import PatientRelated from "./abstracts/patient-related.js";
-import { registrySet } from "./registry.js";
 
 const model = "Payment";
 
@@ -31,5 +30,3 @@ export default class Payment extends PatientRelated {
     this.comments = comments;
   }
 }
-
-registrySet(model, Payment);

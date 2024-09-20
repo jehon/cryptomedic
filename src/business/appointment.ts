@@ -1,5 +1,4 @@
 import Timed from "./abstracts/timed.js";
-import { registrySet } from "./registry.js";
 
 const model = "Appointment";
 
@@ -18,5 +17,3 @@ export default class Appointment extends Timed {
     return false;
   }
 }
-
-registrySet(model, Appointment);

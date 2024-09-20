@@ -2,7 +2,6 @@ import { DataMissingException } from "../utils/exceptions.js";
 import { getSession } from "../utils/session.js";
 import Timed from "./abstracts/timed.js";
 import Price from "./price.js";
-import { registrySet } from "./registry.js";
 
 const model = "Bill";
 
@@ -316,5 +315,3 @@ export default class Bill extends Timed {
     return res;
   }
 }
-
-registrySet(model, Bill);

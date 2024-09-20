@@ -1,5 +1,4 @@
 import Consult from "./abstracts/consult.js";
-import { registrySet } from "./registry.js";
 
 const model = "RicketConsult";
 
@@ -74,5 +73,3 @@ export default class ConsultRicket extends Consult {
     this.walking_difficulties = walking_difficulties;
   }
 }
-
-registrySet(model, ConsultRicket);

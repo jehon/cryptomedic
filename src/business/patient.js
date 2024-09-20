@@ -5,7 +5,6 @@ import "./consult-other.js";
 import "./consult-ricket.js";
 import "./payment.js";
 import "./picture.js";
-import { registrySet } from "./registry.js";
 import "./surgery.js";
 
 const model = "Patient";
@@ -23,45 +22,18 @@ export default class Patient extends PatientRelated {
     return false;
   }
 
+  entry_year;
+  entry_order;
+  name;
+  sex;
+  year_of_birth;
+  phone;
+  address_comments;
+  address_district;
+  address_upazilla;
+  address_union;
+  pathology;
   comments;
-
-  /**
-   *
-   * @param {*} param0
-   * @param {Folder} folder
-   */
-  constructor(
-    {
-      entry_year,
-      entry_order,
-      name,
-      sex,
-      year_of_birth,
-      phone,
-      address_comments,
-      address_district,
-      address_upazilla,
-      address_union,
-      pathology,
-      comments,
-      ...others
-    } = {},
-    folder = null
-  ) {
-    super(others, folder);
-    this.entry_year = entry_year;
-    this.entry_order = entry_order;
-    this.name = name;
-    this.sex = sex;
-    this.year_of_birth = year_of_birth;
-    this.phone = phone;
-    this.address_comments = address_comments;
-    this.address_district = address_district;
-    this.address_upazilla = address_upazilla;
-    this.address_union = address_union;
-    this.pathology = pathology;
-    this.comments = comments;
-  }
 
   sexStr() {
     if (this.sex === "Male") {
@@ -123,5 +95,3 @@ export default class Patient extends PatientRelated {
     return res.years + "y" + res.months + "m";
   }
 }
-
-registrySet(model, Patient);
