@@ -1,4 +1,7 @@
+import { plainToInstance } from "class-transformer";
 import { produce } from "immer";
+import "reflect-metadata"; // plainToInstance
+import { removeNull } from "../utils/objects.js";
 import PatientRelated from "./abstracts/patient-related.js";
 import Pojo from "./abstracts/pojo.js";
 import Appointment from "./appointment";
@@ -15,7 +18,6 @@ import "./payment.js";
 import Payment from "./payment.js";
 import "./picture.js";
 import Picture from "./picture.js";
-import { registryGet } from "./registry.js";
 import "./surgery.js";
 import Surgery from "./surgery.js";
 
@@ -54,10 +56,6 @@ export function type2Class(type: string): typeof Pojo {
 }
 
 export default class Folder extends Pojo {
-  static create(folder: Folder, type: string, data = {}) {
-    return new (registryGet(type))(data, folder);
-  }
-
   list: PatientRelated[];
 
   constructor(listing: any = []) {
@@ -74,7 +72,13 @@ export default class Folder extends Pojo {
     // create the objects
     for (const i in listing) {
       const v = listing[i];
-      this.list.push(Folder.create(this, v.type, v.record));
+      this.list.push(
+        plainToInstance(
+          type2Class(v.type) as unknown as new () => PatientRelated,
+          removeNull(v.record),
+          { enableImplicitConversion: true }
+        ).registerParent(this)
+      );
     }
   }
 

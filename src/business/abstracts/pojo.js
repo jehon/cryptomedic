@@ -1,7 +1,12 @@
+import { plainToInstance } from "class-transformer";
 import { immerable } from "immer";
 
 export default class Pojo {
   [immerable] = true;
+
+  static factory(json) {
+    return plainToInstance(this, json);
+  }
 
   static getTechnicalName() {
     return "pojo";

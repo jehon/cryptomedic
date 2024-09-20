@@ -176,8 +176,13 @@ test("Copy with new file", function () {
   expect(fap).toBeInstanceOf(Appointment);
   assert.equal(fap.purpose, "");
 
+  // TODO: use <> in factory to ease type mapping
   const f2 = f.withFile(
-    new Appointment({ id: "2", examiner: "test", purpose: "test" })
+    Appointment.factory({
+      id: "2",
+      examiner: "test",
+      purpose: "test"
+    }) as any as Appointment
   );
   expect(f2).toBeInstanceOf(Folder);
   const fap2 = f2.getByUid<Appointment>("appointment.2");

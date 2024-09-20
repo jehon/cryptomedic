@@ -1,4 +1,3 @@
-import { StringDate } from "../utils/types.js";
 import Timed from "./abstracts/timed.js";
 import { registrySet } from "./registry.js";
 
@@ -13,31 +12,7 @@ export default class Appointment extends Timed {
     return "appointment";
   }
 
-  // We could not inherit from Timed because Timed implies a date in the past
-
   purpose: string = "";
-
-  /**
-   *
-   * @param {examiner?}
-   * @param {Folder} folder?
-   */
-  constructor(
-    {
-      purpose,
-      ...others
-    }: {
-      examiner?: string;
-      purpose?: string;
-      date?: StringDate;
-      center?: string;
-      [key: string]: any | undefined;
-    } = {},
-    folder = null
-  ) {
-    super(others, folder);
-    this.purpose = purpose || "";
-  }
 
   override isLocked() {
     return false;
