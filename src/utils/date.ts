@@ -1,6 +1,6 @@
 import { DataMissingException } from "./exceptions.js";
 
-export const InvalidDate = "Invalid date";
+const InvalidDate = "Invalid date";
 
 export function normalizeDate(
   d: string | Date | null | undefined
@@ -37,10 +37,7 @@ export function date2HumanString(value: Date | undefined): string {
   }).format(value);
 }
 
-export function fromBirthDateTo(
-  date: Date | null,
-  reference = new Date()
-): number {
+export function fromDateTo(date: Date | null, reference = new Date()): number {
   if (date == null) {
     throw new DataMissingException("date");
   }

@@ -5,7 +5,7 @@ import IOAbstract, { EditContext, IOProps } from "./io-abstract";
 
 // In other part of the application, it could be a mapping
 // Ex: io-boolean, search panels
-export function canonizeList(
+function canonizeList(
   list: string[] | Record<string, string>,
   includeUnknown: boolean = false
 ): Record<string, string> {
@@ -19,7 +19,7 @@ export function canonizeList(
   return list;
 }
 
-export function buildSelect(
+function buildSelect(
   uuid: string,
   list: Record<string, string>,
   value: string,
