@@ -13,7 +13,7 @@ import { passThrough } from "../../utils/promises";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import { EditContext } from "../../widget/io-abstract";
-import { notifySuccess } from "../../widget/notification";
+import notification from "../../widget/notification";
 import Panel from "../../widget/panel";
 import {
   folderFileCreate,
@@ -94,7 +94,7 @@ export default function FilePanel({
   const doUnlock = () => {
     folderFileUnlock(file)
       .then((file) => folder.withFile(file))
-      .then(notifySuccess("File unlocked"))
+      .then(notification("File unlocked"))
       .then((newFolder) => onUpdate(newFolder))
       .then(() => goEdit());
   };
@@ -113,7 +113,7 @@ export default function FilePanel({
     let nFolder;
     if (addMode) {
       return folderFileCreate(file, data)
-        .then(notifySuccess("File created"))
+        .then(notification("File created"))
         .then(
           passThrough((json) => {
             // Route to the newly created file
@@ -130,7 +130,7 @@ export default function FilePanel({
         .then((nFolder) => onUpdate(nFolder));
     } else {
       return folderFileUpdate(file, data)
-        .then(notifySuccess("File saved"))
+        .then(notification("File saved"))
         .then(passThrough(() => routeTo(patientRouterToFile(folder, file))))
         .then((nFolder) => onUpdate(nFolder));
     }
@@ -149,7 +149,7 @@ export default function FilePanel({
 
   const doDelete = () =>
     folderFileDelete(file)
-      .then(notifySuccess("File deleted"))
+      .then(notification("File deleted"))
       .then(passThrough(() => routeTo(patientRouterToFile(folder))))
       .then((folder) => onUpdate(folder));
 

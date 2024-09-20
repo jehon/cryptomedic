@@ -9,10 +9,6 @@ import { passThrough } from "../utils/promises";
 toastr.options.timeOut = 3 * 1000;
 // toastr.options.progressBar = true;
 
-export default function showNotification(): Toastr {
-  return toastr;
-}
-
-export function notifySuccess<T>(message: string): (a: T) => T {
-  return passThrough(() => showNotification().success(message));
+export default function notifySuccess<T>(message: string): (a: T) => T {
+  return passThrough(() => toastr.success(message));
 }

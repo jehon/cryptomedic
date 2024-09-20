@@ -6,7 +6,7 @@ import { buildRadios } from "./io-list";
 // Always required
 //
 
-export function isTrue(v: IOPropsInput<boolean>) {
+function isTrue(v: IOPropsInput<boolean>) {
   if (v == undefined) {
     return false;
   }

@@ -34,11 +34,11 @@ export function patientRouterConfig() {
   ];
 }
 
-export function patientLoader({ params }: { params: any }): Promise<Folder> {
+function patientLoader({ params }: { params: any }): Promise<Folder> {
   return getFolder(params.folderId);
 }
 
-export default function PatientRouter(): React.ReactNode {
+function PatientRouter(): React.ReactNode {
   const folder = useLoaderData() as Folder;
   const { selectedUid, mode } = useParams();
 
