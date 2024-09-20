@@ -74,7 +74,7 @@ frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
 .PHONY: frontend-lint-unused-exports
 frontend-lint-unused-exports: $(FRONTEND_DEPENDENCIES_MARK)
 # Todo: enforce ts-unused-exports analysis
-	node_modules/.bin/ts-unused-exports ./tsconfig.json || true
+	node_modules/.bin/ts-unused-exports ./tsconfig.json
 
 .PHONY: frontend-build
 build: frontend-build
