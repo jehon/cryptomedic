@@ -57,6 +57,7 @@ test("2010-001 update appointment", async ({ page }) => {
   await e2eFile.expectInputValue("Date", "2024-01-02");
   await e2eFile.expectInputValue("Center");
   await e2eFile.expectInputValue("Purpose", "test data");
+  await expect(e2eFile.panel).toHaveScreenshot();
 
   await e2eFile.setFieldValue("Date", "2024-10-11");
   await e2eFile.setFieldValue("Center", "Chakaria Disability Center", "select");
