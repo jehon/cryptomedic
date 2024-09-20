@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { DataMissingException } from "../../utils/exceptions.js";
 import RicketConsult from "../consult-ricket.js";
-import Patient from "../patient.js";
+import Patient from "../patient";
 import Consult from "./consult.js";
 
 import { loadReferenceFolder, RefFolder1 } from "../../test-helper.js";

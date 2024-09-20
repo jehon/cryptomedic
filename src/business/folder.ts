@@ -13,7 +13,7 @@ import "./consult-other.js";
 import ConsultOther from "./consult-other.js";
 import "./consult-ricket.js";
 import ConsultRicket from "./consult-ricket.js";
-import Patient from "./patient.js";
+import Patient from "./patient";
 import "./payment.js";
 import Payment from "./payment.js";
 import "./picture.js";

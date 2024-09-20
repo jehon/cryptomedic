@@ -10,7 +10,7 @@ import Bill from "./bill.js";
 import ConsultOther from "./consult-other.js";
 import ConsultRicket from "./consult-ricket.js";
 import Folder from "./folder";
-import Patient from "./patient.js";
+import Patient from "./patient";
 import Payment from "./payment.js";
 import Picture from "./picture.js";
 import Surgery from "./surgery.js";

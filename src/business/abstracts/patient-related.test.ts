@@ -2,7 +2,7 @@ import { expect } from "expect";
 import test from "node:test";
 
 import RicketConsult from "../consult-ricket.js";
-import Patient from "../patient.js";
+import Patient from "../patient";
 import PatientRelated from "./patient-related.js";
 
 import { loadReferenceFolder, RefFolder1 } from "../../test-helper.js";

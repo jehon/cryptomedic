@@ -10,30 +10,30 @@ import "./surgery.js";
 const model = "Patient";
 
 export default class Patient extends PatientRelated {
-  static getModel() {
+  static override getModel() {
     return model;
   }
 
-  static getTechnicalName() {
+  static override getTechnicalName() {
     return "patient";
   }
 
-  isLocked() {
+  override isLocked() {
     return false;
   }
 
-  entry_year;
-  entry_order;
-  name;
-  sex;
-  year_of_birth;
-  phone;
-  address_comments;
-  address_district;
-  address_upazilla;
-  address_union;
-  pathology;
-  comments;
+  entry_year: string = "" + new Date().getFullYear();
+  entry_order: string = "";
+  name: string = "";
+  sex: string = "";
+  year_of_birth: string = "" + new Date().getFullYear();
+  phone: string = "";
+  address_comments: string = "";
+  address_district: string = "";
+  address_upazilla: string = "";
+  address_union: string = "";
+  pathology: string = "";
+  comments: string = "";
 
   sexStr() {
     if (this.sex === "Male") {
@@ -45,14 +45,17 @@ export default class Patient extends PatientRelated {
     return null;
   }
 
-  actualAge(reference = new Date()) {
+  actualAge(reference: Date | string | number = new Date()) {
     if (!this.year_of_birth) {
       return null;
     }
-    var birth = this.year_of_birth;
-    var options = {
+    let birth: Date | string | number = this.year_of_birth;
+    const options: {
+      reference: Date | string | number;
+      format: string;
+    } = {
       reference,
-      format: false
+      format: ""
     };
     if (typeof options.reference == "number") {
       options.reference = "" + options.reference;
@@ -62,8 +65,8 @@ export default class Patient extends PatientRelated {
         return options.format ? null : "?";
         // throw new Exception('Invalid reference');
       }
-      var ry = parseInt(options.reference.substring(0, 4));
-      var rm = parseInt(options.reference.substring(5, 7));
+      const ry = parseInt(options.reference.substring(0, 4));
+      let rm = parseInt(options.reference.substring(5, 7));
       if (isNaN(rm)) {
         rm = 1; // emulate january
       }
@@ -77,15 +80,23 @@ export default class Patient extends PatientRelated {
         return options.format ? null : "?";
         // throw new Exception('Invalid birth');
       }
-      var by = parseInt(birth.substring(0, 4));
-      var bm = parseInt(birth.substring(5, 7));
+      const by = parseInt(birth.substring(0, 4));
+      let bm = parseInt(birth.substring(5, 7));
       if (isNaN(bm)) {
         bm = 1; // emulate january
       }
       birth = new Date(by, bm - 1 - 1, 30);
     }
-    var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
-    var res = { years: days.getFullYear() - 1900, months: days.getMonth() };
+    const days = new Date(
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      options.reference.getTime() - birth.getTime()
+    );
+    const res = { years: days.getFullYear() - 1900, months: days.getMonth() };
     if (options.format === "object") {
       return res;
     }
