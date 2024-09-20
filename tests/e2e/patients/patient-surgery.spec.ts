@@ -6,9 +6,9 @@ test("2000-001.surgery.5", async ({ page }) => {
   await crApiLogin(page);
   const e2eFile = await new E2EPatient(page, 1).getFile("surgery", 5).go();
 
-  await e2eFile.expectFieldValue("Date", outputDate("2014-01-02"));
-  await e2eFile.expectFieldValue("Diagnostic", "test");
-  await e2eFile.expectFieldValue("Follow-Up Complications", "nothing");
+  await e2eFile.expectOutputValue("Date", outputDate("2014-01-02"));
+  await e2eFile.expectOutputValue("Diagnostic", "test");
+  await e2eFile.expectOutputValue("Follow-Up Complications", "nothing");
   await expect(e2eFile.form).toHaveScreenshot();
   await expect(e2eFile.panel).toHaveScreenshot();
 });

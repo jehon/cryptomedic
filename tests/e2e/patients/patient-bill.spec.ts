@@ -6,10 +6,10 @@ test("2000-001.bill.1", async ({ page }) => {
   await crApiLogin(page);
   const e2eFile = await new E2EPatient(page, 1).getFile("bill", 1).go();
 
-  await e2eFile.expectFieldValue("Date", outputDate("2011-06-09"));
-  await e2eFile.expectFieldValue("Consult CDC Consultation Physio", "1");
-  await e2eFile.expectFieldValue("Consult Other");
-  await e2eFile.expectFieldValue("Price asked", 6720);
+  await e2eFile.expectOutputValue("Date", outputDate("2011-06-09"));
+  await e2eFile.expectOutputValue("Consult CDC Consultation Physio", "1");
+  await e2eFile.expectOutputValue("Consult Other");
+  await e2eFile.expectOutputValue("Price asked", 6720);
   await expect(e2eFile.form).toHaveScreenshot();
   await expect(e2eFile.panel).toHaveScreenshot();
 });
@@ -19,7 +19,7 @@ test("2014-103.bill.2", async ({ page }) => {
 
   const e2eFile = await new E2EPatient(page, 3).getFile("bill", 2).go();
 
-  await e2eFile.expectFieldValue("Family Salary", 4500);
+  await e2eFile.expectOutputValue("Family Salary", 4500);
   const paymentPanel = await page.getByTestId("bill.2.payments");
   await expect(paymentPanel).toBeVisible();
   const payment2 = paymentPanel.getByTestId("payment.2");

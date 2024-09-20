@@ -491,7 +491,7 @@ INSERT INTO `patients` VALUES (7,'2014-08-04 18:31:40','2014-08-04 18:31:40','tr
 INSERT INTO `patients` VALUES (8,'2021-04-23 15:26:16','2021-04-23 20:46:30','murshed',1991,299,'crud patient',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 INSERT INTO `patients` VALUES (100,'2023-08-30 16:48:21','2023-08-30 17:27:13','jehon',2010,100,'free test','Male','2013-01','+32123123','at the end of the world','Chittagong','Chandanish','~ Other ~','Ricket','I have something to add');
 -- appointment
-INSERT INTO `patients` VALUES(102,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,1,'test appointment','','','','','','','','', '');
+INSERT INTO `patients` VALUES (102,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,2,'test appointment','','','','','','','','', '');
 
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;

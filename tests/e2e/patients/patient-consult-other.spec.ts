@@ -8,24 +8,24 @@ test("2000-001.consult-other.1", async ({ page }) => {
     .getFile("consult_other", 1)
     .go();
 
-  await e2eFile.expectFieldValue("Date", outputDate("2007-01-10"));
-  await e2eFile.expectFieldValue("Examiner", "Ershad");
+  await e2eFile.expectOutputValue("Date", outputDate("2007-01-10"));
+  await e2eFile.expectOutputValue("Examiner", "Ershad");
 
-  await e2eFile.expectFieldValue("Weight (kg)", "29");
-  await e2eFile.expectFieldValue("Weight sd", "0.0");
+  await e2eFile.expectOutputValue("Weight (kg)", "29");
+  await e2eFile.expectOutputValue("Weight sd", "0.0");
 
-  await e2eFile.expectFieldValue("Height (cm)", "134");
-  await e2eFile.expectFieldValue("Height sd", "0.0");
+  await e2eFile.expectOutputValue("Height (cm)", "134");
+  await e2eFile.expectOutputValue("Height sd", "0.0");
 
-  await e2eFile.expectFieldValue("Weight/Height ratio", "0.2");
-  await e2eFile.expectFieldValue(
+  await e2eFile.expectOutputValue("Weight/Height ratio", "0.2");
+  await e2eFile.expectOutputValue(
     "Weight/Height sd",
     "'value' is out-of-bounds: 134 [80 -> 120]"
   );
-  await e2eFile.expectFieldValue("BMI", "16.2");
-  await e2eFile.expectFieldValue("BMI sd", "-0.0");
+  await e2eFile.expectOutputValue("BMI", "16.2");
+  await e2eFile.expectOutputValue("BMI sd", "-0.0");
 
-  await e2eFile.expectFieldValue("Joints or Bones Affected", "PBVE");
+  await e2eFile.expectOutputValue("Joints or Bones Affected", "PBVE");
   await expect(e2eFile.form).toHaveScreenshot();
   await expect(e2eFile.panel).toHaveScreenshot();
 });

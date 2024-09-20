@@ -40,7 +40,7 @@ export class E2EFilePanel {
    *
    */
 
-  apiFileUpdate(id: string | number, data: Record<string, string>) {
+  apiFileUpdate(id: string | number, data: Record<string, string | number>) {
     return crApi(this.page, `/fiche/${this.type}/${id}`, {
       method: CRUD.update,
       data
@@ -163,7 +163,7 @@ export class E2EFilePanel {
     return this.form.locator(`[data-role='${label}']`);
   }
 
-  async expectFieldValue(label, value?): Promise<this> {
+  async expectOutputValue(label, value?): Promise<this> {
     const io = await this.expectField(label);
 
     if (value) {
@@ -181,6 +181,11 @@ export class E2EFilePanel {
       await expect(io).not.toBeVisible();
     }
 
+    return this;
+  }
+
+  async expectInputValue(label, value = ""): Promise<this> {
+    await expect(this.panel.getByLabel(label)).toHaveValue(value);
     return this;
   }
 

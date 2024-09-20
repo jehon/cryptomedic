@@ -6,9 +6,9 @@ test("2000-001.picture.2", async ({ page }) => {
   await crApiLogin(page);
   const e2eFile = await new E2EPatient(page, 1).getFile("picture", 2).go();
 
-  await e2eFile.expectFieldValue("Date", outputDate("2014-11-04"));
-  await e2eFile.expectFieldValue("File", "10_2014-11-06_15-32-45.JPG");
-  await e2eFile.expectFieldValue("Type");
+  await e2eFile.expectOutputValue("Date", outputDate("2014-11-04"));
+  await e2eFile.expectOutputValue("File", "10_2014-11-06_15-32-45.JPG");
+  await e2eFile.expectOutputValue("Type");
   await expect(e2eFile.form).toHaveScreenshot();
   await expect(e2eFile.panel).toHaveScreenshot();
 });

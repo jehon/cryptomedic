@@ -9,7 +9,7 @@ test("2000-001.appointment.2", async ({ page }) => {
   await crApiLogin(page);
   const e2eFile = await new E2EPatient(page, 1).getFile("appointment", 2).go();
 
-  await e2eFile.expectFieldValue("Date", outputDate("2015-04-28"));
+  await e2eFile.expectOutputValue("Date", outputDate("2015-04-28"));
   await expect(e2eFile.form).toHaveScreenshot();
   await expect(e2eFile.panel).toHaveScreenshot();
 });
@@ -49,11 +49,15 @@ test("2010-001 update appointment", async ({ page }) => {
 
   await e2eFile.go();
 
-  await e2eFile.expectFieldValue("Date", outputDate("2024-01-02"));
-  await e2eFile.expectFieldValue("Center");
-  await e2eFile.expectFieldValue("Purpose", "test data");
+  await e2eFile.expectOutputValue("Date", outputDate("2024-01-02"));
+  await e2eFile.expectOutputValue("Center");
+  await e2eFile.expectOutputValue("Purpose", "test data");
 
   await e2eFile.goEdit();
+  await e2eFile.expectInputValue("Date", "2024-01-02");
+  await e2eFile.expectInputValue("Center");
+  await e2eFile.expectInputValue("Purpose", "test data");
+
   await e2eFile.setFieldValue("Date", "2024-10-11");
   await e2eFile.setFieldValue("Center", "Chakaria Disability Center", "select");
   await e2eFile.setFieldValue("Purpose", "test running", "textarea");
@@ -61,7 +65,7 @@ test("2010-001 update appointment", async ({ page }) => {
 
   await e2eFile.doSave();
   await expect(e2eFile.panel).toHaveScreenshot();
-  await e2eFile.expectFieldValue("Date", outputDate("2024-10-11"));
-  await e2eFile.expectFieldValue("Center", "Chakaria Disability Center");
-  await e2eFile.expectFieldValue("Purpose", "test running");
+  await e2eFile.expectOutputValue("Date", outputDate("2024-10-11"));
+  await e2eFile.expectOutputValue("Center", "Chakaria Disability Center");
+  await e2eFile.expectOutputValue("Purpose", "test running");
 });

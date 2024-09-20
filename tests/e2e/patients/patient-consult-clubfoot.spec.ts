@@ -11,9 +11,9 @@ test("2014-105.consult_clubfoot.1", async ({ page }) => {
     .getFile("consult_clubfoot", 1)
     .go();
 
-  await e2eFile.expectFieldValue("Date", outputDate("2015-01-10"));
-  await e2eFile.expectFieldValue("Examiner", "Ershad");
-  await e2eFile.expectFieldValue("Age at consultation time", "2Y");
+  await e2eFile.expectOutputValue("Date", outputDate("2015-01-10"));
+  await e2eFile.expectOutputValue("Examiner", "Ershad");
+  await e2eFile.expectOutputValue("Age at consultation time", "2Y");
   await expect(e2eFile.form).toHaveScreenshot();
   await expect(e2eFile.panel).toHaveScreenshot();
 });
