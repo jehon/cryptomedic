@@ -34,42 +34,50 @@ export default function ConsultAbstractIntroduction({
           label="Weight (kg)"
           value={file.weight_kg as number}
         />
-        <IO.Function
-          label="Weight sd"
-          note
-          value={() => roundTo(file.getWeightSd())}
-        />
+        {file.weight_kg && (
+          <IO.Function
+            label="Weight sd"
+            note
+            value={() => roundTo(file.getWeightSd())}
+          />
+        )}
         <IO.Number
           name="height_cm"
           label="Height (cm)"
           value={file.height_cm as number}
         />
-        <IO.Function
-          label="Height sd"
-          note
-          value={() => roundTo(file.getHeightSd())}
-        />
+        {file.height_cm && (
+          <IO.Function
+            label="Height sd"
+            note
+            value={() => roundTo(file.getHeightSd())}
+          />
+        )}
         <IO.Number
           name="brachial_circumference_cm"
           label="Brachial Circumference (cm)"
           value={file.brachial_circumference_cm as number}
         />
-        <IO.Function
-          note
-          label="Weight/Height ratio"
-          value={() => roundTo(file.wh())}
-        />
-        <IO.Function
-          label="Weight/Height sd"
-          note
-          value={() => roundTo(file.getWHSd())}
-        />
-        <IO.Function note label="BMI" value={() => roundTo(file.bmi())} />
-        <IO.Function
-          label="BMI sd"
-          note
-          value={() => roundTo(file.getBMISd())}
-        />
+        {file.weight_kg && file.height_cm && (
+          <>
+            <IO.Function
+              note
+              label="Weight/Height ratio"
+              value={() => roundTo(file.wh())}
+            />
+            <IO.Function
+              label="Weight/Height sd"
+              note
+              value={() => roundTo(file.getWHSd())}
+            />
+            <IO.Function note label="BMI" value={() => roundTo(file.bmi())} />
+            <IO.Function
+              label="BMI sd"
+              note
+              value={() => roundTo(file.getBMISd())}
+            />
+          </>
+        )}
       </Panel>
     </TwoColumns>
   );
