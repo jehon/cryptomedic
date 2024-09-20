@@ -120,7 +120,7 @@ Route::group(array('middleware' => 'authenticated'), function() {
       Route::resource('bills',                 'BillsController');
       Route::resource('clubfeet' ,             'ClubFeetController');
       Route::resource('otherconsults',         'OtherConsultsController');
-      Route::resource('patients',              'PatientsController');
+      Route::resource('patients',              'PatientsController'); // generate patient
       Route::resource('payments',              'PaymentsController');
       Route::resource('pictures',              'PicturesController');
       Route::resource('ricketconsults',        'RicketConsultsController');
