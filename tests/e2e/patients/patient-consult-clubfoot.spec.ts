@@ -5,7 +5,7 @@ import { E2EPatient } from "./e2e-patients";
 // ----------------
 // TODO: add this on 1st file
 //       and add some data to it
-test("2000-001.consult_clubfoot.1", async ({ page }) => {
+test("2014-105.consult_clubfoot.1", async ({ page }) => {
   await crApiLogin(page);
   const e2eFile = await new E2EPatient(page, 5)
     .getFile("consult_clubfoot", 1)
