@@ -184,8 +184,21 @@ export class E2EFilePanel {
     return this;
   }
 
-  async expectInputValue(label, value = ""): Promise<this> {
-    await expect(this.panel.getByLabel(label)).toHaveValue(value);
+  async expectInputValue(
+    label,
+    value = "",
+    type: "string" | "radio" = "string"
+  ): Promise<this> {
+    switch (type) {
+      case "string":
+        await expect(this.panel.getByLabel(label)).toHaveValue(value);
+        break;
+      case "radio":
+        await expect(
+          (await this.expectField(label)).getByLabel(value, { exact: true })
+        ).toBeChecked();
+        break;
+    }
     return this;
   }
 
