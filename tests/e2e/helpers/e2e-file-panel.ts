@@ -169,7 +169,12 @@ export class E2EFilePanel {
     if (value) {
       await expect(io).toBeVisible();
 
-      const ioc = io.locator(".content");
+      let ioc = io.locator(".content");
+      if ((await ioc.locator("div").all()).length > 0) {
+        // In case of Date, we have multiple divs
+        ioc = ioc.locator("div").first();
+      }
+
       await expect(ioc).toBeVisible();
       await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
     } else {

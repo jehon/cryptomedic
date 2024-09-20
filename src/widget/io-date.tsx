@@ -1,4 +1,4 @@
-import { outputDate } from "../utils/date";
+import { outputDate, periodAsHumanReadable } from "../utils/date";
 import { StringDate } from "../utils/types";
 import IOAbstract, { IOProps } from "./io-abstract";
 
@@ -13,7 +13,14 @@ export default function IODate(
   } & IOProps<StringDate | Date>
 ) {
   return IOAbstract(props, {
-    renderOutput: (value) => <div>{outputDate(value)}</div>,
+    renderOutput: (value) => (
+      <>
+        <div>{outputDate(value)}</div>
+        <div className="note" data-e2e="excluded">
+          {periodAsHumanReadable(value)}
+        </div>
+      </>
+    ),
     renderInput: (value, uuid) => (
       <input
         id={uuid}

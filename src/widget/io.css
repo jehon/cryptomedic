@@ -43,6 +43,11 @@
         margin-right: 5px;
       }
     }
+
+    .note {
+      font-size: smaller;
+      color: gray;
+    }
   }
 
   &.io-note {
@@ -61,7 +66,7 @@
   }
 
   & > .annexe {
-    font-size: smaller;
+    font-size: xx-small;
     color: gray;
   }
 }
