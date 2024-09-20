@@ -9,7 +9,7 @@ class FichePatientTest extends FicheTestHelper {
 	// Unit Tests could not be transactionals since each test depends on the previous one!
 
 	protected $model = "Patient";
-	protected $collection = "patients";
+	protected $collection = "patient";
 
 	public function testCreate() {
 		// Create it
@@ -25,7 +25,7 @@ class FichePatientTest extends FicheTestHelper {
 
 		// Remove the value
 		$result = $this->doUpdate($id, [ "phone" => "" ]);
-		
+
 		return $result;
 	}
 

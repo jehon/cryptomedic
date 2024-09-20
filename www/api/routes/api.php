@@ -146,7 +146,7 @@ Route::group(array('middleware' => 'authenticated'), function() {
       // Route::resource('consult_clubfoot' ,       'ClubFeetController');
       // Route::resource('consult_other',           'OtherConsultsController');
       // Route::resource('consult_ricket',          'RicketConsultsController');
-      // Route::resource('patient',                 'PatientsController');
+      Route::resource('patient',                 'PatientsController');
       // Route::resource('picture',                 'PicturesController');
       // Route::resource('payment',                 'PaymentsController');
       // Route::resource('surgery',                 'SurgeriesController');
