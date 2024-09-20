@@ -1,5 +1,3 @@
-// TODO: data field could be sentenced
-
 /**
  *
  * @param {string|undefined|null} key

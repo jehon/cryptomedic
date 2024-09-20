@@ -2,9 +2,8 @@ import duix from "duix";
 import { deepFreeze } from "./objects.js";
 const SESSION = "session";
 
-/**
- * @param {object} session - the object to be stored
- */
+// TODO: used in legacy
+// ts-unused-exports:disable-next-line
 export function setSession(session = null) {
   if (!session || Object.keys(session).length < 1) {
     session = null;
@@ -19,37 +18,36 @@ export function setSession(session = null) {
   }
 }
 
-/**
- * @returns {object} the session
- */
 export const getSession = () => duix.get(SESSION);
 
-/**
- *
- * @param {function(object):any} cb - a callback that will be called on session change
- * @returns {function(void):void} unregistering function
- */
+// TODO: used in legacy
+// ts-unused-exports:disable-next-line
 export const onSession = (cb) =>
   duix.subscribe(SESSION, cb, {
     fireImmediately: true
   }); /* TODO: legacy arg name */
 
-/*
- * Functions
- */
-
+// TODO: used in legacy
+// ts-unused-exports:disable-next-line
 export const getUsername = (session = getSession()) => session?.username;
+
+// TODO: used in legacy
+// ts-unused-exports:disable-next-line
 export const getAuthorized = (key, session = getSession()) =>
   session?.authorized?.includes(key) || false;
 
-/**
- * Current folder (TODO: legacy)
- */
 const FOLDER = "FOLDER";
+
+// TODO: used in legacy
+// ts-unused-exports:disable-next-line
 export const setCurrentFolder = (value = null) => duix.set(FOLDER, value);
-/* TODO: temp function */ /* istanbul ignore next */
+
+// TODO: used in legacy
+// ts-unused-exports:disable-next-line
 export const getCurrentFolder = () => duix.get(FOLDER);
-/* TODO: temp function */ /* istanbul ignore next */
+
+// TODO: used in legacy
+// ts-unused-exports:disable-next-line
 export const onCurrentFolder = (cb) => duix.subscribe(FOLDER, cb);
 
 setSession();
