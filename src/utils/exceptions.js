@@ -24,6 +24,8 @@ export class ServerRequestError extends ApplicationException {
   }
 }
 
+// used in x-fff-age.js
+// ts-unused-exports:disable-next-line
 export class DataException extends ApplicationException {
   #key = "";
 
@@ -75,7 +77,8 @@ export class DataInvalidException extends DataException {
   }
 }
 
-// TODO: useless - use ConfigurationException
+// used in x-file-bill.js
+// ts-unused-exports:disable-next-line
 export class ConfigurationMissingException extends DataException {
   constructor(key) {
     super(key, `Configuration ${key2string(key)} is missing.`);

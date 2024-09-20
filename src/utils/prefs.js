@@ -1,3 +1,5 @@
+// TODO x-page-reports.js
+// ts-unused-exports:disable-next-line
 export function setPref(part, data) {
   let res = {};
   if (sessionStorage.cryptomedicPrefs) {
@@ -25,6 +27,8 @@ export function getPref(part, def = null) {
   return def;
 }
 
+// TODO: use this
+// ts-unused-exports:disable-next-line
 export function extractPrefsFile(object) {
   let prefs = getPref("file", {});
   if (object.date) {

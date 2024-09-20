@@ -1,7 +1,7 @@
 import Folder from "./business/folder";
 
 export const RefFolder1 = "FolderTest.test1.json";
-export const RefFolder1RicketConsult13 = "RicketConsult-13";
+// export const RefFolder1RicketConsult13 = "RicketConsult-13";
 
 const refRoot = "../www/api/tests/references/";
 
