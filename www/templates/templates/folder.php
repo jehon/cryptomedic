@@ -83,7 +83,7 @@
           <x-button id='button_add' ng-class="{ 'selected': page == 'addfile'}" ng-click="go('/folder/' + patient_id + '/addfile')" style='width: 100%'>Add</x-button>
         </x-restricted>
         <x-button id='summary' ng-class="{ 'selected': page == 'summary'}" to-route="#/folder/{{patient_id}}/summary" style='width: 100%'>Summary</x-button>
-        <x-button id='button_patient' ng-class="{ 'selected': !page}" to-route="#/folder/{{patient_id}}" style='width: 100%'>Patient</x-button>
+        <x-button id='button_patient' ng-class="{ 'selected': !page}" to-route="#/folder/{{patient_id}}/summary/patient.{{patient_id}}" style='width: 100%'>Patient</x-button>
         <span id='folder_files'>
           <span ng-repeat="f in folder.getFilesRelatedToPatient()" class='folder_file'>
             <x-button id='folder_menu_{{f.getModel()}}_{{f.id}}' to-route="#/folder/{{patient_id}}/file/{{f.getModel()}}/{{f.id}}" ng-class="{ 'selected': page + subtype + subid == 'file' + f.getModel() + f.id }" style='width: 100%'>
