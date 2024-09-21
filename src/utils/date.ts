@@ -62,9 +62,9 @@ export function periodAsHumanReadable(
     (dateTo.getTime() - dateFrom.getTime()) / 1000
   );
 
-  const secInPeriod = Math.abs(secInPeriodSigned);
+  const relative = secInPeriodSigned > 0 ? " ago" : " onward";
 
-  const relative = secInPeriod > 0 ? " ago" : " onward";
+  const secInPeriod = Math.abs(secInPeriodSigned);
 
   const unit = (number: number, label: string) =>
     " " + label + (number > 1 ? "s" : "");
