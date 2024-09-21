@@ -16,6 +16,8 @@ function canonizeList(
     list = { ...list, "": "Unknown" };
   }
 
+  // key: what to show
+  // value: what to store
   return list;
 }
 
@@ -56,9 +58,9 @@ export function buildRadios(
         id={uuid + "." + i}
         className="form-control"
         name={name}
-        defaultChecked={value === k}
-        value="1"
-        onBlur={() => onChange(k)}
+        defaultChecked={value == v}
+        value={v}
+        onBlur={() => onChange(v)}
         type="radio"
         required
       />
