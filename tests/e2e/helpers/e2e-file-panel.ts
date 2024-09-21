@@ -186,7 +186,7 @@ export class E2EFilePanel {
     return this;
   }
 
-  async expectInputValue(label, value = "", type: IOTypes): Promise<this> {
+  async expectInputValue(label, value = "", type: IOTypes = ""): Promise<this> {
     switch (type) {
       case "":
       case "select":
