@@ -4,6 +4,8 @@ import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
 import { crApi, crExpectUrl, crUrl } from "./cr";
 
+type IOTypes = "" | "radio" | "select" | "textarea";
+
 export class E2EFilePanel {
   protected fileBaseUrl = "";
   protected page: Page;
@@ -184,13 +186,11 @@ export class E2EFilePanel {
     return this;
   }
 
-  async expectInputValue(
-    label,
-    value = "",
-    type: "string" | "radio" = "string"
-  ): Promise<this> {
+  async expectInputValue(label, value = "", type: IOTypes): Promise<this> {
     switch (type) {
-      case "string":
+      case "":
+      case "select":
+      case "textarea":
         await expect(this.panel.getByLabel(label)).toHaveValue(value);
         break;
       case "radio":
@@ -205,7 +205,7 @@ export class E2EFilePanel {
   async setFieldValue(
     label: string,
     value: string,
-    type: "" | "textarea" | "select" | "radio" = ""
+    type: IOTypes = ""
   ): Promise<this> {
     const io = await this.expectField(label);
     await expect(io).toBeVisible();
