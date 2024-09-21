@@ -48,10 +48,10 @@ test("2010-001 update appointment", async ({ page }) => {
   });
 
   await e2eFile.go();
-
   await e2eFile.expectOutputValue("Date", outputDate("2024-01-02"));
   await e2eFile.expectOutputValue("Center");
   await e2eFile.expectOutputValue("Purpose", "test data");
+  await expect(e2eFile.panel).toHaveScreenshot();
 
   await e2eFile.goEdit();
   await e2eFile.expectInputValue("Date", "2024-01-02");
@@ -65,8 +65,8 @@ test("2010-001 update appointment", async ({ page }) => {
   await expect(e2eFile.panel).toHaveScreenshot();
 
   await e2eFile.doSave();
-  await expect(e2eFile.panel).toHaveScreenshot();
   await e2eFile.expectOutputValue("Date", outputDate("2024-10-11"));
   await e2eFile.expectOutputValue("Center", "Chakaria Disability Center");
   await e2eFile.expectOutputValue("Purpose", "test running");
+  await expect(e2eFile.panel).toHaveScreenshot();
 });
