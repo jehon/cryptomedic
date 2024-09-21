@@ -205,7 +205,7 @@ export class E2EFilePanel {
   async setFieldValue(
     label: string,
     value: string,
-    type: "" | "textarea" | "select" = ""
+    type: "" | "textarea" | "select" | "radio" = ""
   ): Promise<this> {
     const io = await this.expectField(label);
     await expect(io).toBeVisible();
@@ -225,6 +225,13 @@ export class E2EFilePanel {
       case "select":
         await expect(ioc.locator("select")).toBeVisible();
         await ioc.locator("select").selectOption({ label: "" + value });
+        break;
+      case "radio":
+        {
+          const radio = await ioc.getByLabel(value, { exact: true });
+          await expect(radio).toBeVisible();
+          await radio.check();
+        }
         break;
       default:
         throw new Error("Unknown type: " + type);
