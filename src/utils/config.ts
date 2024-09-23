@@ -7,6 +7,10 @@ export function getList(listName: string): string[] {
     );
   }
 
+  if (listName == "") {
+    return ["list-is-empty"];
+  }
+
   const allLists: Record<string, string[]> = (getSession() as any).lists;
   if (listName in allLists) {
     return allLists[listName];

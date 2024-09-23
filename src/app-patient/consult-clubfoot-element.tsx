@@ -2,6 +2,7 @@ import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
 import ConsultClubfoot from "../business/consult-clubfoot";
+import { getList } from "../utils/config";
 import { tryOrMessage } from "../utils/strings";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import IO from "../widget/io";
@@ -49,18 +50,21 @@ export default function consultClubfootElementGenerator(
               name="curved_lateral_border_right"
               label="Curved Lateral Border"
               value={file.curved_lateral_border_right}
+              list={getList("")}
             ></IO.List>
             <IO.List
               right
               name="medial_crease_right"
               label="Medial Crease"
               value={file.medial_crease_right}
+              list={getList("")}
             ></IO.List>
             <IO.List
               right
               name="talar_head_coverage_right"
               label="Talar Head Coverage"
               value={file.talar_head_coverage_right}
+              list={getList("")}
             ></IO.List>
             <div className="separator">Hind Foot</div>
             <IO.List
@@ -68,18 +72,21 @@ export default function consultClubfootElementGenerator(
               name="posterior_crease_right"
               label="Posterior Crease"
               value={file.posterior_crease_right}
+              list={getList("")}
             ></IO.List>
             <IO.List
               right
               name="rigid_equinus_right"
               label="Rigid Equinus"
               value={file.rigid_equinus_right}
+              list={getList("")}
             ></IO.List>
             <IO.List
               right
               name="empty_heel_right"
               label="Empty Heel"
               value={file.empty_heel_right}
+              list={getList("")}
             ></IO.List>
             <div className="separator">Score</div>
             <IO.Function
@@ -104,18 +111,21 @@ export default function consultClubfootElementGenerator(
               name="curved_lateral_border_left"
               label="Curved Lateral Border"
               value={file.curved_lateral_border_left}
+              list={getList("")}
             ></IO.List>
             <IO.List
               left
               name="medial_crease_left"
               label="Medial Crease"
               value={file.medial_crease_left}
+              list={getList("")}
             ></IO.List>
             <IO.List
               left
               name="talar_head_coverage_left"
               label="Talar Head Coverage"
               value={file.talar_head_coverage_left}
+              list={getList("")}
             ></IO.List>
             <div className="separator">Hind Foot</div>
             <IO.List
@@ -123,18 +133,21 @@ export default function consultClubfootElementGenerator(
               name="posterior_crease_left"
               label="Posterior Crease"
               value={file.posterior_crease_left}
+              list={getList("")}
             ></IO.List>
             <IO.List
               left
               name="rigid_equinus_left"
               label="Rigid Equinus"
               value={file.rigid_equinus_left}
+              list={getList("")}
             ></IO.List>
             <IO.List
               left
               name="empty_heel_left"
               label="Empty Heel"
               value={file.empty_heel_left}
+              list={getList("")}
             ></IO.List>
             <div className="separator">Score</div>
             <IO.Function
@@ -154,30 +167,39 @@ export default function consultClubfootElementGenerator(
               </>
             }
           >
-            <IO.List right label="Pain" value={file.pain_right}></IO.List>
+            <IO.List
+              right
+              label="Pain"
+              value={file.pain_right}
+              list={getList("")}
+            ></IO.List>
             <IO.List
               right
               name="walking_floor_contact_right"
               label="Walking Floor Contact"
               value={file.walking_floor_contact_right}
+              list={getList("")}
             ></IO.List>
             <IO.List
               right
               name="walking_first_contact_right"
               label="Walking First Contact"
               value={file.walking_first_contact_right}
+              list={getList("")}
             ></IO.List>
             <IO.List
               right
               name="jumping_one_leg_right"
               label="Jumping One Leg"
               value={file.jumping_one_leg_right}
+              list={getList("")}
             ></IO.List>
             <IO.List
               right
               name="run_right"
               label="Run"
               value={file.run_right}
+              list={getList("")}
             ></IO.List>
             <IO.Number
               right
@@ -220,30 +242,39 @@ export default function consultClubfootElementGenerator(
               </>
             }
           >
-            <IO.List left label="Pain" value={file.pain_left}></IO.List>
+            <IO.List
+              left
+              label="Pain"
+              value={file.pain_left}
+              list={getList("")}
+            ></IO.List>
             <IO.List
               left
               name="walking_floor_contact_left"
               label="Walking Floor Contact"
               value={file.walking_floor_contact_left}
+              list={getList("")}
             ></IO.List>
             <IO.List
               left
               name="walking_first_contact_left"
               label="Walking First Contact"
               value={file.walking_first_contact_left}
+              list={getList("")}
             ></IO.List>
             <IO.List
               left
               name="jumping_one_leg_left"
               label="Jumping One Leg"
               value={file.jumping_one_leg_left}
+              list={getList("")}
             ></IO.List>
             <IO.List
               left
               name="run_left"
               label="Run"
               value={file.run_left}
+              list={getList("")}
             ></IO.List>
             <IO.Number
               left

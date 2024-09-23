@@ -1,19 +1,21 @@
-import { useContext } from "react";
 import { toTitleCase } from "../utils/strings";
 import { StringList } from "../utils/types";
-import IOAbstract, { EditContext, IOProps } from "./io-abstract";
+import IOAbstract, { IOProps } from "./io-abstract";
+
+export type IOListType = string[] | Record<string, string>;
+
+export function optionalList(list: string[]): IOListType {
+  return {
+    ...canonizeList(list),
+    "": "Unknown"
+  };
+}
 
 // In other part of the application, it could be a mapping
 // Ex: io-boolean, search panels
-function canonizeList(
-  list: string[] | Record<string, string>,
-  includeUnknown: boolean = false
-): Record<string, string> {
+function canonizeList(list: IOListType): Record<string, string> {
   if (Array.isArray(list)) {
     list = list.reduce((acc, k) => ({ ...acc, [k]: toTitleCase(k) }), {});
-  }
-  if (includeUnknown) {
-    list = { ...list, "": "Unknown" };
   }
 
   // key: what to store
@@ -70,24 +72,25 @@ export function buildRadios(
 }
 
 export default function IOList(
-  props: { list?: string[] | Record<string, string> } & IOProps<StringList>
+  props: { list: IOListType } & IOProps<StringList>
 ) {
-  // TODO: List should be mandatory and thus ?? {} not necessary anymore
-  const edit = useContext(EditContext);
-  if (!props.list && edit && props.name) {
-    throw new Error(`No list in ${props.name}}`);
-  }
-  const list: Record<string, string> = canonizeList(
-    props.list ?? {},
-    !props.required
-  );
-  // TODO: end
+  const list: Record<string, string> = canonizeList(props.list);
 
-  return IOAbstract<string>(props, {
-    renderOutput: (value) => <div>{value}</div>,
-    renderInput: (value, uuid) =>
-      Object.keys(list).length > 4
-        ? buildSelect(uuid, list, value ?? "", props.name ?? "", props.onChange)
-        : buildRadios(uuid, list, value ?? "", props.name ?? "", props.onChange)
-  });
+  return IOAbstract<string>(
+    {
+      ...props,
+      required: true
+    },
+    {
+      renderOutput: (value) => <div>{value}</div>,
+      renderInput: (value, uuid) =>
+        Object.keys(list).length == 0 ? (
+          <div>Not applicable</div>
+        ) : Object.keys(list).length > 4 ? (
+          buildSelect(uuid, list, value ?? "", props.name ?? "", props.onChange)
+        ) : (
+          buildRadios(uuid, list, value ?? "", props.name ?? "", props.onChange)
+        )
+    }
+  );
 }

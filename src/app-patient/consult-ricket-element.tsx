@@ -3,6 +3,7 @@ import ConsultRicket from "../business/consult-ricket";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
+import { getList } from "../utils/config";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
@@ -36,13 +37,23 @@ export default function consultRicketElementGenerator(
             <IO.List
               name="walking_difficulties"
               value={file.walking_difficulties}
+              list={getList("")}
             ></IO.List>
-            <IO.List label="Pain" value={file.pain}></IO.List>
+            <IO.List
+              label="Pain"
+              value={file.pain}
+              list={getList("")}
+            ></IO.List>
             <IO.List
               name="wrist_enlargement"
               value={file.wrist_enlargement}
+              list={getList("")}
             ></IO.List>
-            <IO.List name="rib_heading" value={file.rib_heading}></IO.List>
+            <IO.List
+              name="rib_heading"
+              value={file.rib_heading}
+              list={getList("")}
+            ></IO.List>
             <IO.Text left name="xray" label="XRay" value={file.xray}></IO.Text>
             <IO.Number
               right
@@ -61,7 +72,12 @@ export default function consultRicketElementGenerator(
               </>
             }
           >
-            <IO.List right label="Leg" value={file.right_leg}></IO.List>
+            <IO.List
+              right
+              label="Leg"
+              value={file.right_leg}
+              list={getList("")}
+            ></IO.List>
             <IO.Number
               right
               name="right_leg_angle"
@@ -87,7 +103,12 @@ export default function consultRicketElementGenerator(
               </>
             }
           >
-            <IO.List left label="Leg" value={file.left_leg}></IO.List>
+            <IO.List
+              left
+              label="Leg"
+              value={file.left_leg}
+              list={getList("")}
+            ></IO.List>
             <IO.Number
               left
               name="left_leg_angle"
