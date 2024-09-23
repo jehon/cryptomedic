@@ -1,10 +1,8 @@
 import Timed from "./abstracts/timed.js";
 
-const model = "Appointment";
-
 export default class Appointment extends Timed {
   static override getModel() {
-    return model;
+    return "Appointment";
   }
 
   static override getTechnicalName() {

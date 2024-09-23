@@ -1,10 +1,8 @@
 import Timed from "./abstracts/timed.js";
 
-const model = "Surgery";
-
 export default class Surgery extends Timed {
   static getModel() {
-    return model;
+    return "Surgery";
   }
 
   static getTechnicalName() {
