@@ -33,12 +33,12 @@ export default function surgeryElementGenerator(
               label="Surgeon"
               value={file.report_surgeon as string}
             />
-            <IO.String
+            <IO.Boolean
               name="report_side_right"
               label="Side Right"
               value={file.report_side_right as string}
             />
-            <IO.String
+            <IO.Boolean
               name="report_side_left"
               label="Side Left"
               value={file.report_side_left as string}

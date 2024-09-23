@@ -1,13 +1,13 @@
 import { ImgBooleanFalse, ImgBooleanTrue } from "./images";
-import IOAbstract, { IOProps, IOPropsInput } from "./io-abstract";
+import IOAbstract, { IOProps } from "./io-abstract";
 import { buildRadios } from "./io-list";
 
 //
 // Always required
 //
 
-function isTrue(v: IOPropsInput<boolean>) {
-  if (v == undefined) {
+function isTrue(v: any) {
+  if (v === undefined || v === null) {
     return false;
   }
 
@@ -15,11 +15,11 @@ function isTrue(v: IOPropsInput<boolean>) {
     return v;
   }
 
-  if (v == "0") {
+  if (v == "0" || v == 0) {
     return false;
   }
 
-  if (v == "1") {
+  if (v == "1" || v == 1) {
     return true;
   }
 
@@ -36,10 +36,10 @@ export default function IOBoolean(props: IOProps<boolean>) {
         buildRadios(
           uuid,
           {
-            Yes: "1",
-            No: "0"
+            1: "Yes",
+            0: "No"
           },
-          value == isTrue(value) ? "1" : "0",
+          isTrue(value) ? "1" : "0",
           props.name ?? "",
           (val: string) => props.onChange && props.onChange(isTrue(val))
         )
