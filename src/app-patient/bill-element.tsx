@@ -109,7 +109,7 @@ export default function billElementGenerator(
               >
                 <IODate value={payment.date} noLabel />
                 <IONumber value={payment.amount} noLabel />
-                <IOString value={payment.comments} noLabel note />
+                <IOString value={payment.comments} noLabel />
               </div>
             ))
           )}

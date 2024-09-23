@@ -16,9 +16,7 @@ export default function IODate(
     renderOutput: (value) => (
       <>
         <div>{outputDate(value)}</div>
-        <div className="note" data-e2e="excluded">
-          {periodAsHumanReadable(value)}
-        </div>
+        <div data-e2e="excluded">{periodAsHumanReadable(value)}</div>
       </>
     ),
     renderInput: (value, uuid) => (

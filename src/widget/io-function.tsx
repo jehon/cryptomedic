@@ -13,14 +13,17 @@ export default function IOFunction(props: IOPropsReadonly<T>) {
     return <></>;
   }
 
-  return IOAbstract<T>(props, {
-    renderOutput: (value) => {
-      try {
-        return <div>{typeof value == "function" && value()}</div>;
-      } catch (e: any) {
-        // console.trace("io-function", e);
-        return <div className="io-function-error">{e.message}</div>;
+  return IOAbstract<T>(
+    { ...props, note: true },
+    {
+      renderOutput: (value) => {
+        try {
+          return <div>{typeof value == "function" && value()}</div>;
+        } catch (e: any) {
+          // console.trace("io-function", e);
+          return <div className="io-function-error">{e.message}</div>;
+        }
       }
     }
-  });
+  );
 }

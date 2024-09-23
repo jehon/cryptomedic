@@ -7,10 +7,12 @@
 
   flex-wrap: wrap;
   justify-content: space-between;
+  color: gray;
 
   & > label {
     width: 25%;
     text-align: right;
+    font-size: smaller;
     word-break: break-word;
     hyphens: auto;
   }
@@ -22,10 +24,6 @@
     overflow-wrap: break-word;
 
     max-width: calc(100% - 25% - 10px);
-
-    .io-function-error {
-      color: gray;
-    }
 
     pre {
       overflow-wrap: break-word;
@@ -44,9 +42,8 @@
       }
     }
 
-    .note {
+    &:not(:first-child) {
       font-size: smaller;
-      color: gray;
     }
   }
 
@@ -55,12 +52,7 @@
   }
 
   &.io-output {
-    & > label {
-      font-size: smaller;
-      color: gray;
-    }
-
-    & > .content {
+    & > .content > :first-child {
       color: var(--color-around-green);
     }
   }

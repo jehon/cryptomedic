@@ -37,7 +37,6 @@ export default function ConsultAbstractIntroduction({
         {file.weight_kg && (
           <IO.Function
             label="Weight sd"
-            note
             value={() => roundTo(file.getWeightSd())}
           />
         )}
@@ -49,7 +48,6 @@ export default function ConsultAbstractIntroduction({
         {file.height_cm && (
           <IO.Function
             label="Height sd"
-            note
             value={() => roundTo(file.getHeightSd())}
           />
         )}
@@ -61,19 +59,16 @@ export default function ConsultAbstractIntroduction({
         {file.weight_kg && file.height_cm && (
           <>
             <IO.Function
-              note
               label="Weight/Height ratio"
               value={() => roundTo(file.wh())}
             />
             <IO.Function
               label="Weight/Height sd"
-              note
               value={() => roundTo(file.getWHSd())}
             />
-            <IO.Function note label="BMI" value={() => roundTo(file.bmi())} />
+            <IO.Function label="BMI" value={() => roundTo(file.bmi())} />
             <IO.Function
               label="BMI sd"
-              note
               value={() => roundTo(file.getBMISd())}
             />
           </>

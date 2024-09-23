@@ -1,9 +1,6 @@
 import IOAbstract, { IOProps } from "./io-abstract";
 
-export default function IOString(
-  props: IOProps<string>,
-  rest: Record<string, string>
-) {
+export default function IOString(props: IOProps<string>) {
   return IOAbstract(props, {
     renderOutput: (value) => <div>{value}</div>,
     renderInput: (value, uuid) => (

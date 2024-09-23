@@ -12,10 +12,10 @@ export type IOPropsReadonly<T> = {
   label?: string;
   value: IOPropsInput<T>;
   noLabel?: boolean;
-  note?: boolean;
   left?: boolean;
   right?: boolean;
   e2eExcluded?: boolean;
+  additionalInfos?: React.ReactNode;
 };
 
 export type IOProps<T> = IOPropsReadonly<T> & {
@@ -37,7 +37,10 @@ function getLabel(props: IOProps<any>) {
 }
 
 export default function IOAbstract<T>(
-  props: IOProps<T>,
+  props: IOProps<T> & {
+    // Not published properties
+    note?: boolean;
+  },
   {
     renderOutput,
     renderInput
@@ -48,7 +51,7 @@ export default function IOAbstract<T>(
     };
   }
 ): React.ReactNode {
-  const calculatedProps: IOProps<T> = {
+  const calculatedProps = {
     required: false,
     noLabel: false,
     note: false,
@@ -110,6 +113,7 @@ export default function IOAbstract<T>(
           ? renderInput!(calculatedProps.value, uuid)
           : renderOutput(calculatedProps.value)}
       </div>
+      {props.additionalInfos}
     </div>
   );
 }
