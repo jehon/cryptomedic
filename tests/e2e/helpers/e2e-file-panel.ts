@@ -225,8 +225,12 @@ export class E2EFilePanel {
         await ioc.locator("textarea").fill("" + value);
         break;
       case "select":
-        await expect(ioc.locator("select")).toBeVisible();
-        await ioc.locator("select").selectOption({ label: "" + value });
+        {
+          const select = ioc.locator("select");
+          await expect(select).toBeVisible();
+          await expect(select).toContainText(value);
+          await select.selectOption({ label: "" + value });
+        }
         break;
       case "radio":
         {
