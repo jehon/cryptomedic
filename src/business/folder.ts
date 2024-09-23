@@ -12,7 +12,7 @@ import ConsultRicket from "./consult-ricket.js";
 import Patient from "./patient";
 import Payment from "./payment.js";
 import Picture from "./picture.js";
-import Surgery from "./surgery.js";
+import Surgery from "./surgery";
 
 export type PatientRelatedClass = typeof PatientRelated;
 
