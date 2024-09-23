@@ -76,6 +76,12 @@ export default function IOList(
 ) {
   const list: Record<string, string> = canonizeList(props.list);
 
+  if (props.value && props.onChange && !(props.value in list)) {
+    // We have a value that is not in the list,
+    // so we trigger the change of value
+    setTimeout(() => props.onChange!(""), 1);
+  }
+
   return IOAbstract<string>(
     {
       ...props,
