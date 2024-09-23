@@ -149,6 +149,10 @@ frontend-migration-status: clear
 	@find src -name "*.js" -exec echo "** Files importing: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ src/ ";" | jh-tag-stdin "legacy-to-js"
 	@echo ""
 
+	@echo "********** [Problem] Remaining js files ******************"
+	@find src -name "*.js" | jh-tag-stdin "js"
+	@echo ""
+
 	@echo "********** [Problem] Src files that link to legacy files ******************"
 	@grep --recursive --include "*.js" --include "*.ts" --fixed-strings "../legacy/" src/ | jh-tag-stdin "problem"
 	@echo ""
