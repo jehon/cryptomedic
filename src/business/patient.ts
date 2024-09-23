@@ -1,17 +1,8 @@
 import PatientRelated from "./abstracts/patient-related.js";
-import "./bill.js";
-import "./consult-clubfoot.js";
-import "./consult-other.js";
-import "./consult-ricket.js";
-import "./payment.js";
-import "./picture.js";
-import "./surgery.js";
-
-const model = "Patient";
 
 export default class Patient extends PatientRelated {
   static override getModel() {
-    return model;
+    return "Patient";
   }
 
   static override getTechnicalName() {
