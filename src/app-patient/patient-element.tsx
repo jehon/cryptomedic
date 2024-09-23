@@ -34,13 +34,6 @@ export default function patientElementGenerator(
     patient.address_upazilla
   );
 
-  function updateDistrict(v: string) {
-    districtValueUpdate(v);
-    const upazillaList = getListFor("upazilla", v);
-    // console.log(upazillaList);
-    // upazillaValueUpdate()
-  }
-
   return patientRelatedElementGenerator<Patient>(file, props, {
     header: (
       <>
@@ -101,7 +94,7 @@ export default function patientElementGenerator(
               label="District"
               value={patient.address_district}
               list={optionalList(getList("Districts"))}
-              onChange={(v) => updateDistrict(v)}
+              onChange={(v) => districtValueUpdate(v)}
             />
             <IO.List
               name="address_upazilla"
