@@ -149,7 +149,7 @@ Route::group(array('middleware' => 'authenticated'), function() {
       Route::resource('patient',                 'PatientsController');
       // Route::resource('picture',                 'PicturesController');
       // Route::resource('payment',                 'PaymentsController');
-      // Route::resource('surgery',                 'SurgeriesController');
+      Route::resource('surgery',                 'SurgeriesController');
     });
 
     // New routes
