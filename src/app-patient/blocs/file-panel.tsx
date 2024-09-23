@@ -37,7 +37,6 @@ export function isTodoMigration(type: typeof Pojo) {
     "consult_clubfoot",
     "consult_other",
     "consult_ricket",
-    "patient",
     "payment",
     "picture",
     "price",
