@@ -115,7 +115,7 @@ Route::group(array('middleware' => 'authenticated'), function() {
   });
 
   Route::group([ 'prefix' => '/fiche/' ], function() {
-    // Legacy routes
+    // TODO: Legacy routes
     CRSecurity::ifHasPersmission('folder.edit', function() {
       Route::resource('bills',                 'BillsController');
       Route::resource('clubfeet' ,             'ClubFeetController');
@@ -142,13 +142,13 @@ Route::group(array('middleware' => 'authenticated'), function() {
     // New routes
     CRSecurity::ifHasPersmission('folder.edit', function() {
       Route::resource('appointment',             'AppointmentsController');
-      // Route::resource('bill',                    'BillsController');
-      // Route::resource('consult_clubfoot' ,       'ClubFeetController');
-      // Route::resource('consult_other',           'OtherConsultsController');
-      // Route::resource('consult_ricket',          'RicketConsultsController');
+      Route::resource('bill',                    'BillsController');
+      Route::resource('consult_clubfoot' ,       'ClubFeetController');
+      Route::resource('consult_other',           'OtherConsultsController');
+      Route::resource('consult_ricket',          'RicketConsultsController');
       Route::resource('patient',                 'PatientsController');
-      // Route::resource('picture',                 'PicturesController');
-      // Route::resource('payment',                 'PaymentsController');
+      Route::resource('picture',                 'PicturesController');
+      Route::resource('payment',                 'PaymentsController');
       Route::resource('surgery',                 'SurgeriesController');
     });
 
