@@ -16,8 +16,8 @@ function canonizeList(
     list = { ...list, "": "Unknown" };
   }
 
-  // key: what to show
-  // value: what to store
+  // key: what to store
+  // value: what to show
   return list;
 }
 
@@ -37,9 +37,9 @@ function buildSelect(
       defaultValue={value ?? ""}
       onChange={(evt) => onChange(evt.target.value)}
     >
-      {Object.entries(list).map(([v, k]) => (
-        <option key={k} value={v}>
-          {k}
+      {Object.entries(list).map(([stored, shown]) => (
+        <option key={shown} value={stored}>
+          {shown}
         </option>
       ))}
     </select>
@@ -52,19 +52,19 @@ export function buildRadios(
   name: string,
   onChange: (val: string) => void = () => {}
 ) {
-  return Object.entries(list).map(([v, k], i) => (
-    <div className="align" key={k}>
+  return Object.entries(list).map(([stored, shown], i) => (
+    <div className="align" key={shown}>
       <input
         id={uuid + "." + i}
         className="form-control"
         name={name}
-        defaultChecked={value == v}
-        value={v}
-        onBlur={() => onChange(v)}
+        defaultChecked={value == stored}
+        value={stored}
+        onBlur={() => onChange(stored)}
         type="radio"
         required
       />
-      <label htmlFor={uuid + "." + i}>{k}</label>
+      <label htmlFor={uuid + "." + i}>{shown}</label>
     </div>
   ));
 }
