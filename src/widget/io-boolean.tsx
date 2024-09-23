@@ -30,8 +30,9 @@ export default function IOBoolean(props: IOProps<boolean>) {
   return IOAbstract(
     { ...props, required: true },
     {
-      renderOutput: (value) =>
-        isTrue(value) ? ImgBooleanTrue() : ImgBooleanFalse(),
+      renderOutput: (value) => (
+        <div>{isTrue(value) ? ImgBooleanTrue() : ImgBooleanFalse()}</div>
+      ),
       renderInput: (value, uuid) =>
         buildRadios(
           uuid,
