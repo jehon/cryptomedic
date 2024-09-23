@@ -15,7 +15,8 @@ export type IOPropsReadonly<T> = {
   left?: boolean;
   right?: boolean;
   e2eExcluded?: boolean;
-  additionalInfos?: React.ReactNode;
+  help?: React.ReactNode;
+  inputHelp?: React.ReactNode;
 };
 
 export type IOProps<T> = IOPropsReadonly<T> & {
@@ -109,11 +110,16 @@ export default function IOAbstract<T>(
         className="content"
         data-e2e={calculatedProps.e2eExcluded ? "excluded" : ""}
       >
-        {editContext
-          ? renderInput!(calculatedProps.value, uuid)
-          : renderOutput(calculatedProps.value)}
+        {editContext ? (
+          <>
+            {renderInput!(calculatedProps.value, uuid)}
+            {props.inputHelp}
+          </>
+        ) : (
+          <>{renderOutput(calculatedProps.value)}</>
+        )}
+        {props.help}
       </div>
-      {props.additionalInfos}
     </div>
   );
 }
