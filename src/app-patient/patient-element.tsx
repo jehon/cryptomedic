@@ -65,6 +65,10 @@ export default function patientElementGenerator(
               name="year_of_birth"
               label="Year of Birth"
               value={patient.year_of_birth}
+              htmlProps={{
+                pattern: "[0-9]{4}(-[0-9]{2})"
+              }}
+              inputHelp={<div>YYYY or YYYY-MM</div>}
             />
             <IO.Function
               label="Age today"
