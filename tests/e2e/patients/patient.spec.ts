@@ -71,6 +71,7 @@ test("update patient 101", async ({ page }) => {
   await e2eFile.setFieldValue("Sex", "Female", "radio");
   await e2eFile.setFieldValue("District", "Cox's Bazar", "select");
   await e2eFile.setFieldValue("Upazilla", "Ramu", "select");
+  await e2eFile.setFieldValue("Union", "Eidgar", "select");
   await expect(e2eFile.panel).toHaveScreenshot();
 
   await e2eFile.doSave();
@@ -78,5 +79,6 @@ test("update patient 101", async ({ page }) => {
   await e2eFile.expectOutputValue("Sex", "Female");
   await e2eFile.expectOutputValue("District", "Cox's Bazar");
   await e2eFile.expectOutputValue("Upazilla", "Ramu");
+  await e2eFile.expectOutputValue("Union", "Eidgar");
   await expect(e2eFile.panel).toHaveScreenshot();
 });
