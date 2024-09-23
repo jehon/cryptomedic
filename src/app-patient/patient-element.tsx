@@ -92,14 +92,14 @@ export default function patientElementGenerator(
             <IO.List
               name="address_district"
               label="District"
-              value={patient.address_district}
+              value={districtValue}
               list={optionalList(getList("Districts"))}
               onChange={(v) => districtValueUpdate(v)}
             />
             <IO.List
               name="address_upazilla"
               label="Upazilla"
-              value={patient.address_upazilla}
+              value={upazillaValue}
               list={getListFor("district", districtValue)}
               onChange={(v) => upazillaValueUpdate(v)}
             />
