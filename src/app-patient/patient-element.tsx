@@ -50,8 +50,10 @@ export default function patientElementGenerator(
             <IO.Number
               label="Entry Year"
               value={parseInt(patient.entry_year)}
-              min={1980}
-              max={2100}
+              htmlProps={{
+                min: 1980,
+                max: 2030
+              }}
             />
             <IO.Number
               label="Entry Order"

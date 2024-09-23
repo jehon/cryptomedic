@@ -17,8 +17,6 @@ function canonize(str: IOPropsInput<number>): number {
 export default function IONumber(
   props: {
     precision?: number;
-    min?: string | number;
-    max?: string | number;
   } & IOProps<number>
 ) {
   return IOAbstract<number>(
@@ -41,8 +39,7 @@ export default function IONumber(
             props.onChange && props.onChange(canonize(evt.target.value))
           }
           type="number"
-          min={"" + props.min}
-          max={"" + props.max}
+          {...props.htmlProps}
         />
       )
     }

@@ -1,6 +1,9 @@
 import IOAbstract, { IOProps } from "./io-abstract";
 
-export default function IOString(props: IOProps<string>) {
+export default function IOString(
+  props: IOProps<string>,
+  rest: Record<string, string>
+) {
   return IOAbstract(props, {
     renderOutput: (value) => <div>{value}</div>,
     renderInput: (value, uuid) => (
@@ -10,6 +13,7 @@ export default function IOString(props: IOProps<string>) {
         name={props.name}
         defaultValue={value ?? ""}
         onBlur={(evt) => props.onChange && props.onChange(evt.target.value)}
+        {...props.htmlProps}
       />
     )
   });
