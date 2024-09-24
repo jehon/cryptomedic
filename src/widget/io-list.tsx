@@ -47,7 +47,8 @@ function buildSelect(
     </select>
   );
 }
-export function buildRadios(
+
+function buildRadios(
   uuid: string,
   list: Record<string, string>,
   value: string,

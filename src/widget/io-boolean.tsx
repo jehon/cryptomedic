@@ -1,5 +1,4 @@
 import IOAbstract, { IOProps } from "./io-abstract";
-import { buildRadios } from "./io-list";
 
 //
 // Always required
@@ -27,20 +26,26 @@ function isTrue(v: any) {
 
 export default function IOBoolean(props: IOProps<boolean>) {
   return IOAbstract(
-    { ...props, required: true },
+    { ...props, required: true, value: isTrue(props.value) },
     {
       renderOutput: (value) => isTrue(value) && <div>✔</div>,
-      renderInput: (value, uuid) =>
-        buildRadios(
-          uuid,
-          {
-            1: "Yes",
-            0: "No"
-          },
-          isTrue(value) ? "1" : "0",
-          props.name ?? "",
-          (val: string) => props.onChange && props.onChange(isTrue(val))
-        )
+      renderInput: (value, uuid) => (
+        <>
+          <input type="hidden" name={props.name} value="" />
+          <input
+            id={uuid}
+            type="checkbox"
+            className="form-control"
+            name={props.name}
+            value="1"
+            defaultChecked={isTrue(value)}
+            onBlur={(evt) =>
+              props.onChange && props.onChange(evt.target.checked)
+            }
+            {...props.htmlProps}
+          />
+        </>
+      )
     }
   );
 }
