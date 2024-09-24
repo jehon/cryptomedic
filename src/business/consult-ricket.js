@@ -1,10 +1,8 @@
 import Consult from "./abstracts/consult.js";
 
-const model = "RicketConsult";
-
 export default class ConsultRicket extends Consult {
   static getModel() {
-    return model;
+    return "RicketConsult";
   }
 
   static getTechnicalName() {

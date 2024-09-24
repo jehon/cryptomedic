@@ -1,10 +1,8 @@
 import Consult from "./abstracts/consult.js";
 
-const model = "OtherConsult";
-
 export default class ConsultOther extends Consult {
   static getModel() {
-    return model;
+    return "OtherConsult";
   }
 
   static getTechnicalName() {

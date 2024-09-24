@@ -3,11 +3,9 @@ import { getSession } from "../utils/session.js";
 import Timed from "./abstracts/timed.js";
 import Price from "./price.js";
 
-const model = "Bill";
-
 export default class Bill extends Timed {
   static getModel() {
-    return model;
+    return "Bill";
   }
 
   static getTechnicalName() {

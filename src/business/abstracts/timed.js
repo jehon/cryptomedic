@@ -5,7 +5,7 @@ import PatientRelated from "./patient-related.js";
 
 export default class Timed extends PatientRelated {
   static getModel() {
-    return "Consult";
+    return "Timed";
   }
 
   date;

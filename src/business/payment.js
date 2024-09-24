@@ -1,11 +1,9 @@
 import PatientRelated from "./abstracts/patient-related.js";
 
-const model = "Payment";
-
 // Todo: Payment is not a patient related
 export default class Payment extends PatientRelated {
   static getModel() {
-    return model;
+    return "Payment";
   }
 
   static getTechnicalName() {

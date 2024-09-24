@@ -8,12 +8,12 @@ export default class Pojo {
     return plainToInstance(this, json);
   }
 
-  static getTechnicalName() {
-    return "pojo";
-  }
-
   static getModel() {
     return "Pojo";
+  }
+
+  static getTechnicalName() {
+    return "pojo";
   }
 
   static getTitle() {
