@@ -1,4 +1,4 @@
-import { ImgBooleanFalse, ImgBooleanTrue } from "./images";
+import { ImgBooleanTrue } from "./images";
 import IOAbstract, { IOProps } from "./io-abstract";
 import { buildRadios } from "./io-list";
 
@@ -30,9 +30,7 @@ export default function IOBoolean(props: IOProps<boolean>) {
   return IOAbstract(
     { ...props, required: true },
     {
-      renderOutput: (value) => (
-        <div>{isTrue(value) ? ImgBooleanTrue() : ImgBooleanFalse()}</div>
-      ),
+      renderOutput: (value) => isTrue(value) && <div>{ImgBooleanTrue()}</div>,
       renderInput: (value, uuid) =>
         buildRadios(
           uuid,
