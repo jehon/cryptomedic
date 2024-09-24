@@ -5,7 +5,7 @@ import { setSession } from "../../../../../src/utils/session.js";
 import { routeToLogin } from "../../js/router.js";
 
 import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";
-import nullify from "../../../../../src/utils/nullify.js";
+import nullify from "../../../v1/nullify.js";
 import {
   createElementsFromHTML,
   createElementWithObject,

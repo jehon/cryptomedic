@@ -1,5 +1,5 @@
 import { immerable } from "immer";
-import nullify from "../../../src/utils/nullify.js";
+import nullify from "../../app-old/v1/nullify.js";
 
 export default class Pojo {
   [immerable] = true;
