@@ -1,4 +1,4 @@
-import { DataMissingException } from "../../../src/utils/exceptions.js";
+import { DataMissingException } from "../../../legacy/exceptions.js";
 import { loadReference, RefFolder1 } from "./athelpers.js";
 
 describe("Jasmine", function () {

@@ -1,9 +1,9 @@
+import Patient from "../../../../business/patient.js";
 import {
   DataException,
   DataInvalidException,
   DataMissingException
-} from "../../../../../src/utils/exceptions.js";
-import Patient from "../../../../business/patient.js";
+} from "../../../../exceptions.js";
 import XWithFile from "./x-with-file.js";
 
 /**

@@ -17,8 +17,8 @@ import {
 } from "../../js/overlay-builder.js";
 import XLabel from "../style/x-label.js";
 
-import { TransportRequestError } from "../../../../../src/utils/exceptions.js";
-export { TransportRequestError } from "../../../../../src/utils/exceptions.js";
+import { TransportRequestError } from "../../../../exceptions.js";
+export { TransportRequestError } from "../../../../exceptions.js";
 
 /**
  * @param {number} code - http code

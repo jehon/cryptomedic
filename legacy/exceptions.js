@@ -22,7 +22,9 @@ export class ServerRequestError extends ApplicationException {
   }
 }
 
-class DataException extends ApplicationException {
+// used in x-fff-age.js
+// ts-unused-exports:disable-next-line
+export class DataException extends ApplicationException {
   #key = "";
 
   constructor(key, msg) {
@@ -70,5 +72,13 @@ export class DataInvalidException extends DataException {
       `${key2string(key)} is invalid` +
         (value !== undefined ? ` (${JSON.stringify(value)})` : "")
     );
+  }
+}
+
+// used in x-file-bill.js
+// ts-unused-exports:disable-next-line
+export class ConfigurationMissingException extends DataException {
+  constructor(key) {
+    super(key, `Configuration ${key2string(key)} is missing.`);
   }
 }

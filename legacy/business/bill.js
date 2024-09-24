@@ -1,4 +1,4 @@
-import { DataMissingException } from "../../src/utils/exceptions.js";
+import { DataMissingException } from "../exceptions.js";
 import Timed from "./abstracts/timed.js";
 import Price from "./price.js";
 import { registrySet } from "./registry.js";

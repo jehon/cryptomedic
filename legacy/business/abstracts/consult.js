@@ -1,8 +1,8 @@
 import Timed from "./timed.js";
 
 import { fromBirthDateTo, normalizeDate } from "../../../src/utils/date-old.js";
-import { DataMissingException } from "../../../src/utils/exceptions.js";
 import { stdDeviationFor } from "../../../src/utils/standard-deviation.js";
+import { DataMissingException } from "../../exceptions.js";
 
 export default class Consult extends Timed {
   getModel() {

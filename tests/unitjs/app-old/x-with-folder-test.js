@@ -1,7 +1,7 @@
 import { fn, loadReference, RefFolder1 } from "./athelpers.js";
 
 import XWithFolder from "../../../legacy/app-old/v2/widgets/folder/x-with-folder.js";
-import { DataException } from "../../../src/utils/exceptions.js";
+import { DataException } from "../../../legacy/exceptions.js";
 import Folder from "../../business/folder.js";
 
 let testFolder;
