@@ -1,4 +1,5 @@
 import Picture from "../business/picture";
+import { getList } from "../utils/config";
 
 import IO from "../widget/io";
 import Panel from "../widget/panel";
@@ -17,7 +18,11 @@ export default function pictureElementGenerator(
     body: (
       <TwoColumns>
         <Panel fixed label="Information">
-          <IO.String name="type" value={file.type as string} />
+          <IO.List
+            name="type"
+            value={file.type as string}
+            list={getList("PictureType")}
+          />
           <IO.Date name="date" value={file.date} />
           <IO.String name="file" value={file.file as string} />
           <IO.Text name="comments" value={file.comments as string} />
