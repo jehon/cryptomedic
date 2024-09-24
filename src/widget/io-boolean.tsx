@@ -1,4 +1,3 @@
-import { ImgBooleanTrue } from "./images";
 import IOAbstract, { IOProps } from "./io-abstract";
 import { buildRadios } from "./io-list";
 
@@ -30,7 +29,7 @@ export default function IOBoolean(props: IOProps<boolean>) {
   return IOAbstract(
     { ...props, required: true },
     {
-      renderOutput: (value) => isTrue(value) && <div>{ImgBooleanTrue()}</div>,
+      renderOutput: (value) => isTrue(value) && <div>✔</div>,
       renderInput: (value, uuid) =>
         buildRadios(
           uuid,
