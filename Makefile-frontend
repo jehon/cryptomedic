@@ -145,8 +145,12 @@ frontend-github:
 
 .PHONY: frontend-migration-status
 frontend-migration-status: clear
-	@echo "********** [Info] Legacy files that link to src files ******************"
+	@echo "********** [Info] Files that link to src files ******************"
 	@find src -name "*.js" -exec echo "** Files importing: {}" ";" -exec grep --files-with-matches --recursive --fixed-strings "{}" legacy/ tests/unitjs/ src/ ";" | jh-tag-stdin "legacy-to-js"
+	@echo ""
+
+	@echo "********** [Problem] Js import js ******************"
+	@grep --files-with-matches --recursive --fixed-strings ".js" src/ | grep ".js" | jh-tag-stdin "js-import-js"
 	@echo ""
 
 	@echo "********** [Problem] Remaining js files ******************"
