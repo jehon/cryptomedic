@@ -31,7 +31,8 @@ function request({
   const strUrl =
     url.join("/").replaceAll("//", "/") +
     (method === "GET"
-      ? "?" + new URLSearchParams(nullify(data)).toString()
+      ? "?" +
+        new URLSearchParams(nullify(data) as Record<string, string>).toString()
       : "");
 
   return fetch(strUrl, {
