@@ -29,7 +29,7 @@ endef
 
 # Default target
 .PHONY: check
-check: cls start dependencies lint build test ok
+check: cls dc-up dependencies lint build test ok
 
 # Test with clean environment
 .PHONY: full
