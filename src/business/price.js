@@ -1,10 +1,8 @@
 import Pojo from "./abstracts/pojo.js";
 
-const model = "Price";
-
 export default class Price extends Pojo {
   static getModel() {
-    return model;
+    return "Price";
   }
 
   static getTechnicalName() {

@@ -10,7 +10,7 @@ import ConsultClubfoot from "./consult-clubfoot.js";
 import ConsultOther from "./consult-other.js";
 import ConsultRicket from "./consult-ricket.js";
 import Patient from "./patient";
-import Payment from "./payment.js";
+import Payment from "./payment";
 import Picture from "./picture";
 import Surgery from "./surgery";
 
