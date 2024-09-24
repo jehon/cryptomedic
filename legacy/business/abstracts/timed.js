@@ -1,4 +1,4 @@
-import { getPref } from "../../../src/utils/prefs.js";
+import { getPref } from "../../prefs.js";
 import PatientRelated from "./patient-related.js";
 
 // TODO: Use mixins https://www.typescriptlang.org/docs/handbook/mixins.html

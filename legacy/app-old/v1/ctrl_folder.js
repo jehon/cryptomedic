@@ -1,5 +1,5 @@
-import { extractPrefsFile } from "../../../src/utils/prefs.js";
 import Folder from "../../business/folder.js";
+import { extractPrefsFile } from "../../prefs.js";
 import date2CanonicString from "../v2/js/date2CanonicString.js";
 import { formGetContent } from "../v2/js/form.js";
 import getDataService from "../v2/js/getDataService.js";

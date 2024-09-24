@@ -1,4 +1,4 @@
-import { stdDeviationFor } from "../../../../../src/utils/standard-deviation.js";
+import { stdDeviationFor } from "../../../../standard-deviation.js";
 import { fromBirthDateTo } from "../file/x-fff-age.js";
 import XWithFile from "./x-with-file.js";
 
