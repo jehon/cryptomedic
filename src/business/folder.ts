@@ -6,7 +6,7 @@ import PatientRelated from "./abstracts/patient-related.js";
 import Pojo from "./abstracts/pojo.js";
 import Appointment from "./appointment";
 import Bill from "./bill.js";
-import ConsultClubfoot from "./consult-clubfoot.js";
+import ConsultClubfoot from "./consult-clubfoot";
 import ConsultOther from "./consult-other.js";
 import ConsultRicket from "./consult-ricket.js";
 import Patient from "./patient";
