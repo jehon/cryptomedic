@@ -1,5 +1,4 @@
 import { plainToInstance } from "class-transformer";
-import "reflect-metadata"; // For class-transformer
 import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";
 import { CRUD } from "../constants";
