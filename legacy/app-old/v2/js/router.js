@@ -1,5 +1,3 @@
-import Pojo from "../../../business/abstracts/pojo.js";
-
 /**
  * @param {string} pathname to be set
  * @returns {string} the same hash
@@ -11,7 +9,7 @@ export function setLocation(pathname) {
 /**
  * @returns {string} the current route
  */
-export function getCurrentRoute() {
+function getCurrentRoute() {
   return document.location.hash.substring(1);
 }
 
@@ -56,18 +54,6 @@ export function getRouteToFolderPatient(folderId, edit = false) {
 }
 
 /**
- * @param {Pojo} pojo - the file to display
- * @returns {string} the route
- */
-export function getRouteToFolderFile(pojo) {
-  return getRouteToFolderFileByParams(
-    pojo.patient_id,
-    pojo.getModel(),
-    pojo.id
-  );
-}
-
-/**
  * @param {number} folderId of the patient
  * @param {string} fileName of the file (Bill ?)
  * @param {number} fileId of the file
@@ -109,17 +95,6 @@ export function getRouteToReport(reportName) {
   return `/reports/${reportName}`;
 }
 
-/**
- * @param {string} route - the route to be parsed
- * @see getRouteToReport
- * @returns { object } the route parsed
- */
-export function parseRouteReport(route = getCurrentRoute()) {
-  return {
-    report: route.replace(/^\/reports\//, "")
-  };
-}
-
 export const routes = {
   users_list: "/users",
   user_add: "/users/new",
@@ -157,36 +132,4 @@ export function getRoute(route, data = {}) {
     );
   }
   return newRoute;
-}
-
-/**
- * @param {string} routeTemplate as /blabla/[arg]
- * @param {string} route to be parsed
- * @returns {object} data to customize the route
- */
-export function getRouteParameters(routeTemplate, route) {
-  let n = route.indexOf("?");
-
-  // Path with mandatory elements
-  let r = n > 0 ? route.substr(0, n) : route;
-  let regexp = new RegExp(
-    "^" + routeTemplate.split("[").join("(?<").split("]").join(">[^/]*)") + "$"
-  );
-  const params = regexp.exec(r)?.groups ?? {};
-  if (params === null) {
-    throw new Error("Route is not matching");
-  }
-
-  if (getRoute(routeTemplate, params) != r) {
-    throw new Error("Not correct route");
-  }
-
-  // Optional arguments
-  let s = n > 0 ? route.substring(n + 1) : "";
-  const add = Object.fromEntries(Array.from(new URLSearchParams(s).entries()));
-
-  return {
-    ...params,
-    ...add
-  };
 }
