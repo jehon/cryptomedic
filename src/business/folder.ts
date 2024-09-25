@@ -1,14 +1,14 @@
 import { plainToInstance } from "class-transformer";
 import { produce } from "immer";
 import "reflect-metadata"; // plainToInstance
-import { removeNull } from "../utils/objects.js";
-import PatientRelated from "./abstracts/patient-related.js";
+import { removeNull } from "../utils/objects";
+import PatientRelated from "./abstracts/patient-related";
 import Pojo from "./abstracts/pojo.js";
 import Appointment from "./appointment";
 import Bill from "./bill.js";
 import ConsultClubfoot from "./consult-clubfoot";
-import ConsultOther from "./consult-other.js";
-import ConsultRicket from "./consult-ricket.js";
+import ConsultOther from "./consult-other";
+import ConsultRicket from "./consult-ricket";
 import Patient from "./patient";
 import Payment from "./payment";
 import Picture from "./picture";
