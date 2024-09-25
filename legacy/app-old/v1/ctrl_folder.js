@@ -111,7 +111,7 @@ export default function ctrl_folder($scope, $routeParams) {
   }
 
   // Redirect to React
-  if ($scope.mode == "read") {
+  if ($scope.mode == "read" && $scope.subtype != "Bill") {
     // Redirect to React
     let subtype = $scope.subtype ? _canonize($scope.subtype).join("_") : false;
     switch ($scope.subtype) {
