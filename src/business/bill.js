@@ -18,62 +18,10 @@ export default class Bill extends Timed {
   total_real;
   social_level;
   total_asked;
-
-  // All other infos
-  others;
-
-  /**
-   *
-   * @param {price_id} price_id
-   * @param {*} folder
-   */
-  constructor(
-    {
-      price_id,
-      sl_family_salary,
-      sl_number_of_household_members,
-      total_real,
-      social_level,
-      total_asked,
-      items,
-      ...others
-    } = {},
-    folder = null
-  ) {
-    super(others, folder);
-    this.price_id = price_id;
-    this.sl_family_salary = sl_family_salary;
-    this.sl_number_of_household_members = sl_number_of_household_members;
-    this.total_real = total_real;
-    this.social_level = social_level;
-    this.total_asked = total_asked;
-
-    this.others = others;
-
-    if (!this.id) {
-      // Initialize social level from last bill (if any)
-      var last_bill = null;
-      if (this.getFolder()) {
-        for (var v of folder.getListByType(Bill)) {
-          if (!last_bill) {
-            last_bill = v;
-          } else {
-            if (last_bill.date < v.date) {
-              last_bill = v;
-            }
-          }
-        }
-        if (last_bill) {
-          this.sl_family_salary = last_bill.sl_family_salary;
-          this.sl_number_of_household_members =
-            last_bill.sl_number_of_household_members;
-        }
-      }
-    }
-  }
+  // [key: string]: any;
 
   get items() {
-    let items = [];
+    const items = [];
     for (const [key, value] of Object.entries(this)) {
       if (value > 0) {
         const category = key.split("_")[0];
@@ -158,8 +106,8 @@ export default class Bill extends Timed {
       this.total_asked = 0;
       return -1;
     }
-    var total = 0;
-    for (var i in this.getPrice()) {
+    let total = 0;
+    for (const i in this.getPrice()) {
       if (i[0] === "_") {
         continue;
       }
@@ -215,7 +163,7 @@ export default class Bill extends Timed {
       //console.warn('calculate_percentage_asked(): no price id');
       return 1;
     }
-    var sl = this["social_level"];
+    const sl = this["social_level"];
     if (sl == null) {
       //console.warn('calculate_percentage_asked(): no social level');
       return 1;
@@ -226,7 +174,7 @@ export default class Bill extends Timed {
       //console.warn('calculate_percentage_asked(): no social level in price for sl ' + sl);
       return 1;
     }
-    var perc = this.getPrice()["social_level_percentage_" + sl];
+    const perc = this.getPrice()["social_level_percentage_" + sl];
     // console.log("price", this.getPrice(), sl, perc)
     return perc;
   }
@@ -262,8 +210,8 @@ export default class Bill extends Timed {
       return 0;
     }
     this.price_id = -1;
-    for (var i in prices) {
-      var p = prices[i];
+    for (const i in prices) {
+      const p = prices[i];
       if (
         (p["date_from"] == null || p["date_from"] <= this.date) &&
         (p["date_to"] == null || p["date_to"] > this.date)

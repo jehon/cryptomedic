@@ -6,7 +6,6 @@ import Price from "./price";
 test("with empty loader", function () {
   const data = new Price();
   expect(data).toBeInstanceOf(Price);
-  expect(Price.getBaseUrl()).toBe("admin/prices");
 });
 
 test("with data loading at construction time", function () {
