@@ -1,8 +1,9 @@
 export function string2number(str: string): number {
-  if (!str) {
-    throw new Error("Null value");
+  try {
+    return parseFloat(str);
+  } catch (_e) {
+    return NaN;
   }
-  return parseFloat(str);
 }
 
 export function string2Boolean(v: any) {

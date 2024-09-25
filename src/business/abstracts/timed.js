@@ -12,11 +12,7 @@ export default class Timed extends PatientRelated {
   examiner;
   center;
 
-  /**
-   *
-   * @param {weight_kg?}
-   */
-  constructor({ date, examiner, center, ...others } = {}, folder = null) {
+  constructor({ date, examiner, center, ...others } = {}, folder = undefined) {
     super(others, folder);
     this.date = date;
     this.examiner = examiner;
