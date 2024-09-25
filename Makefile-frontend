@@ -79,7 +79,6 @@ frontend-lint-unused-exports: $(FRONTEND_DEPENDENCIES_MARK)
 .PHONY: frontend-build
 build: frontend-build
 frontend-build: $(FRONTEND_BUILT_MARK)
-# We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild due to the recursive dependencies
 $(FRONTEND_BUILT_MARK): \
 		$(FRONTEND_PUBLISHED)/frontend/ng1x.html \
 		$(FRONTEND_PUBLISHED)/.htaccess
@@ -93,7 +92,6 @@ $(FRONTEND_PUBLISHED)/frontend/ng1x.html: \
 		$(shell find legacy/app-old/ ) \
 		$(shell find legacy/app-static/ ) \
 		$(FRONTEND_BUILD_TMP)/axios.js \
-		$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js \
 		$(FRONTEND_BUILD_TMP)/platform.js \
 		webpack.config.js \
 		tsconfig.json
@@ -120,11 +118,6 @@ $(FRONTEND_PUBLISHED)/.htaccess: src/build.htaccess
 # Dependencies are used in the build !
 $(FRONTEND_BUILD_TMP)/axios.js: node_modules/axios/dist/axios.js $(FRONTEND_DEPENDENCIES_MARK)
 	node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
-
-# Dependencies are used in the build !
-$(FRONTEND_BUILD_TMP)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js $(FRONTEND_DEPENDENCIES_MARK)
-	node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
-	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 # Dependencies are used in the build !
 $(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_DEPENDENCIES_MARK)
