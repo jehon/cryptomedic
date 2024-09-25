@@ -30,7 +30,7 @@ export default function patientElementGenerator(
   const [districtValue, districtValueUpdate] = useState<string>(
     patient.address_district
   );
-  const [upazillaValue, upazillaValueUpdate] = useState<string>(
+  const [upazilaValue, upazilaValueUpdate] = useState<string>(
     patient.address_upazilla
   );
 
@@ -98,16 +98,16 @@ export default function patientElementGenerator(
             />
             <IO.List
               name="address_upazilla"
-              label="Upazilla"
-              value={upazillaValue}
+              label="Upazila"
+              value={upazilaValue}
               list={getListFor("district", districtValue)}
-              onChange={(v) => upazillaValueUpdate(v)}
+              onChange={(v) => upazilaValueUpdate(v)}
             />
             <IO.List
               name="address_union"
               label="Union"
               value={patient.address_union}
-              list={getListFor("upazilla", upazillaValue)}
+              list={getListFor("upazilla", upazilaValue)}
             />
             <IO.Text name="address_comments" value={patient.address_comments} />
           </Panel>
