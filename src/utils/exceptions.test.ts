@@ -6,7 +6,7 @@ import {
   DataInvalidException,
   DataMissingException,
   DataOutOfBoundException
-} from "./exceptions.js";
+} from "./exceptions";
 
 test("should inherit from Error", function () {
   const ae = new ApplicationException("my message");

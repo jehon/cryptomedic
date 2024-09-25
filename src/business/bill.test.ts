@@ -1,8 +1,7 @@
 import { expect } from "expect";
 import test, { beforeEach } from "node:test";
 import { RefFolder1, loadReferenceFolder } from "../test-helper";
-
-import Bill from "./bill.js";
+import Bill from "./bill";
 import Folder from "./folder";
 
 let f: Folder = new Folder();

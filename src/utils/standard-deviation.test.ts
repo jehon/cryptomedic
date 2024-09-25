@@ -5,13 +5,13 @@ import {
   ConfigurationException,
   DataInvalidException,
   DataOutOfBoundException
-} from "./exceptions.js";
+} from "./exceptions";
 import {
   _evaluatePoly,
   _stdDeviation,
   sigma,
   stdDeviationFor
-} from "./standard-deviation.js";
+} from "./standard-deviation";
 
 const poly = {
   min: [

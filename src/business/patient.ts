@@ -1,5 +1,5 @@
-import { StringNumber } from "../utils/types.js";
-import PatientRelated from "./abstracts/patient-related.js";
+import { StringNumber } from "../utils/types";
+import PatientRelated from "./abstracts/patient-related";
 
 // From 1970 to 2029 (see help text on patient-element)
 export const yearOfBirthPattern =

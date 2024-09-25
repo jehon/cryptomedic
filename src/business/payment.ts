@@ -1,5 +1,5 @@
-import { StringDate } from "../utils/types.js";
-import PatientRelated from "./abstracts/patient-related.js";
+import { StringDate } from "../utils/types";
+import PatientRelated from "./abstracts/patient-related";
 
 // Todo: Payment is not a patient related
 export default class Payment extends PatientRelated {

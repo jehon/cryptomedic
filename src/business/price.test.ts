@@ -1,7 +1,7 @@
 import { expect } from "expect";
 import test from "node:test";
 
-import Price from "./price.js";
+import Price from "./price";
 
 test("with empty loader", function () {
   const data = new Price();

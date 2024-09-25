@@ -1,4 +1,4 @@
-import Timed from "./abstracts/timed.js";
+import Timed from "./abstracts/timed";
 
 export default class Appointment extends Timed {
   static override getModel() {

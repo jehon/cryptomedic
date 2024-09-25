@@ -6,9 +6,9 @@ import { loadReferenceFolder, RefFolder1 } from "../test-helper";
 import assert from "node:assert";
 import PatientRelated from "./abstracts/patient-related";
 import Appointment from "./appointment";
-import Bill from "./bill.js";
-import ConsultOther from "./consult-other.js";
-import ConsultRicket from "./consult-ricket.js";
+import Bill from "./bill";
+import ConsultOther from "./consult-other";
+import ConsultRicket from "./consult-ricket";
 import Folder from "./folder";
 import Patient from "./patient";
 import Payment from "./payment";
@@ -161,7 +161,8 @@ test("order", async function (t) {
 test("getNextAppointment", function () {
   expect(new Folder().getNextAppointment()).toBeUndefined();
 
-  f.list.push(new Appointment({ date: "2100-01-01" }));
+  // f.list.push(new Appointment({ date: "2100-01-01" }));
+  f.list.push(Appointment.factory({ date: "2100-01-01" }) as Appointment);
   expect(f.getNextAppointment()).toEqual(new Date("2100-01-01"));
 });
 

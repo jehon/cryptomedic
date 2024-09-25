@@ -1,13 +1,11 @@
 import { expect } from "expect";
 import test from "node:test";
-
-import { DataMissingException } from "../../utils/exceptions.js";
-import RicketConsult from "../consult-ricket.js";
-import Patient from "../patient";
-import Consult from "./consult.js";
-
-import { loadReferenceFolder, RefFolder1 } from "../../test-helper.js";
+import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
+import { DataMissingException } from "../../utils/exceptions";
+import RicketConsult from "../consult-ricket";
 import Folder from "../folder";
+import Patient from "../patient";
+import Consult from "./consult";
 
 test("with ricketConsult_13", async function () {
   const folder = await loadReferenceFolder(RefFolder1);
@@ -33,7 +31,7 @@ test("with ricketConsult_13", async function () {
 test("with patient with sex", function () {
   const f = new Folder();
   const p = new Patient({ id: 123, sex: "Male" } as any, f as any);
-  const c = new Consult({ patient_id: 123 }, f);
+  const c = (Consult.factory({ patient_id: 123 }) as Consult).registerParent(f);
   f.list.push(p);
   f.list.push(c);
 

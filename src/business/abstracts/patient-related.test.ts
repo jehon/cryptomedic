@@ -1,11 +1,9 @@
 import { expect } from "expect";
 import test from "node:test";
-
-import RicketConsult from "../consult-ricket.js";
+import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
+import RicketConsult from "../consult-ricket";
 import Patient from "../patient";
-import PatientRelated from "./patient-related.js";
-
-import { loadReferenceFolder, RefFolder1 } from "../../test-helper.js";
+import PatientRelated from "./patient-related";
 
 test("with TestFolder.test1.json", async function () {
   // Go through the rest_service !!!
