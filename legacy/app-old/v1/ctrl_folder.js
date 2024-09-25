@@ -11,7 +11,6 @@ import { fromBirthDate } from "../v2/widgets/file/x-fff-age.js";
 import "../v2/pages/x-page-folder.js";
 
 import { registryGet } from "../../business/registry.js";
-// import "../v2/pages/blocks/x-folder-graphics.js";
 import { _canonize } from "../v2/js/string-utils.js";
 import "../v2/widgets/file/x-fff-bmi-sd.js";
 import "../v2/widgets/file/x-fff-bmi.js";

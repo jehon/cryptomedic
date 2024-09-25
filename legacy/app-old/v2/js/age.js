@@ -6,7 +6,7 @@
  * @param {Date} reference date (yyyy-mm-dd or date object)
  * @returns {string} representation of the date
  */
-export function toBirthDate(years, months, reference = new Date()) {
+function toBirthDate(years, months, reference = new Date()) {
   let dyears = reference.getFullYear() - years;
   let dmonths = reference.getMonth() + 1 - months;
   if (dmonths < 0) {

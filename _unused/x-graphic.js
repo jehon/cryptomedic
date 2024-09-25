@@ -1,11 +1,12 @@
-/* istanbul ignore file: TODO */
+import {
+  getRouteToFolderFile,
+  setRoute
+} from "../legacy/app-old/v2/js/router.js";
+import { fromBirthDateTo } from "../legacy/app-old/v2/widgets/file/x-fff-age.js";
 
-import { getRouteToFolderFile, setRoute } from "../../js/router.js";
-import { fromBirthDateTo } from "../file/x-fff-age.js";
-
-import createCallback from "../../js/callback.js";
-import "../style/x-group-panel.js";
-import XWithFolder from "./x-with-folder.js";
+import createCallback from "../legacy/app-old/v2/js/callback.js";
+import XWithFolder from "../legacy/app-old/v2/widgets/folder/x-with-folder.js";
+import "../legacy/app-old/v2/widgets/style/x-group-panel.js";
 
 const hooverCallback = createCallback("hooverCallback");
 
@@ -283,7 +284,3 @@ export default class XGraphic extends XWithFolder {
     }
   }
 }
-
-window.customElements.define("x-graphic", XGraphic);
-
-// TODO: hide invalid entriyes ? => tr[valid="invalid"] > td

@@ -10,7 +10,7 @@ import {
  * @param {number} x the absice
  * @returns {number} the y value on the line
  */
-export function _evaluatePoly(line, x) {
+function _evaluatePoly(line, x) {
   var i = -1;
   if (x < line[0][0] || x > line[line.length - 1][0]) {
     return NaN;
@@ -35,7 +35,7 @@ export function _evaluatePoly(line, x) {
  * @param {number} y on the line
  * @returns {number} the standard deviation on the line at (x, y)
  */
-export function _stdDeviation(statLines, x, y) {
+function _stdDeviation(statLines, x, y) {
   var avg = _evaluatePoly(statLines.medium, x);
   if (isNaN(avg)) {
     throw new DataOutOfBoundException("value", x, [
@@ -91,4 +91,4 @@ export function stdDeviationFor(sex, graphName, x, y) {
 }
 
 // 1.64485 = sigma at 90 for normal distribution
-export const sigma = 1.64485;
+const sigma = 1.64485;
