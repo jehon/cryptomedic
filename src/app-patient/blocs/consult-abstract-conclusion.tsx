@@ -1,6 +1,7 @@
 import Consult from "../../business/abstracts/consult";
 
 import { getList } from "../../utils/config";
+import { string2Boolean } from "../../utils/strings";
 import IO from "../../widget/io";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
@@ -20,7 +21,7 @@ export default function ConsultAbstractConclusion({
         />
         <IO.Boolean
           name="suggested_for_surgery"
-          value={file.suggested_for_surgery as boolean}
+          value={string2Boolean(file.suggested_for_surgery)}
         />
         <IO.List
           name="treatment_evaluation"
@@ -29,7 +30,7 @@ export default function ConsultAbstractConclusion({
         />
         <IO.Boolean
           name="treatment_finished"
-          value={file.treatment_finished as boolean}
+          value={string2Boolean(file.treatment_finished)}
         />
       </Panel>
     </TwoColumns>

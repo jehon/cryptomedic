@@ -6,7 +6,7 @@ import TwoColumns from "../../widget/two-columns";
 
 import { getList } from "../../utils/config";
 import { yearsToYM } from "../../utils/date";
-import { roundTo } from "../../utils/strings";
+import { roundTo, string2number } from "../../utils/strings";
 
 export default function ConsultAbstractIntroduction({
   file
@@ -32,7 +32,7 @@ export default function ConsultAbstractIntroduction({
         <IO.Number
           name="weight_kg"
           label="Weight (kg)"
-          value={file.weight_kg as number}
+          value={string2number(file.weight_kg)}
         />
         {file.weight_kg && (
           <IO.Function
@@ -43,7 +43,7 @@ export default function ConsultAbstractIntroduction({
         <IO.Number
           name="height_cm"
           label="Height (cm)"
-          value={file.height_cm as number}
+          value={string2number(file.height_cm)}
         />
         {file.height_cm && (
           <IO.Function
@@ -54,7 +54,7 @@ export default function ConsultAbstractIntroduction({
         <IO.Number
           name="brachial_circumference_cm"
           label="Brachial Circumference (cm)"
-          value={file.brachial_circumference_cm as number}
+          value={string2number(file.brachial_circumference_cm)}
         />
         {file.weight_kg && file.height_cm && (
           <>

@@ -1,3 +1,30 @@
+export function string2number(str: string): number {
+  if (!str) {
+    throw new Error("Null value");
+  }
+  return parseFloat(str);
+}
+
+export function string2Boolean(v: any) {
+  if (v === undefined || v === null) {
+    return false;
+  }
+
+  if (typeof v == "boolean") {
+    return v;
+  }
+
+  if (v == "0" || v == 0) {
+    return false;
+  }
+
+  if (v == "1" || v == 1) {
+    return true;
+  }
+
+  return !!v;
+}
+
 export function padLeftTrim(
   what: string | number,
   l: number,

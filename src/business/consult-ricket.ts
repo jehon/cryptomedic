@@ -1,5 +1,5 @@
-import { StringNumber } from "../utils/types.js";
-import Consult from "./abstracts/consult.js";
+import { StringNumber } from "../utils/types";
+import Consult from "./abstracts/consult";
 
 export default class ConsultRicket extends Consult {
   static override getModel() {

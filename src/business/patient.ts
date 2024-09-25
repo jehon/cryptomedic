@@ -1,4 +1,4 @@
-import { StringList, StringNumber, StringText } from "../utils/types.js";
+import { StringNumber } from "../utils/types.js";
 import PatientRelated from "./abstracts/patient-related.js";
 
 // From 1970 to 2029 (see help text on patient-element)
@@ -21,15 +21,15 @@ export default class Patient extends PatientRelated {
   entry_year: StringNumber = "" + new Date().getFullYear();
   entry_order: StringNumber = "";
   name: string = "";
-  sex: StringList = "";
+  sex: string = "";
   year_of_birth: string = "" + new Date().getFullYear();
-  pathology: StringList = "";
+  pathology: string = "";
   phone: string = "";
-  address_district: StringList = "";
+  address_district: string = "";
   // TODO: should be upazila (1 l)
-  address_upazilla: StringList = "";
-  address_union: StringList = "";
-  address_comments: StringText = "";
+  address_upazilla: string = "";
+  address_union: string = "";
+  address_comments: string = "";
   comments: string = "";
 
   sexStr() {
