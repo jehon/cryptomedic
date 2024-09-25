@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Patient from "../business/patient";
+import Patient, { yearOfBirthPattern } from "../business/patient";
 import { getList } from "../utils/config";
 
 import IO from "../widget/io";
@@ -71,9 +71,9 @@ export default function patientElementGenerator(
               label="Year of Birth"
               value={patient.year_of_birth}
               htmlProps={{
-                pattern: "[0-9]{4}(-[0-9]{2})"
+                pattern: yearOfBirthPattern
               }}
-              inputHelp={<div>YYYY or YYYY-MM</div>}
+              inputHelp={<div>YYYY or YYYY-MM - between 1980 and 2029</div>}
             />
             <IO.Function
               label="Age today"
