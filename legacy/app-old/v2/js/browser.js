@@ -8,15 +8,7 @@ if (!("browserUUID" in localStorage)) {
   console.info("Generated browser UUID: ", localStorage.browserUUID);
 }
 
-export const browserUUID = localStorage.browserUUID;
-
-/**
- * @returns {boolean} true if we are in production (non "localhost")
- */
-export function isProduction() {
-  /* istanbul-ignore-next */
-  return window.location.host.substr(0, "localhost".length) != "localhost";
-}
+const browserUUID = localStorage.browserUUID;
 
 /**
  * When login into the application, add some explanations

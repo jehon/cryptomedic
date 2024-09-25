@@ -3,7 +3,7 @@ const pad = (what, l) => {
   return int.substring(int.length - l, int.length);
 };
 
-export const Invalid = "Invalid date";
+const Invalid = "Invalid date";
 
 // TODO: choose between date2Display and date2CanonicString
 // Used by x-display-date

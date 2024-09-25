@@ -35,7 +35,7 @@ export function toSentenceCase(text, middle = false) {
  * @param {string} text to be transformed (abc dev ghi)
  * @returns {string} the test in title case (Abc Def Ghi)
  */
-export function toTitleCase(text) {
+function toTitleCase(text) {
   return _canonize(text).map(toUpperWordCase).join(" ");
 }
 
@@ -68,7 +68,7 @@ export function toAttributeCase(text) {
  * @param {string} template as the template to be built
  * @returns {function(object): string} that can interplate the string
  */
-export function buildTemplate(template) {
+function buildTemplate(template) {
   // const names = Object.keys(params);
   // const vals = Object.values(params);
   return /** @type {function(object): string} */ (

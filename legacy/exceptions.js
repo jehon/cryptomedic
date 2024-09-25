@@ -16,12 +16,6 @@ export class TransportRequestError extends ApplicationException {
   }
 }
 
-export class ServerRequestError extends ApplicationException {
-  constructor(msg) {
-    super("Server Error: " + msg);
-  }
-}
-
 // used in x-fff-age.js
 // ts-unused-exports:disable-next-line
 export class DataException extends ApplicationException {

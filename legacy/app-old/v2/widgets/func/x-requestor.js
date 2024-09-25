@@ -18,7 +18,6 @@ import {
 import XLabel from "../style/x-label.js";
 
 import { TransportRequestError } from "../../../../exceptions.js";
-export { TransportRequestError } from "../../../../exceptions.js";
 
 /**
  * @param {number} code - http code
@@ -35,7 +34,7 @@ function getHttpMessage(code) {
   }
 }
 
-export class ServerRequestError extends Error {
+class ServerRequestError extends Error {
   constructor(response) {
     super(getHttpMessage(response.status));
     this.data = response.data;
