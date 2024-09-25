@@ -63,14 +63,14 @@ test("update patient 101", async ({ page }) => {
   await e2eFile.expectInputValue("Pathology", "Ricket");
   await e2eFile.expectInputValue("Phone", "+32123123");
   await e2eFile.expectInputValue("District", "Chittagong");
-  await e2eFile.expectInputValue("Upazilla", "Chandanish");
+  await e2eFile.expectInputValue("Upazila", "Chandanish");
   await e2eFile.expectInputValue("Address Comments", "at the end of the world");
   await expect(e2eFile.panel).toHaveScreenshot();
 
   await e2eFile.setFieldValue("Name", "patient test done");
   await e2eFile.setFieldValue("Sex", "Female", "radio");
   await e2eFile.setFieldValue("District", "Cox's Bazar", "select");
-  await e2eFile.setFieldValue("Upazilla", "Ramu", "select");
+  await e2eFile.setFieldValue("Upazila", "Ramu", "select");
   await e2eFile.setFieldValue("Union", "Eidgar", "select");
   await expect(e2eFile.panel).toHaveScreenshot();
 
@@ -78,7 +78,7 @@ test("update patient 101", async ({ page }) => {
   await e2eFile.expectOutputValue("Name", "patient test done");
   await e2eFile.expectOutputValue("Sex", "Female");
   await e2eFile.expectOutputValue("District", "Cox's Bazar");
-  await e2eFile.expectOutputValue("Upazilla", "Ramu");
+  await e2eFile.expectOutputValue("Upazila", "Ramu");
   await e2eFile.expectOutputValue("Union", "Eidgar");
   await expect(e2eFile.panel).toHaveScreenshot();
 });
