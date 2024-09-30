@@ -5,16 +5,12 @@ const InvalidDate = "Invalid date";
 export function normalizeDate(
   d: string | Date | null | undefined
 ): Date | undefined {
-  if (d == null) {
-    return undefined;
-  }
-
-  if (d == undefined) {
-    return undefined;
-  }
-
   if (d instanceof Date) {
     return d;
+  }
+
+  if (!d) {
+    return undefined;
   }
 
   return new Date(d);
@@ -99,8 +95,8 @@ export function periodAsHumanReadable(
 }
 
 export function fromBirthDateTo(
-  date: Date | null,
-  reference: Date | null
+  date: Date | undefined,
+  reference: Date | undefined
 ): number {
   if (date == null) {
     throw new DataMissingException("date");
