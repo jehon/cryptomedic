@@ -16,7 +16,7 @@ export function setPref(part, data) {
   return newState;
 }
 
-export function getPref(part, def = null) {
+function getPref(part, def = null) {
   let res = {};
   if (sessionStorage.cryptomedicPrefs) {
     res = JSON.parse(sessionStorage.cryptomedicPrefs);

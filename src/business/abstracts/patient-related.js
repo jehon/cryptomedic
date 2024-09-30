@@ -4,17 +4,6 @@ export default class PatientRelated extends Pojo {
   /** @type {number} */
   patient_id;
 
-  /**
-   *
-   * @param {patient_id?}
-   */
-  constructor({ patient_id, ...others } = {}, folder = null) {
-    super(others);
-    this.patient_id = patient_id;
-
-    this.registerParent(folder);
-  }
-
   registerParent(parent) {
     /** @type {(): Folder} */
     this.getFolder = () => parent;

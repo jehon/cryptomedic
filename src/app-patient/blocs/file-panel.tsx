@@ -180,7 +180,7 @@ export default function FilePanel({
             />
             {file instanceof Timed ? (
               <span className="no-mobile">
-                {date2HumanString(normalizeDate(file["date"] as Date))}
+                {date2HumanString(normalizeDate(file["date"]))}
               </span>
             ) : null}
             <span data-role="type" className="no-mobile">
