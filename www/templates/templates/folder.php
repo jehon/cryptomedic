@@ -93,21 +93,8 @@
         </span>
       </div>
       <div class='col-sm-10'>
-        <div class='submenu .container-fluid'>
-          <div class='row' ng-if="patient_id >= 0">
-            <div class="col-sm-4 text-left" style="font-size: x-small">
-              <span variable>
-                Modified on {{currentFile().updated_at | date:'yyyy-MM-dd HH:mm:ss' }}
-                by {{currentFile().last_user}}
-              </span>
-              <br>
-              Patient #<span id='folder_id'>{{folder.getPatient().id}}</span> @{{page}}
-              -> {{currentFile().getModel()}} #<span id='file_id'>{{currentFile().id}}</span>
-            </div>
-            <div class='col-sm-4 text-center' id='topsubmenu'>
-              <?php submenu(); ?>
-            </div>
-          </div>
+        <div class="alert alert-info">
+          The blue menu will soon disappear!
         </div>
         <form id="fileForm">
           <button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
