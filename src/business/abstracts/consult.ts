@@ -1,6 +1,6 @@
 import Timed from "./timed";
 
-import { fromBirthDateTo, normalizeDate } from "../../utils/date-old";
+import { fromBirthDateTo, normalizeDate } from "../../utils/date";
 import { DataMissingException } from "../../utils/exceptions";
 import { stdDeviationFor } from "../../utils/standard-deviation";
 import { string2number } from "../../utils/strings";

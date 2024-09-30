@@ -1,3 +1,5 @@
+import { DataMissingException } from "./exceptions.js";
+
 const InvalidDate = "Invalid date";
 
 export function normalizeDate(
@@ -94,4 +96,22 @@ export function periodAsHumanReadable(
   }
 
   return "now";
+}
+
+export function fromBirthDateTo(
+  date: Date | null,
+  reference: Date | null
+): number {
+  if (date == null) {
+    throw new DataMissingException("date");
+  }
+
+  if (reference == null) {
+    throw new DataMissingException("reference");
+  }
+
+  const years = reference.getFullYear() - date.getFullYear();
+  const months = reference.getMonth() - date.getMonth();
+
+  return years + months / 12;
 }
