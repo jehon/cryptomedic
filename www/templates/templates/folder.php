@@ -79,6 +79,7 @@
   <div id="folderpage" class='container-fluid mode-read'>
     <div class='row'>
       <div id='folder_menu' ng-if="patient_id >= 0" class='col-sm-2'>
+        <!-- TODO: Remove this - begin -->
         <x-restricted restricted-by='folder.delete' style='width: 100%'>
           <x-button id='button_add' ng-class="{ 'selected': page == 'addfile'}" ng-click="go('/folder/' + patient_id + '/addfile')" style='width: 100%'>Add</x-button>
         </x-restricted>
@@ -91,11 +92,14 @@
             </x-button>
           </span>
         </span>
-      </div>
+        <!-- TODO: Remove this - end -->
+        </div>
       <div class='col-sm-10'>
+        <!-- TODO: Remove this - begin -->
         <div class="alert alert-info">
           The blue menu will soon disappear!
         </div>
+        <!-- TODO: Remove this - end -->
         <form id="fileForm">
           <button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
           <span ng-include="getTemplateForMe()" onload="reinject()">
