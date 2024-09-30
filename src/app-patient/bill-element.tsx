@@ -11,7 +11,7 @@ import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
-import BillLine from "./blocs/bill-line";
+import IOBillLine from "./blocs/io-bill-line";
 import patientRelatedElementGenerator, {
   PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
@@ -56,11 +56,11 @@ export default function billElementGenerator(
             />
             <IO.Function
               label="Raw Calculated Total"
-              value={() => roundTo(file.calculate_total_real(), 0)}
+              value={() => roundTo(file.total_real, 0)}
             />
             <IO.Function
               label="Percentage asked"
-              value={() => roundTo(file.calculate_percentage_asked(), 0)}
+              value={() => roundTo(file.get_percentage_asked(), 0)}
             />
             <IO.Number
               name="total_asked"
@@ -75,12 +75,7 @@ export default function billElementGenerator(
         </TwoColumns>
         <Panel fixed label="Bill Lines">
           {file.items.map((line) => (
-            <BillLine
-              key={line.key}
-              name={line.key}
-              value={line.value}
-              price={file.getPriceFor(line.key)}
-            />
+            <IOBillLine line={line} price={file.getPriceFor(line.id)} />
           ))}
         </Panel>
       </>
