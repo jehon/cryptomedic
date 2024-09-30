@@ -1,31 +1,31 @@
-import { expect } from "expect";
 import test from "node:test";
 
+import assert from "assert";
 import Pojo from "./pojo";
 
 test("with empty loader", function () {
   const data = Pojo.factory({});
-  expect(data instanceof Pojo).toBeTruthy();
+  assert(data instanceof Pojo);
 });
 
 test("with data loading at construction time", function () {
   const data = Pojo.factory({
-    id: 123,
+    id: "123",
     created_at: new Date(),
     updated_at: new Date(),
     last_user: "data1"
   });
 
-  expect(data.id).toBe(123);
+  assert.equal(data.id, "123");
 
-  data.id = 123;
-  expect(data.uid()).toBe("pojo.123");
+  data.id = "123";
+  assert.equal(data.uid(), "pojo.123");
 });
 
 test("would interpret notSet correctly", function () {
   const data = Pojo.factory({});
-  expect(data.last_user).toBeUndefined();
+  assert.equal(data.last_user, "");
 
   data.last_user = "someone";
-  expect(data.last_user).toBe("someone");
+  assert.equal(data.last_user, "someone");
 });

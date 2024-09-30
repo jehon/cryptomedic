@@ -1,4 +1,3 @@
-import { expect } from "expect";
 import assert from "node:assert";
 import test from "node:test";
 import {
@@ -47,20 +46,24 @@ test("calculate standard deviations", function () {
   assert.equal(_stdDeviation(poly, 0, 1), 0);
   assert.equal(_stdDeviation(poly, 0, 0), -sigma);
   assert.equal(_stdDeviation(poly, 0, 2), sigma);
-  expect(() => _stdDeviation(poly, -1, 2)).toThrow(
+  assert.throws(
+    () => _stdDeviation(poly, -1, 2),
     new DataOutOfBoundException("value", -1, [0, 10])
   );
 
   assert.equal(stdDeviationFor("m", "weight_kg", 10, 32), 0);
-  expect(stdDeviationFor("m", "weight_kg", 10, 42)).toBeCloseTo(sigma);
+  assert(Math.abs(stdDeviationFor("m", "weight_kg", 10, 42) - sigma) < 0.01);
   assert.equal(stdDeviationFor("f", "weight_kg", 3, 13.8), 0);
-  expect(() => stdDeviationFor("f", "invalid", 3, 13.8)).toThrow(
+  assert.throws(
+    () => stdDeviationFor("f", "invalid", 3, 13.8),
     new ConfigurationException("Unknown serie: invalid")
   );
-  expect(() => stdDeviationFor("invalid", "weight_kg", 3, 13.8)).toThrow(
+  assert.throws(
+    () => stdDeviationFor("invalid", "weight_kg", 3, 13.8),
     new DataInvalidException("sex", "invalid")
   );
-  expect(() => stdDeviationFor("m", "weight_kg", 99, 13.8)).toThrow(
+  assert.throws(
+    () => stdDeviationFor("m", "weight_kg", 99, 13.8),
     new DataOutOfBoundException("value", 99, [0, 20])
   );
 });
