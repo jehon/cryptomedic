@@ -207,7 +207,7 @@ export default class Bill extends Timed {
   }
 
   getPayments(): Payment[] {
-    return this.getFolder!().getFilesRelatedToBill(this.getId()) || [];
+    return this.getParent!().getFilesRelatedToBill(this.getId()) || [];
   }
 
   // calculatePriceId() {

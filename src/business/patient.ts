@@ -39,7 +39,7 @@ export default class Patient extends PatientRelated {
     if (this.sex === "Female") {
       return "f";
     }
-    return null;
+    return "";
   }
 
   actualAge(reference: Date | string | number = new Date()) {

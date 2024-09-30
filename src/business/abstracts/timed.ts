@@ -1,5 +1,5 @@
 import { StringDate } from "../../utils/types.js";
-import PatientRelated from "./patient-related.js";
+import PatientRelated from "./patient-related";
 
 export default class Timed extends PatientRelated {
   static override getModel() {
