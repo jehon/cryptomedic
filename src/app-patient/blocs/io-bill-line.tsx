@@ -9,12 +9,10 @@ export type BillLine = {
   key: string;
   category: string;
   value: number;
+  price: number;
 };
 
-export default function IOBillLine(props: {
-  line: BillLine;
-  price: number;
-}): React.ReactNode {
+export default function IOBillLine(props: { line: BillLine }): React.ReactNode {
   const edit = useContext(EditContext);
 
   // Hide if not value and output mode
@@ -28,10 +26,11 @@ export default function IOBillLine(props: {
     <div
       className={"io " + (edit ? "io-input" : "io-output")}
       data-role={label}
+      key={props.line.key}
     >
       <label htmlFor={uuid}>{label}*</label>
       <div className="content">{props.line.value}</div>
-      <div className="annexe">{props.price} €</div>
+      <div className="annexe">{props.line.price} €</div>
     </div>
   );
 }

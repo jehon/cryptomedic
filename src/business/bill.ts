@@ -29,9 +29,10 @@ export default class Bill extends Timed {
         const category = key.split("_")[0];
         if (Price.getCategories().includes(category)) {
           items.push({
-            id: key,
+            key,
             category,
-            value: string2number(value)
+            value: string2number(value),
+            price: this.getPriceFor(key)
           } as BillLine);
         }
       }
