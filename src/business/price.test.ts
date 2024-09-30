@@ -9,7 +9,7 @@ test("with empty loader", function () {
 });
 
 test("with data loading at construction time", function () {
-  const data = new Price({
+  const data = Price.factory({
     id: 123
   });
 

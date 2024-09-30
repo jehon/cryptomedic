@@ -4,12 +4,12 @@ import test from "node:test";
 import Pojo from "./pojo";
 
 test("with empty loader", function () {
-  const data = new Pojo({});
+  const data = Pojo.factory({});
   expect(data instanceof Pojo).toBeTruthy();
 });
 
 test("with data loading at construction time", function () {
-  const data = new Pojo({
+  const data = Pojo.factory({
     id: 123,
     created_at: new Date(),
     updated_at: new Date(),
@@ -23,7 +23,7 @@ test("with data loading at construction time", function () {
 });
 
 test("would interpret notSet correctly", function () {
-  const data = new Pojo({});
+  const data = Pojo.factory({});
   expect(data.last_user).toBeUndefined();
 
   data.last_user = "someone";
