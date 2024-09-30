@@ -1,5 +1,5 @@
-import { StringDate } from "../utils/types.js";
-import Pojo from "./abstracts/pojo.js";
+import { StringDate } from "../utils/types";
+import Pojo from "./abstracts/pojo";
 
 export default class Price extends Pojo {
   static override getModel() {

@@ -1,6 +1,6 @@
-import { expect } from "expect";
 import test from "node:test";
 
+import assert from "node:assert";
 import {
   ApplicationException,
   DataInvalidException,
@@ -11,35 +11,35 @@ import {
 test("should inherit from Error", function () {
   const ae = new ApplicationException("my message");
 
-  expect(ae instanceof Error).toBeTruthy();
-  expect(ae instanceof ApplicationException).toBeTruthy();
-  expect(ae.message).toBe("my message");
+  assert(ae instanceof Error);
+  assert(ae instanceof ApplicationException);
+  assert.equal(ae.message, "my message");
 });
 
 test("should have DataMissingException", function () {
   const ae = new DataMissingException("data");
 
-  expect(ae instanceof ApplicationException).toBeTruthy();
-  expect(ae instanceof Error).toBeTruthy();
-  expect(ae instanceof DataMissingException).toBeTruthy();
-  expect(ae.message).toBe("'data' is not defined");
-  expect(ae.getKey()).toBe("data");
+  assert(ae instanceof ApplicationException);
+  assert(ae instanceof Error);
+  assert(ae instanceof DataMissingException);
+  assert.equal(ae.message, "'data' is not defined");
+  assert.equal(ae.getKey(), "data");
 });
 
 test("should have DataInvalidException", function () {
   const ae = new DataInvalidException("data");
 
-  expect(ae instanceof ApplicationException).toBeTruthy();
-  expect(ae instanceof Error).toBeTruthy();
-  expect(ae.message).toBe("'data' is invalid");
-  expect(ae.getKey()).toBe("data");
+  assert(ae instanceof ApplicationException);
+  assert(ae instanceof Error);
+  assert.equal(ae.message, "'data' is invalid");
+  assert.equal(ae.getKey(), "data");
 });
 
 test("should have DataOutOfBoundException", function () {
   const ae = new DataOutOfBoundException("data", 5, [0, 1]);
 
-  expect(ae instanceof ApplicationException).toBeTruthy();
-  expect(ae instanceof Error).toBeTruthy();
-  expect(ae.message).toBe("'data' is out-of-bounds: 5 [0 -> 1]");
-  expect(ae.getKey()).toBe("data");
+  assert(ae instanceof ApplicationException);
+  assert(ae instanceof Error);
+  assert.equal(ae.message, "'data' is out-of-bounds: 5 [0 -> 1]");
+  assert.equal(ae.getKey(), "data");
 });

@@ -1,76 +1,77 @@
-import { expect } from "expect";
 import test from "node:test";
 
+import assert from "node:assert";
 import nullify from "./nullify";
 
 test("should nullify string", () => {
-  expect(nullify("")).toEqual("");
+  assert.equal(nullify(""), "");
 });
 
 test("should nullify string null", () => {
-  expect(nullify("null")).toEqual(null);
+  assert.equal(nullify("null"), null);
 });
 
 test("should nullify string ?", () => {
-  expect(nullify("?")).toEqual(null);
+  assert.equal(nullify("?"), null);
 });
 
 test("should nullify string undefined", () => {
-  expect(nullify("undefined")).toEqual(null);
+  assert.equal(nullify("undefined"), null);
 });
 
 test("should nullify string anything", () => {
-  expect(nullify("anything")).toEqual("anything");
+  assert.equal(nullify("anything"), "anything");
 });
 
 test("should nullify int 123", () => {
-  expect(nullify(123)).toEqual(123);
+  assert.equal(nullify(123), 123);
 });
 
 test("should nullify object", () => {
-  expect(
+  assert.deepStrictEqual(
     nullify({
       a: 1,
       b: "null",
       c: null
-    })
-  ).toEqual({
-    a: 1,
-    b: null,
-    c: null
-  });
+    }),
+    {
+      a: 1,
+      b: null,
+      c: null
+    }
+  );
 });
 
 test("should handle null", () => {
-  expect(nullify(null)).toBe(null);
+  assert.equal(nullify(null), null);
 });
 
 test('should handle "null"', () => {
-  expect(nullify("null")).toBe(null);
+  assert.equal(nullify("null"), null);
 });
 
 test('should handle "?"', () => {
-  expect(nullify("?")).toBe(null);
+  assert.equal(nullify("?"), null);
 });
 
 test("should handle numbers", () => {
-  expect(nullify(123)).toBe(123);
+  assert.equal(nullify(123), 123);
 });
 
 test("should handle strings", () => {
-  expect(nullify("hehehe")).toBe("hehehe");
+  assert.equal(nullify("hehehe"), "hehehe");
 });
 
 test("should handle false", () => {
-  expect(nullify(false)).toBe(false);
+  assert.equal(nullify(false), false);
 });
 
 test("should handle true", () => {
-  expect(nullify(true)).toBe(true);
+  assert.equal(nullify(true), true);
 });
 
 test("should handle object", () => {
-  expect(
+  assert.deepStrictEqual(
     nullify({
       a: 123,
       b: null,
@@ -80,15 +81,16 @@ test("should handle object", () => {
       f: {
         g: "null"
       }
-    })
-  ).toEqual({
-    a: 123,
-    b: null,
-    c: null,
-    d: 456,
-    e: null,
-    f: {
-      g: null
+    }),
+    {
+      a: 123,
+      b: null,
+      c: null,
+      d: 456,
+      e: null,
+      f: {
+        g: null
+      }
     }
-  });
+  );
 });

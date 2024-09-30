@@ -1,11 +1,11 @@
-import { expect } from "expect";
 import test from "node:test";
 
+import assert from "node:assert";
 import Price from "./price";
 
 test("with empty loader", function () {
   const data = new Price();
-  expect(data).toBeInstanceOf(Price);
+  assert(data instanceof Price);
 });
 
 test("with data loading at construction time", function () {
@@ -13,5 +13,5 @@ test("with data loading at construction time", function () {
     id: 123
   });
 
-  expect(data.id).toBe(123);
+  assert.equal(data.id, 123);
 });
