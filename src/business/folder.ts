@@ -52,6 +52,7 @@ export default class Folder extends Pojo {
   list: PatientRelated[];
 
   constructor(listing: any = []) {
+    super();
     const id =
       "" +
       (listing
@@ -59,7 +60,7 @@ export default class Folder extends Pojo {
           (v: { type: string; [key: string]: string }) => v.type == "Patient"
         )
         .pop()?.id ?? -1);
-    super({ id });
+    this.id = id;
     this.list = [];
 
     // create the objects

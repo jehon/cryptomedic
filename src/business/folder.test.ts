@@ -113,23 +113,23 @@ test("order", async function (t) {
   };
 
   await t.test("order by id", function () {
-    const o1 = new PatientRelated();
-    const o2 = new PatientRelated({ id: 2 });
-    const o3 = new PatientRelated({ id: 1 });
+    const o1 = PatientRelated.factory({}) as PatientRelated;
+    const o2 = PatientRelated.factory({ id: 2 }) as PatientRelated;
+    const o3 = PatientRelated.factory({ id: 1 }) as PatientRelated;
 
     resFirst(o1, o2);
     resFirst(o1, o3);
     resFirst(o2, o3);
 
     // Test string completely...
-    const o25 = new PatientRelated({ id: "25" });
+    const o25 = PatientRelated.factory({ id: "25" }) as PatientRelated;
     resFirst(o25, o2);
   });
 
   await t.test("order by Date", function () {
-    const o1 = new PatientRelated({});
-    const o2 = new PatientRelated({ date: "2010-01-01" });
-    const o3 = new PatientRelated({ date: "2000-01-01" });
+    const o1 = PatientRelated.factory({}) as PatientRelated;
+    const o2 = PatientRelated.factory({ date: "2010-01-01" }) as PatientRelated;
+    const o3 = PatientRelated.factory({ date: "2000-01-01" }) as PatientRelated;
 
     resFirst(o1, o2);
     resFirst(o1, o3);
@@ -137,19 +137,28 @@ test("order", async function (t) {
   });
 
   await t.test("order by created_at", function () {
-    const o1 = new PatientRelated({}); // New element
-    const o2 = new PatientRelated({ id: 1, created_at: "2010-01-01" });
-    const o3 = new PatientRelated({ id: 1, created_at: "2000-01-01" });
+    const o1 = PatientRelated.factory({}) as PatientRelated; // New element
+    const o2 = PatientRelated.factory({
+      id: 1,
+      created_at: "2010-01-01"
+    }) as PatientRelated;
+    const o3 = PatientRelated.factory({
+      id: 1,
+      created_at: "2000-01-01"
+    }) as PatientRelated;
     resFirst(o1, o2);
     resFirst(o1, o3);
     resFirst(o2, o3);
   });
 
   await t.test("order by new > date > model > id", function () {
-    const o1 = new PatientRelated({});
-    const o2 = new PatientRelated({ date: "2000-01-01" });
-    const o3 = new PatientRelated({ id: "25" });
-    const o4 = new PatientRelated({ id: "25", date: "2000-01-01" });
+    const o1 = PatientRelated.factory({}) as PatientRelated;
+    const o2 = PatientRelated.factory({ date: "2000-01-01" }) as PatientRelated;
+    const o3 = PatientRelated.factory({ id: "25" }) as PatientRelated;
+    const o4 = PatientRelated.factory({
+      id: "25",
+      date: "2000-01-01"
+    }) as PatientRelated;
 
     resFirst(o1, o2);
     resFirst(o1, o3);

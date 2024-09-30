@@ -13,7 +13,9 @@ export async function loadReferenceFolder(name: string): Promise<Folder> {
   if (valid_respond == null) {
     throw new Error("The reference " + name + " is empty or not found");
   }
-  return new Folder(valid_respond.default.folder);
+  const folder = new Folder(valid_respond.default.folder);
+  assert.ok(folder instanceof Folder);
+  return folder;
 }
 
 export async function loadSession() {
