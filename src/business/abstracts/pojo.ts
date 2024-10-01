@@ -1,5 +1,6 @@
 import { plainToInstance } from "class-transformer";
 import { immerable } from "immer";
+import { StringDate } from "../../utils/types";
 
 export default class Pojo {
   [immerable] = true;
@@ -19,18 +20,16 @@ export default class Pojo {
   static getTitle() {
     return this.getModel();
   }
+  declare ["constructor"]: typeof Pojo;
 
-  /**
-   * @returns {typeof Pojo}
-   */
-  getStatic() {
+  getStatic(): typeof Pojo {
     return this.constructor;
   }
 
-  id;
-  created_at;
-  updated_at;
-  last_user;
+  id: string = "";
+  created_at: StringDate = "";
+  updated_at: StringDate = "";
+  last_user: string = "";
 
   getId() {
     return this.id;
@@ -40,30 +39,15 @@ export default class Pojo {
     return `${this.getStatic().getTechnicalName()}.${this.getId() ?? "add"}`;
   }
 
-  // Legacy
-  validate(res) {
-    if (!res) {
-      res = {};
-    }
-    return res;
-  }
-
-  // Legacy
   isLocked() {
     return false;
   }
 
-  /**
-   * @returns {string | undefined}
-   */
-  getParentField() {
+  getParentField(): string | undefined {
     return undefined;
   }
 
-  /**
-   * @returns {string | number | undefined}
-   */
-  getParentId() {
+  getParentId(): string | undefined {
     return undefined;
   }
 }

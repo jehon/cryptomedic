@@ -1,4 +1,3 @@
-import { plainToInstance } from "class-transformer";
 import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";
 import { CRUD } from "../constants";
@@ -94,7 +93,7 @@ export function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
     method: CRUD.update
   })
     .then((json) => json.file)
-    .then((json) => plainToInstance(file.constructor as new () => T, json));
+    .then((json) => file.getStatic().factory(json) as T);
 }
 
 export function folderFileDelete<T extends Pojo>(

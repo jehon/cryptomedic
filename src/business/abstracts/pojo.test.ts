@@ -1,6 +1,5 @@
-import test from "node:test";
-
 import assert from "assert";
+import test from "node:test";
 import Pojo from "./pojo";
 
 test("with empty loader", function () {
@@ -24,7 +23,7 @@ test("with data loading at construction time", function () {
 
 test("would interpret notSet correctly", function () {
   const data = Pojo.factory({});
-  assert.equal(data.last_user, undefined);
+  assert.equal(data.last_user, "");
 
   data.last_user = "someone";
   assert.equal(data.last_user, "someone");
