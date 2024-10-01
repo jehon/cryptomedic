@@ -2,7 +2,7 @@ import Folder from "../folder";
 import Pojo from "./pojo";
 
 export default class PatientRelated extends Pojo {
-  patient_id: string = "";
+  patient_id: string | undefined;
   #parent?: Folder;
 
   registerParent(parent: Folder) {
@@ -38,7 +38,7 @@ export default class PatientRelated extends Pojo {
     return "patient_id";
   }
 
-  override getParentId(): string {
+  override getParentId(): string | undefined {
     return this.patient_id;
   }
 }

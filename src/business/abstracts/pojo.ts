@@ -26,7 +26,7 @@ export default class Pojo {
     return this.constructor;
   }
 
-  id: string = "";
+  id?: string;
   created_at: StringDate = "";
   updated_at: StringDate = "";
   last_user: string = "";

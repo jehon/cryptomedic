@@ -136,7 +136,7 @@ export default class Folder extends Pojo {
     throw new Error(`Could not find ${uid}} in getByUid`);
   }
 
-  getByFieldValue(field: string, value: string): PatientRelated[] {
+  getByFieldValue(field: string, value?: string): PatientRelated[] {
     const res = [];
     for (const i in this.list) {
       if (
@@ -184,7 +184,7 @@ export default class Folder extends Pojo {
   }
 
   // TODO: move this to bill
-  getFilesRelatedToBill(id: string): Payment[] {
+  getFilesRelatedToBill(id?: string): Payment[] {
     return this.getByFieldValue("bill_id", id).sort(
       Folder.ordering
     ) as unknown as Payment[];
@@ -216,8 +216,8 @@ export default class Folder extends Pojo {
     const o1First = -1;
     const o2First = 1;
 
-    const o1id = parseInt(o1.id);
-    const o2id = parseInt(o2.id);
+    const o1id = parseInt(o1.id || "");
+    const o2id = parseInt(o2.id || "");
 
     // Return 1 if o1 > o2 (o1 - o2) (o1 est après o2)
     // Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
