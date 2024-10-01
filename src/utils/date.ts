@@ -1,4 +1,4 @@
-import { DataMissingException } from "./exceptions.js";
+import { DataMissingException } from "./exceptions";
 
 const InvalidDate = "Invalid date";
 

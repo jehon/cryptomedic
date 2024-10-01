@@ -1,6 +1,18 @@
 import duix from "duix";
-import { deepFreeze } from "./objects.js";
 const SESSION = "session";
+
+function deepFreeze(object) {
+  const propNames = Object.getOwnPropertyNames(object);
+  for (const name of propNames) {
+    const value = object[name];
+
+    if (value && typeof value === "object") {
+      deepFreeze(value);
+    }
+  }
+
+  return Object.freeze(object);
+}
 
 // TODO: used in legacy
 // ts-unused-exports:disable-next-line
