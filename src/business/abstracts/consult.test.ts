@@ -1,6 +1,10 @@
-import { expect } from "expect";
+import assert from "node:assert";
 import test from "node:test";
-import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
+import {
+  assertToBeClose,
+  loadReferenceFolder,
+  RefFolder1
+} from "../../test-helper";
 import { DataMissingException } from "../../utils/exceptions";
 import RicketConsult from "../consult-ricket";
 import Folder from "../folder";
@@ -11,21 +15,20 @@ test("with ricketConsult_13", async function () {
   const folder = await loadReferenceFolder(RefFolder1);
   const c = folder.getByTypeAndId<RicketConsult>(RicketConsult, "13");
 
-  expect(c).toBeInstanceOf(RicketConsult);
-  expect(c).toBeInstanceOf(Consult);
-  expect(c.getId()).toBe(13);
+  assert(c instanceof RicketConsult);
+  assert(c instanceof Consult);
+  assert.equal(c.getId(), 13);
 
   // Male
-  expect(c.date).toEqual("2014-01-04");
-  expect(c.height_cm).toBe(110);
-  expect(c.weight_kg).toBe(37);
-  expect(c.wh()).toBeCloseTo(0.34, 2);
-  expect(c.bmi()).toBeCloseTo(30.58, 2);
-
-  expect(c.getWeightSd()).toBeCloseTo(-3.59, 2);
-  expect(c.getHeightSd()).toBeCloseTo(-9.57, 2);
-  expect(c.getWHSd()).toBeCloseTo(12.61, 2);
-  expect(c.getBMISd()).toBeCloseTo(2.39, 2);
+  assert.equal(c.date, "2014-01-04");
+  assert.equal(c.height_cm, 110);
+  assert.equal(c.weight_kg, 37);
+  assertToBeClose(c.wh(), 0.34);
+  assertToBeClose(c.bmi(), 30.58);
+  assertToBeClose(c.getWeightSd(), -3.59);
+  assertToBeClose(c.getHeightSd(), -9.57);
+  assertToBeClose(c.getWHSd(), 12.61);
+  assertToBeClose(c.getBMISd(), 2.39);
 });
 
 test("with patient with sex", function () {
@@ -37,10 +40,10 @@ test("with patient with sex", function () {
   f.list.push(p);
   f.list.push(c);
 
-  expect(function () {
+  assert.throws(function () {
     c.bmi();
-  }).toThrow(new DataMissingException("Height"));
-  expect(function () {
+  }, new DataMissingException("Height"));
+  assert.throws(function () {
     c.wh();
-  }).toThrow(new DataMissingException("Height"));
+  }, new DataMissingException("Height"));
 });

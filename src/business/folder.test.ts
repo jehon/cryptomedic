@@ -1,9 +1,6 @@
-import { expect } from "expect";
-import test, { beforeEach } from "node:test";
-
-import { loadReferenceFolder, RefFolder1 } from "../test-helper";
-
 import assert from "node:assert";
+import test, { beforeEach } from "node:test";
+import { loadReferenceFolder, RefFolder1 } from "../test-helper";
 import PatientRelated from "./abstracts/patient-related";
 import Appointment from "./appointment";
 import Bill from "./bill";
@@ -19,30 +16,30 @@ let f: Folder = new Folder();
 
 beforeEach(async () => {
   f = await loadReferenceFolder(RefFolder1);
-  expect(f).toBeInstanceOf(Folder);
+  assert(f instanceof Folder);
 });
 
-test("sould instanciate folder", () => {
+test("should instantiate folder", () => {
   const fnew = new Folder();
-  expect(fnew.getPatient()).toBeInstanceOf(Patient);
-  expect(fnew.getId()).toEqual("-1");
+  assert(fnew.getPatient() instanceof Patient);
+  assert.equal(fnew.getId(), "-1");
 });
 
 test("should have loaded Mock data", () => {
-  expect(f.getPatient()).toBeInstanceOf(Patient);
-  expect(f.getId()).toBe("1");
+  assert(f.getPatient() instanceof Patient);
+  assert.equal(f.getId(), "1");
 });
 
 test("should give the patient", function () {
-  expect(f.getByUid("patient.1")).toBeInstanceOf(Patient);
-  expect(f.getPatient()).toBeInstanceOf(Patient);
+  assert(f.getByUid("patient.1") instanceof Patient);
+  assert(f.getPatient() instanceof Patient);
 });
 
 test("should query specific element (consult_other.1)", () => {
-  expect(f.getByTypeAndId(ConsultOther, "1")).toBeInstanceOf(ConsultOther);
-  expect(f.getByTypeAndId(ConsultOther, "1")?.id).toBe(1);
+  assert(f.getByTypeAndId(ConsultOther, "1") instanceof ConsultOther);
+  assert.equal(f.getByTypeAndId(ConsultOther, "1")?.id, 1);
 
-  expect(f.getByUid("consult_other.1")?.id).toBe(1);
+  assert.equal(f.getByUid("consult_other.1")?.id, 1);
 });
 
 test("should return null if element is not found (consult_other.0)", () => {
@@ -51,42 +48,42 @@ test("should return null if element is not found (consult_other.0)", () => {
 
 test("should give patient related files", () => {
   const list = f.getFilesRelatedToPatient();
-  expect(list.length).toBe(6);
+  assert.equal(list.length, 6);
 
   list.forEach((e) => {
-    expect(e.getPatient()?.id).toBe(1);
+    assert.equal(e.getPatient()?.id, 1);
   });
 
   let i = -1;
   i++;
-  expect(list[i]).toBeInstanceOf(Appointment);
-  expect(list[i].id).toBe(2);
-  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Appointment).id);
+  assert(list[i] instanceof Appointment);
+  assert.equal(list[i].id, 2);
+  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as Appointment).id);
 
   i++;
-  expect(list[i]).toBeInstanceOf(Picture);
-  expect(list[i].id).toBe(2);
-  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Picture).id);
+  assert(list[i] instanceof Picture);
+  assert.equal(list[i].id, 2);
+  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as Picture).id);
 
   i++;
-  expect(list[i]).toBeInstanceOf(ConsultRicket);
-  expect(list[i].id).toBe(13);
-  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as ConsultRicket).id);
+  assert(list[i] instanceof ConsultRicket);
+  assert.equal(list[i].id, 13);
+  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as ConsultRicket).id);
 
   i++;
-  expect(list[i]).toBeInstanceOf(Surgery);
-  expect(list[i].id).toBe(5);
-  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Surgery).id);
+  assert(list[i] instanceof Surgery);
+  assert.equal(list[i].id, 5);
+  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as Surgery).id);
 
   i++;
-  expect(list[i]).toBeInstanceOf(Bill);
-  expect(list[i].id).toBe(1);
-  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as Bill).id);
+  assert(list[i] instanceof Bill);
+  assert.equal(list[i].id, 1);
+  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as Bill).id);
 
   i++;
-  expect(list[i]).toBeInstanceOf(ConsultOther);
-  expect(list[i].id).toBe(1);
-  expect(f.getFileRelatedToPatient(i)?.id).toBe((list[i] as ConsultOther).id);
+  assert(list[i] instanceof ConsultOther);
+  assert.equal(list[i].id, 1);
+  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as ConsultOther).id);
 
   // And out of bounds...
   assert.throws(() => f.getFileRelatedToPatient(1000));
@@ -94,22 +91,22 @@ test("should give patient related files", () => {
 
 test("should give bill related files", () => {
   const list = f.getFilesRelatedToBill("1");
-  expect(list.length).toBe(1);
+  assert.equal(list.length, 1);
 
   let i = -1;
   i++;
-  expect(list[i]).toBeInstanceOf(Payment);
-  expect(list[i].id).toBe(3);
-  expect(list[i].bill_id).toBe(1);
+  assert(list[i] instanceof Payment);
+  assert.equal(list[i].id, 3);
+  assert.equal(list[i].bill_id, 1);
 });
 
 test("order", async function (t) {
   const resFirst = (a: PatientRelated, b: PatientRelated) => {
-    expect(Folder.ordering(a, a)).toBe(0);
-    expect(Folder.ordering(b, b)).toBe(0);
+    assert.equal(Folder.ordering(a, a), 0);
+    assert.equal(Folder.ordering(b, b), 0);
 
-    expect(Folder.ordering(a, b)).toBeLessThan(0);
-    expect(Folder.ordering(b, a)).toBeGreaterThan(0);
+    assert(Folder.ordering(a, b) < 0);
+    assert(Folder.ordering(b, a) > 0);
   };
 
   await t.test("order by id", function () {
@@ -168,22 +165,22 @@ test("order", async function (t) {
 });
 
 test("getNextAppointment", function () {
-  expect(new Folder().getNextAppointment()).toBeUndefined();
+  assert.equal(new Folder().getNextAppointment(), undefined);
 
   // f.list.push(new Appointment({ date: "2100-01-01" }));
   f.list.push(Appointment.factory({ date: "2100-01-01" }) as Appointment);
-  expect(f.getNextAppointment()).toEqual(new Date("2100-01-01"));
+  assert.deepStrictEqual(f.getNextAppointment(), new Date("2100-01-01"));
 });
 
 test("getLastSeen", function () {
-  expect(new Folder().getLastSeen()).toBeUndefined();
-  expect(f.getLastSeen()).toEqual(new Date("2014-11-04"));
+  assert.equal(new Folder().getLastSeen(), undefined);
+  assert.deepStrictEqual(f.getLastSeen(), new Date("2014-11-04"));
 });
 
 test("Copy with new file", function () {
-  expect(f.getId()).toBe("1");
+  assert.equal(f.getId(), "1");
   const fap = f.getByUid<Appointment>("appointment.2");
-  expect(fap).toBeInstanceOf(Appointment);
+  assert(fap instanceof Appointment);
   assert.equal(fap.purpose, "");
 
   // TODO: use <> in factory to ease type mapping
@@ -194,14 +191,14 @@ test("Copy with new file", function () {
       purpose: "test"
     }) as any as Appointment
   );
-  expect(f2).toBeInstanceOf(Folder);
+  assert(f2 instanceof Folder);
   const fap2 = f2.getByUid<Appointment>("appointment.2");
-  expect(fap2).toBeInstanceOf(Appointment);
-  expect(fap2.purpose).toBe("test");
-  expect(fap2.purpose).toBe("test");
+  assert(fap2 instanceof Appointment);
+  assert.equal(fap2.purpose, "test");
+  assert.equal(fap2.purpose, "test");
 
   // Initial
   const fap3 = f.getByUid<Appointment>("appointment.2");
-  expect(fap3).toBeInstanceOf(Appointment);
+  assert(fap3 instanceof Appointment);
   assert.equal(fap3.purpose, "");
 });

@@ -1,6 +1,10 @@
-import { expect } from "expect";
+import assert from "node:assert";
 import test from "node:test";
-import { loadReferenceFolder, RefFolder1 } from "../../test-helper";
+import {
+  assertToBeClose,
+  loadReferenceFolder,
+  RefFolder1
+} from "../../test-helper";
 import RicketConsult from "../consult-ricket";
 import Patient from "../patient";
 import PatientRelated from "./patient-related";
@@ -9,18 +13,18 @@ test("with TestFolder.test1.json", async function () {
   // Go through the rest_service !!!
   const folder = await loadReferenceFolder(RefFolder1);
 
-  expect(folder.getPatient()).toBeInstanceOf(Patient);
-  expect(folder.getPatient().sex).toBe("Male");
-  expect(folder.getPatient().year_of_birth).toBe("1998");
-  expect(folder.getPatient().actualAge(new Date("2014-01-01"))).toBe("16y0m");
+  assert(folder.getPatient() instanceof Patient);
+  assert.equal(folder.getPatient().sex, "Male");
+  assert.equal(folder.getPatient().year_of_birth, "1998");
+  assert.equal(folder.getPatient().actualAge(new Date("2014-01-01")), "16y0m");
 
   const rc = folder.getByTypeAndId<RicketConsult>(RicketConsult, "13");
 
-  expect(rc).toBeInstanceOf(PatientRelated);
-  expect(rc).toBeInstanceOf(RicketConsult);
-  expect(rc.getId()).toBe(13);
-  expect(rc.getPatient()).toBeInstanceOf(Patient);
-  expect(rc.date).toEqual("2014-01-04");
+  assert(rc instanceof PatientRelated);
+  assert(rc instanceof RicketConsult);
+  assert.equal(rc.getId(), 13);
+  assert(rc.getPatient() instanceof Patient);
+  assert.equal(rc.date, "2014-01-04");
 });
 
 test("with ricketConsult_13", async function () {
@@ -29,11 +33,11 @@ test("with ricketConsult_13", async function () {
 
   // Male
 
-  expect(rc).toBeInstanceOf(RicketConsult);
-  expect(rc.getId()).toBe(13);
-  expect(rc.date).toEqual("2014-01-04");
-  expect(rc.height_cm).toBeCloseTo(110, 1);
-  expect(rc.weight_kg).toBeCloseTo(37, 1);
-  expect(rc.bmi()).toBeCloseTo(30.57, 1);
-  expect(rc.wh()).toBeCloseTo(0.3363, 3);
+  assert(rc instanceof RicketConsult);
+  assert.equal(rc.getId(), 13);
+  assert.equal(rc.date, "2014-01-04");
+  assertToBeClose(rc.height_cm, 110);
+  assertToBeClose(rc.weight_kg, 37);
+  assertToBeClose(rc.bmi(), 30.57);
+  assertToBeClose(rc.wh(), 0.34);
 });
