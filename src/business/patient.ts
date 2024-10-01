@@ -32,16 +32,6 @@ export default class Patient extends PatientRelated {
   address_comments: string = "";
   comments: string = "";
 
-  sexStr() {
-    if (this.sex === "Male") {
-      return "m";
-    }
-    if (this.sex === "Female") {
-      return "f";
-    }
-    return "";
-  }
-
   actualAge(reference: Date | string | number = new Date()) {
     if (!this.year_of_birth) {
       return null;

@@ -47,7 +47,7 @@ export default class Consult extends Timed {
 
   getWeightSd() {
     return stdDeviationFor(
-      this.getPatient().sexStr(),
+      this.getPatient().sex,
       "weight_kg",
       this.getAgeAtThatTime(),
       string2number(this.weight_kg)
@@ -56,7 +56,7 @@ export default class Consult extends Timed {
 
   getHeightSd() {
     return stdDeviationFor(
-      this.getPatient().sexStr(),
+      this.getPatient().sex,
       "height_cm",
       this.getAgeAtThatTime(),
       string2number(this.height_cm)
@@ -65,7 +65,7 @@ export default class Consult extends Timed {
 
   getWHSd() {
     return stdDeviationFor(
-      this.getPatient().sexStr(),
+      this.getPatient().sex,
       "wh",
       string2number(this.height_cm),
       string2number(this.weight_kg)
@@ -74,7 +74,7 @@ export default class Consult extends Timed {
 
   getBMISd() {
     return stdDeviationFor(
-      this.getPatient().sexStr(),
+      this.getPatient().sex,
       "bmi",
       this.getAgeAtThatTime(),
       this.bmi()

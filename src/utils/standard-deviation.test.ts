@@ -1,18 +1,15 @@
 import assert from "node:assert";
 import test from "node:test";
-import {
-  ConfigurationException,
-  DataInvalidException,
-  DataOutOfBoundException
-} from "./exceptions";
+import { DataInvalidException, DataOutOfBoundException } from "./exceptions";
 import {
   _evaluatePoly,
   _stdDeviation,
   sigma,
+  StatLines,
   stdDeviationFor
 } from "./standard-deviation";
 
-const poly = {
+const poly: StatLines = {
   min: [
     [0, 0],
     [10, 15]
@@ -51,19 +48,15 @@ test("calculate standard deviations", function () {
     new DataOutOfBoundException("value", -1, [0, 10])
   );
 
-  assert.equal(stdDeviationFor("m", "weight_kg", 10, 32), 0);
-  assert(Math.abs(stdDeviationFor("m", "weight_kg", 10, 42) - sigma) < 0.01);
-  assert.equal(stdDeviationFor("f", "weight_kg", 3, 13.8), 0);
+  assert.equal(stdDeviationFor("Male", "weight_kg", 10, 32), 0);
+  assert(Math.abs(stdDeviationFor("Male", "weight_kg", 10, 42) - sigma) < 0.01);
+  assert.equal(stdDeviationFor("Female", "weight_kg", 3, 13.8), 0);
   assert.throws(
-    () => stdDeviationFor("f", "invalid", 3, 13.8),
-    new ConfigurationException("Unknown serie: invalid")
+    () => stdDeviationFor("anything", "weight_kg", 99, 13.8),
+    new DataInvalidException("sex", "anything")
   );
   assert.throws(
-    () => stdDeviationFor("invalid", "weight_kg", 3, 13.8),
-    new DataInvalidException("sex", "invalid")
-  );
-  assert.throws(
-    () => stdDeviationFor("m", "weight_kg", 99, 13.8),
+    () => stdDeviationFor("Male", "weight_kg", 99, 13.8),
     new DataOutOfBoundException("value", 99, [0, 20])
   );
 });
