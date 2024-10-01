@@ -24,7 +24,7 @@ test("with data loading at construction time", function () {
 
 test("would interpret notSet correctly", function () {
   const data = Pojo.factory({});
-  assert.equal(data.last_user, "");
+  assert.equal(data.last_user, undefined);
 
   data.last_user = "someone";
   assert.equal(data.last_user, "someone");
