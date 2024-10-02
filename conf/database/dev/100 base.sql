@@ -492,6 +492,7 @@ INSERT INTO `patients` VALUES (8,'2021-04-23 15:26:16','2021-04-23 20:46:30','mu
 INSERT INTO `patients` VALUES (100,'2023-08-30 16:48:21','2023-08-30 17:27:13','jehon',2010,100,'free test','Male','2013-01','+32123123','at the end of the world','Chittagong','Chandanish','~ Other ~','Ricket','I have something to add');
 INSERT INTO `patients` VALUES (101,'2023-08-30 16:48:21','2023-08-30 17:27:13','test',2010,1,'patient test','Male','2013-01','+32123123','at the end of the world','Chittagong','Chandanish','~ Other ~','Ricket','I have something to add');
 INSERT INTO `patients` VALUES (102,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,2,'test appointment','','','','','','','','', '');
+INSERT INTO `patients` VALUES (103,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,3,'test surgery','','','','','','','','', '');
 
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -895,6 +896,7 @@ LOCK TABLES `surgeries` WRITE;
 /*!40000 ALTER TABLE `surgeries` DISABLE KEYS */;
 INSERT INTO `surgeries` VALUES (5,'2020-09-02 07:20:43','2023-08-30 05:11:51','jehon',1,'2014-01-02','test','someone',NULL,NULL,NULL,'nothing');
 INSERT INTO `surgeries` VALUES (100,'2023-08-30 16:52:52','2023-08-30 17:36:50','jehon',100,'2023-01-07','cool','god',1,NULL,'could run again','but fall from a wall');
+INSERT INTO `surgeries` VALUES (103,'2023-08-30 16:52:52','2023-08-30 17:36:50','jehon',103,'2023-01-07','cool','god',1,NULL,'could run again','but fall from a wall');
 /*!40000 ALTER TABLE `surgeries` ENABLE KEYS */;
 UNLOCK TABLES;
 
