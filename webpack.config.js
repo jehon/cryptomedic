@@ -26,7 +26,7 @@ export default {
   mode: isDebug ? "development" : "production",
   entry: {
     ng1x: path.join(__dirname, "/legacy/app-old/main.js"),
-    static: path.join(__dirname, "/legacy/app-static/main.js")
+    static: path.join(__dirname, "/src/app-static/main.js")
   },
   output: {
     path: builtRoot,
@@ -52,7 +52,7 @@ export default {
       chunks: ["ng1x"]
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "legacy/app-static/index.html"),
+      template: path.join(__dirname, "src/app-static/index.html"),
       filename: path.join(webRoot, "index.html"),
       inject: "head",
       xhtml: true,

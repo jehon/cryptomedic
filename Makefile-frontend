@@ -90,7 +90,6 @@ $(FRONTEND_PUBLISHED)/frontend/ng1x.html: \
 		$(FRONTEND_DEPENDENCIES_MARK) \
 		$(shell find src/ ) \
 		$(shell find legacy/app-old/ ) \
-		$(shell find legacy/app-static/ ) \
 		$(FRONTEND_BUILD_TMP)/axios.js \
 		$(FRONTEND_BUILD_TMP)/platform.js \
 		webpack.config.js \
