@@ -98,7 +98,7 @@ export class E2EFilePanel {
     await popupActions.getByText("Delete").click();
     await crExpectUrl(
       this.page,
-      new RegExp(".*" + escapeRegExp("#/folder/103/summary") + "$")
+      new RegExp(".*" + escapeRegExp(`#/folder/${this.patient_id}/summary`))
     );
     return this;
   }
