@@ -1,6 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { escapeRegExp } from "../../../src/utils/strings";
-import { crApiLogin, crExpectUrl } from "../helpers/cr";
+import { crApiLogin } from "../helpers/cr";
 import { E2EPatient, outputDate } from "./e2e-patients";
 
 // See 320 test appointment.sql for data
@@ -29,10 +28,6 @@ test("2010-001 create and delete appointment", async ({ page }) => {
 
   await panel.goEdit();
   await panel.doDelete();
-  await crExpectUrl(
-    page,
-    new RegExp(".*" + escapeRegExp("#/folder/102/summary"))
-  );
   await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0);
 });
 

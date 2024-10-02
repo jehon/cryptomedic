@@ -96,7 +96,10 @@ export class E2EFilePanel {
     await expect(popupActions.getByText("Cancel")).toBeVisible();
     await expect(popupActions.getByText("Delete")).toBeVisible();
     await popupActions.getByText("Delete").click();
-
+    await crExpectUrl(
+      this.page,
+      new RegExp(".*" + escapeRegExp("#/folder/103/summary") + "$")
+    );
     return this;
   }
 
