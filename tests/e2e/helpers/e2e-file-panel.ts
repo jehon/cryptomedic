@@ -100,6 +100,7 @@ export class E2EFilePanel {
       this.page,
       new RegExp(".*" + escapeRegExp(`#/folder/${this.patient_id}/summary`))
     );
+    await expect(this.page.getByTestId("add")).toBeVisible();
     return this;
   }
 
@@ -137,6 +138,7 @@ export class E2EFilePanel {
       this.page,
       new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}${this.id}$`)
     );
+    await expect(this.page.getByTestId("add")).toBeVisible();
     await expect(this.page.getByText("Edit")).toBeVisible();
 
     return this.waitVisible();

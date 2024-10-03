@@ -71,7 +71,6 @@ export default function FolderElement({
 
   return (
     <div
-      data-role="summary"
       data-testid={"folder-" + folder.getId()}
       style={{ width: defaultWidthScreen, margin: "0 auto" }}
     >
