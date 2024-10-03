@@ -27,5 +27,5 @@
     "useDefineForClassFields": false,
     "lib": ["ES2023", "dom", "DOM.Iterable"]
   },
-  "include": ["src", "legacy"]
+  "include": ["src", "legacy", "tests/e2e"]
 }

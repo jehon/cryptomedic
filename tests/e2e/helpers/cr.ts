@@ -1,23 +1,24 @@
 import { APIResponse, expect, Locator, Page } from "@playwright/test";
-import { CRUD, CRUDType, JsonData } from "../../../src/constants";
+import { CRUD, CRUDType } from "../../../src/constants";
 import { passThrough } from "../../../src/utils/promises";
 export { outputDate } from "../../../src/utils/date";
 
 const WebBaseUrl = `http://${process.env.CRYPTOMEDIC_DEV_HTTP_HOST}:8085`;
+type JsonData = any;
 
-export const LOGINS = {
+const LOGINS = {
   PHYSIO: "murshed",
   RO: "readonly",
   ADMIN: "jehon"
 };
 
-export const PASSWORD = "p";
+const PASSWORD = "p";
 
 export function crUrl(segment: string = ""): string {
   return `${WebBaseUrl}/built/frontend/ng1x.html#${segment}`;
 }
 
-export function crUrlAPI(segment: string = ""): string {
+function crUrlAPI(segment: string = ""): string {
   return `${WebBaseUrl}/api${segment}`;
 }
 
@@ -50,10 +51,13 @@ export function crApi(
         }
       })
     )
-    .then((resp) => resp.json());
+    .then((resp: APIResponse) => resp.json());
 }
 
-export function crApiLogin(page: Page, login: string = LOGINS.PHYSIO) {
+export function crApiLogin(
+  page: Page,
+  login: string = LOGINS.PHYSIO
+): Promise<JsonData> {
   return crApi(page, "/auth/mylogin", {
     method: CRUD.submit,
     data: {
@@ -63,31 +67,31 @@ export function crApiLogin(page: Page, login: string = LOGINS.PHYSIO) {
   });
 }
 
-export function crDebugHooks(page: Page): void {
-  // Listen for all console logs
-  // page.on("console", (msg) =>
-  //   console.info("Error from browser: ", { type: msg.type(), text: msg.text() })
-  // );
+// export function crDebugHooks(page: Page): void {
+//   // Listen for all console logs
+//   // page.on("console", (msg) =>
+//   //   console.info("Error from browser: ", { type: msg.type(), text: msg.text() })
+//   // );
 
-  page.on("console", async (msg) => {
-    const msgArgs = msg.args();
-    const logValues = await Promise.all(
-      msgArgs.map(async (arg) => await arg.jsonValue())
-    );
-    console.warn(
-      "Error from browser: ",
-      JSON.stringify(
-        { type: msg.type(), text: msg.text(), logs: logValues },
-        null,
-        2
-      )
-    );
-  });
+//   page.on("console", async (msg) => {
+//     const msgArgs = msg.args();
+//     const logValues = await Promise.all(
+//       msgArgs.map(async (arg) => await arg.jsonValue())
+//     );
+//     console.warn(
+//       "Error from browser: ",
+//       JSON.stringify(
+//         { type: msg.type(), text: msg.text(), logs: logValues },
+//         null,
+//         2
+//       )
+//     );
+//   });
 
-  page.on("pageerror", (err) =>
-    console.warn("Uncatched error from browser: ", err)
-  );
-}
+//   page.on("pageerror", (err) =>
+//     console.warn("Uncatched error from browser: ", err)
+//   );
+// }
 
 export async function crInit(
   page: Page,
@@ -113,7 +117,7 @@ export async function crExpectUrl(page: Page, r: string | RegExp) {
   await expect(page).toHaveURL(r);
 }
 
-export async function crReady(
+async function crReady(
   page: Page
   // options: { forScreenshot?: boolean } = {}
 ): Promise<void> {
