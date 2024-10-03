@@ -77,41 +77,16 @@
   }
   ?>
   <div id="folderpage" class='container-fluid mode-read'>
-    <div class='row'>
-      <div id='folder_menu' ng-if="patient_id >= 0" class='col-sm-2'>
-        <!-- TODO: Remove this - begin -->
-        <x-restricted restricted-by='folder.delete' style='width: 100%'>
-          <x-button id='button_add' ng-class="{ 'selected': page == 'addfile'}" ng-click="go('/folder/' + patient_id + '/addfile')" style='width: 100%'>Add</x-button>
-        </x-restricted>
-        <x-button id='summary' ng-class="{ 'selected': page == 'summary'}" to-route="#/folder/{{patient_id}}/summary" style='width: 100%'>Summary</x-button>
-        <x-button id='button_patient' ng-class="{ 'selected': !page}" to-route="#/folder/{{patient_id}}/summary/patient.{{patient_id}}" style='width: 100%'>Patient</x-button>
-        <span id='folder_files'>
-          <span ng-repeat="f in folder.getFilesRelatedToPatient()" class='folder_file'>
-            <x-button id='folder_menu_{{f.getModel()}}_{{f.id}}' to-route="#/folder/{{patient_id}}/file/{{f.getModel()}}/{{f.id}}" ng-class="{ 'selected': page + subtype + subid == 'file' + f.getModel() + f.id }" style='width: 100%'>
-              {{f.getModel()}}<span ng-if="f.date"><br>[{{f.date }}]</span>
-            </x-button>
-          </span>
-        </span>
-        <!-- TODO: Remove this - end -->
+    <form id="fileForm">
+      <button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
+      <span ng-include="getTemplateForMe()" onload="reinject()">
+        debug: Content {{getTemplateName()}}
+      </span>
+      <div class="submenu" id='bottomsubmenu' style='margin-top: 10px'>
+        <div class='text-center'>
+          <?php submenu(); ?>
         </div>
-      <div class='col-sm-10'>
-        <!-- TODO: Remove this - begin -->
-        <div class="alert alert-info">
-          The blue menu will soon disappear!
-        </div>
-        <!-- TODO: Remove this - end -->
-        <form id="fileForm">
-          <button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
-          <span ng-include="getTemplateForMe()" onload="reinject()">
-            debug: Content {{getTemplateName()}}
-          </span>
-          <div class="submenu" id='bottomsubmenu' style='margin-top: 10px'>
-            <div class='text-center'>
-              <?php submenu(); ?>
-            </div>
-          </div>
-        </form>
       </div>
-    </div>
+    </form>
   </div>
 </x-page-folder>
