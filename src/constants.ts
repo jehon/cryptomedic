@@ -6,3 +6,7 @@ export const CRUD = {
   update: "PUT" as CRUDType,
   delete: "DELETE" as CRUDType
 };
+
+export type IndexSignature<T> = {
+  [propName: string]: T;
+};

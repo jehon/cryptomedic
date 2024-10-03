@@ -130,7 +130,7 @@ export class E2EFilePanel {
       );
       const url = await this.page.url();
       const matches = /\.(?<id>[0-9]+)$/.exec(url);
-      this.id = matches?.groups?.id ?? "";
+      this.id = matches?.groups?.["id"] ?? "";
     }
 
     await crExpectUrl(
@@ -168,7 +168,10 @@ export class E2EFilePanel {
     return this.form.locator(`[data-role='${label}']`);
   }
 
-  async expectOutputValue(label, value?): Promise<this> {
+  async expectOutputValue(
+    label: string,
+    value?: string | number | boolean
+  ): Promise<this> {
     const io = await this.expectField(label);
 
     if (value) {
@@ -189,7 +192,11 @@ export class E2EFilePanel {
     return this;
   }
 
-  async expectInputValue(label, value = "", type?: IOTypes): Promise<this> {
+  async expectInputValue(
+    label: string,
+    value = "",
+    type?: IOTypes
+  ): Promise<this> {
     switch (type) {
       case undefined:
       case "string":

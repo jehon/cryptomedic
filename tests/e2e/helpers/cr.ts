@@ -1,9 +1,9 @@
 import { APIResponse, expect, Locator, Page } from "@playwright/test";
-import { CRUD, CRUDType } from "../../../src/constants";
+import { CRUD, CRUDType, IndexSignature } from "../../../src/constants";
 import { passThrough } from "../../../src/utils/promises";
 export { outputDate } from "../../../src/utils/date";
 
-const WebBaseUrl = `http://${process.env.CRYPTOMEDIC_DEV_HTTP_HOST}:8085`;
+const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"]}:8085`;
 type JsonData = any;
 
 const LOGINS = {
@@ -36,12 +36,11 @@ export function crApi(
   // Return the response object (json)
   //
 
-  return page.request[(options.method ?? CRUD.read).toLowerCase()](
-    crUrlAPI(url),
-    {
-      data: options.data ?? {}
-    }
-  )
+  // TODO: more precise than any?
+  const requestor = page.request as IndexSignature<any>;
+  return requestor[(options.method ?? CRUD.read).toLowerCase()](crUrlAPI(url), {
+    data: options.data ?? {}
+  })
     .then(
       passThrough<APIResponse>((resp) => {
         if (resp.status() != 200) {
