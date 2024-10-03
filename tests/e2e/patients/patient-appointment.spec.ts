@@ -22,13 +22,18 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   // Add: Not acceptable form...
   await panel.panel.getByText("Save").click();
   await expect(panel.panel.getByText("Edit")).not.toBeVisible();
+  await expect(panel.form).toHaveScreenshot();
 
   await panel.setFieldValue("Date", "2022-05-06");
+  await expect(panel.form).toHaveScreenshot();
+
   await panel.doSave(true);
+  await expect(panel.form).toHaveScreenshot();
 
   await panel.goEdit();
   await panel.doDelete();
   await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0);
+  await expect(panel.form).toHaveScreenshot();
 });
 
 test("2010-001 update appointment", async ({ page }) => {
