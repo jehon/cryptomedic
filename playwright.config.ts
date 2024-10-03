@@ -36,7 +36,8 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
     toHaveScreenshot: {
       stylePath: ["tests/e2e/e2e.css"]
     }
-  }
+  },
+  use: {}
 };
 
 if (process.env["CI"]) {
@@ -47,6 +48,11 @@ if (process.env["CI"]) {
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   config.forbidOnly = true;
+
+  // Traces: See https://playwright.dev/docs/trace-viewer#opening-the-trace
+  // https://trace.playwright.dev/
+  config.retries = 1;
+  config.use!.trace = "retain-on-failure";
 } else {
   // Locally, we ignore snapshots
   config.ignoreSnapshots = true;
