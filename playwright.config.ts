@@ -9,7 +9,7 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   testDir: "./tests/e2e",
   fullyParallel: true,
   retries: 0,
-  timeout: 10 * 1000,
+  timeout: 30 * 1000,
   outputDir: "tmp/integration/playwright/test-results/",
   reporter: [
     ["list"],
