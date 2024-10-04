@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { crApiLogin } from "../helpers/cr";
+import { crApiLogin } from "../helpers/e2e";
 import { E2EPatient, outputDate } from "./e2e-patients";
 
 // See 320 test appointment.sql for data

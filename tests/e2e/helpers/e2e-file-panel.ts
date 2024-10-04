@@ -2,7 +2,7 @@ import { expect, Locator, Page } from "@playwright/test";
 import { CRUD } from "../../../src/constants";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
-import { crApi, crExpectUrl, crUrl } from "./cr";
+import { crApi, crExpectUrl, crUrl } from "./e2e";
 
 type IOTypes = "string" | "radio" | "select" | "textarea";
 

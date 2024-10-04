@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { crApiLogin } from "../helpers/cr";
+import { crApiLogin } from "../helpers/e2e";
 import { E2EPatient } from "./e2e-patients";
 
 test("2000-001.patient.1", async ({ page }) => {

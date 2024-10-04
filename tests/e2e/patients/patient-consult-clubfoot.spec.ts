@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { crApiLogin, outputDate } from "../helpers/cr";
+import { crApiLogin, outputDate } from "../helpers/e2e";
 import { E2EPatient } from "./e2e-patients";
 
 // ----------------

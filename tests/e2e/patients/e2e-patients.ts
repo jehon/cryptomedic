@@ -1,9 +1,9 @@
 import { expect, Locator, Page } from "playwright/test";
 import { CRUD } from "../../../src/constants";
-import { crApi, crInit } from "../helpers/cr";
+import { crApi, crInit } from "../helpers/e2e";
 import { E2EFilePanel } from "../helpers/e2e-file-panel";
 
-export { outputDate } from "../helpers/cr";
+export { outputDate } from "../helpers/e2e";
 
 export class E2EPatient {
   private isInit = false;
