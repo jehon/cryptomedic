@@ -39,8 +39,7 @@ export function isTodoMigration(type: typeof Pojo) {
     "consult_ricket",
     "payment",
     "picture",
-    "price",
-    "surgery"
+    "price"
   ].includes(type.getTechnicalName());
 }
 
