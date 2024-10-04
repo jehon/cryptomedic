@@ -197,7 +197,11 @@ export class E2EFilePanel {
       }
 
       await expect(ioc).toBeVisible();
-      await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
+      if (value === true) {
+        await expect((await ioc.textContent())?.trim() ?? "").toBe("✔");
+      } else {
+        await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
+      }
     } else {
       await expect(io).not.toBeVisible();
     }
