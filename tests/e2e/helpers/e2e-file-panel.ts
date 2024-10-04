@@ -6,6 +6,11 @@ import { crApi, crExpectUrl, crUrl } from "./e2e";
 
 type IOTypes = "string" | "checkbox" | "radio" | "select" | "textarea";
 
+export const IOV = {
+  R_Checked: "yes",
+  R_NotChecked: ""
+};
+
 export class E2EFilePanel {
   protected fileBaseUrl = "";
   protected page: Page;
@@ -245,7 +250,7 @@ export class E2EFilePanel {
 
   async setFieldValue(
     label: string,
-    value: string,
+    value: string = "",
     type?: IOTypes
   ): Promise<this> {
     const io = await this.expectField(label);
