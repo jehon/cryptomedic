@@ -44,7 +44,7 @@ if (process.env["CI"]) {
   if (config.reporter instanceof Array) {
     config.reporter.push(["github"]);
   }
-  config.workers = 1;
+  // config.workers = 1;
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   config.forbidOnly = true;

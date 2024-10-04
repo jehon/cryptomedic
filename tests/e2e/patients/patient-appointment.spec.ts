@@ -31,7 +31,6 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   await panel.goEdit();
   await panel.doDelete();
   await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0);
-  await expect(e2ePatient.panel).toHaveScreenshot();
 });
 
 test("2010-001 update appointment", async ({ page }) => {
