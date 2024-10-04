@@ -1,5 +1,4 @@
-import { Page } from "playwright-core";
-import { expect } from "playwright/test";
+import { expect, Locator, Page } from "playwright/test";
 import { CRUD } from "../../../src/constants";
 import { crApi, crInit } from "../helpers/cr";
 import { E2EFilePanel } from "../helpers/e2e-file-panel";
@@ -15,6 +14,15 @@ export class E2EPatient {
     id: string | number
   ) {
     this.id = "" + id;
+  }
+
+  get panel(): Locator {
+    return this.page.getByTestId(`folder-${this.id}`);
+  }
+
+  async expectToBeVisible() {
+    await expect(this.panel).toBeVisible();
+    await expect(this.page.getByTestId("add")).toBeVisible();
   }
 
   getFile(type: string, fileId?: string | number): E2EFilePanel {

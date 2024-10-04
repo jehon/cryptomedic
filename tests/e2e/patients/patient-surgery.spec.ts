@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { test } from "@playwright/test";
 import { crApiLogin, outputDate } from "../helpers/cr";
 import { E2EPatient } from "./e2e-patients";
 
@@ -9,6 +9,4 @@ test("2000-001.surgery.5", async ({ page }) => {
   await e2eFile.expectOutputValue("Date", outputDate("2014-01-02"));
   await e2eFile.expectOutputValue("Diagnostic", "test");
   await e2eFile.expectOutputValue("Follow-Up Complications", "nothing");
-  await expect(e2eFile.form).toHaveScreenshot();
-  await expect(e2eFile.panel).toHaveScreenshot();
 });

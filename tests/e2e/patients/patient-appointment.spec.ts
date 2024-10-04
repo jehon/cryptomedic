@@ -25,15 +25,13 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   await expect(panel.form).toHaveScreenshot();
 
   await panel.setFieldValue("Date", "2022-05-06");
-  await expect(panel.form).toHaveScreenshot();
 
   await panel.doSave(true);
-  await expect(panel.form).toHaveScreenshot();
 
   await panel.goEdit();
   await panel.doDelete();
   await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0);
-  await expect(panel.form).toHaveScreenshot();
+  await expect(e2ePatient.panel).toHaveScreenshot();
 });
 
 test("2010-001 update appointment", async ({ page }) => {
@@ -51,22 +49,18 @@ test("2010-001 update appointment", async ({ page }) => {
   await e2eFile.expectOutputValue("Date", outputDate("2024-01-02"));
   await e2eFile.expectOutputValue("Center");
   await e2eFile.expectOutputValue("Purpose", "test data");
-  await expect(e2eFile.panel).toHaveScreenshot();
 
   await e2eFile.goEdit();
   await e2eFile.expectInputValue("Date", "2024-01-02");
   await e2eFile.expectInputValue("Center");
   await e2eFile.expectInputValue("Purpose", "test data");
-  await expect(e2eFile.panel).toHaveScreenshot();
 
   await e2eFile.setFieldValue("Date", "2024-10-11");
   await e2eFile.setFieldValue("Center", "Chakaria Disability Center", "select");
   await e2eFile.setFieldValue("Purpose", "test running", "textarea");
-  await expect(e2eFile.panel).toHaveScreenshot();
 
   await e2eFile.doSave();
   await e2eFile.expectOutputValue("Date", outputDate("2024-10-11"));
   await e2eFile.expectOutputValue("Center", "Chakaria Disability Center");
   await e2eFile.expectOutputValue("Purpose", "test running");
-  await expect(e2eFile.panel).toHaveScreenshot();
 });

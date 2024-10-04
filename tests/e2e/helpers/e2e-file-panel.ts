@@ -68,7 +68,7 @@ export class E2EFilePanel {
     );
   }
 
-  async waitVisible(): Promise<this> {
+  async expectToBeVisible(): Promise<this> {
     await expect(this.panel).toBeVisible();
     await expect(this.form).toBeVisible();
     return this;
@@ -82,11 +82,13 @@ export class E2EFilePanel {
 
   async go(): Promise<this> {
     await this.e2ePatient.go();
-    return this.doOpen();
+    await this.doOpen();
+    await expect(this.panel).toHaveScreenshot();
+    return this;
   }
 
   async doDelete(): Promise<this> {
-    await this.waitVisible();
+    await this.expectToBeVisible();
 
     await this.page.getByText("Delete").click();
     const popup = this.page.getByTestId("popup");
@@ -100,7 +102,7 @@ export class E2EFilePanel {
       this.page,
       new RegExp(".*" + escapeRegExp(`#/folder/${this.patient_id}/summary`))
     );
-    await expect(this.page.getByTestId("add")).toBeVisible();
+    await this.e2ePatient.expectToBeVisible();
     return this;
   }
 
@@ -115,11 +117,16 @@ export class E2EFilePanel {
     } else {
       await this.expectUrlFragmentForType(`\\/${this.type}\\.[0-9]+`);
     }
-    return this.waitVisible();
+    await this.e2ePatient.expectToBeVisible();
+    await this.expectToBeVisible();
+    await expect(this.form).toHaveScreenshot();
+
+    return this;
   }
 
   async doSave(interceptAddedId: boolean = false): Promise<this> {
-    await this.waitVisible();
+    await this.expectToBeVisible();
+    await expect(this.form).toHaveScreenshot();
 
     await expect(this.page.getByText("Save")).toBeVisible();
     await this.page.getByText("Save").click();
@@ -138,14 +145,16 @@ export class E2EFilePanel {
       this.page,
       new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}${this.id}$`)
     );
-    await expect(this.page.getByTestId("add")).toBeVisible();
+    await this.e2ePatient.expectToBeVisible();
+    await this.expectToBeVisible();
     await expect(this.page.getByText("Edit")).toBeVisible();
+    await expect(this.form).toHaveScreenshot();
 
-    return this.waitVisible();
+    return this;
   }
 
   async goEdit(): Promise<this> {
-    await this.waitVisible();
+    await this.expectToBeVisible();
 
     await expect(this.page.getByText("Edit")).toBeVisible();
     await this.page.getByText("Edit").click();
@@ -155,8 +164,10 @@ export class E2EFilePanel {
       new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
     );
     await expect(this.page.getByText("Save")).toBeVisible();
+    await this.expectToBeVisible();
+    await expect(this.form).toHaveScreenshot();
 
-    return this.waitVisible();
+    return this;
   }
 
   /* ***********************************
@@ -166,7 +177,7 @@ export class E2EFilePanel {
    */
 
   private async expectField(label: string): Promise<Locator> {
-    await this.waitVisible();
+    await this.expectToBeVisible();
     return this.form.locator(`[data-role='${label}']`);
   }
 
