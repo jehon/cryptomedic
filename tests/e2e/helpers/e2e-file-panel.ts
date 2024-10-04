@@ -4,7 +4,7 @@ import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
 import { crApi, crExpectUrl, crUrl } from "./e2e";
 
-type IOTypes = "string" | "radio" | "select" | "textarea";
+type IOTypes = "string" | "checkbox" | "radio" | "select" | "textarea";
 
 export class E2EFilePanel {
   protected fileBaseUrl = "";
@@ -221,6 +221,19 @@ export class E2EFilePanel {
       case "textarea":
         await expect(this.panel.getByLabel(label)).toHaveValue(value);
         break;
+      case "checkbox":
+        {
+          const loc = (await this.expectField(label)).locator(
+            "input[type=checkbox]"
+          );
+
+          if (value == "1") {
+            await expect(loc).toBeChecked();
+          } else {
+            await expect(loc).not.toBeChecked();
+          }
+        }
+        break;
       case "radio":
         await expect(
           (await this.expectField(label)).getByLabel(value, { exact: true })
@@ -247,16 +260,16 @@ export class E2EFilePanel {
         await expect(ioc.locator("input")).toBeVisible();
         await ioc.locator("input").fill("" + value);
         break;
-      case "textarea":
-        await expect(ioc.locator("textarea")).toBeVisible();
-        await ioc.locator("textarea").fill("" + value);
-        break;
-      case "select":
+      case "checkbox":
         {
-          const select = ioc.locator("select");
-          await expect(select).toBeVisible();
-          await expect(select).toContainText(value);
-          await select.selectOption({ label: "" + value });
+          const loc = (await this.expectField(label)).locator(
+            "input[type=checkbox]"
+          );
+          if (value) {
+            await loc.check();
+          } else {
+            await loc.uncheck();
+          }
         }
         break;
       case "radio":
@@ -265,6 +278,12 @@ export class E2EFilePanel {
           await expect(radio).toBeVisible();
           await radio.check();
         }
+        break;
+      case "select":
+        break;
+      case "textarea":
+        await expect(ioc.locator("textarea")).toBeVisible();
+        await ioc.locator("textarea").fill("" + value);
         break;
       default:
         throw new Error("Unknown type: " + type);
