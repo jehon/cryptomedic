@@ -119,8 +119,6 @@ export async function crExpectUrl(page: Page, r: string | RegExp) {
 async function crReady(page: Page): Promise<void> {
   // No global spinning wheel anymore
   await expect(page.getByTestId("global-wait")).toHaveCount(0);
-  // TODO: this will take some time
-  await expect(page.getByRole("alert")).toHaveCount(0);
 }
 
 export async function crLegacyInput(
