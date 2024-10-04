@@ -2,7 +2,7 @@ UPDATE appointments
 SET
   updated_at = NOW()
 WHERE
-  id = 101;
+  id = 102;
 
 UPDATE surgeries
 SET

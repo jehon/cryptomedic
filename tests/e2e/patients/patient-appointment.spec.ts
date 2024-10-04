@@ -13,7 +13,7 @@ test("2000-001.appointment.2", async ({ page }) => {
   await expect(e2eFile.panel).toHaveScreenshot();
 });
 
-test("2010-001 create and delete appointment", async ({ page }) => {
+test("2010-002 create and delete appointment", async ({ page }) => {
   await crApiLogin(page);
 
   const e2ePatient = await new E2EPatient(page, 102).go();
@@ -33,12 +33,12 @@ test("2010-001 create and delete appointment", async ({ page }) => {
   await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0);
 });
 
-test("2010-001 update appointment", async ({ page }) => {
+test("2010-002 update appointment", async ({ page }) => {
   await crApiLogin(page);
 
-  const e2eFile = new E2EPatient(page, 102).getFile("appointment", 101);
-  await e2eFile.apiFileUpdate(101, {
-    id: "101",
+  const e2eFile = new E2EPatient(page, 102).getFile("appointment", 102);
+  await e2eFile.apiFileUpdate(102, {
+    id: "102",
     center: "",
     date: "2024-01-02",
     purpose: "test data"
