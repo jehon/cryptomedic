@@ -6,6 +6,9 @@ services:
   ################################################################
 
   proxy:
+    depends_on:
+      - phpmyadmin
+      - web
     image: nginx
     read_only: true
     ports:
