@@ -26,7 +26,9 @@ docker compose stop database
 docker compose rm -f database
 docker volume rm -f "${DC_PROJECT_NAME}_database" || true
 
-# --wait: for the service to be healthy
+# Required for upgrade:
+docker compose up --wait --detach proxy web
+
 docker compose up --force-recreate database \
     --detach --wait --renew-anon-volumes
 header_end
