@@ -4,9 +4,9 @@ USE mysql;
 -- Schema
 -- ---------------------------------------
 --
-DROP SCHEMA IF EXISTS cryptomedic;
+DROP DATABASE IF EXISTS cryptomedic;
 
-CREATE SCHEMA cryptomedic;
+CREATE DATABASE cryptomedic;
 
 -- ---------------------------------------
 -- Users
