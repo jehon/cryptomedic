@@ -1,3 +1,4 @@
+import { StringList } from "../utils/types";
 import Consult from "./abstracts/consult";
 
 export default class ConsultOther extends Consult {
@@ -13,13 +14,13 @@ export default class ConsultOther extends Consult {
     return "Consult. Other";
   }
 
-  side: string = "";
+  side: StringList = "";
   joints_or_bones_affected: string = "";
   deformity: string = "";
   articulation_mobility: string = "";
   muscle_strength: string = "";
-  pain: string = "";
-  walk: string = "";
+  pain: StringList = "";
+  walk: StringList = "";
   xray: string = "";
   performed: string = "";
   not_performed: string = "";

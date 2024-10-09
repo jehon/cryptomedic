@@ -4,16 +4,18 @@ import { fromBirthDateTo, normalizeDate } from "../../utils/date";
 import { DataMissingException } from "../../utils/exceptions";
 import { stdDeviationFor } from "../../utils/standard-deviation";
 import { string2number } from "../../utils/strings";
-import { StringBoolean, StringNumber } from "../../utils/types";
+import { StringBoolean, StringList, StringNumber } from "../../utils/types";
 
 export default class Consult extends Timed {
+  // Begin
   weight_kg: StringNumber = "";
   height_cm: StringNumber = "";
   brachial_circumference_cm: StringNumber = "";
-  treatment_evaluation: string = "";
-  treatment_finished: StringBoolean = "";
+  // End
   comments: string = "";
   suggested_for_surgery: StringBoolean = "";
+  treatment_evaluation: StringList = "";
+  treatment_finished: StringBoolean = "";
 
   getAgeAtThatTime() {
     return fromBirthDateTo(

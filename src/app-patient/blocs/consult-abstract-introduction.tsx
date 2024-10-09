@@ -17,7 +17,11 @@ export default function ConsultAbstractIntroduction({
     <TwoColumns>
       <Panel fixed label="Information">
         <IO.Date name="date" value={file.date} />
-        <IO.String name="examiner" value={file.examiner as string} />
+        <IO.List
+          name="examiner"
+          value={file.examiner as string}
+          list={getList("Examiners")}
+        />
         <IO.List
           name="center"
           value={file.center as string}
