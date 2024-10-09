@@ -441,6 +441,7 @@ LOCK TABLES `other_consults` WRITE;
 /*!40000 ALTER TABLE `other_consults` DISABLE KEYS */;
 INSERT INTO `other_consults` VALUES (1,'1980-01-01 00:00:00','2015-02-19 13:52:16','Thierry',1,'2007-01-10','Ershad',NULL,29,134,0,NULL,'PBVE','','','','No',NULL,'',NULL,NULL,'Postero-medial release','',0,NULL,NULL);
 INSERT INTO `other_consults` VALUES (100,'2023-08-30 16:52:04','2023-08-30 17:35:55','jehon',100,'2023-01-05','Ershad','Forcibly Displaced Myanmar Nationals',34,124,24,'Left','some','yes','could be','strong','Moderate','Level 2','broken tongue','walking is ok','jumping is not ok',NULL,'drink a glass of air',NULL,0,1);
+INSERT INTO `other_consults` VALUES (104,'2023-08-30 16:52:04','2023-08-30 17:35:55','jehon',104,'2023-01-05','Ershad','Forcibly Displaced Myanmar Nationals',34,124,24,'Left','some','yes','could be','strong','Moderate','Level 2','broken tongue','walking is ok','jumping is not ok',NULL,'drink a glass of air',NULL,0,1);
 /*!40000 ALTER TABLE `other_consults` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -493,6 +494,7 @@ INSERT INTO `patients` VALUES (100,'2023-08-30 16:48:21','2023-08-30 17:27:13','
 INSERT INTO `patients` VALUES (101,'2023-08-30 16:48:21','2023-08-30 17:27:13','test',2010,1,'patient test','Male','2013-01','+32123123','at the end of the world','Chittagong','Chandanish','~ Other ~','Ricket','I have something to add');
 INSERT INTO `patients` VALUES (102,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,2,'test appointment','','','','','','','','', '');
 INSERT INTO `patients` VALUES (103,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,3,'test surgery','','','','','','','','', '');
+INSERT INTO `patients` VALUES (104,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,4,'test consult other','','','','','','','','', '');
 
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
