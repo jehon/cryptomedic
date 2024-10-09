@@ -2,8 +2,6 @@ import { expect, test } from "@playwright/test";
 import { crApiLogin } from "../helpers/e2e";
 import { E2EPatient, outputDate } from "./e2e-patients";
 
-// See 320 test appointment.sql for data
-
 test("2000-001.appointment.2", async ({ page }) => {
   await crApiLogin(page);
   const e2eFile = await new E2EPatient(page, 1).getFile("appointment", 2).go();
