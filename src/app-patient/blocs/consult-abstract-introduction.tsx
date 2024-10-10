@@ -48,6 +48,10 @@ export default function ConsultAbstractIntroduction({
           name="height_cm"
           label="Height (cm)"
           value={string2number(file.height_cm)}
+          htmlProps={{
+            min: 50,
+            max: 200
+          }}
         />
         {file.height_cm && (
           <IO.Function
