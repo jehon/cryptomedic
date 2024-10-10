@@ -37,6 +37,10 @@ export default function ConsultAbstractIntroduction({
           name="weight_kg"
           label="Weight (kg)"
           value={string2number(file.weight_kg)}
+          htmlProps={{
+            min: 3,
+            max: 150
+          }}
         />
         {file.weight_kg && (
           <IO.Function
@@ -49,7 +53,7 @@ export default function ConsultAbstractIntroduction({
           label="Height (cm)"
           value={string2number(file.height_cm)}
           htmlProps={{
-            min: 50,
+            min: 30,
             max: 200
           }}
         />
@@ -63,6 +67,10 @@ export default function ConsultAbstractIntroduction({
           name="brachial_circumference_cm"
           label="Brachial Circumference (cm)"
           value={string2number(file.brachial_circumference_cm)}
+          htmlProps={{
+            min: 6,
+            max: 26
+          }}
         />
         {file.weight_kg && file.height_cm && (
           <>
