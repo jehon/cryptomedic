@@ -1,16 +1,20 @@
 import { expect, test } from "@playwright/test";
 import { crApiLogin, outputDate } from "../helpers/e2e";
-import { IOV } from "../helpers/e2e-file-panel";
+import { fullTestRead, IOV } from "../helpers/e2e-file-panel";
 import { E2EPatient } from "./e2e-patients";
 
-test("2000-001.surgery.5", async ({ page }) => {
-  await crApiLogin(page);
-  const e2eFile = await new E2EPatient(page, 1).getFile("surgery", 5).go();
-
-  await e2eFile.expectOutputValue("Date", outputDate("2014-01-02"));
-  await e2eFile.expectOutputValue("Diagnostic", "test");
-  await e2eFile.expectOutputValue("Follow-Up Complications", "nothing");
-});
+test("2000-001.surgery.5", ({ page }) =>
+  fullTestRead({
+    page,
+    patientId: 1,
+    fileType: "surgery",
+    fileId: 5,
+    data: {
+      Date: outputDate("2014-01-02"),
+      Diagnostic: "test",
+      "Follow-Up Complications": "nothing"
+    }
+  }).then(() => {}));
 
 test("2010-003 create and delete surgery", async ({ page }) => {
   await crApiLogin(page);
