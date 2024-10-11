@@ -4,7 +4,7 @@ import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
 import { crApi, crApiLogin, crExpectUrl, crUrl } from "./e2e";
 
-type IOTypes = "string" | "checkbox" | "radio" | "select" | "textarea";
+type IOTypes = "string" | "checkbox" | "date" | "radio" | "select" | "textarea";
 
 export const IOV = {
   R_Checked: "yes",
@@ -222,6 +222,7 @@ export class E2EFilePanel {
     switch (type) {
       case undefined:
       case "string":
+      case "date":
       case "select":
       case "textarea":
         await expect(this.panel.getByLabel(label)).toHaveValue(value);
@@ -260,6 +261,7 @@ export class E2EFilePanel {
     await expect(ioc).toBeVisible();
 
     switch (type) {
+      case "date":
       case "string":
       case undefined:
         await expect(ioc.locator("input")).toBeVisible();
