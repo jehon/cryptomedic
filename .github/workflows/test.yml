@@ -193,6 +193,7 @@ jobs:
     # placeholder for validation of PR
     needs:
       - tests-unit
+      - tests-unit-with-backend
       - tests-e2e
     runs-on: ubuntu-latest
     steps:
