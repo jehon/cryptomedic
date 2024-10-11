@@ -1,19 +1,19 @@
-import { expect, test } from "@playwright/test";
-import { crApiLogin, outputDate } from "../helpers/e2e";
-import { E2EPatient } from "./e2e-patients";
+import { test } from "@playwright/test";
+import { outputDate } from "../helpers/e2e";
+import { fullTestRead } from "../helpers/e2e-file-panel";
 
 // ----------------
 // TODO: add this on 1st file
 //       and add some data to it
-test("2014-105.consult_clubfoot.1", async ({ page }) => {
-  await crApiLogin(page);
-  const e2eFile = await new E2EPatient(page, 5)
-    .getFile("consult_clubfoot", 1)
-    .go();
-
-  await e2eFile.expectOutputValue("Date", outputDate("2015-01-10"));
-  await e2eFile.expectOutputValue("Examiner", "Ershad");
-  await e2eFile.expectOutputValue("Age at consultation time", "2Y");
-  await expect(e2eFile.form).toHaveScreenshot();
-  await expect(e2eFile.panel).toHaveScreenshot();
-});
+test("2014-105.consult_clubfoot.1", ({ page }) =>
+  fullTestRead({
+    page,
+    patientId: 5,
+    fileType: "consult_clubfoot",
+    fileId: 1,
+    data: {
+      Date: outputDate("2015-01-10"),
+      Examiner: "Ershad",
+      "Age at consultation time": "2Y"
+    }
+  }).then(() => {}));
