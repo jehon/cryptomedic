@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import generateUUID from "../../utils/generate-uuid";
 import { toTitleCase } from "../../utils/strings";
 import { EditContext } from "../../widget/io-abstract";
@@ -17,7 +17,7 @@ export default function IOBillLine(props: { line: BillLine }): React.ReactNode {
 
   // Hide if not value and output mode
   if (!edit && !props.line.value) {
-    return null;
+    return;
   }
 
   const uuid = generateUUID();
@@ -26,7 +26,6 @@ export default function IOBillLine(props: { line: BillLine }): React.ReactNode {
     <div
       className={"io " + (edit ? "io-input" : "io-output")}
       data-role={label}
-      key={props.line.key}
     >
       <label htmlFor={uuid}>{label}*</label>
       <div className="content">{props.line.value}</div>

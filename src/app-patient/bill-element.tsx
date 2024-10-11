@@ -75,7 +75,7 @@ export default function billElementGenerator(
         </TwoColumns>
         <Panel fixed label="Bill Lines">
           {file.items.map((line) => (
-            <IOBillLine line={line} />
+            <IOBillLine line={line} key={line.key} />
           ))}
         </Panel>
       </>
