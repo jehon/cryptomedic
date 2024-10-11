@@ -309,7 +309,7 @@ export async function fullTestRead(options: {
   patientId: string | number;
   fileType: string;
   fileId: string | number;
-  data: Record<string, any>;
+  data: Record<string, string | number | boolean | undefined>;
 }) {
   await crApiLogin(options.page);
   const e2eFile = await new E2EPatient(options.page, options.patientId)
@@ -321,4 +321,5 @@ export async function fullTestRead(options: {
   }
   await expect(e2eFile.form).toHaveScreenshot();
   await expect(e2eFile.panel).toHaveScreenshot();
+  return e2eFile;
 }
