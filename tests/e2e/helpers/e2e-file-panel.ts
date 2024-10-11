@@ -2,7 +2,7 @@ import { expect, Locator, Page } from "@playwright/test";
 import { CRUD } from "../../../src/constants";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
-import { crApi, crExpectUrl, crUrl } from "./e2e";
+import { crApi, crApiLogin, crExpectUrl, crUrl } from "./e2e";
 
 type IOTypes = "string" | "checkbox" | "radio" | "select" | "textarea";
 
@@ -302,4 +302,23 @@ export class E2EFilePanel {
 
     return this;
   }
+}
+
+export async function fullTestRead(options: {
+  page: Page;
+  patientId: string | number;
+  fileType: string;
+  fileId: string | number;
+  data: Record<string, any>;
+}) {
+  await crApiLogin(options.page);
+  const e2eFile = await new E2EPatient(options.page, options.patientId)
+    .getFile(options.fileType, options.fileId)
+    .go();
+
+  for (const [key, val] of Object.entries(options.data)) {
+    await e2eFile.expectOutputValue(key, val);
+  }
+  await expect(e2eFile.form).toHaveScreenshot();
+  await expect(e2eFile.panel).toHaveScreenshot();
 }

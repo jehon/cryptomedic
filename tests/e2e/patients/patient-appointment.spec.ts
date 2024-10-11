@@ -1,14 +1,24 @@
 import { expect, test } from "@playwright/test";
 import { crApiLogin } from "../helpers/e2e";
+import { fullTestRead } from "../helpers/e2e-file-panel";
 import { E2EPatient, outputDate } from "./e2e-patients";
 
 test("2000-001.appointment.2", async ({ page }) => {
-  await crApiLogin(page);
-  const e2eFile = await new E2EPatient(page, 1).getFile("appointment", 2).go();
+  await fullTestRead({
+    page,
+    patientId: 1,
+    fileType: "appointment",
+    fileId: 2,
+    data: {
+      Date: outputDate("2015-04-28")
+    }
+  });
+  // await crApiLogin(page);
+  // const e2eFile = await new E2EPatient(page, 1).getFile("appointment", 2).go();
 
-  await e2eFile.expectOutputValue("Date", outputDate("2015-04-28"));
-  await expect(e2eFile.form).toHaveScreenshot();
-  await expect(e2eFile.panel).toHaveScreenshot();
+  // await e2eFile.expectOutputValue("Date", outputDate("2015-04-28"));
+  // await expect(e2eFile.form).toHaveScreenshot();
+  // await expect(e2eFile.panel).toHaveScreenshot();
 });
 
 test("2010-002 create and delete appointment", async ({ page }) => {
