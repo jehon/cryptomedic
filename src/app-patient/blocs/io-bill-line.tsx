@@ -30,7 +30,7 @@ export default function IOBillLine(props: { line: BillLine }): React.ReactNode {
     >
       <label htmlFor={uuid}>{label}*</label>
       <div className="content">{props.line.value}</div>
-      <div className="annexe">{props.line.price} €</div>
+      <div className="annexe">{props.line.price} ৳</div>
     </div>
   );
 }
