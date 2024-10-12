@@ -1,7 +1,15 @@
 import { expect, test } from "@playwright/test";
 import { crApiLogin } from "../helpers/e2e";
-import { fullTestRead } from "../helpers/e2e-file-panel";
+import {
+  FieldsConfigType,
+  fullTestCreateDelete,
+  fullTestRead
+} from "../helpers/e2e-file-panel";
 import { E2EPatient, outputDate } from "./e2e-patients";
+
+const fieldsConfig: FieldsConfigType = {
+  Date: "date"
+};
 
 test("2000-001.appointment.2", ({ page }) =>
   fullTestRead({
@@ -14,25 +22,18 @@ test("2000-001.appointment.2", ({ page }) =>
     }
   }).then(() => {}));
 
-test("2010-002 create and delete appointment", async ({ page }) => {
-  await crApiLogin(page);
-
-  const e2ePatient = await new E2EPatient(page, 102).go();
-  const panel = await e2ePatient.doAdd("appointment");
-
-  // Add: Not acceptable form...
-  await panel.panel.getByText("Save").click();
-  await expect(panel.panel.getByText("Edit")).not.toBeVisible();
-  await expect(panel.form).toHaveScreenshot();
-
-  await panel.setFieldValue("Date", "2022-05-06");
-
-  await panel.doSave(true);
-
-  await panel.goEdit();
-  await panel.doDelete();
-  await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0);
-});
+test("2010-002 create and delete appointment", async ({ page }) =>
+  await fullTestCreateDelete({
+    page,
+    patientId: 102,
+    fileType: "appointment",
+    data: {
+      Date: "2022-05-06"
+    },
+    fieldsConfig,
+    deleteTest: async () =>
+      await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0)
+  }));
 
 test("2010-002 update appointment", async ({ page }) => {
   await crApiLogin(page);

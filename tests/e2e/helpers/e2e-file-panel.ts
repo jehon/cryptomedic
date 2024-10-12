@@ -5,6 +5,9 @@ import { E2EPatient } from "../patients/e2e-patients";
 import { crApi, crApiLogin, crExpectUrl, crUrl } from "./e2e";
 
 type IOTypes = "string" | "checkbox" | "date" | "radio" | "select" | "textarea";
+export type FieldsConfigType = {
+  [key: string]: IOTypes;
+};
 
 export const IOV = {
   R_Checked: "yes",
@@ -324,4 +327,33 @@ export async function fullTestRead(options: {
   await expect(e2eFile.form).toHaveScreenshot();
   await expect(e2eFile.panel).toHaveScreenshot();
   return e2eFile;
+}
+
+export async function fullTestCreateDelete(options: {
+  page: Page;
+  patientId: string | number;
+  fileType: string;
+  data: Record<string, string | number | boolean | undefined>;
+  fieldsConfig: FieldsConfigType;
+  deleteTest: (page: Page) => any;
+}) {
+  await crApiLogin(options.page);
+
+  const e2ePatient = await new E2EPatient(options.page, options.patientId).go();
+  const panel = await e2ePatient.doAdd(options.fileType);
+
+  // TODO: only if invalid data given
+  await panel.panel.getByText("Save").click();
+  await expect(panel.panel.getByText("Edit")).not.toBeVisible();
+  await expect(panel.form).toHaveScreenshot();
+
+  for (const [key, val] of Object.entries(options.data)) {
+    await panel.setFieldValue(key, "" + val, options.fieldsConfig[key]);
+  }
+  await panel.doSave(true);
+
+  await panel.goEdit();
+  await panel.doDelete();
+
+  await options.deleteTest(options.page);
 }
