@@ -336,16 +336,19 @@ export async function fullTestCreateDelete(options: {
   data: Record<string, string | number | boolean | undefined>;
   fieldsConfig: FieldsConfigType;
   deleteTest: (page: Page) => any;
+  initialIsAlreadyGood?: boolean; // ==> Default false/undefined
 }) {
   await crApiLogin(options.page);
 
   const e2ePatient = await new E2EPatient(options.page, options.patientId).go();
   const panel = await e2ePatient.doAdd(options.fileType);
 
-  // TODO: only if invalid data given
-  await panel.panel.getByText("Save").click();
-  await expect(panel.panel.getByText("Edit")).not.toBeVisible();
-  await expect(panel.form).toHaveScreenshot();
+  if (!options.initialIsAlreadyGood) {
+    // Try to save: it does not work
+    await panel.panel.getByText("Save").click();
+    await expect(panel.panel.getByText("Edit")).not.toBeVisible();
+    await expect(panel.form).toHaveScreenshot();
+  }
 
   for (const [key, val] of Object.entries(options.data)) {
     await panel.setFieldValue(key, "" + val, options.fieldsConfig[key]);
