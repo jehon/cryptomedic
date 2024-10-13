@@ -1,7 +1,16 @@
 import { expect, test } from "@playwright/test";
 import { crApiLogin, outputDate } from "../helpers/e2e";
-import { fullTestRead, IOV } from "../helpers/e2e-file-panel";
+import {
+  FieldsConfigType,
+  fullTestCreateDelete,
+  fullTestRead,
+  IOV
+} from "../helpers/e2e-file-panel";
 import { E2EPatient } from "./e2e-patients";
+
+const fieldsConfig: FieldsConfigType = {
+  Date: "date"
+};
 
 test("2000-001.surgery.5", ({ page }) =>
   fullTestRead({
@@ -16,22 +25,20 @@ test("2000-001.surgery.5", ({ page }) =>
     }
   }).then(() => {}));
 
-test("2010-003 create and delete surgery", async ({ page }) => {
-  await crApiLogin(page);
-
-  const e2ePatient = await new E2EPatient(page, 103).go();
-  const panel = await e2ePatient.doAdd("surgery");
-
-  await expect(panel.panel.getByText("Edit")).not.toBeVisible();
-  await panel.setFieldValue("Date", "2022-05-06");
-  await panel.setFieldValue("Surgeon", "Surgeon says that...");
-
-  await panel.doSave(true);
-
-  await panel.goEdit();
-  await panel.doDelete();
-  await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0);
-});
+test("2010-003 create and delete surgery", ({ page }) =>
+  fullTestCreateDelete({
+    page,
+    patientId: 103,
+    fileType: "surgery",
+    data: {
+      Date: "2022-05-06",
+      Surgeon: "Surgeon says that..."
+    },
+    fieldsConfig,
+    deleteTest: () =>
+      expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
+    initialIsAlreadyGood: true
+  }));
 
 test("2010-003 update surgery", async ({ page }) => {
   await crApiLogin(page);
