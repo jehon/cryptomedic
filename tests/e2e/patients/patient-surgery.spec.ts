@@ -4,12 +4,13 @@ import {
   FieldsConfigType,
   fullTestCreateDelete,
   fullTestRead,
-  IOV
+  IOV,
+  TimedFieldsConfigType
 } from "../helpers/e2e-file-panel";
 import { E2EPatient } from "./e2e-patients";
 
 const fieldsConfig: FieldsConfigType = {
-  Date: "date"
+  ...TimedFieldsConfigType
 };
 
 test("2000-001.surgery.5", ({ page }) =>
@@ -30,14 +31,14 @@ test("2010-003 create and delete surgery", ({ page }) =>
     page,
     patientId: 103,
     fileType: "surgery",
+    deleteTest: () =>
+      expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
+    initialIsAlreadyGood: true,
+    fieldsConfig,
     data: {
       Date: "2022-05-06",
       Surgeon: "Surgeon says that..."
-    },
-    fieldsConfig,
-    deleteTest: () =>
-      expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
-    initialIsAlreadyGood: true
+    }
   }));
 
 test("2010-003 update surgery", async ({ page }) => {

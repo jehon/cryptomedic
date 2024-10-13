@@ -3,12 +3,13 @@ import { crApiLogin } from "../helpers/e2e";
 import {
   FieldsConfigType,
   fullTestCreateDelete,
-  fullTestRead
+  fullTestRead,
+  TimedFieldsConfigType
 } from "../helpers/e2e-file-panel";
 import { E2EPatient, outputDate } from "./e2e-patients";
 
 const fieldsConfig: FieldsConfigType = {
-  Date: "date"
+  ...TimedFieldsConfigType
 };
 
 test("2000-001.appointment.2", ({ page }) =>
@@ -27,12 +28,12 @@ test("2010-002 create and delete appointment", async ({ page }) =>
     page,
     patientId: 102,
     fileType: "appointment",
+    deleteTest: () =>
+      expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
+    fieldsConfig,
     data: {
       Date: "2022-05-06"
-    },
-    fieldsConfig,
-    deleteTest: async () =>
-      await expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0)
+    }
   }));
 
 test("2010-002 update appointment", async ({ page }) => {

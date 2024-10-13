@@ -14,6 +14,21 @@ export const IOV = {
   R_NotChecked: ""
 };
 
+export const TimedFieldsConfigType: FieldsConfigType = {
+  Date: "date",
+  examiner: "select",
+  center: "select"
+};
+
+export const ConsultFieldsConfigType: FieldsConfigType = {
+  ...TimedFieldsConfigType,
+
+  comments: "textarea",
+  suggested_for_surgery: "checkbox",
+  treatment_evaluation: "radio",
+  treatment_finished: "checkbox"
+};
+
 export class E2EFilePanel {
   protected fileBaseUrl = "";
   protected page: Page;
@@ -333,10 +348,10 @@ export async function fullTestCreateDelete(options: {
   page: Page;
   patientId: string | number;
   fileType: string;
-  data: Record<string, string | number | boolean | undefined>;
-  fieldsConfig: FieldsConfigType;
   deleteTest: (page: Page) => any;
   initialIsAlreadyGood?: boolean; // ==> Default false/undefined
+  fieldsConfig: FieldsConfigType;
+  data: Record<string, string | number | boolean | undefined>;
 }) {
   await crApiLogin(options.page);
 
