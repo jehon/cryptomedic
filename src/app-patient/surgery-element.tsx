@@ -22,7 +22,7 @@ export default function surgeryElementGenerator(
       <>
         <TwoColumns>
           <Panel fixed label="Report">
-            <IO.Date name="date" value={file.date} />
+            <IO.Date name="date" value={file.date} required />
             <IO.String
               name="report_diagnostic"
               label="Diagnostic"
