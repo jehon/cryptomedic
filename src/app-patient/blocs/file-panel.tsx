@@ -27,15 +27,15 @@ export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
 // TODO: migrate all this progressively
 export function isTodoMigration(type: typeof Pojo) {
-  if (location.search == "?dev") {
+  const dev = location.search == "?dev";
+  if (dev) {
     console.warn("In dev mode for", type.getTechnicalName());
-    return false;
   }
 
   return [
     "bill",
     "consult_clubfoot",
-    "consult_other",
+    ...[dev ? [] : ["consult_other"]],
     "consult_ricket",
     "payment",
     "picture",

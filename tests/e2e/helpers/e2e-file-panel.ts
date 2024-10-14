@@ -20,14 +20,14 @@ export const TimedFieldsConfigType: FieldsConfigType = {
   center: "select"
 };
 
-export const ConsultFieldsConfigType: FieldsConfigType = {
-  ...TimedFieldsConfigType,
+// export const ConsultFieldsConfigType: FieldsConfigType = {
+//   ...TimedFieldsConfigType,
 
-  comments: "textarea",
-  suggested_for_surgery: "checkbox",
-  treatment_evaluation: "radio",
-  treatment_finished: "checkbox"
-};
+//   comments: "textarea",
+//   suggested_for_surgery: "checkbox",
+//   treatment_evaluation: "radio",
+//   treatment_finished: "checkbox"
+// };
 
 export class E2EFilePanel {
   protected fileBaseUrl = "";
