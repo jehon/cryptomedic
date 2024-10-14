@@ -4,7 +4,14 @@ import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
 import { crApi, crApiLogin, crExpectUrl, crUrl } from "./e2e";
 
-type IOTypes = "string" | "checkbox" | "date" | "radio" | "select" | "textarea";
+type IOTypes =
+  | "string"
+  | "checkbox"
+  | "date"
+  | "radio"
+  | "readonly"
+  | "select"
+  | "textarea";
 export type FieldsConfigType = {
   [key: string]: IOTypes;
 };
@@ -263,6 +270,8 @@ export class E2EFilePanel {
           (await this.expectField(label)).getByLabel(value, { exact: true })
         ).toBeChecked();
         break;
+      case "readonly":
+        break;
     }
     return this;
   }
@@ -303,6 +312,8 @@ export class E2EFilePanel {
           await expect(radio).toBeVisible();
           await radio.check();
         }
+        break;
+      case "readonly":
         break;
       case "select":
         {
