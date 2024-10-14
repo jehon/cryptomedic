@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import {
+  consultBasicData,
   ConsultFieldsConfigType,
   FieldsConfigType,
   fullTestCreateDelete,
@@ -42,7 +43,8 @@ test.skip("2010-004 create and delete consult other", ({ page }) =>
     deleteTest: () =>
       expect(page.getByText(outputDate("2022-10-04"))).toHaveCount(0),
     data: {
-      Date: "2022-10-04",
+      ...consultBasicData,
+
       Side: "Left",
       "Joints or Bones Affected": "some there",
       Deformity: "",
