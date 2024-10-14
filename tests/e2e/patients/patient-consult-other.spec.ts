@@ -1,6 +1,16 @@
-import { test } from "@playwright/test";
-import { outputDate } from "../helpers/e2e";
-import { fullTestRead } from "../helpers/e2e-file-panel";
+import { expect, test } from "@playwright/test";
+import {
+  ConsultFieldsConfigType,
+  FieldsConfigType,
+  fullTestCreateDelete,
+  fullTestRead
+} from "../helpers/e2e-file-panel";
+import { outputDate } from "./e2e-patients";
+
+const fieldsConfig: FieldsConfigType = {
+  ...ConsultFieldsConfigType,
+  Side: "radio"
+};
 
 test("2000-001.consult-other.1", ({ page }) =>
   fullTestRead({
@@ -23,30 +33,24 @@ test("2000-001.consult-other.1", ({ page }) =>
     }
   }).then(() => {}));
 
-// test("2010-004 create and delete consult other", async ({ page }) => {
-//   await crApiLogin(page);
-
-//   const e2ePatient = await new E2EPatient(page, 104).go();
-//   const panel = await e2ePatient.doAdd("consult_other");
-
-//   await panel.setFieldValue("Date", "2022-10-04");
-//   await panel.setFieldValue("Date", "2022-10-04");
-//   await panel.setFieldValue("Date", "2022-10-04");
-
-//   await panel.setFieldValue("Side", "Left", "radio");
-//   await panel.setFieldValue("Joints or Bones Affected", "some there");
-//   await panel.setFieldValue("Side", "Left", "radio");
-//   await panel.setFieldValue("Deformity", "");
-//   await panel.setFieldValue("Articulation Mobility", "quiet mobile");
-//   await panel.setFieldValue("Muscle Strength", "strong!");
-//   await panel.setFieldValue("Pain", "Moderate", "radio");
-
-//   // await panel.doSave(true);
-
-//   // await panel.goEdit();
-//   // await panel.doDelete();
-//   // await expect(page.getByText(outputDate("2022-10-04"))).toHaveCount(0);
-// });
+test.skip("2010-004 create and delete consult other", ({ page }) =>
+  fullTestCreateDelete({
+    page,
+    patientId: 104,
+    fileType: "consult_other",
+    fieldsConfig,
+    deleteTest: () =>
+      expect(page.getByText(outputDate("2022-10-04"))).toHaveCount(0),
+    data: {
+      Date: "2022-10-04",
+      Side: "Left",
+      "Joints or Bones Affected": "some there",
+      Deformity: "",
+      "Articulation Mobility": "quiet mobile",
+      "Muscle Strength": "strong!",
+      Pain: "Moderate"
+    }
+  }));
 
 // test("2010-004 update consult other", async ({ page }) => {
 //   await crApiLogin(page);

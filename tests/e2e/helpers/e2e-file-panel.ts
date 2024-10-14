@@ -2,7 +2,7 @@ import { expect, Locator, Page } from "@playwright/test";
 import { CRUD } from "../../../src/constants";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
-import { crApi, crApiLogin, crExpectUrl, crUrl } from "./e2e";
+import { crApi, crApiLogin, crExpectUrl, crUrl, outputDate } from "./e2e";
 
 type IOTypes =
   | "string"
@@ -27,14 +27,38 @@ export const TimedFieldsConfigType: FieldsConfigType = {
   center: "select"
 };
 
-// export const ConsultFieldsConfigType: FieldsConfigType = {
-//   ...TimedFieldsConfigType,
+export const ConsultFieldsConfigType: FieldsConfigType = {
+  ...TimedFieldsConfigType,
+  "Weight sd": "readonly",
+  "Height sd": "readonly",
+  "Weight/Height ratio": "readonly",
+  "Weight/Height sd": "readonly",
+  "BMI sd": "readonly",
 
-//   comments: "textarea",
-//   suggested_for_surgery: "checkbox",
-//   treatment_evaluation: "radio",
-//   treatment_finished: "checkbox"
-// };
+  comments: "textarea",
+  suggested_for_surgery: "checkbox",
+  treatment_evaluation: "radio",
+  treatment_finished: "checkbox"
+};
+
+export const consultBasicData = {
+  Date: outputDate("2007-01-10"),
+  Examiner: "Ershad",
+  Center: "Ukhia",
+  "Weight (kg)": "29",
+  "Weight sd": "0.0",
+  "Height (cm)": "134",
+  "Height sd": "0.0",
+  "Weight/Height ratio": "0.2",
+  "Weight/Height sd": "'value' is out-of-bounds: 134 [80 -> 120]",
+  BMI: "24",
+  "BMI sd": "-0.0",
+
+  "Others Comments/Treatments": "please do something",
+  "Suggested for Surgery": false,
+  "Treatment Evaluation": "Good Result",
+  "Treatment Finished": true
+};
 
 export class E2EFilePanel {
   protected fileBaseUrl = "";
