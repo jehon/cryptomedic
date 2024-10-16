@@ -21,6 +21,7 @@ export default function ConsultAbstractConclusion({
         />
         <IO.Boolean
           name="suggested_for_surgery"
+          label="Suggested for Surgery"
           value={string2Boolean(file.suggested_for_surgery)}
         />
         <IO.List

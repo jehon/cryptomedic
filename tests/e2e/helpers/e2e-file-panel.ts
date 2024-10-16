@@ -36,10 +36,10 @@ export const ConsultFieldsConfigType: FieldsConfigType = {
   BMI: "readonly",
   "BMI sd": "readonly",
 
-  comments: "textarea",
-  suggested_for_surgery: "checkbox",
-  treatment_evaluation: "radio",
-  treatment_finished: "checkbox"
+  Comments: "textarea",
+  "Suggested for Surgery": "checkbox",
+  "Treatment Evaluation": "radio",
+  "Treatment Finished": "checkbox"
 };
 
 export const consultBasicData = {
