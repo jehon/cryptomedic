@@ -13,18 +13,17 @@ const fieldsConfig: FieldsConfigType = {
   ...TimedFieldsConfigType
 };
 
-test("2000-001.surgery.5", ({ page }) =>
-  fullTestRead({
-    page,
-    patientId: 1,
-    fileType: "surgery",
-    fileId: 5,
-    data: {
-      Date: outputDate("2014-01-02"),
-      Diagnostic: "test",
-      "Follow-Up Complications": "nothing"
-    }
-  }).then(() => {}));
+fullTestRead({
+  patientEntryOrder: "2000-001",
+  patientId: 1,
+  fileType: "surgery",
+  fileId: 5,
+  data: {
+    Date: outputDate("2014-01-02"),
+    Diagnostic: "test",
+    "Follow-Up Complications": "nothing"
+  }
+});
 
 test("2010-003 create and delete surgery", ({ page }) =>
   fullTestCreateDelete({

@@ -12,16 +12,15 @@ const fieldsConfig: FieldsConfigType = {
   ...TimedFieldsConfigType
 };
 
-test("2000-001.appointment.2", ({ page }) =>
-  fullTestRead({
-    page,
-    patientId: 1,
-    fileType: "appointment",
-    fileId: 2,
-    data: {
-      Date: outputDate("2015-04-28")
-    }
-  }).then(() => {}));
+fullTestRead({
+  patientEntryOrder: "2000-001",
+  patientId: 1,
+  fileType: "appointment",
+  fileId: 2,
+  data: {
+    Date: outputDate("2015-04-28")
+  }
+});
 
 test("2010-002 create and delete appointment", async ({ page }) =>
   await fullTestCreateDelete({

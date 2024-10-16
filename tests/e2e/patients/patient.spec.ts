@@ -3,22 +3,21 @@ import { crApiLogin } from "../helpers/e2e";
 import { fullTestRead } from "../helpers/e2e-file-panel";
 import { E2EPatient } from "./e2e-patients";
 
-test("2000-001.patient.1", ({ page }) =>
-  fullTestRead({
-    page,
-    patientId: 1,
-    fileType: "patient",
-    fileId: 1,
-    data: {
-      "Entry Year": 2000,
-      "Entry Order": 1,
-      Phone: undefined,
-      Name: "rezaul islam",
-      Sex: "Male",
-      District: "Chittagong",
-      Pathology: "ClubFoot"
-    }
-  }).then(() => {}));
+fullTestRead({
+  patientEntryOrder: "2000-001",
+  patientId: 1,
+  fileType: "patient",
+  fileId: 1,
+  data: {
+    "Entry Year": 2000,
+    "Entry Order": 1,
+    Phone: undefined,
+    Name: "rezaul islam",
+    Sex: "Male",
+    District: "Chittagong",
+    Pathology: "ClubFoot"
+  }
+});
 
 test("2014-103.patient", async ({ page }) => {
   await crApiLogin(page);

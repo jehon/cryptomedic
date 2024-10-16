@@ -15,26 +15,25 @@ const fieldsConfig: FieldsConfigType = {
   Walk: "radio"
 };
 
-test("2000-001.consult-other.1", ({ page }) =>
-  fullTestRead({
-    page,
-    patientId: 1,
-    fileType: "consult_other",
-    fileId: 1,
-    data: {
-      Date: outputDate("2007-01-10"),
-      Examiner: "Ershad",
-      "Weight (kg)": "29",
-      "Weight sd": "0.0",
-      "Height (cm)": "134",
-      "Height sd": "0.0",
-      "Weight/Height ratio": "0.2",
-      "Weight/Height sd": "'value' is out-of-bounds: 134 [80 -> 120]",
-      BMI: "16.2",
-      "BMI sd": "-0.0",
-      "Joints or Bones Affected": "PBVE"
-    }
-  }).then(() => {}));
+fullTestRead({
+  patientEntryOrder: "2000-001",
+  patientId: 1,
+  fileType: "consult_other",
+  fileId: 1,
+  data: {
+    Date: outputDate("2007-01-10"),
+    Examiner: "Ershad",
+    "Weight (kg)": "29",
+    "Weight sd": "0.0",
+    "Height (cm)": "134",
+    "Height sd": "0.0",
+    "Weight/Height ratio": "0.2",
+    "Weight/Height sd": "'value' is out-of-bounds: 134 [80 -> 120]",
+    BMI: "16.2",
+    "BMI sd": "-0.0",
+    "Joints or Bones Affected": "PBVE"
+  }
+});
 
 test("2010-004 create and delete consult other", ({ page }) =>
   fullTestCreateDelete({

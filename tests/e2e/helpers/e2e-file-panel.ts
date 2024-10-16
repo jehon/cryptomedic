@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import test, { expect, Locator, Page } from "@playwright/test";
 import { CRUD } from "../../../src/constants";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
@@ -364,23 +364,26 @@ export class E2EFilePanel {
 }
 
 export async function fullTestRead(options: {
-  page: Page;
+  patientEntryOrder: string;
   patientId: string | number;
   fileType: string;
   fileId: string | number;
   data: Record<string, string | number | boolean | undefined>;
 }) {
-  await crApiLogin(options.page);
-  const e2eFile = await new E2EPatient(options.page, options.patientId)
-    .getFile(options.fileType, options.fileId)
-    .go();
+  await test(`${options.patientEntryOrder}.${options.fileType}.${options.fileId}`, async ({
+    page
+  }) => {
+    await crApiLogin(page);
+    const e2eFile = await new E2EPatient(page, options.patientId)
+      .getFile(options.fileType, options.fileId)
+      .go();
 
-  for (const [key, val] of Object.entries(options.data)) {
-    await e2eFile.expectOutputValue(key, val);
-  }
-  await expect(e2eFile.form).toHaveScreenshot();
-  await expect(e2eFile.panel).toHaveScreenshot();
-  return e2eFile;
+    for (const [key, val] of Object.entries(options.data)) {
+      await e2eFile.expectOutputValue(key, val);
+    }
+    await expect(e2eFile.form).toHaveScreenshot();
+    await expect(e2eFile.panel).toHaveScreenshot();
+  });
 }
 
 export async function fullTestCreateDelete(options: {
