@@ -2,7 +2,7 @@ import { expect, Locator, Page } from "@playwright/test";
 import { CRUD } from "../../../src/constants";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
-import { crApi, crApiLogin, crExpectUrl, crUrl, outputDate } from "./e2e";
+import { crApi, crApiLogin, crExpectUrl, crUrl } from "./e2e";
 
 type IOTypes =
   | "string"
@@ -42,7 +42,7 @@ export const ConsultFieldsConfigType: FieldsConfigType = {
 };
 
 export const consultBasicData = {
-  Date: outputDate("2007-01-10"),
+  Date: "2007-01-10",
   Examiner: "Ershad",
   Center: "Ukhia",
   "Weight (kg)": "29",

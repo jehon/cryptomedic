@@ -10,7 +10,9 @@ import { outputDate } from "./e2e-patients";
 
 const fieldsConfig: FieldsConfigType = {
   ...ConsultFieldsConfigType,
-  Side: "radio"
+  Side: "radio",
+  Pain: "radio",
+  Walk: "radio"
 };
 
 test("2000-001.consult-other.1", ({ page }) =>
