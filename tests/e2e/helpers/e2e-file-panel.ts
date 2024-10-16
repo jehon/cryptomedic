@@ -2,7 +2,7 @@ import test, { expect, Locator, Page } from "@playwright/test";
 import { CRUD } from "../../../src/constants";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
-import { crApi, crApiLogin, crExpectUrl, crUrl } from "./e2e";
+import { crApi, crApiLogin, crExpectUrl, crUrl, outputDate } from "./e2e";
 
 type IOTypes =
   | "string"
@@ -15,6 +15,15 @@ type IOTypes =
 export type FieldsConfigType = {
   [key: string]: IOTypes;
 };
+
+type IOValue = string | number | boolean | undefined;
+
+function ioValue2String(val: IOValue): string {
+  if (val === undefined) {
+    return "";
+  }
+  return val + "";
+}
 
 export const IOV = {
   R_Checked: "yes",
@@ -238,11 +247,18 @@ export class E2EFilePanel {
 
   async expectOutputValue(
     label: string,
-    value?: string | number | boolean
+    value?: IOValue,
+    type?: IOTypes
   ): Promise<this> {
     const io = await this.expectField(label);
 
     if (value) {
+      switch (type) {
+        case "date":
+          value = outputDate(value as string);
+          break;
+      }
+
       await expect(io).toBeVisible();
 
       let ioc = io.locator(".content");
@@ -266,7 +282,7 @@ export class E2EFilePanel {
 
   async expectInputValue(
     label: string,
-    value = "",
+    value?: IOValue,
     type?: IOTypes
   ): Promise<this> {
     switch (type) {
@@ -275,7 +291,9 @@ export class E2EFilePanel {
       case "date":
       case "select":
       case "textarea":
-        await expect(this.panel.getByLabel(label)).toHaveValue(value);
+        await expect(this.panel.getByLabel(label)).toHaveValue(
+          ioValue2String(value)
+        );
         break;
       case "checkbox":
         {
@@ -292,7 +310,9 @@ export class E2EFilePanel {
         break;
       case "radio":
         await expect(
-          (await this.expectField(label)).getByLabel(value, { exact: true })
+          (await this.expectField(label)).getByLabel(ioValue2String(value), {
+            exact: true
+          })
         ).toBeChecked();
         break;
       case "readonly":
@@ -303,7 +323,7 @@ export class E2EFilePanel {
 
   async setFieldValue(
     label: string,
-    value: string = "",
+    value?: IOValue,
     type?: IOTypes
   ): Promise<this> {
     if (type == "readonly") {
@@ -338,7 +358,9 @@ export class E2EFilePanel {
         break;
       case "radio":
         {
-          const radio = await ioc.getByLabel(value, { exact: true });
+          const radio = await ioc.getByLabel(ioValue2String(value), {
+            exact: true
+          });
           await expect(radio).toBeVisible();
           await radio.check();
         }
@@ -347,7 +369,7 @@ export class E2EFilePanel {
         {
           const select = ioc.locator("select");
           await expect(select).toBeVisible();
-          await expect(select).toContainText(value);
+          await expect(select).toContainText(ioValue2String(value));
           await select.selectOption({ label: "" + value });
         }
         break;
@@ -368,7 +390,8 @@ export async function fullTestRead(options: {
   patientId: string | number;
   fileType: string;
   fileId: string | number;
-  data: Record<string, string | number | boolean | undefined>;
+  fieldsConfig: FieldsConfigType;
+  data: Record<string, IOValue>;
 }) {
   await test(`${options.patientEntryOrder}.${options.fileType}.${options.fileId}`, async ({
     page
@@ -379,7 +402,7 @@ export async function fullTestRead(options: {
       .go();
 
     for (const [key, val] of Object.entries(options.data)) {
-      await e2eFile.expectOutputValue(key, val);
+      await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
     }
     await expect(e2eFile.form).toHaveScreenshot();
     await expect(e2eFile.panel).toHaveScreenshot();
@@ -393,7 +416,7 @@ export async function fullTestCreateDelete(options: {
   deleteTest: (page: Page) => any;
   initialIsAlreadyGood?: boolean; // ==> Default false/undefined
   fieldsConfig: FieldsConfigType;
-  data: Record<string, string | number | boolean | undefined>;
+  data: Record<string, IOValue>;
 }) {
   await test(`${options.patientEntryOrder} create and delete ${options.fileType}`, async ({
     page
@@ -421,3 +444,50 @@ export async function fullTestCreateDelete(options: {
     await options.deleteTest(page);
   });
 }
+
+// export async function fullTestUpdate(options: {
+//   patientEntryOrder: string;
+//   patientId: string | number;
+//   fileType: string;
+//   fileId: string | number;
+//   fieldsConfig: FieldsConfigType;
+//   data: Record<string, IOValue>;
+// }) {
+//   await test.only(`${options.patientEntryOrder} update ${options.fileType}`, async ({
+//     page
+//   }) => {
+//     await crApiLogin(page);
+
+//     const e2eFile = new E2EPatient(page, 102).getFile("appointment", 102);
+
+//     // TODO: Update
+//     await e2eFile.apiFileUpdate(options.patientId, {
+//       id: options.fileId,
+//       ...Object.fromEntries(
+//         Object.entries(options.data).map(([k, v]) => [
+//           (k as string).toLowerCase().replaceAll(" ", "_"),
+//           v
+//         ])
+//       )
+//     });
+
+//     await e2eFile.go();
+//     for (const [key, val] of Object.entries(options.data)) {
+//       await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
+//     }
+
+//     await e2eFile.goEdit();
+//     for (const [key, val] of Object.entries(options.data)) {
+//       await e2eFile.expectInputValue(key, val, options.fieldsConfig[key]);
+//     }
+
+//     for (const [key, val] of Object.entries(options.data)) {
+//       await e2eFile.setFieldValue(key, val, options.fieldsConfig[key]);
+//     }
+
+//     await e2eFile.doSave();
+//     for (const [key, val] of Object.entries(options.data)) {
+//       await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
+//     }
+//   });
+// }

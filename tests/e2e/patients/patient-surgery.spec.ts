@@ -18,8 +18,9 @@ fullTestRead({
   patientId: 1,
   fileType: "surgery",
   fileId: 5,
+  fieldsConfig,
   data: {
-    Date: outputDate("2014-01-02"),
+    Date: "2014-01-02",
     Diagnostic: "test",
     "Follow-Up Complications": "nothing"
   }

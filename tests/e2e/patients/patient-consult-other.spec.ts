@@ -20,8 +20,9 @@ fullTestRead({
   patientId: 1,
   fileType: "consult_other",
   fileId: 1,
+  fieldsConfig,
   data: {
-    Date: outputDate("2007-01-10"),
+    Date: "2007-01-10",
     Examiner: "Ershad",
     "Weight (kg)": "29",
     "Weight sd": "0.0",
