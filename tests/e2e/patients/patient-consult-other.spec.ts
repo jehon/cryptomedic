@@ -36,7 +36,7 @@ test("2000-001.consult-other.1", ({ page }) =>
     }
   }).then(() => {}));
 
-test.skip("2010-004 create and delete consult other", ({ page }) =>
+test("2010-004 create and delete consult other", ({ page }) =>
   fullTestCreateDelete({
     page,
     patientId: 104,
