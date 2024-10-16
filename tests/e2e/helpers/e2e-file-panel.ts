@@ -23,8 +23,8 @@ export const IOV = {
 
 export const TimedFieldsConfigType: FieldsConfigType = {
   Date: "date",
-  examiner: "select",
-  center: "select"
+  Examiner: "radio",
+  Center: "select"
 };
 
 export const ConsultFieldsConfigType: FieldsConfigType = {
