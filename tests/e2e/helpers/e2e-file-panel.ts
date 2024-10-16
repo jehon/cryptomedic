@@ -33,6 +33,7 @@ export const ConsultFieldsConfigType: FieldsConfigType = {
   "Height sd": "readonly",
   "Weight/Height ratio": "readonly",
   "Weight/Height sd": "readonly",
+  BMI: "readonly",
   "BMI sd": "readonly",
 
   comments: "textarea",
@@ -305,6 +306,11 @@ export class E2EFilePanel {
     value: string = "",
     type?: IOTypes
   ): Promise<this> {
+    if (type == "readonly") {
+      // The io is not visible
+      return this;
+    }
+
     const io = await this.expectField(label);
     await expect(io).toBeVisible();
 
@@ -336,8 +342,6 @@ export class E2EFilePanel {
           await expect(radio).toBeVisible();
           await radio.check();
         }
-        break;
-      case "readonly":
         break;
       case "select":
         {
