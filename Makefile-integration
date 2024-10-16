@@ -157,6 +157,11 @@ update: integration-update-playwright-browsers
 integration-update-playwright-browsers:
 	$(MAKE) $(HOME)/.cache/ms-playwright
 
+########################################3
+#
+# Update
+#
+
 .PHONY: integration-update-download-github
 integration-update-download-github:
 	bin/cr-github-get-artifacts
