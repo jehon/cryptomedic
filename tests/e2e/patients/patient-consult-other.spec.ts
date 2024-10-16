@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 import {
   consultBasicData,
   ConsultFieldsConfigType,
@@ -35,25 +35,24 @@ fullTestRead({
   }
 });
 
-test("2010-004 create and delete consult other", ({ page }) =>
-  fullTestCreateDelete({
-    page,
-    patientId: 104,
-    fileType: "consult_other",
-    fieldsConfig,
-    deleteTest: () =>
-      expect(page.getByText(outputDate("2022-10-04"))).toHaveCount(0),
-    data: {
-      ...consultBasicData,
+fullTestCreateDelete({
+  patientEntryOrder: "2010-004",
+  patientId: 104,
+  fileType: "consult_other",
+  fieldsConfig,
+  deleteTest: (page) =>
+    expect(page.getByText(outputDate("2022-10-04"))).toHaveCount(0),
+  data: {
+    ...consultBasicData,
 
-      Side: "Left",
-      "Joints or Bones Affected": "some there",
-      Deformity: "",
-      "Articulation Mobility": "quiet mobile",
-      "Muscle Strength": "strong!",
-      Pain: "Moderate"
-    }
-  }));
+    Side: "Left",
+    "Joints or Bones Affected": "some there",
+    Deformity: "",
+    "Articulation Mobility": "quiet mobile",
+    "Muscle Strength": "strong!",
+    Pain: "Moderate"
+  }
+});
 
 // test("2010-004 update consult other", async ({ page }) => {
 //   await crApiLogin(page);

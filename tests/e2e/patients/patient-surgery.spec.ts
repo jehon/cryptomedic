@@ -25,20 +25,19 @@ fullTestRead({
   }
 });
 
-test("2010-003 create and delete surgery", ({ page }) =>
-  fullTestCreateDelete({
-    page,
-    patientId: 103,
-    fileType: "surgery",
-    deleteTest: () =>
-      expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
-    initialIsAlreadyGood: true,
-    fieldsConfig,
-    data: {
-      Date: "2022-05-06",
-      Surgeon: "Surgeon says that..."
-    }
-  }));
+fullTestCreateDelete({
+  patientEntryOrder: "2010-003",
+  patientId: 103,
+  fileType: "surgery",
+  deleteTest: (page) =>
+    expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
+  initialIsAlreadyGood: true,
+  fieldsConfig,
+  data: {
+    Date: "2022-05-06",
+    Surgeon: "Surgeon says that..."
+  }
+});
 
 test("2010-003 update surgery", async ({ page }) => {
   await crApiLogin(page);

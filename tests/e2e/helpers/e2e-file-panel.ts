@@ -387,7 +387,7 @@ export async function fullTestRead(options: {
 }
 
 export async function fullTestCreateDelete(options: {
-  page: Page;
+  patientEntryOrder: string;
   patientId: string | number;
   fileType: string;
   deleteTest: (page: Page) => any;
@@ -395,25 +395,29 @@ export async function fullTestCreateDelete(options: {
   fieldsConfig: FieldsConfigType;
   data: Record<string, string | number | boolean | undefined>;
 }) {
-  await crApiLogin(options.page);
+  await test(`${options.patientEntryOrder} create and delete ${options.fileType}`, async ({
+    page
+  }) => {
+    await crApiLogin(page);
 
-  const e2ePatient = await new E2EPatient(options.page, options.patientId).go();
-  const panel = await e2ePatient.doAdd(options.fileType);
+    const e2ePatient = await new E2EPatient(page, options.patientId).go();
+    const panel = await e2ePatient.doAdd(options.fileType);
 
-  if (!options.initialIsAlreadyGood) {
-    // Try to save: it does not work
-    await panel.panel.getByText("Save").click();
-    await expect(panel.panel.getByText("Edit")).not.toBeVisible();
-    await expect(panel.form).toHaveScreenshot();
-  }
+    if (!options.initialIsAlreadyGood) {
+      // Try to save: it does not work
+      await panel.panel.getByText("Save").click();
+      await expect(panel.panel.getByText("Edit")).not.toBeVisible();
+      await expect(panel.form).toHaveScreenshot();
+    }
 
-  for (const [key, val] of Object.entries(options.data)) {
-    await panel.setFieldValue(key, "" + val, options.fieldsConfig[key]);
-  }
-  await panel.doSave(true);
+    for (const [key, val] of Object.entries(options.data)) {
+      await panel.setFieldValue(key, "" + val, options.fieldsConfig[key]);
+    }
+    await panel.doSave(true);
 
-  await panel.goEdit();
-  await panel.doDelete();
+    await panel.goEdit();
+    await panel.doDelete();
 
-  await options.deleteTest(options.page);
+    await options.deleteTest(page);
+  });
 }

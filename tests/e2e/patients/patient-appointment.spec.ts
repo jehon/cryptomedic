@@ -22,18 +22,17 @@ fullTestRead({
   }
 });
 
-test("2010-002 create and delete appointment", async ({ page }) =>
-  await fullTestCreateDelete({
-    page,
-    patientId: 102,
-    fileType: "appointment",
-    deleteTest: () =>
-      expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
-    fieldsConfig,
-    data: {
-      Date: "2022-05-06"
-    }
-  }));
+await fullTestCreateDelete({
+  patientEntryOrder: "2010-002",
+  patientId: 102,
+  fileType: "appointment",
+  deleteTest: (page) =>
+    expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
+  fieldsConfig,
+  data: {
+    Date: "2022-05-06"
+  }
+});
 
 test("2010-002 update appointment", async ({ page }) => {
   await crApiLogin(page);
