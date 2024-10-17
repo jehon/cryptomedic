@@ -1,4 +1,3 @@
-import { toTitleCase } from "../utils/strings";
 import { StringList } from "../utils/types";
 import IOAbstract, { IOProps } from "./io-abstract";
 
@@ -15,7 +14,7 @@ export function optionalList(list: string[]): IOListType {
 // Ex: io-boolean, search panels
 function canonizeList(list: IOListType): Record<string, string> {
   if (Array.isArray(list)) {
-    list = list.reduce((acc, k) => ({ ...acc, [k]: toTitleCase(k) }), {});
+    list = list.reduce((acc, k) => ({ ...acc, [k]: k }), {});
   }
 
   // key: what to store

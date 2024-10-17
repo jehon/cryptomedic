@@ -78,7 +78,7 @@ export const consultBasicData = {
 
   "Others Comments and Treatments": "please do something",
   "Suggested for Surgery": false,
-  "Treatment Evaluation": "Good Result",
+  "Treatment Evaluation": "Good result", // List
   "Treatment Finished": true
 };
 
