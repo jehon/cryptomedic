@@ -358,7 +358,7 @@ export class E2EFilePanel {
       case "string":
       case undefined:
         await expect(ioc.locator("input")).toBeVisible();
-        await ioc.locator("input").fill("" + value);
+        await ioc.locator("input").fill(ioValue2String(value));
         break;
       case "checkbox":
         {
@@ -391,7 +391,7 @@ export class E2EFilePanel {
         break;
       case "textarea":
         await expect(ioc.locator("textarea")).toBeVisible();
-        await ioc.locator("textarea").fill("" + value);
+        await ioc.locator("textarea").fill(ioValue2String(value));
         break;
       default:
         throw new Error("Unknown type: " + type);
