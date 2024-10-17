@@ -2,7 +2,14 @@ import test, { expect, Locator, Page } from "@playwright/test";
 import { CRUD } from "../../../src/constants";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { E2EPatient } from "../patients/e2e-patients";
-import { crApi, crApiLogin, crExpectUrl, crUrl, outputDate } from "./e2e";
+import {
+  crApi,
+  crApiLogin,
+  crExpectUrl,
+  crReady,
+  crUrl,
+  outputDate
+} from "./e2e";
 
 type IOTypes =
   | "string"
@@ -159,6 +166,7 @@ export class E2EFilePanel {
   async go(): Promise<this> {
     await this.e2ePatient.go();
     await this.doOpen();
+    await crReady(this.page);
     await expect(this.panel).toHaveScreenshot();
     return this;
   }
@@ -179,6 +187,7 @@ export class E2EFilePanel {
       new RegExp(".*" + escapeRegExp(`#/folder/${this.patient_id}/summary`))
     );
     await this.e2ePatient.expectToBeVisible();
+    await crReady(this.page);
     return this;
   }
 
@@ -195,6 +204,7 @@ export class E2EFilePanel {
     }
     await this.e2ePatient.expectToBeVisible();
     await this.expectToBeVisible();
+    await crReady(this.page);
     await expect(this.form).toHaveScreenshot();
 
     return this;
@@ -202,6 +212,7 @@ export class E2EFilePanel {
 
   async doSave(interceptAddedId: boolean = false): Promise<this> {
     await this.expectToBeVisible();
+    await crReady(this.page);
     await expect(this.form).toHaveScreenshot();
 
     await expect(this.page.getByText("Save")).toBeVisible();
@@ -224,6 +235,7 @@ export class E2EFilePanel {
     await this.e2ePatient.expectToBeVisible();
     await this.expectToBeVisible();
     await expect(this.page.getByText("Edit")).toBeVisible();
+    await crReady(this.page);
     await expect(this.form).toHaveScreenshot();
 
     return this;
@@ -241,6 +253,7 @@ export class E2EFilePanel {
     );
     await expect(this.page.getByText("Save")).toBeVisible();
     await this.expectToBeVisible();
+    await crReady(this.page);
     await expect(this.form).toHaveScreenshot();
 
     return this;
@@ -458,7 +471,6 @@ export function fullTest(context: {
         page
       }) => {
         await crApiLogin(page);
-
         const e2ePatient = await new E2EPatient(page, options.patientId).go();
         const panel = await e2ePatient.doAdd(context.fileType);
 
@@ -469,6 +481,7 @@ export function fullTest(context: {
           // No screenshot because too touchy
         }
 
+        // Set field values
         for (const [key, val] of Object.entries(options.data)) {
           await panel.setFieldValue(
             key,
@@ -478,12 +491,13 @@ export function fullTest(context: {
         }
         await panel.doSave(true);
 
+        // Go back to Edit
         await panel.goEdit();
         await panel.doDelete();
-
         await options.deleteTest(page);
       });
     },
+
     async testUpdate(options: {
       patientEntryOrder: string;
       patientId: string | number;

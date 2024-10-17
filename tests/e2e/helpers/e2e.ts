@@ -117,7 +117,7 @@ export async function crExpectUrl(page: Page, r: string | RegExp) {
   await expect(page).toHaveURL(r);
 }
 
-async function crReady(page: Page): Promise<void> {
+export async function crReady(page: Page): Promise<void> {
   // No global spinning wheel anymore
   await expect(page.getByTestId("global-wait")).toHaveCount(0);
 }

@@ -1,6 +1,6 @@
 import { expect, Locator, Page } from "playwright/test";
 import { CRUD } from "../../../src/constants";
-import { crApi, crInit } from "../helpers/e2e";
+import { crApi, crInit, crReady } from "../helpers/e2e";
 import { E2EFilePanel } from "../helpers/e2e-file-panel";
 
 export { outputDate } from "../helpers/e2e";
@@ -62,6 +62,7 @@ export class E2EPatient {
     await this.page.getByTestId("add").click();
     await this.page.getByTestId("add-" + type).click();
 
+    await crReady(this.page);
     return this.getFile(type, "add");
   }
 }
