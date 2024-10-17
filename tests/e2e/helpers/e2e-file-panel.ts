@@ -451,7 +451,8 @@ export async function fullTestUpdate(options: {
   fileType: string;
   fileId: string | number;
   fieldsConfig: FieldsConfigType;
-  data: Record<string, IOValue>;
+  dataInitial: Record<string, IOValue>;
+  dataUpdated: Record<string, IOValue>;
 }) {
   await test(`${options.patientEntryOrder} update ${options.fileType}`, async ({
     page
@@ -466,28 +467,33 @@ export async function fullTestUpdate(options: {
     await e2eFile.apiFileUpdate(options.patientId, {
       id: options.fileId,
       ...Object.fromEntries(
-        Object.entries(options.data).map(([k, v]) => [
+        Object.entries(options.dataInitial).map(([k, v]) => [
           (k as string).toLowerCase().replaceAll(" ", "_"),
           v
         ])
       )
     });
 
+    // Output mode: verify initial data
     await e2eFile.go();
-    for (const [key, val] of Object.entries(options.data)) {
+    for (const [key, val] of Object.entries(options.dataInitial)) {
       await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
     }
 
+    // Input mode: verify initial data
     await e2eFile.goEdit();
-    for (const [key, val] of Object.entries(options.data)) {
+    for (const [key, val] of Object.entries(options.dataInitial)) {
       await e2eFile.expectInputValue(key, val, options.fieldsConfig[key]);
     }
-    for (const [key, val] of Object.entries(options.data)) {
+
+    // Input mode: fill-in new data
+    for (const [key, val] of Object.entries(options.dataUpdated)) {
       await e2eFile.setFieldValue(key, val, options.fieldsConfig[key]);
     }
     await e2eFile.doSave();
 
-    for (const [key, val] of Object.entries(options.data)) {
+    // Output mode: verify updated data
+    for (const [key, val] of Object.entries(options.dataUpdated)) {
       await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
     }
   });
