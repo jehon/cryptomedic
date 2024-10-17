@@ -14,7 +14,7 @@ export default function ConsultAbstractConclusion({
   return (
     <TwoColumns>
       <Panel fixed label="Conclusions">
-        <IO.String
+        <IO.Text
           name="comments"
           label="Others Comments and Treatments"
           value={file.comments as string}
