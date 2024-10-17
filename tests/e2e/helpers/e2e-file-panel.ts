@@ -283,7 +283,9 @@ export class E2EFilePanel {
       }
 
       await expect(ioc).toBeVisible();
-      await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
+      await expect((await ioc.textContent())?.trim() ?? "").toBe(
+        ioValue2String(value)
+      );
     } else {
       await expect(io).not.toBeVisible();
     }
