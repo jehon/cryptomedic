@@ -8,6 +8,7 @@ import {
 } from "../helpers/e2e-file-panel";
 import { outputDate } from "./e2e-patients";
 
+const fileType = "consult_other";
 const fieldsConfig: FieldsConfigType = {
   ...ConsultFieldsConfigType,
   Side: "radio",
@@ -18,7 +19,7 @@ const fieldsConfig: FieldsConfigType = {
 fullTestRead({
   patientEntryOrder: "2000-001",
   patientId: 1,
-  fileType: "consult_other",
+  fileType,
   fileId: 1,
   fieldsConfig,
   data: {
@@ -39,7 +40,7 @@ fullTestRead({
 fullTestCreateDelete({
   patientEntryOrder: "2010-004",
   patientId: 104,
-  fileType: "consult_other",
+  fileType,
   fieldsConfig,
   deleteTest: (page) =>
     expect(page.getByText(outputDate("2022-10-04"))).toHaveCount(0),

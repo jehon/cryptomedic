@@ -1,5 +1,6 @@
 import { fullTestRead, TimedFieldsConfigType } from "../helpers/e2e-file-panel";
 
+const fileType = "bill";
 const fieldsConfig = {
   ...TimedFieldsConfigType
 };
@@ -7,7 +8,7 @@ const fieldsConfig = {
 fullTestRead({
   patientEntryOrder: "2000-001",
   patientId: 1,
-  fileType: "bill",
+  fileType,
   fileId: 1,
   fieldsConfig,
   data: {

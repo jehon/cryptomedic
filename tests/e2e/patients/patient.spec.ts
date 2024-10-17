@@ -3,12 +3,13 @@ import { crApiLogin } from "../helpers/e2e";
 import { fullTestRead } from "../helpers/e2e-file-panel";
 import { E2EPatient } from "./e2e-patients";
 
+const fileType = "patient";
 const fieldsConfig = {};
 
 fullTestRead({
   patientEntryOrder: "2000-001",
   patientId: 1,
-  fileType: "patient",
+  fileType,
   fileId: 1,
   fieldsConfig,
   data: {
@@ -22,11 +23,15 @@ fullTestRead({
   }
 });
 
-test("2014-103.patient", async ({ page }) => {
-  await crApiLogin(page);
-  const e2eFile = await new E2EPatient(page, 3).getFile("patient", 3).go();
-
-  await e2eFile.expectOutputValue("Entry Year", 2014);
+fullTestRead({
+  patientEntryOrder: "2014-103",
+  patientId: 3,
+  fileType,
+  fileId: 3,
+  fieldsConfig,
+  data: {
+    "Entry Year": 2014
+  }
 });
 
 // test("delete a patient", async ({ page }) => {

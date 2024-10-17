@@ -370,7 +370,7 @@ export class E2EFilePanel {
           const select = ioc.locator("select");
           await expect(select).toBeVisible();
           await expect(select).toContainText(ioValue2String(value));
-          await select.selectOption({ label: "" + value });
+          await select.selectOption({ label: ioValue2String(value) });
         }
         break;
       case "textarea":
@@ -445,49 +445,50 @@ export async function fullTestCreateDelete(options: {
   });
 }
 
-// export async function fullTestUpdate(options: {
-//   patientEntryOrder: string;
-//   patientId: string | number;
-//   fileType: string;
-//   fileId: string | number;
-//   fieldsConfig: FieldsConfigType;
-//   data: Record<string, IOValue>;
-// }) {
-//   await test.only(`${options.patientEntryOrder} update ${options.fileType}`, async ({
-//     page
-//   }) => {
-//     await crApiLogin(page);
+export async function fullTestUpdate(options: {
+  patientEntryOrder: string;
+  patientId: string | number;
+  fileType: string;
+  fileId: string | number;
+  fieldsConfig: FieldsConfigType;
+  data: Record<string, IOValue>;
+}) {
+  await test(`${options.patientEntryOrder} update ${options.fileType}`, async ({
+    page
+  }) => {
+    test.slow();
+    // test.setTimeout(120 * 1000)
 
-//     const e2eFile = new E2EPatient(page, 102).getFile("appointment", 102);
+    await crApiLogin(page);
+    const e2eFile = new E2EPatient(page, 102).getFile(options.fileType, 102);
 
-//     // TODO: Update
-//     await e2eFile.apiFileUpdate(options.patientId, {
-//       id: options.fileId,
-//       ...Object.fromEntries(
-//         Object.entries(options.data).map(([k, v]) => [
-//           (k as string).toLowerCase().replaceAll(" ", "_"),
-//           v
-//         ])
-//       )
-//     });
+    // Reset the data in the backend
+    await e2eFile.apiFileUpdate(options.patientId, {
+      id: options.fileId,
+      ...Object.fromEntries(
+        Object.entries(options.data).map(([k, v]) => [
+          (k as string).toLowerCase().replaceAll(" ", "_"),
+          v
+        ])
+      )
+    });
 
-//     await e2eFile.go();
-//     for (const [key, val] of Object.entries(options.data)) {
-//       await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
-//     }
+    await e2eFile.go();
+    for (const [key, val] of Object.entries(options.data)) {
+      await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
+    }
 
-//     await e2eFile.goEdit();
-//     for (const [key, val] of Object.entries(options.data)) {
-//       await e2eFile.expectInputValue(key, val, options.fieldsConfig[key]);
-//     }
+    await e2eFile.goEdit();
+    for (const [key, val] of Object.entries(options.data)) {
+      await e2eFile.expectInputValue(key, val, options.fieldsConfig[key]);
+    }
+    for (const [key, val] of Object.entries(options.data)) {
+      await e2eFile.setFieldValue(key, val, options.fieldsConfig[key]);
+    }
+    await e2eFile.doSave();
 
-//     for (const [key, val] of Object.entries(options.data)) {
-//       await e2eFile.setFieldValue(key, val, options.fieldsConfig[key]);
-//     }
-
-//     await e2eFile.doSave();
-//     for (const [key, val] of Object.entries(options.data)) {
-//       await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
-//     }
-//   });
-// }
+    for (const [key, val] of Object.entries(options.data)) {
+      await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
+    }
+  });
+}

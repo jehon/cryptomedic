@@ -3,6 +3,7 @@ import {
   fullTestRead
 } from "../helpers/e2e-file-panel";
 
+const fileType = "consult_clubfoot";
 const fieldsConfig = {
   ...ConsultFieldsConfigType
 };
@@ -13,7 +14,7 @@ const fieldsConfig = {
 fullTestRead({
   patientEntryOrder: "2014-105",
   patientId: 5,
-  fileType: "consult_clubfoot",
+  fileType,
   fileId: 1,
   fieldsConfig,
   data: {

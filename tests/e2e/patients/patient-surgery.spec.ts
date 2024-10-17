@@ -9,6 +9,7 @@ import {
 } from "../helpers/e2e-file-panel";
 import { E2EPatient } from "./e2e-patients";
 
+const fileType = "surgery";
 const fieldsConfig: FieldsConfigType = {
   ...TimedFieldsConfigType
 };
@@ -16,7 +17,7 @@ const fieldsConfig: FieldsConfigType = {
 fullTestRead({
   patientEntryOrder: "2000-001",
   patientId: 1,
-  fileType: "surgery",
+  fileType,
   fileId: 5,
   fieldsConfig,
   data: {
@@ -29,7 +30,7 @@ fullTestRead({
 fullTestCreateDelete({
   patientEntryOrder: "2010-003",
   patientId: 103,
-  fileType: "surgery",
+  fileType,
   deleteTest: (page) =>
     expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
   initialIsAlreadyGood: true,

@@ -3,6 +3,7 @@ import {
   fullTestRead
 } from "../helpers/e2e-file-panel";
 
+const fileType = "consult_ricket";
 const fieldsConfig = {
   ...ConsultFieldsConfigType
 };
@@ -10,7 +11,7 @@ const fieldsConfig = {
 fullTestRead({
   patientEntryOrder: "2000-001",
   patientId: 1,
-  fileType: "consult_ricket",
+  fileType,
   fileId: 13,
   fieldsConfig,
   data: {
