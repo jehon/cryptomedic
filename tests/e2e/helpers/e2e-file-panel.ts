@@ -45,7 +45,9 @@ export const TimedFieldsConfigType: FieldsConfigType = {
 
 export const ConsultFieldsConfigType: FieldsConfigType = {
   ...TimedFieldsConfigType,
+  "Weight (kg)": { json: "weight_kg" },
   "Weight sd": "readonly",
+  "Height (cm)": { json: "height_cm" },
   "Height sd": "readonly",
   "Weight/Height ratio": "readonly",
   "Weight/Height sd": "readonly",
