@@ -470,7 +470,11 @@ export function fullTest(context: {
         }
 
         for (const [key, val] of Object.entries(options.data)) {
-          await panel.setFieldValue(key, "" + val, fieldsConfig[key]?.type);
+          await panel.setFieldValue(
+            key,
+            ioValue2String(val),
+            fieldsConfig[key]?.type
+          );
         }
         await panel.doSave(true);
 
