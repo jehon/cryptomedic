@@ -16,7 +16,7 @@ export default function ConsultAbstractConclusion({
       <Panel fixed label="Conclusions">
         <IO.String
           name="comments"
-          label="Others Comments/Treatments"
+          label="Others Comments and Treatments"
           value={file.comments as string}
         />
         <IO.Boolean
