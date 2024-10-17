@@ -12,8 +12,16 @@ type IOTypes =
   | "readonly"
   | "select"
   | "textarea";
+type FieldConfigTypeOptional = {
+  type?: IOTypes;
+  json?: string;
+};
+type FieldConfigType = {
+  type: IOTypes;
+  json: string;
+};
 type FieldsConfigType = {
-  [key: string]: IOTypes;
+  [key: string]: IOTypes | FieldConfigTypeOptional;
 };
 
 type IOValue = string | number | boolean | undefined;
@@ -389,6 +397,25 @@ export function fullTest(context: {
   fileType: string;
   fieldsConfig: FieldsConfigType;
 }) {
+  const key2json = (key: string) => key.toLowerCase().replaceAll(" ", "_");
+
+  const fieldsConfig: {
+    [key: string]: FieldConfigType | undefined;
+  } = Object.fromEntries(
+    Object.entries(context.fieldsConfig).map(([k, v]) => [
+      k,
+      typeof v == "string"
+        ? {
+            type: v ?? "string",
+            json: key2json(k)
+          }
+        : {
+            type: v.type ?? "string",
+            json: v.json ?? key2json(k)
+          }
+    ])
+  );
+
   return {
     async testRead(options: {
       patientEntryOrder: string;
@@ -405,7 +432,7 @@ export function fullTest(context: {
           .go();
 
         for (const [key, val] of Object.entries(options.data)) {
-          await e2eFile.expectOutputValue(key, val, context.fieldsConfig[key]);
+          await e2eFile.expectOutputValue(key, val, fieldsConfig[key]?.type);
         }
         await expect(e2eFile.form).toHaveScreenshot();
         await expect(e2eFile.panel).toHaveScreenshot();
@@ -435,7 +462,7 @@ export function fullTest(context: {
         }
 
         for (const [key, val] of Object.entries(options.data)) {
-          await panel.setFieldValue(key, "" + val, context.fieldsConfig[key]);
+          await panel.setFieldValue(key, "" + val, fieldsConfig[key]?.type);
         }
         await panel.doSave(true);
 
@@ -469,7 +496,7 @@ export function fullTest(context: {
           id: options.fileId,
           ...Object.fromEntries(
             Object.entries(options.dataInitial).map(([k, v]) => [
-              (k as string).toLowerCase().replaceAll(" ", "_"),
+              fieldsConfig[k]?.json ?? key2json(k),
               v ?? null
             ])
           )
@@ -478,24 +505,24 @@ export function fullTest(context: {
         // Output mode: verify initial data
         await e2eFile.go();
         for (const [key, val] of Object.entries(options.dataInitial)) {
-          await e2eFile.expectOutputValue(key, val, context.fieldsConfig[key]);
+          await e2eFile.expectOutputValue(key, val, fieldsConfig[key]?.type);
         }
 
         // Input mode: verify initial data
         await e2eFile.goEdit();
         for (const [key, val] of Object.entries(options.dataInitial)) {
-          await e2eFile.expectInputValue(key, val, context.fieldsConfig[key]);
+          await e2eFile.expectInputValue(key, val, fieldsConfig[key]?.type);
         }
 
         // Input mode: fill-in new data
         for (const [key, val] of Object.entries(options.dataUpdated)) {
-          await e2eFile.setFieldValue(key, val, context.fieldsConfig[key]);
+          await e2eFile.setFieldValue(key, val, fieldsConfig[key]?.type);
         }
         await e2eFile.doSave();
 
         // Output mode: verify updated data
         for (const [key, val] of Object.entries(options.dataUpdated)) {
-          await e2eFile.expectOutputValue(key, val, context.fieldsConfig[key]);
+          await e2eFile.expectOutputValue(key, val, fieldsConfig[key]?.type);
         }
       });
     }
