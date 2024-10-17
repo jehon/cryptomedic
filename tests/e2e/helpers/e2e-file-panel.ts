@@ -162,6 +162,13 @@ export class E2EFilePanel {
     return this;
   }
 
+  async expectScreenshot(): Promise<this> {
+    await crReady(this.page);
+    await expect(this.form).toBeVisible();
+    await expect(this.form).toHaveScreenshot();
+    return this;
+  }
+
   /* ***********************************
    *
    * Routes
@@ -171,8 +178,6 @@ export class E2EFilePanel {
   async go(): Promise<this> {
     await this.e2ePatient.go();
     await this.doOpen();
-    await crReady(this.page);
-    await expect(this.panel).toHaveScreenshot();
     return this;
   }
 
@@ -209,16 +214,11 @@ export class E2EFilePanel {
     }
     await this.e2ePatient.expectToBeVisible();
     await this.expectToBeVisible();
-    await crReady(this.page);
-    await expect(this.form).toHaveScreenshot();
-
     return this;
   }
 
   async doSave(interceptAddedId: boolean = false): Promise<this> {
     await this.expectToBeVisible();
-    await crReady(this.page);
-    await expect(this.form).toHaveScreenshot();
 
     await expect(this.page.getByText("Save")).toBeVisible();
     await this.page.getByText("Save").click();
@@ -240,8 +240,6 @@ export class E2EFilePanel {
     await this.e2ePatient.expectToBeVisible();
     await this.expectToBeVisible();
     await expect(this.page.getByText("Edit")).toBeVisible();
-    await crReady(this.page);
-    await expect(this.form).toHaveScreenshot();
 
     return this;
   }
@@ -258,9 +256,6 @@ export class E2EFilePanel {
     );
     await expect(this.page.getByText("Save")).toBeVisible();
     await this.expectToBeVisible();
-    await crReady(this.page);
-    await expect(this.form).toHaveScreenshot();
-
     return this;
   }
 
@@ -460,8 +455,7 @@ export function fullTest(context: {
         for (const [key, val] of Object.entries(options.data)) {
           await e2eFile.expectOutputValue(key, val, fieldsConfig[key]?.type);
         }
-        await expect(e2eFile.form).toHaveScreenshot();
-        await expect(e2eFile.panel).toHaveScreenshot();
+        await e2eFile.expectScreenshot();
       });
     },
 
@@ -477,28 +471,36 @@ export function fullTest(context: {
       }) => {
         await crApiLogin(page);
         const e2ePatient = await new E2EPatient(page, options.patientId).go();
-        const panel = await e2ePatient.doAdd(context.fileType);
+        const e2eFile = await e2ePatient.doAdd(context.fileType);
+        await e2eFile.expectScreenshot();
 
         if (!options.initialIsAlreadyGood) {
           // Try to save: it does not work
-          await panel.panel.getByText("Save").click();
-          await expect(panel.panel.getByText("Edit")).not.toBeVisible();
+          await e2eFile.panel.getByText("Save").click();
+          await expect(e2eFile.panel.getByText("Edit")).not.toBeVisible();
           // No screenshot because too touchy
         }
 
         // Set field values
         for (const [key, val] of Object.entries(options.data)) {
-          await panel.setFieldValue(
+          await e2eFile.setFieldValue(
             key,
             ioValue2String(val),
             fieldsConfig[key]?.type
           );
         }
-        await panel.doSave(true);
+        await e2eFile.expectScreenshot();
+
+        await e2eFile.doSave(true);
+        // TODO: check values
+        await e2eFile.expectScreenshot();
 
         // Go back to Edit
-        await panel.goEdit();
-        await panel.doDelete();
+        await e2eFile.goEdit();
+        // TODO: check values
+        await e2eFile.expectScreenshot();
+
+        await e2eFile.doDelete();
         await options.deleteTest(page);
       });
     },
@@ -514,7 +516,6 @@ export function fullTest(context: {
         page
       }) => {
         test.slow();
-        // test.setTimeout(120 * 1000)
 
         await crApiLogin(page);
         const e2eFile = new E2EPatient(page, options.patientId).getFile(
@@ -538,23 +539,27 @@ export function fullTest(context: {
         for (const [key, val] of Object.entries(options.dataInitial)) {
           await e2eFile.expectOutputValue(key, val, fieldsConfig[key]?.type);
         }
+        await e2eFile.expectScreenshot();
 
         // Input mode: verify initial data
         await e2eFile.goEdit();
         for (const [key, val] of Object.entries(options.dataInitial)) {
           await e2eFile.expectInputValue(key, val, fieldsConfig[key]?.type);
         }
+        await e2eFile.expectScreenshot();
 
         // Input mode: fill-in new data
         for (const [key, val] of Object.entries(options.dataUpdated)) {
           await e2eFile.setFieldValue(key, val, fieldsConfig[key]?.type);
         }
-        await e2eFile.doSave();
+        await e2eFile.expectScreenshot();
 
+        await e2eFile.doSave();
         // Output mode: verify updated data
         for (const [key, val] of Object.entries(options.dataUpdated)) {
           await e2eFile.expectOutputValue(key, val, fieldsConfig[key]?.type);
         }
+        await e2eFile.expectScreenshot();
       });
     }
   };
