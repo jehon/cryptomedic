@@ -76,7 +76,7 @@ export const consultBasicData = {
   BMI: "24",
   "BMI sd": "-0.0",
 
-  "Others Comments and Treatments": "please do something",
+  // "Others Comments and Treatments": "please do something",
   "Suggested for Surgery": false,
   "Treatment Evaluation": "Good Result",
   "Treatment Finished": true
