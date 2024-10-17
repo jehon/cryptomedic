@@ -33,9 +33,8 @@ function ioValue2String(val: IOValue): string {
   return val + "";
 }
 
-export const IOV = {
-  R_Checked: "yes",
-  R_NotChecked: ""
+const IOV = {
+  R_Checked: "✔"
 };
 
 export const TimedFieldsConfigType: FieldsConfigType = {
@@ -265,6 +264,12 @@ export class E2EFilePanel {
         case "date":
           value = outputDate(value as string);
           break;
+        case "checkbox":
+          if (value) {
+            value = IOV.R_Checked;
+          } else {
+            value = "";
+          }
       }
 
       await expect(io).toBeVisible();
@@ -276,11 +281,7 @@ export class E2EFilePanel {
       }
 
       await expect(ioc).toBeVisible();
-      if (value === true) {
-        await expect((await ioc.textContent())?.trim() ?? "").toBe("✔");
-      } else {
-        await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
-      }
+      await expect((await ioc.textContent())?.trim() ?? "").toBe("" + value);
     } else {
       await expect(io).not.toBeVisible();
     }
