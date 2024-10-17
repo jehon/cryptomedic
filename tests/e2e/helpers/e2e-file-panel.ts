@@ -469,7 +469,7 @@ export async function fullTestUpdate(options: {
       ...Object.fromEntries(
         Object.entries(options.dataInitial).map(([k, v]) => [
           (k as string).toLowerCase().replaceAll(" ", "_"),
-          v
+          v ?? null
         ])
       )
     });

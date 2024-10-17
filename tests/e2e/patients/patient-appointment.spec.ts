@@ -3,13 +3,15 @@ import {
   FieldsConfigType,
   fullTestCreateDelete,
   fullTestRead,
+  fullTestUpdate,
   TimedFieldsConfigType
 } from "../helpers/e2e-file-panel";
 import { outputDate } from "./e2e-patients";
 
 const fileType = "appointment";
 const fieldsConfig: FieldsConfigType = {
-  ...TimedFieldsConfigType
+  ...TimedFieldsConfigType,
+  Purpose: "textarea"
 };
 
 fullTestRead({
@@ -35,15 +37,20 @@ await fullTestCreateDelete({
   }
 });
 
-// await fullTestUpdate({
-//   patientEntryOrder: "2010-002",
-//   patientId: 102,
-//   fileType: "appointment",
-//   fileId: 102,
-//   fieldsConfig,
-//   data: {
-//     Date: "2024-01-02",
-//     Center: undefined,
-//     Purpose: "test data"
-//   }
-// });
+await fullTestUpdate({
+  patientEntryOrder: "2010-002",
+  patientId: 102,
+  fileType,
+  fileId: 102,
+  fieldsConfig,
+  dataInitial: {
+    Date: "2024-01-02",
+    Center: undefined,
+    Purpose: "test data"
+  },
+  dataUpdated: {
+    Date: "2024-10-11",
+    Center: "Chakaria Disability Center",
+    Purpose: "test running"
+  }
+});

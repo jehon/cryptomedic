@@ -53,7 +53,7 @@ INSERT INTO `appointments` VALUES (6,'1980-01-01 00:00:00','2015-05-10 04:29:15'
 INSERT INTO `appointments` VALUES (7,'1980-01-01 00:00:00','2015-05-07 16:53:30','murshed',5,'Ershad',NULL,'2014-04-21','Ukhia');
 INSERT INTO `appointments` VALUES (8,'1980-01-01 00:00:00','2015-05-07 16:49:28','murshed',5,'AMD doctor',NULL,'2014-03-21','Ukhia');
 INSERT INTO `appointments` VALUES (100,'2023-08-30 16:53:04','2023-08-30 17:40:54','jehon',100,'Ershad',NULL,'2120-06-01','Forcibly Displaced Myanmar Nationals');
-INSERT INTO `appointments` VALUES (102,'1980-01-01 00:00:00','1980-01-01 00:00:00','test-appointment',102,'',NULL,'2024-01-02','test data');
+INSERT INTO `appointments` VALUES (102,'1980-01-01 00:00:00','1980-01-01 00:00:00','test-appointment',102,'',NULL,'2024-01-02','');
 
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
