@@ -12,7 +12,7 @@ type IOTypes =
   | "readonly"
   | "select"
   | "textarea";
-export type FieldsConfigType = {
+type FieldsConfigType = {
   [key: string]: IOTypes;
 };
 
@@ -385,116 +385,119 @@ export class E2EFilePanel {
   }
 }
 
-export async function fullTestRead(options: {
-  patientEntryOrder: string;
-  patientId: string | number;
+export function fullTest(context: {
   fileType: string;
-  fileId: string | number;
   fieldsConfig: FieldsConfigType;
-  data: Record<string, IOValue>;
 }) {
-  await test(`${options.patientEntryOrder}.${options.fileType}.${options.fileId}`, async ({
-    page
-  }) => {
-    await crApiLogin(page);
-    const e2eFile = await new E2EPatient(page, options.patientId)
-      .getFile(options.fileType, options.fileId)
-      .go();
+  return {
+    async testRead(options: {
+      patientEntryOrder: string;
+      patientId: string | number;
+      fileId: string | number;
+      data: Record<string, IOValue>;
+    }) {
+      await test(`${options.patientEntryOrder}.${context.fileType}.${options.fileId}`, async ({
+        page
+      }) => {
+        await crApiLogin(page);
+        const e2eFile = await new E2EPatient(page, options.patientId)
+          .getFile(context.fileType, options.fileId)
+          .go();
 
-    for (const [key, val] of Object.entries(options.data)) {
-      await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
+        for (const [key, val] of Object.entries(options.data)) {
+          await e2eFile.expectOutputValue(key, val, context.fieldsConfig[key]);
+        }
+        await expect(e2eFile.form).toHaveScreenshot();
+        await expect(e2eFile.panel).toHaveScreenshot();
+      });
+    },
+
+    async testCreateDelete(options: {
+      patientEntryOrder: string;
+      patientId: string | number;
+      deleteTest: (page: Page) => any;
+      initialIsAlreadyGood?: boolean; // ==> Default false/undefined
+      data: Record<string, IOValue>;
+    }) {
+      await test(`${options.patientEntryOrder} create and delete ${context.fileType}`, async ({
+        page
+      }) => {
+        await crApiLogin(page);
+
+        const e2ePatient = await new E2EPatient(page, options.patientId).go();
+        const panel = await e2ePatient.doAdd(context.fileType);
+
+        if (!options.initialIsAlreadyGood) {
+          // Try to save: it does not work
+          await panel.panel.getByText("Save").click();
+          await expect(panel.panel.getByText("Edit")).not.toBeVisible();
+          await expect(panel.form).toHaveScreenshot();
+        }
+
+        for (const [key, val] of Object.entries(options.data)) {
+          await panel.setFieldValue(key, "" + val, context.fieldsConfig[key]);
+        }
+        await panel.doSave(true);
+
+        await panel.goEdit();
+        await panel.doDelete();
+
+        await options.deleteTest(page);
+      });
+    },
+    async testUpdate(options: {
+      patientEntryOrder: string;
+      patientId: string | number;
+      fileId: string | number;
+      dataInitial: Record<string, IOValue>;
+      dataUpdated: Record<string, IOValue>;
+    }) {
+      await test(`${options.patientEntryOrder} update ${context.fileType}`, async ({
+        page
+      }) => {
+        test.slow();
+        // test.setTimeout(120 * 1000)
+
+        await crApiLogin(page);
+        const e2eFile = new E2EPatient(page, options.patientId).getFile(
+          context.fileType,
+          options.fileId
+        );
+
+        // Reset the data in the backend
+        await e2eFile.apiFileUpdate(options.patientId, {
+          id: options.fileId,
+          ...Object.fromEntries(
+            Object.entries(options.dataInitial).map(([k, v]) => [
+              (k as string).toLowerCase().replaceAll(" ", "_"),
+              v ?? null
+            ])
+          )
+        });
+
+        // Output mode: verify initial data
+        await e2eFile.go();
+        for (const [key, val] of Object.entries(options.dataInitial)) {
+          await e2eFile.expectOutputValue(key, val, context.fieldsConfig[key]);
+        }
+
+        // Input mode: verify initial data
+        await e2eFile.goEdit();
+        for (const [key, val] of Object.entries(options.dataInitial)) {
+          await e2eFile.expectInputValue(key, val, context.fieldsConfig[key]);
+        }
+
+        // Input mode: fill-in new data
+        for (const [key, val] of Object.entries(options.dataUpdated)) {
+          await e2eFile.setFieldValue(key, val, context.fieldsConfig[key]);
+        }
+        await e2eFile.doSave();
+
+        // Output mode: verify updated data
+        for (const [key, val] of Object.entries(options.dataUpdated)) {
+          await e2eFile.expectOutputValue(key, val, context.fieldsConfig[key]);
+        }
+      });
     }
-    await expect(e2eFile.form).toHaveScreenshot();
-    await expect(e2eFile.panel).toHaveScreenshot();
-  });
-}
-
-export async function fullTestCreateDelete(options: {
-  patientEntryOrder: string;
-  patientId: string | number;
-  fileType: string;
-  deleteTest: (page: Page) => any;
-  initialIsAlreadyGood?: boolean; // ==> Default false/undefined
-  fieldsConfig: FieldsConfigType;
-  data: Record<string, IOValue>;
-}) {
-  await test(`${options.patientEntryOrder} create and delete ${options.fileType}`, async ({
-    page
-  }) => {
-    await crApiLogin(page);
-
-    const e2ePatient = await new E2EPatient(page, options.patientId).go();
-    const panel = await e2ePatient.doAdd(options.fileType);
-
-    if (!options.initialIsAlreadyGood) {
-      // Try to save: it does not work
-      await panel.panel.getByText("Save").click();
-      await expect(panel.panel.getByText("Edit")).not.toBeVisible();
-      await expect(panel.form).toHaveScreenshot();
-    }
-
-    for (const [key, val] of Object.entries(options.data)) {
-      await panel.setFieldValue(key, "" + val, options.fieldsConfig[key]);
-    }
-    await panel.doSave(true);
-
-    await panel.goEdit();
-    await panel.doDelete();
-
-    await options.deleteTest(page);
-  });
-}
-
-export async function fullTestUpdate(options: {
-  patientEntryOrder: string;
-  patientId: string | number;
-  fileType: string;
-  fileId: string | number;
-  fieldsConfig: FieldsConfigType;
-  dataInitial: Record<string, IOValue>;
-  dataUpdated: Record<string, IOValue>;
-}) {
-  await test(`${options.patientEntryOrder} update ${options.fileType}`, async ({
-    page
-  }) => {
-    test.slow();
-    // test.setTimeout(120 * 1000)
-
-    await crApiLogin(page);
-    const e2eFile = new E2EPatient(page, 102).getFile(options.fileType, 102);
-
-    // Reset the data in the backend
-    await e2eFile.apiFileUpdate(options.patientId, {
-      id: options.fileId,
-      ...Object.fromEntries(
-        Object.entries(options.dataInitial).map(([k, v]) => [
-          (k as string).toLowerCase().replaceAll(" ", "_"),
-          v ?? null
-        ])
-      )
-    });
-
-    // Output mode: verify initial data
-    await e2eFile.go();
-    for (const [key, val] of Object.entries(options.dataInitial)) {
-      await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
-    }
-
-    // Input mode: verify initial data
-    await e2eFile.goEdit();
-    for (const [key, val] of Object.entries(options.dataInitial)) {
-      await e2eFile.expectInputValue(key, val, options.fieldsConfig[key]);
-    }
-
-    // Input mode: fill-in new data
-    for (const [key, val] of Object.entries(options.dataUpdated)) {
-      await e2eFile.setFieldValue(key, val, options.fieldsConfig[key]);
-    }
-    await e2eFile.doSave();
-
-    // Output mode: verify updated data
-    for (const [key, val] of Object.entries(options.dataUpdated)) {
-      await e2eFile.expectOutputValue(key, val, options.fieldsConfig[key]);
-    }
-  });
+  };
 }

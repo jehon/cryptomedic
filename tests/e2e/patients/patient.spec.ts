@@ -1,17 +1,17 @@
 import { test } from "@playwright/test";
 import { crApiLogin } from "../helpers/e2e";
-import { fullTestRead } from "../helpers/e2e-file-panel";
+import { fullTest } from "../helpers/e2e-file-panel";
 import { E2EPatient } from "./e2e-patients";
 
-const fileType = "patient";
-const fieldsConfig = {};
+const ctx = fullTest({
+  fileType: "patient",
+  fieldsConfig: {}
+});
 
-fullTestRead({
+ctx.testRead({
   patientEntryOrder: "2000-001",
   patientId: 1,
-  fileType,
   fileId: 1,
-  fieldsConfig,
   data: {
     "Entry Year": 2000,
     "Entry Order": 1,
@@ -23,12 +23,10 @@ fullTestRead({
   }
 });
 
-fullTestRead({
+ctx.testRead({
   patientEntryOrder: "2014-103",
   patientId: 3,
-  fileType,
   fileId: 3,
-  fieldsConfig,
   data: {
     "Entry Year": 2014
   }

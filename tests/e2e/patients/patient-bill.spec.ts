@@ -1,16 +1,16 @@
-import { fullTestRead, TimedFieldsConfigType } from "../helpers/e2e-file-panel";
+import { fullTest, TimedFieldsConfigType } from "../helpers/e2e-file-panel";
 
-const fileType = "bill";
-const fieldsConfig = {
-  ...TimedFieldsConfigType
-};
+const ctx = fullTest({
+  fileType: "bill",
+  fieldsConfig: {
+    ...TimedFieldsConfigType
+  }
+});
 
-fullTestRead({
+ctx.testRead({
   patientEntryOrder: "2000-001",
   patientId: 1,
-  fileType,
   fileId: 1,
-  fieldsConfig,
   data: {
     Date: "2011-06-09",
     "Consult CDC Consultation Physio": 1,

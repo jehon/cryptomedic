@@ -2,26 +2,24 @@ import { expect } from "@playwright/test";
 import {
   consultBasicData,
   ConsultFieldsConfigType,
-  FieldsConfigType,
-  fullTestCreateDelete,
-  fullTestRead
+  fullTest
 } from "../helpers/e2e-file-panel";
 import { outputDate } from "./e2e-patients";
 
-const fileType = "consult_other";
-const fieldsConfig: FieldsConfigType = {
-  ...ConsultFieldsConfigType,
-  Side: "radio",
-  Pain: "radio",
-  Walk: "radio"
-};
+const ctx = fullTest({
+  fileType: "consult_other",
+  fieldsConfig: {
+    ...ConsultFieldsConfigType,
+    Side: "radio",
+    Pain: "radio",
+    Walk: "radio"
+  }
+});
 
-fullTestRead({
+ctx.testRead({
   patientEntryOrder: "2000-001",
   patientId: 1,
-  fileType,
   fileId: 1,
-  fieldsConfig,
   data: {
     Date: "2007-01-10",
     Examiner: "Ershad",
@@ -37,11 +35,9 @@ fullTestRead({
   }
 });
 
-fullTestCreateDelete({
+ctx.testCreateDelete({
   patientEntryOrder: "2010-004",
   patientId: 104,
-  fileType,
-  fieldsConfig,
   deleteTest: (page) =>
     expect(page.getByText(outputDate("2022-10-04"))).toHaveCount(0),
   data: {

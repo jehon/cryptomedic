@@ -1,22 +1,19 @@
-import {
-  ConsultFieldsConfigType,
-  fullTestRead
-} from "../helpers/e2e-file-panel";
+import { ConsultFieldsConfigType, fullTest } from "../helpers/e2e-file-panel";
 
-const fileType = "consult_clubfoot";
-const fieldsConfig = {
-  ...ConsultFieldsConfigType
-};
+const ctx = fullTest({
+  fileType: "consult_clubfoot",
+  fieldsConfig: {
+    ...ConsultFieldsConfigType
+  }
+});
 
 // ----------------
 // TODO: add this on 1st file
 //       and add some data to it
-fullTestRead({
+ctx.testRead({
   patientEntryOrder: "2014-105",
   patientId: 5,
-  fileType,
   fileId: 1,
-  fieldsConfig,
   data: {
     Date: "2015-01-10",
     Examiner: "Ershad",
