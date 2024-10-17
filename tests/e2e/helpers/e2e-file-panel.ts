@@ -37,6 +37,11 @@ function ioValue2String(val: IOValue): string {
   if (val === undefined) {
     return "";
   }
+
+  if (val === false) {
+    return "";
+  }
+
   return val + "";
 }
 
