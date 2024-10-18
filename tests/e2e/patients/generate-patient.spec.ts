@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { crApiLogin, crInit, crLegacyInput } from "../helpers/e2e";
-import { E2EPatient } from "./e2e-patients";
+import { E2EPatient } from "../helpers/e2e-patients";
 
 test("create-reference-2002", async ({ page }) => {
   await crApiLogin(page);

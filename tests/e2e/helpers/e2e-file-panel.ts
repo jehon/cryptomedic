@@ -1,61 +1,26 @@
-import test, { expect, Locator, Page } from "@playwright/test";
+import test, { expect, Page } from "@playwright/test";
 import { CRUD } from "../../../src/constants";
 import { escapeRegExp } from "../../../src/utils/strings";
-import { E2EPatient } from "../patients/e2e-patients";
-import {
-  crApi,
-  crApiLogin,
-  crExpectUrl,
-  crReady,
-  crUrl,
-  outputDate
-} from "./e2e";
+import { crApi, crApiLogin, crExpectUrl, crReady, crUrl } from "./e2e";
+import { E2EForm, IOType, IOValue } from "./e2e-form";
+import { E2EPatient } from "./e2e-patients";
 
-type IOTypes =
-  | "string"
-  | "checkbox"
-  | "date"
-  | "radio"
-  | "readonly"
-  | "select"
-  | "textarea";
-type FieldConfigTypeOptional = {
-  type?: IOTypes;
+type FieldConfigType = {
+  type?: IOType;
   json?: string;
 };
-type FieldConfigType = {
-  type: IOTypes;
-  json: string;
-};
-type FieldsConfigType = {
-  [key: string]: IOTypes | FieldConfigTypeOptional;
+
+export type FieldsConfigTypeSimplified = {
+  [key: string]: IOType | FieldConfigType;
 };
 
-type IOValue = string | number | boolean | undefined;
-
-function ioValue2String(val: IOValue): string {
-  if (val === undefined) {
-    return "";
-  }
-
-  if (val === false) {
-    return "";
-  }
-
-  return val + "";
-}
-
-const IOV = {
-  R_Checked: "✔"
-};
-
-export const TimedFieldsConfigType: FieldsConfigType = {
+export const TimedFieldsConfigType: FieldsConfigTypeSimplified = {
   Date: "date",
   Examiner: "radio",
   Center: "select"
 };
 
-export const ConsultFieldsConfigType: FieldsConfigType = {
+export const ConsultFieldsConfigType: FieldsConfigTypeSimplified = {
   ...TimedFieldsConfigType,
   "Weight (kg)": { json: "weight_kg" },
   "Weight sd": "readonly",
@@ -75,26 +40,32 @@ export const ConsultFieldsConfigType: FieldsConfigType = {
   "Treatment Finished": "checkbox"
 };
 
-export const consultBasicData = {
-  Date: "2007-01-10",
-  Examiner: "Ershad",
-  Center: "Ukhia",
-  "Weight (kg)": "29",
-  "Weight sd": "0.0",
-  "Height (cm)": "134",
-  "Height sd": "0.0",
-  "Weight/Height ratio": "0.2",
-  "Weight/Height sd": "'value' is out-of-bounds: 134 [80 -> 120]",
-  BMI: "24",
-  "BMI sd": "-0.0",
+// export const consultBasicData = {
+//   Date: "2007-01-10",
+//   Examiner: "Ershad",
+//   Center: "Ukhia",
+//   "Weight (kg)": "29",
+//   // "Weight sd": "0.0",
+//   "Height (cm)": "134",
+//   // "Height sd": "0.0",
+//   // "Weight/Height ratio": "0.2",
+//   // "Weight/Height sd": "'value' is out-of-bounds: 134 [80 -> 120]",
+//   // BMI: "24",
+//   // "BMI sd": "-0.0",
 
-  "Others Comments and Treatments": "please do something",
-  "Suggested for Surgery": false,
-  "Treatment Evaluation": "Good result", // List
-  "Treatment Finished": true
-};
+//   "Others Comments and Treatments": "please do something",
+//   "Suggested for Surgery": false,
+//   "Treatment Evaluation": "Good result", // List
+//   "Treatment Finished": true
+// };
 
-export class E2EFilePanel {
+function reduceFieldConfig2Form(fc: FieldsConfigTypeSimplified) {
+  return Object.fromEntries(
+    Object.entries(fc).map(([k, v]) => [k, typeof v == "string" ? v : v.type])
+  );
+}
+
+export class E2EFilePanel extends E2EForm {
   protected fileBaseUrl = "";
   protected page: Page;
   protected patient_id: string;
@@ -103,25 +74,20 @@ export class E2EFilePanel {
   constructor(
     protected e2ePatient: E2EPatient,
     protected type: string,
-    id: string | number
+    id: string | number,
+    fieldsConfig: FieldsConfigTypeSimplified
   ) {
+    super(
+      () =>
+        e2ePatient.page
+          .getByTestId(`${this.type}.${this.id}`)
+          .locator(">[data-role=panel]"),
+      reduceFieldConfig2Form(fieldsConfig)
+    );
     this.page = e2ePatient.page;
     this.patient_id = "" + this.e2ePatient.id;
     this.id = "" + id;
     this.fileBaseUrl = `/folder/${this.patient_id}/summary/${type}.`;
-  }
-
-  get panel(): Locator {
-    // We take the data-role=panel to avoid the fullscreen overlay
-    return this.page.getByTestId(this.uuid).locator(">[data-role=panel]");
-  }
-
-  get form(): Locator {
-    return this.panel.locator("form");
-  }
-
-  get uuid(): string {
-    return `${this.type}.${this.id}`;
   }
 
   /* ***********************************
@@ -154,19 +120,6 @@ export class E2EFilePanel {
           "$"
       )
     );
-  }
-
-  async expectToBeVisible(): Promise<this> {
-    await expect(this.panel).toBeVisible();
-    await expect(this.form).toBeVisible();
-    return this;
-  }
-
-  async expectScreenshot(): Promise<this> {
-    await crReady(this.page);
-    await expect(this.form).toBeVisible();
-    await expect(this.form).toHaveScreenshot();
-    return this;
   }
 
   /* ***********************************
@@ -202,8 +155,9 @@ export class E2EFilePanel {
   }
 
   async doOpen(): Promise<this> {
-    await expect(this.panel).toBeVisible();
-    await this.panel.click(); // the panel is the closed item
+    await this.expectToBeVisible();
+
+    await this.locator.click(); // the panel is the closed item
 
     // TODO: when URL will be self-updated on load, this should be fixed
     this.page.goto(crUrl(`${this.fileBaseUrl}${this.id}`));
@@ -231,6 +185,8 @@ export class E2EFilePanel {
       const url = await this.page.url();
       const matches = /\.(?<id>[0-9]+)$/.exec(url);
       this.id = matches?.groups?.["id"] ?? "";
+
+      // TODO PROBLEM
     }
 
     await crExpectUrl(
@@ -258,203 +214,53 @@ export class E2EFilePanel {
     await this.expectToBeVisible();
     return this;
   }
-
-  /* ***********************************
-   *
-   * Forms
-   *
-   */
-
-  private async expectField(label: string): Promise<Locator> {
-    await this.expectToBeVisible();
-    return this.form.locator(`[data-role='${label}']`);
-  }
-
-  async expectOutputValue(
-    label: string,
-    value?: IOValue,
-    type?: IOTypes
-  ): Promise<this> {
-    const io = await this.expectField(label);
-
-    if (value) {
-      switch (type) {
-        case "date":
-          value = outputDate(value as string);
-          break;
-        case "checkbox":
-          if (value) {
-            value = IOV.R_Checked;
-          } else {
-            value = "";
-          }
-      }
-
-      await expect(io).toBeVisible();
-
-      let ioc = io.locator(".content");
-      if ((await ioc.locator("div").all()).length > 0) {
-        // In case of Date, we have multiple divs
-        ioc = ioc.locator("div").first();
-      }
-
-      await expect(ioc).toBeVisible();
-      await expect((await ioc.textContent())?.trim() ?? "").toBe(
-        ioValue2String(value)
-      );
-    } else {
-      await expect(io).not.toBeVisible();
-    }
-
-    return this;
-  }
-
-  async expectInputValue(
-    label: string,
-    value?: IOValue,
-    type?: IOTypes
-  ): Promise<this> {
-    switch (type) {
-      case undefined:
-      case "string":
-      case "date":
-      case "select":
-      case "textarea":
-        await expect(this.panel.getByLabel(label)).toHaveValue(
-          ioValue2String(value)
-        );
-        break;
-      case "checkbox":
-        {
-          const loc = (await this.expectField(label)).locator(
-            "input[type=checkbox]"
-          );
-
-          if (value) {
-            await expect(loc).toBeChecked();
-          } else {
-            await expect(loc).not.toBeChecked();
-          }
-        }
-        break;
-      case "radio":
-        await expect(
-          (await this.expectField(label)).getByLabel(ioValue2String(value), {
-            exact: true
-          })
-        ).toBeChecked();
-        break;
-      case "readonly":
-        break;
-    }
-    return this;
-  }
-
-  async setFieldValue(
-    label: string,
-    value?: IOValue,
-    type?: IOTypes
-  ): Promise<this> {
-    if (type == "readonly") {
-      // The io is not visible
-      return this;
-    }
-
-    const io = await this.expectField(label);
-    await expect(io).toBeVisible();
-
-    const ioc = io.locator(".content");
-    await expect(ioc).toBeVisible();
-
-    switch (type) {
-      case "date":
-      case "string":
-      case undefined:
-        await expect(ioc.locator("input")).toBeVisible();
-        await ioc.locator("input").fill(ioValue2String(value));
-        break;
-      case "checkbox":
-        {
-          const loc = (await this.expectField(label)).locator(
-            "input[type=checkbox]"
-          );
-          if (value) {
-            await loc.check();
-          } else {
-            await loc.uncheck();
-          }
-        }
-        break;
-      case "radio":
-        {
-          const radio = await ioc.getByLabel(ioValue2String(value), {
-            exact: true
-          });
-          await expect(radio).toBeVisible();
-          await radio.check();
-        }
-        break;
-      case "select":
-        {
-          const select = ioc.locator("select");
-          await expect(select).toBeVisible();
-          await expect(select).toContainText(ioValue2String(value));
-          await select.selectOption({ label: ioValue2String(value) });
-        }
-        break;
-      case "textarea":
-        await expect(ioc.locator("textarea")).toBeVisible();
-        await ioc.locator("textarea").fill(ioValue2String(value));
-        break;
-      default:
-        throw new Error("Unknown type: " + type);
-    }
-
-    return this;
-  }
 }
 
 export function fullTest(context: {
   fileType: string;
-  fieldsConfig: FieldsConfigType;
+  fieldsConfig: FieldsConfigTypeSimplified;
 }) {
-  const key2json = (key: string) => key.toLowerCase().replaceAll(" ", "_");
+  const fieldsConfig: { [key: string]: { type?: IOType; json: string } } =
+    Object.fromEntries(
+      Object.entries(context.fieldsConfig)
+        .map(([k, v]): [string, FieldConfigType] => [
+          k,
+          (typeof v == "string" ? { type: v } : v) as FieldConfigType
+        ])
+        .map(([k, v]) => [
+          k,
+          {
+            type: v.type,
+            json: v.json ?? k.toLowerCase().replaceAll(" ", "_")
+          }
+        ])
+    );
 
-  const fieldsConfig: {
-    [key: string]: FieldConfigType | undefined;
-  } = Object.fromEntries(
-    Object.entries(context.fieldsConfig).map(([k, v]) => [
-      k,
-      typeof v == "string"
-        ? {
-            type: v ?? "string",
-            json: key2json(k)
-          }
-        : {
-            type: v.type ?? "string",
-            json: v.json ?? key2json(k)
-          }
-    ])
-  );
+  const getJson = (key: string) =>
+    fieldsConfig[key]?.json ?? key.toLowerCase().replaceAll(" ", "_");
 
   return {
+    fieldsConfig,
+
     async testRead(options: {
       patientEntryOrder: string;
       patientId: string | number;
       fileId: string | number;
-      data: Record<string, IOValue>;
+      data: Record<string, IOValue | undefined>;
     }) {
       await test(`${options.patientEntryOrder}.${context.fileType}.${options.fileId}`, async ({
         page
       }) => {
         await crApiLogin(page);
         const e2eFile = await new E2EPatient(page, options.patientId)
-          .getFile(context.fileType, options.fileId)
+          .getFile({
+            fileType: context.fileType,
+            fileId: options.fileId,
+            fieldsConfig
+          })
           .go();
 
-        for (const [key, val] of Object.entries(options.data)) {
-          await e2eFile.expectOutputValue(key, val, fieldsConfig[key]?.type);
-        }
+        await e2eFile.expectAllOutputValues(options.data);
         await e2eFile.expectScreenshot();
       });
     },
@@ -471,47 +277,32 @@ export function fullTest(context: {
       }) => {
         await crApiLogin(page);
         const e2ePatient = await new E2EPatient(page, options.patientId).go();
-        const e2eFile = await e2ePatient.doAdd(context.fileType);
+        const e2eFile = await e2ePatient.doAdd({
+          fileType: context.fileType,
+          fieldsConfig
+        });
         await e2eFile.expectScreenshot();
 
         if (!options.initialIsAlreadyGood) {
           // Try to save: it does not work
-          await e2eFile.panel.getByText("Save").click();
-          await expect(e2eFile.panel.getByText("Edit")).not.toBeVisible();
+          await e2eFile.locator.getByText("Save").click();
+          await expect(e2eFile.locator.getByText("Edit")).not.toBeVisible();
           // No screenshot because too touchy
         }
 
         // Set field values
-        for (const [key, val] of Object.entries(options.data)) {
-          await e2eFile.setFieldValue(
-            key,
-            ioValue2String(val),
-            fieldsConfig[key]?.type
-          );
-        }
+        await e2eFile.setAllInputValues(options.data);
         await e2eFile.expectScreenshot();
 
         await e2eFile.doSave(true);
         // Check that the values has been correctly saved
-        for (const [key, val] of Object.entries(options.data)) {
-          await e2eFile.expectOutputValue(
-            key,
-            ioValue2String(val),
-            fieldsConfig[key]?.type
-          );
-        }
+        await e2eFile.expectAllOutputValues(options.data);
         await e2eFile.expectScreenshot();
 
         // Go back to Edit
         await e2eFile.goEdit();
         // Check that the values has been correctly filled in form
-        for (const [key, val] of Object.entries(options.data)) {
-          await e2eFile.expectInputValue(
-            key,
-            ioValue2String(val),
-            fieldsConfig[key]?.type
-          );
-        }
+        await e2eFile.expectAllInputValues(options.data);
         await e2eFile.expectScreenshot();
 
         await e2eFile.doDelete();
@@ -532,17 +323,18 @@ export function fullTest(context: {
         test.slow();
 
         await crApiLogin(page);
-        const e2eFile = new E2EPatient(page, options.patientId).getFile(
-          context.fileType,
-          options.fileId
-        );
+        const e2eFile = new E2EPatient(page, options.patientId).getFile({
+          fileType: context.fileType,
+          fileId: options.fileId,
+          fieldsConfig
+        });
 
         // Reset the data in the backend
         await e2eFile.apiFileUpdate(options.patientId, {
           id: options.fileId,
           ...Object.fromEntries(
             Object.entries(options.dataInitial).map(([k, v]) => [
-              fieldsConfig[k]?.json ?? key2json(k),
+              getJson(k),
               v ?? null
             ])
           )
@@ -550,29 +342,21 @@ export function fullTest(context: {
 
         // Output mode: verify initial data
         await e2eFile.go();
-        for (const [key, val] of Object.entries(options.dataInitial)) {
-          await e2eFile.expectOutputValue(key, val, fieldsConfig[key]?.type);
-        }
+        await e2eFile.expectAllOutputValues(options.dataInitial);
         await e2eFile.expectScreenshot();
 
         // Input mode: verify initial data
         await e2eFile.goEdit();
-        for (const [key, val] of Object.entries(options.dataInitial)) {
-          await e2eFile.expectInputValue(key, val, fieldsConfig[key]?.type);
-        }
+        await e2eFile.expectAllInputValues(options.dataInitial);
         await e2eFile.expectScreenshot();
 
         // Input mode: fill-in new data
-        for (const [key, val] of Object.entries(options.dataUpdated)) {
-          await e2eFile.setFieldValue(key, val, fieldsConfig[key]?.type);
-        }
+        await e2eFile.setAllInputValues(options.dataUpdated);
         await e2eFile.expectScreenshot();
 
         await e2eFile.doSave();
         // Output mode: verify updated data
-        for (const [key, val] of Object.entries(options.dataUpdated)) {
-          await e2eFile.expectOutputValue(key, val, fieldsConfig[key]?.type);
-        }
+        await e2eFile.expectAllOutputValues(options.dataUpdated);
         await e2eFile.expectScreenshot();
       });
     }

@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { fullTest, TimedFieldsConfigType } from "../helpers/e2e-file-panel";
-import { outputDate } from "./e2e-patients";
+import { outputDate } from "../helpers/e2e-patients";
 
 const ctx = fullTest({
   fileType: "appointment",

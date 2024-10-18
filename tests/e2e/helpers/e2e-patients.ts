@@ -1,12 +1,12 @@
 import { expect, Locator, Page } from "playwright/test";
 import { CRUD } from "../../../src/constants";
-import { crApi, crInit, crReady } from "../helpers/e2e";
-import { E2EFilePanel } from "../helpers/e2e-file-panel";
+import { crApi, crInit, crReady } from "./e2e";
+import { E2EFilePanel, FieldsConfigTypeSimplified } from "./e2e-file-panel";
 
-export { outputDate } from "../helpers/e2e";
+export { outputDate } from "./e2e";
 
+// TODO: this is a E2EForm too?
 export class E2EPatient {
-  private isInit = false;
   public id: string;
 
   constructor(
@@ -25,8 +25,17 @@ export class E2EPatient {
     await expect(this.page.getByTestId("add")).toBeVisible();
   }
 
-  getFile(type: string, fileId?: string | number): E2EFilePanel {
-    return new E2EFilePanel(this, type, "" + fileId);
+  getFile(options: {
+    fieldsConfig: FieldsConfigTypeSimplified;
+    fileType: string;
+    fileId?: string | number;
+  }): E2EFilePanel {
+    return new E2EFilePanel(
+      this,
+      options.fileType,
+      "" + options.fileId,
+      options.fieldsConfig
+    );
   }
 
   async go(): Promise<this> {
@@ -58,11 +67,18 @@ export class E2EPatient {
       .then(() => undefined);
   }
 
-  async doAdd(type: string): Promise<E2EFilePanel> {
+  async doAdd(options: {
+    fileType: string;
+    fieldsConfig: FieldsConfigTypeSimplified;
+  }): Promise<E2EFilePanel> {
     await this.page.getByTestId("add").click();
-    await this.page.getByTestId("add-" + type).click();
+    await this.page.getByTestId("add-" + options.fileType).click();
 
     await crReady(this.page);
-    return this.getFile(type, "add");
+    return this.getFile({
+      fileType: options.fileType,
+      fileId: "add",
+      fieldsConfig: options.fieldsConfig
+    });
   }
 }
