@@ -20,7 +20,6 @@ export default function IOFunction(props: IOPropsReadonly<T>) {
         try {
           return <div>{typeof value == "function" && value()}</div>;
         } catch (e: any) {
-          // console.trace("io-function", e);
           return <div className="io-function-error">{e.message}</div>;
         }
       }
