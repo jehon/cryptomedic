@@ -330,7 +330,7 @@ export class E2EFilePanel {
             "input[type=checkbox]"
           );
 
-          if (value == "1") {
+          if (value) {
             await expect(loc).toBeChecked();
           } else {
             await expect(loc).not.toBeChecked();
