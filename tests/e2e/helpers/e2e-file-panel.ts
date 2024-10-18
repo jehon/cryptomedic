@@ -492,12 +492,26 @@ export function fullTest(context: {
         await e2eFile.expectScreenshot();
 
         await e2eFile.doSave(true);
-        // TODO: check values
+        // Check that the values has been correctly saved
+        for (const [key, val] of Object.entries(options.data)) {
+          await e2eFile.expectOutputValue(
+            key,
+            ioValue2String(val),
+            fieldsConfig[key]?.type
+          );
+        }
         await e2eFile.expectScreenshot();
 
         // Go back to Edit
         await e2eFile.goEdit();
-        // TODO: check values
+        // Check that the values has been correctly filled in form
+        for (const [key, val] of Object.entries(options.data)) {
+          await e2eFile.expectInputValue(
+            key,
+            ioValue2String(val),
+            fieldsConfig[key]?.type
+          );
+        }
         await e2eFile.expectScreenshot();
 
         await e2eFile.doDelete();
