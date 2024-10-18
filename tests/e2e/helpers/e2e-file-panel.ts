@@ -45,13 +45,7 @@ export const consultBasicData = {
   Examiner: "Ershad",
   Center: "Ukhia",
   "Weight (kg)": "29",
-  // "Weight sd": "0.0",
   "Height (cm)": "134",
-  // "Height sd": "0.0",
-  // "Weight/Height ratio": "0.2",
-  // "Weight/Height sd": "'value' is out-of-bounds: 134 [80 -> 120]",
-  // BMI: "24",
-  // "BMI sd": "-0.0",
 
   "Others Comments and Treatments": "please do something",
   "Suggested for Surgery": false,
