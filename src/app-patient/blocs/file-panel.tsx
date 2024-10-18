@@ -35,7 +35,7 @@ export function isTodoMigration(type: typeof Pojo) {
   return [
     "bill",
     "consult_clubfoot",
-    ...[dev ? [] : ["consult_other"]],
+    // ...[dev ? [] : ["consult_other"]],
     "consult_ricket",
     "payment",
     "picture",
