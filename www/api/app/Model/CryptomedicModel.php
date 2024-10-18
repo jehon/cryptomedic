@@ -87,10 +87,10 @@ class CryptomedicModel extends Model {
 		abort(500, "Could not create the object");
 	}
 
-	static public function updateWithArray($id, $data) {
+	static public function updateWithArray($id, $attributes = array()) {
 		$obj = self::findOrFail($id);
 
-		foreach ($data as $k => $v) {
+		foreach ($attributes as $k => $v) {
 			// Set existing fields
 			if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
 				$obj->{$k} = $v;
