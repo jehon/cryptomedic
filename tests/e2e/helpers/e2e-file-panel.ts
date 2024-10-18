@@ -40,24 +40,24 @@ export const ConsultFieldsConfigType: FieldsConfigTypeSimplified = {
   "Treatment Finished": "checkbox"
 };
 
-// export const consultBasicData = {
-//   Date: "2007-01-10",
-//   Examiner: "Ershad",
-//   Center: "Ukhia",
-//   "Weight (kg)": "29",
-//   // "Weight sd": "0.0",
-//   "Height (cm)": "134",
-//   // "Height sd": "0.0",
-//   // "Weight/Height ratio": "0.2",
-//   // "Weight/Height sd": "'value' is out-of-bounds: 134 [80 -> 120]",
-//   // BMI: "24",
-//   // "BMI sd": "-0.0",
+export const consultBasicData = {
+  Date: "2007-01-10",
+  Examiner: "Ershad",
+  Center: "Ukhia",
+  "Weight (kg)": "29",
+  // "Weight sd": "0.0",
+  "Height (cm)": "134",
+  // "Height sd": "0.0",
+  // "Weight/Height ratio": "0.2",
+  // "Weight/Height sd": "'value' is out-of-bounds: 134 [80 -> 120]",
+  // BMI: "24",
+  // "BMI sd": "-0.0",
 
-//   "Others Comments and Treatments": "please do something",
-//   "Suggested for Surgery": false,
-//   "Treatment Evaluation": "Good result", // List
-//   "Treatment Finished": true
-// };
+  "Others Comments and Treatments": "please do something",
+  "Suggested for Surgery": false,
+  "Treatment Evaluation": "Good result", // List
+  "Treatment Finished": true
+};
 
 function reduceFieldConfig2Form(fc: FieldsConfigTypeSimplified) {
   return Object.fromEntries(

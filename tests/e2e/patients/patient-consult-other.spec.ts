@@ -1,4 +1,10 @@
-import { ConsultFieldsConfigType, fullTest } from "../helpers/e2e-file-panel";
+import { expect } from "@playwright/test";
+import { outputDate } from "../helpers/e2e";
+import {
+  consultBasicData,
+  ConsultFieldsConfigType,
+  fullTest
+} from "../helpers/e2e-file-panel";
 
 const ctx = fullTest({
   fileType: "consult_other",
@@ -29,44 +35,44 @@ ctx.testRead({
   }
 });
 
-// ctx.testCreateDelete({
-//   patientEntryOrder: "2010-004",
-//   patientId: 104,
-//   deleteTest: (page) =>
-//     expect(page.getByText(outputDate("2022-10-04"))).toHaveCount(0),
-//   data: {
-//     ...consultBasicData,
+ctx.testCreateDelete({
+  patientEntryOrder: "2010-004",
+  patientId: 104,
+  deleteTest: (page) =>
+    expect(page.getByText(outputDate("2022-10-04"))).toHaveCount(0),
+  data: {
+    ...consultBasicData,
 
-//     Side: "Left",
-//     "Joints or Bones Affected": "some there",
-//     Deformity: "",
-//     "Articulation Mobility": "quiet mobile",
-//     "Muscle Strength": "strong!",
-//     Pain: "Moderate"
-//   }
-// });
+    Side: "Left",
+    "Joints or Bones Affected": "some there",
+    Deformity: "",
+    "Articulation Mobility": "quiet mobile",
+    "Muscle Strength": "strong!",
+    Pain: "Moderate"
+  }
+});
 
-// ctx.testUpdate({
-//   patientEntryOrder: "2010-004",
-//   patientId: 104,
-//   fileId: 104,
-//   dataInitial: {
-//     ...consultBasicData,
+ctx.testUpdate({
+  patientEntryOrder: "2010-004",
+  patientId: 104,
+  fileId: 104,
+  dataInitial: {
+    ...consultBasicData,
 
-//     Side: "Left",
-//     "Joints or Bones Affected": "some there",
-//     Deformity: "",
-//     "Articulation Mobility": "quiet mobile",
-//     "Muscle Strength": "strong!",
-//     Pain: "Moderate"
-//   },
-//   dataUpdated: {
-//     ...consultBasicData,
-//     Side: "Right",
-//     "Joints or Bones Affected": "some others",
-//     Deformity: "yes indeed",
-//     "Articulation Mobility": "not anymore",
-//     "Muscle Strength": "waw",
-//     Pain: "No"
-//   }
-// });
+    Side: "Left",
+    "Joints or Bones Affected": "some there",
+    Deformity: "",
+    "Articulation Mobility": "quiet mobile",
+    "Muscle Strength": "strong!",
+    Pain: "Moderate"
+  },
+  dataUpdated: {
+    ...consultBasicData,
+    Side: "Right",
+    "Joints or Bones Affected": "some others",
+    Deformity: "yes indeed",
+    "Articulation Mobility": "not anymore",
+    "Muscle Strength": "waw",
+    Pain: "No"
+  }
+});
