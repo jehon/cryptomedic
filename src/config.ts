@@ -46,3 +46,11 @@ export const icons = {
 export const urls = {
   home: "/built/frontend/ng1x.html"
 };
+
+export function isFeatureSwitchEnabled(): boolean {
+  return location.search == "?dev";
+}
+
+if (isFeatureSwitchEnabled()) {
+  console.warn("In dev mode (inTodoDev in config.ts)");
+}

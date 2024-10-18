@@ -6,7 +6,7 @@ import Pojo from "../../business/abstracts/pojo";
 import Timed from "../../business/abstracts/timed";
 import Folder, { PatientRelatedClass } from "../../business/folder";
 import Patient from "../../business/patient";
-import { icons } from "../../config";
+import { icons, isFeatureSwitchEnabled } from "../../config";
 import { routeTo } from "../../react";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { passThrough } from "../../utils/promises";
@@ -27,15 +27,9 @@ export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
 // TODO: migrate all this progressively
 export function isTodoMigration(type: typeof Pojo) {
-  const dev = location.search == "?dev";
-  if (dev) {
-    console.warn("In dev mode for", type.getTechnicalName());
-  }
-
   return [
     "bill",
-    "consult_clubfoot",
-    // ...[dev ? [] : ["consult_other"]],
+    ...[isFeatureSwitchEnabled() ? [] : ["consult_clubfoot"]],
     "consult_ricket",
     "payment",
     "picture",
