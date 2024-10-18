@@ -58,7 +58,7 @@ class CryptomedicModel extends Model {
 		return DatabaseStructure::getDependantsOfTable(self::staticGetModelName());
 	}
 
-	static public function filterData($data, $forUpdate = true) {
+	static private function filterData($data, $forUpdate = true) {
 		unset($data['_type']);
 
 		$columns = self::getTableColumnsList();
