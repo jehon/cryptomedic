@@ -55,7 +55,7 @@ export default function consultOtherElementGenerator(
           </Panel>
           <Panel label="Orthopedic observations">
             <IO.Text name="performed" value={file.performed}></IO.Text>
-            <IO.Text name="not performed" value={file.not_performed}></IO.Text>
+            <IO.Text name="not_performed" value={file.not_performed}></IO.Text>
           </Panel>
         </TwoColumns>
         <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
