@@ -2,7 +2,6 @@ import Appointment from "../business/appointment";
 
 import { getList } from "../utils/config";
 import IO from "../widget/io";
-import { optionalList } from "../widget/io-list";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
@@ -22,7 +21,7 @@ export default function appointmentElementGenerator(
           <IO.List
             name="center"
             value={file.center as string}
-            list={optionalList(getList("Centers"))}
+            list={getList("Centers")}
           />
         </Panel>
         <Panel fixed label="Objective">

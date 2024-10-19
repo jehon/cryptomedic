@@ -3,7 +3,7 @@ import Patient, { yearOfBirthPattern } from "../business/patient";
 import { getList } from "../utils/config";
 
 import IO from "../widget/io";
-import { IOListType, optionalList } from "../widget/io-list";
+import { IOListType } from "../widget/io-list";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
@@ -14,7 +14,7 @@ function getListFor(category: string, value: string): IOListType {
   // "district.other"
   //
   try {
-    return optionalList(getList(`${category}.${value}`));
+    return getList(`${category}.${value}`);
   } catch (_e) {
     // acceptable
   }
@@ -61,11 +61,7 @@ export default function patientElementGenerator(
               value={parseInt(patient.entry_order)}
             />
             <IO.String name="name" value={patient.name} />
-            <IO.List
-              name="sex"
-              value={patient.sex}
-              list={optionalList(getList("sex"))}
-            />
+            <IO.List name="sex" value={patient.sex} list={getList("sex")} />
             <IO.String
               name="year_of_birth"
               label="Year of Birth"
@@ -83,7 +79,7 @@ export default function patientElementGenerator(
             <IO.List
               name="pathology"
               value={patient.pathology}
-              list={optionalList(getList("Pathologies"))}
+              list={getList("Pathologies")}
             />
             <IO.Text name="comments" value={patient.comments} />
           </Panel>
@@ -93,7 +89,7 @@ export default function patientElementGenerator(
               name="address_district"
               label="District"
               value={districtValue}
-              list={optionalList(getList("Districts"))}
+              list={getList("Districts")}
               onChange={(v) => districtValueUpdate(v)}
             />
             <IO.List

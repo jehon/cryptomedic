@@ -3,9 +3,9 @@ import IOAbstract, { IOProps } from "./io-abstract";
 
 export type IOListType = string[] | Record<string, string>;
 
-export function optionalList(list: string[]): IOListType {
+function optionalList(list: Record<string, string>): Record<string, string> {
   return {
-    ...canonizeList(list),
+    ...list,
     "": "Unknown"
   };
 }
@@ -74,7 +74,10 @@ function buildRadios(
 export default function IOList(
   props: { list: IOListType } & IOProps<StringList>
 ) {
-  const list: Record<string, string> = canonizeList(props.list);
+  // Handle required
+  const list = props.required
+    ? canonizeList(props.list)
+    : optionalList(canonizeList(props.list));
 
   if (props.value && props.onChange && !(props.value in list)) {
     // We have a value that is not in the list,
@@ -82,21 +85,15 @@ export default function IOList(
     setTimeout(() => props.onChange!(""), 1);
   }
 
-  return IOAbstract<string>(
-    {
-      ...props,
-      required: true
-    },
-    {
-      renderOutput: (value) => <div>{value}</div>,
-      renderInput: (value, uuid) =>
-        Object.keys(list).length == 0 ? (
-          <div>Not applicable</div>
-        ) : Object.keys(list).length > 4 ? (
-          buildSelect(uuid, list, value ?? "", props.name ?? "", props.onChange)
-        ) : (
-          buildRadios(uuid, list, value ?? "", props.name ?? "", props.onChange)
-        )
-    }
-  );
+  return IOAbstract<string>(props, {
+    renderOutput: (value) => <div>{value}</div>,
+    renderInput: (value, uuid) =>
+      Object.keys(list).length == 0 ? (
+        <div>Not applicable</div>
+      ) : Object.keys(list).length > 4 ? (
+        buildSelect(uuid, list, value ?? "", props.name ?? "", props.onChange)
+      ) : (
+        buildRadios(uuid, list, value ?? "", props.name ?? "", props.onChange)
+      )
+  });
 }

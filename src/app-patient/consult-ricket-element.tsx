@@ -37,22 +37,22 @@ export default function consultRicketElementGenerator(
             <IO.List
               name="walking_difficulties"
               value={file.walking_difficulties}
-              list={getList("")}
+              list={getList("WalkingCapacities")}
             ></IO.List>
             <IO.List
               label="Pain"
               value={file.pain}
-              list={getList("")}
+              list={getList("Pain")}
             ></IO.List>
             <IO.List
               name="wrist_enlargement"
               value={file.wrist_enlargement}
-              list={getList("")}
+              list={getList("Eval03")}
             ></IO.List>
             <IO.List
               name="rib_heading"
               value={file.rib_heading}
-              list={getList("")}
+              list={getList("Eval03")}
             ></IO.List>
             <IO.Text left name="xray" label="XRay" value={file.xray}></IO.Text>
             <IO.Number
@@ -76,7 +76,7 @@ export default function consultRicketElementGenerator(
               right
               label="Leg"
               value={file.right_leg}
-              list={getList("")}
+              list={getList("LegAnalysis")}
             ></IO.List>
             <IO.Number
               right
@@ -107,7 +107,7 @@ export default function consultRicketElementGenerator(
               left
               label="Leg"
               value={file.left_leg}
-              list={getList("")}
+              list={getList("LegAnalysis")}
             ></IO.List>
             <IO.Number
               left

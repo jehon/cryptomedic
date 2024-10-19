@@ -36,7 +36,7 @@ export const ConsultFieldsConfigType: FieldsConfigTypeSimplified = {
     json: "comments"
   },
   "Suggested for Surgery": "checkbox",
-  "Treatment Evaluation": "radio",
+  "Treatment Evaluation": "select",
   "Treatment Finished": "checkbox"
 };
 

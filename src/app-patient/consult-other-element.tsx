@@ -26,6 +26,7 @@ export default function consultOtherElementGenerator(
               name="side"
               value={file.side}
               list={getList("Side")}
+              required
             ></IO.List>
             <IO.String
               name="joints_or_bones_affected"

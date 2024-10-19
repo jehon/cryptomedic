@@ -21,11 +21,13 @@ export default function ConsultAbstractIntroduction({
           name="examiner"
           value={file.examiner as string}
           list={getList("Examiners")}
+          required
         />
         <IO.List
           name="center"
           value={file.center as string}
           list={getList("Centers")}
+          required
         />
         <IO.Function
           label="Age at consultation time"

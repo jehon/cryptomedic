@@ -12,7 +12,7 @@ const ctx = fullTest({
     ...ConsultFieldsConfigType,
     Side: "radio",
     Pain: "radio",
-    Walk: "radio"
+    Walk: "select"
   }
 });
 
