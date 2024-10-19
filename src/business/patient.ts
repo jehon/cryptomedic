@@ -5,6 +5,7 @@ import PatientRelated from "./abstracts/patient-related";
 export const yearOfBirthPattern =
   "(19[7-9][0-9]|20[0-2][0-9])(-(0?[1-9]|1[0-2]))?";
 
+// TODO: this is not a PatientRelated
 export default class Patient extends PatientRelated {
   static override getModel() {
     return "Patient";
