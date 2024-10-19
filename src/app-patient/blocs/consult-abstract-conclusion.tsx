@@ -3,6 +3,7 @@ import Consult from "../../business/abstracts/consult";
 import { getList } from "../../utils/config";
 import { string2Boolean } from "../../utils/strings";
 import IO from "../../widget/io";
+import { optionalList } from "../../widget/io-list";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
 
@@ -27,7 +28,7 @@ export default function ConsultAbstractConclusion({
         <IO.List
           name="treatment_evaluation"
           value={file.treatment_evaluation}
-          list={getList("TreatmentEvaluation")}
+          list={optionalList(getList("TreatmentEvaluation"))}
         />
         <IO.Boolean
           name="treatment_finished"
