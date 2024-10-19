@@ -3,7 +3,11 @@ import { ConsultFieldsConfigType, fullTest } from "../helpers/e2e-file-panel";
 const ctx = fullTest({
   fileType: "consult_ricket",
   fieldsConfig: {
-    ...ConsultFieldsConfigType
+    ...ConsultFieldsConfigType,
+    "Walking Difficulties": "select",
+    Pain: "radio",
+    "Wrist Enlargement": "select",
+    "Rib Heading": "select"
   }
 });
 

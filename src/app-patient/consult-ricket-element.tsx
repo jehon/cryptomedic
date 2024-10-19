@@ -40,7 +40,7 @@ export default function consultRicketElementGenerator(
               list={getList("WalkingCapacities")}
             ></IO.List>
             <IO.List
-              label="Pain"
+              name="pain"
               value={file.pain}
               list={getList("Pain")}
             ></IO.List>
@@ -74,6 +74,7 @@ export default function consultRicketElementGenerator(
           >
             <IO.List
               right
+              name="right_leg"
               label="Leg"
               value={file.right_leg}
               list={getList("LegAnalysis")}
@@ -105,6 +106,7 @@ export default function consultRicketElementGenerator(
           >
             <IO.List
               left
+              name="left_leg"
               label="Leg"
               value={file.left_leg}
               list={getList("LegAnalysis")}
@@ -126,12 +128,6 @@ export default function consultRicketElementGenerator(
               name="cross_left_F"
               label="Cross F"
               value={file.cross_left_F}
-            ></IO.Number>
-            <IO.Number
-              left
-              name="IMIC_distance"
-              label="IMIC Distance"
-              value={file.IMIC_distance}
             ></IO.Number>
           </Panel>
         </TwoColumns>
