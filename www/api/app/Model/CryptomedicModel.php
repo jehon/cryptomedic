@@ -88,11 +88,13 @@ class CryptomedicModel extends Model {
 	}
 
 	static public function updateWithArray($id, $attributes = array()) {
+		$attributes = self::canonize($attributes);
+		$attributes = self::filterData($attributes, false);
+
 		$obj = self::findOrFail($id);
 
 		foreach ($attributes as $k => $v) {
-			// Set existing fields
-			if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
+			if ($obj->getAttribute($k) != $v) {
 				$obj->{$k} = $v;
 			}
 		}
