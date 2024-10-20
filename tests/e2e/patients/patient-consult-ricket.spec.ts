@@ -7,7 +7,10 @@ const ctx = fullTest({
     "Walking Difficulties": "select",
     Pain: "radio",
     "Wrist Enlargement": "select",
-    "Rib Heading": "select"
+    "Rib Heading": "select",
+
+    "Right Leg": "radio",
+    "Left Leg": "radio"
   }
 });
 
@@ -18,6 +21,11 @@ ctx.testRead({
   data: {
     Date: "2014-01-04",
     Examiner: "AMD doctor",
-    "Walking Difficulties": "Level 1"
+    "Weight (kg)": 37,
+    "Walking Difficulties": "Level 1",
+    Pain: "Moderate",
+    "Right Leg": "Varus",
+    "Left Leg Angle": 5,
+    "Suggested for Surgery": true
   }
 });
