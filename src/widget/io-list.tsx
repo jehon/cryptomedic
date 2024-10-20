@@ -3,12 +3,7 @@ import IOAbstract, { IOProps } from "./io-abstract";
 
 export type IOListType = string[] | Record<string, string>;
 
-function optionalList(list: Record<string, string>): Record<string, string> {
-  return {
-    ...list,
-    "": "Unknown"
-  };
-}
+const UnknownLabel = "Unknown";
 
 // In other part of the application, it could be a mapping
 // Ex: io-boolean, search panels
@@ -27,8 +22,21 @@ function buildSelect(
   list: Record<string, string>,
   value: string,
   name: string,
-  onChange: (val: string) => void = () => {}
+  onChange: (val: string) => void = () => {},
+  required: boolean
 ) {
+  if (required) {
+    list = {
+      "": "Please select an option",
+      ...list
+    };
+  } else {
+    list = {
+      ...list,
+      "": UnknownLabel
+    };
+  }
+
   // Select always require a selected option to be chosen
   return (
     <select
@@ -37,6 +45,7 @@ function buildSelect(
       name={name}
       defaultValue={value ?? ""}
       onChange={(evt) => onChange(evt.target.value)}
+      required={required}
     >
       {Object.entries(list).map(([stored, shown]) => (
         <option key={shown} value={stored}>
@@ -52,8 +61,18 @@ function buildRadios(
   list: Record<string, string>,
   value: string,
   name: string,
-  onChange: (val: string) => void = () => {}
+  onChange: (val: string) => void = () => {},
+  required: boolean
 ) {
+  if (required) {
+    // true
+  } else {
+    list = {
+      ...list,
+      "": UnknownLabel
+    };
+  }
+
   return Object.entries(list).map(([stored, shown], i) => (
     <div className="align" key={shown}>
       <input
@@ -74,12 +93,9 @@ function buildRadios(
 export default function IOList(
   props: { list: IOListType } & IOProps<StringList>
 ) {
-  // Handle required
-  const list = props.required
-    ? canonizeList(props.list)
-    : optionalList(canonizeList(props.list));
+  const choices = canonizeList(props.list);
 
-  if (props.value && props.onChange && !(props.value in list)) {
+  if (props.value && props.onChange && !(props.value in choices)) {
     // We have a value that is not in the list,
     // so we trigger the change of value
     setTimeout(() => props.onChange!(""), 1);
@@ -88,12 +104,29 @@ export default function IOList(
   return IOAbstract<string>(props, {
     renderOutput: (value) => <div>{value}</div>,
     renderInput: (value, uuid) =>
-      Object.keys(list).length == 0 ? (
+      Object.keys(choices).length == 0 ? (
         <div>Not applicable</div>
-      ) : Object.keys(list).length > 4 ? (
-        buildSelect(uuid, list, value ?? "", props.name ?? "", props.onChange)
+      ) : Object.keys(choices).length +
+          // If not-required/optional, we add "unknown" to the list
+          (props.required ? 0 : 1) >
+        4 ? (
+        buildSelect(
+          uuid,
+          choices,
+          value ?? "",
+          props.name ?? "",
+          props.onChange,
+          props.required || false
+        )
       ) : (
-        buildRadios(uuid, list, value ?? "", props.name ?? "", props.onChange)
+        buildRadios(
+          uuid,
+          choices,
+          value ?? "",
+          props.name ?? "",
+          props.onChange,
+          props.required || false
+        )
       )
   });
 }
