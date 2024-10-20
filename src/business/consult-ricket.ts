@@ -32,8 +32,4 @@ export default class ConsultRicket extends Consult {
   left_leg_angle: StringNumber = "";
   cross_left_T: StringNumber = "";
   cross_left_F: StringNumber = "";
-
-  x_Surgery: string = "";
-  x_Brace: string = "";
-  x_Nutrisupport: string = "";
 }
