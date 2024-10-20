@@ -75,23 +75,23 @@ export default function consultRicketElementGenerator(
             <IO.List
               right
               name="right_leg"
-              label="Leg"
               value={file.right_leg}
               list={getList("LegAnalysis")}
             ></IO.List>
             <IO.Number
               right
               name="right_leg_angle"
-              label="Leg Angle"
               value={file.right_leg_angle}
             ></IO.Number>
             <IO.Number
               right
+              label="Right Cross T"
               name="cross_right_T"
               value={file.cross_right_T}
             ></IO.Number>
             <IO.Number
               right
+              label="Right Cross F"
               name="cross_right_F"
               value={file.cross_right_F}
             ></IO.Number>
@@ -107,26 +107,24 @@ export default function consultRicketElementGenerator(
             <IO.List
               left
               name="left_leg"
-              label="Leg"
               value={file.left_leg}
               list={getList("LegAnalysis")}
             ></IO.List>
             <IO.Number
               left
               name="left_leg_angle"
-              label="Leg Angle"
               value={file.left_leg_angle}
             ></IO.Number>
             <IO.Number
               left
               name="cross_left_T"
-              label="Cross T"
+              label="Left Cross T"
               value={file.cross_left_T}
             ></IO.Number>
             <IO.Number
               left
               name="cross_left_F"
-              label="Cross F"
+              label="Left Cross F"
               value={file.cross_left_F}
             ></IO.Number>
           </Panel>
