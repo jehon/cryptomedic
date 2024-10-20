@@ -495,6 +495,7 @@ INSERT INTO `patients` VALUES (101,'2023-08-30 16:48:21','2023-08-30 17:27:13','
 INSERT INTO `patients` VALUES (102,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,2,'test appointment','','','','','','','','', '');
 INSERT INTO `patients` VALUES (103,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,3,'test surgery','','','','','','','','', '');
 INSERT INTO `patients` VALUES (104,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,4,'test consult other','','','','','','','','', '');
+INSERT INTO `patients` VALUES (105,'1980-01-01 00:00:00','1980-01-01 00:00:00','test',2010,5,'test consult ricket','','','','','','','','', '');
 
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -790,6 +791,7 @@ INSERT INTO `ricket_consults` VALUES (8,'1980-01-01 00:00:00','2015-02-04 17:57:
 INSERT INTO `ricket_consults` VALUES (9,'1980-01-01 00:00:00','2015-02-04 17:57:04','transfer',6,'2004-05-23',NULL,NULL,18,114,NULL,'Valgus',NULL,0,0,4,4,NULL,NULL,NULL,'Valgus',NULL,NULL,NULL,NULL,0,NULL,NULL,'',0,NULL,NULL,0,0,0);
 INSERT INTO `ricket_consults` VALUES (13,'2014-06-02 07:19:09','2023-08-30 05:11:54','Thierry',1,'2014-01-04','AMD doctor','Chakaria Disability Center',37,110,'0','Varus','Moderate',0,0,30,5,'','','10','Varus','0','Osteotomy','',NULL,0,0,'Level 1','',1,NULL,NULL,0,1,0);
 INSERT INTO `ricket_consults` VALUES (100,'2023-08-30 16:50:06','2023-08-30 17:36:40','jehon',100,'2023-01-03','Morshedul Alam','Pakua',90,120,'13','Valgus','Moderate',1,2,10,11,'12','14','16','Varus','15',NULL,'waw',NULL,0,20,'Level 2','drink a glass of water',NULL,0,NULL,0,0,0);
+INSERT INTO `ricket_consults` VALUES (105,'2023-08-30 16:50:06','2023-08-30 17:36:40','jehon',105,'2023-01-03','Morshedul Alam','Pakua',90,120,'13','Valgus','Moderate',1,2,10,11,'12','14','16','Varus','15',NULL,'waw',NULL,0,20,'Level 2','drink a glass of water',NULL,0,NULL,0,0,0);
 /*!40000 ALTER TABLE `ricket_consults` ENABLE KEYS */;
 UNLOCK TABLES;
 

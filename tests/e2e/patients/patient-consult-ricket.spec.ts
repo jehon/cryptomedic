@@ -1,4 +1,10 @@
-import { ConsultFieldsConfigType, fullTest } from "../helpers/e2e-file-panel";
+import { expect } from "@playwright/test";
+import { outputDate } from "../helpers/e2e";
+import {
+  consultBasicData,
+  ConsultFieldsConfigType,
+  fullTest
+} from "../helpers/e2e-file-panel";
 
 const ctx = fullTest({
   fileType: "consult_ricket",
@@ -27,5 +33,27 @@ ctx.testRead({
     "Right Leg": "Varus",
     "Left Leg Angle": 5,
     "Suggested for Surgery": true
+  }
+});
+
+ctx.testCreateDelete({
+  patientEntryOrder: "2010-005",
+  patientId: 105,
+  deleteTest: (page) =>
+    expect(page.getByText(outputDate(consultBasicData.Date))).toHaveCount(0),
+  data: {
+    ...consultBasicData
+  }
+});
+
+ctx.testUpdate({
+  patientEntryOrder: "2010-005",
+  patientId: 105,
+  fileId: 105,
+  dataInitial: {
+    ...consultBasicData
+  },
+  dataUpdated: {
+    ...consultBasicData
   }
 });
