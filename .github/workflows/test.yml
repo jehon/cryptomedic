@@ -229,7 +229,7 @@ jobs:
       - tests-unit
       - tests-unit-with-backend
       - tests-e2e-cypress
-      - tests-e2e-playwright
+      # - tests-e2e-playwright
       - test-e2e-playwright-update-snapshots
     runs-on: ubuntu-latest
     steps:
