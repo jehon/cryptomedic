@@ -23,3 +23,11 @@
 #toast-container {
   display: none !important;
 }
+
+*,
+*::before,
+*::after {
+  animation: none !important;
+  caret-color: transparent !important;
+  transition: none !important;
+}
