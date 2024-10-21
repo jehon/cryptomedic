@@ -28,10 +28,10 @@ export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 // TODO: migrate all this progressively
 export function isTodoMigration(type: typeof Pojo) {
   return [
-    "bill",
-    "payment",
+    ...[isFeatureSwitchEnabled() ? [] : ["consult_clubfoot"]],
     "picture",
-    ...[isFeatureSwitchEnabled() ? [] : ["consult_clubfoot"]]
+    "bill",
+    "payment"
   ].includes(type.getTechnicalName());
 }
 
