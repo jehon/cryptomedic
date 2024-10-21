@@ -24,6 +24,10 @@
   display: none !important;
 }
 
+/*
+  Already handled by Playwright ?
+  https://playwright.dev/docs/api/class-pageassertions#page-assertions-to-have-screenshot-1-option-animations
+*/
 *,
 *::before,
 *::after {
