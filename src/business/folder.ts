@@ -139,12 +139,8 @@ export default class Folder extends Pojo {
   getByFieldValue(field: string, value?: string): PatientRelated[] {
     const res = [];
     for (const i in this.list) {
-      if (
-        // TODO: simplify after Pojo.ts
-        ((this.list[i] as unknown as { [key: string]: string })[
-          field
-        ] as string) == value
-      ) {
+      // Not exactly exact, but close enough
+      if ((this.list[i][field as keyof PatientRelated] as string) == value) {
         res.push(this.list[i] as PatientRelated);
       }
     }

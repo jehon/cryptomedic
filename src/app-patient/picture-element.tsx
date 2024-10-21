@@ -14,7 +14,7 @@ export default function pictureElementGenerator(
 ) {
   return patientRelatedElementGenerator<Picture>(file, props, {
     // TODO: Picture header
-    // header: <>{file.type}</>,
+    header: <>{file.type}</>,
     body: (
       <TwoColumns>
         <Panel fixed label="Information">

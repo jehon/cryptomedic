@@ -5,8 +5,8 @@ import { StringDate } from "../../utils/types";
 export default class Pojo {
   [immerable] = true;
 
-  static factory(json = {}) {
-    return plainToInstance(this, json);
+  static factory<T extends Pojo>(json = {}) {
+    return plainToInstance(this, json) as T;
   }
 
   static getModel() {
@@ -20,6 +20,7 @@ export default class Pojo {
   static getTitle() {
     return this.getModel();
   }
+
   declare ["constructor"]: typeof Pojo;
 
   getStatic(): typeof Pojo {

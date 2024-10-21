@@ -183,13 +183,12 @@ test("Copy with new file", function () {
   assert(fap instanceof Appointment);
   assert.equal(fap.purpose, "");
 
-  // TODO: use <> in factory to ease type mapping
   const f2 = f.withFile(
     Appointment.factory({
       id: "2",
       examiner: "test",
       purpose: "test"
-    }) as any as Appointment
+    })
   );
   assert(f2 instanceof Folder);
   const fap2 = f2.getByUid<Appointment>("appointment.2");

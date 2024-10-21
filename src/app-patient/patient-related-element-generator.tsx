@@ -15,8 +15,7 @@ export default function patientRelatedElementGenerator<
   file: T,
   { selectedUid, onUpdate, mode }: PatientRelatedElementGeneratorProps,
   elements: {
-    // TODO: header is mandatory
-    header?: React.ReactNode;
+    header: React.ReactNode;
     body: React.ReactNode;
     footer?: React.ReactNode;
   }
