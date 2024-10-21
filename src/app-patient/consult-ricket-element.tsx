@@ -54,9 +54,8 @@ export default function consultRicketElementGenerator(
               value={file.rib_heading}
               list={getList("Eval03")}
             ></IO.List>
-            <IO.Text left name="xray" label="XRay" value={file.xray}></IO.Text>
+            <IO.Text name="xray" label="XRay" value={file.xray}></IO.Text>
             <IO.Number
-              right
               name="IMIC_distance"
               label="IMIC Distance"
               value={file.IMIC_distance}
@@ -73,24 +72,20 @@ export default function consultRicketElementGenerator(
             }
           >
             <IO.List
-              right
               name="right_leg"
               value={file.right_leg}
               list={getList("LegAnalysis")}
             ></IO.List>
             <IO.Number
-              right
               name="right_leg_angle"
               value={file.right_leg_angle}
             ></IO.Number>
             <IO.Number
-              right
               label="Right Cross T"
               name="cross_right_T"
               value={file.cross_right_T}
             ></IO.Number>
             <IO.Number
-              right
               label="Right Cross F"
               name="cross_right_F"
               value={file.cross_right_F}
@@ -105,24 +100,20 @@ export default function consultRicketElementGenerator(
             }
           >
             <IO.List
-              left
               name="left_leg"
               value={file.left_leg}
               list={getList("LegAnalysis")}
             ></IO.List>
             <IO.Number
-              left
               name="left_leg_angle"
               value={file.left_leg_angle}
             ></IO.Number>
             <IO.Number
-              left
               name="cross_left_T"
               label="Left Cross T"
               value={file.cross_left_T}
             ></IO.Number>
             <IO.Number
-              left
               name="cross_left_F"
               label="Left Cross F"
               value={file.cross_left_F}

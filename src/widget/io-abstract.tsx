@@ -12,8 +12,6 @@ export type IOPropsReadonly<T> = {
   label?: string;
   value: IOPropsInput<T>;
   noLabel?: boolean;
-  left?: boolean;
-  right?: boolean;
   e2eExcluded?: boolean;
   help?: React.ReactNode;
   inputHelp?: React.ReactNode;
@@ -56,8 +54,6 @@ export default function IOAbstract<T>(
     required: false,
     noLabel: false,
     note: false,
-    left: false, // TODO: Check usage
-    right: false, // TODO: Check usage
     e2eExcluded: false, // Wether the data should be excluded from e2e
     ...props
   };
@@ -87,8 +83,6 @@ export default function IOAbstract<T>(
   if (!editContext && !calculatedProps.value) {
     return null;
   }
-
-  // TODO: handle left / right
 
   const uuid = generateUUID();
   return (
