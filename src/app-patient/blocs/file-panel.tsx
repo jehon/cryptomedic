@@ -32,8 +32,7 @@ export function isTodoMigration(type: typeof Pojo) {
     "consult_clubfoot",
     ...[isFeatureSwitchEnabled() ? [] : ["consult_ricket"]],
     "payment",
-    "picture",
-    "price"
+    "picture"
   ].includes(type.getTechnicalName());
 }
 
