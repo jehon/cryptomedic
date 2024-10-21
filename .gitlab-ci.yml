@@ -60,7 +60,7 @@ tests-unit-with-backend:
     - make start
     - make $target
 
-tests-e2e:
+tests-e2e-desktop:
   stage: test
   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
   services:
@@ -76,14 +76,31 @@ tests-e2e:
     - make dc-build
     - make start
     - make dependencies
-    - make integration-test-${flavor}-run
-    - make integration-test-${flavor}-styles
+    - make integration-test-desktop-run
+    - make integration-test-desktop-styles
   artifacts:
     when: always
     paths:
-      - tmp/integration/$flavor
+      - tmp/integration/desktop
 
-update-e2e:
+tests-e2e-playwright:
+  stage: test
+  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+  services:
+    - name: docker:dind
+  script:
+    - ./setup.sh
+    - make github
+    - make dc-build
+    - make start
+    - make dependencies
+    - make integration-test-playwright
+  artifacts:
+    when: always
+    paths:
+      - tmp/integration/playwright
+
+test-e2e-playwright-update-snapshots:
   stage: test
   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
   services:
@@ -106,8 +123,8 @@ valid:
   image: alpine
   needs:
     - tests-unit
-    - tests-e2e
     - tests-unit-with-backend
+    - test-e2e-playwright-update-snapshots
   script:
     - echo "ok"
 
