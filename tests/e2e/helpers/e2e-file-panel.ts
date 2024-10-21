@@ -179,8 +179,6 @@ export class E2EFilePanel extends E2EForm {
       const url = await this.page.url();
       const matches = /\.(?<id>[0-9]+)$/.exec(url);
       this.id = matches?.groups?.["id"] ?? "";
-
-      // TODO PROBLEM
     }
 
     await crExpectUrl(

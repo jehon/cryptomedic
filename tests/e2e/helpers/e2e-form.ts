@@ -113,7 +113,8 @@ export class E2EForm {
   }
 
   async expectInputValue(label: string, value?: IOValue): Promise<this> {
-    switch (this.getType(label)) {
+    const type = this.getType(label);
+    switch (type) {
       case "string":
       case "date":
       case "select":
@@ -156,7 +157,9 @@ export class E2EForm {
   }
 
   async setInputValue(label: string, value?: IOValue): Promise<this> {
-    if (this.getType(label) == "readonly") {
+    const type = this.getType(label);
+
+    if (type == "readonly") {
       // The io is not visible
       return this;
     }
@@ -167,7 +170,7 @@ export class E2EForm {
     const ioc = io.locator(".content");
     await expect(ioc).toBeVisible();
 
-    switch (this.getType(label)) {
+    switch (type) {
       case "date":
       case "string":
       case undefined:

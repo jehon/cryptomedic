@@ -108,7 +108,6 @@ for (const [key, diff] of listOfFiles) {
       diff.message = "No run found";
     } else {
       // Generate the diffs
-      // TODO: https://github.com/dmtrKovalenko/odiff
       const pngReference = PNG.sync.read(fs.readFileSync(diff.reference));
       const pngRuntime = PNG.sync.read(fs.readFileSync(diff.runtime));
       const { width, height } = pngReference;
