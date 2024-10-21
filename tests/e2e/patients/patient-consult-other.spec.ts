@@ -12,7 +12,8 @@ const ctx = fullTest({
     ...ConsultFieldsConfigType,
     Side: "radio",
     Pain: "radio",
-    Walk: "select"
+    Walk: "select",
+    "Examination Data": "textarea"
   }
 });
 

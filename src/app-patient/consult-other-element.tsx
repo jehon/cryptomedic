@@ -55,8 +55,10 @@ export default function consultOtherElementGenerator(
             <IO.String name="xray" label="XRay" value={file.xray}></IO.String>
           </Panel>
           <Panel label="Orthopedic observations">
-            <IO.Text name="performed" value={file.performed}></IO.Text>
-            <IO.Text name="not_performed" value={file.not_performed}></IO.Text>
+            <IO.Text
+              name="examination_data"
+              value={file.examination_data}
+            ></IO.Text>
           </Panel>
         </TwoColumns>
         <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>

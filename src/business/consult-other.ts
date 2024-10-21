@@ -22,6 +22,9 @@ export default class ConsultOther extends Consult {
   pain: StringList = "";
   walk: StringList = "";
   xray: string = "";
-  performed: string = "";
-  not_performed: string = "";
+  examination_data: string = "";
+
+  // TODO: Remove this fields in DB
+  x_performed: string = "";
+  x_not_performed: string = "";
 }
