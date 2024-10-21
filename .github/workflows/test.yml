@@ -180,7 +180,7 @@ jobs:
           name: integration-playwright
           path: tmp/integration/playwright
 
-  update-e2e:
+  test-e2e-playwright-update-snapshots:
     needs:
       - build
     runs-on: ubuntu-latest
@@ -229,7 +229,8 @@ jobs:
       - tests-unit
       - tests-unit-with-backend
       - tests-e2e-cypress
-      - update-e2e
+      - tests-e2e-playwright
+      - test-e2e-playwright-update-snapshots
     runs-on: ubuntu-latest
     steps:
       - run: echo "ok"
