@@ -17,6 +17,7 @@ export default function IOText(props: IOProps<StringText>) {
         id={uuid}
         className="form-control"
         name={props.name}
+        rows={(value || "").split("\n").length}
         defaultValue={value ?? ""}
         onKeyUp={(event) => adjust(event.target as HTMLTextAreaElement)}
         onBlur={(evt) => props.onChange && props.onChange(evt.target.value)}
