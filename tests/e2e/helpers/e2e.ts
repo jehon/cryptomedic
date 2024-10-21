@@ -118,6 +118,10 @@ export async function crExpectUrl(page: Page, r: string | RegExp) {
 }
 
 export async function crReady(page: Page): Promise<void> {
+  // https://developer.mozilla.org/en-US/docs/Web/API/Document/fonts#doing_operation_after_fonts_are_loaded
+  // https://github.com/microsoft/playwright/issues/28204#issuecomment-1816895791
+  await page.evaluate(() => document.fonts.ready);
+
   // No global spinning wheel anymore
   await expect(page.getByTestId("global-wait")).toHaveCount(0);
 }
