@@ -18,3 +18,5 @@ ctx.testRead({
     "Price asked": 6720
   }
 });
+
+// 108
