@@ -73,6 +73,19 @@ function buildRadios(
     };
   }
 
+  // TODO: for consult_clubfoot - get number really?
+  switch (value) {
+    case "1.00":
+      value = "1";
+      break;
+    case "0.50":
+      value = "0.5";
+      break;
+    case "0.00":
+      value = "0";
+      break;
+  }
+
   return Object.entries(list).map(([stored, shown], i) => (
     <div className="align" key={shown}>
       <input
