@@ -49,38 +49,38 @@ export default function consultClubfootElementGenerator(
               name="curved_lateral_border_right"
               label="Curved Lateral Border"
               value={file.curved_lateral_border_right}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <IO.List
               name="medial_crease_right"
               label="Medial Crease"
               value={file.medial_crease_right}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <IO.List
               name="talar_head_coverage_right"
               label="Talar Head Coverage"
               value={file.talar_head_coverage_right}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <div className="separator">Hind Foot</div>
             <IO.List
               name="posterior_crease_right"
               label="Posterior Crease"
               value={file.posterior_crease_right}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <IO.List
               name="rigid_equinus_right"
               label="Rigid Equinus"
               value={file.rigid_equinus_right}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <IO.List
               name="empty_heel_right"
               label="Empty Heel"
               value={file.empty_heel_right}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <div className="separator">Score</div>
             <IO.Function
@@ -103,38 +103,38 @@ export default function consultClubfootElementGenerator(
               name="curved_lateral_border_left"
               label="Curved Lateral Border"
               value={file.curved_lateral_border_left}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <IO.List
               name="medial_crease_left"
               label="Medial Crease"
               value={file.medial_crease_left}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <IO.List
               name="talar_head_coverage_left"
               label="Talar Head Coverage"
               value={file.talar_head_coverage_left}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <div className="separator">Hind Foot</div>
             <IO.List
               name="posterior_crease_left"
               label="Posterior Crease"
               value={file.posterior_crease_left}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <IO.List
               name="rigid_equinus_left"
               label="Rigid Equinus"
               value={file.rigid_equinus_left}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <IO.List
               name="empty_heel_left"
               label="Empty Heel"
               value={file.empty_heel_left}
-              list={getList("")}
+              list={getList("Pirani")}
             ></IO.List>
             <div className="separator">Score</div>
             <IO.Function
@@ -156,31 +156,31 @@ export default function consultClubfootElementGenerator(
             <IO.List
               label="Pain"
               value={file.pain_right}
-              list={getList("")}
+              list={getList("Eval02")}
             ></IO.List>
             <IO.List
               name="walking_floor_contact_right"
               label="Walking Floor Contact"
               value={file.walking_floor_contact_right}
-              list={getList("")}
+              list={getList("Eval02")}
             ></IO.List>
             <IO.List
               name="walking_first_contact_right"
               label="Walking First Contact"
               value={file.walking_first_contact_right}
-              list={getList("")}
+              list={getList("Eval02")}
             ></IO.List>
             <IO.List
               name="jumping_one_leg_right"
               label="Jumping One Leg"
               value={file.jumping_one_leg_right}
-              list={getList("")}
+              list={getList("Eval02")}
             ></IO.List>
             <IO.List
               name="run_right"
               label="Run"
               value={file.run_right}
-              list={getList("")}
+              list={getList("Eval02")}
             ></IO.List>
             <IO.Number
               name="adduction_angle_right"
@@ -227,25 +227,25 @@ export default function consultClubfootElementGenerator(
               name="walking_floor_contact_left"
               label="Walking Floor Contact"
               value={file.walking_floor_contact_left}
-              list={getList("")}
+              list={getList("Eval02")}
             ></IO.List>
             <IO.List
               name="walking_first_contact_left"
               label="Walking First Contact"
               value={file.walking_first_contact_left}
-              list={getList("")}
+              list={getList("Eval02")}
             ></IO.List>
             <IO.List
               name="jumping_one_leg_left"
               label="Jumping One Leg"
               value={file.jumping_one_leg_left}
-              list={getList("")}
+              list={getList("Eval02")}
             ></IO.List>
             <IO.List
               name="run_left"
               label="Run"
               value={file.run_left}
-              list={getList("")}
+              list={getList("Eval02")}
             ></IO.List>
             <IO.Number
               name="adduction_angle_left"

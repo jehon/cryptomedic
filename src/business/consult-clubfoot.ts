@@ -1,5 +1,5 @@
 import { string2number } from "../utils/strings";
-import { StringList } from "../utils/types";
+import { StringBoolean, StringList, StringNumber } from "../utils/types";
 import Consult from "./abstracts/consult";
 
 export default class ConsultClubfoot extends Consult {
@@ -15,38 +15,49 @@ export default class ConsultClubfoot extends Consult {
     return "Consult. Clubfoot";
   }
 
-  pain_left: string = "";
-  pain_right: string = "";
-  walking_floor_contact_left: string = "";
-  walking_floor_contact_right: string = "";
-  walking_first_contact_left: string = "";
-  walking_first_contact_right: string = "";
-  jumping_one_leg_left: string = "";
-  jumping_one_leg_right: string = "";
-  run_left: string = "";
-  run_right: string = "";
-  adduction_angle_left: string = "";
-  adduction_angle_right: string = "";
-  hind_foot_angle_W_left: string = "";
-  hind_foot_angle_W_right: string = "";
-  dorsal_flexion_max_left: string = "";
-  dorsal_flexion_max_right: string = "";
-  plantar_flexion_max_left: string = "";
-  plantar_flexion_max_right: string = "";
-  muscular_inbalance_left: string = "";
-  muscular_inbalance_right: string = "";
-  curved_lateral_border_left: StringList = "";
+  // Right
+  // TODO: rename into right_
+  // Right: Pirani
   curved_lateral_border_right: StringList = "";
-  medial_crease_left: string = "";
-  medial_crease_right: string = "";
-  talar_head_coverage_left: string = "";
-  talar_head_coverage_right: string = "";
-  posterior_crease_left: string = "";
-  posterior_crease_right: string = "";
-  rigid_equinus_left: string = "";
-  rigid_equinus_right: string = "";
-  empty_heel_left: string = "";
-  empty_heel_right: string = "";
+  medial_crease_right: StringList = "";
+  talar_head_coverage_right: StringList = "";
+  posterior_crease_right: StringList = "";
+  rigid_equinus_right: StringList = "";
+  empty_heel_right: StringList = "";
+
+  // Right: 3+
+  pain_right: StringList = "";
+  walking_floor_contact_right: StringList = "";
+  walking_first_contact_right: StringList = "";
+  jumping_one_leg_right: StringList = "";
+  run_right: StringList = "";
+  adduction_angle_right: StringNumber = "";
+  hind_foot_angle_W_right: StringNumber = "";
+  dorsal_flexion_max_right: StringNumber = "";
+  plantar_flexion_max_right: StringNumber = "";
+  muscular_inbalance_right: StringBoolean = "";
+
+  // Left
+  // TODO: rename into left_
+  // Left: Pirani
+  curved_lateral_border_left: StringList = "";
+  medial_crease_left: StringList = "";
+  talar_head_coverage_left: StringList = "";
+  posterior_crease_left: StringList = "";
+  rigid_equinus_left: StringList = "";
+  empty_heel_left: StringList = "";
+
+  // Left: 3+
+  pain_left: StringList = "";
+  walking_floor_contact_left: StringList = "";
+  walking_first_contact_left: StringList = "";
+  jumping_one_leg_left: StringList = "";
+  run_left: StringList = "";
+  adduction_angle_left: StringNumber = "";
+  hind_foot_angle_W_left: StringNumber = "";
+  dorsal_flexion_max_left: StringNumber = "";
+  plantar_flexion_max_left: StringNumber = "";
+  muscular_inbalance_left: StringBoolean = "";
 
   getPiraniLeft() {
     // TODO: try-catch it in gui
