@@ -1,5 +1,3 @@
-import { expect } from "@playwright/test";
-import { outputDate } from "../helpers/e2e";
 import { fullTest, TimedFieldsConfigType } from "../helpers/e2e-file-panel";
 
 const ctx = fullTest({
@@ -44,8 +42,6 @@ ctx.testRead({
 ctx.testCreateDelete({
   patientEntryOrder: "2010-003",
   patientId: 103,
-  deleteTest: (page) =>
-    expect(page.getByText(outputDate("2022-05-06"))).toHaveCount(0),
   initialIsAlreadyGood: true,
   data: {
     Date: "2022-05-06",

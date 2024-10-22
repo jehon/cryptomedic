@@ -1,5 +1,3 @@
-import { expect } from "@playwright/test";
-import { outputDate } from "../helpers/e2e";
 import {
   consultBasicData,
   ConsultFieldsConfigType,
@@ -39,8 +37,6 @@ ctx.testRead({
 ctx.testCreateDelete({
   patientEntryOrder: "2010-005",
   patientId: 105,
-  deleteTest: (page) =>
-    expect(page.getByText(outputDate(consultBasicData.Date))).toHaveCount(0),
   data: {
     ...consultBasicData
   }

@@ -3,8 +3,6 @@ import { CRUD } from "../../../src/constants";
 import { crApi, crInit, crReady } from "./e2e";
 import { E2EFilePanel, FieldsConfigTypeSimplified } from "./e2e-file-panel";
 
-export { outputDate } from "./e2e";
-
 // TODO: this is a E2EForm too?
 export class E2EPatient {
   public id: string;
