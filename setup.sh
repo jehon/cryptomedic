@@ -17,7 +17,6 @@ root_or_sudo() {
 
 echo "* Installing packages..."
 root_or_sudo apt update
-# TODO: add for playwright: libevent-2.1-7t64: playwright
 root_or_sudo apt install --quiet --yes \
     curl lftp sshfs sshpass jq make gettext-base rsync \
     google-chrome-stable
