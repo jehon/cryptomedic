@@ -22,8 +22,8 @@ ctx.testRead({
     Date: "2015-01-10",
     Examiner: "Ershad",
     "Age at consultation time": "2Y",
-    "Adduction Angle Right": 0,
-    "Dorsal Flexion Max Left": 0
+    "Adduction Angle Right": undefined,
+    "Dorsal Flexion Max Left": undefined
   }
 });
 

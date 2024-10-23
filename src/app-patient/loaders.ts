@@ -2,7 +2,6 @@ import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";
 import { CRUD } from "../constants";
 import { ServerRequestError, TransportRequestError } from "../utils/exceptions";
-import nullify from "../utils/nullify";
 
 function request({
   url,
@@ -29,10 +28,7 @@ function request({
 
   const strUrl =
     url.join("/").replaceAll("//", "/") +
-    (method === "GET"
-      ? "?" +
-        new URLSearchParams(nullify(data) as Record<string, string>).toString()
-      : "");
+    (method === "GET" ? "?" + new URLSearchParams(data).toString() : "");
 
   return fetch(strUrl, {
     method,
@@ -41,12 +37,13 @@ function request({
     headers: {
       "Content-Type": "application/json"
     },
+    // TODO: Pass the form directly? Need change at backend
     body:
       method === "GET"
         ? null
-        : // TODO: Pass the FormData directly (required for pictures?)
-          //       but requires change at backend
-          JSON.stringify(form ? nullify(Object.fromEntries(form)) : null)
+        : form
+          ? JSON.stringify(Object.fromEntries(form))
+          : undefined
   }).then(
     (response) => {
       if (
