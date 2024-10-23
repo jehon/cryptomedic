@@ -92,7 +92,7 @@ function buildRadios(
         id={uuid + "." + i}
         className="form-control"
         name={name}
-        defaultChecked={value == stored}
+        defaultChecked={value === stored}
         value={stored}
         onBlur={() => onChange(stored)}
         type="radio"
