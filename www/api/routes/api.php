@@ -127,8 +127,7 @@ Route::group(array('middleware' => 'authenticated'), function() {
       Route::resource('surgeries',             'SurgeriesController');
     });
 
-    // Legacy routes
-    // TODO: should be PUT
+    // TODO: Legacy routes
     CRSecurity::ifHasPersmission('folder.unlock', function() {
       Route::get('bills/unlock/{id}',          'BillsController@unlock');
       Route::get('clubfeet/unlock/{id}',       'ClubFeetController@unlock');
@@ -158,9 +157,9 @@ Route::group(array('middleware' => 'authenticated'), function() {
       Route::put('bill/unlock/{id}',             'BillsController@unlock');
       Route::put('consult_clubfoot/unlock/{id}', 'ClubFeetController@unlock');
       Route::put('consult_other/unlock/{id}',    'OtherConsultsController@unlock');
+      Route::put('consult_ricket/unlock/{id}',   'RicketConsultsController@unlock');
       Route::put('payment/unlock/{id}',          'PaymentsController@unlock');
       Route::put('picture/unlock/{id}',          'PicturesController@unlock');
-      Route::put('consult_ricket/unlock/{id}',   'RicketConsultsController@unlock');
       Route::put('surgery/unlock/{id}',          'SurgeriesController@unlock');
     });
   });
