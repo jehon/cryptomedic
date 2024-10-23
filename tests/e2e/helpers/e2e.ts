@@ -123,7 +123,7 @@ export async function crReady(page: Page): Promise<void> {
   await page.evaluate(() => document.fonts.ready);
 
   // No global spinning wheel anymore
-  await expect(page.getByTestId("global-wait")).toHaveCount(0);
+  await expect(page.getByTestId("global-wait"), "crReady").toHaveCount(0);
 }
 
 export async function crLegacyInput(
@@ -132,9 +132,10 @@ export async function crLegacyInput(
   value: string | number
 ): Promise<void> {
   const el = page.locator(selector);
-  await expect(el).toBeVisible();
+  const msg = "with '${selector}' = '${value}' (e2e.crLegacyInput)`";
+  await expect(el, msg).toBeVisible();
   const input = el.locator("input");
-  await expect(input).toBeVisible();
+  await expect(input, msg).toBeVisible();
   await input.fill("" + value);
-  await expect(input).toHaveValue("" + value);
+  await expect(input, msg).toHaveValue("" + value);
 }

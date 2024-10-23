@@ -58,7 +58,10 @@ export class E2EForm {
   //
 
   async expectToBeVisible(): Promise<this> {
-    await expect(this.locator).toBeVisible();
+    await expect(
+      this.locator,
+      "2e2-form.expectToBeVisible: global panel"
+    ).toBeVisible();
     return this;
   }
 
@@ -115,12 +118,13 @@ export class E2EForm {
 
   async expectInputValue(label: string, value?: IOValue): Promise<this> {
     const type = this.getType(label);
+    const msg = `expectInputValue '${label}' = '${value}' (${type})`;
     switch (type) {
       case "string":
       case "date":
       case "select":
       case "textarea":
-        await expect(this.locator.getByLabel(label)).toHaveValue(
+        await expect(this.locator.getByLabel(label), msg).toHaveValue(
           ioValue2String(ioValue2String(value))
         );
         break;
@@ -131,9 +135,9 @@ export class E2EForm {
           );
 
           if (value) {
-            await expect(loc).toBeChecked();
+            await expect(loc, msg + " => checked").toBeChecked();
           } else {
-            await expect(loc).not.toBeChecked();
+            await expect(loc, msg + " => unChecked").not.toBeChecked();
           }
         }
         break;
@@ -141,7 +145,8 @@ export class E2EForm {
         await expect(
           (await this.expectField(label)).getByLabel(ioValue2String(value), {
             exact: true
-          })
+          }),
+          msg
         ).toBeChecked();
         break;
       case "readonly":
