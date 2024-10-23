@@ -10,7 +10,7 @@ SET
 WHERE
   id = 103;
 
-UPDATE consult_clubfeet
+UPDATE club_feet
 SET
   updated_at = NOW()
 WHERE
