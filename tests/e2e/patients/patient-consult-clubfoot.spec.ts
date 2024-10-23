@@ -10,9 +10,6 @@ const ctx = fullTest({
   }
 });
 
-// ----------------
-// TODO: add this on 1st file
-//       and add some data to it
 ctx.testRead({
   patientEntryOrder: "2014-105",
   patientId: 5,
@@ -20,7 +17,9 @@ ctx.testRead({
   data: {
     Date: "2015-01-10",
     Examiner: "Ershad",
-    "Age at consultation time": "2Y"
+    "Age at consultation time": "2Y",
+    "Adduction Angle Right": 0,
+    "Dorsal Flexion Max Left": 0
   }
 });
 
