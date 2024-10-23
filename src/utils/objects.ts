@@ -20,3 +20,9 @@ export function removeNull<T extends Record<any, any>>(object: T): T {
   }
   return object;
 }
+
+export function isEmptyValue(v: any): boolean {
+  return (
+    v === undefined || v === null || v === "" || v === false || Number.isNaN(v)
+  );
+}

@@ -1,4 +1,5 @@
 import { expect, Locator } from "@playwright/test";
+import { isEmptyValue } from "../../../src/utils/objects";
 import { outputDate } from "./e2e";
 
 export type IOValue = string | number | boolean | undefined;
@@ -70,7 +71,7 @@ export class E2EForm {
   async expectOutputValue(label: string, value?: IOValue): Promise<this> {
     const io = await this.expectField(label);
 
-    if (!value) {
+    if (isEmptyValue(value)) {
       await expect(io).not.toBeVisible();
       return this;
     }

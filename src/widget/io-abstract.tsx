@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import generateUUID from "../utils/generate-uuid";
+import { isEmptyValue } from "../utils/objects";
 import { toTitleCase } from "../utils/strings";
 import "./io.css";
 
@@ -80,7 +81,7 @@ export default function IOAbstract<T>(
   const editContext = useContext(EditContext) && writable;
 
   // Hide if not value and output mode
-  if (!editContext && !calculatedProps.value) {
+  if (!editContext && isEmptyValue(calculatedProps.value)) {
     return null;
   }
 
