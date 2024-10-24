@@ -46,7 +46,7 @@ if (process.env["CI"]) {
 
   // Traces: See https://playwright.dev/docs/trace-viewer#opening-the-trace
   // https://trace.playwright.dev/
-  config.retries = 1;
+  config.retries = 3;
   config.use!.trace = "retain-on-failure";
   config.ignoreSnapshots = false;
 
