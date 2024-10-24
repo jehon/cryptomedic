@@ -60,7 +60,10 @@ export const consultBasicData = {
   "Treatment Finished": true
 };
 
-function reduceFieldConfig2Form(fc: FieldsConfigTypeSimplified) {
+function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified) {
+  if (!fc) {
+    return {};
+  }
   return Object.fromEntries(
     Object.entries(fc).map(([k, v]) => [k, typeof v == "string" ? v : v.type])
   );
@@ -76,7 +79,7 @@ export class E2EFilePanel extends E2EForm {
     protected e2ePatient: E2EPatient,
     protected type: string,
     id: string | number,
-    fieldsConfig: FieldsConfigTypeSimplified
+    fieldsConfig?: FieldsConfigTypeSimplified
   ) {
     super(
       () =>
@@ -183,7 +186,7 @@ export class E2EFilePanel extends E2EForm {
         this.page,
         new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}[0-9]+$`)
       );
-      const url = await this.page.url();
+      const url = this.page.url();
       const matches = /\.(?<id>[0-9]+)$/.exec(url);
       this.id = matches?.groups?.["id"] ?? "";
     }
