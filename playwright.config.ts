@@ -1,6 +1,7 @@
 /* eslint-env node*/
 
 import { PlaywrightTestConfig, defineConfig, devices } from "@playwright/test";
+import path from "node:path";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -52,14 +53,17 @@ if (process.env["CI"]) {
 
   if (process.env["GITHUB_ACTIONS"]) {
     (config.reporter as Array<any>).push(["github"]);
+    config.snapshotDir = path.join(config.testDir!, "/__github__");
   } else if (process.env["GITLAB_CI"]) {
     // config.retries = 1;
     // (config.reporter as Array<any>).push(["gitlab"]);
+    config.snapshotDir = path.join(config.testDir!, "/__gitlab__");
   } else {
     console.warn("Mode: CI but unidentified runner !!");
   }
 } else {
-  config.ignoreSnapshots = true;
+  // config.ignoreSnapshots = true;
+  config.snapshotDir = path.join(config.testDir!, "/__local__");
 }
 
 export default defineConfig(config);
