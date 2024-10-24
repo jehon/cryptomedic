@@ -126,6 +126,12 @@ export class E2EFilePanel extends E2EForm {
     );
   }
 
+  detectFileId() {
+    const url = this.page.url();
+    const matches = /\.(?<id>[0-9]+)$/.exec(url);
+    this.id = matches?.groups?.["id"] ?? "";
+  }
+
   /* ***********************************
    *
    * Routes
@@ -186,9 +192,7 @@ export class E2EFilePanel extends E2EForm {
         this.page,
         new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}[0-9]+$`)
       );
-      const url = this.page.url();
-      const matches = /\.(?<id>[0-9]+)$/.exec(url);
-      this.id = matches?.groups?.["id"] ?? "";
+      this.detectFileId();
     }
 
     await crExpectUrl(
