@@ -51,17 +51,14 @@ if (process.env["CI"]) {
   config.ignoreSnapshots = false;
 
   if (process.env["GITHUB_ACTIONS"]) {
-    console.info("Mode: GitHub Actions");
     (config.reporter as Array<any>).push(["github"]);
   } else if (process.env["GITLAB_CI"]) {
-    console.info("Mode: GitLab CI");
     // config.retries = 1;
     // (config.reporter as Array<any>).push(["gitlab"]);
   } else {
     console.warn("Mode: CI but unidentified runner !!");
   }
 } else {
-  console.info("Mode: Local run");
   config.ignoreSnapshots = true;
 }
 
