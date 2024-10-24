@@ -11,9 +11,10 @@ export class E2EPatient {
     public page: Page,
     id?: string | number
   ) {
-    this.id = "" + id;
     if (id === undefined) {
-      this.detectPatientId();
+      this.id = this.detectPatientId();
+    } else {
+      this.id = "" + id;
     }
   }
 
@@ -26,10 +27,10 @@ export class E2EPatient {
     await expect(this.page.getByTestId("add")).toBeVisible();
   }
 
-  detectPatientId() {
+  detectPatientId(): string {
     const url: string = this.page.url();
     const matches = /#\/folder\/(?<id>[0-9]+)\/.*$/.exec(url);
-    this.id = matches?.groups?.["id"] ?? "";
+    return matches?.groups?.["id"] ?? "";
   }
 
   getFile(options: {

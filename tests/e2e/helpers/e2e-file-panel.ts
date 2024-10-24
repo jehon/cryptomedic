@@ -90,7 +90,12 @@ export class E2EFilePanel extends E2EForm {
     );
     this.page = e2ePatient.page;
     this.patient_id = "" + this.e2ePatient.id;
-    this.id = "" + id;
+
+    if (id === undefined) {
+      this.id = this.detectFileId();
+    } else {
+      this.id = "" + id;
+    }
     this.fileBaseUrl = `/folder/${this.patient_id}/summary/${type}.`;
   }
 
@@ -129,7 +134,7 @@ export class E2EFilePanel extends E2EForm {
   detectFileId() {
     const url = this.page.url();
     const matches = /\.(?<id>[0-9]+)$/.exec(url);
-    this.id = matches?.groups?.["id"] ?? "";
+    return matches?.groups?.["id"] ?? "";
   }
 
   /* ***********************************
@@ -192,7 +197,7 @@ export class E2EFilePanel extends E2EForm {
         this.page,
         new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}[0-9]+$`)
       );
-      this.detectFileId();
+      this.id = this.detectFileId();
     }
 
     await crExpectUrl(
