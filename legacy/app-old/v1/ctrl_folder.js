@@ -43,9 +43,9 @@ export default function ctrl_folder($scope, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
    *
+   *  '/folder/-1/edit                  add a patient     (page ~> mode)
    *  '/folder/123                      ->REACT view the patient file
-   *  '/folder/123/edit                 edit the patient  (page ~> mode)
-   *  '/folder/                         add a patient     (page ~> mode)
+   *  '/folder/123/edit                 ->REACT edit the patient  (page ~> mode)
    *  '/folder/123/file/Bills/456       ->REACT view the sub file
    *  '/folder/123/file/Bills/456/edit  ->REACT edit the sub file
    *  '/folder/123/file/Bills           ->REACT add a bill
@@ -84,6 +84,9 @@ export default function ctrl_folder($scope, $routeParams) {
   if (!$scope.page) {
     $scope.mode = "read";
     $scope.page = false;
+    return goThere(
+      `/folder/${$scope.patient_id}/summary/patient.${$scope.patient_id}`
+    );
   }
 
   // PATIENT ROUTE EDIT / ADD
@@ -94,6 +97,12 @@ export default function ctrl_folder($scope, $routeParams) {
     $scope.page = false;
     if ($scope.patient_id < 0) {
       $scope.mode = "add";
+    }
+    if ($scope.patient_id >= 0) {
+      // Only when the file is already created
+      return goThere(
+        `/folder/${$scope.patient_id}/summary/patient.${$scope.patient_id}/edit`
+      );
     }
   }
 

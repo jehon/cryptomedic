@@ -35,13 +35,16 @@ test("create-reference-2002", async ({ page }) => {
   await createRefButton.click();
   await page.waitForURL(/.+#\/folder\/.+/);
 
-  const pey = page.locator("#Patient_entry_year");
-  await expect(pey).toBeVisible();
-  await expect(pey).toHaveText("" + GenerateYear);
+  const e2ePatient = new E2EPatient(page);
+  const e2eFile = e2ePatient.getFile({
+    fileType: "patient",
+    fileId: e2ePatient.id
+  });
 
-  const peo = page.locator("#Patient_entry_order");
-  await expect(peo).toBeVisible();
-  await expect(peo).toHaveText("" + GenerateOrder);
+  await e2eFile.expectAllOutputValues({
+    "Entry Year": GenerateYear,
+    "Entry Order": GenerateOrder
+  });
 
   // TODO: enter some data and save it, to check if the state is still correct
 });
@@ -65,6 +68,15 @@ test("generate-reference", async ({ page }) => {
     .click();
 
   await page.waitForURL(/.+#\/folder\/.+/);
+
+  // const e2ePatient = new E2EPatient(page);
+  // const e2eFile = e2ePatient.getFile({
+  //   fileType: "patient"
+  // });
+
+  // await e2eFile.expectAllOutputValues({
+  //   "Entry Year": GenerateYear
+  // });
 
   // TODO: enter some data and save it, to check if the state is still correct
 });
