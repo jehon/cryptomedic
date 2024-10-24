@@ -47,8 +47,8 @@ export default function ctrl_folder($scope, $routeParams) {
    *  '/folder/123/edit                 edit the patient  (page ~> mode)
    *  '/folder/                         add a patient     (page ~> mode)
    *  '/folder/123/file/Bills/456       ->REACT view the sub file
-   *  '/folder/123/file/Bills/456/edit  edit the sub file
-   *  '/folder/123/file/Bills           add a bill
+   *  '/folder/123/file/Bills/456/edit  ->REACT edit the sub file
+   *  '/folder/123/file/Bills           ->REACT add a bill
    *  '/folder/123/summary/*            ->REACT
    *  '/folder/123/addfile
    *
@@ -126,18 +126,10 @@ export default function ctrl_folder($scope, $routeParams) {
         break;
     }
 
-    const reactRoute =
+    return goThere(
       `/folder/${$scope.patient_id}/summary` +
-      ($scope.subtype ? `/${subtype}.${$scope.subid}` : "");
-
-    // console.log({
-    //   reactRoute,
-    //   id: $scope.patient_id,
-    //   osubtype: $scope.subtype,
-    //   subtype,
-    //   subid: $scope.subid
-    // });
-    goThere(reactRoute);
+        ($scope.subtype ? `/${subtype}.${$scope.subid}` : "")
+    );
   }
 
   var cachedCurrentFile = null;
