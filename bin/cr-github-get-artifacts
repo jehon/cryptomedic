@@ -32,7 +32,7 @@ header_begin "Playwright"
 get_artifact "integration-playwright-updated-snapshots" "$CR_TMP/integration/integration-playwright-updated-snapshots"
 rsync --itemize-changes --recursive \
     --omit-dir-times --checksum \
-    "$CR_TMP/integration/integration-playwright-updated-snapshots/" "tests/e2e/"
+    "$CR_TMP/integration/integration-playwright-updated-snapshots/" "tests/e2e/__github__/"
 header_end
 
 header_begin "Cypress"

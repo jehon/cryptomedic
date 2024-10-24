@@ -221,7 +221,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: integration-playwright-updated-snapshots
-          path: tests/e2e/**/*.png
+          path: tests/e2e/__github__/**/*.png
 
   valid:
     # placeholder for validation of PR
