@@ -33,9 +33,9 @@ export class E2EPatient {
   }
 
   getFile(options: {
-    fieldsConfig: FieldsConfigTypeSimplified;
     fileType: string;
     fileId?: string | number;
+    fieldsConfig?: FieldsConfigTypeSimplified;
   }): E2EFilePanel {
     return new E2EFilePanel(
       this,
