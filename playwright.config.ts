@@ -41,11 +41,6 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
 };
 
 if (process.env["CI"]) {
-  if (config.reporter instanceof Array) {
-    config.reporter.push(["github"]);
-  }
-  // config.workers = 1;
-
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   config.forbidOnly = true;
 
@@ -53,8 +48,20 @@ if (process.env["CI"]) {
   // https://trace.playwright.dev/
   config.retries = 1;
   config.use!.trace = "retain-on-failure";
+  config.ignoreSnapshots = false;
+
+  if (process.env["GITHUB_ACTIONS"]) {
+    console.info("Mode: GitHub Actions");
+    (config.reporter as Array<any>).push(["github"]);
+  } else if (process.env["GITLAB_CI"]) {
+    console.info("Mode: GitLab CI");
+    // config.retries = 1;
+    // (config.reporter as Array<any>).push(["gitlab"]);
+  } else {
+    console.warn("Mode: CI but unidentified runner !!");
+  }
 } else {
-  // Locally, we ignore snapshots
+  console.info("Mode: Local run");
   config.ignoreSnapshots = true;
 }
 
