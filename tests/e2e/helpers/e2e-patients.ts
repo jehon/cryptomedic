@@ -9,9 +9,12 @@ export class E2EPatient {
 
   constructor(
     public page: Page,
-    id: string | number
+    id?: string | number
   ) {
     this.id = "" + id;
+    if (id === undefined) {
+      this.detectPatientId();
+    }
   }
 
   get panel(): Locator {
@@ -21,6 +24,12 @@ export class E2EPatient {
   async expectToBeVisible() {
     await expect(this.panel).toBeVisible();
     await expect(this.page.getByTestId("add")).toBeVisible();
+  }
+
+  detectPatientId() {
+    const url: string = this.page.url();
+    const matches = /#\/folder\/(?<id>[0-9]+)\/.*$/.exec(url);
+    this.id = matches?.groups?.["id"] ?? "";
   }
 
   getFile(options: {
