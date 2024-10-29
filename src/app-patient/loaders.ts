@@ -6,14 +6,14 @@ import { ServerRequestError, TransportRequestError } from "../utils/exceptions";
 function request({
   url,
   method,
-  form,
-  data,
+  queryData,
+  formData,
   allowed
 }: {
   url: string[];
   method?: string;
-  data?: Record<string, any>;
-  form?: FormData;
+  queryData?: Record<string, any>;
+  formData?: FormData;
   allowed?: number[];
 }) {
   url = url || ["/"];
@@ -28,7 +28,7 @@ function request({
 
   const strUrl =
     url.join("/").replaceAll("//", "/") +
-    (method === "GET" ? "?" + new URLSearchParams(data).toString() : "");
+    (method === "GET" ? "?" + new URLSearchParams(queryData).toString() : "");
 
   return fetch(strUrl, {
     method,
@@ -36,13 +36,13 @@ function request({
     signal,
     headers: {
       "Content-Type": "application/json"
+      // "Content-Type": "application/x-www-form-urlencoded"
     },
-    // TODO: Pass the form directly? Need change at backend
     body:
       method === "GET"
         ? null
-        : form
-          ? JSON.stringify(Object.fromEntries(form))
+        : formData
+          ? JSON.stringify(Object.fromEntries(formData))
           : undefined
   }).then(
     (response) => {
@@ -115,23 +115,26 @@ export function folderFileDelete<T extends Pojo>(
 
 export function folderFileCreate(
   file: Pojo,
-  form: FormData
+  formData: FormData
 ): Promise<{ folder: Folder; newKey: string }> {
   return request({
     url: ["fiche", file.getStatic().getTechnicalName()],
     method: CRUD.create,
-    form
+    formData
   }).then((json) => ({
     newKey: "" + json.newKey,
     folder: new Folder(json.folder)
   }));
 }
 
-export function folderFileUpdate(file: Pojo, form: FormData): Promise<Folder> {
+export function folderFileUpdate(
+  file: Pojo,
+  formData: FormData
+): Promise<Folder> {
   return request({
     url: ["fiche", file.getStatic().getTechnicalName(), file.getId() || ""],
     method: CRUD.update,
-    form
+    formData
   })
     .then((json) => json.folder)
     .then((json) => new Folder(json));
