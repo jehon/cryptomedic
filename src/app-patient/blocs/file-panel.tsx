@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { ButtonGroup } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Timed from "../../business/abstracts/timed";
@@ -54,7 +53,7 @@ export default function FilePanel({
 }): React.ReactNode {
   const folder: Folder = file.getParent();
   const formRef = useRef<HTMLFormElement>(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const addMode = !file.getId();
   const editMode = addMode || (edit ?? false);
