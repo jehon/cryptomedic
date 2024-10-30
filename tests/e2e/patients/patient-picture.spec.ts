@@ -3,7 +3,8 @@ import { fullTest, TimedFieldsConfigType } from "../helpers/e2e-file-panel";
 const ctx = fullTest({
   fileType: "picture",
   fieldsConfig: {
-    ...TimedFieldsConfigType
+    ...TimedFieldsConfigType,
+    Type: "radio"
   }
 });
 
@@ -17,4 +18,29 @@ ctx.testRead({
   }
 });
 
-// 107
+ctx.testCreateDelete({
+  patientId: 107,
+  data: {
+    Type: "picture",
+    Date: "2023-01-06",
+    File: "test file",
+    Comments: "Beautiful picture"
+  }
+});
+
+ctx.testUpdate({
+  patientId: 107,
+  fileId: 107,
+  dataInitial: {
+    Type: "picture",
+    Date: "2023-01-06",
+    File: "test file",
+    Comments: "Beautiful picture"
+  },
+  dataUpdated: {
+    Type: "x-ray",
+    Date: "2020-02-07",
+    File: "test x-ray",
+    Comments: "Beautiful xray"
+  }
+});

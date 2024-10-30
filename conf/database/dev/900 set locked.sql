@@ -15,3 +15,9 @@ SET
   updated_at = NOW()
 WHERE
   id = 106;
+
+UPDATE pictures
+SET
+  updated_at = NOW()
+WHERE
+  id = 107;
