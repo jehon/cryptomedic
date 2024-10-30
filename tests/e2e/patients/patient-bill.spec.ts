@@ -8,7 +8,6 @@ const ctx = fullTest({
 });
 
 ctx.testRead({
-  patientEntryOrder: "2000-001",
   patientId: 1,
   fileId: 1,
   data: {

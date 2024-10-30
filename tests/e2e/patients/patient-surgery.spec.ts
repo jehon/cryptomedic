@@ -29,7 +29,6 @@ const ctx = fullTest({
 });
 
 ctx.testRead({
-  patientEntryOrder: "2000-001",
   patientId: 1,
   fileId: 5,
   data: {
@@ -40,7 +39,6 @@ ctx.testRead({
 });
 
 ctx.testCreateDelete({
-  patientEntryOrder: "2010-003",
   patientId: 103,
   initialIsAlreadyGood: true,
   data: {
@@ -50,7 +48,6 @@ ctx.testCreateDelete({
 });
 
 ctx.testUpdate({
-  patientEntryOrder: "2010-003",
   patientId: 103,
   fileId: 103,
   dataInitial: {

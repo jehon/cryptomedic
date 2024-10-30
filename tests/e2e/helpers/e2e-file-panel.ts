@@ -254,14 +254,11 @@ export function fullTest(context: {
     fieldsConfig,
 
     async testRead(options: {
-      patientEntryOrder: string;
       patientId: string | number;
       fileId: string | number;
       data: Record<string, IOValue | undefined>;
     }) {
-      await test(`${options.patientEntryOrder}.${context.fileType}.${options.fileId}`, async ({
-        page
-      }) => {
+      await test(`${context.fileType}.${options.fileId}`, async ({ page }) => {
         await crApiLogin(page);
         const e2eFile = await new E2EPatient(page, options.patientId)
           .getFile({
@@ -277,7 +274,6 @@ export function fullTest(context: {
     },
 
     async testCreateDelete(options: {
-      patientEntryOrder?: string;
       patientId: string | number;
       deleteTest?: (page: Page, data: Record<string, IOValue>) => any;
       initialIsAlreadyGood?: boolean; // ==> Default false/undefined
@@ -293,7 +289,7 @@ export function fullTest(context: {
       };
 
       await test(
-        `${options.patientEntryOrder ?? ""} create and delete ${context.fileType}`.trim(),
+        `${context.fileType} create and delete`.trim(),
         async ({ page }) => {
           await crApiLogin(page);
           const e2ePatient = await new E2EPatient(page, options.patientId).go();
@@ -332,14 +328,13 @@ export function fullTest(context: {
     },
 
     async testUpdate(options: {
-      patientEntryOrder?: string;
       patientId: string | number;
       fileId: string | number;
       dataInitial: Record<string, IOValue>;
       dataUpdated: Record<string, IOValue>;
     }) {
       await test(
-        `${options.patientEntryOrder ?? ""} update ${context.fileType}`.trim(),
+        `${context.fileType}.${options.fileId} update`.trim(),
         async ({ page }) => {
           test.slow();
 
