@@ -63,9 +63,6 @@ mainApp.controller("ctrl", [
   }
 ]);
 
-import ctrl_file_appointment from "./ctrl_file_appointment.js";
-mainApp.controller("ctrl_file_appointment", ctrl_file_appointment);
-
 import ctrl_file_bill from "./ctrl_file_bill.js";
 mainApp.controller("ctrl_file_bill", ctrl_file_bill);
 
