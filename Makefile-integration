@@ -133,7 +133,7 @@ integration-test-playwright-headed: integration-test-playwright-deps
 	node_modules/.bin/playwright test --ui
 
 .PHONY: integration-test-playwright-deps
-integration-test-playwright-deps:
+integration-test-playwright-deps: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/e2e/ -name "*.ts") \
 		playwright.config.ts \
