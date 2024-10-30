@@ -114,44 +114,39 @@ integration-update-references-styles-desktop:
 #
 
 .PHONY: integration-test-playwright
-integration-test-playwright: integration-test-playwright-run integration-test-playwright-styles
+integration-test-playwright: integration-test-playwright-deps
 
-.PHONY: integration-test-playwright-run
-integration-test-playwright-run: $(INTEGRATION_TEST_TMP)/playwright/.tested
-$(INTEGRATION_TEST_TMP)/playwright/.tested: \
-		$(INTEGRATION_BUILT_MARK) \
-		$(shell find tests/e2e/ -name "*.ts") \
-		playwright.config.ts \
-		$(HOME)/.cache/ms-playwright
-
-	@mkdir -p "$(dir $@)"
 	node_modules/.bin/playwright test
-	@touch "$@"
-
 
 .PHONY: integration-update-playwright
-integration-update-playwright: \
-		$(INTEGRATION_BUILT_MARK) \
-		$(shell find tests/e2e/ -name "*.ts") \
-		playwright.config.ts \
-		$(HOME)/.cache/ms-playwright
+integration-update-playwright: integration-test-playwright-deps
 
 	node_modules/.bin/playwright test --update-snapshots
 
+# Alias for ease of use
+.PHONY: integration-test-playwright-update
+integration-test-playwright-update: integration-update-playwright
+
 .PHONY: integration-test-playwright-headed
-integration-test-playwright-headed: \
-		$(INTEGRATION_BUILT_MARK) \
-		$(HOME)/.cache/ms-playwright
+integration-test-playwright-headed: integration-test-playwright-deps
 
 	node_modules/.bin/playwright test --ui
 
-$(HOME)/.cache/ms-playwright:
-	node_modules/.bin/playwright install
+.PHONY: integration-test-playwright-deps
+integration-test-playwright-deps:
+		$(INTEGRATION_BUILT_MARK) \
+		$(shell find tests/e2e/ -name "*.ts") \
+		playwright.config.ts \
+		$(HOME)/.cache/ms-playwright
 
 .PHONY: integration-update-playwright-browsers
 update: integration-update-playwright-browsers
 integration-update-playwright-browsers:
 	$(MAKE) $(HOME)/.cache/ms-playwright
+
+$(HOME)/.cache/ms-playwright:
+	node_modules/.bin/playwright install
+
 
 ########################################3
 #
