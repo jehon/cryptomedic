@@ -60,6 +60,10 @@ class CryptomedicModel extends Model {
 
 	static private function filterData($data, $forUpdate = true) {
 		unset($data['_type']);
+		//
+		// Method spoofing: https://laravel.com/docs/11.x/routing#form-method-spoofing
+		//
+		unset($data['_method']);
 
 		$columns = self::getTableColumnsList();
 		$result = array_intersect_key($data, array_combine($columns, $columns));

@@ -30,20 +30,25 @@ function request({
     url.join("/").replaceAll("//", "/") +
     (method === "GET" ? "?" + new URLSearchParams(queryData).toString() : "");
 
+  //
+  // Method spoofing:
+  //   PHP does not parse form data
+  //   for PUT request, so we fake it
+  //
+  // https://laravel.com/docs/11.x/routing#form-method-spoofing
+  // https://stackoverflow.com/a/50691997/1954789
+  //
+  if (method.toUpperCase() != "POST" && formData) {
+    // formData = new URLSearchParams(formData);
+    formData.append("_method", method);
+    method = "post";
+  }
+
   return fetch(strUrl, {
     method,
     credentials: "same-origin",
     signal,
-    headers: {
-      "Content-Type": "application/json"
-      // "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body:
-      method === "GET"
-        ? null
-        : formData
-          ? JSON.stringify(Object.fromEntries(formData))
-          : undefined
+    body: formData
   }).then(
     (response) => {
       if (
