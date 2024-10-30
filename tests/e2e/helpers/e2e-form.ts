@@ -88,8 +88,6 @@ export class E2EForm {
       case "checkbox":
         if (value) {
           value = "✔";
-        } else {
-          value = "";
         }
     }
 
