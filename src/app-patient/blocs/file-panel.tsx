@@ -29,8 +29,7 @@ export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 export function isTodoMigration(type: typeof Pojo) {
   return [
     ...(isFeatureSwitchEnabled() ? [] : ["picture"]),
-    // ...(isFeatureSwitchEnabled() ? [] : ["bill"]),
-    "bill"
+    ...(isFeatureSwitchEnabled() ? [] : ["bill"])
   ].includes(type.getTechnicalName());
 }
 
