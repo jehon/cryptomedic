@@ -11,6 +11,7 @@ export type IOType =
   | "string"
   | "checkbox"
   | "date"
+  | "file"
   | "radio"
   | "readonly"
   | "select"
@@ -89,6 +90,10 @@ export class E2EForm {
         if (value) {
           value = "✔";
         }
+        break;
+      case "file":
+        // No test to be made
+        return this;
     }
 
     await expect(io).toBeVisible();
@@ -138,6 +143,8 @@ export class E2EForm {
             await expect(loc, msg + " => unChecked").not.toBeChecked();
           }
         }
+        break;
+      case "file":
         break;
       case "radio":
         await expect(
@@ -192,6 +199,8 @@ export class E2EForm {
             await loc.uncheck();
           }
         }
+        break;
+      case "file":
         break;
       case "radio":
         {
