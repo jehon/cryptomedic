@@ -4,7 +4,8 @@ const ctx = fullTest({
   fileType: "picture",
   fieldsConfig: {
     ...TimedFieldsConfigType,
-    Type: "radio"
+    Type: "radio",
+    Comments: "textarea"
   }
 });
 
