@@ -59,6 +59,8 @@ class CryptomedicModel extends Model {
 	}
 
 	static private function filterData($data, $forUpdate = true) {
+		global $myconfig;
+
 		unset($data['_type']);
 		//
 		// Method spoofing: https://laravel.com/docs/11.x/routing#form-method-spoofing
@@ -66,12 +68,24 @@ class CryptomedicModel extends Model {
 		unset($data['_method']);
 
 		$columns = self::getTableColumnsList();
+		$extraData = array_diff_key($data, array_combine($columns, $columns));
+		if (count($extraData) > 0) {
+			// TODO: Activate this on prod too
+			if ($myconfig["dev"]) {
+				throw new \Error("Extra keys: " . implode(",", array_keys($extraData)));
+			}
+		}
+
 		$result = array_intersect_key($data, array_combine($columns, $columns));
 
 		if ($forUpdate) {
 			foreach ($result as $k => $v) {
 				if (in_array($k, self::getReadOnlyField())) {
 					unset($result[$k]);
+					// TODO: Activate this on prod too
+					if ($myconfig["dev"]) {
+						throw new \Error("Read-only field: $k");
+					}
 					continue;
 				}
 			}
