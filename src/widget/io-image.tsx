@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Optional } from "../utils/generic-types";
-import { IOProps } from "./io-abstract";
+import IOAbstract, { IOProps } from "./io-abstract";
 import "./io-image.css";
 
 // For styling, see io.css
@@ -20,13 +20,18 @@ export default function IOImage(props: IOProps<Optional<string>>) {
       <img data-decorator src="/static/img/io/exit.svg" alt="Exit" />
     </div>
   ) : (
-    <div className="io-img" onClick={() => setTop(!top)}>
-      <img data-role="image" src={value + "/thumbnail"} alt="Content" />
-      <img
-        data-decorator
-        src="/static/img/io/fullscreen.svg"
-        alt="Fullscreen"
-      />
-    </div>
+    IOAbstract(props, {
+      renderOutput: (value) => (
+        <div className="io-img" onClick={() => setTop(!top)}>
+          <img data-role="image" src={value + "/thumbnail"} alt="Content" />
+          <img
+            data-decorator
+            src="/static/img/io/fullscreen.svg"
+            alt="Fullscreen"
+          />
+        </div>
+      ),
+      renderInput: (value, uuid) => <></>
+    })
   );
 }
