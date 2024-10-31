@@ -5,7 +5,7 @@ import "./io-image.css";
 
 // For styling, see io.css
 
-export default function IOPicture(props: IOProps<Optional<string>>) {
+export default function IOImage(props: IOProps<Optional<string>>) {
   const [top, setTop] = useState(false);
 
   const value = props.value;
