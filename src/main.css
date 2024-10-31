@@ -35,6 +35,10 @@
   flex-grow: 0;
 }
 
+.with-image > div {
+  text-align: left;
+}
+
 .with-image > img {
   height: 1em;
   padding-right: 0.5em;
