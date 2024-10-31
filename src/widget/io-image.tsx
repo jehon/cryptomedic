@@ -45,6 +45,7 @@ export default function IOImage(
                 className="form-control"
                 name={props.name}
                 type="file"
+                required={props.required}
                 {...props.htmlProps}
               />{" "}
               <br />
