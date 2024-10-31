@@ -1,5 +1,9 @@
+.io.io-image > .content {
+  width: 100%;
+  max-width: 100%; /* Override default value from io-abstract */
+}
+
 .io-img {
-  /* position: relative; */
   height: 100%;
   width: 100%;
 
