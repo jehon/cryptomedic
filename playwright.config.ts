@@ -41,6 +41,14 @@ const config: PlaywrightTestConfig<unknown, unknown> = {
   use: {}
 };
 
+//
+// https://playwright.dev/docs/api/class-testconfig#test-config-snapshot-path-template
+//
+// See node_modules/playwright/lib/common/config.js #155
+// const defaultSnapshotPathTemplate = '{snapshotDir}/{testFileDir}/{testFileName}-snapshots/{arg}{-projectName}{-snapshotSuffix}{ext}';
+//   [...] snapshotDir: takeFirst(pathResolve(configDir, projectConfig.snapshotDir), pathResolve(configDir, config.snapshotDir), testDir),
+//
+
 if (process.env["CI"]) {
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   config.forbidOnly = true;
