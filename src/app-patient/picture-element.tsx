@@ -29,9 +29,11 @@ export default function pictureElementGenerator(
         </Panel>
         <Panel fixed label="Image">
           <IO.Image
-            name="fileContent"
+            name="fileBlob"
             label="Picture"
             value={file.getPictureUrl() as string}
+            required
+            create={!file.id}
           />
         </Panel>
       </TwoColumns>
