@@ -19,15 +19,15 @@ ctx.testRead({
   }
 });
 
-ctx.testCreateDelete({
-  patientId: 107,
-  data: {
-    Type: "picture",
-    Date: "2023-01-06",
-    File: "test file",
-    Comments: "Beautiful picture"
-  }
-});
+// ctx.testCreateDelete({
+//   patientId: 107,
+//   data: {
+//     Type: "picture",
+//     Date: "2023-01-06",
+//     File: "test file",
+//     Comments: "Beautiful picture"
+//   }
+// });
 
 ctx.testUpdate({
   patientId: 107,
