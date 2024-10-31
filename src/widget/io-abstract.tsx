@@ -40,6 +40,7 @@ export default function IOAbstract<T>(
   props: IOProps<T> & {
     // Not published properties
     note?: boolean;
+    type: string;
   },
   {
     renderOutput,
@@ -91,7 +92,8 @@ export default function IOAbstract<T>(
       className={
         "io " +
         (calculatedProps.note ? "io-note " : "") +
-        (editContext ? "io-input" : "io-output")
+        (editContext ? "io-input " : "io-output ") +
+        `io-${props.type}`
       }
       data-role={getLabel(calculatedProps)}
     >

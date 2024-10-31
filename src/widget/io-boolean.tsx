@@ -7,7 +7,12 @@ import IOAbstract, { IOProps } from "./io-abstract";
 
 export default function IOBoolean(props: IOProps<boolean>) {
   return IOAbstract(
-    { ...props, required: true, value: string2Boolean(props.value) },
+    {
+      ...props,
+      type: "boolean",
+      required: true,
+      value: string2Boolean(props.value)
+    },
     {
       renderOutput: (value) => string2Boolean(value) && <div>✔</div>,
       renderInput: (value, uuid) => (

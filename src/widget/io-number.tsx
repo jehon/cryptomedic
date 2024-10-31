@@ -20,7 +20,7 @@ export default function IONumber(
   } & IOProps<number>
 ) {
   return IOAbstract<number>(
-    { ...props },
+    { ...props, type: "number" },
     {
       renderOutput: (value) => (
         <div>

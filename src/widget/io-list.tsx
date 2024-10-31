@@ -114,32 +114,35 @@ export default function IOList(
     setTimeout(() => props.onChange!(""), 1);
   }
 
-  return IOAbstract<string>(props, {
-    renderOutput: (value) => <div>{value}</div>,
-    renderInput: (value, uuid) =>
-      Object.keys(choices).length == 0 ? (
-        <div>Not applicable</div>
-      ) : Object.keys(choices).length +
-          // If not-required/optional, we add "unknown" to the list
-          (props.required ? 0 : 1) >
-        4 ? (
-        buildSelect(
-          uuid,
-          choices,
-          value ?? "",
-          props.name ?? "",
-          props.onChange,
-          props.required || false
+  return IOAbstract<string>(
+    { ...props, type: "list" },
+    {
+      renderOutput: (value) => <div>{value}</div>,
+      renderInput: (value, uuid) =>
+        Object.keys(choices).length == 0 ? (
+          <div>Not applicable</div>
+        ) : Object.keys(choices).length +
+            // If not-required/optional, we add "unknown" to the list
+            (props.required ? 0 : 1) >
+          4 ? (
+          buildSelect(
+            uuid,
+            choices,
+            value ?? "",
+            props.name ?? "",
+            props.onChange,
+            props.required || false
+          )
+        ) : (
+          buildRadios(
+            uuid,
+            choices,
+            value ?? "",
+            props.name ?? "",
+            props.onChange,
+            props.required || false
+          )
         )
-      ) : (
-        buildRadios(
-          uuid,
-          choices,
-          value ?? "",
-          props.name ?? "",
-          props.onChange,
-          props.required || false
-        )
-      )
-  });
+    }
+  );
 }

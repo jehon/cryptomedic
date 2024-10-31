@@ -12,25 +12,28 @@ export default function IODate(
     max?: string;
   } & IOProps<StringDate | Date>
 ) {
-  return IOAbstract(props, {
-    renderOutput: (value) => (
-      <>
-        <div>{outputDate(value)}</div>
-        <div data-e2e="excluded">{periodAsHumanReadable(value)}</div>
-      </>
-    ),
-    renderInput: (value, uuid) => (
-      <input
-        id={uuid}
-        className="form-control"
-        name={props.name}
-        defaultValue={(value ?? 0) + ""}
-        onBlur={(evt) => props.onChange && props.onChange(evt.target.value)}
-        type="date"
-        min={props.min}
-        max={props.max}
-        required={props.required}
-      />
-    )
-  });
+  return IOAbstract(
+    { ...props, type: "date" },
+    {
+      renderOutput: (value) => (
+        <>
+          <div>{outputDate(value)}</div>
+          <div data-e2e="excluded">{periodAsHumanReadable(value)}</div>
+        </>
+      ),
+      renderInput: (value, uuid) => (
+        <input
+          id={uuid}
+          className="form-control"
+          name={props.name}
+          defaultValue={(value ?? 0) + ""}
+          onBlur={(evt) => props.onChange && props.onChange(evt.target.value)}
+          type="date"
+          min={props.min}
+          max={props.max}
+          required={props.required}
+        />
+      )
+    }
+  );
 }
