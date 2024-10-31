@@ -24,7 +24,7 @@ export default function pictureElementGenerator(
             list={getList("PictureType")}
           />
           <IO.Date name="date" value={file.date} />
-          <IO.String name="file" value={file.file as string} />
+          <IO.String label="File" value={file.file as string} />
           <IO.Text name="comments" value={file.comments as string} />
         </Panel>
         <Panel fixed label="Image">

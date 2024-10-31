@@ -5,7 +5,9 @@ const ctx = fullTest({
   fieldsConfig: {
     ...TimedFieldsConfigType,
     Type: "radio",
-    Comments: "textarea"
+    Comments: "textarea",
+    File: "readonly",
+    Picture: "file"
   }
 });
 
@@ -35,13 +37,11 @@ ctx.testUpdate({
   dataInitial: {
     Type: "picture",
     Date: "2023-01-06",
-    File: "test file",
     Comments: "Beautiful picture"
   },
   dataUpdated: {
     Type: "x-ray",
     Date: "2020-02-07",
-    File: "test x-ray",
     Comments: "Beautiful xray"
   }
 });
