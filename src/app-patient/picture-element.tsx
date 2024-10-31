@@ -28,7 +28,11 @@ export default function pictureElementGenerator(
           <IO.Text name="comments" value={file.comments as string} />
         </Panel>
         <Panel fixed label="Image">
-          <IO.Image label="Picture" value={file.getPictureUrl() as string} />
+          <IO.Image
+            name="fileContent"
+            label="Picture"
+            value={file.getPictureUrl() as string}
+          />
         </Panel>
       </TwoColumns>
     )
