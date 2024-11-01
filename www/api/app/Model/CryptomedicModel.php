@@ -18,6 +18,8 @@ class CryptomedicModel extends Model {
 	use OptimisticLockingTrait;
 
 	protected $guarded = array('id');
+	static protected $apiFields = [];
+
 
 	static public function staticGetModelName() {
 		return  (new \ReflectionClass(new static))->getShortName();
@@ -67,7 +69,7 @@ class CryptomedicModel extends Model {
 		//
 		unset($data['_method']);
 
-		$columns = self::getTableColumnsList();
+		$columns = array_merge(self::getTableColumnsList(), self::$apiFields);
 		$extraData = array_diff_key($data, array_combine($columns, $columns));
 		if (count($extraData) > 0) {
 			// TODO: Activate this on prod too

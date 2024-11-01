@@ -14,6 +14,12 @@ function mkdirIf($filename) {
 class Picture extends CryptomedicModel {
 	const DATA_PREFIX = "data:image/";
 
+	// Impossible to init a field based on array_merge
+	static function initStatic() {
+		// TODO: fileContent is legacy field
+		Picture::$apiFields = array_merge(CryptomedicModel::$apiFields, [ "fileBlob", "fileContent" ]);
+	}
+
 	public static function getPhysicalRoot() {
 		global $myconfig;
 		return $myconfig['folders']['storage'] . DIRECTORY_SEPARATOR . "uploadedPictures" . DIRECTORY_SEPARATOR;
@@ -68,7 +74,7 @@ class Picture extends CryptomedicModel {
 		}
 
 		$patient = Patient::find($this->patient_id);
-		
+
 		return $patient->entry_year
 			. "/"
 			. str_pad($patient->entry_order % 100, 3, "0", STR_PAD_LEFT)
@@ -85,6 +91,7 @@ class Picture extends CryptomedicModel {
 			return $model;
 		}
 
+		// TODO: legacy field
 		if (Request::has('fileContent')) {
 			$dataURI = Request::input('fileContent');
 
@@ -103,7 +110,7 @@ class Picture extends CryptomedicModel {
 			if (file_exists($model->getPhysicalPath($model->file))) {
 				abort(500, "Moving uploaded file to " . $model->getPhysicalPath($model->file) . ": already exists");
 			}
-	
+
 			mkdirIf($model->getPhysicalPath($model->file));
 
 			if (!file_put_contents($model->getPhysicalPath($model->file), $contentRaw)) {
@@ -123,3 +130,5 @@ class Picture extends CryptomedicModel {
 		return parent::delete();
 	}
 }
+
+Picture::initStatic();
