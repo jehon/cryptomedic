@@ -83,7 +83,24 @@ tests-e2e-desktop:
     paths:
       - tmp/integration/desktop
 
-tests-e2e-playwright:
+tests-e2e-playwright-strict:
+  stage: test
+  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+  services:
+    - name: docker:dind
+  script:
+    - ./setup.sh
+    - make github
+    - make dc-build
+    - make start
+    - make dependencies
+    - make integration-test-playwright-strict
+  artifacts:
+    when: always
+    paths:
+      - tmp/integration/playwright
+
+test-e2e-playwright:
   stage: test
   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
   services:
@@ -95,23 +112,6 @@ tests-e2e-playwright:
     - make start
     - make dependencies
     - make integration-test-playwright
-  artifacts:
-    when: always
-    paths:
-      - tmp/integration/playwright
-
-test-e2e-playwright-update-snapshots:
-  stage: test
-  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-  services:
-    - name: docker:dind
-  script:
-    - ./setup.sh
-    - make github
-    - make dc-build
-    - make start
-    - make dependencies
-    - make integration-update-playwright
     - git status
   artifacts:
     when: always
@@ -124,7 +124,7 @@ valid:
   needs:
     - tests-unit
     - tests-unit-with-backend
-    - test-e2e-playwright-update-snapshots
+    - test-e2e-playwright
   script:
     - echo "ok"
 

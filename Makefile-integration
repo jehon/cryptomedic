@@ -116,16 +116,12 @@ integration-update-references-styles-desktop:
 .PHONY: integration-test-playwright
 integration-test-playwright: integration-test-playwright-deps
 
-	node_modules/.bin/playwright test
-
-.PHONY: integration-update-playwright
-integration-update-playwright: integration-test-playwright-deps
-
 	node_modules/.bin/playwright test --update-snapshots
 
-# Alias for ease of use
-.PHONY: integration-test-playwright-update
-integration-test-playwright-update: integration-update-playwright
+.PHONY: integration-test-playwright-strict
+integration-test-playwright-strict: integration-test-playwright-deps
+
+	node_modules/.bin/playwright test
 
 .PHONY: integration-test-playwright-headed
 integration-test-playwright-headed: integration-test-playwright-deps

@@ -142,7 +142,7 @@ jobs:
           name: integration-desktop
           path: tmp/integration/desktop
 
-  tests-e2e-playwright:
+  tests-e2e-playwright-strict:
     needs:
       - build
     strategy:
@@ -171,7 +171,7 @@ jobs:
       - run: make dc-build
       - run: make start
       - run: make dependencies
-      - run: make integration-test-playwright
+      - run: make integration-test-playwright-strict
 
       - name: Upload styles
         if: always()
@@ -180,7 +180,7 @@ jobs:
           name: integration-playwright
           path: tmp/integration/playwright
 
-  test-e2e-playwright-update-snapshots:
+  test-e2e-playwright:
     needs:
       - build
     runs-on: ubuntu-latest
@@ -212,7 +212,7 @@ jobs:
 
       - run: make dependencies
 
-      - run: make integration-update-playwright
+      - run: make integration-test-playwright
 
       - run: git status
 
@@ -230,7 +230,7 @@ jobs:
       - tests-unit-with-backend
       - tests-e2e-cypress
       # - tests-e2e-playwright
-      - test-e2e-playwright-update-snapshots
+      - test-e2e-playwright
     runs-on: ubuntu-latest
     steps:
       - run: echo "ok"
