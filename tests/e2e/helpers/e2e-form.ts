@@ -144,8 +144,6 @@ export class E2EForm {
           }
         }
         break;
-      case "file":
-        break;
       case "radio":
         await expect(
           (await this.expectField(label)).getByLabel(ioValue2String(value), {
@@ -154,6 +152,7 @@ export class E2EForm {
           msg
         ).toBeChecked();
         break;
+      case "file":
       case "readonly":
         break;
     }
