@@ -95,28 +95,11 @@ export default function IOImage(
 //   return blob;
 // }
 
-// constructor() {
-//   super();
-//   this.free();
 //   this._maxSize = 300 * 1024;
-
-//   this.shadowRoot.innerHTML += `<style>
-//         x-input-picture * {
-//           width: 100%;
-//         }
-//       </style>
 //       <input id="file" type="file" name="fileContent" accept="image/*"><br>
-//       <div class='text-center'>
-//         <canvas></canvas>
-//       </div>`;
-//   this[inputElement] = this.shadowRoot.querySelector("input");
-//   this[previewElement] = this.shadowRoot.querySelector("canvas");
-
-//   /* istanbul ignore next: impossible to set "file" property of input */
 //   this[inputElement].addEventListener("change", () =>
 //     this._generatePreview(this[inputElement].files[0])
 //   );
-// }
 
 // _generatePreview(file) {
 //   this.block();
@@ -136,7 +119,6 @@ export default function IOImage(
 //   var imgBuilder = document.createElement("img");
 //   var reader = new FileReader();
 
-//   /* istanbul ignore next: no documentation found on error causes... */
 //   reader.onerror = function (e) {
 //     console.error(e);
 //     this.free();
