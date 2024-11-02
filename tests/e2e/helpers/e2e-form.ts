@@ -93,6 +93,7 @@ export class E2EForm {
         break;
       case "file":
         // No test to be made
+        // TODO: test that an image is visible
         return this;
     }
 
@@ -200,6 +201,7 @@ export class E2EForm {
         }
         break;
       case "file":
+        // TODO
         break;
       case "radio":
         {
