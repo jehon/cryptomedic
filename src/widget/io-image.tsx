@@ -47,7 +47,7 @@ export default function IOImage(
                 type="file"
                 required={props.required}
                 {...props.htmlProps}
-              />{" "}
+              />
               <br />
               <div className="with-image">
                 <img
@@ -56,8 +56,8 @@ export default function IOImage(
                 />
                 <div>
                   If you are currently on smartphone, clicking on the button
-                  above ("browse" or "choose file") should allow you to take a
-                  photo with your camera, and to upload it immediately.
+                  above should allow you to take a photo with your camera, and
+                  to upload it immediately.
                 </div>
               </div>
             </div>
