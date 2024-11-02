@@ -69,6 +69,9 @@ export default function IOImage(
   );
 }
 
+// TODO: snapshot of image?
+// TODO: reduce image?
+
 // static dataURItoBlob(dataURI, name = "test") {
 //   // https://stackoverflow.com/a/5100158/1954789
 //   // convert base64/URLEncoded data component to raw binary data held in a string
