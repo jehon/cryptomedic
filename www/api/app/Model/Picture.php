@@ -91,8 +91,21 @@ class Picture extends CryptomedicModel {
 			return $model;
 		}
 
-		// TODO: legacy field
-		if (Request::has('fileContent')) {
+		if (Request::has("fileBlob")) {
+			$mimetype = Request::file("fileBlob")->getMimeType();
+			$model->file = $model->calculateTargetName($mimetype);
+
+			if (file_exists($model->getPhysicalPath($model->file))) {
+				abort(500, "Moving uploaded file to " . $model->getPhysicalPath($model->file) . ": already exists");
+			}
+
+			mkdirIf($model->getPhysicalPath($model->file));
+
+			if (!Request::file("fileBlob")->move(dirname($model->getPhysicalPath($model->file)), basename($model->getPhysicalPath($model->file)))) {
+				abort(500, "Storing uploaded file to " . $model->getPhysicalPath($model->file));
+  			}
+		} else if (Request::has('fileContent')) {
+			// TODO: legacy field
 			$dataURI = Request::input('fileContent');
 
 			// example = data:image/jpeg;base64
