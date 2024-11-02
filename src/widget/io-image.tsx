@@ -72,6 +72,9 @@ export default function IOImage(
 // TODO: snapshot of image?
 // TODO: reduce image?
 
+// Change the uploaded image? https://dev.to/code_rabbi/programmatically-setting-file-inputs-in-javascript-2p7i
+// Resize image before upload? https://stackoverflow.com/questions/61740953/reactjs-resize-image-before-upload
+
 // static dataURItoBlob(dataURI, name = "test") {
 //   // https://stackoverflow.com/a/5100158/1954789
 //   // convert base64/URLEncoded data component to raw binary data held in a string
