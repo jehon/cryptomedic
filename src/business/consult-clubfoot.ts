@@ -60,7 +60,6 @@ export default class ConsultClubfoot extends Consult {
   muscular_inbalance_left: StringBoolean = "";
 
   getPiraniLeft() {
-    // TODO: try-catch it in gui
     try {
       return (
         string2number(this.curved_lateral_border_left) +
@@ -71,12 +70,11 @@ export default class ConsultClubfoot extends Consult {
         string2number(this.empty_heel_left)
       );
     } catch (_e) {
-      return "undefined";
+      throw new Error("?");
     }
   }
 
   getPiraniRight() {
-    // TODO: try-catch it in gui
     try {
       return (
         string2number(this.curved_lateral_border_right) +
@@ -87,7 +85,7 @@ export default class ConsultClubfoot extends Consult {
         string2number(this.empty_heel_right)
       );
     } catch (_e) {
-      return "undefined";
+      throw new Error("?");
     }
   }
 }

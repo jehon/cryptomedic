@@ -45,8 +45,6 @@ test("create-reference-2002", async ({ page }) => {
     "Entry Year": GenerateYear,
     "Entry Order": GenerateOrder
   });
-
-  // TODO: enter some data and save it, to check if the state is still correct
 });
 
 test("generate-reference", async ({ page }) => {

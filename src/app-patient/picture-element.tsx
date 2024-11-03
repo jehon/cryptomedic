@@ -13,7 +13,6 @@ export default function pictureElementGenerator(
   props: PatientRelatedElementGeneratorProps
 ) {
   return patientRelatedElementGenerator<Picture>(file, props, {
-    // TODO: Picture header
     header: <>{file.type}</>,
     body: (
       <TwoColumns>
