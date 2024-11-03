@@ -41,17 +41,6 @@ const config = [
     }
   },
   {
-    files: ["tests/unitjs/**"],
-    languageOptions: {
-      globals: {
-        ...globals.jasmine,
-        ...globals.browser,
-        readJSON: true,
-        withHtml: true
-      }
-    }
-  },
-  {
     files: ["tests/cypress/**"],
     // https://github.com/cypress-io/eslint-plugin-cypress/issues/155
     // See plugin:cypress/recommended
