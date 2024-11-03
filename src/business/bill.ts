@@ -25,7 +25,7 @@ export default class Bill extends Timed {
   get items(): BillLine[] {
     const items = [];
     for (const [key, value] of Object.entries(this as Record<string, any>)) {
-      if (value > 0) {
+      if (this.getPriceFor(key) > 0) {
         const category = key.split("_")[0];
         if (Price.getCategories().includes(category)) {
           items.push({
