@@ -34,7 +34,7 @@ export default function IOImage(
     </div>
   ) : (
     IOAbstract(
-      { ...props, type: "image" },
+      { type: "image", ...props },
       {
         renderOutput: renderOutputFn,
         renderInput: (value, uuid) =>

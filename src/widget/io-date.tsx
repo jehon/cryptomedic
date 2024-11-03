@@ -13,7 +13,7 @@ export default function IODate(
   } & IOProps<StringDate | Date>
 ) {
   return IOAbstract(
-    { ...props, type: "date" },
+    { type: "date", ...props },
     {
       renderOutput: (value) => (
         <>

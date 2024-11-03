@@ -2,7 +2,7 @@ import IOAbstract, { IOProps } from "./io-abstract";
 
 export default function IOString(props: IOProps<string>) {
   return IOAbstract(
-    { ...props, type: "string" },
+    { type: "string", ...props },
     {
       renderOutput: (value) => <div>{value}</div>,
       renderInput: (value, uuid) => (

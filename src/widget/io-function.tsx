@@ -14,7 +14,7 @@ export default function IOFunction(props: IOPropsReadonly<T>) {
   }
 
   return IOAbstract<T>(
-    { ...props, type: "function", note: true },
+    { type: "function", note: true, ...props },
     {
       renderOutput: (value) => {
         try {

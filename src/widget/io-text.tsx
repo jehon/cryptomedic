@@ -11,7 +11,7 @@ export default function IOText(props: IOProps<StringText>) {
   };
 
   return IOAbstract(
-    { ...props, type: "text" },
+    { type: "text", ...props },
     {
       renderOutput: (value) => <pre>{value}</pre>,
       renderInput: (value, uuid) => (

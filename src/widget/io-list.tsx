@@ -115,7 +115,7 @@ export default function IOList(
   }
 
   return IOAbstract<string>(
-    { ...props, type: "list" },
+    { type: "list", ...props },
     {
       renderOutput: (value) => <div>{value}</div>,
       renderInput: (value, uuid) =>
