@@ -1,4 +1,5 @@
 import { expect, Locator } from "@playwright/test";
+import path from "node:path/posix";
 import { isEmptyValue } from "../../../src/utils/objects";
 import { outputDate } from "./e2e";
 
@@ -201,7 +202,17 @@ export class E2EForm {
         }
         break;
       case "file":
-        // TODO
+        {
+          // https://playwright.dev/docs/api/class-filechooser
+          const fileChooserPromise = this.locator
+            .page()
+            .waitForEvent("filechooser");
+          await io.locator("input").click();
+          const fileChooser = await fileChooserPromise;
+          await fileChooser.setFiles(
+            path.join(import.meta.dirname, "..", "assets", value as string)
+          );
+        }
         break;
       case "radio":
         {

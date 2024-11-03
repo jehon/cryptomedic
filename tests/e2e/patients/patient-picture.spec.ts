@@ -21,16 +21,16 @@ ctx.testRead({
   }
 });
 
-// ctx.testCreateDelete({
-//   patientId: 107,
-//   data: {
-//     Type: "picture",
-//     Date: "2023-01-06",
-//     File: "test file",
-//     Picture: "107-upload.jpeg",
-//     Comments: "Beautiful picture"
-//   }
-// });
+ctx.testCreateDelete({
+  patientId: 107,
+  data: {
+    Type: "picture",
+    Date: "2023-01-06",
+    // File: new RegExp("2010/007/2010-7.2023-01-06.[0-9]+.jpg"),
+    Picture: "107-upload.jpeg",
+    Comments: "Beautiful picture"
+  }
+});
 
 ctx.testUpdate({
   patientId: 107,
