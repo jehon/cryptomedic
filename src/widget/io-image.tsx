@@ -45,6 +45,7 @@ export default function IOImage(
                 className="form-control"
                 name={props.name}
                 type="file"
+                accept="image/*"
                 required={props.required}
                 {...props.htmlProps}
               />
@@ -114,7 +115,6 @@ export default function IOImage(
 //   // Erase preview
 
 //   // http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
-//   // TODO: handle this in x-general-error
 //   if (!file.type.match(/image.*/)) {
 //     console.error("Not a picture?");
 //     alert(
