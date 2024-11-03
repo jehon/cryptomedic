@@ -14,8 +14,8 @@ export type IOPropsReadonly<T> = {
   value: IOPropsInput<T>;
   noLabel?: boolean;
   e2eExcluded?: boolean;
-  help?: React.ReactNode;
   inputHelp?: React.ReactNode;
+  appendix?: React.ReactNode;
 };
 
 export type IOProps<T> = IOPropsReadonly<T> & {
@@ -23,7 +23,7 @@ export type IOProps<T> = IOPropsReadonly<T> & {
   required?: boolean;
   onChange?: (arg: T) => void;
   // To be used by sub-types
-  htmlProps?: Record<string, string | number>;
+  htmlProps?: Record<string, string | number | any>;
 };
 
 function getLabel(props: IOProps<any>) {
@@ -115,8 +115,8 @@ export default function IOAbstract<T>(
         ) : (
           <>{renderOutput(calculatedProps.value)}</>
         )}
-        {props.help}
       </div>
+      {props.appendix}
     </div>
   );
 }

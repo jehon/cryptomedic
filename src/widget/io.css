@@ -29,6 +29,10 @@
       overflow-wrap: break-word;
     }
 
+    & > input {
+      margin: 0 auto;
+    }
+
     /* For radio buttons specifically */
     & > .align {
       display: flex;
