@@ -23,7 +23,7 @@ export type IOProps<T> = IOPropsReadonly<T> & {
   required?: boolean;
   onChange?: (arg: T) => void;
   // To be used by sub-types
-  htmlProps?: Record<string, string | number | any>;
+  htmlProps?: Record<string, string | number | Record<string, any>>;
 };
 
 function getLabel(props: IOProps<any>) {
