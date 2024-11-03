@@ -26,7 +26,7 @@ test("with folder1", function () {
   // consult_CDC_consultation_physio
   // workshop_BHKAFO_night
   // surgical_osteotomy
-  assert.equal(b.items.length, 3);
+  assert.equal(b.items.length, 54);
   assert.equal(b.items[0].key, "consult_CDC_consultation_physio");
   assert.equal(b.items[0].category, "consult");
   assert.equal(b.items[0].value, 1);

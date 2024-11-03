@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
-import generateUUID from "../../utils/generate-uuid";
-import { toTitleCase } from "../../utils/strings";
 import { EditContext } from "../../widget/io-abstract";
+import IONumber from "../../widget/io-number";
 import "../../widget/io.css";
 
 export type BillLine = {
@@ -20,16 +19,11 @@ export default function IOBillLine(props: { line: BillLine }): React.ReactNode {
     return;
   }
 
-  const uuid = generateUUID();
-  const label = toTitleCase(props.line.key ?? "euh");
-  return (
-    <div
-      className={"io " + (edit ? "io-input" : "io-output")}
-      data-role={label}
-    >
-      <label htmlFor={uuid}>{label}*</label>
-      <div className="content">{props.line.value}</div>
-      <div className="annexe">{props.line.price} ৳</div>
-    </div>
-  );
+  return IONumber({
+    name: props.line.key,
+    value: props.line.value,
+    precision: 0,
+    appendix: <div>{props.line.price} ৳</div>,
+    htmlProps: { size: 5, style: { width: "5em" } }
+  });
 }
