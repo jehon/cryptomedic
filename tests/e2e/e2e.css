@@ -11,11 +11,6 @@
   }
 }
 
-[variable] {
-  background-color: purple !important;
-  color: purple !important;
-}
-
 /*
   Disable all notification
   because their timing may affect follow-up screenshots
