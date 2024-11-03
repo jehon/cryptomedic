@@ -27,6 +27,7 @@ ctx.testRead({
 //     Type: "picture",
 //     Date: "2023-01-06",
 //     File: "test file",
+//     Picture: "107-upload.jpeg",
 //     Comments: "Beautiful picture"
 //   }
 // });
