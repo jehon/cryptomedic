@@ -16,7 +16,7 @@
 
   & > label {
     flex-grow: 0; /* Override for label */
-    flex-basis: 25%; /* Override for label */
+    flex-basis: 80px; /* Override for label */
 
     text-align: right;
     font-size: smaller;

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { EditContext } from "../../widget/io-abstract";
 import IONumber from "../../widget/io-number";
-import "../../widget/io.css";
+import "./io-bill-line.css";
 
 export type BillLine = {
   id: string;
