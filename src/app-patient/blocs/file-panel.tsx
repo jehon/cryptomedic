@@ -26,10 +26,9 @@ export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
 // TODO: migrate all this progressively
 export function isTodoMigration(type: typeof Pojo) {
-  return [
-    ...(isFeatureSwitchEnabled() ? [] : ["picture"]),
-    ...(isFeatureSwitchEnabled() ? [] : ["bill"])
-  ].includes(type.getTechnicalName());
+  return [...(isFeatureSwitchEnabled() ? [] : ["bill"])].includes(
+    type.getTechnicalName()
+  );
 }
 
 // TODO: make routing more abstract
