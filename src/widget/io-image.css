@@ -1,6 +1,7 @@
 .io.io-image > .content {
   width: 100%;
   max-width: 100%; /* Override default value from io-abstract */
+  flex-basis: 100%; /* Override default value from io-abstract */
 }
 
 .io-img {

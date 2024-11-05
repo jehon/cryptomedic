@@ -9,8 +9,15 @@
   justify-content: space-between;
   color: gray;
 
+  & > * {
+    flex-grow: 1;
+    flex-basis: 1px;
+  }
+
   & > label {
-    width: 25%;
+    flex-grow: 0; /* Override for label */
+    flex-basis: 25%; /* Override for label */
+
     text-align: right;
     font-size: smaller;
     word-break: break-word;
@@ -18,7 +25,6 @@
   }
 
   & > .content {
-    flex-grow: 1;
     text-align: left;
     background-color: white;
     overflow-wrap: break-word;

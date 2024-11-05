@@ -19,6 +19,7 @@ export type IOPropsReadonly<T> = {
 };
 
 export type IOProps<T> = IOPropsReadonly<T> & {
+  type?: string;
   name?: string;
   required?: boolean;
   onChange?: (arg: T) => void;
@@ -116,7 +117,7 @@ export default function IOAbstract<T>(
           <>{renderOutput(calculatedProps.value)}</>
         )}
       </div>
-      {props.appendix}
+      {props.appendix && <div className="appendix">{props.appendix}</div>}
     </div>
   );
 }

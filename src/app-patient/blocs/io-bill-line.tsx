@@ -20,10 +20,11 @@ export default function IOBillLine(props: { line: BillLine }): React.ReactNode {
   }
 
   return IONumber({
+    type: "bill-line",
     name: props.line.key,
     value: props.line.value,
     precision: 0,
-    appendix: <div>{props.line.price} ৳</div>,
-    htmlProps: { size: 5, style: { width: "5em" } }
+    appendix: `${props.line.price}৳`,
+    htmlProps: { style: { width: "5em" } }
   });
 }
