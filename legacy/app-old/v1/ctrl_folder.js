@@ -18,7 +18,6 @@ import "../v2/widgets/file/x-fff-height-sd.js";
 import "../v2/widgets/file/x-fff-weight-sd.js";
 import "../v2/widgets/file/x-fff-wh-sd.js";
 import "../v2/widgets/file/x-fff-wh.js";
-import "../v2/widgets/folder/x-ff-next-appointment.js";
 import "../v2/widgets/folder/x-ff-patient-related.js";
 import "../v2/widgets/style/x-button.js";
 

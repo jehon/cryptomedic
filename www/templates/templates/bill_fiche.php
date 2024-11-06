@@ -91,7 +91,6 @@ EOD;
       </div>
       <div>
         <x-ff-patient-related></x-ff-patient-related>
-        <x-ff-next-appointment></x-ff-next-appointment>
         <x-group-panel title='Social Data'>
           <?php (new t("Bill.sl_family_salary"))
               ->tr2("Family Salary in a Month")
