@@ -69,7 +69,7 @@ export class E2EForm {
 
   async expectScreenshot(): Promise<this> {
     await this.expectToBeVisible();
-    await expect(this.locator).toHaveScreenshot();
+    await expect(this.locator.locator("form")).toHaveScreenshot();
     return this;
   }
 
