@@ -8,7 +8,7 @@ import "./main.css";
 
 /* Application */
 import { patientRouterConfig } from "./app-patient/patient-router";
-import { bridgeTo } from "./bridge";
+import { bridgeTo } from "./utils/react";
 import ErrorPage from "./widget/error-page";
 import RouteLoading from "./widget/route-loading";
 

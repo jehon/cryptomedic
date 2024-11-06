@@ -17,7 +17,7 @@ import "./v2/widgets/x-user-status.js";
 import "./v1/mainApp.js";
 
 // React components and application
-import "../../src/react.tsx";
+import "../../src/main.tsx";
 import { routeToLogin } from "./v2/js/router.js";
 
 routeToLogin();

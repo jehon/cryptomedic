@@ -6,7 +6,7 @@ import Timed from "../../business/abstracts/timed";
 import Folder, { PatientRelatedClass } from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons, isFeatureSwitchEnabled } from "../../config";
-import { routeTo } from "../../react";
+import { routeTo } from "../../main";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { passThrough } from "../../utils/promises";
 import ActionButton from "../../widget/action-button";
