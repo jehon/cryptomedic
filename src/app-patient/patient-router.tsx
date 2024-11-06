@@ -26,7 +26,14 @@ export function patientRouterConfig() {
       element: <RouteLoading element={<PatientRouter />} />
     },
     {
-      // Under !patient! route
+      // TODO: Temporary
+      path: "/patient/-1/edit",
+      Component: () => {
+        window.location.href = "#/folder/-1/edit";
+        return null;
+      }
+    },
+    {
       path: "/patient/:folderId/:selectedUid?/:mode?",
       loader: patientLoader,
       element: <RouteLoading element={<PatientRouter />} />
