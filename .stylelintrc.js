@@ -8,10 +8,6 @@ export default {
     "media-feature-range-notation": [ "prefix" ],
     "no-descending-specificity": null,
     "selector-type-no-unknown": [true, { ignore: "custom-elements" }],
-    "plugin/no-unsupported-browser-features": [true, {
-      // TODO: remove this
-      ignore: [ "css-nesting" ]
-    }],
     "no-empty-source": null
   }
 };
