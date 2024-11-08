@@ -1,5 +1,14 @@
+import { Type } from "class-transformer";
+import "reflect-metadata"; // Required by class-transformer
 import { StringNumber } from "../utils/types";
 import PatientRelated from "./abstracts/patient-related";
+import Appointment from "./appointment";
+import Bill from "./bill";
+import ConsultClubfoot from "./consult-clubfoot";
+import ConsultOther from "./consult-other";
+import ConsultRicket from "./consult-ricket";
+import Picture from "./picture";
+import Surgery from "./surgery";
 
 // From 1970 to 2029 (see help text on patient-element)
 export const yearOfBirthPattern =
@@ -36,6 +45,27 @@ export default class Patient extends PatientRelated {
   address_union: string = "";
   address_comments: string = "";
   comments: string = "";
+
+  @Type(() => Appointment)
+  appointment: Appointment[] = [];
+
+  @Type(() => Bill)
+  bill: Bill[] = [];
+
+  @Type(() => ConsultClubfoot)
+  club_foot: ConsultClubfoot[] = [];
+
+  @Type(() => ConsultOther)
+  other_consult: ConsultOther[] = [];
+
+  @Type(() => ConsultRicket)
+  ricket_consult: ConsultRicket[] = [];
+
+  @Type(() => Picture)
+  picture: Picture[] = [];
+
+  @Type(() => Surgery)
+  surgery: Surgery[] = [];
 
   actualAge(reference: Date | string | number = new Date()) {
     if (!this.year_of_birth) {
@@ -96,5 +126,75 @@ export default class Patient extends PatientRelated {
       return res.years + res.months / 12;
     }
     return res.years + "y" + res.months + "m";
+  }
+
+  getChildren(): PatientRelated[] {
+    return [
+      ...this.appointment,
+      ...this.bill,
+      ...this.club_foot,
+      ...this.other_consult,
+      ...this.ricket_consult,
+      ...this.picture,
+      ...this.surgery
+    ].toSorted(Patient.ordering);
+  }
+
+  static ordering(o1: PatientRelated, o2: PatientRelated) {
+    const o1First = -1;
+    const o2First = 1;
+
+    const o1id = parseInt(o1.id || "");
+    const o2id = parseInt(o2.id || "");
+
+    // Return 1 if o1 > o2 (o1 - o2) (o1 est après o2)
+    // Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
+
+    // What to do if one 'id' is missing
+    if (isNaN(o1id) && !isNaN(o2id)) {
+      return 10 * o1First;
+    }
+    if (isNaN(o2id) && !isNaN(o1id)) {
+      return 10 * o2First;
+    }
+
+    if ("date" in o1 && o1.date != undefined) {
+      if ("date" in o2 && o2.date != undefined) {
+        // Both 'date' are present
+        if (o1.date < o2.date) return 30 * o2First;
+        if (o1.date > o2.date) return 30 * o1First;
+      } else {
+        return 20 * o2First;
+      }
+    } else {
+      if ("date" in o2 && o2.date != undefined) {
+        return 20 * o1First;
+      } else {
+        // Both 'date' are absent
+        // Not deciding here
+      }
+    }
+
+    if (
+      typeof o1.created_at != "undefined" &&
+      typeof o2.created_at != "undefined"
+    ) {
+      if (o1.created_at < o2.created_at) return 40 * o2First;
+      if (o1.created_at > o2.created_at) return 40 * o1First;
+    }
+
+    // Both 'id' are present
+    if (!isNaN(o1id) && !isNaN(o2id)) {
+      if (o1id > o2id) return 50 * o1First;
+      if (o1id < o2id) return 50 * o2First;
+    }
+
+    // Both 'type' are present
+    if (o1.getStatic().getTitle() < o2.getStatic().getTitle())
+      return 40 * o1First;
+    if (o1.getStatic().getTitle() > o2.getStatic().getTitle())
+      return 40 * o2First;
+
+    return 0;
   }
 }
