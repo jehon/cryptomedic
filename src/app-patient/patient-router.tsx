@@ -8,7 +8,8 @@ import { getFolder } from "./loaders";
 type Mode = "edit" | "";
 
 export function patientRouterToPatient(f: Folder, mode?: Mode) {
-  return `/folder/${f.getId()}/summary/${mode ? `/${mode}` : ""}`;
+  // TODO: in the future, remove patient.100 ?
+  return `/patient/${f.getId()}/patient.${f.getId()}/${mode ? `/${mode}` : ""}`;
 }
 
 export function patientRouterToFile(f: Folder, p: PatientRelated, mode?: Mode) {
