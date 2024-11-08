@@ -586,7 +586,7 @@ reports[REPORT_ACTIVITY] = {
             "a",
             {
               href:
-                "#" + getRouteToFolderFileByParams(data.pid, "Bill", data.bid)
+                "#" + getRouteToFolderFileByParams(data.pid, "bill", data.bid)
             },
             `#${i + 1}`
           ),

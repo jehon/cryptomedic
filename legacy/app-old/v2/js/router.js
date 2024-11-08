@@ -60,7 +60,7 @@ export function getRouteToFolderPatient(folderId, edit = false) {
  * @returns {string} the route
  */
 export function getRouteToFolderFileByParams(folderId, fileName, fileId) {
-  return "/folder/" + folderId + "/file/" + fileName + "/" + fileId;
+  return "/patient/" + folderId + "/" + fileName + "." + fileId;
 }
 
 /**
