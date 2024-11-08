@@ -118,27 +118,16 @@ Route::group(array('middleware' => 'authenticated'), function() {
     // TODO: Legacy routes
     CRSecurity::ifHasPersmission('folder.edit', function() {
       Route::resource('bills',                 'BillsController');
-      Route::resource('clubfeet' ,             'ClubFeetController');
-      Route::resource('otherconsults',         'OtherConsultsController');
       Route::resource('patients',              'PatientsController'); // generate patient
       Route::resource('payments',              'PaymentsController');
-      Route::resource('pictures',              'PicturesController');
-      Route::resource('ricketconsults',        'RicketConsultsController');
-      Route::resource('surgeries',             'SurgeriesController');
     });
 
     // TODO: Legacy routes
     CRSecurity::ifHasPersmission('folder.unlock', function() {
       Route::get('bills/unlock/{id}',          'BillsController@unlock');
-      Route::get('clubfeet/unlock/{id}',       'ClubFeetController@unlock');
-      Route::get('otherconsults/unlock/{id}',  'OtherConsultsController@unlock');
       Route::get('payments/unlock/{id}',       'PaymentsController@unlock');
-      Route::get('pictures/unlock/{id}',       'PicturesController@unlock');
-      Route::get('ricketconsults/unlock/{id}', 'RicketConsultsController@unlock');
-      Route::get('surgeries/unlock/{id}',      'SurgeriesController@unlock');
     });
 
-    // New routes
     CRSecurity::ifHasPersmission('folder.edit', function() {
       Route::resource('appointment',             'AppointmentsController');
       Route::resource('bill',                    'BillsController');
@@ -151,7 +140,6 @@ Route::group(array('middleware' => 'authenticated'), function() {
       Route::resource('surgery',                 'SurgeriesController');
     });
 
-    // New routes
     CRSecurity::ifHasPersmission('folder.unlock', function() {
       Route::put('appointment/unlock/{id}',      'AppointmentsController@unlock');
       Route::put('bill/unlock/{id}',             'BillsController@unlock');
