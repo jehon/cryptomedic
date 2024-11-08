@@ -20,7 +20,7 @@ import {
   folderFileUnlock,
   folderFileUpdate
 } from "../loaders";
-import { patientRouterToFile } from "../patient-router";
+import { patientRouterToFile, patientRouterToPatient } from "../patient-router";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
@@ -124,10 +124,10 @@ export default function FilePanel({
 
   const doCancel = () => {
     if (addMode) {
-      // This is not necessary because the top folder will reload anyway
-      // Remove the newly added file, that we don't want to keep
+      // // This is not necessary because the top folder will reload anyway
+      // // Remove the newly added file, that we don't want to keep
       // onUpdate(folder.withoutFile(file));
-      routeTo(patientRouterToFile(folder));
+      routeTo(patientRouterToPatient(folder));
     } else {
       routeTo(patientRouterToFile(folder, file));
     }
@@ -136,7 +136,7 @@ export default function FilePanel({
   const doDelete = () =>
     folderFileDelete(file)
       .then(notification("File deleted"))
-      .then(passThrough(() => routeTo(patientRouterToFile(folder))))
+      .then(passThrough(() => routeTo(patientRouterToPatient(folder))))
       .then((folder) => onUpdate(folder));
 
   return (

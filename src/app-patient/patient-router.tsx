@@ -5,11 +5,13 @@ import RouteLoading from "../widget/route-loading";
 import FolderElement from "./folder-element";
 import { getFolder } from "./loaders";
 
-export function patientRouterToFile(
-  f: Folder,
-  p?: PatientRelated,
-  mode?: "edit"
-) {
+type Mode = "edit" | "";
+
+export function patientRouterToPatient(f: Folder, mode?: Mode) {
+  return `/folder/${f.getId()}/summary/${mode ? `/${mode}` : ""}`;
+}
+
+export function patientRouterToFile(f: Folder, p: PatientRelated, mode?: Mode) {
   return `/folder/${f.getId()}/summary/${p?.uid() ?? ""}${mode ? `/${mode}` : ""}`;
 }
 
