@@ -84,7 +84,7 @@ export default function ctrl_folder($scope, $routeParams) {
     $scope.mode = "read";
     $scope.page = false;
     return goThere(
-      `/folder/${$scope.patient_id}/summary/patient.${$scope.patient_id}`
+      `/patient/${$scope.patient_id}/patient.${$scope.patient_id}`
     );
   }
 
@@ -100,7 +100,7 @@ export default function ctrl_folder($scope, $routeParams) {
     if ($scope.patient_id >= 0) {
       // Only when the file is already created
       return goThere(
-        `/folder/${$scope.patient_id}/summary/patient.${$scope.patient_id}/edit`
+        `/patient/${$scope.patient_id}/patient.${$scope.patient_id}/edit`
       );
     }
   }
@@ -135,8 +135,7 @@ export default function ctrl_folder($scope, $routeParams) {
     }
 
     return goThere(
-      `/folder/${$scope.patient_id}/summary` +
-        ($scope.subtype ? `/${subtype}.${$scope.subid}` : "")
+      `/patient/${$scope.patient_id}/${$scope.subtype ? `/${subtype}.${$scope.subid}` : ""}`
     );
   }
 
@@ -315,7 +314,9 @@ export default function ctrl_folder($scope, $routeParams) {
           $scope.subid
       );
     } else {
-      goThere("/folder/" + $scope.patient_id);
+      goThere(
+        "/patient/" + $scope.patient_id + `/patient.${$scope.patient_id}`
+      );
     }
   };
 
@@ -454,7 +455,7 @@ export default function ctrl_folder($scope, $routeParams) {
         $scope.folder = data;
         newRefresh($scope.folder, cachedCurrentFile);
 
-        goThere("/folder/" + $scope.patient_id);
+        goThere(`/patient/${$scope.patient_id}/patient.${$scope.patient_id}`);
         $scope.safeApply();
       });
   };
@@ -483,7 +484,7 @@ export default function ctrl_folder($scope, $routeParams) {
         $scope.folder = folder;
         newRefresh($scope.folder, cachedCurrentFile);
 
-        goThere("/folder/" + folder.getId());
+        goThere("/patient/" + folder.getId()`/patient.${$scope.patient_id}`);
         $scope.safeApply();
       });
   };
@@ -515,7 +516,7 @@ export default function ctrl_folder($scope, $routeParams) {
           level: "success",
           text: "The patient has been saved."
         });
-        goThere("/folder/" + folder.getId());
+        goThere("/patient/" + folder.getId()`/patient.${$scope.patient_id}`);
       });
   };
 
