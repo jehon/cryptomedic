@@ -12,12 +12,6 @@ import "../v2/pages/x-page-folder.js";
 
 import { registryGet } from "../../business/registry.js";
 import { _canonize } from "../v2/js/string-utils.js";
-import "../v2/widgets/file/x-fff-bmi-sd.js";
-import "../v2/widgets/file/x-fff-bmi.js";
-import "../v2/widgets/file/x-fff-height-sd.js";
-import "../v2/widgets/file/x-fff-weight-sd.js";
-import "../v2/widgets/file/x-fff-wh-sd.js";
-import "../v2/widgets/file/x-fff-wh.js";
 import "../v2/widgets/folder/x-ff-patient-related.js";
 import "../v2/widgets/style/x-button.js";
 

@@ -9,9 +9,9 @@ import path from "path";
 import pixelMatch from "pixelmatch";
 import { PNG } from "pngjs";
 
-export const p_ok = chalk.green(" ✓ ");
-export const p_warn = chalk.yellow(" ? ");
-export const p_ko = chalk.red("✗  ");
+const p_ok = chalk.green(" ✓ ");
+const p_warn = chalk.yellow(" ? ");
+const p_ko = chalk.red("✗  ");
 
 const args = parseArgs({
   options: {

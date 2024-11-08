@@ -4,7 +4,6 @@ import {
   crApiLogin
 } from "../../cypress/e2e/helpers/cr-api.js";
 import { crLoginInBackground, crReady } from "../../cypress/e2e/helpers/cr.js";
-import { patientFilesCrud } from "../../cypress/e2e/helpers/e2e-entrynumber-assigned.js";
 import { patientgo } from "../../cypress/e2e/helpers/patients.js";
 
 context("Actions", () => {

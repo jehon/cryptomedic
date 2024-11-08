@@ -7,7 +7,7 @@
  * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
  * @see https://docs.cypress.io/api/commands/request
  */
-export function crApi(options = {}) {
+function crApi(options = {}) {
   return cy
     .request({
       ...options,
@@ -56,72 +56,6 @@ export function crApiLogout() {
   return crApi({
     url: "auth/logout"
   });
-}
-
-/**
- * Get the price list
- *
- * @returns {Cypress.Chainable<*>} Cypress chain to price list
- */
-export function crApiFolderGet(id) {
-  return crApi({ url: `folder/Patient/${id}` });
-}
-
-/**
- * Delete a patient using the API
- *   !! It need to log as Admin to do that
- *
- * @param {number} entry_year  to be deleted
- * @param {number} entry_order to be deleted
- * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
- */
-export function crApiPatientDelete(entry_year, entry_order = 1000) {
-  // Get the id:
-  return crApi({ url: `reference/${entry_year}/${entry_order}` }).then(
-    (folder) =>
-      folder?.id > 0
-        ? crApi({ url: `fiche/patients/${folder.id}`, method: "DELETE" })
-        : true
-  );
-}
-
-/**
- * Update a Fiche
- *
- * @param {string} type to be updated
- * @param {number|string} id to be updated
- * @param {object} data to be set
- * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
- */
-export function crApiFicheModify(type, id, data) {
-  return crApi({ url: `fiche/${type}/${id}`, method: "PUT", data });
-}
-
-/**
- * Delete a Fiche
- *
- * @param {string} type to be updated
- * @param {number} id to be updated
- * @returns {Cypress.Chainable<*>} Cypress chain to the results of the request
- */
-export function crApiFicheDelete(type, id) {
-  // Modify a file
-  const apiTypes = {
-    Appointment: "appointments",
-    Bill: "bills",
-    ClubFoot: "clubfeet",
-    OtherConsult: "otherconsults",
-    Payment: "payments",
-    Picture: "pictures",
-    RicketConsult: "ricketconsults",
-    Surgery: "surgeries"
-  };
-
-  if (!apiTypes[type]) {
-    throw new Error(`No mapping found for ${type}`);
-  }
-
-  return crApi({ url: `fiche/${apiTypes[type]}/${id}`, method: "DELETE" });
 }
 
 /**

@@ -1,5 +1,4 @@
 // TODO x-page-reports.js
-// ts-unused-exports:disable-next-line
 export function setPref(part, data) {
   let res = {};
   if (sessionStorage.cryptomedicPrefs) {
