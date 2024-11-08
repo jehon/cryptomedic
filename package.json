@@ -74,7 +74,7 @@
     "stylelint-no-unsupported-browser-features": "8.0.2",
     "ts-loader": "9.5.1",
     "ts-unused-exports": "10.1.0",
-    "tsx": "4.19.1",
+    "tsx": "4.19.2",
     "typescript-eslint": "8.13.0",
     "watch": "1.0.2",
     "webpack": "5.95.0",
