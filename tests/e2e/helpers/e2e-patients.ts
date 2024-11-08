@@ -48,7 +48,7 @@ export class E2EPatient {
 
   async go(): Promise<this> {
     await crInit(this.page, {
-      page: `/folder/${this.id}/summary/`
+      page: `/patient/${this.id}/patient.${this.id}/`
     });
     const panel = await this.page.getByTestId(`folder-${this.id}`);
     await expect(panel).toBeVisible();

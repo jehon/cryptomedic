@@ -96,7 +96,7 @@ export class E2EFilePanel extends E2EForm {
     } else {
       this.id = "" + id;
     }
-    this.fileBaseUrl = `/folder/${this.patient_id}/summary/${type}.`;
+    this.fileBaseUrl = `/patient/${this.patient_id}/${type}.`;
   }
 
   /* ***********************************
@@ -123,10 +123,7 @@ export class E2EFilePanel extends E2EForm {
     await crExpectUrl(
       this.page,
       new RegExp(
-        "^.*" +
-          escapeRegExp(`#/folder/${this.patient_id}/summary`) +
-          fragment +
-          "$"
+        "^.*" + escapeRegExp(`#/patient/${this.patient_id}`) + fragment + "$"
       )
     );
   }
@@ -162,7 +159,7 @@ export class E2EFilePanel extends E2EForm {
     await popupActions.getByText("Delete").click();
     await crExpectUrl(
       this.page,
-      new RegExp(".*" + escapeRegExp(`#/folder/${this.patient_id}/summary`))
+      new RegExp(".*" + escapeRegExp(`#/patient/${this.patient_id}`))
     );
     await this.e2ePatient.expectToBeVisible();
     await crReady(this.page);

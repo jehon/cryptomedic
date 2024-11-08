@@ -13,11 +13,11 @@ export function patientRouterToPatient(f: Folder, mode?: Mode) {
 }
 
 export function patientRouterToFile(f: Folder, p: PatientRelated, mode?: Mode) {
-  return `/folder/${f.getId()}/summary/${p?.uid() ?? ""}${mode ? `/${mode}` : ""}`;
+  return `/patient/${f.getId()}/${p?.uid() ?? ""}${mode ? `/${mode}` : ""}`;
 }
 
 export function patientRouterToFileAdd(f: Folder, type: typeof PatientRelated) {
-  return `/folder/${f.getId()}/summary/${type.getTechnicalName()}.add`;
+  return `/patient/${f.getId()}/${type.getTechnicalName()}.add`;
 }
 
 function patientLoader({
