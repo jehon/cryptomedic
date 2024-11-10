@@ -34,6 +34,7 @@ export function isTodoMigration(type: typeof Pojo) {
 // TODO: make routing more abstract
 
 export default function FilePanel({
+  folder,
   file,
   header,
   children,
@@ -42,6 +43,7 @@ export default function FilePanel({
   onUpdate,
   edit
 }: {
+  folder: Folder;
   file: PatientRelated;
   header?: React.ReactNode;
   children: React.ReactNode;
@@ -50,14 +52,14 @@ export default function FilePanel({
   onUpdate: FolderUpdateCallback;
   edit?: boolean;
 }): React.ReactNode {
-  const folder: Folder = file.getParent();
   const formRef = useRef<HTMLFormElement>(null);
   // const navigate = useNavigate();
 
   const addMode = !file.getId();
   const editMode = addMode || (edit ?? false);
 
-  const goToPatientFile = () => routeTo(patientRouterToFile(folder, file));
+  const goToPatientFile = () =>
+    routeTo(patientRouterToFile(file.getParentId()!, file));
   const goEdit = () => {
     if (
       // TODO: migrate all this progressively
@@ -65,7 +67,7 @@ export default function FilePanel({
     ) {
       location.hash = [
         "folder",
-        "" + folder.getId(),
+        "" + file.getParentId(),
         "file",
         file.getStatic().getModel(),
         "" + file.getId(),
@@ -74,7 +76,7 @@ export default function FilePanel({
       return;
     }
 
-    routeTo(patientRouterToFile(folder, file, "edit"));
+    routeTo(patientRouterToFile(file.getParentId() ?? "", file, "edit"));
   };
 
   const doUnlock = () => {
@@ -104,7 +106,7 @@ export default function FilePanel({
           passThrough((json) => {
             // Route to the newly created file
             location.hash = patientRouterToFile(
-              json.folder,
+              file.getParentId() ?? "",
               json.folder.getByTypeAndId(
                 file.constructor as PatientRelatedClass,
                 json.newKey
@@ -117,7 +119,11 @@ export default function FilePanel({
     } else {
       return folderFileUpdate(file, data)
         .then(notification("File saved"))
-        .then(passThrough(() => routeTo(patientRouterToFile(folder, file))))
+        .then(
+          passThrough(() =>
+            routeTo(patientRouterToFile(file.getParentId() ?? "", file))
+          )
+        )
         .then((nFolder) => onUpdate(nFolder));
     }
   };
@@ -127,16 +133,20 @@ export default function FilePanel({
       // // This is not necessary because the top folder will reload anyway
       // // Remove the newly added file, that we don't want to keep
       // onUpdate(folder.withoutFile(file));
-      routeTo(patientRouterToPatient(folder));
+      routeTo(patientRouterToPatient(file.getParentId() ?? ""));
     } else {
-      routeTo(patientRouterToFile(folder, file));
+      routeTo(patientRouterToFile(file.getParentId() ?? "", file));
     }
   };
 
   const doDelete = () =>
     folderFileDelete(file)
       .then(notification("File deleted"))
-      .then(passThrough(() => routeTo(patientRouterToPatient(folder))))
+      .then(
+        passThrough(() =>
+          routeTo(patientRouterToPatient(file.getParentId() ?? ""))
+        )
+      )
       .then((folder) => onUpdate(folder));
 
   return (

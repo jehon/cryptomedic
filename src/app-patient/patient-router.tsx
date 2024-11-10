@@ -7,25 +7,24 @@ import { getFolder } from "./loaders";
 
 type Mode = "edit" | "";
 
-export function patientRouterToPatient(f: Folder, mode?: Mode) {
+export function patientRouterToPatient(patientId: string, mode?: Mode) {
   // TODO: in the future, remove patient.100 ?
-  return `/patient/${f.getId()}/patient.${f.getId()}/${mode ? `/${mode}` : ""}`;
+  return `/patient/${patientId}/patient.${patientId}/${mode ? `/${mode}` : ""}`;
 }
 
-export function patientRouterToFile(f: Folder, p: PatientRelated, mode?: Mode) {
-  return `/patient/${f.getId()}/${p?.uid() ?? ""}${mode ? `/${mode}` : ""}`;
+export function patientRouterToFile(
+  patientId: string,
+  p: PatientRelated,
+  mode?: Mode
+) {
+  return `/patient/${patientId}/${p?.uid() ?? ""}${mode ? `/${mode}` : ""}`;
 }
 
-export function patientRouterToFileAdd(f: Folder, type: typeof PatientRelated) {
-  return `/patient/${f.getId()}/${type.getTechnicalName()}.add`;
-}
-
-function patientLoader({
-  params
-}: {
-  params: Params<string>;
-}): Promise<Folder> {
-  return getFolder(params["folderId"] ?? "");
+export function patientRouterToFileAdd(
+  patientId: string,
+  type: typeof PatientRelated
+) {
+  return `/patient/${patientId}/${type.getTechnicalName()}.add`;
 }
 
 export function patientRouterConfig() {
@@ -33,7 +32,8 @@ export function patientRouterConfig() {
     {
       // TODO: Temporary
       path: "/folder/:folderId/summary/:selectedUid?/:mode?",
-      loader: patientLoader,
+      loader: ({ params }: { params: Params<string> }) =>
+        getFolder(params["folderId"] ?? ""),
       element: <RouteLoading element={<PatientRouter />} />
     },
     {
@@ -46,7 +46,8 @@ export function patientRouterConfig() {
     },
     {
       path: "/patient/:folderId/:selectedUid?/:mode?",
-      loader: patientLoader,
+      loader: ({ params }: { params: Params<string> }) =>
+        getFolder(params["folderId"] ?? ""),
       element: <RouteLoading element={<PatientRouter />} />
     }
   ];

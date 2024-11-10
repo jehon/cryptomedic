@@ -13,16 +13,12 @@ export default class PatientRelated extends Pojo {
     return this;
   }
 
-  getParent(): Folder {
-    return this.#parent!;
-  }
-
   // Legacy
   /**
    * @returns {Patient}
    */
   getPatient() {
-    return this.getParent().getPatient();
+    return this.#parent!.getPatient();
   }
 
   override isLocked(): boolean {
