@@ -35,7 +35,6 @@ export default function FolderElement({
   mode?: string;
 }): React.ReactNode {
   const [folder, folderUpdated] = useState<Folder>(initialFolder);
-  const patient = folder.getPatient();
 
   const folderUpdatedCallback = (folder: Folder | undefined) => {
     if (folder) {
@@ -118,9 +117,9 @@ export default function FolderElement({
         <IO.Date label="Next appointment" value={folder.getNextAppointment()} />
       </Panel>
 
-      {patientElementGenerator(patient, commonProps)}
+      {patientElementGenerator(folder.getPatient(), commonProps)}
 
-      {(folder.getFilesRelatedToPatient() as PatientRelated[]).map(
+      {(folder.getChildren() as PatientRelated[]).map(
         (file: PatientRelated) => {
           if (file instanceof Appointment) {
             return appointmentElementGenerator(file, commonProps);

@@ -58,16 +58,6 @@ export default class Bill extends Timed {
     return getSession()?.prices?.[this.price_id] ?? null;
   }
 
-  // getTotalForCategory(category: string) {
-  //   return this.items
-  //     .filter((item) => item.category === category)
-  //     .reduce(
-  //       (total: number, item: BillLine) =>
-  //         total + item.value * this.getPriceFor(item.key),
-  //       0
-  //     );
-  // }
-
   social_level_calculated() {
     /**
      From TC:
@@ -106,64 +96,6 @@ export default class Bill extends Timed {
     return 4;
   }
 
-  // // Legacy
-  // get_total_real() {
-  //   if (!this.getPrice()) {
-  //     this.total_real = 0;
-  //     this.total_asked = 0;
-  //     return -1;
-  //   }
-  //   let total = 0;
-  //   for (const i in this.getPrice()) {
-  //     if (i[0] === "_") {
-  //       continue;
-  //     }
-  //     if (i === "id") {
-  //       continue;
-  //     }
-  //     if (i === "created_at") {
-  //       continue;
-  //     }
-  //     if (i === "updated_at") {
-  //       continue;
-  //     }
-  //     if (i === "last_user") {
-  //       continue;
-  //     }
-  //     if (i === "date_from") {
-  //       continue;
-  //     }
-  //     if (i === "date_to") {
-  //       continue;
-  //     }
-  //     if (i === "controller") {
-  //       continue;
-  //     }
-  //     if (i === "locked") {
-  //       continue;
-  //     }
-  //     if (i === "dlocked") {
-  //       continue;
-  //     }
-  //     if (i.startsWith("social_level_")) {
-  //       continue;
-  //     }
-  //     if (this.getPrice()[i] < 0) {
-  //       continue;
-  //     }
-  //     if (typeof this[i] === "undefined") {
-  //       continue;
-  //     }
-  //     if (this[i] <= 0) {
-  //       continue;
-  //     }
-  //     total += this.getPrice()[i] * this[i];
-  //   } //, this);
-  //   this.total_real = total;
-  //   this.total_asked = this.total_real * this.calculate_percentage_asked();
-  //   return this.total_real;
-  // }
-
   get_percentage_asked(): number {
     if (!this.getPrice()) {
       //console.warn('calculate_percentage_asked(): no price id');
@@ -190,14 +122,6 @@ export default class Bill extends Timed {
     if (!this.getPrice()[key]) return 0;
     return this.getPrice()[key];
   }
-
-  // // Legacy
-  // getTotalFor(key: string): number {
-  //   if (!this.getPrice()) return 0;
-  //   if (!this.getPrice()[key]) return 0;
-  //   if (!this[key]) return 0;
-  //   return this.getPrice()[key] * this[key];
-  // }
 
   getTotalAlreadyPaid() {
     return this.getPayments().reduce(

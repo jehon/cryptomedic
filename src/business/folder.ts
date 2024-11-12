@@ -158,7 +158,7 @@ export default class Folder extends Pojo {
     return list[0] as Patient;
   }
 
-  getFilesRelatedToPatient(): PatientRelated[] {
+  getChildren(): PatientRelated[] {
     if (!this.getPatient().id) {
       return [];
     }
@@ -169,14 +169,6 @@ export default class Folder extends Pojo {
         // TODO: this is not in the correct place
         .filter((v) => !(v instanceof Payment))
     );
-  }
-
-  getFileRelatedToPatient(i: number): PatientRelated {
-    const list = this.getFilesRelatedToPatient();
-    if (list.length > i) {
-      return list[i];
-    }
-    throw new Error(`Could not find ${i}} in getFileRelatedToPatient`);
   }
 
   // TODO: move this to bill
