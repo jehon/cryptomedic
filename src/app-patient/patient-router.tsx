@@ -20,20 +20,13 @@ export function patientRouterToFileAdd(f: Folder, type: typeof PatientRelated) {
   return `/patient/${f.getId()}/${type.getTechnicalName()}.add`;
 }
 
-function patientLoader({
-  params
-}: {
-  params: Params<string>;
-}): Promise<Folder> {
-  return getFolder(params["folderId"] ?? "");
-}
-
 export function patientRouterConfig() {
   return [
     {
       // TODO: Temporary
       path: "/folder/:folderId/summary/:selectedUid?/:mode?",
-      loader: patientLoader,
+      loader: ({ params }: { params: Params<string> }) =>
+        getFolder(params["folderId"] ?? ""),
       element: <RouteLoading element={<PatientRouter />} />
     },
     {
@@ -46,7 +39,8 @@ export function patientRouterConfig() {
     },
     {
       path: "/patient/:folderId/:selectedUid?/:mode?",
-      loader: patientLoader,
+      loader: ({ params }: { params: Params<string> }) =>
+        getFolder(params["folderId"] ?? ""),
       element: <RouteLoading element={<PatientRouter />} />
     }
   ];
