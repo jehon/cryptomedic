@@ -34,6 +34,7 @@ export function isTodoMigration(type: typeof Pojo) {
 // TODO: make routing more abstract
 
 export default function FilePanel({
+  folder,
   file,
   header,
   children,
@@ -42,6 +43,7 @@ export default function FilePanel({
   onUpdate,
   edit
 }: {
+  folder: Folder;
   file: PatientRelated;
   header?: React.ReactNode;
   children: React.ReactNode;
@@ -50,7 +52,6 @@ export default function FilePanel({
   onUpdate: FolderUpdateCallback;
   edit?: boolean;
 }): React.ReactNode {
-  const folder: Folder = file.getParent();
   const formRef = useRef<HTMLFormElement>(null);
   // const navigate = useNavigate();
 
@@ -65,7 +66,7 @@ export default function FilePanel({
     ) {
       location.hash = [
         "folder",
-        "" + folder.getId(),
+        "" + file.getParentId(),
         "file",
         file.getStatic().getModel(),
         "" + file.getId(),

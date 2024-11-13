@@ -64,6 +64,7 @@ export default function FolderElement({
   }
 
   const commonProps = {
+    folder,
     selectedUid,
     mode,
     onUpdate: folderUpdatedCallback
