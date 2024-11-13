@@ -8,6 +8,7 @@ import Bill from "./bill";
 import ConsultOther from "./consult-other";
 import ConsultRicket from "./consult-ricket";
 import Patient, { yearOfBirthPattern } from "./patient";
+import Payment from "./payment";
 import Picture from "./picture";
 import Surgery from "./surgery";
 
@@ -76,6 +77,9 @@ test("should give patient related files", () => {
   assert(list[i] instanceof Bill);
   assert.equal(list[i].id, 1);
   assert.equal(p.getChildren()[i].id, (list[i] as Bill).id);
+  const bill = p.getChildren()[i] as Bill;
+  assert(bill.payment[0] instanceof Payment);
+  assert.equal(bill.payment[0].getId(), "3");
 
   i++;
   assert(list[i] instanceof ConsultOther);

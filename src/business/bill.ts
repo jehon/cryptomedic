@@ -1,3 +1,5 @@
+import { Type } from "class-transformer";
+import "reflect-metadata"; // Required by class-transformer
 import { BillLine } from "../app-patient/blocs/io-bill-line";
 import { DataMissingException } from "../utils/exceptions";
 import { getSession } from "../utils/session";
@@ -21,6 +23,10 @@ export default class Bill extends Timed {
   total_real: number = 0;
   social_level: number = 0;
   total_asked: number = 0;
+
+  // !! This map to getTechnicalName() !!
+  @Type(() => Payment)
+  payment: Payment[] = [];
 
   get items(): BillLine[] {
     const items = [];
