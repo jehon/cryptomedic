@@ -22,7 +22,7 @@ export default class PatientRelated extends Pojo {
    * @returns {Patient}
    */
   getPatient() {
-    return this.getParent().getPatient();
+    return this.#parent!.getPatient();
   }
 
   override isLocked(): boolean {
