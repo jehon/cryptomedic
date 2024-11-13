@@ -244,7 +244,7 @@ export default function FilePanel({
               {file instanceof PatientRelated &&
                 !addMode &&
                 (!(file instanceof Patient) ||
-                  folder.getFilesRelatedToPatient().length == 0) && (
+                  folder.getChildren().length == 0) && (
                   <ActionConfirm
                     style="Delete"
                     discrete={true}

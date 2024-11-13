@@ -86,11 +86,11 @@ export default function billElementGenerator(
           <ButtonsGroup>
             <ActionButton
               style="Add"
-              linkTo={`#/folder/${file.getParent().getId()}/file/Bill/${file.getId()}`}
+              linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
             />
             <ActionButton
               style="Edit"
-              linkTo={`#/folder/${file.getParent().getId()}/file/Bill/${file.getId()}`}
+              linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
             />
           </ButtonsGroup>
           {file.getPayments().length == 0 ? (

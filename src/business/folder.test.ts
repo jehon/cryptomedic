@@ -47,7 +47,7 @@ test("should return null if element is not found (consult_other.0)", () => {
 });
 
 test("should give patient related files", () => {
-  const list = f.getFilesRelatedToPatient();
+  const list = f.getChildren();
   assert.equal(list.length, 6);
 
   list.forEach((e) => {
@@ -58,35 +58,32 @@ test("should give patient related files", () => {
   i++;
   assert(list[i] instanceof Appointment);
   assert.equal(list[i].id, 2);
-  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as Appointment).id);
+  assert.equal(f.getChildren()[i].id, (list[i] as Appointment).id);
 
   i++;
   assert(list[i] instanceof Picture);
   assert.equal(list[i].id, 2);
-  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as Picture).id);
+  assert.equal(f.getChildren()[i].id, (list[i] as Picture).id);
 
   i++;
   assert(list[i] instanceof ConsultRicket);
   assert.equal(list[i].id, 13);
-  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as ConsultRicket).id);
+  assert.equal(f.getChildren()[i].id, (list[i] as ConsultRicket).id);
 
   i++;
   assert(list[i] instanceof Surgery);
   assert.equal(list[i].id, 5);
-  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as Surgery).id);
+  assert.equal(f.getChildren()[i].id, (list[i] as Surgery).id);
 
   i++;
   assert(list[i] instanceof Bill);
   assert.equal(list[i].id, 1);
-  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as Bill).id);
+  assert.equal(f.getChildren()[i].id, (list[i] as Bill).id);
 
   i++;
   assert(list[i] instanceof ConsultOther);
   assert.equal(list[i].id, 1);
-  assert.equal(f.getFileRelatedToPatient(i)?.id, (list[i] as ConsultOther).id);
-
-  // And out of bounds...
-  assert.throws(() => f.getFileRelatedToPatient(1000));
+  assert.equal(f.getChildren()[i].id, (list[i] as ConsultOther).id);
 });
 
 test("should give bill related files", () => {
