@@ -105,7 +105,7 @@ export default function FolderElement({
               className="dropdown-item"
               key={type.getTechnicalName()}
               data-testid={"add-" + type.getTechnicalName()}
-              to={patientRouterToFileAdd(folder, type)}
+              to={patientRouterToFileAdd(folder.getId()!, type)}
             >
               {type.getTitle()}
             </Link>

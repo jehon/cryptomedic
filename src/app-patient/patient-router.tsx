@@ -1,23 +1,37 @@
 import { Params, useLoaderData, useParams } from "react-router-dom";
 import PatientRelated from "../business/abstracts/patient-related";
+import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";
 import RouteLoading from "../widget/route-loading";
 import FolderElement from "./folder-element";
 import { getFolder } from "./loaders";
 
-type Mode = "edit" | "";
+export const Modes = {
+  output: "",
+  input: "edit"
+};
 
-export function patientRouterToPatient(f: Folder, mode?: Mode) {
+type Mode = (typeof Modes)[keyof typeof Modes];
+
+export function patientRouterToPatient(patientId: string, mode: Mode) {
   // TODO: in the future, remove patient.100 ?
-  return `/patient/${f.getId()}/patient.${f.getId()}/${mode ? `/${mode}` : ""}`;
+  return `/patient/${patientId}/patient.${patientId}/${mode ? `/${mode}` : ""}`;
 }
 
-export function patientRouterToFile(f: Folder, p: PatientRelated, mode?: Mode) {
-  return `/patient/${f.getId()}/${p?.uid() ?? ""}${mode ? `/${mode}` : ""}`;
+export function patientRouterToFile(
+  patientId: string,
+  fileType: typeof Pojo,
+  fileId: string,
+  mode: Mode
+) {
+  return `/patient/${patientId}/${fileType.getTechnicalName()}.${fileId}${mode ? `/${mode}` : ""}`;
 }
 
-export function patientRouterToFileAdd(f: Folder, type: typeof PatientRelated) {
-  return `/patient/${f.getId()}/${type.getTechnicalName()}.add`;
+export function patientRouterToFileAdd(
+  patientId: string,
+  type: typeof PatientRelated
+) {
+  return `/patient/${patientId}/${type.getTechnicalName()}.add`;
 }
 
 export function patientRouterConfig() {

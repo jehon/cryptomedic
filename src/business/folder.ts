@@ -14,8 +14,6 @@ import Payment from "./payment";
 import Picture from "./picture";
 import Surgery from "./surgery";
 
-export type PatientRelatedClass = typeof PatientRelated;
-
 export function type2Class(type: string): typeof Pojo {
   switch (type) {
     case "appointment":
@@ -112,7 +110,7 @@ export default class Folder extends Pojo {
   }
 
   getByTypeAndId<T extends PatientRelated>(
-    type: PatientRelatedClass,
+    type: typeof PatientRelated,
     id: string
   ): T {
     const list = this.getListByType(type);

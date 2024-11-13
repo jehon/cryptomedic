@@ -3,7 +3,7 @@ import { ButtonGroup } from "react-bootstrap";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Timed from "../../business/abstracts/timed";
-import Folder, { PatientRelatedClass } from "../../business/folder";
+import Folder from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons, isFeatureSwitchEnabled } from "../../config";
 import { routeTo } from "../../main";
@@ -20,7 +20,11 @@ import {
   folderFileUnlock,
   folderFileUpdate
 } from "../loaders";
-import { patientRouterToFile, patientRouterToPatient } from "../patient-router";
+import {
+  Modes,
+  patientRouterToFile,
+  patientRouterToPatient
+} from "../patient-router";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
@@ -58,7 +62,15 @@ export default function FilePanel({
   const addMode = !file.getId();
   const editMode = addMode || (edit ?? false);
 
-  const goToPatientFile = () => routeTo(patientRouterToFile(folder, file));
+  const goToPatientFile = () =>
+    routeTo(
+      patientRouterToFile(
+        file.getParentId()!,
+        file.getStatic(),
+        file.getId()!,
+        Modes.output
+      )
+    );
   const goEdit = () => {
     if (
       // TODO: migrate all this progressively
@@ -75,7 +87,14 @@ export default function FilePanel({
       return;
     }
 
-    routeTo(patientRouterToFile(folder, file, "edit"));
+    routeTo(
+      patientRouterToFile(
+        file.getParentId() ?? "",
+        file.getStatic(),
+        file.getId()!,
+        "edit"
+      )
+    );
   };
 
   const doUnlock = () => {
@@ -105,11 +124,10 @@ export default function FilePanel({
           passThrough((json) => {
             // Route to the newly created file
             location.hash = patientRouterToFile(
-              json.folder,
-              json.folder.getByTypeAndId(
-                file.constructor as PatientRelatedClass,
-                json.newKey
-              )
+              file.getParentId() ?? "",
+              file.constructor,
+              json.newKey,
+              Modes.output
             );
           })
         )
@@ -118,7 +136,18 @@ export default function FilePanel({
     } else {
       return folderFileUpdate(file, data)
         .then(notification("File saved"))
-        .then(passThrough(() => routeTo(patientRouterToFile(folder, file))))
+        .then(
+          passThrough(() =>
+            routeTo(
+              patientRouterToFile(
+                file.getParentId()!,
+                file.getStatic(),
+                file.getId()!,
+                Modes.output
+              )
+            )
+          )
+        )
         .then((nFolder) => onUpdate(nFolder));
     }
   };
@@ -128,16 +157,27 @@ export default function FilePanel({
       // // This is not necessary because the top folder will reload anyway
       // // Remove the newly added file, that we don't want to keep
       // onUpdate(folder.withoutFile(file));
-      routeTo(patientRouterToPatient(folder));
+      routeTo(patientRouterToPatient(folder.getId()!, Modes.output));
     } else {
-      routeTo(patientRouterToFile(folder, file));
+      routeTo(
+        patientRouterToFile(
+          folder.getId()!,
+          file.getStatic(),
+          file.getId()!,
+          Modes.output
+        )
+      );
     }
   };
 
   const doDelete = () =>
     folderFileDelete(file)
       .then(notification("File deleted"))
-      .then(passThrough(() => routeTo(patientRouterToPatient(folder))))
+      .then(
+        passThrough(() =>
+          routeTo(patientRouterToPatient(file.getParentId()!, Modes.output))
+        )
+      )
       .then((folder) => onUpdate(folder));
 
   return (
