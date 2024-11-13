@@ -59,7 +59,7 @@ export default function FolderElement({
     if (folder.list.filter((f) => f.uid() == selectedUid).length == 0) {
       const nf = typeClass.factory() as PatientRelated;
       nf.registerParent(folder);
-      folderUpdated(folder.withFile(nf));
+      folderUpdated(folder.withFileOLD(nf));
     }
   }
 

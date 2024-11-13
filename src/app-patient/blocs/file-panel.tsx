@@ -79,7 +79,7 @@ export default function FilePanel({
 
   const doUnlock = () => {
     folderFileUnlock(file)
-      .then((file) => folder.withFile(file))
+      .then((file) => folder.withFileOLD(file))
       .then(notification("File unlocked"))
       .then((newFolder) => onUpdate(newFolder))
       .then(() => goEdit());

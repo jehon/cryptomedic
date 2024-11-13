@@ -76,17 +76,17 @@ export default class Folder extends Pojo {
     }
   }
 
-  withFile(file: PatientRelated): Folder {
+  withFileOLD(file: PatientRelated): Folder {
     //
     // We remove and add in one run
     // to avoid building twice the folder
     //
-    return produce(this.withoutFile(file), (draft) => {
+    return produce(this.withoutFileOLD(file), (draft) => {
       draft.list.push(file);
     });
   }
 
-  withoutFile(file: PatientRelated): Folder {
+  withoutFileOLD(file: PatientRelated): Folder {
     const i = this.list.findIndex((val) => val.uid() === file.uid());
     if (i < 0) {
       return this;

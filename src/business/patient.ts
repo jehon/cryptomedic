@@ -46,6 +46,8 @@ export default class Patient extends PatientRelated {
   address_comments: string = "";
   comments: string = "";
 
+  // !! This map to getTechnicalName() !!
+
   @Type(() => Appointment)
   appointment: Appointment[] = [];
 
@@ -196,5 +198,27 @@ export default class Patient extends PatientRelated {
       return 40 * o2First;
 
     return 0;
+  }
+
+  getNextAppointment(): Date | undefined {
+    const today = new Date();
+    return this.appointment
+      .map((v) => v.date)
+      .map((d) => new Date(d))
+      .filter((d) => d > today)
+      .sort((a, b) => b.getTime() - a.getTime()) // Bigger at top
+      .shift();
+  }
+
+  getLastSeen(): Date | undefined {
+    const today = new Date();
+    return this.getChildren()
+      .filter((v) => !(v instanceof Appointment)) // We take everything except Appointment
+      .map((v) => "date" in v && v.date)
+      .filter((d) => d)
+      .map((d) => new Date(d as string))
+      .filter((d) => d < today)
+      .sort((a, b) => a.getTime() - b.getTime())
+      .pop();
   }
 }

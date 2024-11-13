@@ -183,7 +183,7 @@ test("Copy with new file", function () {
   assert(fap instanceof Appointment);
   assert.equal(fap.purpose, "");
 
-  const f2 = f.withFile(
+  const f2 = f.withFileOLD(
     Appointment.factory({
       id: "2",
       examiner: "test",
