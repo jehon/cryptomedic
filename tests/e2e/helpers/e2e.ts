@@ -1,5 +1,6 @@
 import { APIResponse, expect, Locator, Page } from "@playwright/test";
-import { CRUD, CRUDType, IndexSignature } from "../../../src/constants";
+import { IndexSignature } from "../../../src/constants";
+import { CRUD, CRUDType } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
 export { outputDate } from "../../../src/utils/date";
 
