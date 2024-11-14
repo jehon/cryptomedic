@@ -478,7 +478,7 @@ export default function ctrl_folder($scope, $routeParams) {
         $scope.folder = folder;
         newRefresh($scope.folder, cachedCurrentFile);
 
-        goThere("/patient/" + folder.getId()`/patient.${$scope.patient_id}`);
+        goThere("/patient/" + folder.getId() + `/patient.${folder.getId()}`);
         $scope.safeApply();
       });
   };
@@ -510,7 +510,7 @@ export default function ctrl_folder($scope, $routeParams) {
           level: "success",
           text: "The patient has been saved."
         });
-        goThere("/patient/" + folder.getId()`/patient.${$scope.patient_id}`);
+        goThere("/patient/" + folder.getId() + `/patient.${$scope.patient_id}`);
       });
   };
 

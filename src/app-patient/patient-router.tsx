@@ -37,21 +37,6 @@ export function patientRouterToFileAdd(
 export function patientRouterConfig() {
   return [
     {
-      // TODO: Temporary
-      path: "/folder/:folderId/summary/:selectedUid?/:mode?",
-      loader: ({ params }: { params: Params<string> }) =>
-        getFolder(params["folderId"] ?? ""),
-      element: <RouteLoading element={<PatientRouter />} />
-    },
-    {
-      // TODO: Temporary
-      path: "/patient/-1/edit",
-      Component: () => {
-        window.location.href = "#/folder/-1/edit";
-        return null;
-      }
-    },
-    {
       path: "/patient/:folderId/:selectedUid?/:mode?",
       loader: ({ params }: { params: Params<string> }) =>
         getFolder(params["folderId"] ?? ""),
