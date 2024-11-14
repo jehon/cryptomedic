@@ -1,5 +1,6 @@
 import { plainToInstance } from "class-transformer";
 import { immerable, produce } from "immer";
+import { request } from "../../utils/network";
 import { StringDate } from "../../utils/types";
 
 export default class Pojo {
@@ -78,6 +79,15 @@ export default class Pojo {
     return produce(this, (draft: this) => {
       draft.getList(listName).splice(i, 1);
     });
+  }
+
+  /*********************
+   * CRUD Methods
+   */
+  static get<T extends Pojo>(id: string): Promise<T> {
+    return request({ url: [this.getTechnicalName(), id] }).then(
+      this.factory<T>
+    );
   }
 }
 
