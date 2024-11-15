@@ -58,17 +58,23 @@ export default class Pojo {
     return this[list] as T[];
   }
 
-  withFile(listName: keyof this, file: Pojo): this {
+  withFile(
+    file: Pojo,
+    listName: keyof this = file.getStatic().getTechnicalName() as keyof this
+  ): this {
     //
     // We remove and add in one run
     // to avoid building twice the folder
     //
-    return produce(this.withoutFile(listName, file), (draft: this) => {
+    return produce(this.withoutFile(file, listName), (draft: this) => {
       draft.getList(listName).push(file);
     });
   }
 
-  withoutFile(listName: keyof this, file: Pojo): this {
+  withoutFile(
+    file: Pojo,
+    listName: keyof this = file.getStatic().getTechnicalName() as keyof this
+  ): this {
     const i = this.getList(listName).findIndex(
       (val: Pojo) => val.uid() === file.uid()
     );

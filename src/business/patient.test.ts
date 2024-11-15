@@ -173,7 +173,6 @@ test("Copy with new file", function () {
   assert.equal(fap.purpose, null);
 
   const p2 = p.withFile(
-    Appointment.getTechnicalName() as keyof Patient,
     Appointment.factory({
       id: "2",
       examiner: "test",
