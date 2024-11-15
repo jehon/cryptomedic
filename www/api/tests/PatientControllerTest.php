@@ -7,7 +7,7 @@ class PatientControllerTest extends RouteReferenceTestCase {
 	public function testsUnauthenticated() {
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          	->setUrl("patients/1")
+          	->setUrl("patient/1")
         	->asUnauthenticated()
           	->setExpected(401)
           	->asText()
@@ -17,7 +17,7 @@ class PatientControllerTest extends RouteReferenceTestCase {
 	public function test1() {
 		$opt = $this->getNewRequestOptionsBuilder()
 			->withReference()
-			->setUrl("patients/1");
+			->setUrl("patient/1");
 		$json = $this->myRunAssertQueryForRoles($opt);
 		$this->assertEquals(1, $json['id']);
 	}
@@ -25,7 +25,7 @@ class PatientControllerTest extends RouteReferenceTestCase {
   	public function test6() {
 	    $opt = $this->getNewRequestOptionsBuilder()
     	  	->withReference()
-	      	->setUrl("patients/6");
+	      	->setUrl("patient/6");
     	$json = $this->myRunAssertQueryForRoles($opt);
     	$this->assertEquals(6, $json['id']);
   	}

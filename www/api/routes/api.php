@@ -91,7 +91,8 @@ Route::group(array('middleware' => 'authenticated'), function() {
 
   CRSecurity::ifHasPersmission('folder.read', function() {
     Route::resource('folder', "FolderController", [ "only" => [ "index" ]]);
-    Route::get('patients/{id}', "PatientsController@show");
+    Route::get('patient/{id}', "PatientsController@show"); // Redundant because patient has different rights
+    Route::get('patients/{id}', "PatientsController@show"); // TODO: Legacy
 
     Route::get('folder/{model}/{id}', [
       "uses" => "FolderController@show"
