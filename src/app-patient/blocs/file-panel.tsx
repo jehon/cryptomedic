@@ -101,7 +101,7 @@ export default function FilePanel({
     folderFileUnlock(file)
       .then((file) => folder.withFileOLD(file))
       .then(notification("File unlocked"))
-      .then((newFolder) => onUpdate(newFolder))
+      .then(onUpdate)
       .then(() => goEdit());
   };
 
@@ -132,7 +132,7 @@ export default function FilePanel({
           })
         )
         .then((json) => json.folder)
-        .then((nFolder) => onUpdate(nFolder));
+        .then(onUpdate);
     } else {
       return folderFileUpdate(file, data)
         .then(notification("File saved"))
@@ -148,7 +148,7 @@ export default function FilePanel({
             )
           )
         )
-        .then((nFolder) => onUpdate(nFolder));
+        .then(onUpdate);
     }
   };
 
@@ -178,7 +178,7 @@ export default function FilePanel({
           routeTo(patientRouterToPatient(file.getParentId()!, Modes.output))
         )
       )
-      .then((folder) => onUpdate(folder));
+      .then(onUpdate);
 
   return (
     <Panel
