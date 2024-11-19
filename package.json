@@ -16,7 +16,7 @@
     "bootstrap5": "npm:bootstrap@5.3.3",
     "class-transformer": "0.5.1",
     "css-inherit": "github:jehon/css-inherit",
-    "duix": "3.0.3",
+    "duix": "3.0.4",
     "excellentexport": "3.9.7",
     "he": "1.2.0",
     "immer": "10.1.1",
