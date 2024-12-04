@@ -11,7 +11,7 @@
     "@types/toastr": "2.1.43",
     "angular": "1.8.3",
     "angular-route": "1.8.3",
-    "axios": "1.7.8",
+    "axios": "1.7.9",
     "bootstrap4": "npm:bootstrap@4.6.2",
     "bootstrap5": "npm:bootstrap@5.3.3",
     "class-transformer": "0.5.1",
