@@ -45,7 +45,7 @@
     "@types/node": "22.10.2",
     "@types/pixelmatch": "5.2.6",
     "@types/pngjs": "6.0.5",
-    "@types/react": "18.3.16",
+    "@types/react": "18.3.17",
     "@types/react-dom": "18.3.5",
     "@types/string": "0.0.34",
     "babel-plugin-transform-commonjs": "1.1.6",
