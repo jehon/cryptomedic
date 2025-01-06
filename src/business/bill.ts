@@ -104,23 +104,18 @@ export default class Bill extends Timed {
 
   get_percentage_asked(): number {
     if (!this.getPrice()) {
-      //console.warn('calculate_percentage_asked(): no price id');
       return 1;
     }
     const sl = this["social_level"];
     if (sl == null) {
-      //console.warn('calculate_percentage_asked(): no social level');
       return 1;
     }
     if (
       typeof this.getPrice()["social_level_percentage_" + sl] == "undefined"
     ) {
-      //console.warn('calculate_percentage_asked(): no social level in price for sl ' + sl);
       return 1;
     }
-    const perc = this.getPrice()["social_level_percentage_" + sl];
-    // console.log("price", this.getPrice(), sl, perc)
-    return perc;
+    return this.getPrice()["social_level_percentage_" + sl];
   }
 
   getPriceFor(key: string): number {
@@ -137,6 +132,7 @@ export default class Bill extends Timed {
   }
 
   getPayments(): Payment[] {
+    // TODO: use payments field
     return this.getParent!().getFilesRelatedToBill(this.getId());
   }
 
