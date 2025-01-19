@@ -11,48 +11,48 @@
 set -o errexit
 set -o pipefail
 
-# shellcheck source=./cr-lib
+# shellcheck source-path=SCRIPTDIR
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 run_cypress_raw() {
-    docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
-        --volume "$CR_PRJ_DIR:/workdir" \
-        --workdir /workdir/tests \
-        --env HOME=/root \
-        --entrypoint "cypress" \
-        cypress \
-        "$@"
-    #        -e DISPLAY \
-    #        -v /tmp/.X11-unix:/tmp/.X11-unix \
+	docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
+		--volume "$CR_PRJ_DIR:/workdir" \
+		--workdir /workdir/tests \
+		--env HOME=/root \
+		--entrypoint "cypress" \
+		cypress \
+		"$@"
+	#        -e DISPLAY \
+	#        -v /tmp/.X11-unix:/tmp/.X11-unix \
 }
 
 run_cypress() {
-    COMMAND="$1"
-    OUTPUT="$2"
-    FLAVOR="$3"
-    shift
-    shift
-    shift
+	COMMAND="$1"
+	OUTPUT="$2"
+	FLAVOR="$3"
+	shift
+	shift
+	shift
 
-    mkdir -p "$OUTPUT"
-    cr-ensure-folder-empty "$OUTPUT"/screenshots
-    cr-ensure-folder-empty "$OUTPUT"/videos
-    cr-ensure-folder-empty "$OUTPUT"/coverage
+	mkdir -p "$OUTPUT"
+	cr-ensure-folder-empty "$OUTPUT"/screenshots
+	cr-ensure-folder-empty "$OUTPUT"/videos
+	cr-ensure-folder-empty "$OUTPUT"/coverage
 
-    if [ "$FLAVOR" = "mobile" ]; then
-        MOBILE_RESOLUTION=",viewportWidth=360,viewportHeight=640"
-    fi
+	if [ "$FLAVOR" = "mobile" ]; then
+		MOBILE_RESOLUTION=",viewportWidth=360,viewportHeight=640"
+	fi
 
-    DOCKER_OUTPUT="/workdir/$(realpath --relative-to "$CR_PRJ_DIR" "$OUTPUT")"
+	DOCKER_OUTPUT="/workdir/$(realpath --relative-to "$CR_PRJ_DIR" "$OUTPUT")"
 
-    header_begin "Cypress run tests ($*)"
-    run_cypress_raw \
-        "$COMMAND" \
-        "--env" "flavor=$FLAVOR" \
-        "--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots$MOBILE_RESOLUTION" \
-        "$@"
+	header_begin "Cypress run tests ($*)"
+	run_cypress_raw \
+		"$COMMAND" \
+		"--env" "flavor=$FLAVOR" \
+		"--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots$MOBILE_RESOLUTION" \
+		"$@"
 
-    header_end
+	header_end
 }
 
 CMD="${1:?Need command as [1]}"
@@ -60,22 +60,22 @@ OUTPUT="$2"
 
 case "$CMD" in
 "version")
-    run_cypress_raw "version" "--component" "package"
-    ;;
+	run_cypress_raw "version" "--component" "package"
+	;;
 "open")
-    run_cypress "open" "$OUTPUT" "desktop" \
-        "--project" "." "--e2e" "--browser=electron"
-    ;;
+	run_cypress "open" "$OUTPUT" "desktop" \
+		"--project" "." "--e2e" "--browser=electron"
+	;;
 "desktop")
-    # Nothing to do - default flavor - use the config preset's
-    run_cypress "run" "$OUTPUT" "desktop"
-    ;;
+	# Nothing to do - default flavor - use the config preset's
+	run_cypress "run" "$OUTPUT" "desktop"
+	;;
 "mobile")
-    # Mobile: 360 x 480
-    run_cypress "run" "$OUTPUT" "mobile"
-    ;;
+	# Mobile: 360 x 480
+	run_cypress "run" "$OUTPUT" "mobile"
+	;;
 *)
-    echo "Need flavor as [1]" >&2
-    exit 255
-    ;;
+	echo "Need flavor as [1]" >&2
+	exit 255
+	;;
 esac

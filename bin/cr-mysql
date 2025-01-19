@@ -3,6 +3,7 @@
 set -o errexit
 set -o pipefail
 
+# shellcheck source-path=SCRIPTDIR
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
 #
@@ -13,14 +14,15 @@ set -o pipefail
 # So, nobody can listen to stdin before the real "mysql" call!
 #
 
+# shellcheck source-path=SCRIPTDIR
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
 mysql_run() {
-    docker compose exec -T database mysql \
-        --quick \
-        --reconnect \
-        --unbuffered \
-        --wait "$@"
+	docker compose exec -T database mysql \
+		--quick \
+		--reconnect \
+		--unbuffered \
+		--wait "$@"
 }
 
 # -T is necessary for <file.sql

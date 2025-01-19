@@ -3,14 +3,14 @@
 set -o errexit
 set -o pipefail
 
-# shellcheck source=./cr-lib
+# shellcheck source-path=SCRIPTDIR
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 header_begin "cr-data-reset: reset folder structure"
 # Keep the sessions open
 rsync --archive --delete \
-    --exclude laravel/sessions/ \
-    live-for-test/ live/
+	--exclude laravel/sessions/ \
+	live-for-test/ live/
 
 # Exclude sessions, which can be a bit tricky
 find live -not -path "live/laravel/sessions/*" -exec chmod a+rwX "{}" ";"
@@ -30,7 +30,7 @@ docker volume rm -f "${DC_PROJECT_NAME}_database" || true
 docker compose up --wait --detach proxy web
 
 docker compose up --force-recreate database \
-    --detach --wait --renew-anon-volumes
+	--detach --wait --renew-anon-volumes
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"

@@ -3,7 +3,7 @@
 set -o errexit
 set -o pipefail
 
-# shellcheck source=./cr-lib
+# shellcheck source-path=SCRIPTDIR
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 #
@@ -21,14 +21,14 @@ BASE_HOST="$1"
 TOKEN="$2"
 
 if [ -z "$2" ]; then
-    echo "$0 need parameters" >&2
-    exit 1
+	echo "$0 need parameters" >&2
+	exit 1
 fi
 
 echo "Deploying to ${BASE_HOST} with pwd of #${#TOKEN} char length"
 
 with_header "Upgrading database" \
-    cr_curl "${BASE_HOST}/maintenance/patch_db.php?pwd=${TOKEN}"
+	cr_curl "${BASE_HOST}/maintenance/patch_db.php?pwd=${TOKEN}"
 
 with_header "Upgrading files" \
-    cr_curl "${BASE_HOST}/maintenance/reset.php?pwd=${TOKEN}"
+	cr_curl "${BASE_HOST}/maintenance/reset.php?pwd=${TOKEN}"

@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-npx json-to-ts-cli $1

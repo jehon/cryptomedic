@@ -3,6 +3,7 @@
 set -o errexit
 set -o pipefail
 
+# shellcheck source-path=SCRIPTDIR
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
 # We replace the local integration (e2e test results) by those of github
@@ -16,23 +17,23 @@ echo "RUN_ID: $RUN_ID"
 header_end
 
 get_artifact() {
-    artifactName="$1"
-    destination="$2"
-    echo "* getting ${artifactName}"
-    echo "    -> ${destination}"
+	artifactName="$1"
+	destination="$2"
+	echo "* getting ${artifactName}"
+	echo "    -> ${destination}"
 
-    (
-        rm -fr "${destination}"
-        mkdir -p "${destination}"
-        gh run download "$RUN_ID" --name "${artifactName}" --dir "${destination}"
-    )
+	(
+		rm -fr "${destination}"
+		mkdir -p "${destination}"
+		gh run download "$RUN_ID" --name "${artifactName}" --dir "${destination}"
+	)
 }
 
 header_begin "Playwright"
 get_artifact "integration-playwright-updated-snapshots" "$CR_TMP/integration/integration-playwright-updated-snapshots"
 rsync --itemize-changes --recursive \
-    --omit-dir-times --checksum \
-    "$CR_TMP/integration/integration-playwright-updated-snapshots/" "tests/e2e/__github__/"
+	--omit-dir-times --checksum \
+	"$CR_TMP/integration/integration-playwright-updated-snapshots/" "tests/e2e/__github__/"
 header_end
 
 header_begin "Cypress"
