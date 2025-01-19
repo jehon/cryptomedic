@@ -1,7 +1,10 @@
 import { expect, type Locator, type Page } from "playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { crApi, crInit, crReady } from "./e2e";
-import { E2EFilePanel, FieldsConfigTypeSimplified } from "./e2e-file-panel";
+import {
+  E2EFilePanel,
+  type FieldsConfigTypeSimplified
+} from "./e2e-file-panel";
 
 // TODO: this is a E2EForm too?
 export class E2EPatient {
