@@ -1,4 +1,5 @@
-import { expect, Locator } from "@playwright/test";
+import type { Locator } from "@playwright/test";
+import { expect } from "@playwright/test";
 import path from "node:path/posix";
 import { isEmptyValue } from "../../../src/utils/objects";
 import { outputDate } from "./e2e";
