@@ -9,7 +9,7 @@ class ReportSurgicalSuggestedController extends ReportController
 {
   public function buildData()
   {
-    $this->result['list'] = 
+    $this->result['list'] =
       $this->runSqlWithNamedParameter(
         "SELECT
           patients.id as pid,
@@ -19,13 +19,14 @@ class ReportSurgicalSuggestedController extends ReportController
           patients.sex,
           patients.pathology,
 
-          COUNT(surgeries.id) as amount_surgeries,
+          MAX(appointments.date) AS last_appointment,
           MAX(surgeries.date) AS last_surgery,
           MAX(consults.date) AS suggested_from
 
         FROM patients
           LEFT OUTER JOIN surgeries ON (surgeries.patient_id = patients.id)
           LEFT OUTER JOIN consults ON (consults.patient_id = patients.id AND consults.suggested_for_surgery = 1)
+          LEFT OUTER JOIN appointments ON (appointments.patient_id = patients.id)
 
         WHERE (1 = 1)
           AND " . $this->getParamAsSqlFilter("year", "YEAR(consults.date)") . "

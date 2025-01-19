@@ -12,7 +12,7 @@
             "year_of_birth": 1998,
             "sex": "Male",
             "pathology": "ClubFoot",
-            "amount_surgeries": 1,
+            "last_appointment": "2015-04-28",
             "last_surgery": "2014-01-02",
             "suggested_from": "2014-01-04"
         }

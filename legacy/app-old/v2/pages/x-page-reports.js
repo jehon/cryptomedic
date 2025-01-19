@@ -1021,7 +1021,7 @@ reports[REPORT_SURGICAL_SUGGESTED] = {
       .addDetail("year_of_birth", { headers: ["Birth"] })
       .addDetail("sex", { headers: ["sex"] })
       .addDetail("pathology", { headers: ["pathology"] })
-      .addDetail("amount_surgeries", { headers: ["# surgeries"] })
+      .addDetail("last_appointment", { headers: ["Last Appointment"] })
       .addDetail("last_surgery", { headers: ["Last Surgery"] })
       .addDetail("suggested_from", { headers: ["Suggested from"] })
       .end();
