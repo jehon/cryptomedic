@@ -1,4 +1,5 @@
-import { expect, Locator, Page } from "playwright/test";
+import type { Locator } from "@playwright/test";
+import { expect, Page } from "playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { crApi, crInit, crReady } from "./e2e";
 import { E2EFilePanel, FieldsConfigTypeSimplified } from "./e2e-file-panel";

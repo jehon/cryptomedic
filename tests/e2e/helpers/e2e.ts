@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, type Locator, Page } from "@playwright/test";
 import { type IndexSignature } from "../../../src/constants";
 import type { CRUDType } from "../../../src/utils/network";
 import { CRUD } from "../../../src/utils/network";
