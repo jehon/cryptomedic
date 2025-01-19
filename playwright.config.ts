@@ -1,12 +1,12 @@
 /* eslint-env node*/
 
-import { PlaywrightTestConfig, defineConfig, devices } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 import path from "node:path";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const config: PlaywrightTestConfig<unknown, unknown> = {
+const config: any = {
   testDir: "./tests/e2e",
   fullyParallel: true,
   retries: 0,
