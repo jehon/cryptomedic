@@ -1,154 +1,153 @@
 include:
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/default@main
+  - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/packages/lint@production
+  # - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
+  #   inputs:
+  #     flavor: /builder
+  #     publish: false
 
 variables:
   CRYPTOMEDIC_DEV_HTTP_HOST: docker
 
-stages:
-  - build
-  - test
-  - validate
-  - deploy
-
 default:
   timeout: 15m
 
-build:
-  stage: build
-  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-  services:
-    - name: docker:dind
-  script:
-    - |
-      echo "BUILDER_DOCKER_BASE: $BUILDER_DOCKER_BASE"
-      echo "BUILDER_DOCKER_TEST: $BUILDER_DOCKER_TEST"
-      echo "DOCKER_TLS_CERTDIR:  $DOCKER_TLS_CERTDIR"
-      echo "DOCKER_TLS_VERIFY:   $DOCKER_TLS_VERIFY"
-    - env
-    - make dump
-    - make build
-  artifacts:
-    paths:
-      - .ovhconfig
-      - www
+# ############################################################
+# #
+# # build
+# #
 
-tests-unit:
-  stage: test
-  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-  parallel:
-    matrix:
-      - target:
-        - dump
-        - lint
-        - frontend-test
-  script:
-    - make github
-    - make $target
+# build:
+#   stage: build
+#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+#   services:
+#     - name: docker
+#   script:
+#     - env
+#     - make dump
+#     - make build
+#   artifacts:
+#     paths:
+#       - .ovhconfig
+#       - www
 
-tests-unit-with-backend:
-  stage: test
-  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-  services:
-    - name: docker:dind
-  parallel:
-    matrix:
-      - target:
-        - backend-test
-  script:
-    - make github
-    - make dependencies
-    - make start
-    - make $target
+# ############################################################
+# #
+# # Test
+# #
 
-tests-e2e-desktop:
-  stage: test
-  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-  services:
-    - name: docker:dind
-  parallel:
-    matrix:
-      - flavor:
-        - desktop
-        - playwright
-  script:
-    - ./setup.sh
-    - make github
-    - make dc-build
-    - make start
-    - make dependencies
-    - make integration-test-desktop-run
-    - make integration-test-desktop-styles
-  artifacts:
-    when: always
-    paths:
-      - tmp/integration/desktop
+# tests-unit:
+#   stage: test
+#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+#   parallel:
+#     matrix:
+#       - target:
+#         - dump
+#         - lint
+#         - frontend-test
+#   script:
+#     - make github
+#     - make $target
 
-tests-e2e-playwright-strict:
-  stage: test
-  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-  services:
-    - name: docker:dind
-  script:
-    - ./setup.sh
-    - make github
-    - make dc-build
-    - make start
-    - make dependencies
-    - make integration-test-playwright-strict
-  artifacts:
-    when: always
-    paths:
-      - tmp/integration/playwright
+# tests-unit-with-backend:
+#   stage: test
+#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+#   services:
+#     - name: docker:dind
+#   parallel:
+#     matrix:
+#       - target:
+#         - backend-test
+#   script:
+#     - make github
+#     - make dependencies
+#     - make start
+#     - make $target
 
-test-e2e-playwright:
-  stage: test
-  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-  services:
-    - name: docker:dind
-  script:
-    - ./setup.sh
-    - make github
-    - make dc-build
-    - make start
-    - make dependencies
-    - make integration-test-playwright
-    - git status
-  artifacts:
-    when: always
-    paths:
-      - tests/e2e/**/*.png
-
-valid:
-  stage: validate
-  image: alpine
-  needs:
-    - tests-unit
-    - tests-unit-with-backend
-    - test-e2e-playwright
-  script:
-    - echo "ok"
-
-# deploy:
-#   stage: deploy
-#   environment:
-#     name: production
-#   rules:
-#     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-#       when: never
-#     - when: on_success
+# tests-e2e-desktop:
+#   stage: test
+#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+#   services:
+#     - name: docker:dind
+#   parallel:
+#     matrix:
+#       - flavor:
+#         - desktop
+#         - playwright
 #   script:
 #     - ./setup.sh
 #     - make github
-#     - make build
-#     - make deploy
-#   variables:
-#     CRYPTOMEDIC_DEPLOY_WEB_HOST: $CRYPTOMEDIC_DEPLOY_WEB_HOST
-#     CRYPTOMEDIC_DEPLOY_WEB_PORT: $CRYPTOMEDIC_DEPLOY_WEB_PORT
-#     CRYPTOMEDIC_DEPLOY_WEB_TOKEN: $CRYPTOMEDIC_DEPLOY_WEB_TOKEN
-#     CRYPTOMEDIC_DEPLOY_FILES_HOST: $CRYPTOMEDIC_DEPLOY_FILES_HOST
-#     CRYPTOMEDIC_DEPLOY_FILES_USER: $CRYPTOMEDIC_DEPLOY_FILES_USER
-#     CRYPTOMEDIC_DEPLOY_FILES_PASSWORD: $CRYPTOMEDIC_DEPLOY_FILES_PASSWORD
+#     - make dc-build
+#     - make start
+#     - make dependencies
+#     - make integration-test-desktop-run
+#     - make integration-test-desktop-styles
 #   artifacts:
 #     when: always
 #     paths:
-#       - tmp/deploy.log
+#       - tmp/integration/desktop
+
+# tests-e2e-playwright-strict:
+#   stage: test
+#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+#   services:
+#     - name: docker:dind
+#   script:
+#     - ./setup.sh
+#     - make github
+#     - make dc-build
+#     - make start
+#     - make dependencies
+#     - make integration-test-playwright-strict
+#   artifacts:
+#     when: always
+#     paths:
+#       - tmp/integration/playwright
+
+# test-e2e-playwright:
+#   stage: test
+#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+#   services:
+#     - name: docker:dind
+#   script:
+#     - ./setup.sh
+#     - make github
+#     - make dc-build
+#     - make start
+#     - make dependencies
+#     - make integration-test-playwright
+#     - git status
+#   artifacts:
+#     when: always
+#     paths:
+#       - tests/e2e/**/*.png
+
+# deploy:
+#   stage: release
+#   image: alpine
+#   needs:
+#     - tests-unit
+#     - tests-unit-with-backend
+#     - test-e2e-playwright
+# #   environment:
+# #     name: production
+# #   rules:
+# #     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+# #       when: never
+# #     - when: on_success
+# #   script:
+# #     - ./setup.sh
+# #     - make github
+# #     - make build
+# #     - make deploy
+# #   variables:
+# #     CRYPTOMEDIC_DEPLOY_WEB_HOST: $CRYPTOMEDIC_DEPLOY_WEB_HOST
+# #     CRYPTOMEDIC_DEPLOY_WEB_PORT: $CRYPTOMEDIC_DEPLOY_WEB_PORT
+# #     CRYPTOMEDIC_DEPLOY_WEB_TOKEN: $CRYPTOMEDIC_DEPLOY_WEB_TOKEN
+# #     CRYPTOMEDIC_DEPLOY_FILES_HOST: $CRYPTOMEDIC_DEPLOY_FILES_HOST
+# #     CRYPTOMEDIC_DEPLOY_FILES_USER: $CRYPTOMEDIC_DEPLOY_FILES_USER
+# #     CRYPTOMEDIC_DEPLOY_FILES_PASSWORD: $CRYPTOMEDIC_DEPLOY_FILES_PASSWORD
+# #   artifacts:
+# #     when: always
+# #     paths:
+# #       - tmp/deploy.log
