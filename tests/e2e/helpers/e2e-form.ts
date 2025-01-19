@@ -33,10 +33,13 @@ function ioValue2String(val?: IOValue): string {
 }
 
 export class E2EForm {
-  constructor(
-    private locatorFunction: () => Locator,
-    private fieldsConfig: FieldsTypes
-  ) {}
+  private locatorFunction: () => Locator;
+  private fieldsConfig: FieldsTypes;
+
+  constructor(locatorFunction: () => Locator, fieldsConfig: FieldsTypes) {
+    this.locatorFunction = locatorFunction;
+    this.fieldsConfig = fieldsConfig;
+  }
 
   get locator(): Locator {
     return this.locatorFunction();

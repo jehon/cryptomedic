@@ -74,10 +74,12 @@ export class E2EFilePanel extends E2EForm {
   protected page: Page;
   protected patient_id: string;
   protected id: string;
+  protected e2ePatient: E2EPatient;
+  protected type: string;
 
   constructor(
-    protected e2ePatient: E2EPatient,
-    protected type: string,
+    e2ePatient: E2EPatient,
+    type: string,
     id: string | number,
     fieldsConfig?: FieldsConfigTypeSimplified
   ) {
@@ -88,6 +90,8 @@ export class E2EFilePanel extends E2EForm {
           .locator(">[data-role=panel]"),
       reduceFieldConfig2Form(fieldsConfig)
     );
+    this.e2ePatient = e2ePatient;
+    this.type = type;
     this.page = e2ePatient.page;
     this.patient_id = "" + this.e2ePatient.id;
 

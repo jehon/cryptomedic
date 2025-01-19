@@ -6,11 +6,10 @@ import { E2EFilePanel, FieldsConfigTypeSimplified } from "./e2e-file-panel";
 // TODO: this is a E2EForm too?
 export class E2EPatient {
   public id: string;
+  public page: Page;
 
-  constructor(
-    public page: Page,
-    id?: string | number
-  ) {
+  constructor(page: Page, id?: string | number) {
+    this.page = page;
     if (id === undefined) {
       this.id = this.detectPatientId();
     } else {
