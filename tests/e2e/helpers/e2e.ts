@@ -1,4 +1,4 @@
-import { APIResponse, expect, Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { IndexSignature } from "../../../src/constants";
 import { CRUD, CRUDType } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
@@ -44,7 +44,7 @@ export function crApi(
     data: options.data ?? {}
   })
     .then(
-      passThrough<APIResponse>((resp) => {
+      passThrough<any>((resp) => {
         if (resp.status() != 200) {
           throw new Error(
             "Server responded with invalid status: " + resp.status()
@@ -52,7 +52,7 @@ export function crApi(
         }
       })
     )
-    .then((resp: APIResponse) => resp.json());
+    .then((resp: any) => resp.json());
 }
 
 export function crApiLogin(
