@@ -2,7 +2,7 @@ import { plainToInstance } from "class-transformer";
 import { produce } from "immer";
 import "reflect-metadata"; // plainToInstance
 import { removeNull } from "../utils/objects";
-import PatientRelated from "./abstracts/patient-related";
+import type PatientRelated from "./abstracts/patient-related";
 import Pojo from "./abstracts/pojo";
 import Appointment from "./appointment";
 import Bill from "./bill";

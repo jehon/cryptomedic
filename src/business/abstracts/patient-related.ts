@@ -1,4 +1,4 @@
-import Folder from "../folder";
+import type Folder from "../folder";
 import Pojo from "./pojo";
 
 export default class PatientRelated extends Pojo {
