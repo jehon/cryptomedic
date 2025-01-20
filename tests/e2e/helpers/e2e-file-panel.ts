@@ -9,7 +9,7 @@ import {
   crUrl,
   outputDate
 } from "./e2e";
-import { E2EForm, type IOType, IOValue } from "./e2e-form";
+import { E2EForm, type IOType, type IOValue } from "./e2e-form";
 import { E2EPatient } from "./e2e-patients";
 
 type FieldConfigType = {

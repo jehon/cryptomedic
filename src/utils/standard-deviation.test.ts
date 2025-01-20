@@ -5,7 +5,7 @@ import {
   _evaluatePoly,
   _stdDeviation,
   sigma,
-  StatLines,
+  type StatLines,
   stdDeviationFor
 } from "./standard-deviation";
 

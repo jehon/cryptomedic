@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ButtonsGroup from "../styles/buttons-group";
-import ActionButton, { ButtonActionProps } from "./action-button";
+import ActionButton, { type ButtonActionProps } from "./action-button";
 import Popup from "./popup";
 
 export default function ActionConfirm(

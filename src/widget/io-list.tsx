@@ -1,5 +1,5 @@
-import { StringList } from "../utils/types";
-import IOAbstract, { IOProps } from "./io-abstract";
+import { type StringList } from "../utils/types";
+import IOAbstract, { type IOProps } from "./io-abstract";
 
 export type IOListType = string[] | Record<string, string>;
 

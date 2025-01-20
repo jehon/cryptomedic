@@ -1,4 +1,4 @@
-import { StringList, StringNumber } from "../utils/types";
+import { type StringList, type StringNumber } from "../utils/types";
 import Consult from "./abstracts/consult";
 
 export default class ConsultRicket extends Consult {

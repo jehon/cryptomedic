@@ -1,4 +1,4 @@
-import { Params, useLoaderData, useParams } from "react-router-dom";
+import { type Params, useLoaderData, useParams } from "react-router-dom";
 import PatientRelated from "../business/abstracts/patient-related";
 import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";

@@ -1,4 +1,4 @@
-import { StringDate } from "../utils/types";
+import { type StringDate } from "../utils/types";
 import PatientRelated from "./abstracts/patient-related";
 
 // Todo: Payment is not a patient related

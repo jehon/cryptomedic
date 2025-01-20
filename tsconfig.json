@@ -25,7 +25,12 @@
     "target": "esnext",
     "module": "esnext",
     "useDefineForClassFields": false,
-    "lib": ["ES2023", "dom", "DOM.Iterable"]
+    "lib": ["ES2023", "dom", "DOM.Iterable"],
+
+    // For Nodejs Typescript support
+    // "noEmit": true,
+    // "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true
   },
   "include": ["src", "legacy", "tests"]
 }

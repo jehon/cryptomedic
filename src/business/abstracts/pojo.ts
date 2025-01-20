@@ -1,7 +1,7 @@
 import { plainToInstance } from "class-transformer";
 import { immerable, produce } from "immer";
 import { request } from "../../utils/network";
-import { StringDate } from "../../utils/types";
+import { type StringDate } from "../../utils/types";
 
 export default class Pojo {
   [immerable] = true;

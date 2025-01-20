@@ -2,7 +2,7 @@ import React from "react";
 import PatientRelated from "../business/abstracts/patient-related";
 
 import Folder from "../business/folder";
-import FilePanel, { FolderUpdateCallback } from "./blocs/file-panel";
+import FilePanel, { type FolderUpdateCallback } from "./blocs/file-panel";
 
 export type PatientRelatedElementGeneratorProps = {
   folder: Folder;

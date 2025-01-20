@@ -1,4 +1,4 @@
-import IOAbstract, { IOProps } from "./io-abstract";
+import IOAbstract, { type IOProps } from "./io-abstract";
 
 export default function IOString(props: IOProps<string>) {
   return IOAbstract(

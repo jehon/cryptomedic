@@ -1,5 +1,5 @@
 import { roundTo } from "../utils/strings";
-import IOAbstract, { IOProps, IOPropsInput } from "./io-abstract";
+import IOAbstract, { type IOProps, type IOPropsInput } from "./io-abstract";
 
 //
 // Always required

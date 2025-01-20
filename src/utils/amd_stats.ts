@@ -1,5 +1,5 @@
 import { deepFreeze } from "./objects";
-import { FullStats } from "./standard-deviation";
+import { type FullStats } from "./standard-deviation";
 
 const amd_stats: {
   Male: FullStats;

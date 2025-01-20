@@ -1,4 +1,4 @@
-import { ActionStyles, ActionStyleType } from "./action-button";
+import { ActionStyles, type ActionStyleType } from "./action-button";
 import "./popup.css";
 
 export default function Popup({

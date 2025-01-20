@@ -4,7 +4,7 @@ import Folder from "./business/folder";
 import Patient from "./business/patient";
 import { setSession } from "./utils/session";
 import { string2number } from "./utils/strings";
-import { StringNumber } from "./utils/types";
+import { type StringNumber } from "./utils/types";
 
 export const RefFolder1 = "FolderTest.test1.json";
 export const RefPatient1 = {

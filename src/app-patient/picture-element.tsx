@@ -5,7 +5,7 @@ import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
-  PatientRelatedElementGeneratorProps
+  type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
 export default function pictureElementGenerator(

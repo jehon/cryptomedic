@@ -1,5 +1,9 @@
 import { string2number } from "../utils/strings";
-import { StringBoolean, StringList, StringNumber } from "../utils/types";
+import {
+  type StringBoolean,
+  type StringList,
+  type StringNumber
+} from "../utils/types";
 import Consult from "./abstracts/consult";
 
 export default class ConsultClubfoot extends Consult {

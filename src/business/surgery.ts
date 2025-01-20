@@ -1,4 +1,4 @@
-import { StringBoolean } from "../utils/types";
+import { type StringBoolean } from "../utils/types";
 import Timed from "./abstracts/timed";
 
 export default class Surgery extends Timed {

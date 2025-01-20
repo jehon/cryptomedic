@@ -3,11 +3,11 @@ import Patient, { yearOfBirthPattern } from "../business/patient";
 import { getList } from "../utils/config";
 
 import IO from "../widget/io";
-import { IOListType } from "../widget/io-list";
+import { type IOListType } from "../widget/io-list";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
-  PatientRelatedElementGeneratorProps
+  type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
 function getListFor(category: string, value: string): IOListType {

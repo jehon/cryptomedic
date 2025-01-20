@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import IOAbstract, { EditContext, IOPropsReadonly } from "./io-abstract";
+import IOAbstract, { EditContext, type IOPropsReadonly } from "./io-abstract";
 
 type T = () => string;
 

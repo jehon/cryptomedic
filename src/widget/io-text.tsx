@@ -1,5 +1,5 @@
-import { StringText } from "../utils/types";
-import IOAbstract, { IOProps } from "./io-abstract";
+import { type StringText } from "../utils/types";
+import IOAbstract, { type IOProps } from "./io-abstract";
 
 export default function IOText(props: IOProps<StringText>) {
   const adjust = (element: HTMLTextAreaElement) => {

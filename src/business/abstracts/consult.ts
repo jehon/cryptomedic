@@ -4,7 +4,11 @@ import { fromBirthDateTo, normalizeDate } from "../../utils/date";
 import { DataMissingException } from "../../utils/exceptions";
 import { stdDeviationFor } from "../../utils/standard-deviation";
 import { string2number } from "../../utils/strings";
-import { StringBoolean, StringList, StringNumber } from "../../utils/types";
+import {
+  type StringBoolean,
+  type StringList,
+  type StringNumber
+} from "../../utils/types";
 
 export default class Consult extends Timed {
   // Begin

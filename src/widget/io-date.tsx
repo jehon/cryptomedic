@@ -1,6 +1,6 @@
 import { outputDate, periodAsHumanReadable } from "../utils/date";
-import { StringDate } from "../utils/types";
-import IOAbstract, { IOProps } from "./io-abstract";
+import { type StringDate } from "../utils/types";
+import IOAbstract, { type IOProps } from "./io-abstract";
 
 //
 // We receive strings from database

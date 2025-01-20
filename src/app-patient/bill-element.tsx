@@ -13,7 +13,7 @@ import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
 import IOBillLine from "./blocs/io-bill-line";
 import patientRelatedElementGenerator, {
-  PatientRelatedElementGeneratorProps
+  type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
 export default function billElementGenerator(

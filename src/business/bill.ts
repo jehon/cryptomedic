@@ -1,6 +1,6 @@
 import { Type } from "class-transformer";
 import "reflect-metadata"; // Required by class-transformer
-import { BillLine } from "../app-patient/blocs/io-bill-line";
+import { type BillLine } from "../app-patient/blocs/io-bill-line";
 import { DataMissingException } from "../utils/exceptions";
 import { getSession } from "../utils/session";
 import { string2number } from "../utils/strings";

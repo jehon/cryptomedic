@@ -1,5 +1,5 @@
 import { string2Boolean } from "../utils/strings";
-import IOAbstract, { IOProps } from "./io-abstract";
+import IOAbstract, { type IOProps } from "./io-abstract";
 
 //
 // Always required
