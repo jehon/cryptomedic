@@ -71,7 +71,7 @@
     "style-loader": "4.0.0",
     "stylelint": "16.14.1",
     "stylelint-config-standard": "36.0.1",
-    "stylelint-no-unsupported-browser-features": "8.0.2",
+    "stylelint-no-unsupported-browser-features": "8.0.4",
     "ts-loader": "9.5.2",
     "ts-unused-exports": "10.1.0",
     "tsx": "4.19.2",
