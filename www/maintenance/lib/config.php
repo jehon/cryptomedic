@@ -10,7 +10,7 @@ global $debug;
 $debug = isset($_REQUEST["debug"]) ? intval($_REQUEST["debug"]) : 0;
 
 if ($debug > 0) {
-    \Jehon\Maintenance\Database::debug(true);
+  \Jehon\Maintenance\Database::debug(true);
 }
 
 /* ***************** myconfig ************** */
@@ -18,20 +18,20 @@ if ($debug > 0) {
 global $myconfig;
 
 if (!$myconfig["security"]["key"]) {
-    die("No security.admin configured");
+  die("No security.admin configured");
 }
 
 /* ***************** functions ************** */
 
 function fatalError($code, $msg)
 {
-    http_response_code($code);
-    die($msg);
+  http_response_code($code);
+  die($msg);
 }
 
 global $db;
 $db = new \Jehon\Maintenance\Database(
-    "mysql:dbname={$myconfig["database"]["schema"]};host={$myconfig["database"]["host"]}",
-    $myconfig["database"]["username"],
-    $myconfig["database"]["password"]
+  "mysql:dbname={$myconfig["database"]["schema"]};host={$myconfig["database"]["host"]}",
+  $myconfig["database"]["username"],
+  $myconfig["database"]["password"]
 );

@@ -5,10 +5,10 @@ t::setDefaultOption("baseExpression", "folder.getPatient()."); ?>
 		<x-group-panel title='General data'>
 			<x-fff-field ng-if="patient_id > -1" label='Entry Number'>
 				<div><?php (new t("Patient.entry_year"))->read()->p(); ?>-<?php (new t(
-    "Patient.entry_order"
+  "Patient.entry_order"
 ))
-    ->read()
-    ->p(); ?></div>
+  ->read()
+  ->p(); ?></div>
 			</x-fff-field>
 			<x-fff-field ng-if="patient_id == -1" label='Entry Year'>
 				<div>
@@ -16,8 +16,8 @@ t::setDefaultOption("baseExpression", "folder.getPatient()."); ?>
 						You asked the system to generate a reference for you. This reference will be generated
 						when you will save this file. I just need the year to build up the reference.
 						<?php (new t("Patient.entry_year", ["required" => "required"]))
-          ->write()
-          ->p(); ?>
+        ->write()
+        ->p(); ?>
 					</x-message>
 				</div>
 			</x-fff-field>

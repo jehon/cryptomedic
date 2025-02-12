@@ -10,16 +10,16 @@ use App\Model\Bill;
 t::setDefaultOption("baseExpression", "currentFile().");
 
 if (!function_exists("App\price")) {
-    function price($item)
-    {
-        $name = explode(".", $item);
-        $name = $name[1];
-        $label = str_replace("_", " ", substr($item, strpos($item, "_") + 1));
-        if (array_key_exists($item, Bill::$translations)) {
-            $label = Bill::$translations[$item];
-        }
+  function price($item)
+  {
+    $name = explode(".", $item);
+    $name = $name[1];
+    $label = str_replace("_", " ", substr($item, strpos($item, "_") + 1));
+    if (array_key_exists($item, Bill::$translations)) {
+      $label = Bill::$translations[$item];
+    }
 
-        echo <<<EOD
+    echo <<<EOD
 <x-fff-field label='$label'
     ng-if="currentFile().getPriceFor('$name') > 0"
     ng-class='{ "not-mode-read": !currentFile()["$name"] }'
@@ -27,27 +27,27 @@ if (!function_exists("App\price")) {
   <div ng-if="currentFile().getPriceFor('$name')<=1">1x</div>
   <div ng-if="currentFile().getPriceFor('$name')<=1">
 EOD;
-        (new t($item, ["inline" => "style='width: 4em' step=1 min=0"]))
-            ->value()
-            ->p();
-        echo <<<EOD
+    (new t($item, ["inline" => "style='width: 4em' step=1 min=0"]))
+      ->value()
+      ->p();
+    echo <<<EOD
   </div>
   <div ng-if="currentFile().getPriceFor('$name')>1">
 EOD;
-        (new t($item, ["inline" => "style='width: 4em' step=1 min=0 max=2"]))
-            ->value()
-            ->p();
-        echo <<<EOD
+    (new t($item, ["inline" => "style='width: 4em' step=1 min=0 max=2"]))
+      ->value()
+      ->p();
+    echo <<<EOD
   </div>
   <div ng-if="currentFile().getPriceFor('$name')>1"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></div>
   <div>{{currentFile().getTotalFor('$name')}}</div>
 </x-fff-field>
 EOD;
-        // var_dump(t::isWriteMode());
-        // <x-label label='$label'>
-        //   <x-io-bill name='$name' value='{{currentFile()["$name"]}}' t='currentFile()["$name"]' <?php echo t::isWriteMode() ? 'input' : ''; ? > ></x-io-bill>
-        // </x-label>
-    }
+    // var_dump(t::isWriteMode());
+    // <x-label label='$label'>
+    //   <x-io-bill name='$name' value='{{currentFile()["$name"]}}' t='currentFile()["$name"]' <?php echo t::isWriteMode() ? 'input' : ''; ? > ></x-io-bill>
+    // </x-label>
+  }
 }
 ?>
 <div ng-controller="ctrl_file_bill">
@@ -67,8 +67,8 @@ EOD;
           <?php (new t("Bill.date"))->tr2()->p(); ?>
           <?php (new t("Bill.examiner"))->tr2("Examiner")->p(); ?>
           <?php (new t("Bill.center"))
-              ->tr2("Center where consultation took place")
-              ->p(); ?>
+            ->tr2("Center where consultation took place")
+            ->p(); ?>
           <div class='debug-infos'>
             price_id <?php (new t("Bill.price_id"))->read()->p(); ?>
           </div>
@@ -83,7 +83,7 @@ EOD;
                 <div>Total</div>
               </x-fff-field>
               <?php foreach (Bill::getFieldsList($cat) as $field) {
-                  price("Bill." . $field);
+                price("Bill." . $field);
               } ?>
             </x-group-panel>
           <?php } ?>
@@ -93,11 +93,11 @@ EOD;
         <x-ff-patient-related></x-ff-patient-related>
         <x-group-panel title='Social Data'>
           <?php (new t("Bill.sl_family_salary"))
-              ->tr2("Family Salary in a Month")
-              ->p(); ?>
+            ->tr2("Family Salary in a Month")
+            ->p(); ?>
           <?php (new t("Bill.sl_number_of_household_members"))
-              ->tr2("Number of Houslehold Members")
-              ->p(); ?>
+            ->tr2("Number of Houslehold Members")
+            ->p(); ?>
           <x-fff-field label='Salary Ratio'>
             <x-fff-salary-ratio></x-fff-salary-ratio>
           </x-fff-field>
@@ -108,19 +108,19 @@ EOD;
         <x-group-panel title='Summary'>
           <x-fff-field label='Raw Calculated total'>
             <div id='total_calculated_raw'>{{currentFile().calculate_total_real()}}<?php new t(
-                "Bill.total_real"
+              "Bill.total_real"
             ); ?></div>
           </x-fff-field>
           <?php (new t("Bill.social_level"))
-              ->readOnly()
-              ->tr2("Social Level")
-              ->p(); ?>
+            ->readOnly()
+            ->tr2("Social Level")
+            ->p(); ?>
           <x-fff-field label='Percentage of price to be asked'>
             <div id='percentage'>{{currentFile().calculate_percentage_asked() * 100 | number:0}}%</div>
           </x-fff-field>
           <x-fff-field label='Price to be asked to the patient'>
             <div id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php new t(
-                "Bill.total_asked"
+              "Bill.total_asked"
             ); ?></div>
           </x-fff-field>
         </x-group-panel>

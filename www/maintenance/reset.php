@@ -3,84 +3,84 @@ ob_start();
 http_response_code(500);
 
 try {
-    echo "<pre>";
+  echo "<pre>";
 
-    echo "\nRunning...\n";
+  echo "\nRunning...\n";
 
-    require_once __DIR__ . "/lib/config.php";
-    require_once __DIR__ . "/lib/protect.php";
+  require_once __DIR__ . "/lib/config.php";
+  require_once __DIR__ . "/lib/protect.php";
 
-    global $myconfig;
+  global $myconfig;
 
-    function deleteRecursively($filepath)
-    {
-        if (is_dir($filepath)) {
-            if (substr($filepath, strlen($filepath) - 1, 1) != "/") {
-                $filepath .= "/";
-            }
-            $files = glob($filepath . "*", GLOB_MARK);
-            foreach ($files as $file) {
-                if (is_dir($file)) {
-                    deleteRecursively($file);
-                } else {
-                    unlink($file);
-                }
-            }
+  function deleteRecursively($filepath)
+  {
+    if (is_dir($filepath)) {
+      if (substr($filepath, strlen($filepath) - 1, 1) != "/") {
+        $filepath .= "/";
+      }
+      $files = glob($filepath . "*", GLOB_MARK);
+      foreach ($files as $file) {
+        if (is_dir($file)) {
+          deleteRecursively($file);
+        } else {
+          unlink($file);
         }
-        rmdir($filepath);
+      }
     }
+    rmdir($filepath);
+  }
 
-    function deleteFileFromGlob($glob)
-    {
-        $files = glob($glob);
-        foreach ($files as $file) {
-            if (is_dir($file)) {
-                deleteRecursively($file);
-            }
+  function deleteFileFromGlob($glob)
+  {
+    $files = glob($glob);
+    foreach ($files as $file) {
+      if (is_dir($file)) {
+        deleteRecursively($file);
+      }
 
-            if (is_file($file)) {
-                echo "Removing $file\n";
-                unlink($file);
-            }
-        }
+      if (is_file($file)) {
+        echo "Removing $file\n";
+        unlink($file);
+      }
     }
+  }
 
-    function ensureFolderEmpty(string $path): void
-    {
-        $target = constant("CR_PRJ_ROOT") . "/" . $path;
-        echo "ensureFolderEmpty: $path ($target)\n";
-        if (is_dir($target)) {
-            echo " - removing files in $target\n";
-            deleteFileFromGlob($target . "/*");
-        }
-        @mkdir($target, 0777, true);
+  function ensureFolderEmpty(string $path): void
+  {
+    $target = constant("CR_PRJ_ROOT") . "/" . $path;
+    echo "ensureFolderEmpty: $path ($target)\n";
+    if (is_dir($target)) {
+      echo " - removing files in $target\n";
+      deleteFileFromGlob($target . "/*");
     }
+    @mkdir($target, 0777, true);
+  }
 
-    function migrateFile(string $from, string $to): void
-    {
-        $fromAbs = constant("CR_PRJ_ROOT") . "/" . $from;
-        $toAbs = constant("CR_PRJ_ROOT") . "/" . $to;
-        if (file_exists($fromAbs)) {
-            echo "migrateFile: $from to $to\n";
-            $res = rename($fromAbs, $toAbs);
-            if (!$res) {
-                throw new Exception("Impossible to move $from to $to");
-            }
-        }
+  function migrateFile(string $from, string $to): void
+  {
+    $fromAbs = constant("CR_PRJ_ROOT") . "/" . $from;
+    $toAbs = constant("CR_PRJ_ROOT") . "/" . $to;
+    if (file_exists($fromAbs)) {
+      echo "migrateFile: $from to $to\n";
+      $res = rename($fromAbs, $toAbs);
+      if (!$res) {
+        throw new Exception("Impossible to move $from to $to");
+      }
     }
+  }
 
-    // Relative to CR_PRJ_ROOT
-    ensureFolderEmpty("www/api/bootstrap/cache/");
-    ensureFolderEmpty("tmp/integration/webTemp/");
-    ensureFolderEmpty("live/laravel/cache/");
-    ensureFolderEmpty("live/laravel/views/");
-    @mkdir(constant("CR_PRJ_ROOT") . "/live/laravel/sessions/");
+  // Relative to CR_PRJ_ROOT
+  ensureFolderEmpty("www/api/bootstrap/cache/");
+  ensureFolderEmpty("tmp/integration/webTemp/");
+  ensureFolderEmpty("live/laravel/cache/");
+  ensureFolderEmpty("live/laravel/views/");
+  @mkdir(constant("CR_PRJ_ROOT") . "/live/laravel/sessions/");
 
-    echo "\nDone " . basename(__FILE__) . "\n";
-    http_response_code(200);
-    ob_end_flush();
+  echo "\nDone " . basename(__FILE__) . "\n";
+  http_response_code(200);
+  ob_end_flush();
 } catch (Exception $e) {
-    http_response_code(500);
-    ob_end_flush();
-    echo "Failed: " . $e->getMessage();
+  http_response_code(500);
+  ob_end_flush();
+  echo "Failed: " . $e->getMessage();
 }

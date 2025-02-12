@@ -3,9 +3,9 @@
   t::setDefaultOption("baseExpression", "getCurrentFile().");
 
   if (!function_exists("submenu")) {
-      function submenu()
-      {
-          ?>
+    function submenu()
+    {
+      ?>
       <div ng-if="(page == 'file')">
         <span ng-if="(mode == 'add')">
           <!--  Add file route -->
@@ -73,7 +73,7 @@
         <x-button action='Cancel' id='patient_cancel' ng-click="go('/home')">Cancel</x-button>
       </div>
   <?php
-      }
+    }
   }
   ?>
   <div id="folderpage" class='container-fluid mode-read'>
