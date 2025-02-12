@@ -7,5 +7,5 @@ set -o pipefail
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
 docker compose exec "${CR_DOCKER_ARGS[@]}" \
-	web \
-	php "$@"
+  web \
+  php "$@"

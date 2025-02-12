@@ -7,7 +7,7 @@ set -o pipefail
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 if [ -d "$1" ]; then
-	rm -fr "$1"
+  rm -fr "$1"
 fi
 
 mkdir -p "$1" >/dev/null

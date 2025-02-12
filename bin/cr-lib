@@ -29,67 +29,67 @@ export PATH="$CR_SCRIPT_DIR:$PATH"
 export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
 
 cr_curl() {
-	curl -sSL --fail-with-body --user-agent firefox "$@"
+  curl -sSL --fail-with-body --user-agent firefox "$@"
 }
 
 cr_lftp() {
-	# https://manpages.debian.org/bookworm/lftp/lftp.1.en.html#sftp:connect-program
-	lftp \
-		-e "set sftp:connect-program ssh -a -x -o UserKnownHostsFile=${CR_PRJ_DIR}/conf/ovh.key;" \
-		"$@"
+  # https://manpages.debian.org/bookworm/lftp/lftp.1.en.html#sftp:connect-program
+  lftp \
+    -e "set sftp:connect-program ssh -a -x -o UserKnownHostsFile=${CR_PRJ_DIR}/conf/ovh.key;" \
+    "$@"
 }
 
 jh_color() {
-	COLOR=${1:-"0"}
-	if [ -z "$JH_DAEMON" ]; then
-		echo -en "\e[${COLOR}m"
-	fi
+  COLOR=${1:-"0"}
+  if [ -z "$JH_DAEMON" ]; then
+    echo -en "\e[${COLOR}m"
+  fi
 }
 
 header_message() {
-	if [ -n "$QUIET" ]; then
-		return
-	fi
-	jh_color 93
-	echo -n "$CR_HEADER_PREFIX $*"
-	jh_color
-	echo
+  if [ -n "$QUIET" ]; then
+    return
+  fi
+  jh_color 93
+  echo -n "$CR_HEADER_PREFIX $*"
+  jh_color
+  echo
 }
 
 header_begin() {
-	LASTMSG="$*"
-	header_message "$*..."
+  LASTMSG="$*"
+  header_message "$*..."
 }
 
 header_end() {
-	header_message "$LASTMSG done"
+  header_message "$LASTMSG done"
 }
 
 with_header() {
-	H="$1"
-	shift
-	header_begin "$H ($*)"
-	"$@"
-	header_end
+  H="$1"
+  shift
+  header_begin "$H ($*)"
+  "$@"
+  header_end
 }
 
 progress() {
-	if [ -n "$QUIET" ]; then
-		return
-	fi
-	if [ -n "$1" ]; then
-		echo -n "$1"
-	else
-		echo -n "."
-	fi
+  if [ -n "$QUIET" ]; then
+    return
+  fi
+  if [ -n "$1" ]; then
+    echo -n "$1"
+  else
+    echo -n "."
+  fi
 }
 
 declare -a CR_DOCKER_ARGS=("--no-TTY")
 export CR_DOCKER_ARGS
 if ! docker info -f "{{println .SecurityOptions}}" | grep rootless >&/dev/null; then
-	# We are in a docker rootfull environment
-	# echo "Rootfull environment"
-	CR_DOCKER_ARGS+=("--user" "$(id -u)")
+  # We are in a docker rootfull environment
+  # echo "Rootfull environment"
+  CR_DOCKER_ARGS+=("--user" "$(id -u)")
 fi
 
 declare -a CR_DOCKER_ARGS_RUN=("--rm" "--quiet-pull" "--interactive=false" "--no-deps")

@@ -18,53 +18,53 @@ LOG="$CR_TMP/deploy.log"
 truncate --size=0 "$LOG"
 
 ftp_exec_raw() {
-	SSHPASS="${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}" sshpass -e \
-		sftp -o "UserKnownHostsFile=$SWD/../conf/ovh.key" \
-		"${CRYPTOMEDIC_DEPLOY_FILES_USER}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}" \
-		2>&1 | tee -a "$LOG"
+  SSHPASS="${CRYPTOMEDIC_DEPLOY_FILES_PASSWORD}" sshpass -e \
+    sftp -o "UserKnownHostsFile=$SWD/../conf/ovh.key" \
+    "${CRYPTOMEDIC_DEPLOY_FILES_USER}@${CRYPTOMEDIC_DEPLOY_FILES_HOST}" \
+    2>&1 | tee -a "$LOG"
 }
 
 ftp_exec() {
-	ftp_exec_raw |
-		grep -v "SFTP protocol" |
-		grep -v "Connected to" |
-		grep -v "Couldn't create directory" |
-		grep -v "remote mkdir .*: Failure" |
-		(grep -v "^sftp" || [[ $? == 1 ]]) |
-		while read -r R; do
-			echo "$R"
-			if [[ "$R" =~ "No such file or directory" ]]; then
-				echo "Problem uploading file" >&2
-				return 1
-			fi
-		done
-	echo "**********" >>"$LOG"
+  ftp_exec_raw |
+    grep -v "SFTP protocol" |
+    grep -v "Connected to" |
+    grep -v "Couldn't create directory" |
+    grep -v "remote mkdir .*: Failure" |
+    (grep -v "^sftp" || [[ $? == 1 ]]) |
+    while read -r R; do
+      echo "$R"
+      if [[ "$R" =~ "No such file or directory" ]]; then
+        echo "Problem uploading file" >&2
+        return 1
+      fi
+    done
+  echo "**********" >>"$LOG"
 }
 
 ftp_mkdir() {
-	if [ "$1" = "." ]; then
-		return
-	fi
+  if [ "$1" = "." ]; then
+    return
+  fi
 
-	if [ -r "$REMOTE_LISTING" ]; then
-		if grep ": /$1" "$REMOTE_LISTING" >/dev/null 2>&1; then
-			echo "# mkdir $1: already exists"
-			# It already exists (there is a file in it)
-			return
-		fi
-	fi
+  if [ -r "$REMOTE_LISTING" ]; then
+    if grep ": /$1" "$REMOTE_LISTING" >/dev/null 2>&1; then
+      echo "# mkdir $1: already exists"
+      # It already exists (there is a file in it)
+      return
+    fi
+  fi
 
-	ftp_mkdir "$(dirname "$1")"
-	echo "mkdir \"$1\""
+  ftp_mkdir "$(dirname "$1")"
+  echo "mkdir \"$1\""
 }
 
 ftp_put() {
-	ftp_mkdir "$(dirname "$1")"
-	echo "put \"$1\" \"$1\""
+  ftp_mkdir "$(dirname "$1")"
+  echo "put \"$1\" \"$1\""
 }
 
 ftp_rm() {
-	echo "rm \"$1\""
+  echo "rm \"$1\""
 }
 
 header_begin "Dump infos"
@@ -78,8 +78,8 @@ echo "CRYPTOMEDIC_DEPLOY_FILES_PASSWORD:  ${#CRYPTOMEDIC_DEPLOY_FILES_PASSWORD} 
 header_end
 
 if [ -z "$CRYPTOMEDIC_DEPLOY_FILES_USER" ]; then
-	echo "No CRYPTOMEDIC_DEPLOY_FILES_USER. Did you forget something?" >&2
-	exit 1
+  echo "No CRYPTOMEDIC_DEPLOY_FILES_USER. Did you forget something?" >&2
+  exit 1
 fi
 
 header_begin "Testing connectivity"

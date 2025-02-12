@@ -21,11 +21,11 @@ FOLDER="$CR_REL_PATH"
 header_begin "PHPUnit: $T $V starting"
 
 docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
-	-e "COMMIT=$COMMIT" \
-	-e "XDEBUG_MODE=coverage" \
-	--volume "$CR_PRJ_DIR:/workdir" \
-	--workdir "/workdir/$FOLDER" \
-	web \
-	vendor/bin/phpunit "$@"
+  -e "COMMIT=$COMMIT" \
+  -e "XDEBUG_MODE=coverage" \
+  --volume "$CR_PRJ_DIR:/workdir" \
+  --workdir "/workdir/$FOLDER" \
+  web \
+  vendor/bin/phpunit "$@"
 
 header_end

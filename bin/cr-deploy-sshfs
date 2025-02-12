@@ -10,13 +10,13 @@ make build
 
 DRY_RUN="--dry-run"
 if [ "$1" == "commit" ]; then
-	echo "*** Commiting really ***"
-	DRY_RUN=
-	shift
+  echo "*** Commiting really ***"
+  DRY_RUN=
+  shift
 fi
 
 if [ -n "$1" ]; then
-	PART="${1%/}/"
+  PART="${1%/}/"
 fi
 
 LOCAL_MOUNT="$(realpath tmp/remote)"
@@ -35,17 +35,17 @@ echo "PART:                               ${PART}"
 header_end
 
 if [ -z "$CRYPTOMEDIC_DEPLOY_FILES_USER" ]; then
-	echo "No CRYPTOMEDIC_DEPLOY_FILES_USER. Did you forget something?" >&2
-	exit 1
+  echo "No CRYPTOMEDIC_DEPLOY_FILES_USER. Did you forget something?" >&2
+  exit 1
 fi
 
 generate_sync_command() {
-	F="${1%%/}"
-	echo -n "mirror ${DRY_RUN} --verbose" \
-		"--parallel=5" \
-		"--reverse --delete --no-perms " \
-		"-x tmp -x bin -x test -x tests -x Tmp -x Temp -x '.+\.log'" \
-		"$F $F"
+  F="${1%%/}"
+  echo -n "mirror ${DRY_RUN} --verbose" \
+    "--parallel=5" \
+    "--reverse --delete --no-perms " \
+    "-x tmp -x bin -x test -x tests -x Tmp -x Temp -x '.+\.log'" \
+    "$F $F"
 }
 
 header_begin "Cleaning local"
@@ -56,8 +56,8 @@ header_end
 header_begin "Syncing (DRY_RUN = ${DRY_RUN} PART = ${PART})"
 
 (
-	# Note: See "Cleaning local" above for managed exclusions
-	cat <<EOS
+  # Note: See "Cleaning local" above for managed exclusions
+  cat <<EOS
     $(generate_sync_command "") --file=.ovhconfig;
     $(generate_sync_command "www/");
     quit
