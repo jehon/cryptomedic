@@ -1,21 +1,23 @@
 include:
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/default@main
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/packages/lint@production
-  # - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
-  #   inputs:
-  #     flavor: /builder
-  #     publish: false
+  - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
+    inputs:
+      flavor: /database
+      dockerfile: services/database/Dockerfile
+      context: services/database
+      publish: false
 
 variables:
-  CRYPTOMEDIC_DEV_HTTP_HOST: docker
+  CRYPTOMEDIC_DEV_MYSQL_HOST: database
 
 default:
   timeout: 15m
 
-# ############################################################
-# #
-# # build
-# #
+############################################################
+#
+# build
+#
 
 # build:
 #   stage: build
@@ -31,10 +33,28 @@ default:
 #       - .ovhconfig
 #       - www
 
-# ############################################################
-# #
-# # Test
-# #
+############################################################
+#
+# Test
+#
+
+.with-db:
+  stage: test
+  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:production
+  services:
+    - name: database
+      image: $CI_REGISTRY_IMAGE/database:$CI_COMMIT_SHA
+  variables:
+    CRYPTOMEDIC_DEV_HTTP_HOST: web
+  script:
+    - type mysql
+
+test-setup:
+  extends: .with-db
+  image: mysql:8
+  script:
+    - type mysql
+    - mysql -h database -e "show databases;"
 
 # tests-unit:
 #   stage: test
