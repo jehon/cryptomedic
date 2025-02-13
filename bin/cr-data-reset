@@ -25,13 +25,12 @@ header_begin "cr-data-reset: Mysql - restoring initial base"
 docker compose stop database
 docker compose rm -f database
 docker volume rm -f "${DC_PROJECT_NAME}_database" || true
-
-# Required for upgrade:
-docker compose up --wait --detach proxy web
-
 docker compose up --force-recreate database \
   --detach --wait --renew-anon-volumes
 header_end
+
+# Required for upgrade:
+docker compose up --wait --detach proxy web
 
 header_begin "cr-data-reset: cr-refresh-structure"
 cr-refresh-structure "http://${CRYPTOMEDIC_DEV_HTTP_HOST}:${CRYPTOMEDIC_DEPLOY_WEB_PORT}/" "secret"
