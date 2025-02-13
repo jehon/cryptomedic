@@ -42,8 +42,8 @@ default:
   stage: test
   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:production
   services:
-    - name: database
-      image: $CI_REGISTRY_IMAGE/database:$CI_COMMIT_SHA
+    - alias: database
+      name: $CI_REGISTRY_IMAGE/database:$CI_COMMIT_SHA
   variables:
     CRYPTOMEDIC_DEV_HTTP_HOST: web
 
