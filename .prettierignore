@@ -16,4 +16,4 @@ package-lock.json
 composer.lock
 composer.json
 
-conf/database/dev/100 base.sql
+services/database/initial/100 base.sql

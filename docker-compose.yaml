@@ -43,27 +43,10 @@ services:
         target: /app
 
   database:
+    build:
+      context: ./services/database
     profiles:
       - reset
-    image: mysql:${MYSQL_VERSION}
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
-      MYSQL_DATABASE: cryptomedic
-    healthcheck:
-      # https://docs.docker.com/reference/dockerfile/#healthcheck
-      test:
-        [
-          "CMD",
-          "mysql",
-          "--database",
-          "cryptomedic",
-          "-e",
-          "SELECT * FROM `settings` WHERE id = 'structure_version'; "
-        ]
-      start_period: 5s
-      interval: 1s
-      timeout: 1s
-      retries: 30
     expose:
       - 3306
     volumes:
@@ -71,7 +54,7 @@ services:
         source: database
         target: /var/lib/mysql
       - type: bind
-        source: conf/database/dev/
+        source: services/database/initial/
         target: /docker-entrypoint-initdb.d/
 
   phpmyadmin:
