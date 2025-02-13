@@ -4,9 +4,14 @@ include:
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
     inputs:
       flavor: /database
-      dockerFile: services/database/Dockerfile
       context: services/database
+      dockerFile: services/database/Dockerfile
       publish: false
+  - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
+    inputs:
+      flavor: /web
+      context: services/web
+      dockerFile: services/web/Dockerfile
 
 variables:
   CRYPTOMEDIC_DEV_MYSQL_HOST: database
