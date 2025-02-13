@@ -45,8 +45,6 @@ services:
   database:
     build:
       context: ./services/database
-    profiles:
-      - reset
     expose:
       - 3306
     volumes:
