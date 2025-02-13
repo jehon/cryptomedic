@@ -30,9 +30,15 @@ RUN echo "umask 0000" >> /etc/apache2/envvars
 
 # Add composer.phar
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/ \
-    && chmod +x /composer.phar
+  && chmod +x /composer.phar
 
-# Add project in it
+# Add service's configurations
 ADD . /
+
+# For final image
+# ADD ??? /app
+
+# For GitLab services <== split image?
+# ADD ??? /app/???
 
 WORKDIR /app

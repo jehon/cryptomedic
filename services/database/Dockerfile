@@ -10,6 +10,7 @@ HEALTHCHECK \
 	--retries=10 \
 	CMD mysql --database cryptomedic -e 'SELECT * FROM `settings` WHERE id = "structure_version";'
 
+# For GitLab services
 ADD initial/ /docker-entrypoint-initdb.d/
 
 # https://docs.docker.com/reference/dockerfile/#healthcheck
