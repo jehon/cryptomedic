@@ -4,7 +4,7 @@ include:
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
     inputs:
       flavor: /database
-      dockerfile: services/database/Dockerfile
+      dockerFile: services/database/Dockerfile
       context: services/database
       publish: false
 
@@ -46,15 +46,13 @@ default:
       image: $CI_REGISTRY_IMAGE/database:$CI_COMMIT_SHA
   variables:
     CRYPTOMEDIC_DEV_HTTP_HOST: web
-  script:
-    - type mysql
 
 test-setup:
   extends: .with-db
   image: mysql:8
   script:
     - type mysql
-    - mysql -h database -e "show databases;"
+    - bin/cr-mysql cryptomedic -e "select * from settings;"
 
 # tests-unit:
 #   stage: test
