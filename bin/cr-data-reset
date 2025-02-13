@@ -22,11 +22,10 @@ header_end
 
 # Reset database
 header_begin "cr-data-reset: Mysql - restoring initial base"
-docker compose stop database
-docker compose rm -f database
-docker volume rm -f "${DC_PROJECT_NAME}_database" || true
-docker compose up --force-recreate database \
-  --detach --wait --renew-anon-volumes
+for F in services/database/initial/*.sql; do
+  echo "* $F"
+  "$CR_SCRIPT_DIR"/cr-mysql cryptomedic <"$F"
+done
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"
