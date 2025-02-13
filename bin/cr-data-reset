@@ -24,7 +24,7 @@ header_end
 header_begin "cr-data-reset: Mysql - restoring initial base"
 for F in services/database/initial/*.sql; do
   echo "* $F"
-  "$CR_SCRIPT_DIR"/cr-mysql cryptomedic <"$F"
+  QUIET=y "$CR_SCRIPT_DIR"/cr-mysql cryptomedic <"$F"
 done
 header_end
 
