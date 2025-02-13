@@ -29,9 +29,6 @@ docker compose up --force-recreate database \
   --detach --wait --renew-anon-volumes
 header_end
 
-# Required for upgrade:
-docker compose up --wait --detach proxy web
-
 header_begin "cr-data-reset: cr-refresh-structure"
 cr-refresh-structure "http://${CRYPTOMEDIC_DEV_HTTP_HOST}:${CRYPTOMEDIC_DEPLOY_WEB_PORT}/" "secret"
 header_end
