@@ -18,7 +18,7 @@ set -o pipefail
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
 mysql_run() {
-  if [[ -n "$CR_MYSQL_HOST" ]]; then
+  if [[ -n "$CRYPTOMEDIC_DEV_MYSQL_HOST" ]]; then
     cmd=(mysql -h "$CR_MYSQL_HOST")
   else
     cmd=(docker compose exec -T database mysql)
