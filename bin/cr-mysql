@@ -18,7 +18,12 @@ set -o pipefail
 . "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
 mysql_run() {
-  docker compose exec -T database mysql \
+  if [[ -n "$CR_MYSQL_HOST" ]]; then
+    cmd=(mysql -h "$CR_MYSQL_HOST")
+  else
+    cmd=(docker compose exec -T database mysql)
+  fi
+  "${cmd[@]}" \
     --quick \
     --reconnect \
     --unbuffered \
