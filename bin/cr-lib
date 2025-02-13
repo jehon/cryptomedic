@@ -80,14 +80,16 @@ progress() {
   fi
 }
 
-declare -a CR_DOCKER_ARGS=("--no-TTY")
-export CR_DOCKER_ARGS
-if ! docker info -f "{{println .SecurityOptions}}" | grep rootless >&/dev/null; then
-  # We are in a docker rootfull environment
-  # echo "Rootfull environment"
-  CR_DOCKER_ARGS+=("--user" "$(id -u)")
-fi
+if which docker >&/dev/null; then
+  declare -a CR_DOCKER_ARGS=("--no-TTY")
+  export CR_DOCKER_ARGS
+  if ! docker info -f "{{println .SecurityOptions}}" | grep rootless >&/dev/null; then
+    # We are in a docker rootfull environment
+    # echo "Rootfull environment"
+    CR_DOCKER_ARGS+=("--user" "$(id -u)")
+  fi
 
-declare -a CR_DOCKER_ARGS_RUN=("--rm" "--quiet-pull" "--interactive=false" "--no-deps")
-CR_DOCKER_ARGS_RUN+=("${CR_DOCKER_ARGS[@]}")
-export CR_DOCKER_ARGS_RUN
+  declare -a CR_DOCKER_ARGS_RUN=("--rm" "--quiet-pull" "--interactive=false" "--no-deps")
+  CR_DOCKER_ARGS_RUN+=("${CR_DOCKER_ARGS[@]}")
+  export CR_DOCKER_ARGS_RUN
+fi
