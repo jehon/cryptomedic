@@ -45,7 +45,7 @@ default:
 # Test
 #
 
-.with-db:
+.with-services:
   stage: test
   image: $CI_REGISTRY_IMAGE/builder:$CI_COMMIT_SHA
   services:
@@ -57,24 +57,17 @@ default:
     CRYPTOMEDIC_DEV_MYSQL_HOST: database
     CRYPTOMEDIC_DEV_HTTP_HOST: web
 
-test-setup:
-  extends: .with-db
-  script:
-    - bin/cr-mysql cryptomedic -e "select * from settings;"
-    - curl -fsS http://web/
-
-# tests-unit:
-#   stage: test
-#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-#   parallel:
-#     matrix:
-#       - target:
-#         - dump
-#         - lint
-#         - frontend-test
+# test-setup:
+#   extends: .with-services
 #   script:
-#     - make github
-#     - make $target
+#     - bin/cr-mysql cryptomedic -e "select * from settings;"
+#     - curl -fsS http://web/
+
+test-frontend:
+  stage: test
+  image: $CI_REGISTRY_IMAGE/builder:$CI_COMMIT_SHA
+  script:
+    - make frontend-test
 
 # tests-unit-with-backend:
 #   stage: test
