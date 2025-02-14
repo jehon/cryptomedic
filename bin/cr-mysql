@@ -19,7 +19,7 @@ set -o pipefail
 
 mysql_run() {
   if [[ -n "$CRYPTOMEDIC_DEV_MYSQL_HOST" ]]; then
-    cmd=(mysql -h "$CR_MYSQL_HOST")
+    cmd=(mysql --host="$CRYPTOMEDIC_DEV_MYSQL_HOST")
   else
     cmd=(docker compose exec -T database mysql)
   fi

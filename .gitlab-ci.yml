@@ -17,10 +17,6 @@ include:
       context: services/web
       dockerFile: services/web/Dockerfile
 
-variables:
-  CRYPTOMEDIC_DEV_MYSQL_HOST: database
-  CRYPTOMEDIC_DEV_HTTP_HOST: web
-
 default:
   timeout: 15m
 
@@ -57,12 +53,15 @@ default:
     - alias: web
       name: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   variables:
+    CRYPTOMEDIC_DEV_MYSQL_HOST: database
     CRYPTOMEDIC_DEV_HTTP_HOST: web
 
 test-setup:
   extends: .with-db
   script:
     - type mysql
+    - |
+      echo "CRYPTOMEDIC_DEV_MYSQL_HOST: $CRYPTOMEDIC_DEV_MYSQL_HOST"
     - bin/cr-mysql cryptomedic -e "select * from settings;"
     - curl -fsSL http://web/
 
