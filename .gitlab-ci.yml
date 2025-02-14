@@ -59,11 +59,8 @@ default:
 test-setup:
   extends: .with-db
   script:
-    - type mysql
-    - |
-      echo "CRYPTOMEDIC_DEV_MYSQL_HOST: $CRYPTOMEDIC_DEV_MYSQL_HOST"
     - bin/cr-mysql cryptomedic -e "select * from settings;"
-    - curl -fsSL http://web/
+    - curl -fsSL http://$CRYPTOMEDIC_DEV_HTTP_HOST/
 
 # tests-unit:
 #   stage: test
