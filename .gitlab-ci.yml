@@ -19,6 +19,7 @@ include:
 
 variables:
   CRYPTOMEDIC_DEV_MYSQL_HOST: database
+  CRYPTOMEDIC_DEV_HTTP_HOST: web
 
 default:
   timeout: 15m
@@ -49,19 +50,21 @@ default:
 
 .with-db:
   stage: test
-  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:production
+  image: $CI_REGISTRY_IMAGE/builder:$CI_COMMIT_SHA
   services:
     - alias: database
       name: $CI_REGISTRY_IMAGE/database:$CI_COMMIT_SHA
+    - alias: web
+      name: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   variables:
     CRYPTOMEDIC_DEV_HTTP_HOST: web
 
 test-setup:
   extends: .with-db
-  image: mysql:8
   script:
     - type mysql
     - bin/cr-mysql cryptomedic -e "select * from settings;"
+    - curl -fsSL http://web/
 
 # tests-unit:
 #   stage: test
