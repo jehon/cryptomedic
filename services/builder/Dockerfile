@@ -1,3 +1,4 @@
-FROM $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:production
+
+FROM registry.gitlab.com/jehon/packages/dev
 
 RUN apt update && apt install --yes mysql-client
