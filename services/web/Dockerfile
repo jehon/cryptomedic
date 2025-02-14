@@ -37,7 +37,7 @@ ADD . /
 
 # For final image
 # ADD ??? /app
-ADD app /app
+COPY --from=project www /app/
 
 # For GitLab services <== split image?
 # ADD ??? /app/???

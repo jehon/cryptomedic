@@ -33,6 +33,8 @@ services:
       context: services/web
       args:
         PHP_VERSION: ${PHP_VERSION}
+      additional_contexts:
+        project: .
     environment:
       - SERVER_ENV=dev
     expose:
