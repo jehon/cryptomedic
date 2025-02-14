@@ -6,6 +6,7 @@ include:
       flavor: /builder
       context: services/builder
       dockerFile: services/builder/Dockerfile
+      publish: false
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
     inputs:
       flavor: /database
