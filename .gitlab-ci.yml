@@ -61,7 +61,7 @@ test-setup:
   extends: .with-db
   script:
     - bin/cr-mysql cryptomedic -e "select * from settings;"
-    - curl -fsSL http://$CRYPTOMEDIC_DEV_HTTP_HOST/
+    - curl -fsS http://web/
 
 # tests-unit:
 #   stage: test
