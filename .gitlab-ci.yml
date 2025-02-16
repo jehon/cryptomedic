@@ -142,9 +142,9 @@ test-frontend:
 #     paths:
 #       - tests/e2e/**/*.png
 
-# deploy:
-#   stage: release
-#   image: alpine
+deploy:
+  stage: release
+  image: alpine
 #   needs:
 #     - tests-unit
 #     - tests-unit-with-backend
@@ -155,7 +155,9 @@ test-frontend:
 # #     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
 # #       when: never
 # #     - when: on_success
-# #   script:
+  script:
+    - echo 'Not implemented yet'
+    - /not-implemented-yet
 # #     - ./setup.sh
 # #     - make github
 # #     - make build
