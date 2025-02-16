@@ -37,11 +37,11 @@ ADD . /
 
 # For final image
 # ADD ??? /app
-COPY --from=project www /app/
+COPY --from=project . /app/
 
 # For GitLab services <== split image?
 # ADD ??? /app/???
 
 WORKDIR /app
 
-RUN cd www/api && /composer.phar --no-interaction
+RUN cd /app/www/api && /composer.phar --no-interaction
