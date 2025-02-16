@@ -43,3 +43,5 @@ COPY --from=project www /app/
 # ADD ??? /app/???
 
 WORKDIR /app
+
+RUN cd www/api && /composer.phar --no-interaction
