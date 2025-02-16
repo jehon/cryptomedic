@@ -74,8 +74,7 @@ tests-backend:
   extends: .with-services
   image: $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA
   script:
-    - make dependencies
-    - make test-backend
+    - vendor/bin/phpunit
 
 # tests-e2e-desktop:
 #   stage: test
