@@ -69,20 +69,13 @@ test-frontend:
   script:
     - make frontend-test
 
-# tests-unit-with-backend:
-#   stage: test
-#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-#   services:
-#     - name: docker:dind
-#   parallel:
-#     matrix:
-#       - target:
-#         - backend-test
-#   script:
-#     - make github
-#     - make dependencies
-#     - make start
-#     - make $target
+tests-backend:
+  stage: test
+  extends: .with-services
+  image: $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA
+  script:
+    - make dependencies
+    - make test-backend
 
 # tests-e2e-desktop:
 #   stage: test
