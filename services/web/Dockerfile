@@ -48,4 +48,3 @@ WORKDIR /app
 RUN mkdir -p www/api/bootstrap/cache
 
 RUN cd www/api && /composer.phar --no-interaction install
-
