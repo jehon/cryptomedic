@@ -72,7 +72,7 @@ test-frontend:
 tests-backend:
   stage: test
   extends: .with-services
-  image: $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   script:
     - vendor/bin/phpunit
 
