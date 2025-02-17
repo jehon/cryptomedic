@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+# shellcheck source-path=SCRIPTDIR
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
+
+header_begin "Waiting for database ..."
+I=1
+while ! cr-mysql cryptomedic -e "SELECT * from settings" &>/dev/null; do
+  echo -n "."
+  sleep 1
+  ((I++))
+  if ((I > 30)); then
+    echo "Waited too long!" >&2
+    exit 1
+  fi
+done
+header_end
