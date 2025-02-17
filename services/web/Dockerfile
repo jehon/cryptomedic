@@ -44,4 +44,6 @@ COPY --from=project . /app/
 
 WORKDIR /app
 
-RUN cd /app/www/api && /composer.phar --no-interaction install
+RUN cd www/api && /composer.phar --no-interaction install
+
+RUN mkdir -p www/api/bootstrap/cache
