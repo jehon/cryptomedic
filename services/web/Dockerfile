@@ -44,4 +44,4 @@ COPY --from=project . /app/
 
 WORKDIR /app
 
-RUN cd /app/www/api && /composer.phar --no-interaction
+RUN cd /app/www/api && /composer.phar --no-interaction install
