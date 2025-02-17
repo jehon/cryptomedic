@@ -44,6 +44,8 @@ COPY --from=project . /app/
 
 WORKDIR /app
 
+# Required by composer install for one package
+RUN mkdir -p www/api/bootstrap/cache
+
 RUN cd www/api && /composer.phar --no-interaction install
 
-RUN mkdir -p www/api/bootstrap/cache
