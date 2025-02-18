@@ -10,11 +10,8 @@ ACCEPTANCE := live-from-production
 export HUSKY=0
 
 ## Where to deploy
-export CRYPTOMEDIC_DEPLOY_WEB_HOST ?= $(CRYPTOMEDIC_HTTP_DEPLOY_HOST)
-export CRYPTOMEDIC_DEPLOY_WEB_PORT ?= $(CRYPTOMEDIC_DEV_HTTP_PORT)
 export CRYPTOMEDIC_DEPLOY_WEB_TOKEN ?= secret
 export DBUPDATEPWD := secret # From config.php
-export CRYPTOMEDIC_DOCKER_SOCKET := $(shell docker context inspect | jq -r .[0].Endpoints.docker.Host | sed "s^unix://^^")
 
 define rehydrate
 	@if [ -r "$(1)" ] && [ "$(1)" -ot "$(2)" ] ; then \
@@ -68,7 +65,6 @@ global-dump:
 	@echo "SHELL:                          $(SHELL)"
 	@echo "PATH:                           $(PATH)"
 	@echo "arch:                           $(shell arch)"
-	@echo "CRYPTOMEDIC_DOCKER_SOCKET:      $(CRYPTOMEDIC_DOCKER_SOCKET)"
 	@echo "ACCEPTANCE:                     $(ACCEPTANCE)"
 	@echo "CRYPTOMEDIC_DEPLOY_FILES_HOST:  $(CRYPTOMEDIC_DEPLOY_FILES_HOST)"
 	@echo "CRYPTOMEDIC_DEPLOY_WEB_HOST:    $(CRYPTOMEDIC_DEPLOY_WEB_HOST)"
