@@ -56,6 +56,8 @@ default:
   variables:
     CRYPTOMEDIC_DEV_MYSQL_HOST: database
     CRYPTOMEDIC_DEV_HTTP_HOST: web
+  before_script:
+    - bin/cr-system-ready
 
 # test-setup:
 #   extends: .with-services
