@@ -59,7 +59,6 @@ default:
     CRYPTOMEDIC_DEV_MYSQL_HOST: database
   before_script:
     - cr-refresh-structure "http://${CRYPTOMEDIC_DEV_HTTP_HOST}:${CRYPTOMEDIC_DEPLOY_WEB_PORT}/" "secret"
-    - bin/cr-system-ready
 
 # test-setup:
 #   extends: .with-services
