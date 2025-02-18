@@ -2,56 +2,11 @@
 
 namespace Jehon\Maintenance;
 
+require_once __DIR__ . "/filesystem.php";
+
 use \PDO;
 use \PDOException;
 use \Exception;
-
-function myglob($glob, $recursive = false)
-{
-  $pattern = basename($glob);
-  $path = dirname($glob);
-  if ($path == DIRECTORY_SEPARATOR) {
-    return ["."];
-  }
-
-  if (!is_readable($path)) {
-    throw new Exception("Path is not readable $path");
-  }
-
-  $handle = opendir($path);
-  if ($handle === false) {
-    return [];
-  }
-  $list = [];
-  while (false !== ($file = readdir($handle))) {
-    if ($file == ".") {
-      continue;
-    }
-    if ($file == "..") {
-      continue;
-    }
-    if (
-      is_file(dirname($glob) . DIRECTORY_SEPARATOR . $file) &&
-      fnmatch($pattern, $file)
-    ) {
-      $list[] = $path . DIRECTORY_SEPARATOR . $file;
-    }
-    if (is_dir(dirname($glob) . DIRECTORY_SEPARATOR . $file) && $recursive) {
-      $res = myglob(
-        dirname($glob) .
-          DIRECTORY_SEPARATOR .
-          $file .
-          DIRECTORY_SEPARATOR .
-          basename($glob),
-        $recursive
-      );
-      $list = array_merge($list, $res);
-    }
-  }
-  closedir($handle);
-  natsort($list);
-  return $list;
-}
 
 class Database
 {
@@ -249,30 +204,26 @@ class Database
     natsort($list);
 
     foreach ($list as $f) {
-      $nextVersion = basename($f, ".sql");
-      if (preg_match("~^(\d+)~", basename($f, ".sql"), $nn)) {
-        if (count($nn) > 1) {
-          $nextVersion = $nn[1];
-          if (
-            $this->getVersion() == $nextVersion ||
-            strnatcmp($this->getVersion(), $nextVersion) > 0
-          ) {
-            echo "\nSkipping $f [$nextVersion]";
-            continue;
-          }
+      $name = basename($f);
+      $nextVersion = getVersionIn($f);
+      if ($nextVersion != "") {
+        if (
+          $this->getVersion() == $nextVersion ||
+          strnatcmp($this->getVersion(), $nextVersion) > 0
+        ) {
+          echo "\nSkipping $name [$nextVersion]";
+          continue;
         }
-      } else {
-        $nextVersion = "invalid";
       }
 
-      echo "\nTreating $f [$nextVersion]: ";
+      echo "\nTreating $name [$nextVersion]: ";
       $res = $this->runFile($f);
       echo " = " . $res . "\n";
       if (!$res) {
         return false;
       }
 
-      if ($nextVersion != "invalid") {
+      if ($nextVersion != "") {
         $this->setVersion($nextVersion);
       }
     }

@@ -16,7 +16,7 @@ try {
   echo $db->getVersion() . "\n";
 
   echo "\n\nRunning versions\n";
-  $db->runDirectory(__DIR__ . "/versions");
+  $db->runDirectory($myconfig["database"]["versions"]);
 
   echo "\n\nDone " . basename(__FILE__) . "\n";
   http_response_code(200);

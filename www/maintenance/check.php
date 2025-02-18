@@ -1,5 +1,7 @@
 <?php
 
+use Jehon\Maintenance;
+
 try {
   ob_start();
   http_response_code(500);
@@ -13,9 +15,22 @@ try {
   echo "MySQL Version: " .
     $db->pdo->getAttribute(PDO::ATTR_SERVER_VERSION) .
     "<br>\n";
-  echo "Structure version: " . $db->getVersion() . "<br>\n";
+  $dbVersion = $db->getVersion();
+  $fsVersion = Jehon\Maintenance\getVersionIn(
+    $myconfig["database"]["versions"]
+  );
+  echo "<br>";
+  echo "Structure version: $dbVersion<br>\n";
+  echo "Filesystem version: $fsVersion<br>\n";
 
-  echo "\n<br><br>";
+  if ($dbVersion == $fsVersion) {
+    echo "Version match<br>";
+  } else {
+    echo "!! Version mismatch<br>";
+    $res = false;
+  }
+
+  echo "\n<br>";
 
   if ($res) {
     echo "Ok<br>\n";
@@ -30,28 +45,3 @@ try {
   http_response_code(503);
 }
 ob_flush();
-
-// TODO: remove this
-
-// $ip = "2001:41d0:404:200:0:0:0:2a3f";
-$ip = "135.125.106.114";
-$username = "test";
-$password = "test";
-if (in_array("ip", $_REQUEST)) {
-  $ip = $_REQUEST["ip"];
-}
-if (in_array("username", $_REQUEST)) {
-  $username = $_REQUEST["username"];
-}
-if (in_array("password", $_REQUEST)) {
-  $password = $_REQUEST["password"];
-}
-$dsn = "mysql:host=$ip;dbname=" . $myconfig["database"]["schema"];
-echo "DSN: $dsn<br>\n";
-
-try {
-  $pdo = new PDO($dsn, $username, $password);
-  echo "Connected successfully";
-} catch (PDOException $e) {
-  echo "Connection failed: " . $e->getMessage();
-}

@@ -35,3 +35,4 @@ $db = new \Jehon\Maintenance\Database(
   $myconfig["database"]["username"],
   $myconfig["database"]["password"]
 );
+$myconfig["database"]["versions"] = __DIR__ . "/../versions";
