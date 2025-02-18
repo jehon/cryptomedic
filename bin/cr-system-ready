@@ -8,7 +8,7 @@ set -o pipefail
 
 header_begin "Waiting for database ..."
 I=1
-while ! cr-mysql cryptomedic -e "SELECT * from settings" >/dev/null; do
+while ! curl -fsSL "http://$CRYPTOMEDIC_DEV_HTTP_HOST:$CRYPTOMEDIC_DEV_HTTP_PORT/maintenance/check.php" >/dev/null; do
   echo -n "."
   sleep 1
   ((I++))
