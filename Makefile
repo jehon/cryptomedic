@@ -9,10 +9,6 @@ ACCEPTANCE := live-from-production
 # To disable husky scripts
 export HUSKY=0
 
-# Defaults value for Dev:
-## For patching, we need a ref to the local server
-export CRYPTOMEDIC_DEV_HTTP_PORT = 8085
-export CRYPTOMEDIC_DEV_HTTP_HOST ?= localhost
 ## Where to deploy
 export CRYPTOMEDIC_DEPLOY_WEB_HOST ?= $(CRYPTOMEDIC_HTTP_DEPLOY_HOST)
 export CRYPTOMEDIC_DEPLOY_WEB_PORT ?= $(CRYPTOMEDIC_DEV_HTTP_PORT)
