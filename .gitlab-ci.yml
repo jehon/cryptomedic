@@ -54,8 +54,9 @@ default:
     - alias: web
       name: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   variables:
-    CRYPTOMEDIC_DEV_MYSQL_HOST: database
     CRYPTOMEDIC_DEV_HTTP_HOST: web
+    CRYPTOMEDIC_DEV_HTTP_PORT: 80
+    CRYPTOMEDIC_DEV_MYSQL_HOST: database
   before_script:
     - bin/cr-system-ready
 
