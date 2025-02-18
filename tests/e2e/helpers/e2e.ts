@@ -5,7 +5,7 @@ import { CRUD } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
 export { outputDate } from "../../../src/utils/date";
 
-const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"]}:8085`;
+const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
 type JsonData = any;
 
 const LOGINS = {
