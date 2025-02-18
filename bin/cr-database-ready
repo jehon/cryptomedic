@@ -8,7 +8,7 @@ set -o pipefail
 
 header_begin "Waiting for database ..."
 I=1
-while ! cr-mysql cryptomedic -e "SELECT * from settings" &>/dev/null; do
+while ! cr-mysql cryptomedic -e "SELECT * from settings" >/dev/null; do
   echo -n "."
   sleep 1
   ((I++))
