@@ -8,7 +8,7 @@ set -o pipefail
 
 header_begin "Waiting for database ..."
 I=1
-while ! curl -fsSL "http://$CRYPTOMEDIC_DEV_HTTP_HOST:$CRYPTOMEDIC_DEV_HTTP_PORT/maintenance/check.php" >/dev/null; do
+while ! curl -vf "http://$CRYPTOMEDIC_DEV_HTTP_HOST:$CRYPTOMEDIC_DEV_HTTP_PORT/maintenance/check.php"; do
   echo -n "."
   sleep 1
   ((I++))

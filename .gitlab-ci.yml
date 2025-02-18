@@ -77,7 +77,6 @@ tests-backend:
   extends: .with-services
   image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   script:
-    - bin/cr-database-ready
     # In the current folder, we have the git checkout, but
     # without the vendor install
     - cd /app/www/api
