@@ -71,7 +71,7 @@ COPY --from=project . .
 # Required by composer install for one package
 RUN mkdir -p \
   www/api/bootstrap/cache \
-  www/api/live/laravel/sessions \
+  live/laravel/sessions \
   tmp/integration/webTemp
 
 RUN cd www/api && /composer.phar --no-interaction install
