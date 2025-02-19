@@ -93,28 +93,22 @@ tests-backend:
     - cd /app/www/api
     - XDEBUG_MODE=coverage vendor/bin/phpunit
 
-# tests-e2e-desktop:
-#   stage: test
-#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-#   services:
-#     - name: docker:dind
-#   parallel:
-#     matrix:
-#       - flavor:
-#         - desktop
-#         - playwright
-#   script:
-#     - ./setup.sh
-#     - make github
-#     - make dc-build
-#     - make start
-#     - make dependencies
-#     - make integration-test-desktop-run
-#     - make integration-test-desktop-styles
-#   artifacts:
-#     when: always
-#     paths:
-#       - tmp/integration/desktop
+tests-e2e-desktop:
+  stage: test
+  extends: .with-services
+  # parallel:
+  #   matrix:
+  #     - flavor:
+  #       - desktop
+  #       - playwright
+  script:
+    - make dependencies
+    - make integration-test-desktop-run
+    - make integration-test-desktop-styles
+  artifacts:
+    when: always
+    paths:
+      - tmp/integration/desktop
 
 # tests-e2e-playwright-strict:
 #   stage: test
