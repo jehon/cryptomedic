@@ -53,6 +53,9 @@ default:
       name: $CI_REGISTRY_IMAGE/database:$CI_COMMIT_SHA
     - alias: web
       name: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      variables:
+        # If not set, enforce https redirection
+        SERVER_ENV: dev
   variables:
     CRYPTOMEDIC_DEV_HTTP_HOST: web
     CRYPTOMEDIC_DEV_HTTP_PORT: 80
