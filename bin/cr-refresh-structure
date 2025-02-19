@@ -27,8 +27,6 @@ fi
 
 echo "Deploying to ${BASE_HOST} with pwd of #${#TOKEN} char length"
 
-curl -v "${BASE_HOST}/maintenance/patch_db.php?pwd=${TOKEN}"
-
 with_header "Upgrading database" \
   curl -fsSL "${BASE_HOST}/maintenance/patch_db.php?pwd=${TOKEN}"
 
