@@ -6,6 +6,12 @@ FROM php:${PHP_VERSION}-apache
 ENV HOME=/home/runner
 RUN mkdir -p "$HOME" && chmod a+rwx "$HOME"
 
+############################################################
+#
+# Apache
+#
+############################################################
+
 # Add packages for composer
 RUN apt update && apt install --yes git zip
 
@@ -13,12 +19,6 @@ RUN apt update && apt install --yes git zip
 RUN a2enmod expires rewrite
 
 RUN rm -fr /etc/apache2/sites-enabled/*.conf
-
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions
-
-# mbstring, xml already installed
-RUN install-php-extensions pdo_mysql xdebug intl gd zip
 
 #
 # All files created by the server will be ugo+rw and folders will be ugo+rwx
@@ -28,24 +28,52 @@ RUN install-php-extensions pdo_mysql xdebug intl gd zip
 # [For dev only?]
 RUN echo "umask 0000" >> /etc/apache2/envvars
 
+############################################################
+#
+# PHP
+#
+############################################################
+
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions
+
+# mbstring, xml already installed
+RUN install-php-extensions pdo_mysql xdebug intl gd zip
+
+
 # Add composer.phar
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/ \
   && chmod +x /composer.phar
 
+############################################################
+#
+# Custom settings
+#
+############################################################
+
 # Add service's configurations
 ADD . /
 
+############################################################
+#
+# App
+#
+############################################################
+
+WORKDIR /app
+
 # For final image
-# ADD ??? /app
-COPY --from=project . /app/
-RUN chmod a+rwx -R /app/
+COPY --from=project . .
 
 # For GitLab services <== split image?
 # ADD ??? /app/???
 
-WORKDIR /app
-
 # Required by composer install for one package
-RUN mkdir -p www/api/bootstrap/cache
+RUN mkdir -p \
+  www/api/bootstrap/cache \
+  www/api/bootstrap/cache/ \
+  tmp/integration/webTemp
 
 RUN cd www/api && /composer.phar --no-interaction install
+
+RUN chmod a+rwx -R .
