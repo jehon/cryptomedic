@@ -38,6 +38,7 @@ ADD . /
 # For final image
 # ADD ??? /app
 COPY --from=project . /app/
+RUN chmod a+rwx -R /app/
 
 # For GitLab services <== split image?
 # ADD ??? /app/???
