@@ -91,7 +91,7 @@ tests-backend:
     # In the current folder, we have the git checkout, but
     # without the vendor install
     - cd /app/www/api
-    - vendor/bin/phpunit
+    - XDEBUG_MODE=coverage vendor/bin/phpunit
 
 # tests-e2e-desktop:
 #   stage: test
