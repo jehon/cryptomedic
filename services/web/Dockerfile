@@ -76,4 +76,4 @@ RUN mkdir -p \
 
 RUN cd www/api && /composer.phar --no-interaction install
 
-RUN chmod a+rwx -R .
+RUN chmod a+rwX -R .
