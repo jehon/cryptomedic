@@ -94,8 +94,8 @@ tests-backend:
     - XDEBUG_MODE=coverage vendor/bin/phpunit
 
 tests-e2e-desktop:
-  stage: test
-  image: cypress
+  stage: pre-test # TODO: in test
+  image: cypress/included:13.17.0
   # parallel:
   #   matrix:
   #     - flavor:
