@@ -86,10 +86,7 @@ test-frontend:
 tests-backend:
   stage: test
   extends: .with-services
-  image:
-    name: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    entrypoint:
-      -  /usr/bin/bash
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   script:
     # In the current folder, we have the git checkout, but
     # without the vendor install
@@ -98,7 +95,10 @@ tests-backend:
 
 tests-e2e-desktop:
   stage: pre-test # TODO: in test
-  image: cypress/included:13.17.0
+  image:
+    name: cypress/included:13.17.0
+    entrypoint:
+      -  /usr/bin/bash
   # parallel:
   #   matrix:
   #     - flavor:
