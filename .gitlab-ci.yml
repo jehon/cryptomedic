@@ -115,9 +115,9 @@ tests-e2e-desktop:
 tests-e2e-playwright-strict:
   stage: pre-test
   extends: .with-services
-  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
   script:
-    - make integration-test-playwright-strict
+    - node_modules/.bin/playwright install
+    - node_modules/.bin/playwright test
   artifacts:
     when: always
     paths:
@@ -136,6 +136,7 @@ tests-e2e-playwright-strict:
 #     - make dependencies
 #     - make integration-test-playwright
 #     - git status
+# --update-snapshots
 #   artifacts:
 #     when: always
 #     paths:
