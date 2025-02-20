@@ -86,7 +86,10 @@ test-frontend:
 tests-backend:
   stage: test
   extends: .with-services
-  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  image:
+    name: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    entrypoint:
+      -  /usr/bin/bash
   script:
     # In the current folder, we have the git checkout, but
     # without the vendor install
@@ -101,6 +104,11 @@ tests-e2e-desktop:
   #     - flavor:
   #       - desktop
   #       - playwright
+  variables:
+    HOME: /tmp
+    LANG: C.UTF-8
+    CYPRESS_BASE_URL: http://web/
+
   script:
     - cypress run
 
