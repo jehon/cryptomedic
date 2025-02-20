@@ -95,6 +95,7 @@ tests-backend:
 
 tests-e2e-desktop:
   stage: pre-test # TODO: in test
+  extends: .with-services
   image:
     name: cypress/included:13.17.0
     entrypoint: [""]
@@ -111,22 +112,16 @@ tests-e2e-desktop:
     paths:
       - tmp/integration/desktop
 
-# tests-e2e-playwright-strict:
-#   stage: test
-#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-#   services:
-#     - name: docker:dind
-#   script:
-#     - ./setup.sh
-#     - make github
-#     - make dc-build
-#     - make start
-#     - make dependencies
-#     - make integration-test-playwright-strict
-#   artifacts:
-#     when: always
-#     paths:
-#       - tmp/integration/playwright
+tests-e2e-playwright-strict:
+  stage: pre-test
+  extends: .with-services
+  image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
+  script:
+    - make integration-test-playwright-strict
+  artifacts:
+    when: always
+    paths:
+      - tmp/integration/playwright
 
 # test-e2e-playwright:
 #   stage: test
