@@ -28,54 +28,38 @@ run_cypress_raw() {
 
 run_cypress() {
   COMMAND="$1"
-  OUTPUT="$2"
-  FLAVOR="$3"
-  shift
-  shift
   shift
 
-  mkdir -p "$OUTPUT"
-  cr-ensure-folder-empty "$OUTPUT"/screenshots
-  cr-ensure-folder-empty "$OUTPUT"/videos
-  cr-ensure-folder-empty "$OUTPUT"/coverage
-
-  if [ "$FLAVOR" = "mobile" ]; then
-    MOBILE_RESOLUTION=",viewportWidth=360,viewportHeight=640"
-  fi
-
-  DOCKER_OUTPUT="/workdir/$(realpath --relative-to "$CR_PRJ_DIR" "$OUTPUT")"
+  mkdir -p "tmp/integration/desktop/runtime"
+  cr-ensure-folder-empty tmp/integration/desktop/runtime/screenshots
+  cr-ensure-folder-empty tmp/integration/desktop/runtime/videos
+  cr-ensure-folder-empty tmp/integration/desktop/runtime/coverage
 
   header_begin "Cypress run tests ($*)"
   run_cypress_raw \
     "$COMMAND" \
-    "--env" "flavor=$FLAVOR" \
-    "--config" "videosFolder=$DOCKER_OUTPUT/videos,screenshotsFolder=$DOCKER_OUTPUT/screenshots$MOBILE_RESOLUTION" \
+    "--env" "flavor=desktop" \
+    "--config" "videosFolder=/workdir/tmp/integration/desktop/runtime/videos,screenshotsFolder=/workdir/tmp/integration/desktop/runtime/screenshots" \
     "$@"
 
   header_end
 }
 
-CMD="${1:?Need command as [1]}"
-OUTPUT="$2"
+CMD="$1"
 
 case "$CMD" in
 "version")
   run_cypress_raw "version" "--component" "package"
   ;;
 "open")
-  run_cypress "open" "$OUTPUT" "desktop" \
-    "--project" "." "--e2e" "--browser=electron"
+  run_cypress "open" "--project" "." "--e2e" "--browser=electron"
   ;;
-"desktop")
+"")
   # Nothing to do - default flavor - use the config preset's
-  run_cypress "run" "$OUTPUT" "desktop"
-  ;;
-"mobile")
-  # Mobile: 360 x 480
-  run_cypress "run" "$OUTPUT" "mobile"
+  run_cypress "run"
   ;;
 *)
-  echo "Need flavor as [1]" >&2
+  echo "Invalid choice as [1]" >&2
   exit 255
   ;;
 esac

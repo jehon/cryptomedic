@@ -85,7 +85,7 @@ $(INTEGRATION_TEST_TMP)/desktop/.tested: \
 		$(shell find tests/cypress/ -name "*.js")
 
 	@mkdir -p "$(dir $@)"
-	bin/cr-cypress "desktop" "$(INTEGRATION_TEST_TMP)/desktop/runtime"
+	bin/cr-cypress
 	@touch "$@"
 
 .PHONY: integration-test-desktop-styles
