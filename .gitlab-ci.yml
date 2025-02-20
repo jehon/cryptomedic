@@ -97,8 +97,7 @@ tests-e2e-desktop:
   stage: pre-test # TODO: in test
   image:
     name: cypress/included:13.17.0
-    entrypoint:
-      -  /usr/bin/bash
+    entrypoint: [""]
   # parallel:
   #   matrix:
   #     - flavor:
