@@ -98,11 +98,6 @@ tests-e2e-desktop:
   image:
     name: cypress/included:13.17.0
     entrypoint: [""]
-  # parallel:
-  #   matrix:
-  #     - flavor:
-  #       - desktop
-  #       - playwright
   variables:
     HOME: /tmp
     LANG: C.UTF-8
