@@ -14,7 +14,7 @@ set -o pipefail
 # shellcheck source-path=SCRIPTDIR
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-run_cypress_raw() {
+run_cypress() {
   docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
     --volume "$CR_PRJ_DIR:/workdir" \
     --workdir /workdir/tests \
@@ -26,30 +26,11 @@ run_cypress_raw() {
   #        -v /tmp/.X11-unix:/tmp/.X11-unix \
 }
 
-run_cypress() {
-  COMMAND="$1"
-  shift
-
-  mkdir -p "tmp/integration/desktop/runtime"
-  cr-ensure-folder-empty tmp/integration/desktop/runtime/screenshots
-  cr-ensure-folder-empty tmp/integration/desktop/runtime/videos
-  cr-ensure-folder-empty tmp/integration/desktop/runtime/coverage
-
-  header_begin "Cypress run tests ($*)"
-  run_cypress_raw \
-    "$COMMAND" \
-    "--env" "flavor=desktop" \
-    "--config" "videosFolder=/workdir/tmp/integration/desktop/runtime/videos,screenshotsFolder=/workdir/tmp/integration/desktop/runtime/screenshots" \
-    "$@"
-
-  header_end
-}
-
 CMD="$1"
 
 case "$CMD" in
 "version")
-  run_cypress_raw "version" "--component" "package"
+  run_cypress "version" "--component" "package"
   ;;
 "open")
   run_cypress "open" "--project" "." "--e2e" "--browser=electron"

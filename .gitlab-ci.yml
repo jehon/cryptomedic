@@ -95,16 +95,15 @@ tests-backend:
 
 tests-e2e-desktop:
   stage: test
-  extends: .with-services
+  image: cypress
   # parallel:
   #   matrix:
   #     - flavor:
   #       - desktop
   #       - playwright
   script:
-    - make dependencies
-    - make integration-test-desktop-run
-    - make integration-test-desktop-styles
+    - cypress run
+
   artifacts:
     when: always
     paths:
