@@ -48,6 +48,8 @@ services:
   database:
     build:
       context: ./services/database
+      additional_contexts:
+        project: .
     expose:
       - 3306
     volumes:
@@ -57,6 +59,10 @@ services:
       - type: bind
         source: services/database/initial/
         target: /docker-entrypoint-initdb.d/
+      # TODO: Gitlab - move this into services/databases
+      - type: bind
+        source: www/maintenance/versions/
+        target: /versions/
 
   phpmyadmin:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/

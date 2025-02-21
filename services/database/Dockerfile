@@ -1,4 +1,4 @@
-FROM mysql:9
+FROM mysql:8
 
 ENV MYSQL_ALLOW_EMPTY_PASSWORD=yes
 ENV MYSQL_DATABASE=cryptomedic
@@ -11,6 +11,9 @@ HEALTHCHECK \
 	CMD mysql --database cryptomedic -e 'SELECT * FROM `settings` WHERE id = "structure_version";'
 
 # For GitLab services
-ADD initial/ /docker-entrypoint-initdb.d/
+COPY initial/ /docker-entrypoint-initdb.d/
+
+# For Gitlab Only
+COPY --from=project www/maintenance/versions /versions/
 
 # https://docs.docker.com/reference/dockerfile/#healthcheck
