@@ -103,7 +103,7 @@ tests-e2e-desktop:
     CYPRESS_BASE_URL: http://web/
 
   script:
-    - cypress run
+    - cd tests && cypress run
 
   artifacts:
     when: always
