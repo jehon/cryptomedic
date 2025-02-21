@@ -2,6 +2,7 @@
 
 require_once __DIR__ . "/lib/config.php";
 require_once __DIR__ . "/lib/protect.php";
+require_once __DIR__ . "/lib/database.php";
 
 echo "<pre>";
 

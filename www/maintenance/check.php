@@ -11,6 +11,7 @@ try {
   echo "PHP Version: " . phpversion() . "<br>\n";
 
   require_once __DIR__ . "/lib/config.php";
+  require_once __DIR__ . "/lib/database.php";
 
   echo "MySQL Version: " .
     $db->pdo->getAttribute(PDO::ATTR_SERVER_VERSION) .

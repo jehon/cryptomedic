@@ -238,3 +238,10 @@ class Database
     }
   }
 }
+
+global $db;
+$db = new \Jehon\Maintenance\Database(
+  "mysql:dbname={$myconfig["database"]["schema"]};host={$myconfig["database"]["host"]}",
+  $myconfig["database"]["username"],
+  $myconfig["database"]["password"]
+);

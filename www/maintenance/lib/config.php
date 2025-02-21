@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . "/../../config.php";
-require_once __DIR__ . "/Database.php";
 
 /* ***************** DEBUG ************** */
 global $debug;
@@ -29,10 +28,4 @@ function fatalError($code, $msg)
   die($msg);
 }
 
-global $db;
-$db = new \Jehon\Maintenance\Database(
-  "mysql:dbname={$myconfig["database"]["schema"]};host={$myconfig["database"]["host"]}",
-  $myconfig["database"]["username"],
-  $myconfig["database"]["password"]
-);
 $myconfig["database"]["versions"] = __DIR__ . "/../versions";
