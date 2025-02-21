@@ -1,4 +1,4 @@
-FROM mysql:8
+FROM mysql:9
 
 ENV MYSQL_ALLOW_EMPTY_PASSWORD=yes
 ENV MYSQL_DATABASE=cryptomedic
