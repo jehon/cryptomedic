@@ -94,7 +94,7 @@ tests-backend:
     - XDEBUG_MODE=coverage vendor/bin/phpunit
 
 tests-e2e-desktop:
-  stage: pre-test # TODO: in test
+  stage: test # TODO: in test
   extends: .with-services
   image:
     name: cypress/included:13.17.0
@@ -113,7 +113,7 @@ tests-e2e-desktop:
       - tmp/integration/desktop
 
 tests-e2e-playwright-strict:
-  stage: pre-test
+  stage: test
   extends: .with-services
   script:
     - node_modules/.bin/playwright install
