@@ -104,7 +104,7 @@ export async function crInit(
   await page.goto(crUrl(opts.page ?? ""));
 
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Cryptomedic/);
+  await expect(page, `url: ${WebBaseUrl}`).toHaveTitle(/Cryptomedic/);
 
   // Body is loading
   await expect(page.getByTestId("top-level")).toBeVisible();
