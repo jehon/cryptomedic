@@ -104,7 +104,11 @@ tests-e2e-desktop:
   script:
     - npm install
     - cd tests && cypress run
-
+    - |
+      node_modules/.bin/tsx tests/styles/check-styles.ts \
+        --references="tests/styles/references/desktop" \
+        --results="tmp/integration/desktop" \
+       	--screenshots="tmp/integration/desktop/runtime/screenshots"
   artifacts:
     when: always
     paths:
