@@ -101,8 +101,8 @@ tests-e2e-desktop:
     HOME: /tmp
     LANG: C.UTF-8
     CYPRESS_BASE_URL: http://web/
-
   script:
+    - npm install
     - cd tests && cypress run
 
   artifacts:
