@@ -38,7 +38,7 @@ build-frontend:
       - www/built
 
 docker-build:
-  needs:
+  dependencies:
     - build-frontend
 
 ############################################################
