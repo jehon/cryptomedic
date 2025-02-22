@@ -26,6 +26,17 @@ default:
 # build
 #
 
+node:
+  stage: build
+  image: node:alpine
+  script:
+    - npm ci
+    - CRYPTOMEDIC_DEV=true node_modules/.bin/webpack
+  artifacts:
+    name: frontend
+    paths:
+      - www/built
+
 # build:
 #   stage: build
 #   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
