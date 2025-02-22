@@ -1,10 +1,10 @@
 /* eslint-env node */
 
-import path from "node:path";
-import url from "node:url";
-
 import fse from "fs-extra";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import fs from "node:fs";
+import path from "node:path";
+import url from "node:url";
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
@@ -13,6 +13,10 @@ const webBuildRoot = "/built/frontend";
 const builtRoot = path.join(webRoot, webBuildRoot);
 
 fse.emptyDirSync(builtRoot);
+fs.copyFileSync(
+  path.join(__dirname, "src/build.htaccess"),
+  path.join(webRoot, "built", ".htaccess")
+);
 
 const isDebug = process.env.CRYPTOMEDIC_DEV ?? false;
 if (isDebug) {
