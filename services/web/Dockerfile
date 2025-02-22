@@ -79,5 +79,3 @@ RUN cd www/api && /composer.phar --no-interaction install
 RUN chmod a+rwX -R .
 
 RUN php www/maintenance/reset.php
-
-RUN make build
