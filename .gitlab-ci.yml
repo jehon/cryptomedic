@@ -26,8 +26,8 @@ default:
 # build
 #
 
-node:
-  stage: build
+build-frontend:
+  stage: prepare
   image: node:alpine
   script:
     - npm ci
@@ -37,19 +37,9 @@ node:
     paths:
       - www/built
 
-# build:
-#   stage: build
-#   image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/packages/dev:latest
-#   services:
-#     - name: docker
-#   script:
-#     - env
-#     - make dump
-#     - make build
-#   artifacts:
-#     paths:
-#       - .ovhconfig
-#       - www
+docker-build:
+  needs:
+    - build-frontend
 
 ############################################################
 #
