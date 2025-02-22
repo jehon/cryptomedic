@@ -1,6 +1,6 @@
 import hash from "./hash.js";
 
-import platform from "../../../built/platform.js";
+import platform from "platform";
 
 /* istanbul ignore else: impossible to test */
 if (!("browserUUID" in localStorage)) {

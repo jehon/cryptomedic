@@ -4,8 +4,8 @@ import JHElement from "./jh-element.js";
 import "./x-o-overlay.js";
 import "./x-waiting.js";
 
+import axios from "axios";
 import { setSession } from "../../../../src/utils/session.js";
-import axios from "../../../built/axios.js";
 import { routeToLogin } from "../../v2/js/router.js";
 
 const error = Symbol("error");

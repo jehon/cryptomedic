@@ -89,8 +89,6 @@ $(FRONTEND_PUBLISHED)/frontend/ng1x.html: \
 		$(FRONTEND_DEPENDENCIES_MARK) \
 		$(shell find src/ ) \
 		$(shell find legacy/app-old/ ) \
-		$(FRONTEND_BUILD_TMP)/axios.js \
-		$(FRONTEND_BUILD_TMP)/platform.js \
 		src/build.htaccess \
 		webpack.config.js \
 		tsconfig.json
@@ -106,14 +104,6 @@ frontend-dev:
 	@mkdir -p "$(dir $@)"
 	CRYPTOMEDIC_DEV=true node_modules/.bin/webpack --watch
 	@touch "$@"
-
-# Dependencies are used in the build !
-$(FRONTEND_BUILD_TMP)/axios.js: node_modules/axios/dist/axios.js $(FRONTEND_DEPENDENCIES_MARK)
-	node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
-
-# Dependencies are used in the build !
-$(FRONTEND_BUILD_TMP)/platform.js: node_modules/platform/platform.js $(FRONTEND_DEPENDENCIES_MARK)
-	node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs "$<"
 
 .PHONY: frontend-test
 test: frontend-test
