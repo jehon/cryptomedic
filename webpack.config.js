@@ -1,6 +1,5 @@
 /* eslint-env node */
 
-import fse from "fs-extra";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import fs from "node:fs";
 import path from "node:path";
@@ -12,7 +11,8 @@ const webRoot = path.join(__dirname, "/www/");
 const webBuildRoot = "/built/frontend";
 const builtRoot = path.join(webRoot, webBuildRoot);
 
-fse.emptyDirSync(builtRoot);
+fs.rmSync(builtRoot, { force: true, recursive: true });
+fs.mkdirSync(builtRoot);
 fs.copyFileSync(
   path.join(__dirname, "src/build.htaccess"),
   path.join(webRoot, "built", ".htaccess")
