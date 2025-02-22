@@ -1,4 +1,4 @@
-import axios from "../../../../built/axios.js";
+import axios from "axios";
 axios.defaults.timeout = 30 * 1000;
 
 import { setSession } from "../../../../../src/utils/session.js";
