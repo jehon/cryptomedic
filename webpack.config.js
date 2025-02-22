@@ -12,7 +12,7 @@ const webBuildRoot = "/built/frontend";
 const builtRoot = path.join(webRoot, webBuildRoot);
 
 fs.rmSync(builtRoot, { force: true, recursive: true });
-fs.mkdirSync(builtRoot);
+fs.mkdirSync(builtRoot, { recursive: true });
 fs.copyFileSync(
   path.join(__dirname, "src/build.htaccess"),
   path.join(webRoot, "built", ".htaccess")
