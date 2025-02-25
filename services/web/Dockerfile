@@ -52,7 +52,7 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/ \
 ############################################################
 
 # Add service's configurations
-ADD . /
+ADD root /
 
 ############################################################
 #
