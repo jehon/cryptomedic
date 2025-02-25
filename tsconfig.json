@@ -30,7 +30,8 @@
     // For Nodejs Typescript support
     // "noEmit": true,
     // "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["src", "legacy", "tests"]
 }
