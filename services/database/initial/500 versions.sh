@@ -21,9 +21,13 @@ for f in "${files[@]}"; do
       echo "Running $fn [$vf]"
       run_mysql <"$f"
       version="$vf"
+      run_mysql --raw --silent -e 'UPDATE settings SET value='"$version"' WHERE id = "structure_version"'
     fi
   else
     echo "Running $fn [invalid]"
     docker_process_sql <"$f"
   fi
 done
+
+version="$(run_mysql --raw --silent -e 'SELECT value FROM settings WHERE id = "structure_version"')"
+echo "Final version: $version"
