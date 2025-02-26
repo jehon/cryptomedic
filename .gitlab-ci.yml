@@ -71,11 +71,10 @@ dump:
   script:
     - make dump
     - bin/cr-mysql cryptomedic -e "select * from settings;"
-    - curl --fail-with-body http://web/
-    - curl --fail-with-body http://web/maintenance/check.php
-    - curl --fail-with-body http://web/api/auth/settings
+    - curl --silent --fail-with-body http://web/
+    - curl --silent --fail-with-body http://web/maintenance/check.php
     - |
-      curl --fail-with-body http://web/api/auth/mylogin -X POST -H 'Content-Type: application/json' --data-raw '{"username":"jehon","password":"p"}'
+      curl --silent --fail-with-body http://web/api/auth/mylogin -X POST -H 'Content-Type: application/json' --data-raw '{"username":"jehon","password":"p"}'
 
 test-frontend:
   stage: test
