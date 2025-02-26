@@ -35,9 +35,6 @@ services:
         PHP_VERSION: ${PHP_VERSION}
       additional_contexts:
         project: .
-    environment:
-      # !! Handle https redirection and enforce www.*
-      - SERVER_ENV=dev
     expose:
       - 80
     volumes:

@@ -4,6 +4,9 @@ ARG PHP_VERSION=8.2
 FROM php:${PHP_VERSION}-apache
 
 ENV HOME=/home/runner
+# TODO: Remove from everywhere
+ENV SERVER_ENV=dev
+
 RUN mkdir -p "$HOME" && chmod a+rwx "$HOME"
 
 ############################################################
