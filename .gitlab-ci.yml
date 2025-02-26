@@ -38,8 +38,9 @@ build-frontend:
       - www/built
 
 docker-build:
-  dependencies:
-    - build-frontend
+  needs:
+    - job: build-frontend
+      artifacts: true
 
 ############################################################
 #
