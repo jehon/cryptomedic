@@ -63,19 +63,12 @@ docker-build:
     CRYPTOMEDIC_DEV_HTTP_PORT: 80
     CRYPTOMEDIC_DEV_MYSQL_HOST: database
 
-# test-setup:
-#   extends: .with-services
-#   script:
-#     - bin/cr-mysql cryptomedic -e "select * from settings;"
-#     - curl -fsS http://web/
-
 dump:
   stage: test
   when: manual
   extends: .with-services
   script:
     - make dump
-
 
 test-frontend:
   stage: test
