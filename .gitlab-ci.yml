@@ -69,6 +69,12 @@ dump:
   extends: .with-services
   script:
     - make dump
+    - bin/cr-mysql cryptomedic -e "select * from settings;"
+    - curl -fsS http://web/
+    - curl -fsS http://web/maintenance/check.php
+    - curl -fsS http://web/api/auth/settings
+    - |
+      curl -fsS http://web/api/auth/mylogin -X POST -H 'Content-Type: application/json' --data-raw '{"username":"jehon","password":"p"}'
 
 test-frontend:
   stage: test
