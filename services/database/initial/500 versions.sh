@@ -3,7 +3,11 @@
 set -o pipefail
 set -o errexit
 
-version="$(docker_process_sql cryptomedic --raw --silent -e 'SELECT value FROM settings WHERE id = "structure_version"')"
+run_mysql() {
+  mysql -uroot cryptomedic "$@"
+}
+
+version="$(run_mysql --raw --silent -e 'SELECT value FROM settings WHERE id = "structure_version"')"
 echo "Initial version: $version"
 
 readarray -d '' files < <(printf '%s\0' /versions/* | sort -zV)
@@ -15,7 +19,7 @@ for f in "${files[@]}"; do
       echo "Skipping $fn [$vf]"
     else
       echo "Running $fn [$vf]"
-      docker_process_sql <"$f"
+      run_mysql <"$f"
       version="$vf"
     fi
   else
