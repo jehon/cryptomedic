@@ -6,32 +6,33 @@ try {
   ob_start();
   http_response_code(418);
   $res = true;
-  echo "<h1>Check</h1>";
+  echo "<pre>\n";
+  echo "## Check\n";
 
-  echo "PHP Version: " . phpversion() . "<br>\n";
+  echo "PHP Version: " . phpversion() . "\n";
 
   require_once __DIR__ . "/lib/config.php";
   require_once __DIR__ . "/lib/database.php";
 
   echo "MySQL Version: " .
     $db->pdo->getAttribute(PDO::ATTR_SERVER_VERSION) .
-    "<br>\n";
+    "\n";
   $dbVersion = $db->getVersion();
   $fsVersion = Jehon\Maintenance\getVersionIn(
     $myconfig["database"]["versions"]
   );
-  echo "<br>";
-  echo "Structure version: $dbVersion<br>\n";
-  echo "Filesystem version: $fsVersion<br>\n";
+  echo "\n";
+  echo "- Structure version: $dbVersion\n";
+  echo "- Filesystem version: $fsVersion\n";
 
   if ($dbVersion == $fsVersion) {
-    echo "Version match<br>";
+    echo "Version match\n";
   } else {
-    echo "!! Version mismatch<br>";
+    echo "!! Version mismatch\n";
     throw new Error("Test failed");
   }
 
-  echo "\n<br>";
+  echo "\n";
   http_response_code(200);
 } catch (Throwable $e) {
   echo "Exception<br>\n";
