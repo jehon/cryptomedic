@@ -4,7 +4,7 @@ use Jehon\Maintenance;
 
 try {
   ob_start();
-  http_response_code(500);
+  http_response_code(418);
   $res = true;
   echo "<h1>Check</h1>";
 
@@ -28,21 +28,15 @@ try {
     echo "Version match<br>";
   } else {
     echo "!! Version mismatch<br>";
-    $res = false;
+    throw new Error("Test failed");
   }
 
   echo "\n<br>";
-
-  if ($res) {
-    echo "Ok<br>\n";
-    http_response_code(200);
-  } else {
-    echo "Failed<br>\n";
-    http_response_code(503);
-  }
-} catch (e) {
+  http_response_code(200);
+} catch (Throwable $e) {
   echo "Exception<br>\n";
   var_dump($e);
-  http_response_code(503);
+  http_response_code(500);
 }
-ob_flush();
+
+while (@ob_end_flush());
