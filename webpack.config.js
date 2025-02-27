@@ -12,8 +12,8 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const webRoot = path.join(__dirname, "/www/");
 const frontendRoot = path.join(webRoot, "/built");
 // TODO: flattern this a bit
-const webBuildRoot = "/frontend";
-const builtRoot = path.join(frontendRoot, webBuildRoot);
+const webBuildRoot = "/built/frontend";
+const builtRoot = path.join(frontendRoot, "frontend");
 
 fs.rmSync(builtRoot, { force: true, recursive: true });
 fs.mkdirSync(builtRoot, { recursive: true });
