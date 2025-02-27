@@ -24,7 +24,7 @@ fs.copyFileSync(
 const browsers = browserslist();
 fs.writeFileSync(
   path.join(frontendRoot, "browsers.json"),
-  JSON.stringify(browsers)
+  JSON.stringify({ browsers: browsers })
 );
 
 fs.writeFileSync(
