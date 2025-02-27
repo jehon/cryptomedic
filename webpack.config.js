@@ -1,6 +1,8 @@
 /* eslint-env node */
 
+import browserslist from "browserslist";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import child_process from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import url from "node:url";
@@ -8,14 +10,36 @@ import url from "node:url";
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 const webRoot = path.join(__dirname, "/www/");
-const webBuildRoot = "/built/frontend";
-const builtRoot = path.join(webRoot, webBuildRoot);
+const frontendRoot = path.join(webRoot, "/built");
+// TODO: flattern this a bit
+const webBuildRoot = "/frontend";
+const builtRoot = path.join(frontendRoot, webBuildRoot);
 
 fs.rmSync(builtRoot, { force: true, recursive: true });
 fs.mkdirSync(builtRoot, { recursive: true });
 fs.copyFileSync(
   path.join(__dirname, "src/build.htaccess"),
-  path.join(webRoot, "built", ".htaccess")
+  path.join(frontendRoot, ".htaccess")
+);
+
+const browsers = browserslist();
+fs.writeFileSync(
+  path.join(frontendRoot, "browsers.json"),
+  JSON.stringify(browsers)
+);
+
+fs.writeFileSync(
+  path.join(frontendRoot, "release_version.txt"),
+  JSON.stringify(
+    {
+      date: new Date().toISOString(),
+      git: child_process
+        .execSync("git rev-parse HEAD", { encoding: "UTF8" })
+        .trim()
+    },
+    null,
+    2
+  )
 );
 
 const isDebug = process.env.CRYPTOMEDIC_DEV ?? false;

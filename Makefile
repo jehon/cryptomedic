@@ -107,7 +107,7 @@ clean-files:
 
 	rm -f "$(ROOT)/.ovhconfig"
 	rm -f "$(ROOT)/www/built/backup"
-	rm -f "$(ROOT)/www/built/browsers.json"
+
 
 dc-build:
 	docker compose build
@@ -194,7 +194,6 @@ $(HOME)/.ssh/id_rsa:
 .PHONY: build
 build: \
 		www/built/backup \
-		www/built/release_version.txt \
 		.ovhconfig
 
 .ovhconfig: conf/ovhconfig .env
@@ -204,10 +203,6 @@ www/built/backup: bin/cr-live-backup.sh
 # Make the backup script available to web
 	@mkdir -p "$(dir $@)"
 	cp -f "$<" "$@"
-
-www/built/release_version.txt:
-	@mkdir -p "$(dir $@)"
-	date > "$@"
 
 .PHONY: update-references-browsers
 update: update-references-browsers

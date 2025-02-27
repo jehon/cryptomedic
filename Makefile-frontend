@@ -90,6 +90,7 @@ $(FRONTEND_PUBLISHED)/frontend/ng1x.html: \
 		$(shell find src/ ) \
 		$(shell find legacy/app-old/ ) \
 		src/build.htaccess \
+		.browserslistrc \
 		webpack.config.js \
 		tsconfig.json
 
