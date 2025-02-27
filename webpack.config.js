@@ -2,7 +2,6 @@
 
 import browserslist from "browserslist";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import child_process from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import url from "node:url";
@@ -32,10 +31,11 @@ fs.writeFileSync(
   path.join(frontendRoot, "release_version.txt"),
   JSON.stringify(
     {
-      date: new Date().toISOString(),
-      git: child_process
-        .execSync("git rev-parse HEAD", { encoding: "UTF8" })
-        .trim()
+      date: new Date().toISOString()
+      // Does not work on CI
+      // git: child_process
+      //   .execSync("git rev-parse HEAD", { encoding: "UTF8" })
+      //   .trim()
     },
     null,
     2
