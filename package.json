@@ -41,7 +41,7 @@
     "@playwright/test": "1.51.1",
     "@prettier/plugin-php": "0.22.4",
     "@testing-library/react": "16.2.0",
-    "@types/node": "22.13.14",
+    "@types/node": "22.14.0",
     "@types/pixelmatch": "5.2.6",
     "@types/pngjs": "6.0.5",
     "@types/react": "19.0.12",
