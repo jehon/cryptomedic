@@ -87,7 +87,7 @@ $(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/desktop/.te
 		tests/styles/check-styles.ts
 
 	@mkdir -p "$(dir $@)"
-	node_modules/.bin/tsx tests/styles/check-styles.ts \
+	node --experimental-strip-types tests/styles/check-styles.ts \
 		--references="tests/styles/references/desktop" \
 		--results="$(INTEGRATION_TEST_TMP)/desktop" \
 		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots"
@@ -95,7 +95,7 @@ $(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/desktop/.te
 .PHONY: integration-update-references-styles-desktop
 update: integration-update-references-styles-desktop
 integration-update-references-styles-desktop:
-	node_modules/.bin/tsx tests/styles/check-styles.ts \
+	node --experimental-strip-types tests/styles/check-styles.ts \
 		--references="tests/styles/references/desktop" \
 		--results="$(INTEGRATION_TEST_TMP)/desktop" \
 		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots" \
