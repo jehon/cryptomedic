@@ -1,10 +1,6 @@
 import assert from "node:assert";
 import test, { beforeEach } from "node:test";
-import {
-  RefFolder1,
-  loadReferenceFolder,
-  loadSession
-} from "../test-helper.ts";
+import { RefFolder1, loadReferenceFolder, loadSession } from "../test-helper";
 import Bill from "./bill";
 import Folder from "./folder";
 

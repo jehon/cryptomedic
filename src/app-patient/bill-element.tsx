@@ -2,6 +2,7 @@ import Bill from "../business/bill";
 
 import Payment from "../business/payment";
 import ButtonsGroup from "../styles/buttons-group";
+import { getList } from "../utils/config";
 import { roundTo } from "../utils/strings";
 import ActionButton from "../widget/action-button";
 import IO from "../widget/io";
@@ -32,8 +33,18 @@ export default function billElementGenerator(
         <TwoColumns>
           <Panel fixed label="Information">
             <IO.Date name="date" value={file.date} />
-            <IO.String name="examiner" value={file.examiner as string} />
-            <IO.String name="center" value={file.center as string} />
+            <IO.List
+              name="examiner"
+              value={file.examiner as string}
+              list={getList("Examiners")}
+              required
+            />
+            <IO.List
+              name="center"
+              value={file.center as string}
+              list={getList("Centers")}
+              required
+            />{" "}
           </Panel>
           <Panel fixed label="Totals">
             <IO.Number
@@ -45,6 +56,7 @@ export default function billElementGenerator(
               name="sl_number_of_household_members"
               label="Number of Houslehold Members"
               value={file.sl_number_of_household_members as number}
+              htmlProps={{ max: 10 }}
             />
             <IO.Function
               label="Salary Ratio"
