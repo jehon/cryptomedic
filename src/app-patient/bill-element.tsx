@@ -54,7 +54,7 @@ export default function billElementGenerator(
             />
             <IO.Number
               name="sl_number_of_household_members"
-              label="Number of Houslehold Members"
+              label="Number of Household Members"
               value={file.sl_number_of_household_members as number}
               htmlProps={{ max: 10 }}
             />
