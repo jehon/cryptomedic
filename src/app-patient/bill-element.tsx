@@ -37,13 +37,11 @@ export default function billElementGenerator(
               name="examiner"
               value={file.examiner as string}
               list={getList("Examiners")}
-              required
             />
             <IO.List
               name="center"
               value={file.center as string}
               list={getList("Centers")}
-              required
             />{" "}
           </Panel>
           <Panel fixed label="Totals">
