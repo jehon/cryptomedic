@@ -12,7 +12,7 @@ import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
-import IOBillLine from "./blocs/io-bill-line";
+import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
@@ -21,6 +21,13 @@ export default function billElementGenerator(
   file: Bill,
   props: PatientRelatedElementGeneratorProps
 ) {
+  let total = 0;
+
+  const updateTotal = (value: BillLine) => {
+    total += value.total ?? 0;
+    console.log(total);
+  };
+
   return patientRelatedElementGenerator<Bill>(file, props, {
     header: (
       <>
@@ -85,7 +92,11 @@ export default function billElementGenerator(
         </TwoColumns>
         <Panel fixed label="Bill Lines">
           {file.items.map((line) => (
-            <IOBillLine line={line} key={line.key} />
+            <IOBillLine
+              value={line}
+              key={line.key}
+              onChange={(bl) => updateTotal(bl)}
+            />
           ))}
         </Panel>
       </>
