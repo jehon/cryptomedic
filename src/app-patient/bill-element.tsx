@@ -25,7 +25,6 @@ export default function billElementGenerator(
 
   const updateTotal = (value: BillLine) => {
     total += value.total ?? 0;
-    console.log(total);
   };
 
   return patientRelatedElementGenerator<Bill>(file, props, {
