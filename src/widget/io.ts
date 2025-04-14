@@ -1,6 +1,7 @@
 import Boolean from "./io-boolean";
 import Date from "./io-date";
 import Function from "./io-function";
+import Hidden from "./io-hidden";
 import Image from "./io-image";
 import List from "./io-list";
 import Number from "./io-number";
@@ -11,6 +12,7 @@ const IO = {
   Boolean,
   Date,
   Function,
+  Hidden,
   Image,
   List,
   Number,

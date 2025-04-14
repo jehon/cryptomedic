@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Bill from "../business/bill";
 
 import Payment from "../business/payment";
@@ -21,10 +22,24 @@ export default function billElementGenerator(
   file: Bill,
   props: PatientRelatedElementGeneratorProps
 ) {
-  let total = 0;
+  const [currentBill, setCurrentBill] = useState(
+    file.items
+      .filter((value) => value.value > 0)
+      .reduce(
+        (acc, value) => acc.set(value.key, value),
+        new Map<string, BillLine>()
+      )
+  );
+
+  const getTotal = () =>
+    Array.from(currentBill)
+      .map((rec) => rec[1])
+      .reduce((acc, val) => (acc += val.value * val.price), 0);
 
   const updateTotal = (value: BillLine) => {
-    total += value.total ?? 0;
+    const newBill = new Map(currentBill);
+    newBill.set(value.key, value);
+    setCurrentBill(newBill);
   };
 
   return patientRelatedElementGenerator<Bill>(file, props, {
@@ -55,28 +70,20 @@ export default function billElementGenerator(
               name="sl_family_salary"
               label="Family Salary"
               value={file.sl_family_salary as number}
+              // onChange={(value) => {}
             />
             <IO.Number
               name="sl_number_of_household_members"
               label="Number of Household Members"
               value={file.sl_number_of_household_members as number}
               htmlProps={{ max: 10 }}
+              // onChange={(value) => {}
             />
-            <IO.Function
-              label="Salary Ratio"
-              value={() => roundTo(file.ratioSalary(), 0)}
-            />
-            <IO.Function
-              label="Social Level (calculated)"
-              value={() => roundTo(file.social_level_calculated(), 0)}
-            />
-            <IO.Function
+            <IO.Number name="social_level" value={file.social_level} />
+            <IO.Hidden
+              name="total_real"
               label="Raw Calculated Total"
-              value={() => roundTo(file.total_real, 0)}
-            />
-            <IO.Function
-              label="Percentage asked"
-              value={() => roundTo(file.get_percentage_asked(), 0)}
+              value={getTotal()}
             />
             <IO.Number
               name="total_asked"

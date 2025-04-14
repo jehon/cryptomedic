@@ -9,7 +9,6 @@ export type BillLine = {
   category: string;
   value: number;
   price: number;
-  total?: number;
 };
 
 export default function IOBillLine(
@@ -31,14 +30,10 @@ export default function IOBillLine(
     if (props.onChange) {
       props.onChange({
         ...(props.value as BillLine),
-        value: value,
-        total: getTotal(value)
+        value: value
       });
     }
   };
-
-  // Trigger initial state to update totals
-  if (getTotal() > 0) onChange();
 
   return IONumber({
     type: "bill-line",
