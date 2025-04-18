@@ -46,8 +46,8 @@ export default function billElementGenerator(
     for (const i in prices) {
       const p = prices[i];
       if (
-        (p["date_from"] == null || p["date_from"] <= date) &&
-        (p["date_to"] == null || p["date_to"] > date)
+        (!p["date_from"] || p["date_from"] <= date) &&
+        (!p["date_to"] || p["date_to"] > date)
       ) {
         price_id = i;
       }
