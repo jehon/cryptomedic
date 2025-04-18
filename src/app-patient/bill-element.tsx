@@ -61,7 +61,7 @@ export default function BillElement({
     setPrice(prices[price_id]);
   };
 
-  const items = Object.keys(file as Record<string, any>)
+  const items = Object.keys((price ?? {}) as Record<string, any>)
     .sort()
     .filter((key) => Price.getCategories().includes(key.split("_")[0]))
     .map(
@@ -223,47 +223,47 @@ export default function BillElement({
             /> */}
           </Panel>
         </TwoColumns>
-        <Panel fixed label="Bill Lines">
-          {items.map((line) => (
-            <IOBillLine
-              value={line}
-              key={line.key}
-              onChange={(bl) => updateTotal(bl)}
-            />
-          ))}
-        </Panel>
+        {price && (
+          <Panel fixed label="Bill Lines">
+            {items.map((line) => (
+              <IOBillLine
+                value={line}
+                key={line.key}
+                onChange={(bl) => updateTotal(bl)}
+              />
+            ))}
+          </Panel>
+        )}
       </>
     ),
-    footer: (
-      <>
-        <Panel fixed label="Payments" testid={file.uid() + ".payments"}>
-          <ButtonsGroup>
-            <ActionButton
-              style="Add"
-              linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
-            />
-            <ActionButton
-              style="Edit"
-              linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
-            />
-          </ButtonsGroup>
-          {file.getPayments().length == 0 ? (
-            <div>No payment received</div>
-          ) : (
-            file.getPayments().map((payment: Payment) => (
-              <div
-                key={payment.uid()}
-                className="payment-line"
-                data-testid={payment.uid()}
-              >
-                <IODate value={payment.date} noLabel />
-                <IONumber value={payment.amount} noLabel />
-                <IOString value={payment.comments} noLabel />
-              </div>
-            ))
-          )}
-        </Panel>
-      </>
+    footer: price && (
+      <Panel fixed label="Payments" testid={file.uid() + ".payments"}>
+        <ButtonsGroup>
+          <ActionButton
+            style="Add"
+            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
+          />
+          <ActionButton
+            style="Edit"
+            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
+          />
+        </ButtonsGroup>
+        {file.getPayments().length == 0 ? (
+          <div>No payment received</div>
+        ) : (
+          file.getPayments().map((payment: Payment) => (
+            <div
+              key={payment.uid()}
+              className="payment-line"
+              data-testid={payment.uid()}
+            >
+              <IODate value={payment.date} noLabel />
+              <IONumber value={payment.amount} noLabel />
+              <IOString value={payment.comments} noLabel />
+            </div>
+          ))
+        )}
+      </Panel>
     )
   });
 }
