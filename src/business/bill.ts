@@ -25,6 +25,10 @@ export default class Bill extends Timed {
 
   getPayments(): Payment[] {
     // TODO: use payments field
+    if (!this.getId()) {
+      return [];
+    }
+
     return this.getParent!().getFilesRelatedToBill(this.getId());
   }
 
