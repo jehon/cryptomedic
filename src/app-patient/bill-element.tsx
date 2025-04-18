@@ -236,7 +236,7 @@ export default function BillElement({
         )}
       </>
     ),
-    footer: price && (
+    footer: props.mode != "edit" && file.id && price && (
       <Panel fixed label="Payments" testid={file.uid() + ".payments"}>
         <ButtonsGroup>
           <ActionButton
