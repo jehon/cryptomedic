@@ -7,6 +7,7 @@ const ctx = fullTest({
   }
 });
 
+// Data in DB are obsolete, but they are calculated live
 ctx.testRead({
   patientId: 1,
   fileId: 1,
@@ -14,7 +15,7 @@ ctx.testRead({
     Date: "2011-06-09",
     "Consult CDC Consultation Physio": 1,
     "Consult Other": undefined,
-    "Price asked": 6720
+    "Price asked": 2240
   }
 });
 

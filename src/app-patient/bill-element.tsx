@@ -84,9 +84,10 @@ export default function BillElement({
     number_of_household_members: file.sl_number_of_household_members
   });
 
-  const rationSalary: number =
+  const rationSalary: number = Math.ceil(
     socialLevelParams.family_salary /
-    socialLevelParams.number_of_household_members;
+      socialLevelParams.number_of_household_members
+  );
 
   let socialLevel = 4;
   /**
