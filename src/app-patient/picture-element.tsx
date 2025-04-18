@@ -8,10 +8,13 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
-export default function pictureElementGenerator(
-  file: Picture,
-  props: PatientRelatedElementGeneratorProps
-) {
+export default function PictureElement({
+  file,
+  props
+}: {
+  file: Picture;
+  props: PatientRelatedElementGeneratorProps;
+}): React.ReactNode {
   return patientRelatedElementGenerator<Picture>(file, props, {
     header: <>{file.type}</>,
     body: (

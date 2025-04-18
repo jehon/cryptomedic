@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Bill from "../business/bill";
 
 import Payment from "../business/payment";
@@ -20,10 +20,13 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
-export default function billElementGenerator(
-  file: Bill,
-  props: PatientRelatedElementGeneratorProps
-) {
+export default function BillElement({
+  file,
+  props
+}: {
+  file: Bill;
+  props: PatientRelatedElementGeneratorProps;
+}): React.ReactNode {
   /** *************************
    *
    * Calculate the price_id

@@ -14,16 +14,16 @@ import ButtonsGroup from "../styles/buttons-group";
 import { defaultWidthScreen } from "../styles/style-helpers";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
-import appointmentElementGenerator from "./appointment-element";
-import billElementGenerator from "./bill-element";
+import AppointmentElement from "./appointment-element";
+import BillElement from "./bill-element";
 import { isTodoMigration } from "./blocs/file-panel";
-import consultClubfootElementGenerator from "./consult-clubfoot-element";
-import consultOtherElementGenerator from "./consult-other-element";
-import consultRicketElementGenerator from "./consult-ricket-element";
+import ConsultClubfootElement from "./consult-clubfoot-element";
+import ConsultOtherElement from "./consult-other-element";
+import ConsultRicketElement from "./consult-ricket-element";
 import patientElementGenerator from "./patient-element";
 import { patientRouterToFileAdd } from "./patient-router";
-import pictureElementGenerator from "./picture-element";
-import surgeryElementGenerator from "./surgery-element";
+import PictureElement from "./picture-element";
+import SurgeryElement from "./surgery-element";
 
 export default function FolderElement({
   folder: initialFolder,
@@ -122,25 +122,25 @@ export default function FolderElement({
       {(folder.getChildren() as PatientRelated[]).map(
         (file: PatientRelated) => {
           if (file instanceof Appointment) {
-            return appointmentElementGenerator(file, commonProps);
+            return <AppointmentElement file={file} props={commonProps} />;
           }
           if (file instanceof Bill) {
-            return billElementGenerator(file, commonProps);
+            return <BillElement file={file} props={commonProps} />;
           }
           if (file instanceof ConsultClubfoot) {
-            return consultClubfootElementGenerator(file, commonProps);
+            return <ConsultClubfootElement file={file} props={commonProps} />;
           }
           if (file instanceof ConsultOther) {
-            return consultOtherElementGenerator(file, commonProps);
+            return <ConsultOtherElement file={file} props={commonProps} />;
           }
           if (file instanceof ConsultRicket) {
-            return consultRicketElementGenerator(file, commonProps);
+            return <ConsultRicketElement file={file} props={commonProps} />;
           }
           if (file instanceof Picture) {
-            return pictureElementGenerator(file, commonProps);
+            return <PictureElement file={file} props={commonProps} />;
           }
           if (file instanceof Surgery) {
-            return surgeryElementGenerator(file, commonProps);
+            return <SurgeryElement file={file} props={commonProps} />;
           }
           return null;
         }

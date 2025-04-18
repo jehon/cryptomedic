@@ -11,10 +11,13 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
-export default function consultOtherElementGenerator(
-  file: ConsultOther,
-  props: PatientRelatedElementGeneratorProps
-) {
+export default function ConsultOtherElement({
+  file,
+  props
+}: {
+  file: ConsultOther;
+  props: PatientRelatedElementGeneratorProps;
+}): React.ReactNode {
   return patientRelatedElementGenerator<ConsultOther>(file, props, {
     header: <>{file.side}</>,
     body: (

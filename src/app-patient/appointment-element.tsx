@@ -8,10 +8,13 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
-export default function appointmentElementGenerator(
-  file: Appointment,
-  props: PatientRelatedElementGeneratorProps
-) {
+export default function AppointmentElement({
+  file,
+  props
+}: {
+  file: Appointment;
+  props: PatientRelatedElementGeneratorProps;
+}): React.ReactNode {
   return patientRelatedElementGenerator<Appointment>(file, props, {
     header: <span>{file.center}</span>,
     body: (
