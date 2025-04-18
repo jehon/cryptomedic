@@ -156,7 +156,13 @@ export default function BillElement({
     header: (
       <>
         <span>total: {file.total_real}</span>
-        {/* <span>paid: {file.getTotalAlreadyPaid()}</span> */}
+        <span>
+          paid:{" "}
+          {file
+            .getPayments()
+            .map((p) => p.amount)
+            .reduce((acc, v) => acc + v, 0)}
+        </span>
       </>
     ),
     body: (
