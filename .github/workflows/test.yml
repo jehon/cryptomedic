@@ -172,7 +172,7 @@ jobs:
       - run: make start
       - run: make dependencies
       # TODO: Should not fail!
-      - run: make integration-test-playwright-strict || true
+      - run: make integration-test-playwright-strict
 
       - name: Upload styles
         if: always()
