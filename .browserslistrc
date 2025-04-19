@@ -3,6 +3,6 @@
 
 # Default: > 0.5%, last 2 versions, Firefox ESR, not dead => less browser supported!
 
-last 5 Firefox versions
-last 5 Chrome versions
+last 3 Firefox versions
+last 3 Chrome versions
 Firefox ESR
