@@ -77,7 +77,9 @@ export default function FilePanel({
   };
 
   const fileIsUpdated = (nFile: PatientRelated | undefined) =>
-    onUpdate(folder.withFileOLD(file));
+    nFile
+      ? onUpdate(folder.withFileOLD(nFile))
+      : onUpdate(folder.withoutFileOLD(file));
 
   const doSave = (e?: React.SyntheticEvent) => {
     if (e) {
