@@ -191,7 +191,7 @@ export class E2EFilePanel extends E2EForm {
     await this.expectToBeVisible();
 
     await expect(this.page.getByText("Save")).toBeVisible();
-    await this.page.getByText("Save").click();
+    await this.page.getByText("Save").first().click();
 
     if (interceptAddedId) {
       await crExpectUrl(
@@ -302,7 +302,7 @@ export function fullTest(context: {
 
           if (!options.initialIsAlreadyGood) {
             // Try to save: it does not work
-            await e2eFile.locator.getByText("Save").click();
+            await e2eFile.locator.getByText("Save").first().click();
             await expect(e2eFile.locator.getByText("Edit")).not.toBeVisible();
             // No screenshot because too touchy
           }
