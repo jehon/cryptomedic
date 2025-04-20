@@ -127,24 +127,6 @@ export default function FilePanel({
     }
   };
 
-  const doCancel = () => {
-    if (addMode) {
-      // // This is not necessary because the top folder will reload anyway
-      // // Remove the newly added file, that we don't want to keep
-      // onUpdate(folder.withoutFile(file));
-      routeTo(patientRouterToPatient(folder.getId()!, Modes.output));
-    } else {
-      routeTo(
-        patientRouterToFile(
-          folder.getId()!,
-          file.getStatic(),
-          file.getId()!,
-          Modes.output
-        )
-      );
-    }
-  };
-
   return (
     <Panel
       testid={file.uid()}
@@ -247,7 +229,6 @@ export default function FilePanel({
                 formRef={formRef}
               />
               <ActionButton style="Confirm" action="Save" onOk={doSave} />
-              <ActionButton style="Cancel" onOk={() => doCancel()} />
             </ButtonGroup>
           )}
         </form>
