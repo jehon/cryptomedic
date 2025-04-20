@@ -6,28 +6,17 @@ import { folderFileUnlock } from "../loaders";
 import { patientRouterToFile } from "../patient-router";
 import { isTodoMigration } from "./file-panel";
 
-import type Pojo from "../../business/abstracts/pojo";
-import type Folder from "../../business/folder";
 import ActionConfirm from "../../widget/action-confirm";
+import type { ButtonContext } from "./button-context";
 
-export type ViewButtonContext = {
-  folder: Folder; // TODO: remove
-  staticType: typeof Pojo; // TODO: remove
-  title: string;
-  migrationUrlHash: string; // TODO: remove
-  editMode: boolean;
-  canDelete: boolean;
-  isLocked: boolean;
-};
-
-export default function ViewButton({
+export default function ViewButtons({
   file,
   onUpdate,
   context
 }: {
   file: PatientRelated;
   onUpdate: (file: PatientRelated) => void;
-  context: ViewButtonContext;
+  context: ButtonContext;
 }) {
   const goEdit = () => {
     if (

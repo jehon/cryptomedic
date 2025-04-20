@@ -24,8 +24,8 @@ import {
   patientRouterToFile,
   patientRouterToPatient
 } from "../patient-router";
-import type { ViewButtonContext } from "./view-buttons";
-import ViewButton from "./view-buttons";
+import type { ButtonContext } from "./button-context";
+import ViewButtons from "./view-buttons";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
@@ -63,7 +63,7 @@ export default function FilePanel({
   const addMode = !file.getId();
   const editMode = addMode || (edit ?? false);
 
-  const buttonContext: ViewButtonContext = {
+  const buttonContext: ButtonContext = {
     folder,
     staticType: file.getStatic(),
     title: file.getStatic().getTitle(),
@@ -75,16 +75,6 @@ export default function FilePanel({
       !addMode &&
       (!(file instanceof Patient) || folder.getChildren().length == 0)
   };
-
-  const goToPatientFile = () =>
-    routeTo(
-      patientRouterToFile(
-        file.getParentId()!,
-        file.getStatic(),
-        file.getId()!,
-        Modes.output
-      )
-    );
 
   const fileIsUpdated = (nFile: PatientRelated | undefined) =>
     onUpdate(folder.withFileOLD(file));
@@ -204,7 +194,7 @@ export default function FilePanel({
       }
       actions={
         <>
-          <ViewButton
+          <ViewButtons
             file={file}
             onUpdate={fileIsUpdated}
             context={buttonContext}
@@ -232,7 +222,20 @@ export default function FilePanel({
         </>
       }
     >
-      <div className="technical" data-e2e="excluded" onClick={goToPatientFile}>
+      <div
+        className="technical"
+        data-e2e="excluded"
+        onClick={() =>
+          routeTo(
+            patientRouterToFile(
+              file.getParentId()!,
+              file.getStatic(),
+              file.getId()!,
+              Modes.output
+            )
+          )
+        }
+      >
         <div>{file.uid()}</div>
         <div>created at {date2HumanString(normalizeDate(file.created_at))}</div>
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
