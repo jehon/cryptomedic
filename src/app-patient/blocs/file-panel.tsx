@@ -65,7 +65,7 @@ export default function FilePanel({
 
   const buttonContext: ButtonContext = {
     folder,
-    staticType: file.getStatic(),
+    staticType: file.getStatic() as typeof PatientRelated,
     title: file.getStatic().getTitle(),
     migrationUrlHash: `folder/${file.getParentId()}/file/${file.getStatic().getModel()}`,
     editMode,
