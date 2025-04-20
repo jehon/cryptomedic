@@ -17,7 +17,6 @@ import Panel from "../../widget/panel";
 import {
   folderFileCreate,
   folderFileDelete,
-  folderFileUnlock,
   folderFileUpdate
 } from "../loaders";
 import {
@@ -25,6 +24,8 @@ import {
   patientRouterToFile,
   patientRouterToPatient
 } from "../patient-router";
+import type { ViewButtonContext } from "./view-buttons";
+import ViewButton from "./view-buttons";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
@@ -62,6 +63,19 @@ export default function FilePanel({
   const addMode = !file.getId();
   const editMode = addMode || (edit ?? false);
 
+  const buttonContext: ViewButtonContext = {
+    folder,
+    staticType: file.getStatic(),
+    title: file.getStatic().getTitle(),
+    migrationUrlHash: `folder/${file.getParentId()}/file/${file.getStatic().getModel()}`,
+    editMode,
+    isLocked: file instanceof PatientRelated && file.isLocked(),
+    canDelete:
+      file instanceof PatientRelated &&
+      !addMode &&
+      (!(file instanceof Patient) || folder.getChildren().length == 0)
+  };
+
   const goToPatientFile = () =>
     routeTo(
       patientRouterToFile(
@@ -71,39 +85,9 @@ export default function FilePanel({
         Modes.output
       )
     );
-  const goEdit = () => {
-    if (
-      // TODO: migrate all this progressively
-      isTodoMigration(file.getStatic())
-    ) {
-      location.hash = [
-        "folder",
-        "" + file.getParentId(),
-        "file",
-        file.getStatic().getModel(),
-        "" + file.getId(),
-        "edit"
-      ].join("/");
-      return;
-    }
 
-    routeTo(
-      patientRouterToFile(
-        file.getParentId() ?? "",
-        file.getStatic(),
-        file.getId()!,
-        "edit"
-      )
-    );
-  };
-
-  const doUnlock = () => {
-    folderFileUnlock(file)
-      .then((file) => folder.withFileOLD(file))
-      .then(notification("File unlocked"))
-      .then(onUpdate)
-      .then(() => goEdit());
-  };
+  const fileIsUpdated = (nFile: PatientRelated | undefined) =>
+    onUpdate(folder.withFileOLD(file));
 
   const doSave = (e?: React.SyntheticEvent) => {
     if (e) {
@@ -220,26 +204,12 @@ export default function FilePanel({
       }
       actions={
         <>
-          {file.isLocked() ? (
-            // File is locked
-            file instanceof PatientRelated && (
-              <ActionConfirm
-                style="Alternate"
-                action="Unlock"
-                discrete={true}
-                onOk={() => doUnlock()}
-                requires="folder.unlock"
-              >
-                <div>
-                  Are you sure you want to unlock the File{" "}
-                  {file.getStatic().getTitle()}?
-                  <br />
-                  Anybody will then be able to edit it.
-                </div>
-              </ActionConfirm>
-            )
-          ) : // File is not locked
-          editMode ? (
+          <ViewButton
+            file={file}
+            onUpdate={fileIsUpdated}
+            context={buttonContext}
+          />
+          {editMode && (
             <>
               {file instanceof PatientRelated &&
                 !addMode &&
@@ -258,12 +228,6 @@ export default function FilePanel({
                   </ActionConfirm>
                 )}
             </>
-          ) : (
-            <ActionButton
-              style="Edit"
-              onOk={() => goEdit()}
-              requires="folder.edit"
-            />
           )}
         </>
       }
