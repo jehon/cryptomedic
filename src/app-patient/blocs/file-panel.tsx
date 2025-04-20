@@ -8,12 +8,8 @@ import Patient from "../../business/patient";
 import { icons, isFeatureSwitchEnabled } from "../../config";
 import { routeTo } from "../../main";
 import { date2HumanString, normalizeDate } from "../../utils/date";
-import { passThrough } from "../../utils/promises";
-import ActionButton from "../../widget/action-button";
 import { EditContext } from "../../widget/io-abstract";
-import notification from "../../widget/notification";
 import Panel from "../../widget/panel";
-import { folderFileCreate, folderFileUpdate } from "../loaders";
 import {
   Modes,
   patientRouterToFile,
@@ -78,53 +74,6 @@ export default function FilePanel({
   const fileIsDeleted = () => {
     onUpdate(folder.withoutFileOLD(file));
     routeTo(patientRouterToPatient(file.getParentId()!, Modes.output));
-  };
-
-  const doSave = (e?: React.SyntheticEvent) => {
-    if (e) {
-      // If we are call as form submit
-      e.preventDefault();
-    }
-    if (!formRef.current!.checkValidity()) {
-      formRef.current!.requestSubmit();
-      return;
-    }
-
-    const data = new FormData(formRef.current!);
-    let nFolder;
-    if (addMode) {
-      return folderFileCreate(file, data)
-        .then(notification("File created"))
-        .then(
-          passThrough((json) => {
-            // Route to the newly created file
-            location.hash = patientRouterToFile(
-              file.getParentId() ?? "",
-              file.constructor,
-              json.newKey,
-              Modes.output
-            );
-          })
-        )
-        .then((json) => json.folder)
-        .then(onUpdate);
-    } else {
-      return folderFileUpdate(file, data)
-        .then(notification("File saved"))
-        .then(
-          passThrough(() =>
-            routeTo(
-              patientRouterToFile(
-                file.getParentId()!,
-                file.getStatic(),
-                file.getId()!,
-                Modes.output
-              )
-            )
-          )
-        )
-        .then(onUpdate);
-    }
   };
 
   return (
@@ -206,7 +155,6 @@ export default function FilePanel({
           id="file"
           data-testid={"file-" + file.uid() + "-form"}
           ref={formRef}
-          onSubmit={doSave}
         >
           {file.getParentField() && (
             <input
@@ -228,7 +176,6 @@ export default function FilePanel({
                 context={{ ...buttonContext, canDelete: false }}
                 formRef={formRef}
               />
-              <ActionButton style="Confirm" action="Save" onOk={doSave} />
             </ButtonGroup>
           )}
         </form>

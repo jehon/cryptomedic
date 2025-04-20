@@ -1,3 +1,4 @@
+import type PatientRelated from "../business/abstracts/patient-related";
 import Pojo from "../business/abstracts/pojo";
 import Folder from "../business/folder";
 import { CRUD, request } from "../utils/network";
@@ -38,31 +39,44 @@ export function folderFileDelete<T extends Pojo>(
   );
 }
 
-export function folderFileCreate(
-  file: Pojo,
+export function folderFileCreate<T extends PatientRelated>(
+  file: T,
   formData: FormData
-): Promise<{ folder: Folder; newKey: string }> {
+): Promise<T> {
   return request({
     url: ["fiche", file.getStatic().getTechnicalName()],
     method: CRUD.create,
     formData
-  }).then((json) => ({
-    newKey: "" + json.newKey,
-    folder: new Folder(json.folder)
-  }));
+  })
+    .then((json) => ({
+      newKey: "" + json.newKey,
+      folder: new Folder(json.folder)
+    }))
+    .then(({ folder, newKey }) =>
+      folder.getByTypeAndId<T>(
+        file.constructor as typeof PatientRelated,
+        newKey
+      )
+    );
 }
 
-export function folderFileUpdate(
-  file: Pojo,
+export function folderFileUpdate<T extends PatientRelated>(
+  file: T,
   formData: FormData
-): Promise<Folder> {
+): Promise<PatientRelated> {
   return request({
     url: ["fiche", file.getStatic().getTechnicalName(), file.getId() || ""],
     method: CRUD.update,
     formData
   })
     .then((json) => json.folder)
-    .then((json) => new Folder(json));
+    .then((json) => new Folder(json))
+    .then((folder) =>
+      folder.getByTypeAndId<T>(
+        file.constructor as typeof PatientRelated,
+        file.id!
+      )
+    );
 }
 
 // See legacy/app-old/v1/elements/cryptomedic-data-service.js

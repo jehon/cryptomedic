@@ -1,9 +1,14 @@
 import PatientRelated from "../../business/abstracts/patient-related";
 import { routeTo } from "../../main";
+import { passThrough } from "../../utils/promises";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
-import { folderFileDelete } from "../loaders";
+import {
+  folderFileCreate,
+  folderFileDelete,
+  folderFileUpdate
+} from "../loaders";
 import {
   Modes,
   patientRouterToFile,
@@ -15,9 +20,9 @@ import type { ButtonContext } from "./button-context";
 export default function EditButtons({
   file,
   onDelete,
-  // onUpdate,
-  context
-  // formRef
+  onUpdate,
+  context,
+  formRef
 }: {
   file: PatientRelated;
   onDelete: () => void;
@@ -52,6 +57,54 @@ export default function EditButtons({
     }
   };
 
+  const doSave = () => {
+    if (!formRef.current!.checkValidity()) {
+      formRef.current!.requestSubmit();
+      return;
+    }
+
+    const data = new FormData(formRef.current!);
+    if (addMode) {
+      return folderFileCreate(file, data)
+        .then(notification("File created"))
+        .then(
+          passThrough((newFile) => {
+            // Route to the newly created file
+            location.hash = patientRouterToFile(
+              context.folder.id ?? "",
+              context.staticType,
+              newFile.id!,
+              Modes.output
+            );
+          })
+        )
+        .then(onUpdate);
+    } else {
+      return folderFileUpdate(file, data)
+        .then(notification("File saved"))
+        .then(
+          passThrough(() =>
+            routeTo(
+              patientRouterToFile(
+                context.folder.id!,
+                context.staticType,
+                file.id!,
+                Modes.output
+              )
+            )
+          )
+        )
+        .then(onUpdate);
+    }
+  };
+
+  if (formRef.current) {
+    formRef.current.onsubmit = (e) => {
+      e.preventDefault();
+      doSave();
+    };
+  }
+
   return (
     <>
       {context.canDelete && (
@@ -65,6 +118,7 @@ export default function EditButtons({
         </ActionConfirm>
       )}
       <ActionButton style="Cancel" onOk={() => doCancel()} />
+      <ActionButton style="Confirm" action="Save" onOk={doSave} />
     </>
   );
 }
