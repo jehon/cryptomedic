@@ -10,21 +10,17 @@ import { routeTo } from "../../main";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { passThrough } from "../../utils/promises";
 import ActionButton from "../../widget/action-button";
-import ActionConfirm from "../../widget/action-confirm";
 import { EditContext } from "../../widget/io-abstract";
 import notification from "../../widget/notification";
 import Panel from "../../widget/panel";
-import {
-  folderFileCreate,
-  folderFileDelete,
-  folderFileUpdate
-} from "../loaders";
+import { folderFileCreate, folderFileUpdate } from "../loaders";
 import {
   Modes,
   patientRouterToFile,
   patientRouterToPatient
 } from "../patient-router";
 import type { ButtonContext } from "./button-context";
+import EditButtons from "./edit-buttons";
 import ViewButtons from "./view-buttons";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
@@ -76,10 +72,13 @@ export default function FilePanel({
       (!(file instanceof Patient) || folder.getChildren().length == 0)
   };
 
-  const fileIsUpdated = (nFile: PatientRelated | undefined) =>
-    nFile
-      ? onUpdate(folder.withFileOLD(nFile))
-      : onUpdate(folder.withoutFileOLD(file));
+  const fileIsUpdated = (nFile: PatientRelated) =>
+    onUpdate(folder.withFileOLD(nFile));
+
+  const fileIsDeleted = () => {
+    onUpdate(folder.withoutFileOLD(file));
+    routeTo(patientRouterToPatient(file.getParentId()!, Modes.output));
+  };
 
   const doSave = (e?: React.SyntheticEvent) => {
     if (e) {
@@ -146,16 +145,6 @@ export default function FilePanel({
     }
   };
 
-  const doDelete = () =>
-    folderFileDelete(file)
-      .then(notification("File deleted"))
-      .then(
-        passThrough(() =>
-          routeTo(patientRouterToPatient(file.getParentId()!, Modes.output))
-        )
-      )
-      .then(onUpdate);
-
   return (
     <Panel
       testid={file.uid()}
@@ -201,26 +190,13 @@ export default function FilePanel({
             onUpdate={fileIsUpdated}
             context={buttonContext}
           />
-          {editMode && (
-            <>
-              {file instanceof PatientRelated &&
-                !addMode &&
-                (!(file instanceof Patient) ||
-                  folder.getChildren().length == 0) && (
-                  <ActionConfirm
-                    style="Delete"
-                    discrete={true}
-                    onOk={() => doDelete()}
-                    requires="folder.delete"
-                  >
-                    <div>
-                      Are you sure you want to DELETE the File
-                      {file.getStatic().getTitle()}?
-                    </div>
-                  </ActionConfirm>
-                )}
-            </>
-          )}
+          <EditButtons
+            file={file}
+            onDelete={fileIsDeleted}
+            onUpdate={fileIsUpdated}
+            context={buttonContext}
+            formRef={formRef}
+          />
         </>
       }
     >
@@ -263,6 +239,13 @@ export default function FilePanel({
           {children}
           {editMode && (
             <ButtonGroup>
+              <EditButtons
+                file={file}
+                onDelete={fileIsDeleted}
+                onUpdate={fileIsUpdated}
+                context={{ ...buttonContext, canDelete: false }}
+                formRef={formRef}
+              />
               <ActionButton style="Confirm" action="Save" onOk={doSave} />
               <ActionButton style="Cancel" onOk={() => doCancel()} />
             </ButtonGroup>
