@@ -190,7 +190,7 @@ export class E2EFilePanel extends E2EForm {
   async doSave(interceptAddedId: boolean = false): Promise<this> {
     await this.expectToBeVisible();
 
-    await expect(this.page.getByText("Save")).toBeVisible();
+    await expect(this.page.getByText("Save").first()).toBeVisible();
     await this.page.getByText("Save").first().click();
 
     if (interceptAddedId) {
@@ -222,7 +222,7 @@ export class E2EFilePanel extends E2EForm {
       this.page,
       new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
     );
-    await expect(this.page.getByText("Save")).toBeVisible();
+    await expect(this.page.getByText("Save").first()).toBeVisible();
     await this.expectToBeVisible();
     return this;
   }
