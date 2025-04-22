@@ -1,6 +1,7 @@
 import { expect, type Locator, type Page } from "playwright/test";
 import { CRUD } from "../../../src/utils/network";
-import { crAcceptPopup, crApi, crInit, crReady } from "./e2e";
+import { escapeRegExp } from "../../../src/utils/strings";
+import { crAcceptPopup, crApi, crExpectUrl, crInit, crReady } from "./e2e";
 import {
   E2EFilePanel,
   type FieldsConfigTypeSimplified
@@ -95,5 +96,8 @@ export class E2EPatient {
   async doDelete() {
     await this.page.getByText("Delete").click();
     await crAcceptPopup(this.panel, "Delete");
+
+    // Patient is deleted, we should go back to home
+    await crExpectUrl(this.page, new RegExp("^.*" + escapeRegExp("#/home")));
   }
 }
