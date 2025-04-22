@@ -2,6 +2,10 @@ import { expect, test } from "@playwright/test";
 import { crApiLogin, crInit, crLegacyInput } from "../helpers/e2e";
 import { E2EPatient } from "../helpers/e2e-patients";
 
+function deleteFile(_e2ePatient: E2EPatient) {
+  // TODO
+}
+
 test("create-reference-2002", async ({ page }) => {
   await crApiLogin(page);
 
@@ -45,6 +49,8 @@ test("create-reference-2002", async ({ page }) => {
     "Entry Year": GenerateYear,
     "Entry Order": GenerateOrder
   });
+
+  deleteFile(e2ePatient);
 });
 
 test("generate-reference", async ({ page }) => {
@@ -67,14 +73,16 @@ test("generate-reference", async ({ page }) => {
 
   await page.waitForURL(/.+#\/folder\/.+/);
 
-  // const e2ePatient = new E2EPatient(page);
-  // const e2eFile = e2ePatient.getFile({
-  //   fileType: "patient"
-  // });
+  const e2ePatient = new E2EPatient(page);
+  const e2eFile = e2ePatient.getFile({
+    fileType: "patient"
+  });
 
-  // await e2eFile.expectAllOutputValues({
-  //   "Entry Year": GenerateYear
-  // });
+  await e2eFile.expectAllOutputValues({
+    "Entry Year": GenerateYear
+  });
 
   // TODO: enter some data and save it, to check if the state is still correct
+
+  deleteFile(e2ePatient);
 });

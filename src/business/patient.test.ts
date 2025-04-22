@@ -12,6 +12,8 @@ import Payment from "./payment";
 import Picture from "./picture";
 import Surgery from "./surgery";
 
+// DELETE is tested in generate-patient.spec.ts
+
 let p: Patient = new Patient();
 
 test("year of birth pattern", () => {

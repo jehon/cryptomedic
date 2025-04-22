@@ -73,7 +73,11 @@ export default function FilePanel({
 
   const fileIsDeleted = () => {
     onUpdate(folder.withoutFileOLD(file));
-    routeTo(patientRouterToPatient(file.getParentId()!, Modes.output));
+    if (file instanceof Patient) {
+      routeTo("/home");
+    } else {
+      routeTo(patientRouterToPatient(file.getParentId()!, Modes.output));
+    }
   };
 
   return (
