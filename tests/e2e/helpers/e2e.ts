@@ -141,3 +141,11 @@ export async function crLegacyInput(
   await input.fill("" + value);
   await expect(input, msg).toHaveValue("" + value);
 }
+
+export async function crAcceptPopup(page: Page | Locator, button: string) {
+  const box = page.locator(".popup .box .buttons.btn-group");
+  await expect(page.locator(".popup .box .buttons.btn-group")).toBeVisible();
+  await box.getByText(button).click();
+
+  await expect(box).not.toBeVisible();
+}
