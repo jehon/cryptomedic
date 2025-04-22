@@ -91,4 +91,6 @@ export class E2EPatient {
       fieldsConfig: options.fieldsConfig
     });
   }
+
+  async doDelete() {}
 }

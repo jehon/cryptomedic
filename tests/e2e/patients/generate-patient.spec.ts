@@ -2,10 +2,6 @@ import { expect, test } from "@playwright/test";
 import { crApiLogin, crInit, crLegacyInput } from "../helpers/e2e";
 import { E2EPatient } from "../helpers/e2e-patients";
 
-function deleteFile(_e2ePatient: E2EPatient) {
-  // TODO
-}
-
 test("create-reference-2002", async ({ page }) => {
   await crApiLogin(page);
 
@@ -50,7 +46,7 @@ test("create-reference-2002", async ({ page }) => {
     "Entry Order": GenerateOrder
   });
 
-  deleteFile(e2ePatient);
+  e2ePatient.doDelete();
 });
 
 test("generate-reference", async ({ page }) => {
@@ -85,5 +81,5 @@ test("generate-reference", async ({ page }) => {
 
   // // TODO: enter some data and save it, to check if the state is still correct
 
-  // deleteFile(e2ePatient);
+  // e2ePatient.doDelete();
 });
