@@ -37,6 +37,10 @@ export function patientRouterToFileAdd(
 export function patientRouterConfig() {
   return [
     {
+      path: "/patient/create",
+      element: <PatientRouter />
+    },
+    {
       path: "/patient/:folderId/:selectedUid?/:mode?",
       loader: ({ params }: { params: Params<string> }) =>
         getFolder(params["folderId"] ?? ""),

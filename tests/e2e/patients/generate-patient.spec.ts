@@ -33,7 +33,7 @@ test("create-reference-2002", async ({ page }) => {
   await expect(patientByReferencePanel).toHaveScreenshot();
 
   await createRefButton.click();
-  await page.waitForURL(/.+#\/folder\/.+/);
+  await page.waitForURL(/.+#\/patient\/.+/);
 
   const e2ePatient = new E2EPatient(page);
   const e2eFile = e2ePatient.getFile({
@@ -67,7 +67,7 @@ test("generate-reference", async ({ page }) => {
     .locator("x-button[action=Default]")
     .click();
 
-  await page.waitForURL(/.+#\/folder\/.+/);
+  await page.waitForURL(/.+#\/patient\/.+/);
 
   // TODO: Test the generation of the patient
   // const e2ePatient = new E2EPatient(page);
