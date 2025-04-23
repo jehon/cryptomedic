@@ -29,3 +29,8 @@ if type direnv >&/dev/null; then
 else
   echo "!! skipping direnv allow !!"
 fi
+
+if ! type node; then
+  echo "Node is not installed. Please install it manually" >&2
+  exit 1
+fi
