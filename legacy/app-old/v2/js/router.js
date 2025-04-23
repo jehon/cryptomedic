@@ -50,7 +50,7 @@ export function parseRouteLogin(route = getCurrentRoute()) {
  * @returns {string} the route
  */
 export function getRouteToFolderPatient(folderId, edit = false) {
-  return getRouteToFolderPatient(folderId, "patient", folderId, edit);
+  return getRouteToFolderFileByParams(folderId, "patient", folderId, edit);
 }
 
 /**
