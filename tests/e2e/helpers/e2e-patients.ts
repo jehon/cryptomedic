@@ -32,7 +32,7 @@ export class E2EPatient {
 
   detectPatientId(): string {
     const url: string = this.page.url();
-    const matches = /#\/folder\/(?<id>[0-9]+)\/.*$/.exec(url);
+    const matches = /#\/patient\/(?<id>[0-9]+)\/.*$/.exec(url);
     return matches?.groups?.["id"] ?? "";
   }
 
