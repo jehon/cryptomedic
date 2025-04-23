@@ -18,7 +18,7 @@ function mylog($picture, $msg, $fix = null) {
   echo "<tr>";
   echo "<td>#" . $myLogI . "</td>";
   if ($picture) {
-    echo "<td><a href='/built/ng1x.html#/folder/" . $picture->patient_id . "/file/Picture/" . $picture->id . "'>" . $picture->id . "</a></td>";
+    echo "<td><a href='/built/frontend/ng1x.html#/patient/" . $picture->patient_id . "/picture." . $picture->id . "'>" . $picture->id . "</a></td>";
     echo "<td>" . $picture->file . "</td>";
   }
   echo "<td>$msg</td>";
