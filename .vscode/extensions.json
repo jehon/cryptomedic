@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "esbenp.prettier-vscode",
-    "angular.ng-template"
+    "esbenp.prettier-vscode"
   ]
 }
