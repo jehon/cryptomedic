@@ -50,7 +50,7 @@ export function parseRouteLogin(route = getCurrentRoute()) {
  * @returns {string} the route
  */
 export function getRouteToFolderPatient(folderId, edit = false) {
-  return "/folder/" + folderId + (edit ? "/edit" : "");
+  return getRouteToFolderPatient(folderId, "patient", folderId, edit);
 }
 
 /**
@@ -59,15 +59,20 @@ export function getRouteToFolderPatient(folderId, edit = false) {
  * @param {number} fileId of the file
  * @returns {string} the route
  */
-export function getRouteToFolderFileByParams(folderId, fileName, fileId) {
-  return "/patient/" + folderId + "/" + fileName + "." + fileId;
+export function getRouteToFolderFileByParams(
+  folderId,
+  fileName,
+  fileId,
+  edit = false
+) {
+  return `/patient/${folderId}/${fileName}.${fileId}${edit ? "/edit" : ""}`;
 }
 
 /**
- * @param {number} folderId - the folder of wich to show the patient
+ * @param {number} folderId - the folder of which to show the patient
  */
 export function routeToFolderPatient(folderId) {
-  setRoute(`/folder/${folderId}`);
+  setRoute(getRouteToFolderPatient(folderId));
 }
 
 /**
