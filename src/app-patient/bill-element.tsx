@@ -9,9 +9,6 @@ import { getSession } from "../utils/session";
 import { string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
 import IO from "../widget/io";
-import IODate from "../widget/io-date";
-import IONumber from "../widget/io-number";
-import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
@@ -264,9 +261,9 @@ export default function BillElement({
               className="payment-line"
               data-testid={payment.uid()}
             >
-              <IODate value={payment.date} noLabel />
-              <IONumber value={payment.amount} noLabel />
-              <IOString value={payment.comments} noLabel />
+              <IO.Date value={payment.date} noLabel />
+              <IO.Number value={payment.amount} noLabel />
+              <IO.String value={payment.comments} noLabel />
             </div>
           ))
         )}
