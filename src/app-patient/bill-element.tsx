@@ -8,7 +8,11 @@ import { getList } from "../utils/config";
 import { getSession } from "../utils/session";
 import { string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
-import IO from "../widget/io";
+import IODate from "../widget/io-date";
+import IOHidden from "../widget/io-hidden";
+import IOList from "../widget/io-list";
+import IONumber from "../widget/io-number";
+import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
@@ -167,24 +171,24 @@ export default function BillElement({
       <>
         <TwoColumns>
           <Panel fixed label="Information">
-            <IO.Date
+            <IODate
               name="date"
               value={file.date}
               onChange={(value) => selectPrice(value)}
             />
-            <IO.List
+            <IOList
               name="examiner"
               value={file.examiner as string}
               list={getList("Examiners")}
             />
-            <IO.List
+            <IOList
               name="center"
               value={file.center as string}
               list={getList("Centers")}
             />{" "}
           </Panel>
           <Panel fixed label="Totals">
-            <IO.Number
+            <IONumber
               name="sl_family_salary"
               label="Family Salary"
               value={socialLevelParams.family_salary}
@@ -195,7 +199,7 @@ export default function BillElement({
                 })
               }
             />
-            <IO.Number
+            <IONumber
               name="sl_number_of_household_members"
               label="Number of Household Members"
               value={socialLevelParams.number_of_household_members}
@@ -207,21 +211,21 @@ export default function BillElement({
                 })
               }
             />
-            <IO.Hidden name="social_level" value={socialLevel} />
-            <IO.Hidden label="Percentage" value={percentageAsked * 100} />
-            <IO.Hidden
+            <IOHidden name="social_level" value={socialLevel} />
+            <IOHidden label="Percentage" value={percentageAsked * 100} />
+            <IOHidden
               name="total_real"
               label="Raw Calculated Total"
               value={getTotal()}
             />
-            <IO.Hidden
+            <IOHidden
               name="total_asked"
               label="Price asked"
               value={priceAsked}
             />
             {/*
             TODO
-            <IO.Function
+            <IOFunction
               label="Payments Received (see below)"
               value={() => roundTo(file.getTotalAlreadyPaid(), 0)}
             /> */}
@@ -261,9 +265,9 @@ export default function BillElement({
               className="payment-line"
               data-testid={payment.uid()}
             >
-              <IO.Date value={payment.date} noLabel />
-              <IO.Number value={payment.amount} noLabel />
-              <IO.String value={payment.comments} noLabel />
+              <IODate value={payment.date} noLabel />
+              <IONumber value={payment.amount} noLabel />
+              <IOString value={payment.comments} noLabel />
             </div>
           ))
         )}

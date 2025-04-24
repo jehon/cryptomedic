@@ -4,7 +4,9 @@ import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
 import { getList } from "../utils/config";
-import IO from "../widget/io";
+import IOList from "../widget/io-list";
+import IOString from "../widget/io-string";
+import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
@@ -25,43 +27,43 @@ export default function ConsultOtherElement({
         <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel label="Orthopedic data">
-            <IO.List
+            <IOList
               name="side"
               value={file.side}
               list={getList("Side")}
               required
-            ></IO.List>
-            <IO.String
+            ></IOList>
+            <IOString
               name="joints_or_bones_affected"
               label="Joints or Bones Affected"
               value={file.joints_or_bones_affected}
-            ></IO.String>
-            <IO.String name="deformity" value={file.deformity}></IO.String>
-            <IO.String
+            ></IOString>
+            <IOString name="deformity" value={file.deformity}></IOString>
+            <IOString
               name="articulation_mobility"
               value={file.articulation_mobility}
-            ></IO.String>
-            <IO.String
+            ></IOString>
+            <IOString
               name="muscle_strength"
               value={file.muscle_strength}
-            ></IO.String>
-            <IO.List
+            ></IOString>
+            <IOList
               name="pain"
               value={file.pain}
               list={getList("Pain")}
-            ></IO.List>
-            <IO.List
+            ></IOList>
+            <IOList
               name="walk"
               value={file.walk}
               list={getList("WalkingCapacities")}
-            ></IO.List>
-            <IO.String name="xray" label="XRay" value={file.xray}></IO.String>
+            ></IOList>
+            <IOString name="xray" label="XRay" value={file.xray}></IOString>
           </Panel>
           <Panel label="Orthopedic observations">
-            <IO.Text
+            <IOText
               name="examination_data"
               value={file.examination_data}
-            ></IO.Text>
+            ></IOText>
           </Panel>
         </TwoColumns>
         <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>

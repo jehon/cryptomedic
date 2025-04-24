@@ -1,6 +1,9 @@
 import Surgery from "../business/surgery";
+import IOBoolean from "../widget/io-boolean";
+import IODate from "../widget/io-date";
+import IOString from "../widget/io-string";
+import IOText from "../widget/io-text";
 
-import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
@@ -25,35 +28,35 @@ export default function SurgeryElement({
       <>
         <TwoColumns>
           <Panel fixed label="Report">
-            <IO.Date name="date" value={file.date} required />
-            <IO.String
+            <IODate name="date" value={file.date} required />
+            <IOString
               name="report_diagnostic"
               label="Diagnostic"
               value={file.report_diagnostic as string}
             />
-            <IO.String
+            <IOString
               name="report_surgeon"
               label="Surgeon"
               value={file.report_surgeon as string}
             />
-            <IO.Boolean
+            <IOBoolean
               name="report_side_right"
               label="Side Right"
               value={file.report_side_right as string}
             />
-            <IO.Boolean
+            <IOBoolean
               name="report_side_left"
               label="Side Left"
               value={file.report_side_left as string}
             />
-            <IO.String
+            <IOString
               name="report_procedure"
               label="Procedure"
               value={file.report_procedure as string}
             />
           </Panel>
           <Panel fixed label="Hospitalization Follow-up">
-            <IO.Text
+            <IOText
               name="follow_up_complication"
               label="Follow-Up Complications"
               value={file.follow_up_complication as string}

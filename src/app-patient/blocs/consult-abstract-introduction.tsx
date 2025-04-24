@@ -1,12 +1,15 @@
 import Consult from "../../business/abstracts/consult";
 
-import IO from "../../widget/io";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
 
 import { getList } from "../../utils/config";
 import { yearsToYM } from "../../utils/date";
 import { roundTo, string2number } from "../../utils/strings";
+import IODate from "../../widget/io-date";
+import IOFunction from "../../widget/io-function";
+import IOList from "../../widget/io-list";
+import IONumber from "../../widget/io-number";
 
 export default function ConsultAbstractIntroduction({
   file
@@ -16,26 +19,26 @@ export default function ConsultAbstractIntroduction({
   return (
     <TwoColumns>
       <Panel fixed label="Information">
-        <IO.Date name="date" value={file.date} />
-        <IO.List
+        <IODate name="date" value={file.date} />
+        <IOList
           name="examiner"
           value={file.examiner as string}
           list={getList("Examiners")}
           required
         />
-        <IO.List
+        <IOList
           name="center"
           value={file.center as string}
           list={getList("Centers")}
           required
         />
-        <IO.Function
+        <IOFunction
           label="Age at consultation time"
           value={() => yearsToYM(file.getAgeAtThatTime())}
         />
       </Panel>
       <Panel fixed label="Nutritional data">
-        <IO.Number
+        <IONumber
           name="weight_kg"
           label="Weight (kg)"
           value={string2number(file.weight_kg)}
@@ -45,12 +48,12 @@ export default function ConsultAbstractIntroduction({
           }}
         />
         {file.weight_kg && (
-          <IO.Function
+          <IOFunction
             label="Weight sd"
             value={() => roundTo(file.getWeightSd())}
           />
         )}
-        <IO.Number
+        <IONumber
           name="height_cm"
           label="Height (cm)"
           value={string2number(file.height_cm)}
@@ -60,12 +63,12 @@ export default function ConsultAbstractIntroduction({
           }}
         />
         {file.height_cm && (
-          <IO.Function
+          <IOFunction
             label="Height sd"
             value={() => roundTo(file.getHeightSd())}
           />
         )}
-        <IO.Number
+        <IONumber
           name="brachial_circumference_cm"
           label="Brachial Circumference (cm)"
           value={string2number(file.brachial_circumference_cm)}
@@ -76,19 +79,16 @@ export default function ConsultAbstractIntroduction({
         />
         {file.weight_kg && file.height_cm && (
           <>
-            <IO.Function
+            <IOFunction
               label="Weight/Height ratio"
               value={() => roundTo(file.wh())}
             />
-            <IO.Function
+            <IOFunction
               label="Weight/Height sd"
               value={() => roundTo(file.getWHSd())}
             />
-            <IO.Function label="BMI" value={() => roundTo(file.bmi())} />
-            <IO.Function
-              label="BMI sd"
-              value={() => roundTo(file.getBMISd())}
-            />
+            <IOFunction label="BMI" value={() => roundTo(file.bmi())} />
+            <IOFunction label="BMI sd" value={() => roundTo(file.getBMISd())} />
           </>
         )}
       </Panel>

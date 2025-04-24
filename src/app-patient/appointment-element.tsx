@@ -1,7 +1,9 @@
 import Appointment from "../business/appointment";
 
 import { getList } from "../utils/config";
-import IO from "../widget/io";
+import IODate from "../widget/io-date";
+import IOList from "../widget/io-list";
+import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
@@ -20,15 +22,15 @@ export default function AppointmentElement({
     body: (
       <TwoColumns>
         <Panel fixed label="Information">
-          <IO.Date name="date" value={file.date} required />
-          <IO.List
+          <IODate name="date" value={file.date} required />
+          <IOList
             name="center"
             value={file.center as string}
             list={getList("Centers")}
           />
         </Panel>
         <Panel fixed label="Objective">
-          <IO.Text name="purpose" value={file.purpose as string} />
+          <IOText name="purpose" value={file.purpose as string} />
         </Panel>
       </TwoColumns>
     )

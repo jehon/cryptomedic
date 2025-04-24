@@ -12,7 +12,7 @@ import Surgery from "../business/surgery";
 import * as config from "../config";
 import ButtonsGroup from "../styles/buttons-group";
 import { defaultWidthScreen } from "../styles/style-helpers";
-import IO from "../widget/io";
+import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
 import AppointmentElement from "./appointment-element";
 import BillElement from "./bill-element";
@@ -113,8 +113,8 @@ export default function FolderElement({
       </ButtonsGroup>
       {/* ------------ Key dates  --------------------*/}
       <Panel key="key-dates" label="Key dates">
-        <IO.Date label="Last seen" value={folder.getLastSeen()} />
-        <IO.Date label="Next appointment" value={folder.getNextAppointment()} />
+        <IODate label="Last seen" value={folder.getLastSeen()} />
+        <IODate label="Next appointment" value={folder.getNextAppointment()} />
       </Panel>
 
       {patientElementGenerator(folder.getPatient(), commonProps)}

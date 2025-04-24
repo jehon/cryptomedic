@@ -1,7 +1,11 @@
 import Picture from "../business/picture";
 import { getList } from "../utils/config";
+import IODate from "../widget/io-date";
+import IOImage from "../widget/io-image";
+import IOList from "../widget/io-list";
+import IOString from "../widget/io-string";
+import IOText from "../widget/io-text";
 
-import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
@@ -20,17 +24,17 @@ export default function PictureElement({
     body: (
       <TwoColumns>
         <Panel fixed label="Information">
-          <IO.List
+          <IOList
             name="type"
             value={file.type as string}
             list={getList("PictureType")}
           />
-          <IO.Date name="date" value={file.date} />
-          <IO.String label="File" value={file.file as string} e2eExcluded />
-          <IO.Text name="comments" value={file.comments as string} />
+          <IODate name="date" value={file.date} />
+          <IOString label="File" value={file.file as string} e2eExcluded />
+          <IOText name="comments" value={file.comments as string} />
         </Panel>
         <Panel fixed label="Image">
-          <IO.Image
+          <IOImage
             name="fileBlob"
             label="Picture"
             value={file.getPictureUrl() as string}

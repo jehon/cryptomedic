@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import generateUUID from "../utils/generate-uuid";
 import { isEmptyValue } from "../utils/objects";
 import { toTitleCase } from "../utils/strings";
-import "./io.css";
+import "./io-abstract.css";
 
 // Will be initiated at higher level
 export const EditContext = createContext(false);
