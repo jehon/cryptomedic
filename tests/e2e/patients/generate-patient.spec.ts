@@ -67,7 +67,7 @@ test("generate-reference", async ({ page }) => {
     .locator("x-button[action=Default]")
     .click();
 
-  await page.waitForURL(/.+#\/patient\/.+/);
+  await page.waitForURL(/.+#\/folder\/.+/);
 
   // TODO: Test the generation of the patient
   // const e2ePatient = new E2EPatient(page);
