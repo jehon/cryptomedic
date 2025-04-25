@@ -7,6 +7,7 @@ import "bootstrap4/dist/js/bootstrap";
 import "./main.css";
 
 /* Application */
+import { HomeRouter } from "./app-home/home-router";
 import { patientRouterConfig } from "./app-patient/patient-router";
 import { bridgeTo } from "./utils/react";
 import ErrorPage from "./widget/error-page";
@@ -28,6 +29,7 @@ const router = createHashRouter([
       />
     )
   },
+  ...HomeRouter(),
   ...patientRouterConfig()
 ]);
 
