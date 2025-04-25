@@ -20,7 +20,7 @@ class RouteReferenceTestCase extends TestCase {
 		return new RequestOptionsBuilder();
 	}
 
-	public function myRunAssertQuery(RequestOptionsBuilder $opt = null) {
+	public function myRunAssertQuery(?RequestOptionsBuilder $opt = null) {
 		if ($opt == null) {
 			$opt = $this->getNewRequestOptionsBuilder();
 		}
