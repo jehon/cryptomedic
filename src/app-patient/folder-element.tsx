@@ -11,7 +11,6 @@ import Picture from "../business/picture";
 import Surgery from "../business/surgery";
 import * as config from "../config";
 import ButtonsGroup from "../styles/buttons-group";
-import { defaultWidthScreen } from "../styles/style-helpers";
 import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
 import AppointmentElement from "./appointment-element";
@@ -70,10 +69,7 @@ export default function FolderElement({
   };
 
   return (
-    <div
-      data-testid={"folder-" + folder.getId()}
-      style={{ width: defaultWidthScreen, margin: "0 auto" }}
-    >
+    <div data-testid={"folder-" + folder.getId()} className="reduce-width">
       {/* ------------ Header  --------------------*/}
       <ButtonsGroup>
         <button
