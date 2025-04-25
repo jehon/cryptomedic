@@ -7,7 +7,7 @@ ENV HOME=/home/runner
 # TODO: Remove from everywhere
 ENV SERVER_ENV=dev
 
-RUN mkdir -p "$HOME" && chmod a+rwx "$HOME"
+RUN mkdir -p "$HOME" && chmod -R a+rwx "$HOME"
 
 ############################################################
 #
