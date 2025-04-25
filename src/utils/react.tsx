@@ -1,6 +1,5 @@
 // https://legacy.reactjs.org/docs/web-components.html
 
-import React from "react";
 import { createRoot } from "react-dom/client";
 
 export function bridgeTo(tag: string, reactComponent: React.ReactNode) {
