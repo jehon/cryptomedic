@@ -5,7 +5,9 @@ import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
 import { getList } from "../utils/config";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
-import IO from "../widget/io";
+import IOList from "../widget/io-list";
+import IONumber from "../widget/io-number";
+import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
@@ -37,32 +39,32 @@ export default function ConsultRicketElement({
         <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel label="Ricket Data">
-            <IO.List
+            <IOList
               name="walking_difficulties"
               value={file.walking_difficulties}
               list={getList("WalkingCapacities")}
-            ></IO.List>
-            <IO.List
+            ></IOList>
+            <IOList
               name="pain"
               value={file.pain}
               list={getList("Pain")}
-            ></IO.List>
-            <IO.List
+            ></IOList>
+            <IOList
               name="wrist_enlargement"
               value={file.wrist_enlargement}
               list={getList("Eval03")}
-            ></IO.List>
-            <IO.List
+            ></IOList>
+            <IOList
               name="rib_heading"
               value={file.rib_heading}
               list={getList("Eval03")}
-            ></IO.List>
-            <IO.Text name="xray" label="XRay" value={file.xray}></IO.Text>
-            <IO.Number
+            ></IOList>
+            <IOText name="xray" label="XRay" value={file.xray}></IOText>
+            <IONumber
               name="IMIC_distance"
               label="IMIC Distance"
               value={file.IMIC_distance}
-            ></IO.Number>
+            ></IONumber>
           </Panel>
         </TwoColumns>
         <TwoColumns>
@@ -74,25 +76,25 @@ export default function ConsultRicketElement({
               </>
             }
           >
-            <IO.List
+            <IOList
               name="right_leg"
               value={file.right_leg}
               list={getList("LegAnalysis")}
-            ></IO.List>
-            <IO.Number
+            ></IOList>
+            <IONumber
               name="right_leg_angle"
               value={file.right_leg_angle}
-            ></IO.Number>
-            <IO.Number
+            ></IONumber>
+            <IONumber
               label="Right Cross T"
               name="cross_right_T"
               value={file.cross_right_T}
-            ></IO.Number>
-            <IO.Number
+            ></IONumber>
+            <IONumber
               label="Right Cross F"
               name="cross_right_F"
               value={file.cross_right_F}
-            ></IO.Number>
+            ></IONumber>
           </Panel>
           <Panel
             header={
@@ -102,25 +104,25 @@ export default function ConsultRicketElement({
               </>
             }
           >
-            <IO.List
+            <IOList
               name="left_leg"
               value={file.left_leg}
               list={getList("LegAnalysis")}
-            ></IO.List>
-            <IO.Number
+            ></IOList>
+            <IONumber
               name="left_leg_angle"
               value={file.left_leg_angle}
-            ></IO.Number>
-            <IO.Number
+            ></IONumber>
+            <IONumber
               name="cross_left_T"
               label="Left Cross T"
               value={file.cross_left_T}
-            ></IO.Number>
-            <IO.Number
+            ></IONumber>
+            <IONumber
               name="cross_left_F"
               label="Left Cross F"
               value={file.cross_left_F}
-            ></IO.Number>
+            ></IONumber>
           </Panel>
         </TwoColumns>
         <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>

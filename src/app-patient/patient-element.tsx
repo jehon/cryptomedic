@@ -2,8 +2,11 @@ import { useState } from "react";
 import Patient, { yearOfBirthPattern } from "../business/patient";
 import { getList } from "../utils/config";
 
-import IO from "../widget/io";
-import { type IOListType } from "../widget/io-list";
+import IOFunction from "../widget/io-function";
+import IOList, { type IOListType } from "../widget/io-list";
+import IONumber from "../widget/io-number";
+import IOString from "../widget/io-string";
+import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
@@ -48,7 +51,7 @@ export default function patientElementGenerator(
       <>
         <TwoColumns>
           <Panel fixed label="Identification">
-            <IO.Number
+            <IONumber
               label="Entry Year"
               value={parseInt(patient.entry_year)}
               htmlProps={{
@@ -56,13 +59,13 @@ export default function patientElementGenerator(
                 max: 2030
               }}
             />
-            <IO.Number
+            <IONumber
               label="Entry Order"
               value={parseInt(patient.entry_order)}
             />
-            <IO.String name="name" value={patient.name} />
-            <IO.List name="sex" value={patient.sex} list={getList("sex")} />
-            <IO.String
+            <IOString name="name" value={patient.name} />
+            <IOList name="sex" value={patient.sex} list={getList("sex")} />
+            <IOString
               name="year_of_birth"
               label="Year of Birth"
               value={patient.year_of_birth}
@@ -71,41 +74,41 @@ export default function patientElementGenerator(
               }}
               inputHelp={<div>YYYY or YYYY-MM - between 1980 and 2029</div>}
             />
-            <IO.Function
+            <IOFunction
               label="Age today"
               value={() => patient.actualAge() as string}
               e2eExcluded
             />
-            <IO.List
+            <IOList
               name="pathology"
               value={patient.pathology}
               list={getList("Pathologies")}
             />
-            <IO.Text name="comments" value={patient.comments} />
+            <IOText name="comments" value={patient.comments} />
           </Panel>
           <Panel fixed label="Address">
-            <IO.String name="phone" value={patient.phone ?? ""} />
-            <IO.List
+            <IOString name="phone" value={patient.phone ?? ""} />
+            <IOList
               name="address_district"
               label="District"
               value={districtValue}
               list={getList("Districts")}
               onChange={(v) => districtValueUpdate(v)}
             />
-            <IO.List
+            <IOList
               name="address_upazilla"
               label="Upazila"
               value={upazilaValue}
               list={getListFor("district", districtValue)}
               onChange={(v) => upazilaValueUpdate(v)}
             />
-            <IO.List
+            <IOList
               name="address_union"
               label="Union"
               value={patient.address_union}
               list={getListFor("upazilla", upazilaValue)}
             />
-            <IO.Text name="address_comments" value={patient.address_comments} />
+            <IOText name="address_comments" value={patient.address_comments} />
           </Panel>
         </TwoColumns>
       </>
