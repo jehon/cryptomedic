@@ -3,7 +3,7 @@ import HomeElement from "./home-element";
 export function HomeRouter() {
   return [
     {
-      path: "/home",
+      path: "/home.new",
       element: <HomeElement />
     }
   ];

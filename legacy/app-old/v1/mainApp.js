@@ -106,6 +106,9 @@ mainApp.config([
       .when("/home", {
         template: () => goToElement(XPageHome)
       })
+      .when("/home.new", {
+        template: "<x-react-router></x-react-router>"
+      })
       .when("/search", {
         template: () => goToElement(XPageSearch)
       })
