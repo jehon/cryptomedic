@@ -1,4 +1,13 @@
 import { icons } from "../config";
+import {
+  REPORT_ACTIVITY,
+  REPORT_CASH_REGISTER,
+  REPORT_CONSULTATIONS,
+  REPORT_FINANCIAL,
+  REPORT_STATISTICAL,
+  REPORT_SURGICAL,
+  REPORT_SURGICAL_SUGGESTED
+} from "../constants";
 import { MenuItem } from "./blocs/menu-item";
 import "./home-element.css";
 
@@ -31,7 +40,7 @@ export default function HomeElement() {
           title="Consultations of the day"
           requires="planning.execute"
           versalIcon="/static/img/consultOfDay.gif"
-          toRoute="getRouteToReport(REPORT_CONSULTATIONS)"
+          toRoute={`/reports/${REPORT_CONSULTATIONS}`}
         >
           Have a list of the consultations of the day
         </MenuItem>
@@ -39,7 +48,7 @@ export default function HomeElement() {
           title="Activity Report"
           requires="reports.execute"
           versalIcon="/static/img/reports.gif"
-          toRoute="getRouteToReport(REPORT_ACTIVITY)"
+          toRoute={`/reports/${REPORT_ACTIVITY}`}
         >
           If you want to know your activity, choose this report.
         </MenuItem>
@@ -47,7 +56,7 @@ export default function HomeElement() {
           title="Statistical Report"
           requires="reports.execute"
           versalIcon="/static/img/reports.gif"
-          toRoute="getRouteToReport(REPORT_STATISTICAL)"
+          toRoute={`/reports/${REPORT_STATISTICAL}`}
         >
           If you want to know the activity of the SARPV CDC on a period.
         </MenuItem>
@@ -55,7 +64,7 @@ export default function HomeElement() {
           title="Cash Register Report"
           requires="reports.execute"
           versalIcon="/static/img/reports.gif"
-          toRoute="getRouteToReport(REPORT_CASH_REGISTER)"
+          toRoute={`/reports/${REPORT_CASH_REGISTER}`}
         >
           If you want to know what is paid according to what is asked.
         </MenuItem>
@@ -63,7 +72,7 @@ export default function HomeElement() {
           title="Surgical Report"
           requires="reports.execute"
           versalIcon="/static/img/reports.gif"
-          toRoute="getRouteToReport(REPORT_SURGICAL)"
+          toRoute={`/reports/${REPORT_SURGICAL}`}
         >
           Follow up of the surgical activity of the period.
         </MenuItem>
@@ -71,7 +80,7 @@ export default function HomeElement() {
           title="Surgical Suggestions Report"
           requires="reports.execute"
           versalIcon="/static/img/reports.gif"
-          toRoute="getRouteToReport(REPORT_SURGICAL_SUGGESTED)"
+          toRoute={`/reports/${REPORT_SURGICAL_SUGGESTED}`}
         >
           List the suggestions for surgeries.
         </MenuItem>
@@ -79,7 +88,7 @@ export default function HomeElement() {
           title="Financial Report"
           requires="reports.execute"
           versalIcon="/static/img/reports.gif"
-          toRoute="getRouteToReport(REPORT_FINANCIAL)"
+          toRoute={`/reports/${REPORT_FINANCIAL}`}
         >
           Follow up of the finances.
         </MenuItem>
