@@ -1,5 +1,7 @@
 import { ButtonGroup } from "react-bootstrap";
+import { routeTo } from "../../main";
 import { toAttributeCase } from "../../utils/strings";
+import ActionButton from "../../widget/action-button";
 import Panel from "../../widget/panel";
 import Restricted from "../../widget/restricted";
 import TwoColumns from "../../widget/two-columns";
@@ -30,11 +32,14 @@ export function MenuItem({
             {versalIcon && <img className="versal-icon" src={versalIcon} />}
             <div className="description">{children}</div>
           </TwoColumns>
-          <ButtonGroup></ButtonGroup>
-          {
-            //                 "to-route": toRoute ?? false,
-            //                 "to-location": toLocation ?? false
-          }
+          <ButtonGroup>
+            <ActionButton
+              action={buttonText}
+              onOk={() =>
+                toLocation ? (document.location = toLocation) : routeTo(toRoute)
+              }
+            />
+          </ButtonGroup>
         </Panel>
       </div>
     </Restricted>
