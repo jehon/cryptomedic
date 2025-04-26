@@ -65,7 +65,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "style-loader": "4.0.0",
-    "stylelint": "16.19.0",
+    "stylelint": "16.19.1",
     "stylelint-config-standard": "38.0.0",
     "stylelint-no-unsupported-browser-features": "8.0.4",
     "ts-loader": "9.5.2",
