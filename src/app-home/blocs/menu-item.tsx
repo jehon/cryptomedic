@@ -1,13 +1,13 @@
 import { toAttributeCase } from "../../utils/strings";
 import Panel from "../../widget/panel";
 import Restricted from "../../widget/restricted";
+import TwoColumns from "../../widget/two-columns";
 import "./menu-item.css";
 
 export function MenuItem({
   title,
   requires: restrictedBy,
   versalIcon,
-  html,
   toRoute,
   toLocation,
   buttonText,
@@ -16,7 +16,6 @@ export function MenuItem({
   title: string;
   requires?: string;
   versalIcon?: string;
-  html?: string;
   toRoute?: string;
   toLocation?: string;
   buttonText?: string;
@@ -26,22 +25,25 @@ export function MenuItem({
     <Restricted requires={restrictedBy}>
       <div className="menu-item">
         <Panel header={title} fixed={true} testid={toAttributeCase(title)}>
-          {/* createElementWithTag("img", { slot: "versal", src: versalIcon }) */}
-          {children}
-
-          {/* //       createElementWithObject(XButtons, {}, [
-  //         toRoute || toLocation
-  //           ? createElementWithObject(
-  //               XButton,
-  //               {
-  //                 action: XButton.Default,
-  //                 "to-route": toRoute ?? false,
-  //                 "to-location": toLocation ?? false
-  //               },
-  //               buttonText
-  //             )
-  //           : null
-  //       ]) */}
+          <TwoColumns>
+            {versalIcon && <img className="versal-icon" src={versalIcon} />}
+            <div>{children}</div>
+          </TwoColumns>
+          {
+            //       createElementWithObject(XButtons, {}, [
+            //         toRoute || toLocation
+            //           ? createElementWithObject(
+            //               XButton,
+            //               {
+            //                 action: XButton.Default,
+            //                 "to-route": toRoute ?? false,
+            //                 "to-location": toLocation ?? false
+            //               },
+            //               buttonText
+            //             )
+            //           : null
+            //       ])
+          }
         </Panel>
       </div>
     </Restricted>
