@@ -15,8 +15,6 @@ import XGroupPanel from "../widgets/style/x-group-panel.js";
 import XPanel from "../widgets/style/x-panel.js";
 import XPatientByReference from "./blocks/x-patient-by-reference.js";
 
-import { getRouteToCreateReference, getRouteToReport } from "../js/router.js";
-import pageStyles from "./page-helper.js";
 import {
   REPORT_ACTIVITY,
   REPORT_CASH_REGISTER,
@@ -25,7 +23,9 @@ import {
   REPORT_STATISTICAL,
   REPORT_SURGICAL,
   REPORT_SURGICAL_SUGGESTED
-} from "./x-page-reports.js";
+} from "../../../../src/constants.ts";
+import { getRouteToCreateReference, getRouteToReport } from "../js/router.js";
+import pageStyles from "./page-helper.js";
 
 /**
  * @param {object} options to generate the XGroupPanel

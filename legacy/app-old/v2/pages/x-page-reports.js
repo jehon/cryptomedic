@@ -1,4 +1,13 @@
 import ExcellentExport from "excellentexport";
+import {
+  REPORT_ACTIVITY,
+  REPORT_CASH_REGISTER,
+  REPORT_CONSULTATIONS,
+  REPORT_FINANCIAL,
+  REPORT_STATISTICAL,
+  REPORT_SURGICAL,
+  REPORT_SURGICAL_SUGGESTED
+} from "../../../../src/constants.ts";
 import { getSession } from "../../../../src/utils/session.js";
 import { messages } from "../../../config.js";
 import { getPref, setPref } from "../../../prefs.js";
@@ -558,14 +567,6 @@ x-button#export {
 // TODO: remove addDetailsLegacy
 
 customElements.define(XPageReports.Tag, XPageReports);
-
-export const REPORT_ACTIVITY = "activity";
-export const REPORT_CASH_REGISTER = "cash-register";
-export const REPORT_CONSULTATIONS = "consultations";
-export const REPORT_FINANCIAL = "financial";
-export const REPORT_SURGICAL = "surgical";
-export const REPORT_SURGICAL_SUGGESTED = "surgical-suggested";
-export const REPORT_STATISTICAL = "statistical";
 
 const reports = {};
 reports[REPORT_ACTIVITY] = {
