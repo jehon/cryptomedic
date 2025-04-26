@@ -1,3 +1,4 @@
+import { ButtonGroup } from "react-bootstrap";
 import { toAttributeCase } from "../../utils/strings";
 import Panel from "../../widget/panel";
 import Restricted from "../../widget/restricted";
@@ -27,22 +28,12 @@ export function MenuItem({
         <Panel header={title} fixed={true} testid={toAttributeCase(title)}>
           <TwoColumns>
             {versalIcon && <img className="versal-icon" src={versalIcon} />}
-            <div>{children}</div>
+            <div className="description">{children}</div>
           </TwoColumns>
+          <ButtonGroup></ButtonGroup>
           {
-            //       createElementWithObject(XButtons, {}, [
-            //         toRoute || toLocation
-            //           ? createElementWithObject(
-            //               XButton,
-            //               {
-            //                 action: XButton.Default,
             //                 "to-route": toRoute ?? false,
             //                 "to-location": toLocation ?? false
-            //               },
-            //               buttonText
-            //             )
-            //           : null
-            //       ])
           }
         </Panel>
       </div>
