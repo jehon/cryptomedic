@@ -72,7 +72,7 @@
     "ts-unused-exports": "11.0.1",
     "tsx": "4.19.3",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.31.0",
+    "typescript-eslint": "8.31.1",
     "webpack": "5.99.7",
     "webpack-cli": "6.0.1"
   },
