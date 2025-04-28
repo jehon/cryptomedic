@@ -1,4 +1,3 @@
-import { icons } from "../config";
 import {
   REPORT_ACTIVITY,
   REPORT_CASH_REGISTER,
@@ -9,6 +8,8 @@ import {
   REPORT_SURGICAL_SUGGESTED
 } from "../constants";
 import { MenuItem } from "./blocs/menu-item";
+import { MenuPatientCreateReference } from "./blocs/menu-patient-create-reference";
+import { MenuPatientSearchByReference } from "./blocs/menu-patient-search-by-reference";
 import "./home-element.css";
 
 export default function HomeElement() {
@@ -19,15 +20,8 @@ export default function HomeElement() {
         Home
       </h1>
       <div className="grid">
-        <div>XPatientByReference</div>
-        <MenuItem
-          title="Create a reference"
-          requires="folder.edit"
-          versalIcon={icons.models.patient}
-          toRoute="getRouteToCreateReference()"
-        >
-          The reference is auto-generated.
-        </MenuItem>
+        <MenuPatientSearchByReference />
+        <MenuPatientCreateReference />
         <MenuItem
           title="Search"
           requires="folder.read"

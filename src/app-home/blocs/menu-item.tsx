@@ -11,18 +11,20 @@ export function MenuItem({
   title,
   requires: restrictedBy,
   versalIcon,
-  toRoute,
-  toLocation,
+  children,
   buttonText,
-  children
+  buttons,
+  toRoute,
+  toLocation
 }: {
   title: string;
   requires?: string;
   versalIcon?: string;
+  children: React.ReactNode;
+  buttonText?: string;
   toRoute?: string;
   toLocation?: string;
-  buttonText?: string;
-  children: React.ReactNode;
+  buttons?: React.ReactNode[];
 }) {
   return (
     <Restricted requires={restrictedBy}>
@@ -33,12 +35,17 @@ export function MenuItem({
             <div className="description">{children}</div>
           </TwoColumns>
           <ButtonGroup>
-            <ActionButton
-              action={buttonText}
-              onOk={() =>
-                toLocation ? (document.location = toLocation) : routeTo(toRoute)
-              }
-            />
+            {buttons || (
+              <ActionButton
+                action={buttonText}
+                discrete={true}
+                onOk={() =>
+                  toLocation
+                    ? (document.location = toLocation)
+                    : routeTo(toRoute)
+                }
+              />
+            )}
           </ButtonGroup>
         </Panel>
       </div>
