@@ -16,6 +16,7 @@ export type IOPropsReadonly<T> = {
   e2eExcluded?: boolean;
   inputHelp?: React.ReactNode;
   appendix?: React.ReactNode;
+  mode?: "output" | "input" | "context";
 };
 
 export type IOProps<T> = IOPropsReadonly<T> & {
@@ -82,8 +83,10 @@ export default function IOAbstract<T>(
   // ReadOnly always prevent edit mode
   const editContext = useContext(EditContext) && writable;
 
+  const editMode =
+    props.mode == "output" ? false : props.mode == "input" ? true : editContext;
   // Hide if not value and output mode
-  if (!editContext && isEmptyValue(calculatedProps.value)) {
+  if (!editMode && isEmptyValue(calculatedProps.value)) {
     return null;
   }
 
@@ -93,7 +96,7 @@ export default function IOAbstract<T>(
       className={
         "io " +
         (calculatedProps.note ? "io-note " : "") +
-        (editContext ? "io-input " : "io-output ") +
+        (editMode ? "io-input " : "io-output ") +
         `io-${props.type}`
       }
       data-role={getLabel(calculatedProps)}
@@ -108,7 +111,7 @@ export default function IOAbstract<T>(
         className="content"
         data-e2e={calculatedProps.e2eExcluded ? "excluded" : ""}
       >
-        {editContext ? (
+        {editMode ? (
           <>
             {renderInput!(calculatedProps.value, uuid)}
             {props.inputHelp}
