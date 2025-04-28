@@ -37,7 +37,7 @@ export function patientRouterToFileAdd(
 export function patientRouterConfig() {
   return [
     {
-      path: "/patient/create",
+      path: "/patient/create/:year",
       element: <PatientRouter />
     },
     {

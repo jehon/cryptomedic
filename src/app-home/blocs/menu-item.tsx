@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { routeTo } from "../../main";
 import { toAttributeCase } from "../../utils/strings";
@@ -24,7 +25,7 @@ export function MenuItem({
   buttonText?: string;
   toRoute?: string;
   toLocation?: string;
-  buttons?: React.ReactNode[];
+  buttons?: ReactElement<typeof ActionButton>[];
 }) {
   return (
     <Restricted requires={restrictedBy}>
