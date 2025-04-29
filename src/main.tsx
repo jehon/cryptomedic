@@ -17,20 +17,23 @@ import RouteLoading from "./widget/route-loading";
 // https://reactrouter.com/en/main/routers/create-browser-router
 const router = createHashRouter([
   {
-    errorElement: <ErrorPage />
-  },
-  {
-    // TODO: Temporary
-    path: "/login/*",
-    element: (
-      <RouteLoading
-        message="Authenticating and loading"
-        element={<div>Ready</div>}
-      />
-    )
-  },
-  ...HomeRouter(),
-  ...patientRouterConfig()
+    path: "/",
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        // TODO: Temporary
+        path: "login/*",
+        element: (
+          <RouteLoading
+            message="Authenticating and loading"
+            element={<div>Ready</div>}
+          />
+        )
+      },
+      ...HomeRouter(),
+      ...patientRouterConfig()
+    ]
+  }
 ]);
 
 export function routeTo(target: string = "") {
