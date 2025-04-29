@@ -63,7 +63,7 @@ class RouteReferenceTestCase extends TestCase {
 		$this->assertNotNull($json, "Received JSON is null. Problem parsing response?");
 
 		if ($opt->getReference() !== false) {
-			$this->myAssertResponseAgainstReference($json, $opt->getReference());
+			$this->myAssertResponseAgainstReference($json, $opt->getReference(), $opt->getReferenceDynamic());
 		}
 
 		return $json;
@@ -87,15 +87,18 @@ class RouteReferenceTestCase extends TestCase {
 		return $json;
 	}
 
-	protected function myAssertResponseAgainstReference($json, $file = null) {
+	protected function myAssertResponseAgainstReference($json, $file = null, array $dynamic = [ "" ]) {
+		// Clone the object
+		$jsonFiltered = unserialize(serialize($json));
 
-		$jsonFiltered = json_decode(
-			preg_replace(
-				'/"(created_at|updated_at)":"[0-9\- :T]+(\.0+Z)?"/',
-				'"$1":"<timestamp>"',
-				json_encode($json)
-			)
-		);
+		array_walk_recursive($jsonFiltered, function(&$value, $key, $dynamic) {
+			if ($key == "created_at" or $key == "updated_at") {
+				$value = "<timestamp>";
+			}
+			if (in_array($key, $dynamic) !== false) {
+				$value = "<dynamic>";
+			}
+		}, $dynamic);
 
 		$jsonPP = json_encode($jsonFiltered, JSON_PRETTY_PRINT);
 

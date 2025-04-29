@@ -11,6 +11,7 @@ class RequestOptionsBuilder {
   protected $syncCheckpoint = false;
   protected $syncNbr = false;
   protected $reference = false;
+  protected $referenceDynamic = [];
 
   public function clone() {
     return clone $this;
@@ -159,13 +160,13 @@ class RequestOptionsBuilder {
     return $this->reference;
   }
 
-  public function setReference($reference = null) {
-    $this->reference = $reference;
-    return $this;
+  public function getReferenceDynamic(): array {
+    return $this->referenceDynamic;
   }
 
-  public function withReference() {
+  public function withReference(array $dynamic = []) {
     $this->reference = null;
+    $this->referenceDynamic = $dynamic;
     return $this;
   }
 }
