@@ -138,7 +138,7 @@ class RouteReferenceTestCase extends TestCase {
 		} else {
 			/* Assert the difference */
 			if (file_exists($pfile)) {
-				$res = $this->assertStringEqualsFile($pfile, $jsonPP);
+				$this->assertStringEqualsFile($pfile, $jsonPP);
 			} else {
 				$this->fail("Reference file not found: $file");
 			}
