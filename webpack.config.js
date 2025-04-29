@@ -65,7 +65,7 @@ export default {
   resolve: {
     extensions: [".ts", ".js", ".tsx"]
   },
-  devtool: isDebug ? "eval" : false,
+  devtool: isDebug ? "inline-source-map" : false,
   optimization: {
     // https://webpack.js.org/configuration/optimization/#optimizationmoduleids
     moduleIds: "deterministic"
