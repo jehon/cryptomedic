@@ -124,6 +124,7 @@ dev: clear start
 # No reset!
 # build: other stuff than frontend need to be build
 
+#? 
 dc-up:
 	docker compose up -d --wait --remove-orphans --build
 # bin/cr-refresh-structure "http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
@@ -166,7 +167,7 @@ acceptance: $(ACCEPTANCE)/.done dc-up
 $(ACCEPTANCE)/.done:
 	bin/cr-live-backup.sh "$(dir $@)"
 	touch "$@"
-
+	
 acceptance-refresh:
 	rm -f "$(ROOT)/$(ACCEPTANCE)/.done"
 # Do not depend but force running

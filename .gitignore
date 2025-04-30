@@ -25,3 +25,5 @@ vendor
 
 commit.msg
 *.bak
+
+note.md

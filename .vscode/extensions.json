@@ -1,6 +1,8 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
-    "angular.ng-template"
+    "angular.ng-template",
+    "ms-playwright.playwright",
+    "ms-azuretools.vscode-docker"
   ]
 }

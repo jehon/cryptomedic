@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import Bill from "../business/bill";
 
-import Payment from "../business/payment";
 import Price from "../business/price";
-import ButtonsGroup from "../styles/buttons-group";
 import { getList } from "../utils/config";
 import { getSession } from "../utils/session";
 import { string2number } from "../utils/strings";
-import ActionButton from "../widget/action-button";
 import IO from "../widget/io";
-import IODate from "../widget/io-date";
-import IONumber from "../widget/io-number";
-import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
@@ -184,7 +178,7 @@ export default function BillElement({
               name="center"
               value={file.center as string}
               list={getList("Centers")}
-            />{" "}
+            />
           </Panel>
           <Panel fixed label="Totals">
             <IO.Number
@@ -222,12 +216,6 @@ export default function BillElement({
               label="Price asked"
               value={priceAsked}
             />
-            {/*
-            TODO
-            <IO.Function
-              label="Payments Received (see below)"
-              value={() => roundTo(file.getTotalAlreadyPaid(), 0)}
-            /> */}
           </Panel>
         </TwoColumns>
         {price && (
@@ -242,35 +230,6 @@ export default function BillElement({
           </Panel>
         )}
       </>
-    ),
-    footer: props.mode != "edit" && file.id && price && (
-      <Panel fixed label="Payments" testid={file.uid() + ".payments"}>
-        <ButtonsGroup>
-          <ActionButton
-            style="Add"
-            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
-          />
-          <ActionButton
-            style="Edit"
-            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
-          />
-        </ButtonsGroup>
-        {file.getPayments().length == 0 ? (
-          <div>No payment received</div>
-        ) : (
-          file.getPayments().map((payment: Payment) => (
-            <div
-              key={payment.uid()}
-              className="payment-line"
-              data-testid={payment.uid()}
-            >
-              <IODate value={payment.date} noLabel />
-              <IONumber value={payment.amount} noLabel />
-              <IOString value={payment.comments} noLabel />
-            </div>
-          ))
-        )}
-      </Panel>
     )
   });
 }
