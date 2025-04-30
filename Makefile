@@ -5,6 +5,8 @@ export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 TMP := tmp
 ACCEPTANCE := live-from-production
+CRYPTOMEDIC_DEV_HTTP_HOST ?= localhost
+CRYPTOMEDIC_DEV_HTTP_PORT ?= 8085
 
 # To disable husky scripts
 export HUSKY=0
