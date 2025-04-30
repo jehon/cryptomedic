@@ -56,10 +56,11 @@ export default function ActionButton(
     ? "#/" + linkToRaw.join("/")
     : linkToRaw;
   const onOk =
-    props.onOk ??
-    (() => {
-      document.location.href = linkTo;
-    });
+    (props.onOk ?? linkTo)
+      ? () => {
+          document.location.href = linkTo;
+        }
+      : undefined;
 
   return (
     <Restricted requires={props.requires}>
