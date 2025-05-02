@@ -8,12 +8,20 @@ set -o pipefail
 
 # We replace the local integration (e2e test results) by those of github
 
-header_begin "Getting latest run"
+branch="$(git symbolic-ref --short -q HEAD)"
+
+# Configure gh:
+export PAGER=""
+
+if [ -z "$branch" ]; then
+  branch="main"
+fi
+
+header_begin "Getting latest run on $branch"
 # https://cli.github.com/manual/gh_run_list
 # gh run list --branch main --limit 1 --workflow .github/workflows/test.yml
-RUN_ID="$(gh run list --branch main --limit 1 --workflow .github/workflows/test.yml --json databaseId --jq ".[0].databaseId")"
-PAGER="" gh run view "$RUN_ID"
-echo "RUN_ID: $RUN_ID"
+runId="$(gh run list --branch "$branch" --limit 1 --workflow .github/workflows/test.yml --json databaseId --jq ".[0].databaseId")"
+gh run view "$runId" | head -n 20
 header_end
 
 get_artifact() {
@@ -25,7 +33,7 @@ get_artifact() {
   (
     rm -fr "${destination}"
     mkdir -p "${destination}"
-    gh run download "$RUN_ID" --name "${artifactName}" --dir "${destination}"
+    gh run download "$runId" --name "${artifactName}" --dir "${destination}"
   )
 }
 
