@@ -8,3 +8,11 @@ export function patientCreate(formData: FormData): Promise<Patient> {
     formData
   }).then((json) => json.folder[0].record);
 }
+
+export function patientSearch(formData: FormData): Promise<Patient[]> {
+  return request({
+    url: ["folder"],
+    method: CRUD.search,
+    formData
+  });
+}
