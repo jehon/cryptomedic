@@ -5,6 +5,7 @@ import Price from "../business/price";
 import { getList } from "../utils/config";
 import { getSession } from "../utils/session";
 import { string2number } from "../utils/strings";
+import ActionButton from "../widget/action-button";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
@@ -13,6 +14,7 @@ import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
+import { Modes, patientRouterToFile } from "./patient-router";
 
 export default function BillElement({
   file,
@@ -158,6 +160,17 @@ export default function BillElement({
             .map((p) => p.amount)
             .reduce((acc, v) => acc + v, 0)}
         </span>
+        {!props.mode && (
+          <ActionButton
+            style="Edit"
+            linkTo={patientRouterToFile(
+              props.folder.id!,
+              Bill,
+              file.id!,
+              Modes.input
+            )}
+          />
+        )}
       </>
     ),
     body: (

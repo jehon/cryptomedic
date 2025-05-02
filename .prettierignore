@@ -18,4 +18,5 @@ composer.json
 
 services/database/initial/100 base.sql
 
-note.md
+
+note-lucas/
