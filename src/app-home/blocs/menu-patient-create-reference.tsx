@@ -25,7 +25,7 @@ export function MenuPatientCreateReference() {
         title="Create a reference"
         requires="folder.edit"
         // versalIcon={icons.models.patient}
-        buttons={[<ActionButton style={"Add"} default />]}
+        buttons={[<ActionButton key="add" style={"Add"} default />]}
       >
         <IONumber
           mode="input"
