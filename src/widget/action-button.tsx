@@ -41,6 +41,10 @@ export const ActionStyles = {
   View: {
     css: "action-view",
     text: "View"
+  } as const,
+  Reset: {
+    css: "action-alternate",
+    text: "Reset"
   } as const
 };
 
