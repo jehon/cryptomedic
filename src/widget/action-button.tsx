@@ -8,7 +8,7 @@ export type ButtonActionProps = {
   default?: boolean;
   discrete?: boolean;
   action?: string;
-  onOk?: () => void;
+  onOk?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   linkTo?: string | string[];
   requires?: string;
 };
