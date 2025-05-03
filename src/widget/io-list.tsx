@@ -94,7 +94,7 @@ function buildRadios(
         name={name}
         defaultChecked={value + "" === stored}
         value={stored}
-        onBlur={() => onChange(stored)}
+        onChange={() => onChange(stored)}
         type="radio"
         required
       />

@@ -25,7 +25,7 @@ export default function IOBoolean(props: IOProps<boolean>) {
             name={props.name}
             value="1"
             defaultChecked={string2Boolean(value)}
-            onBlur={(evt) =>
+            onChange={(evt) =>
               props.onChange && props.onChange(evt.target.checked)
             }
             {...props.htmlProps}

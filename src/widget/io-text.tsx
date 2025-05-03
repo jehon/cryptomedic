@@ -22,7 +22,7 @@ export default function IOText(props: IOProps<StringText>) {
           rows={Math.max((value || "").split("\n").length, 2)}
           defaultValue={value ?? ""}
           onKeyUp={(event) => adjust(event.target as HTMLTextAreaElement)}
-          onBlur={(evt) => props.onChange && props.onChange(evt.target.value)}
+          onChange={(evt) => props.onChange && props.onChange(evt.target.value)}
         />
       )
     }

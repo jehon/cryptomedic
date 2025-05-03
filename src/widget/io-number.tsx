@@ -35,7 +35,7 @@ export default function IONumber(
           className="form-control"
           name={props.name}
           defaultValue={(value ?? 0) + ""}
-          onBlur={(evt) =>
+          onChange={(evt) =>
             props.onChange && props.onChange(canonize(evt.target.value))
           }
           type="number"
