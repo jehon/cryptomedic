@@ -1,50 +1,95 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "../../widget/action-button";
+import { EditContext } from "../../widget/io-abstract";
 import IONumber from "../../widget/io-number";
-import { patientSearch } from "../loaders";
+import { patientCreate, patientSearch } from "../loaders";
 import { MenuItem } from "./menu-item";
 
 export function MenuPatientSearchByReference() {
+  const currentYear = new Date().getFullYear();
+  const [data, updateData] = useState<Record<string, number>>({
+    entry_year: currentYear,
+    entry_order: 0
+  });
   const [state, updateState] = useState<"" | "create" | "error">("");
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
-  const currentYear = new Date().getFullYear();
 
   return (
-    <form
-      ref={formRef}
-      onSubmit={async (event: React.SyntheticEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const patients = await patientSearch(new FormData(event.currentTarget));
-        switch (patients.length) {
-          case 1: {
+    <EditContext.Provider value={state == ""}>
+      <form
+        ref={formRef}
+        onSubmit={async (event: React.SyntheticEvent<HTMLFormElement>) => {
+          event.preventDefault();
+          const formData = new FormData(event.currentTarget);
+          const patients = await patientSearch(formData);
+          if (patients.length == 1) {
             const patient = patients[0];
             navigate(`/patient/${patient.id}/patient.${patient.id}`);
-            break;
           }
-        }
-      }}
-    >
-      <MenuItem
-        title="Create a reference"
-        requires="folder.edit"
-        // versalIcon={icons.models.patient}
-        buttons={[<ActionButton key="view" style="View" default />]}
+
+          if (patients.length == 0) {
+            updateState("create");
+          } else {
+            updateState("error");
+          }
+        }}
       >
-        <IONumber
-          mode="input"
-          name="entry_year"
-          value={currentYear}
-          htmlProps={{ min: 2000, max: currentYear }}
-        />
-        <IONumber
-          mode="input"
-          name="entry_order"
-          value={0}
-          htmlProps={{ min: 1 }}
-        />
-      </MenuItem>
-    </form>
+        <MenuItem
+          title="Create a reference"
+          requires="folder.edit"
+          // versalIcon={icons.models.patient}
+          buttons={[
+            ...(state == ""
+              ? [<ActionButton key="view" style="View" default />]
+              : []),
+            ...(state != ""
+              ? [
+                  <ActionButton
+                    key="reset"
+                    style="Reset"
+                    default
+                    onOk={() => updateState("")}
+                  />
+                ]
+              : []),
+            ...(state == "create"
+              ? [
+                  <ActionButton
+                    key="create"
+                    style="Add"
+                    onOk={() => {
+                      const fd = new FormData();
+                      fd.append("entry_year", "" + data["entry_year"]);
+                      fd.append("entry_order", "" + data["entry_order"]);
+                      patientCreate(fd).then((patient) =>
+                        navigate(`/patient/${patient.id}/patient.${patient.id}`)
+                      );
+                    }}
+                  />
+                ]
+              : [])
+          ]}
+        >
+          <IONumber
+            name="entry_year"
+            value={data["entry_year"]}
+            htmlProps={{ min: 2000, max: currentYear }}
+            onChange={(val) => updateData({ ...data, entry_year: val })}
+          />
+          <IONumber
+            name="entry_order"
+            value={data["entry_order"]}
+            htmlProps={{ min: 1 }}
+            onChange={(val) => updateData({ ...data, entry_order: val })}
+          />
+          {state == "error" && (
+            <div>Server error: multiple results received</div>
+          )}
+          {state == "create" && <div>Create the selected reference?</div>}
+        </MenuItem>
+      </form>
+    </EditContext.Provider>
   );
 }
