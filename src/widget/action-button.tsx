@@ -72,7 +72,11 @@ export default function ActionButton(
       <button
         className={"btn " + as.css + (props.discrete ? " discrete " : "")}
         onClick={onOk}
-        {...(props.default ? { type: "submit" } : {})}
+        {
+          //https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#type
+          // by default, it is a submit button
+          ...(props.default ? { type: "submit" } : { type: "button" })
+        }
       >
         {action}
       </button>
