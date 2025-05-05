@@ -17,8 +17,7 @@ const LOGINS = {
 const PASSWORD = "p";
 
 export function crUrl(segment: string = ""): string {
-  // TODO: remove the "?dev" when migration is finished
-  return `${WebBaseUrl}/built/frontend/ng1x.html?dev#${segment}`;
+  return `${WebBaseUrl}/built/frontend/ng1x.html#${segment}`;
 }
 
 function crUrlAPI(segment: string = ""): string {
