@@ -11,7 +11,6 @@ import { HomeRouter } from "./app-home/home-router";
 import { patientRouterConfig } from "./app-patient/patient-router";
 import { bridgeTo } from "./utils/react";
 import ErrorPage from "./widget/error-page";
-import RouteLoading from "./widget/route-loading";
 
 // Thanks to: https:/rm /reactrouter.com/en/main/start/tutorial#setup
 // https://reactrouter.com/en/main/routers/create-browser-router
@@ -20,16 +19,7 @@ const router = createHashRouter([
     path: "/",
     errorElement: <ErrorPage />,
     children: [
-      {
-        // TODO: Temporary
-        path: "login/*",
-        element: (
-          <RouteLoading
-            message="Authenticating and loading"
-            element={<div>Ready</div>}
-          />
-        )
-      },
+      // All sub routes
       ...HomeRouter(),
       ...patientRouterConfig()
     ]
