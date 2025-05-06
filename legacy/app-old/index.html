@@ -24,15 +24,15 @@
     <div id="menu">
       <img src="/favicon.svg" height="30px" />
       <span style="flex-grow: 1"></span>
-      <a id="menu_home" href="#/home" class="navbar-link">
-        <x-restricted
-          restricted-by="application.open"
-          style="flex-direction: row"
-        >
+      <x-restricted
+        restricted-by="application.open"
+        style="flex-direction: row"
+      >
+        <a id="menu_home" href="#/home" class="navbar-link">
           <img src="/static/img/home.gif" height="20px" />
           Home
-        </x-restricted>
-      </a>
+        </a>
+      </x-restricted>
       <x-user-status></x-user-status>
     </div>
     <div class="container-fluid" id="main_content" data-testid="top-level">
