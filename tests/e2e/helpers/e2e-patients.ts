@@ -33,6 +33,7 @@ export class E2EPatient {
   detectPatientId(): string {
     const url: string = this.page.url();
     const matches = /#\/patient\/(?<id>[0-9]+)\/.*$/.exec(url);
+    console.info("Guessing patient: ", matches?.groups?.["id"]);
     return matches?.groups?.["id"] ?? "";
   }
 
