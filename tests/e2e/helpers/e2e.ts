@@ -127,20 +127,6 @@ export async function crReady(page: Page): Promise<void> {
   await expect(page.getByTestId("global-wait"), "crReady").toHaveCount(0);
 }
 
-export async function crLegacyInput(
-  page: Page | Locator,
-  selector: string,
-  value: string | number
-): Promise<void> {
-  const el = page.locator(selector);
-  const msg = "with '${selector}' = '${value}' (e2e.crLegacyInput)`";
-  await expect(el, msg).toBeVisible();
-  const input = el.locator("input");
-  await expect(input, msg).toBeVisible();
-  await input.fill("" + value);
-  await expect(input, msg).toHaveValue("" + value);
-}
-
 export async function crAcceptPopup(page: Page | Locator, button: string) {
   const box = page.locator(".popup .box .buttons.btn-group");
   await expect(page.locator(".popup .box .buttons.btn-group")).toBeVisible();
