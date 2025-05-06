@@ -73,7 +73,6 @@ mainApp.controller("ctrl_folder", ctrl_folder);
 
 // Routing
 import { createElementWithObject } from "../v2/js/custom-element.js";
-import XPageHome from "../v2/pages/x-page-home.js";
 import XPageLogin from "../v2/pages/x-page-login.js";
 import XPagePrices from "../v2/pages/x-page-prices.js";
 import XPageReports from "../v2/pages/x-page-reports.js";
@@ -106,9 +105,6 @@ mainApp.config([
       .when("/folder/:patient_id/:page?/:subtype?/:subid?/:mode?", {
         templateUrl: template("folder"),
         controller: "ctrl_folder"
-      })
-      .when("/home", {
-        template: () => goToElement(XPageHome)
       })
       .when("/search", {
         template: () => goToElement(XPageSearch)

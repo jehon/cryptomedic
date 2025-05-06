@@ -5,7 +5,7 @@ flavorFilter(flavorFilter.DESKTOP, () =>
   context("Actions", () => {
     it("should show report", () => {
       goReport(
-        "statistical",
+        "statistical-report",
         () => {
           cy.get('[label="Period"] > x-input-list').invoke(
             "attr",

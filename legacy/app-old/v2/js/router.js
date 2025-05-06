@@ -75,23 +75,6 @@ export function routeToFolderPatient(folderId) {
   setRoute(getRouteToFolderPatient(folderId));
 }
 
-/**
- * Get a route to the creation of a folder
- *
- * @returns {string} the route
- */
-export function getRouteToCreateReference() {
-  return "/folder/-1/edit";
-}
-
-/**
- * @param {string} reportName - the name of the report
- * @returns {string} the route
- */
-export function getRouteToReport(reportName) {
-  return `/reports/${reportName}`;
-}
-
 export const routes = {
   users_list: "/users",
   user_add: "/users/new",

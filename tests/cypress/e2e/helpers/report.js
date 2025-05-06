@@ -7,7 +7,7 @@ export function goReport(reportName, fillInFieldsCb, checkCb) {
   crLoginInBackground(crApiLogin.RO);
 
   crPage().within(() => {
-    cy.get(`#report_${reportName}_menu > x-buttons > x-button`).click();
+    cy.get(`[data-testid=${reportName}] button`).click();
 
     cy.get("x-page-reports")
       .should("be.visible")
