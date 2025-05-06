@@ -37,18 +37,26 @@ export function MenuPatientSearchByReference() {
         }}
       >
         <MenuItem
-          title="Create a reference"
+          title="Search a reference"
           requires="folder.edit"
           // versalIcon={icons.models.patient}
           buttons={[
             ...(state == ""
-              ? [<ActionButton key="view" style="View" default />]
+              ? [
+                  <ActionButton
+                    action="Search"
+                    key="search"
+                    style="View"
+                    default
+                  />
+                ]
               : []),
             ...(state != ""
               ? [
                   <ActionButton
                     key="reset"
                     style="Reset"
+                    discrete
                     default
                     onOk={() => updateState("")}
                   />
@@ -59,6 +67,7 @@ export function MenuPatientSearchByReference() {
                   <ActionButton
                     key="create"
                     style="Add"
+                    action="Create"
                     onOk={() => {
                       const fd = new FormData();
                       fd.append("entry_year", "" + data["entry_year"]);

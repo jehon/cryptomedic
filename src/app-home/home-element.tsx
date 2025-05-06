@@ -8,7 +8,7 @@ import {
   REPORT_SURGICAL_SUGGESTED
 } from "../constants";
 import { MenuItem } from "./blocs/menu-item";
-import { MenuPatientCreateReference } from "./blocs/menu-patient-create-reference";
+import { MenuPatientGenerateReference } from "./blocs/menu-patient-generate-reference";
 import { MenuPatientSearchByReference } from "./blocs/menu-patient-search-by-reference";
 import "./home-element.css";
 
@@ -21,7 +21,7 @@ export default function HomeElement() {
       </h1>
       <div className="grid">
         <MenuPatientSearchByReference />
-        <MenuPatientCreateReference />
+        <MenuPatientGenerateReference />
         <MenuItem
           title="Search"
           requires="folder.read"

@@ -5,7 +5,7 @@ import IONumber from "../../widget/io-number";
 import { patientCreate } from "../loaders";
 import { MenuItem } from "./menu-item";
 
-export function MenuPatientCreateReference() {
+export function MenuPatientGenerateReference() {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
@@ -22,10 +22,17 @@ export function MenuPatientCreateReference() {
       }}
     >
       <MenuItem
-        title="Create a reference"
+        title="Generate a reference"
         requires="folder.edit"
         // versalIcon={icons.models.patient}
-        buttons={[<ActionButton key="add" style={"Add"} default />]}
+        buttons={[
+          <ActionButton
+            action="Generate"
+            key="generate"
+            style={"Add"}
+            default
+          />
+        ]}
       >
         <IONumber
           mode="input"
