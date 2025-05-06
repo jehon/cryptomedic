@@ -44,7 +44,7 @@ export default function FolderElement({
   };
 
   if (!folder) {
-    return <div>No folder selected</div>;
+    return <div key="no-folder-selected">No folder selected</div>;
   }
 
   if (selectedUid?.endsWith(".add")) {
@@ -69,7 +69,11 @@ export default function FolderElement({
   };
 
   return (
-    <div data-testid={"folder-" + folder.getId()} className="reduce-width">
+    <div
+      key="top-folder"
+      data-testid={"folder-" + folder.getId()}
+      className="reduce-width"
+    >
       {/* ------------ Header  --------------------*/}
       <ButtonsGroup>
         <button
@@ -118,25 +122,63 @@ export default function FolderElement({
       {(folder.getChildren() as PatientRelated[]).map(
         (file: PatientRelated) => {
           if (file instanceof Appointment) {
-            return <AppointmentElement file={file} props={commonProps} />;
+            return (
+              <AppointmentElement
+                key={file.uid()}
+                file={file}
+                props={commonProps}
+              />
+            );
           }
           if (file instanceof Bill) {
-            return <BillElement file={file} props={commonProps} />;
+            return (
+              <BillElement key={file.uid()} file={file} props={commonProps} />
+            );
           }
           if (file instanceof ConsultClubfoot) {
-            return <ConsultClubfootElement file={file} props={commonProps} />;
+            return (
+              <ConsultClubfootElement
+                key={file.uid()}
+                file={file}
+                props={commonProps}
+              />
+            );
           }
           if (file instanceof ConsultOther) {
-            return <ConsultOtherElement file={file} props={commonProps} />;
+            return (
+              <ConsultOtherElement
+                key={file.uid()}
+                file={file}
+                props={commonProps}
+              />
+            );
           }
           if (file instanceof ConsultRicket) {
-            return <ConsultRicketElement file={file} props={commonProps} />;
+            return (
+              <ConsultRicketElement
+                key={file.uid()}
+                file={file}
+                props={commonProps}
+              />
+            );
           }
           if (file instanceof Picture) {
-            return <PictureElement file={file} props={commonProps} />;
+            return (
+              <PictureElement
+                key={file.uid()}
+                file={file}
+                props={commonProps}
+              />
+            );
           }
           if (file instanceof Surgery) {
-            return <SurgeryElement file={file} props={commonProps} />;
+            return (
+              <SurgeryElement
+                key={file.uid()}
+                file={file}
+                props={commonProps}
+              />
+            );
           }
           return null;
         }
