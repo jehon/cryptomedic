@@ -21,7 +21,19 @@ const router = createHashRouter([
     children: [
       // All sub routes
       ...HomeRouter(),
-      ...patientRouterConfig()
+      ...patientRouterConfig(),
+
+      // Legacy code to be migrated into react
+      { path: "/login/:redirect", element: <div>to legacy code</div> },
+      { path: "/search", element: <div>to legacy code</div> },
+      { path: "/reports/:report", element: <div>to legacy code</div> },
+      { path: "/users/:uid/password", element: <div>to legacy code</div> },
+      { path: "/users/:uid", element: <div>to legacy code</div> },
+      { path: "/users", element: <div>to legacy code</div> },
+      { path: "/prices", element: <div>to legacy code</div> },
+
+      // To be removed
+      { path: "/folder/*", element: <div></div> }
     ]
   }
 ]);
