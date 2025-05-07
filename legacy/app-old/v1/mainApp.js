@@ -106,6 +106,7 @@ mainApp.config([
         templateUrl: template("folder"),
         controller: "ctrl_folder"
       })
+
       .when("/search", {
         template: () => goToElement(XPageSearch)
       })
@@ -125,7 +126,7 @@ mainApp.config([
         template: () => goToElement(XPagePrices)
       })
 
-      .when("/home.new", {
+      .when("/home", {
         template: "<x-react-router></x-react-router>"
       })
       .when("/patient/:folderId?/:uid?/:mode?", {

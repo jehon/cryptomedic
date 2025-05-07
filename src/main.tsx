@@ -1,5 +1,5 @@
 /* Packages */
-import { createHashRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, Navigate, RouterProvider } from "react-router-dom";
 
 /* Styles */
 import "bootstrap4/dist/css/bootstrap.min.css";
@@ -33,7 +33,10 @@ const router = createHashRouter([
       { path: "/prices", element: <div>to legacy code</div> },
 
       // To be removed
-      { path: "/folder/*", element: <div></div> }
+      { path: "/folder/*", element: <div></div> },
+      {
+        element: <Navigate to="/home" />
+      }
     ]
   }
 ]);
