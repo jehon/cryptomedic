@@ -34,16 +34,8 @@ export default class Pojo {
   updated_at: StringDate = "";
   last_user: string = "";
 
-  getId() {
-    return this.id;
-  }
-
   uid() {
-    return `${this.getStatic().getTechnicalName()}.${this.getId() ?? "add"}`;
-  }
-
-  isLocked() {
-    return false;
+    return `${this.getStatic().getTechnicalName()}.${this.id ?? "add"}`;
   }
 
   getParentField(): string | undefined {

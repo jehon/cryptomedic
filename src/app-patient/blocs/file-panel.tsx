@@ -3,10 +3,12 @@ import { ButtonGroup } from "react-bootstrap";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Timed from "../../business/abstracts/timed";
+import Appointment from "../../business/appointment";
 import Folder from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons, isFeatureSwitchEnabled } from "../../config";
 import { routeTo } from "../../main";
+import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { EditContext } from "../../widget/io-abstract";
 import Panel from "../../widget/panel";
@@ -52,7 +54,7 @@ export default function FilePanel({
   const formRef = useRef<HTMLFormElement>(null);
   // const navigate = useNavigate();
 
-  const addMode = !file.getId();
+  const addMode = !file.id;
   const editMode = addMode || (edit ?? false);
 
   const buttonContext: ButtonContext = {
@@ -61,7 +63,11 @@ export default function FilePanel({
     title: file.getStatic().getTitle(),
     migrationUrlHash: `folder/${file.getParentId()}/file/${file.getStatic().getModel()}`,
     editMode,
-    isLocked: file instanceof PatientRelated && file.isLocked(),
+    isLocked:
+      file instanceof PatientRelated &&
+      !(file instanceof Patient) &&
+      !(file instanceof Appointment) &&
+      isLocked(file),
     canDelete:
       file instanceof PatientRelated &&
       !addMode &&
@@ -143,7 +149,7 @@ export default function FilePanel({
             patientRouterToFile(
               file.getParentId()!,
               file.getStatic(),
-              file.getId()!,
+              file.id!,
               Modes.output
             )
           )

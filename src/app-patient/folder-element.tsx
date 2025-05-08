@@ -51,7 +51,7 @@ export default function FolderElement({
     const typeName = selectedUid.replace(".add", "");
     const typeClass = type2Class(typeName) as typeof PatientRelated;
     if (isTodoMigration(typeClass)) {
-      location.hash = `/folder/${folder.getId()}/file/${typeClass.getModel()}`;
+      location.hash = `/folder/${folder.id}/file/${typeClass.getModel()}`;
       return;
     }
     if (folder.list.filter((f) => f.uid() == selectedUid).length == 0) {
@@ -71,7 +71,7 @@ export default function FolderElement({
   return (
     <div
       key="top-folder"
-      data-testid={"folder-" + folder.getId()}
+      data-testid={"folder-" + folder.id}
       className="reduce-width"
     >
       {/* ------------ Header  --------------------*/}
@@ -104,7 +104,7 @@ export default function FolderElement({
               className="dropdown-item"
               key={type.getTechnicalName()}
               data-testid={"add-" + type.getTechnicalName()}
-              to={patientRouterToFileAdd(folder.getId()!, type)}
+              to={patientRouterToFileAdd(folder.id!, type)}
             >
               {type.getTitle()}
             </Link>

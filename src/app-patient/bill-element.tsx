@@ -22,7 +22,7 @@ import patientRelatedElementGenerator, {
 } from "./patient-related-element-generator";
 
 function getPayments(file: Bill): Payment[] {
-  return file.getParent!().getFilesRelatedToBill(file.getId());
+  return file.getParent!().getFilesRelatedToBill(file.id);
 }
 
 export default function BillElement({
@@ -252,11 +252,11 @@ export default function BillElement({
         <ButtonsGroup>
           <ActionButton
             style="Add"
-            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
+            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.id}`}
           />
           <ActionButton
             style="Edit"
-            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
+            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.id}`}
           />
         </ButtonsGroup>
         {getPayments(file).length == 0 ? (

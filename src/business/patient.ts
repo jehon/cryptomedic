@@ -24,10 +24,6 @@ export default class Patient extends PatientRelated {
     return "patient";
   }
 
-  override isLocked() {
-    return false;
-  }
-
   override getParentField(): string {
     return "";
   }

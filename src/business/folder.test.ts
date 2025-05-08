@@ -22,12 +22,12 @@ beforeEach(async () => {
 test("should instantiate folder", () => {
   const fnew = new Folder();
   assert(fnew.getPatient() instanceof Patient);
-  assert.equal(fnew.getId(), "-1");
+  assert.equal(fnew.id, "-1");
 });
 
 test("should have loaded Mock data", () => {
   assert(f.getPatient() instanceof Patient);
-  assert.equal(f.getId(), "1");
+  assert.equal(f.id, "1");
 });
 
 test("should give the patient", function () {
@@ -175,7 +175,7 @@ test("getLastSeen", function () {
 });
 
 test("Copy with new file", function () {
-  assert.equal(f.getId(), "1");
+  assert.equal(f.id, "1");
   const fap = f.getByUid<Appointment>("appointment.2");
   assert(fap instanceof Appointment);
   assert.equal(fap.purpose, "");

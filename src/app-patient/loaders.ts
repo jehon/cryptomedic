@@ -65,7 +65,7 @@ export function folderFileUpdate<T extends PatientRelated>(
   formData: FormData
 ): Promise<PatientRelated> {
   return request({
-    url: ["fiche", file.getStatic().getTechnicalName(), file.getId() || ""],
+    url: ["fiche", file.getStatic().getTechnicalName(), file.id || ""],
     method: CRUD.update,
     formData
   })

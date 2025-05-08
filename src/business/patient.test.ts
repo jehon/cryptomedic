@@ -43,11 +43,11 @@ beforeEach(async () => {
 
 test("should instantiate patient", () => {
   const pNew = new Patient();
-  assert.equal(pNew.getId(), undefined);
+  assert.equal(pNew.id, undefined);
 });
 
 test("should have loaded Mock data", () => {
-  assert.equal(p.getId(), "1");
+  assert.equal(p.id, "1");
 });
 
 test("should give patient related files", () => {
@@ -81,7 +81,7 @@ test("should give patient related files", () => {
   assert.equal(p.getChildren()[i].id, (list[i] as Bill).id);
   const bill = p.getChildren()[i] as Bill;
   assert(bill.payment[0] instanceof Payment);
-  assert.equal(bill.payment[0].getId(), "3");
+  assert.equal(bill.payment[0].id, "3");
 
   i++;
   assert(list[i] instanceof ConsultOther);
@@ -168,7 +168,7 @@ test("getLastSeen", function () {
 });
 
 test("Copy with new file", function () {
-  assert.equal(p.getId(), "1");
+  assert.equal(p.id, "1");
   const fap = filterById(p.appointment, "2");
   assert(fap instanceof Appointment);
   assert.equal(fap.id, 2);

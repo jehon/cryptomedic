@@ -1,4 +1,5 @@
 import type Consult from "../business/abstracts/consult";
+import type PatientRelated from "../business/abstracts/patient-related";
 import type Timed from "../business/abstracts/timed";
 import type Patient from "../business/patient";
 import { fromBirthDateTo, normalizeDate } from "./date";
@@ -70,4 +71,13 @@ export function getBMISd(consult: Consult, patient: Patient) {
     getAgeAtThatTime(consult, patient),
     bmi(consult)
   );
+}
+
+export function isLocked(patientRelated: PatientRelated): boolean {
+  if (!patientRelated.updated_at) {
+    return false;
+  }
+  const dlock = new Date(patientRelated.updated_at);
+  dlock.setDate(dlock.getDate() + 35);
+  return dlock < new Date();
 }

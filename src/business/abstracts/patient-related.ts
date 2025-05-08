@@ -8,7 +8,7 @@ export default class PatientRelated extends Pojo {
   registerParent(parent: Folder) {
     this.#parent = parent;
     if (parent) {
-      this.patient_id = parent.getId();
+      this.patient_id = parent.id;
     }
     return this;
   }
@@ -23,15 +23,6 @@ export default class PatientRelated extends Pojo {
    */
   getPatient() {
     return this.#parent!.getPatient();
-  }
-
-  override isLocked(): boolean {
-    if (!this.updated_at) {
-      return false;
-    }
-    const dlock = new Date(this.updated_at);
-    dlock.setDate(dlock.getDate() + 35);
-    return dlock < new Date();
   }
 
   override getParentField(): string {

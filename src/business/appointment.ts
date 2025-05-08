@@ -10,8 +10,4 @@ export default class Appointment extends Timed {
   }
 
   purpose: string = "";
-
-  override isLocked() {
-    return false;
-  }
 }
