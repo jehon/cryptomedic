@@ -123,7 +123,7 @@ export default class Folder extends Pojo {
     throw new Error(`Could not find ${type}#${id}} in getByTypeAndId`);
   }
 
-  #getByFieldValue(field: string, value?: string): PatientRelated[] {
+  _getByFieldValue(field: string, value?: string): PatientRelated[] {
     const res = [];
     for (const i in this.list) {
       // Not exactly exact, but close enough
@@ -150,7 +150,7 @@ export default class Folder extends Pojo {
       return [];
     }
     return (
-      this.#getByFieldValue("patient_id", this.getPatient().id)
+      this._getByFieldValue("patient_id", this.getPatient().id)
         .sort(patientRelatedOrdering)
         .filter((v) => !(v instanceof Patient))
         // TODO: this is not in the correct place
@@ -160,7 +160,7 @@ export default class Folder extends Pojo {
 
   // TODO: move this to bill
   getFilesRelatedToBill(id?: string): Payment[] {
-    return this.#getByFieldValue("bill_id", id).sort(
+    return this._getByFieldValue("bill_id", id).sort(
       patientRelatedOrdering
     ) as unknown as Payment[];
   }
