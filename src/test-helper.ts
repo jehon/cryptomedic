@@ -2,7 +2,6 @@ import assert from "assert";
 import Pojo from "./business/abstracts/pojo";
 import Folder from "./business/folder";
 import Patient from "./business/patient";
-import { setSession } from "./utils/session";
 import { string2number } from "./utils/strings";
 import { type StringNumber } from "./utils/types";
 
@@ -41,18 +40,6 @@ export async function loadReference<T extends Pojo = Patient>({
   const model = (type as typeof Pojo).factory(valid_respond.default) as T;
   assert.ok(model instanceof type);
   return model;
-}
-
-export async function loadSession() {
-  const valid_respond = await import(refRoot + "AuthTest.testsLogin.json");
-
-  if (valid_respond == null) {
-    throw new Error("The reference " + name + " is empty or not found");
-  }
-  const session = valid_respond.default;
-  assert.equal(Object.keys(session.prices).length, 3);
-  setSession(session);
-  return session;
 }
 
 export function assertToBeClose(

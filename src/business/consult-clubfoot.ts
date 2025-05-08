@@ -1,4 +1,3 @@
-import { string2number } from "../utils/strings";
 import {
   type StringBoolean,
   type StringList,
@@ -62,34 +61,4 @@ export default class ConsultClubfoot extends Consult {
   dorsal_flexion_max_left: StringNumber = "";
   plantar_flexion_max_left: StringNumber = "";
   muscular_inbalance_left: StringBoolean = "";
-
-  getPiraniLeft() {
-    try {
-      return (
-        string2number(this.curved_lateral_border_left) +
-        string2number(this.medial_crease_left) +
-        string2number(this.talar_head_coverage_left) +
-        string2number(this.posterior_crease_left) +
-        string2number(this.rigid_equinus_left) +
-        string2number(this.empty_heel_left)
-      );
-    } catch (_e) {
-      throw new Error("?");
-    }
-  }
-
-  getPiraniRight() {
-    try {
-      return (
-        string2number(this.curved_lateral_border_right) +
-        string2number(this.medial_crease_right) +
-        string2number(this.talar_head_coverage_right) +
-        string2number(this.posterior_crease_right) +
-        string2number(this.rigid_equinus_right) +
-        string2number(this.empty_heel_right)
-      );
-    } catch (_e) {
-      throw new Error("?");
-    }
-  }
 }

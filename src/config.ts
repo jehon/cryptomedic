@@ -54,6 +54,7 @@ export function isFeatureSwitchEnabled(): boolean {
 if (isFeatureSwitchEnabled()) {
   console.warn("In dev mode (inTodoDev in config.ts)");
 }
+
 export const REPORT_ACTIVITY = "activity";
 export const REPORT_CASH_REGISTER = "cash-register";
 export const REPORT_CONSULTATIONS = "consultations";
@@ -61,3 +62,7 @@ export const REPORT_FINANCIAL = "financial";
 export const REPORT_SURGICAL = "surgical";
 export const REPORT_SURGICAL_SUGGESTED = "surgical-suggested";
 export const REPORT_STATISTICAL = "statistical";
+
+export function getPriceCategories() {
+  return ["consult", "medecine", "other", "workshop", "surgical"];
+}

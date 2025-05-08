@@ -14,22 +14,4 @@ export default class Picture extends Timed {
   type: StringList = "";
   file: string = "";
   comments: string = "";
-
-  getPictureUrl() {
-    return "/api/picture/" + this.id;
-  }
-
-  // // Legacy
-  // validate(res) {
-  //   res = super.validate(res);
-
-  //   if (!this.fileContent && !this.file) {
-  //     res.pictureRequired = true;
-  //   }
-
-  //   if (this.date > new Date().toISOString()) {
-  //     res.dateInTheFuture = true;
-  //   }
-  //   return res;
-  // }
 }

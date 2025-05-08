@@ -10,10 +10,6 @@ export default class Price extends Pojo {
     return "price";
   }
 
-  static getCategories() {
-    return ["consult", "medecine", "other", "workshop", "surgical"];
-  }
-
   date_from?: StringDate;
   date_to?: StringDate;
   social_level_threshold_1: number = 0;

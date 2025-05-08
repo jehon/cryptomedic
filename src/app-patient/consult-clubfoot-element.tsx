@@ -3,7 +3,7 @@ import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
 import ConsultClubfoot from "../business/consult-clubfoot";
 import { getList } from "../utils/session";
-import { tryOrMessage } from "../utils/strings";
+import { string2number, tryOrMessage } from "../utils/strings";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import IOBoolean from "../widget/io-boolean";
 import IOFunction from "../widget/io-function";
@@ -14,6 +14,36 @@ import TwoColumns from "../widget/two-columns";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
+
+function getPiraniLeft(file: ConsultClubfoot) {
+  try {
+    return (
+      string2number(file.curved_lateral_border_left) +
+      string2number(file.medial_crease_left) +
+      string2number(file.talar_head_coverage_left) +
+      string2number(file.posterior_crease_left) +
+      string2number(file.rigid_equinus_left) +
+      string2number(file.empty_heel_left)
+    );
+  } catch (_e) {
+    throw new Error("?");
+  }
+}
+
+function getPiraniRight(file: ConsultClubfoot) {
+  try {
+    return (
+      string2number(file.curved_lateral_border_right) +
+      string2number(file.medial_crease_right) +
+      string2number(file.talar_head_coverage_right) +
+      string2number(file.posterior_crease_right) +
+      string2number(file.rigid_equinus_right) +
+      string2number(file.empty_heel_right)
+    );
+  } catch (_e) {
+    throw new Error("?");
+  }
+}
 
 export default function ConsultClubfootElement({
   file,
@@ -27,11 +57,11 @@ export default function ConsultClubfootElement({
       <>
         <span className="with-image">
           <ImgSideRight></ImgSideRight>
-          {file.getPiraniRight() as number}
+          {getPiraniRight(file) as number}
         </span>
         <span className="with-image">
           <ImgSideLeft></ImgSideLeft>
-          {file.getPiraniLeft() as number}
+          {getPiraniLeft(file) as number}
         </span>
       </>
     ),
@@ -46,7 +76,7 @@ export default function ConsultClubfootElement({
               <>
                 <ImgSideRight></ImgSideRight>
                 <span>Pirani Right (&lt; 3 years)</span>
-                {tryOrMessage(() => file.getPiraniRight(), "")}
+                {tryOrMessage(() => getPiraniRight(file), "")}
               </>
             }
           >
@@ -85,7 +115,7 @@ export default function ConsultClubfootElement({
             <div className="separator">Score</div>
             <IOFunction
               label="Score"
-              value={() => file.getPiraniRight() + ""}
+              value={() => getPiraniRight(file) + ""}
             ></IOFunction>
           </Panel>
           <Panel
@@ -94,7 +124,7 @@ export default function ConsultClubfootElement({
               <>
                 <ImgSideLeft></ImgSideLeft>
                 <span>Pirani Left (&lt; 3 years)</span>
-                {tryOrMessage(() => file.getPiraniLeft(), "")}
+                {tryOrMessage(() => getPiraniLeft(file), "")}
               </>
             }
           >
@@ -133,7 +163,7 @@ export default function ConsultClubfootElement({
             <div className="separator">Score</div>
             <IOFunction
               label="Score"
-              value={() => file.getPiraniLeft() + ""}
+              value={() => getPiraniLeft(file) + ""}
             ></IOFunction>
           </Panel>
         </TwoColumns>

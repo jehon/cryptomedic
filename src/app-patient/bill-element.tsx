@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Bill from "../business/bill";
 
 import Payment from "../business/payment";
 import Price from "../business/price";
+import { getPriceCategories } from "../config";
 import { getList, getSession } from "../utils/session";
 import { string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
@@ -19,6 +20,10 @@ import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
+
+function getPayments(file: Bill): Payment[] {
+  return file.getParent!().getFilesRelatedToBill(file.getId());
+}
 
 export default function BillElement({
   file,
@@ -63,7 +68,7 @@ export default function BillElement({
 
   const items = Object.keys((price ?? {}) as Record<string, any>)
     .sort()
-    .filter((key) => Price.getCategories().includes(key.split("_")[0]))
+    .filter((key) => getPriceCategories().includes(key.split("_")[0]))
     .map(
       (key) =>
         ({
@@ -159,8 +164,7 @@ export default function BillElement({
         <span>total: {file.total_real}</span>
         <span>
           paid:{" "}
-          {file
-            .getPayments()
+          {getPayments(file)
             .map((p) => p.amount)
             .reduce((acc, v) => acc + v, 0)}
         </span>
@@ -255,10 +259,10 @@ export default function BillElement({
             linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.getId()}`}
           />
         </ButtonsGroup>
-        {file.getPayments().length == 0 ? (
+        {getPayments(file).length == 0 ? (
           <div>No payment received</div>
         ) : (
-          file.getPayments().map((payment: Payment) => (
+          getPayments(file).map((payment: Payment) => (
             <div
               key={payment.uid()}
               className="payment-line"
