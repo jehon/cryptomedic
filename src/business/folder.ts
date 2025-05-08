@@ -123,18 +123,6 @@ export default class Folder extends Pojo {
     throw new Error(`Could not find ${type}#${id}} in getByTypeAndId`);
   }
 
-  getByUid<T extends PatientRelated>(uid: string): T {
-    if (uid === "Patient") {
-      return this.getPatient() as PatientRelated as T;
-    }
-    for (const i in this.list) {
-      if (this.list[i].uid && this.list[i].uid() === uid) {
-        return this.list[i] as T;
-      }
-    }
-    throw new Error(`Could not find ${uid} in getByUid`);
-  }
-
   #getByFieldValue(field: string, value?: string): PatientRelated[] {
     const res = [];
     for (const i in this.list) {
