@@ -10,7 +10,7 @@ import Folder, { type2Class } from "../business/folder";
 import Picture from "../business/picture";
 import Surgery from "../business/surgery";
 import * as config from "../config";
-import ButtonsGroup from "../styles/buttons-group";
+import ButtonsGroup from "../widget/buttons-group";
 import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
 import AppointmentElement from "./appointment-element";

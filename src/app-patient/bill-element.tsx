@@ -3,11 +3,11 @@ import Bill from "../business/bill";
 
 import Payment from "../business/payment";
 import Price from "../business/price";
-import ButtonsGroup from "../styles/buttons-group";
 import { getList } from "../utils/config";
 import { getSession } from "../utils/session";
 import { string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
+import ButtonsGroup from "../widget/buttons-group";
 import IODate from "../widget/io-date";
 import IOHidden from "../widget/io-hidden";
 import IOList from "../widget/io-list";
