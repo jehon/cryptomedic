@@ -13,10 +13,6 @@ export default class PatientRelated extends Pojo {
     return this;
   }
 
-  getParent(): Folder {
-    return this.#parent!;
-  }
-
   // Legacy
   /**
    * @returns {Patient}

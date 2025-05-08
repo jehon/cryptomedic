@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Bill from "../business/bill";
 
+import type Folder from "../business/folder";
 import Payment from "../business/payment";
 import Price from "../business/price";
 import { getPriceCategories } from "../config";
@@ -21,8 +22,8 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
-function getPayments(file: Bill): Payment[] {
-  return file.getParent!().getFilesRelatedToBill(file.id);
+function getPayments(file: Bill, folder: Folder): Payment[] {
+  return folder.getFilesRelatedToBill(file.id);
 }
 
 export default function BillElement({
@@ -164,7 +165,7 @@ export default function BillElement({
         <span>total: {file.total_real}</span>
         <span>
           paid:{" "}
-          {getPayments(file)
+          {getPayments(file, props.folder)
             .map((p) => p.amount)
             .reduce((acc, v) => acc + v, 0)}
         </span>
@@ -259,10 +260,10 @@ export default function BillElement({
             linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.id}`}
           />
         </ButtonsGroup>
-        {getPayments(file).length == 0 ? (
+        {getPayments(file, props.folder).length == 0 ? (
           <div>No payment received</div>
         ) : (
-          getPayments(file).map((payment: Payment) => (
+          getPayments(file, props.folder).map((payment: Payment) => (
             <div
               key={payment.uid()}
               className="payment-line"
