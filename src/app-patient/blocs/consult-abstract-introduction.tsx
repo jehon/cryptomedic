@@ -3,6 +3,15 @@ import Consult from "../../business/abstracts/consult";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
 
+import {
+  bmi,
+  getAgeAtThatTime,
+  getBMISd,
+  getHeightSd,
+  getWeightSd,
+  getWHSd,
+  wh
+} from "../../utils/calculations";
 import { yearsToYM } from "../../utils/date";
 import { getList } from "../../utils/session";
 import { roundTo, string2number } from "../../utils/strings";
@@ -34,7 +43,7 @@ export default function ConsultAbstractIntroduction({
         />
         <IOFunction
           label="Age at consultation time"
-          value={() => yearsToYM(file.getAgeAtThatTime())}
+          value={() => yearsToYM(getAgeAtThatTime(file, file.getPatient()))}
         />
       </Panel>
       <Panel fixed label="Nutritional data">
@@ -50,7 +59,7 @@ export default function ConsultAbstractIntroduction({
         {file.weight_kg && (
           <IOFunction
             label="Weight sd"
-            value={() => roundTo(file.getWeightSd())}
+            value={() => roundTo(getWeightSd(file, file.getPatient()))}
           />
         )}
         <IONumber
@@ -65,7 +74,7 @@ export default function ConsultAbstractIntroduction({
         {file.height_cm && (
           <IOFunction
             label="Height sd"
-            value={() => roundTo(file.getHeightSd())}
+            value={() => roundTo(getHeightSd(file, file.getPatient()))}
           />
         )}
         <IONumber
@@ -81,14 +90,17 @@ export default function ConsultAbstractIntroduction({
           <>
             <IOFunction
               label="Weight/Height ratio"
-              value={() => roundTo(file.wh())}
+              value={() => roundTo(wh(file))}
             />
             <IOFunction
               label="Weight/Height sd"
-              value={() => roundTo(file.getWHSd())}
+              value={() => roundTo(getWHSd(file, file.getPatient()))}
             />
-            <IOFunction label="BMI" value={() => roundTo(file.bmi())} />
-            <IOFunction label="BMI sd" value={() => roundTo(file.getBMISd())} />
+            <IOFunction label="BMI" value={() => roundTo(bmi(file))} />
+            <IOFunction
+              label="BMI sd"
+              value={() => roundTo(getBMISd(file, file.getPatient()))}
+            />
           </>
         )}
       </Panel>
