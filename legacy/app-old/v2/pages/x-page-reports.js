@@ -7,7 +7,7 @@ import {
   REPORT_STATISTICAL,
   REPORT_SURGICAL,
   REPORT_SURGICAL_SUGGESTED
-} from "../../../../src/constants.ts";
+} from "../../../../src/config.ts";
 import { getSession } from "../../../../src/utils/session.js";
 import { messages } from "../../../config.js";
 import { getPref, setPref } from "../../../prefs.js";

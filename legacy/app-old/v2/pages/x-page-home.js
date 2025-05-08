@@ -23,7 +23,7 @@ import {
   REPORT_STATISTICAL,
   REPORT_SURGICAL,
   REPORT_SURGICAL_SUGGESTED
-} from "../../../../src/constants.ts";
+} from "../../../../src/config.ts";
 import { getRouteToCreateReference, getRouteToReport } from "../js/router.js";
 import pageStyles from "./page-helper.js";
 

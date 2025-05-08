@@ -6,7 +6,7 @@ import {
   REPORT_STATISTICAL,
   REPORT_SURGICAL,
   REPORT_SURGICAL_SUGGESTED
-} from "../constants";
+} from "../config";
 import { MenuItem } from "./blocs/menu-item";
 import { MenuPatientGenerateReference } from "./blocs/menu-patient-generate-reference";
 import { MenuPatientSearchByReference } from "./blocs/menu-patient-search-by-reference";
