@@ -3,7 +3,7 @@ import ConsultRicket from "../business/consult-ricket";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
-import { getList } from "../utils/config";
+import { getList } from "../utils/session";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import IOList from "../widget/io-list";
 import IONumber from "../widget/io-number";

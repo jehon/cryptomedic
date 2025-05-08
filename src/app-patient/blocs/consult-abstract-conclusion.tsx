@@ -1,6 +1,6 @@
 import Consult from "../../business/abstracts/consult";
 
-import { getList } from "../../utils/config";
+import { getList } from "../../utils/session";
 import { string2Boolean } from "../../utils/strings";
 import IOBoolean from "../../widget/io-boolean";
 import IOList from "../../widget/io-list";

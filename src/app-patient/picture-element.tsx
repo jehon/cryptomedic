@@ -1,5 +1,5 @@
 import Picture from "../business/picture";
-import { getList } from "../utils/config";
+import { getList } from "../utils/session";
 import IODate from "../widget/io-date";
 import IOImage from "../widget/io-image";
 import IOList from "../widget/io-list";

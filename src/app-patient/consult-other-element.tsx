@@ -3,7 +3,7 @@ import ConsultOther from "../business/consult-other";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
-import { getList } from "../utils/config";
+import { getList } from "../utils/session";
 import IOList from "../widget/io-list";
 import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";

@@ -3,8 +3,8 @@ import Consult from "../../business/abstracts/consult";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
 
-import { getList } from "../../utils/config";
 import { yearsToYM } from "../../utils/date";
+import { getList } from "../../utils/session";
 import { roundTo, string2number } from "../../utils/strings";
 import IODate from "../../widget/io-date";
 import IOFunction from "../../widget/io-function";

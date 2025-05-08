@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Patient, { yearOfBirthPattern } from "../business/patient";
-import { getList } from "../utils/config";
+import { getList } from "../utils/session";
 
 import IOFunction from "../widget/io-function";
 import IOList, { type IOListType } from "../widget/io-list";

@@ -3,8 +3,7 @@ import Bill from "../business/bill";
 
 import Payment from "../business/payment";
 import Price from "../business/price";
-import { getList } from "../utils/config";
-import { getSession } from "../utils/session";
+import { getList, getSession } from "../utils/session";
 import { string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
 import ButtonsGroup from "../widget/buttons-group";

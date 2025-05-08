@@ -1,4 +1,4 @@
-import { setSession } from "../../../../src/utils/session.js";
+import { setSession } from "../../../../src/utils/session.ts";
 import { messages } from "../../../config.js";
 import { parseRouteLogin, setRoute } from "../js/router.js";
 

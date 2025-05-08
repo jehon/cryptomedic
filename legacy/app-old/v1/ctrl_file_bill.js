@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* eslint-disable */
 
-import { getSession, onSession } from "../../../src/utils/session.js";
+import { getSession, onSession } from "../../../src/utils/session.ts";
 import Payment from "../../business/payment.js";
 import { extractPrefsFile } from "../../prefs.js";
 import { formGetContent } from "../v2/js/form.js";

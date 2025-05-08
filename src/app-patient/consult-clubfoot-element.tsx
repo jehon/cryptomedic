@@ -2,7 +2,7 @@ import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 
 import ConsultClubfoot from "../business/consult-clubfoot";
-import { getList } from "../utils/config";
+import { getList } from "../utils/session";
 import { tryOrMessage } from "../utils/strings";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import IOBoolean from "../widget/io-boolean";

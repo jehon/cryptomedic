@@ -1,6 +1,6 @@
 import Appointment from "../business/appointment";
 
-import { getList } from "../utils/config";
+import { getList } from "../utils/session";
 import IODate from "../widget/io-date";
 import IOList from "../widget/io-list";
 import IOText from "../widget/io-text";

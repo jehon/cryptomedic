@@ -8,7 +8,7 @@ import {
   REPORT_SURGICAL,
   REPORT_SURGICAL_SUGGESTED
 } from "../../../../src/config.ts";
-import { getSession } from "../../../../src/utils/session.js";
+import { getSession } from "../../../../src/utils/session.ts";
 import { messages } from "../../../config.js";
 import { getPref, setPref } from "../../../prefs.js";
 import XInputDate from "../../v1/elements/x-input-date.js";

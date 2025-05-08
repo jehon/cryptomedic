@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { getSession, onSession } from "../../../../src/utils/session.js";
+import { getSession, onSession } from "../../../../src/utils/session.ts";
 import {
   ConfigurationMissingException,
   DataMissingException
