@@ -10,6 +10,7 @@ import Folder, { type2Class } from "../business/folder";
 import Picture from "../business/picture";
 import Surgery from "../business/surgery";
 import * as config from "../config";
+import { getLastSeen, getNextAppointment } from "../utils/calculations";
 import ButtonsGroup from "../widget/buttons-group";
 import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
@@ -113,8 +114,8 @@ export default function FolderElement({
       </ButtonsGroup>
       {/* ------------ Key dates  --------------------*/}
       <Panel key="key-dates" label="Key dates">
-        <IODate label="Last seen" value={folder.getLastSeen()} />
-        <IODate label="Next appointment" value={folder.getNextAppointment()} />
+        <IODate label="Last seen" value={getLastSeen(folder)} />
+        <IODate label="Next appointment" value={getNextAppointment(folder)} />
       </Panel>
 
       {patientElementGenerator(folder.getPatient(), commonProps)}

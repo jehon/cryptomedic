@@ -5,25 +5,16 @@ import Patient from "./business/patient";
 import { string2number } from "./utils/strings";
 import { type StringNumber } from "./utils/types";
 
-export const RefFolder1 = "FolderTest.test1.json";
+export const RefFolder1 = {
+  name: "FolderTest.test1.json",
+  type: Folder
+};
 export const RefPatient1 = {
   name: "PatientControllerTest.test1.json",
   type: Patient
 };
 
 const refRoot = "../www/api/tests/references/";
-
-// TODO: Should disappear loadReferenceFolder
-export async function loadReferenceFolder(name: string): Promise<Folder> {
-  const valid_respond = await import(refRoot + name);
-
-  if (valid_respond == null) {
-    throw new Error("The reference " + name + " is empty or not found");
-  }
-  const folder = new Folder(valid_respond.default.folder);
-  assert.ok(folder instanceof Folder);
-  return folder;
-}
 
 export async function loadReference<T extends Pojo = Patient>({
   name,
@@ -37,7 +28,11 @@ export async function loadReference<T extends Pojo = Patient>({
   if (valid_respond == null) {
     throw new Error("The reference " + name + " is empty or not found");
   }
-  const model = (type as typeof Pojo).factory(valid_respond.default) as T;
+
+  const model =
+    type == Folder
+      ? (new Folder(valid_respond.default.folder) as unknown as T) // Can not build with factory as others
+      : ((type as typeof Pojo).factory(valid_respond.default) as T);
   assert.ok(model instanceof type);
   return model;
 }

@@ -1,6 +1,8 @@
 import type Consult from "../business/abstracts/consult";
 import type PatientRelated from "../business/abstracts/patient-related";
 import type Timed from "../business/abstracts/timed";
+import Appointment from "../business/appointment";
+import type Folder from "../business/folder";
 import type Patient from "../business/patient";
 import { fromBirthDateTo, normalizeDate } from "./date";
 import { DataMissingException } from "./exceptions";
@@ -80,4 +82,150 @@ export function isLocked(patientRelated: PatientRelated): boolean {
   const dlock = new Date(patientRelated.updated_at);
   dlock.setDate(dlock.getDate() + 35);
   return dlock < new Date();
+}
+
+export function actualAge(
+  patient: Patient,
+  reference: Date | string | number = new Date()
+) {
+  if (!patient.year_of_birth) {
+    return null;
+  }
+  let birth: Date | string | number = patient.year_of_birth;
+  const options: {
+    reference: Date | string | number;
+    format: string;
+  } = {
+    reference,
+    format: ""
+  };
+  if (typeof options.reference == "number") {
+    options.reference = "" + options.reference;
+  }
+  if (typeof options.reference == "string") {
+    if (options.reference.length < 4) {
+      return options.format ? null : "?";
+      // throw new Exception('Invalid reference');
+    }
+    const ry = parseInt(options.reference.substring(0, 4));
+    let rm = parseInt(options.reference.substring(5, 7));
+    if (isNaN(rm)) {
+      rm = 1; // emulate january
+    }
+    options.reference = new Date(ry, rm - 1, 1);
+  }
+  if (typeof birth == "number") {
+    birth = "" + birth;
+  }
+  if (typeof birth == "string") {
+    if (birth.length < 4) {
+      return options.format ? null : "?";
+      // throw new Exception('Invalid birth');
+    }
+    const by = parseInt(birth.substring(0, 4));
+    let bm = parseInt(birth.substring(5, 7));
+    if (isNaN(bm)) {
+      bm = 1; // emulate january
+    }
+    birth = new Date(by, bm - 1 - 1, 30);
+  }
+  const days = new Date(
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    options.reference.getTime() - birth.getTime()
+  );
+  const res = { years: days.getFullYear() - 1900, months: days.getMonth() };
+  if (options.format === "object") {
+    return res;
+  }
+  if (options.format === "number") {
+    return res.years + res.months / 12;
+  }
+  return res.years + "y" + res.months + "m";
+}
+
+export function getNextAppointment(folder: Folder): Date | undefined {
+  const today = new Date();
+  return folder
+    .getListByType<Appointment>(Appointment)
+    .map((v) => v.date)
+    .map((d) => new Date(d))
+    .filter((d) => d > today)
+    .sort((a, b) => b.getTime() - a.getTime()) // Bigger at top
+    .shift();
+}
+
+export function getLastSeen(folder: Folder): Date | undefined {
+  const today = new Date();
+  return folder
+    .getChildren()
+    .filter((v) => !(v instanceof Appointment)) // We take everything except Appointment
+    .map((v) => "date" in v && v.date)
+    .filter((d) => d)
+    .map((d) => new Date(d as string))
+    .filter((d) => d < today)
+    .sort((a, b) => a.getTime() - b.getTime())
+    .pop();
+}
+
+export function patientRelatedOrdering(o1: PatientRelated, o2: PatientRelated) {
+  const o1First = -1;
+  const o2First = 1;
+
+  const o1id = parseInt(o1.id || "");
+  const o2id = parseInt(o2.id || "");
+
+  // Return 1 if o1 > o2 (o1 - o2) (o1 est après o2)
+  // Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
+
+  // What to do if one 'id' is missing
+  if (isNaN(o1id) && !isNaN(o2id)) {
+    return 10 * o1First;
+  }
+  if (isNaN(o2id) && !isNaN(o1id)) {
+    return 10 * o2First;
+  }
+
+  if ("date" in o1 && o1.date != undefined) {
+    if ("date" in o2 && o2.date != undefined) {
+      // Both 'date' are present
+      if (o1.date < o2.date) return 30 * o2First;
+      if (o1.date > o2.date) return 30 * o1First;
+    } else {
+      return 20 * o2First;
+    }
+  } else {
+    if ("date" in o2 && o2.date != undefined) {
+      return 20 * o1First;
+    } else {
+      // Both 'date' are absent
+      // Not deciding here
+    }
+  }
+
+  if (
+    typeof o1.created_at != "undefined" &&
+    typeof o2.created_at != "undefined"
+  ) {
+    if (o1.created_at < o2.created_at) return 40 * o2First;
+    if (o1.created_at > o2.created_at) return 40 * o1First;
+  }
+
+  // Both 'id' are present
+  if (!isNaN(o1id) && !isNaN(o2id)) {
+    if (o1id > o2id) return 50 * o1First;
+    if (o1id < o2id) return 50 * o2First;
+  }
+
+  // Both 'type' are present
+  if (o1.getStatic().getTitle() < o2.getStatic().getTitle())
+    return 40 * o1First;
+  if (o1.getStatic().getTitle() > o2.getStatic().getTitle())
+    return 40 * o2First;
+
+  return 0;
 }

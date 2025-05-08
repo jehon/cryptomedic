@@ -1,7 +1,9 @@
 import { useState } from "react";
-import Patient, { yearOfBirthPattern } from "../business/patient";
+import Patient from "../business/patient";
 import { getList } from "../utils/session";
 
+import { actualAge } from "../utils/calculations";
+import { yearOfBirthPattern } from "../utils/strings";
 import IOFunction from "../widget/io-function";
 import IOList, { type IOListType } from "../widget/io-list";
 import IONumber from "../widget/io-number";
@@ -76,7 +78,7 @@ export default function patientElementGenerator(
             />
             <IOFunction
               label="Age today"
-              value={() => patient.actualAge() as string}
+              value={() => actualAge(patient) as string}
               e2eExcluded
             />
             <IOList

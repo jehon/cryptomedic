@@ -1,6 +1,7 @@
 import { plainToInstance } from "class-transformer";
 import { produce } from "immer";
 import "reflect-metadata"; // plainToInstance
+import { patientRelatedOrdering } from "../utils/calculations";
 import { removeNull } from "../utils/objects";
 import type PatientRelated from "./abstracts/patient-related";
 import Pojo from "./abstracts/pojo";
@@ -131,7 +132,7 @@ export default class Folder extends Pojo {
         return this.list[i] as T;
       }
     }
-    throw new Error(`Could not find ${uid}} in getByUid`);
+    throw new Error(`Could not find ${uid} in getByUid`);
   }
 
   getByFieldValue(field: string, value?: string): PatientRelated[] {
@@ -162,7 +163,7 @@ export default class Folder extends Pojo {
     }
     return (
       this.getByFieldValue("patient_id", this.getPatient().id)
-        .sort(Folder.ordering)
+        .sort(patientRelatedOrdering)
         .filter((v) => !(v instanceof Patient))
         // TODO: this is not in the correct place
         .filter((v) => !(v instanceof Payment))
@@ -172,87 +173,7 @@ export default class Folder extends Pojo {
   // TODO: move this to bill
   getFilesRelatedToBill(id?: string): Payment[] {
     return this.getByFieldValue("bill_id", id).sort(
-      Folder.ordering
+      patientRelatedOrdering
     ) as unknown as Payment[];
-  }
-
-  getNextAppointment(): Date | undefined {
-    const today = new Date();
-    return this.getListByType<Appointment>(Appointment)
-      .map((v) => v.date)
-      .map((d) => new Date(d))
-      .filter((d) => d > today)
-      .sort((a, b) => b.getTime() - a.getTime()) // Bigger at top
-      .shift();
-  }
-
-  getLastSeen(): Date | undefined {
-    const today = new Date();
-    return this.list
-      .filter((v) => !(v instanceof Appointment)) // We take everything except Appointment
-      .map((v) => "date" in v && v.date)
-      .filter((d) => d)
-      .map((d) => new Date(d as string))
-      .filter((d) => d < today)
-      .sort((a, b) => a.getTime() - b.getTime())
-      .pop();
-  }
-
-  static ordering(o1: PatientRelated, o2: PatientRelated) {
-    const o1First = -1;
-    const o2First = 1;
-
-    const o1id = parseInt(o1.id || "");
-    const o2id = parseInt(o2.id || "");
-
-    // Return 1 if o1 > o2 (o1 - o2) (o1 est après o2)
-    // Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
-
-    // What to do if one 'id' is missing
-    if (isNaN(o1id) && !isNaN(o2id)) {
-      return 10 * o1First;
-    }
-    if (isNaN(o2id) && !isNaN(o1id)) {
-      return 10 * o2First;
-    }
-
-    if ("date" in o1 && o1.date != undefined) {
-      if ("date" in o2 && o2.date != undefined) {
-        // Both 'date' are present
-        if (o1.date < o2.date) return 30 * o2First;
-        if (o1.date > o2.date) return 30 * o1First;
-      } else {
-        return 20 * o2First;
-      }
-    } else {
-      if ("date" in o2 && o2.date != undefined) {
-        return 20 * o1First;
-      } else {
-        // Both 'date' are absent
-        // Not deciding here
-      }
-    }
-
-    if (
-      typeof o1.created_at != "undefined" &&
-      typeof o2.created_at != "undefined"
-    ) {
-      if (o1.created_at < o2.created_at) return 40 * o2First;
-      if (o1.created_at > o2.created_at) return 40 * o1First;
-    }
-
-    // Both 'id' are present
-    if (!isNaN(o1id) && !isNaN(o2id)) {
-      if (o1id > o2id) return 50 * o1First;
-      if (o1id < o2id) return 50 * o2First;
-    }
-
-    // Both 'type' are present
-    if (o1.getStatic().getTitle() < o2.getStatic().getTitle())
-      return 40 * o1First;
-    if (o1.getStatic().getTitle() > o2.getStatic().getTitle())
-      return 40 * o2First;
-
-    return 0;
   }
 }

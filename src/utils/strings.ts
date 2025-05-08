@@ -109,3 +109,7 @@ export function escapeRegExp(string: string): string {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions#escaping
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
+
+// From 1970 to 2029 (see help text on patient-element)
+export const yearOfBirthPattern =
+  "(19[7-9][0-9]|20[0-2][0-9])(-(0?[1-9]|1[0-2]))?";
