@@ -113,7 +113,7 @@ frontend-test: $(FRONTEND_DEPENDENCIES_MARK)
 # Check reporters: https://nodejs.org/api/test.html#test-reporters
 # --experimental-test-coverage
 	node \
-		--import ./src/fake-loader/register.js \
+		--import ./src/build/fake-loader.js \
 		--import tsx/esm \
 		--test "src/**/*.test.ts" "src/**/*.test.tsx"
 
