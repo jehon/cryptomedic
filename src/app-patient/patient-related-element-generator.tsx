@@ -22,6 +22,13 @@ export default function patientRelatedElementGenerator<
     footer?: React.ReactNode;
   }
 ): React.ReactNode {
+  console.log("patientRelatedElementGenerator - Debug:", {
+    fileUid: file.uid(),
+    selectedUid,
+    mode,
+    isEdit: file.uid() == selectedUid ? mode === "edit" : false
+  });
+
   return (
     <FilePanel
       folder={folder}

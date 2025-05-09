@@ -1,11 +1,10 @@
 import { useRef } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import PatientRelated from "../../business/abstracts/patient-related";
-import Pojo from "../../business/abstracts/pojo";
 import Timed from "../../business/abstracts/timed";
 import Folder from "../../business/folder";
 import Patient from "../../business/patient";
-import { icons, isFeatureSwitchEnabled } from "../../config";
+import { icons } from "../../config";
 import { routeTo } from "../../main";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { EditContext } from "../../widget/io-abstract";
@@ -20,13 +19,6 @@ import EditButtons from "./edit-buttons";
 import ViewButtons from "./view-buttons";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
-
-// TODO: migrate all this progressively
-export function isTodoMigration(type: typeof Pojo) {
-  return [...(isFeatureSwitchEnabled() ? [] : ["bill"])].includes(
-    type.getTechnicalName()
-  );
-}
 
 // TODO: make routing more abstract
 
@@ -55,6 +47,15 @@ export default function FilePanel({
   const addMode = !file.getId();
   const editMode = addMode || (edit ?? false);
 
+  console.log("FilePanel - Debug:", {
+    fileUid: file.uid(),
+    fileId: file.getId(),
+    addMode,
+    editMode,
+    edit,
+    isLocked: file instanceof PatientRelated && file.isLocked()
+  });
+
   const buttonContext: ButtonContext = {
     folder,
     staticType: file.getStatic() as typeof PatientRelated,
@@ -67,6 +68,8 @@ export default function FilePanel({
       !addMode &&
       (!(file instanceof Patient) || folder.getChildren().length == 0)
   };
+
+  console.log("FilePanel - ButtonContext:", buttonContext);
 
   const fileIsUpdated = (nFile: PatientRelated) =>
     onUpdate(folder.withFileOLD(nFile));

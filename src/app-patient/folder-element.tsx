@@ -16,7 +16,6 @@ import IO from "../widget/io";
 import Panel from "../widget/panel";
 import AppointmentElement from "./appointment-element";
 import BillElement from "./bill-element";
-import { isTodoMigration } from "./blocs/file-panel";
 import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOtherElement from "./consult-other-element";
 import ConsultRicketElement from "./consult-ricket-element";
@@ -51,10 +50,6 @@ export default function FolderElement({
   if (selectedUid?.endsWith(".add")) {
     const typeName = selectedUid.replace(".add", "");
     const typeClass = type2Class(typeName) as typeof PatientRelated;
-    if (isTodoMigration(typeClass)) {
-      location.hash = `/folder/${folder.getId()}/file/${typeClass.getModel()}`;
-      return;
-    }
     if (folder.list.filter((f) => f.uid() == selectedUid).length == 0) {
       const nf = typeClass.factory() as PatientRelated;
       nf.registerParent(folder);
@@ -122,10 +117,18 @@ export default function FolderElement({
       {(folder.getChildren() as PatientRelated[]).map(
         (file: PatientRelated) => {
           if (file instanceof Appointment) {
-            return <AppointmentElement file={file} props={commonProps} />;
+            return (
+              <AppointmentElement
+                key={file.uid()}
+                file={file}
+                props={commonProps}
+              />
+            );
           }
           if (file instanceof Bill) {
-            return <BillElement file={file} props={commonProps} />;
+            return (
+              <BillElement key={file.uid()} file={file} props={commonProps} />
+            );
           }
           if (file instanceof ConsultClubfoot) {
             return <ConsultClubfootElement file={file} props={commonProps} />;
@@ -143,8 +146,7 @@ export default function FolderElement({
             return <SurgeryElement file={file} props={commonProps} />;
           }
           return null;
-        }
-      )}
+        })}
     </div>
   );
 }

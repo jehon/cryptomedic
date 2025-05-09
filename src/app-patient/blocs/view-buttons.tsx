@@ -4,7 +4,6 @@ import ActionButton from "../../widget/action-button";
 import notification from "../../widget/notification";
 import { folderFileUnlock } from "../loaders";
 import { patientRouterToFile } from "../patient-router";
-import { isTodoMigration } from "./file-panel";
 
 import ActionConfirm from "../../widget/action-confirm";
 import type { ButtonContext } from "./button-context";
@@ -18,15 +17,16 @@ export default function ViewButtons({
   onUpdate: (file: PatientRelated) => void;
   context: ButtonContext;
 }) {
-  const goEdit = () => {
-    if (
-      // TODO: migrate all this progressively
-      isTodoMigration(context.staticType)
-    ) {
-      location.hash = `${context.migrationUrlHash}/${file.id!}/edit`;
-      return;
-    }
+  console.log("ViewButtons - Debug:", {
+    fileUid: file.uid(),
+    fileId: file.getId(),
+    editMode: context.editMode,
+    isLocked: context.isLocked,
+    context
+  });
 
+  const goEdit = () => {
+    console.log("ViewButtons - goEdit called");
     routeTo(
       patientRouterToFile(
         context.folder.id!,
@@ -38,6 +38,7 @@ export default function ViewButtons({
   };
 
   const doUnlock = () => {
+    console.log("ViewButtons - doUnlock called");
     folderFileUnlock(file)
       .then(notification("File unlocked"))
       .then(onUpdate)
@@ -63,6 +64,7 @@ export default function ViewButtons({
   }
 
   if (context.editMode) {
+    console.log("ViewButtons - editMode is true, returning empty");
     return <></>;
   }
 
