@@ -54,7 +54,12 @@ export default function FolderElement({
       location.hash = `/folder/${folder.id}/file/${typeClass.getModel()}`;
       return;
     }
-    if (folder.list.filter((f) => f.uid() == selectedUid).length == 0) {
+    if (
+      folder.list.filter(
+        (f) =>
+          `${f.getStatic().getTechnicalName()}.${f.id ?? "add"}` == selectedUid
+      ).length == 0
+    ) {
       const nf = typeClass.factory() as PatientRelated;
       nf.registerParent(folder);
       folderUpdated(folder.withFileOLD(nf));
@@ -124,7 +129,7 @@ export default function FolderElement({
           if (file instanceof Appointment) {
             return (
               <AppointmentElement
-                key={file.uid()}
+                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -132,13 +137,17 @@ export default function FolderElement({
           }
           if (file instanceof Bill) {
             return (
-              <BillElement key={file.uid()} file={file} props={commonProps} />
+              <BillElement
+                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
+                file={file}
+                props={commonProps}
+              />
             );
           }
           if (file instanceof ConsultClubfoot) {
             return (
               <ConsultClubfootElement
-                key={file.uid()}
+                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -147,7 +156,7 @@ export default function FolderElement({
           if (file instanceof ConsultOther) {
             return (
               <ConsultOtherElement
-                key={file.uid()}
+                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -156,7 +165,7 @@ export default function FolderElement({
           if (file instanceof ConsultRicket) {
             return (
               <ConsultRicketElement
-                key={file.uid()}
+                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -165,7 +174,7 @@ export default function FolderElement({
           if (file instanceof Picture) {
             return (
               <PictureElement
-                key={file.uid()}
+                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -174,7 +183,7 @@ export default function FolderElement({
           if (file instanceof Surgery) {
             return (
               <SurgeryElement
-                key={file.uid()}
+                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />

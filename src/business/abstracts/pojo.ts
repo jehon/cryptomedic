@@ -29,10 +29,6 @@ export default class Pojo {
   updated_at: StringDate = "";
   last_user: string = "";
 
-  uid() {
-    return `${this.getStatic().getTechnicalName()}.${this.id ?? "add"}`;
-  }
-
   getParentField(): string | undefined {
     return undefined;
   }

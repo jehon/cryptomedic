@@ -25,13 +25,21 @@ export default function patientRelatedElementGenerator<
   return (
     <FilePanel
       folder={folder}
-      key={file.uid()}
-      closed={file.uid() !== selectedUid}
+      key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
+      closed={
+        `${file.getStatic().getTechnicalName()}.${file.id ?? "add"}` !==
+        selectedUid
+      }
       file={file}
       onUpdate={onUpdate}
       header={elements.header}
       footer={elements.footer}
-      edit={file.uid() == selectedUid ? mode === "edit" : false}
+      edit={
+        `${file.getStatic().getTechnicalName()}.${file.id ?? "add"}` ==
+        selectedUid
+          ? mode === "edit"
+          : false
+      }
     >
       {elements.body}
     </FilePanel>

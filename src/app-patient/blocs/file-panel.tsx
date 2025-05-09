@@ -84,7 +84,7 @@ export default function FilePanel({
 
   return (
     <Panel
-      testid={file.uid()}
+      testid={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
       closed={closed}
       fullscreen={editMode}
       onToggle={(opened) => {
@@ -146,7 +146,7 @@ export default function FilePanel({
           )
         }
       >
-        <div>{file.uid()}</div>
+        <div>{`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}</div>
         <div>created at {date2HumanString(normalizeDate(file.created_at))}</div>
         <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
         <div>by {file.last_user}</div>
@@ -154,7 +154,7 @@ export default function FilePanel({
       <EditContext.Provider value={editMode}>
         <form
           id="file"
-          data-testid={"file-" + file.uid() + "-form"}
+          data-testid={`file-${file.getStatic().getTechnicalName()}.${file.id ?? "add"}-form`}
           ref={formRef}
         >
           {file.getParentField() && (

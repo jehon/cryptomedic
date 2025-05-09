@@ -86,7 +86,11 @@ export default class Folder extends Pojo {
   }
 
   withoutFileOLD(file: PatientRelated): Folder {
-    const i = this.list.findIndex((val) => val.uid() === file.uid());
+    const fileUid = `${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`;
+    const i = this.list.findIndex(
+      (val) =>
+        `${val.getStatic().getTechnicalName()}.${val.id ?? "add"}` === fileUid
+    );
     if (i < 0) {
       return this;
     }

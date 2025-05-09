@@ -249,7 +249,7 @@ export default function BillElement({
       </>
     ),
     footer: props.mode != "edit" && file.id && price && (
-      <Panel fixed label="Payments" testid={file.uid() + ".payments"}>
+      <Panel fixed label="Payments" testid={`bill.${file.id}.payments`}>
         <ButtonsGroup>
           <ActionButton
             style="Add"
@@ -265,9 +265,9 @@ export default function BillElement({
         ) : (
           getPayments(file, props.folder).map((payment: Payment) => (
             <div
-              key={payment.uid()}
+              key={`payment.${payment.id}`}
               className="payment-line"
-              data-testid={payment.uid()}
+              data-testid={`payment.${payment.id}`}
             >
               <IODate value={payment.date} noLabel />
               <IONumber value={payment.amount} noLabel />
