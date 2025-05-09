@@ -12,8 +12,10 @@ rsync --archive --delete \
   --exclude laravel/sessions/ \
   live-for-test/ live/
 
-# Exclude sessions, which can be a bit tricky
-find live -not -path "live/laravel/sessions/*" -exec chmod a+rwX "{}" ";"
+if [ "$1" == "session" ]; then
+  # Exclude sessions, which can be a bit tricky
+  find live -not -path "live/laravel/sessions/*" -exec chmod a+rwX "{}" ";"
+fi
 
 cr-ensure-folder-empty "www/api/bootstrap/cache/"
 cr-ensure-folder-empty "tmp/integration/webTemp"

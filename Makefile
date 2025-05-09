@@ -24,11 +24,11 @@ endef
 
 # Default target
 .PHONY: check
-check: cls dependencies lint build test ok
+check: cls dependencies lint build reset-lite test ok
 
 # Test with clean environment
 .PHONY: full
-full: cls clean stop dc-build start dependencies lint build test ok
+full: cls stop clean dc-build start dependencies lint build test ok
 
 .PHONY: ok
 ok:
@@ -140,6 +140,9 @@ logs:
 	docker compose logs -f
 
 reset:
+	bin/cr-data-reset session
+
+reset-lite:
 	bin/cr-data-reset
 
 database-update-base-sql:
