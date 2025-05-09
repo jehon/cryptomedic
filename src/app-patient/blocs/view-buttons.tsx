@@ -1,11 +1,10 @@
 import PatientRelated from "../../business/abstracts/patient-related";
-import { routeTo } from "../../main";
 import ActionButton from "../../widget/action-button";
 import notification from "../../widget/notification";
 import { folderFileUnlock } from "../loaders";
-import { patientRouterToFile } from "../patient-router";
 import { isTodoMigration } from "./file-panel";
 
+import { useNavigate } from "react-router-dom";
 import ActionConfirm from "../../widget/action-confirm";
 import type { ButtonContext } from "./button-context";
 
@@ -18,6 +17,7 @@ export default function ViewButtons({
   onUpdate: (file: PatientRelated) => void;
   context: ButtonContext;
 }) {
+  const navigate = useNavigate();
   const goEdit = () => {
     if (
       // TODO: migrate all this progressively
@@ -27,13 +27,8 @@ export default function ViewButtons({
       return;
     }
 
-    routeTo(
-      patientRouterToFile(
-        context.folder.id!,
-        context.staticType,
-        file.id!,
-        "edit"
-      )
+    navigate(
+      `/patient/${context.folder.id!}/${context.staticType.getTechnicalName()}.${file.id!}/edit`
     );
   };
 

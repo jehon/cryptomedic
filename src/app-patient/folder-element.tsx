@@ -21,7 +21,6 @@ import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOtherElement from "./consult-other-element";
 import ConsultRicketElement from "./consult-ricket-element";
 import patientElementGenerator from "./patient-element";
-import { patientRouterToFileAdd } from "./patient-router";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
 
@@ -64,7 +63,7 @@ export default function FolderElement({
 
   const commonProps = {
     folder,
-    selectedUid,
+    selectedUid: selectedUid ?? `patient.${folder.id!}`,
     mode,
     onUpdate: folderUpdatedCallback
   };
@@ -105,9 +104,9 @@ export default function FolderElement({
               className="dropdown-item"
               key={type.getTechnicalName()}
               data-testid={"add-" + type.getTechnicalName()}
-              to={patientRouterToFileAdd(folder.id!, type)}
+              to={`/patient/${folder.id!}/${type.getTechnicalName()}.add`}
             >
-              {type.getTitle()}
+              {config.type2Title(type.getTechnicalName())}
             </Link>
           ))}
         </div>

@@ -26,7 +26,7 @@ export function MenuPatientSearchByReference() {
           const patients = await patientSearch(formData);
           if (patients.length == 1) {
             const patient = patients[0];
-            navigate(`/patient/${patient.id}/patient.${patient.id}`);
+            navigate(`/patient/${patient.id}`);
           }
 
           if (patients.length == 0) {
@@ -73,7 +73,7 @@ export function MenuPatientSearchByReference() {
                       fd.append("entry_year", "" + data["entry_year"]);
                       fd.append("entry_order", "" + data["entry_order"]);
                       patientCreate(fd).then((patient) =>
-                        navigate(`/patient/${patient.id}/patient.${patient.id}`)
+                        navigate(`/patient/${patient.id}`)
                       );
                     }}
                   />

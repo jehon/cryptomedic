@@ -18,10 +18,6 @@ export default class Pojo {
     return "pojo";
   }
 
-  static getTitle() {
-    return this.getModel();
-  }
-
   declare ["constructor"]: typeof Pojo;
 
   getStatic(): typeof Pojo {

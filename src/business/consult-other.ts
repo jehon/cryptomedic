@@ -10,10 +10,6 @@ export default class ConsultOther extends Consult {
     return "consult_other";
   }
 
-  static override getTitle() {
-    return "Consult. Other";
-  }
-
   side: StringList = "";
   joints_or_bones_affected: string = "";
   deformity: string = "";

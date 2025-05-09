@@ -10,10 +10,6 @@ export default class ConsultRicket extends Consult {
     return "consult_ricket";
   }
 
-  static override getTitle() {
-    return "Consult. Ricket";
-  }
-
   walking_difficulties: StringList = "";
   pain: StringList = "";
   wrist_enlargement: StringList = "";

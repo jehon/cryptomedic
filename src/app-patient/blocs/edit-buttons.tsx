@@ -1,5 +1,5 @@
+import { useNavigate } from "react-router-dom";
 import PatientRelated from "../../business/abstracts/patient-related";
-import { routeTo } from "../../main";
 import { passThrough } from "../../utils/promises";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
@@ -9,11 +9,6 @@ import {
   folderFileDelete,
   folderFileUpdate
 } from "../loaders";
-import {
-  Modes,
-  patientRouterToFile,
-  patientRouterToPatient
-} from "../patient-router";
 
 import type { ButtonContext } from "./button-context";
 
@@ -21,15 +16,18 @@ export default function EditButtons({
   file,
   onDelete,
   onUpdate,
+  // baseNavigate,
   context,
   formRef
 }: {
   file: PatientRelated;
   onDelete: () => void;
   onUpdate: (file: PatientRelated) => void;
+  // baseNavigate: string;
   context: ButtonContext;
   formRef: React.RefObject<HTMLFormElement | null>;
 }) {
+  const navigate = useNavigate();
   if (!context.editMode) {
     return <></>;
   }
@@ -44,15 +42,10 @@ export default function EditButtons({
       // // This is not necessary because the top folder will reload anyway
       // // Remove the newly added file, that we don't want to keep
       // onUpdate(folder.withoutFile(file));
-      routeTo(patientRouterToPatient(context.folder.id!, Modes.output));
+      navigate(`/patient/${context.folder.id!}`);
     } else {
-      routeTo(
-        patientRouterToFile(
-          context.folder.id!,
-          context.staticType,
-          file.id!,
-          Modes.output
-        )
+      navigate(
+        `/patient/${context.folder.id!}/${context.staticType.getTechnicalName()}.${file.id!}`
       );
     }
   };
@@ -70,11 +63,8 @@ export default function EditButtons({
         .then(
           passThrough((newFile) => {
             // Route to the newly created file
-            location.hash = patientRouterToFile(
-              context.folder.id ?? "",
-              context.staticType,
-              newFile.id!,
-              Modes.output
+            navigate(
+              `/patient/${context.folder.id!}/${context.staticType.getTechnicalName()}.${newFile.id!}`
             );
           })
         )
@@ -84,26 +74,14 @@ export default function EditButtons({
         .then(notification("File saved"))
         .then(
           passThrough(() =>
-            routeTo(
-              patientRouterToFile(
-                context.folder.id!,
-                context.staticType,
-                file.id!,
-                Modes.output
-              )
+            navigate(
+              `/patient/${context.folder.id!}/${context.staticType.getTechnicalName()}.${file.id!}`
             )
           )
         )
         .then(onUpdate);
     }
   };
-
-  if (formRef.current) {
-    formRef.current.onsubmit = (e) => {
-      e.preventDefault();
-      doSave();
-    };
-  }
 
   return (
     <>

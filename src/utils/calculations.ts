@@ -207,25 +207,23 @@ export function patientRelatedOrdering(o1: PatientRelated, o2: PatientRelated) {
     }
   }
 
-  if (
-    typeof o1.created_at != "undefined" &&
-    typeof o2.created_at != "undefined"
-  ) {
-    if (o1.created_at < o2.created_at) return 40 * o2First;
-    if (o1.created_at > o2.created_at) return 40 * o1First;
+  if (typeof o2.created_at == "undefined") {
+    // Even if o1 is undefined
+    return 10 * o1First;
   }
+
+  if (typeof o1.created_at == "undefined") {
+    return 10 * o2First;
+  }
+
+  if (o1.created_at < o2.created_at) return 40 * o2First;
+  if (o1.created_at > o2.created_at) return 40 * o1First;
 
   // Both 'id' are present
   if (!isNaN(o1id) && !isNaN(o2id)) {
     if (o1id > o2id) return 50 * o1First;
     if (o1id < o2id) return 50 * o2First;
   }
-
-  // Both 'type' are present
-  if (o1.getStatic().getTitle() < o2.getStatic().getTitle())
-    return 40 * o1First;
-  if (o1.getStatic().getTitle() > o2.getStatic().getTitle())
-    return 40 * o2First;
 
   return 0;
 }

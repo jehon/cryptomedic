@@ -1,22 +1,18 @@
 import { useRef } from "react";
 import { ButtonGroup } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import PatientRelated from "../../business/abstracts/patient-related";
 import Pojo from "../../business/abstracts/pojo";
 import Timed from "../../business/abstracts/timed";
 import Appointment from "../../business/appointment";
 import Folder from "../../business/folder";
 import Patient from "../../business/patient";
-import { icons, isFeatureSwitchEnabled } from "../../config";
+import { icons, isFeatureSwitchEnabled, type2Title } from "../../config";
 import { routeTo } from "../../main";
 import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { EditContext } from "../../widget/io-abstract";
 import Panel from "../../widget/panel";
-import {
-  Modes,
-  patientRouterToFile,
-  patientRouterToPatient
-} from "../patient-router";
 import type { ButtonContext } from "./button-context";
 import EditButtons from "./edit-buttons";
 import ViewButtons from "./view-buttons";
@@ -52,7 +48,7 @@ export default function FilePanel({
   edit?: boolean;
 }): React.ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const addMode = !file.id;
   const editMode = addMode || (edit ?? false);
@@ -60,7 +56,7 @@ export default function FilePanel({
   const buttonContext: ButtonContext = {
     folder,
     staticType: file.getStatic() as typeof PatientRelated,
-    title: file.getStatic().getTitle(),
+    title: type2Title(file.getStatic().getTechnicalName()),
     migrationUrlHash: `folder/${file.getParentId()}/file/${file.getStatic().getModel()}`,
     editMode,
     isLocked:
@@ -82,7 +78,7 @@ export default function FilePanel({
     if (file instanceof Patient) {
       routeTo("/home");
     } else {
-      routeTo(patientRouterToPatient(file.getParentId()!, Modes.output));
+      navigate(`/patient/${file.getParentId()!}`);
     }
   };
 
@@ -94,7 +90,7 @@ export default function FilePanel({
       onToggle={(opened) => {
         // if (opened) {
         // TODO: when angular router is out (adapt e2e file panel goEdit too)
-        // navigate(patientRouterToFile(folder, file));
+        // navigate(`/patient/${patientId}/${fileType.getTechnicalName()}.${fileId}${mode ? `/${mode}` : ""}`);
         //   location.hash = routeToFolderFile(folder, file);
         // }
       }}
@@ -109,7 +105,7 @@ export default function FilePanel({
                     .getTechnicalName() as keyof typeof icons.models) ?? ""
                 ]
               }
-              alt={file.getStatic().getTitle()}
+              alt={type2Title(file.getStatic().getTechnicalName())}
               className="inline"
             />
             {file instanceof Timed ? (
@@ -118,7 +114,7 @@ export default function FilePanel({
               </span>
             ) : null}
             <span data-role="type" className="no-mobile">
-              {file.getStatic().getTitle()}
+              {type2Title(file.getStatic().getTechnicalName())}
             </span>
           </span>
           {header}
@@ -145,13 +141,8 @@ export default function FilePanel({
         className="technical"
         data-e2e="excluded"
         onClick={() =>
-          routeTo(
-            patientRouterToFile(
-              file.getParentId()!,
-              file.getStatic(),
-              file.id!,
-              Modes.output
-            )
+          navigate(
+            `/patient/${file.getParentId()!}/${file.getStatic().getTechnicalName()}.${file.id!}`
           )
         }
       >

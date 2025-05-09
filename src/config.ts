@@ -66,3 +66,30 @@ export const REPORT_STATISTICAL = "statistical";
 export function getPriceCategories() {
   return ["consult", "medecine", "other", "workshop", "surgical"];
 }
+
+export function type2Title(type: string) {
+  switch (type) {
+    case "appointment":
+      return "Appointment";
+    case "bill":
+      return "Bill";
+    case "consult_clubfoot":
+      return "Consult. Clubfoot";
+    case "consult_other":
+      return "Consult. Other";
+    case "consult_ricket":
+      return "Consult. Ricket";
+    case "patient":
+      return "Patient";
+    case "payment":
+      return "Payment";
+    case "picture":
+      return "Picture";
+    case "price":
+      return "Price";
+    case "surgery":
+      return "Surgery";
+    default:
+      throw new Error(`Unknown type ${type} in type2Title`);
+  }
+}

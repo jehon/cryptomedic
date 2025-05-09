@@ -14,10 +14,6 @@ export default class ConsultClubfoot extends Consult {
     return "consult_clubfoot";
   }
 
-  static override getTitle() {
-    return "Consult. Clubfoot";
-  }
-
   // Right
   // TODO: rename into right_
   // Right: Pirani
