@@ -6,10 +6,11 @@ import Payment from "../business/payment";
 import Price from "../business/price";
 import { getPriceCategories } from "../config";
 import { getList, getSession } from "../utils/session";
-import { string2number } from "../utils/strings";
+import { roundTo, string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
 import ButtonsGroup from "../widget/buttons-group";
 import IODate from "../widget/io-date";
+import IOFunction from "../widget/io-function";
 import IOHidden from "../widget/io-hidden";
 import IOList from "../widget/io-list";
 import IONumber from "../widget/io-number";
@@ -153,6 +154,12 @@ export default function BillElement({
   };
 
   const priceAsked = Math.round(getTotal() * percentageAsked);
+  const totalPaid = roundTo(
+    getPayments(file, props.folder)
+      .map((p) => p.amount)
+      .reduce((acc, v) => acc + v, 0),
+    0
+  );
 
   /** *************************
    *
@@ -163,12 +170,7 @@ export default function BillElement({
     header: (
       <>
         <span>total: {file.total_real}</span>
-        <span>
-          paid:{" "}
-          {getPayments(file, props.folder)
-            .map((p) => p.amount)
-            .reduce((acc, v) => acc + v, 0)}
-        </span>
+        <span>paid: {totalPaid}</span>
       </>
     ),
     body: (
@@ -227,12 +229,10 @@ export default function BillElement({
               label="Price asked"
               value={priceAsked}
             />
-            {/*
-            TODO
             <IOFunction
               label="Payments Received (see below)"
-              value={() => roundTo(file.getTotalAlreadyPaid(), 0)}
-            /> */}
+              value={() => totalPaid}
+            />
           </Panel>
         </TwoColumns>
         {price && (
