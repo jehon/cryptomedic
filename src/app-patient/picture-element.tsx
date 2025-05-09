@@ -37,7 +37,7 @@ export default function PictureElement({
           <IOImage
             name="fileBlob"
             label="Picture"
-            value={`/api/picture/${file.id}`}
+            value={`/api/picture/${file.id ?? ""}`}
             required
             create={!file.id}
           />
