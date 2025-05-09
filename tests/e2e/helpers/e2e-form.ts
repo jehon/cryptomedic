@@ -173,6 +173,7 @@ export class E2EForm {
 
   async setInputValue(label: string, value?: IOValue): Promise<this> {
     const type = this.getType(label);
+    const inputTimeoutMs = 1000;
 
     if (type == "readonly") {
       // The io is not visible
@@ -198,9 +199,9 @@ export class E2EForm {
             "input[type=checkbox]"
           );
           if (value) {
-            await loc.check();
+            await loc.check({ timeout: inputTimeoutMs });
           } else {
-            await loc.uncheck();
+            await loc.uncheck({ timeout: inputTimeoutMs });
           }
         }
         break;
@@ -223,7 +224,7 @@ export class E2EForm {
             exact: true
           });
           await expect(radio).toBeVisible();
-          await radio.check();
+          await radio.check({ timeout: inputTimeoutMs });
         }
         break;
       case "select":
@@ -231,12 +232,21 @@ export class E2EForm {
           const select = ioc.locator("select");
           await expect(select).toBeVisible();
           await expect(select).toContainText(ioValue2String(value));
-          await select.selectOption({ label: ioValue2String(value) });
+          await select.selectOption(
+            {
+              label: ioValue2String(value)
+            },
+            {
+              timeout: inputTimeoutMs
+            }
+          );
         }
         break;
       case "textarea":
         await expect(ioc.locator("textarea")).toBeVisible();
-        await ioc.locator("textarea").fill(ioValue2String(value));
+        await ioc
+          .locator("textarea")
+          .fill(ioValue2String(value), { timeout: inputTimeoutMs });
         break;
     }
 
