@@ -21,10 +21,6 @@ const config: any = {
   ],
   projects: [
     {
-      name: "Firefox",
-      use: { ...devices["Desktop Firefox"] }
-    },
-    {
       name: "Google Chrome",
       use: { ...devices["Desktop Chrome"], channel: "chrome" }
     },
