@@ -48,7 +48,7 @@ export const ConsultFieldsConfigType: FieldsConfigTypeSimplified = {
 };
 
 export const consultBasicData = {
-  Date: "2007-01-10",
+  Date: "2008-01-10",
   Examiner: "Ershad",
   Center: "Ukhia",
   "Weight (kg)": "29",
