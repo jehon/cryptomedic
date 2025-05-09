@@ -115,6 +115,7 @@ export async function crInit(
 }
 
 export async function crExpectUrl(page: Page, r: string | RegExp) {
+  await page.waitForURL(r);
   await expect(page).toHaveURL(r);
 }
 
