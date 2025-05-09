@@ -2,10 +2,6 @@ import { type StringBoolean } from "../utils/types";
 import Timed from "./abstracts/timed";
 
 export default class Surgery extends Timed {
-  static override getModel() {
-    return "Surgery";
-  }
-
   static override getTechnicalName() {
     return "surgery";
   }

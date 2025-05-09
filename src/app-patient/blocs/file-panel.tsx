@@ -21,9 +21,10 @@ export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
 // TODO: migrate all this progressively
 export function isTodoMigration(type: typeof Pojo) {
-  return [...(isFeatureSwitchEnabled() ? [] : ["bill"])].includes(
-    type.getTechnicalName()
-  );
+  if (isFeatureSwitchEnabled()) {
+    return false;
+  }
+  return "bill" == type.getTechnicalName();
 }
 
 // TODO: make routing more abstract
@@ -57,7 +58,6 @@ export default function FilePanel({
     folder,
     staticType: file.getStatic() as typeof PatientRelated,
     title: type2Title(file.getStatic().getTechnicalName()),
-    migrationUrlHash: `folder/${file.getParentId()}/file/${file.getStatic().getModel()}`,
     editMode,
     isLocked:
       file instanceof PatientRelated &&

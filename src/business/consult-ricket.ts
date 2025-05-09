@@ -2,10 +2,6 @@ import { type StringList, type StringNumber } from "../utils/types";
 import Consult from "./abstracts/consult";
 
 export default class ConsultRicket extends Consult {
-  static override getModel() {
-    return "RicketConsult";
-  }
-
   static override getTechnicalName() {
     return "consult_ricket";
   }

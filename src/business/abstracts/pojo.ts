@@ -9,10 +9,6 @@ export default class Pojo {
     return plainToInstance(this, json) as T;
   }
 
-  static getModel() {
-    return "Pojo";
-  }
-
   static getTechnicalName() {
     // Patient map this name to the list field (getChildren)
     return "pojo";

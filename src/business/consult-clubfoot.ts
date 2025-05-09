@@ -6,10 +6,6 @@ import {
 import Consult from "./abstracts/consult";
 
 export default class ConsultClubfoot extends Consult {
-  static override getModel() {
-    return "ClubFoot";
-  }
-
   static override getTechnicalName() {
     return "consult_clubfoot";
   }

@@ -4,10 +4,6 @@ import Timed from "./abstracts/timed";
 import Payment from "./payment";
 
 export default class Bill extends Timed {
-  static override getModel() {
-    return "Bill";
-  }
-
   static override getTechnicalName() {
     return "bill";
   }

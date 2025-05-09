@@ -23,7 +23,7 @@ export default function ViewButtons({
       // TODO: migrate all this progressively
       isTodoMigration(context.staticType)
     ) {
-      location.hash = `${context.migrationUrlHash}/${file.id!}/edit`;
+      location.hash = `folder/${file.getParentId()}/file/Bill/${file.id!}/edit`;
       return;
     }
 

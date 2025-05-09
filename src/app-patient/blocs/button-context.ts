@@ -5,7 +5,6 @@ export type ButtonContext = {
   folder: Folder; // TODO: remove
   staticType: typeof PatientRelated; // TODO: remove
   title: string;
-  migrationUrlHash: string; // TODO: remove
   editMode: boolean;
   canDelete: boolean;
   isLocked: boolean;

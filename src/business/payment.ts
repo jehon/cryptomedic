@@ -3,10 +3,6 @@ import PatientRelated from "./abstracts/patient-related";
 
 // Todo: Payment is not a patient related
 export default class Payment extends PatientRelated {
-  static override getModel() {
-    return "Payment";
-  }
-
   static override getTechnicalName() {
     return "payment";
   }

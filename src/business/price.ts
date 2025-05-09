@@ -2,10 +2,6 @@ import { type StringDate } from "../utils/types";
 import Pojo from "./abstracts/pojo";
 
 export default class Price extends Pojo {
-  static override getModel() {
-    return "Price";
-  }
-
   static override getTechnicalName() {
     return "price";
   }

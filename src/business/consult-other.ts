@@ -2,10 +2,6 @@ import { type StringList } from "../utils/types";
 import Consult from "./abstracts/consult";
 
 export default class ConsultOther extends Consult {
-  static override getModel() {
-    return "OtherConsult";
-  }
-
   static override getTechnicalName() {
     return "consult_other";
   }

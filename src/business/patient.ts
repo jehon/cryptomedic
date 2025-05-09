@@ -12,10 +12,6 @@ import Surgery from "./surgery";
 
 // TODO: this is not a PatientRelated
 export default class Patient extends PatientRelated {
-  static override getModel() {
-    return "Patient";
-  }
-
   static override getTechnicalName() {
     return "patient";
   }
