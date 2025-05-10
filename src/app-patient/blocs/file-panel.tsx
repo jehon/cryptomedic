@@ -69,8 +69,6 @@ export default function FilePanel({
       (!(file instanceof Patient) || folder.getChildren().length == 0)
   };
 
-  console.log("FilePanel - ButtonContext:", buttonContext);
-
   const fileIsUpdated = (nFile: PatientRelated) =>
     onUpdate(folder.withFileOLD(nFile));
 

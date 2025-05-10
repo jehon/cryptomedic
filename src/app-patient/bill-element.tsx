@@ -5,7 +5,6 @@ import Price from "../business/price";
 import { getList } from "../utils/config";
 import { getSession } from "../utils/session";
 import { string2number } from "../utils/strings";
-import ActionButton from "../widget/action-button";
 import IO from "../widget/io";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";

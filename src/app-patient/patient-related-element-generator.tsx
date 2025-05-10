@@ -22,7 +22,7 @@ export default function patientRelatedElementGenerator<
     footer?: React.ReactNode;
   }
 ): React.ReactNode {
-  console.log("patientRelatedElementGenerator - Debug:", {
+  console.log("PatientRelatedElementGenerator - Debug:", {
     fileUid: file.uid(),
     selectedUid,
     mode,
