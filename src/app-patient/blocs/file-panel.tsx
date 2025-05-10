@@ -87,7 +87,7 @@ export default function FilePanel({
       testid={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
       closed={closed}
       fullscreen={editMode}
-      onToggle={(opened) => {
+      onToggle={(_opened) => {
         // if (opened) {
         // TODO: when angular router is out (adapt e2e file panel goEdit too)
         // navigate(`/patient/${patientId}/${fileType.getTechnicalName()}.${fileId}${mode ? `/${mode}` : ""}`);
