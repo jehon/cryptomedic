@@ -47,7 +47,9 @@ export default function ConsultAbstractIntroduction({
         />
         <IOFunction
           label="Age at consultation time"
-          value={() => yearsToYM(getAgeAtThatTime(file, file.getPatient()))}
+          value={() =>
+            yearsToYM(getAgeAtThatTime(file, props.folder.getPatient()))
+          }
         />
       </Panel>
       <Panel fixed label="Nutritional data">
@@ -63,7 +65,7 @@ export default function ConsultAbstractIntroduction({
         {file.weight_kg && (
           <IOFunction
             label="Weight sd"
-            value={() => roundTo(getWeightSd(file, file.getPatient()))}
+            value={() => roundTo(getWeightSd(file, props.folder.getPatient()))}
           />
         )}
         <IONumber
@@ -78,7 +80,7 @@ export default function ConsultAbstractIntroduction({
         {file.height_cm && (
           <IOFunction
             label="Height sd"
-            value={() => roundTo(getHeightSd(file, file.getPatient()))}
+            value={() => roundTo(getHeightSd(file, props.folder.getPatient()))}
           />
         )}
         <IONumber
@@ -98,12 +100,12 @@ export default function ConsultAbstractIntroduction({
             />
             <IOFunction
               label="Weight/Height sd"
-              value={() => roundTo(getWHSd(file, file.getPatient()))}
+              value={() => roundTo(getWHSd(file, props.folder.getPatient()))}
             />
             <IOFunction label="BMI" value={() => roundTo(bmi(file))} />
             <IOFunction
               label="BMI sd"
-              value={() => roundTo(getBMISd(file, file.getPatient()))}
+              value={() => roundTo(getBMISd(file, props.folder.getPatient()))}
             />
           </>
         )}
