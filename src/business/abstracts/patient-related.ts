@@ -20,12 +20,4 @@ export default class PatientRelated extends Pojo {
   getPatient() {
     return this.#parent!.getPatient();
   }
-
-  override getParentField(): string {
-    return "patient_id";
-  }
-
-  override getParentId(): string | undefined {
-    return this.patient_id;
-  }
 }

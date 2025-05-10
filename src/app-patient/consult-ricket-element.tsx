@@ -36,7 +36,10 @@ export default function ConsultRicketElement({
     ),
     body: (
       <>
-        <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
+        <ConsultAbstractIntroduction
+          file={file}
+          props={props}
+        ></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel label="Ricket Data">
             <IOList

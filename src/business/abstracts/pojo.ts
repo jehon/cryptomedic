@@ -24,12 +24,4 @@ export default class Pojo {
   created_at: StringDate = "";
   updated_at: StringDate = "";
   last_user: string = "";
-
-  getParentField(): string | undefined {
-    return undefined;
-  }
-
-  getParentId(): string | undefined {
-    return undefined;
-  }
 }

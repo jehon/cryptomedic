@@ -68,7 +68,10 @@ export default function ConsultClubfootElement({
 
     body: (
       <>
-        <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
+        <ConsultAbstractIntroduction
+          file={file}
+          props={props}
+        ></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel
             fixed

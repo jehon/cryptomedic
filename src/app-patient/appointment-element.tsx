@@ -22,6 +22,11 @@ export default function AppointmentElement({
     body: (
       <TwoColumns>
         <Panel fixed label="Information">
+          <input
+            type="hidden"
+            name="patient_id"
+            defaultValue={props.folder.id}
+          />
           <IODate name="date" value={file.date} required />
           <IOList
             name="center"

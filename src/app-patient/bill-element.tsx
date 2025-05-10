@@ -177,6 +177,11 @@ export default function BillElement({
       <>
         <TwoColumns>
           <Panel fixed label="Information">
+            <input
+              type="hidden"
+              name="patient_id"
+              defaultValue={props.folder.id}
+            />
             <IODate
               name="date"
               value={file.date}
@@ -253,11 +258,11 @@ export default function BillElement({
         <ButtonsGroup>
           <ActionButton
             style="Add"
-            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.id}`}
+            linkTo={`#/folder/${props.folder.id}/file/Bill/${file.id}`}
           />
           <ActionButton
             style="Edit"
-            linkTo={`#/folder/${file.getParentId()}/file/Bill/${file.id}`}
+            linkTo={`#/folder/${props.folder.id}/file/Bill/${file.id}`}
           />
         </ButtonsGroup>
         {getPayments(file, props.folder).length == 0 ? (

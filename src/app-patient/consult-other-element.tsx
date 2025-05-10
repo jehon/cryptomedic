@@ -24,7 +24,10 @@ export default function ConsultOtherElement({
     header: <>{file.side}</>,
     body: (
       <>
-        <ConsultAbstractIntroduction file={file}></ConsultAbstractIntroduction>
+        <ConsultAbstractIntroduction
+          file={file}
+          props={props}
+        ></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel label="Orthopedic data">
             <IOList

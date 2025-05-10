@@ -78,7 +78,7 @@ export default function FilePanel({
     if (file instanceof Patient) {
       routeTo("/home");
     } else {
-      navigate(`/patient/${file.getParentId()!}`);
+      navigate(`/patient/${folder.id}`);
     }
   };
 
@@ -142,7 +142,7 @@ export default function FilePanel({
         data-e2e="excluded"
         onClick={() =>
           navigate(
-            `/patient/${file.getParentId()!}/${file.getStatic().getTechnicalName()}.${file.id!}`
+            `/patient/${folder.id}/${file.getStatic().getTechnicalName()}.${file.id!}`
           )
         }
       >
@@ -157,13 +157,6 @@ export default function FilePanel({
           data-testid={`file-${file.getStatic().getTechnicalName()}.${file.id ?? "add"}-form`}
           ref={formRef}
         >
-          {file.getParentField() && (
-            <input
-              type="hidden"
-              name={file.getParentField()}
-              value={file.getParentId()}
-            />
-          )}
           {file.updated_at && (
             <input type="hidden" name="updated_at" value={file.updated_at} />
           )}

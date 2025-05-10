@@ -19,15 +19,19 @@ import IODate from "../../widget/io-date";
 import IOFunction from "../../widget/io-function";
 import IOList from "../../widget/io-list";
 import IONumber from "../../widget/io-number";
+import type { PatientRelatedElementGeneratorProps } from "../patient-related-element-generator";
 
 export default function ConsultAbstractIntroduction({
-  file
+  file,
+  props
 }: {
   file: Consult;
+  props: PatientRelatedElementGeneratorProps;
 }): React.ReactNode {
   return (
     <TwoColumns>
       <Panel fixed label="Information">
+        <input type="hidden" name="patient_id" defaultValue={props.folder.id} />
         <IODate name="date" value={file.date} />
         <IOList
           name="examiner"

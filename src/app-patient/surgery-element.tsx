@@ -28,6 +28,11 @@ export default function SurgeryElement({
       <>
         <TwoColumns>
           <Panel fixed label="Report">
+            <input
+              type="hidden"
+              name="patient_id"
+              defaultValue={props.folder.id}
+            />
             <IODate name="date" value={file.date} required />
             <IOString
               name="report_diagnostic"

@@ -24,6 +24,11 @@ export default function PictureElement({
     body: (
       <TwoColumns>
         <Panel fixed label="Information">
+          <input
+            type="hidden"
+            name="patient_id"
+            defaultValue={props.folder.id}
+          />
           <IOList
             name="type"
             value={file.type as string}

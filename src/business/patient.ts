@@ -16,10 +16,6 @@ export default class Patient extends PatientRelated {
     return "patient";
   }
 
-  override getParentField(): string {
-    return "";
-  }
-
   entry_year: StringNumber = "" + new Date().getFullYear();
   entry_order: StringNumber = "";
   name: string = "";
