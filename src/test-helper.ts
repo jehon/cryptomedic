@@ -9,10 +9,10 @@ export const RefFolder1 = {
   name: "FolderTest.test1.json",
   type: Folder
 };
-export const RefPatient1 = {
-  name: "PatientControllerTest.test1.json",
-  type: Patient
-};
+// export const RefPatient1 = {
+//   name: "PatientControllerTest.test1.json",
+//   type: Patient
+// };
 
 const refRoot = "../www/api/tests/references/";
 
