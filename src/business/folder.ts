@@ -70,7 +70,7 @@ export default class Folder extends Pojo {
           type2Class(v.type) as unknown as new () => PatientRelated,
           removeNull(v.record),
           { enableImplicitConversion: true }
-        ).registerParent(this)
+        )
       );
     }
   }
