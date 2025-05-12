@@ -29,6 +29,8 @@ export function isTodoMigration(type: string) {
 // TODO: make routing more abstract
 
 export default function FilePanel(props: {
+  selfUrl: string;
+  type: string;
   folder: Folder;
   file: PatientRelated;
   header?: React.ReactNode;
@@ -45,9 +47,9 @@ export default function FilePanel(props: {
   const editMode = addMode || (props.edit ?? false);
 
   const buttonContext: ButtonContext = {
-    parentUrl: `/patient/${props.folder.id}`,
-    type: props.file.getStatic().getTechnicalName(),
-    title: type2Title(props.file.getStatic().getTechnicalName()),
+    parentUrl: props.selfUrl,
+    type: props.type,
+    title: type2Title(props.type),
     editMode,
     isLocked:
       props.file instanceof PatientRelated &&
@@ -69,13 +71,13 @@ export default function FilePanel(props: {
     if (props.file instanceof Patient) {
       routeTo("/home");
     } else {
-      navigate(`/patient/${props.folder.id}`);
+      navigate(props.selfUrl);
     }
   };
 
   return (
     <Panel
-      testid={`${props.file.getStatic().getTechnicalName()}.${props.file.id ?? "add"}`}
+      testid={`${props.type}.${props.file.id ?? "add"}`}
       closed={props.closed}
       fullscreen={editMode}
       onToggle={(_opened) => {
@@ -90,13 +92,9 @@ export default function FilePanel(props: {
           <span className="first">
             <img
               src={
-                icons.models[
-                  (props.file
-                    .getStatic()
-                    .getTechnicalName() as keyof typeof icons.models) ?? ""
-                ]
+                icons.models[(props.type as keyof typeof icons.models) ?? ""]
               }
-              alt={type2Title(props.file.getStatic().getTechnicalName())}
+              alt={type2Title(props.type)}
               className="inline"
             />
             {props.file instanceof Timed ? (
@@ -105,7 +103,7 @@ export default function FilePanel(props: {
               </span>
             ) : null}
             <span data-role="type" className="no-mobile">
-              {type2Title(props.file.getStatic().getTechnicalName())}
+              {type2Title(props.type)}
             </span>
           </span>
           {props.header}
@@ -132,12 +130,10 @@ export default function FilePanel(props: {
         className="technical"
         data-e2e="excluded"
         onClick={() =>
-          navigate(
-            `/patient/${props.folder.id}/${props.file.getStatic().getTechnicalName()}.${props.file.id!}`
-          )
+          navigate(`${props.selfUrl}/${props.type}.${props.file.id!}`)
         }
       >
-        <div>{`${props.file.getStatic().getTechnicalName()}.${props.file.id ?? "add"}`}</div>
+        <div>{`${props.type}.${props.file.id ?? "add"}`}</div>
         <div>
           created at {date2HumanString(normalizeDate(props.file.created_at))}
         </div>
@@ -149,7 +145,7 @@ export default function FilePanel(props: {
       <EditContext.Provider value={editMode}>
         <form
           id="file"
-          data-testid={`file-${props.file.getStatic().getTechnicalName()}.${props.file.id ?? "add"}-form`}
+          data-testid={`file-${props.type}.${props.file.id ?? "add"}-form`}
           ref={formRef}
         >
           {props.file.updated_at && (

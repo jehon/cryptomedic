@@ -25,6 +25,8 @@ export default function patientRelatedElementGenerator<
 ): React.ReactNode {
   return (
     <FilePanel
+      selfUrl={`/patient/${folder.id}`}
+      type={file.getStatic().getTechnicalName()}
       folder={folder}
       key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
       closed={
