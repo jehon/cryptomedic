@@ -49,9 +49,9 @@ export default function FolderElement({
   }
 
   if (selectedUid?.endsWith(".add")) {
-    const typeName = selectedUid.replace(".add", "");
+    const typeName = selectedUid.replace(".add", "") as config.BusinessType;
     const typeClass = type2Class(typeName) as typeof PatientRelated;
-    if (isTodoMigration(typeClass.getTechnicalName())) {
+    if (isTodoMigration(typeName)) {
       // Only bill remain!
       location.hash = `/folder/${folder.id}/file/Bill`;
       return;
@@ -129,7 +129,7 @@ export default function FolderElement({
           if (file instanceof Appointment) {
             return (
               <AppointmentElement
-                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
+                key={`appointment.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -138,7 +138,7 @@ export default function FolderElement({
           if (file instanceof Bill) {
             return (
               <BillElement
-                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
+                key={`bill.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -147,7 +147,7 @@ export default function FolderElement({
           if (file instanceof ConsultClubfoot) {
             return (
               <ConsultClubfootElement
-                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
+                key={`consult_clubfoot.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -156,7 +156,7 @@ export default function FolderElement({
           if (file instanceof ConsultOther) {
             return (
               <ConsultOtherElement
-                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
+                key={`consult_other.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -165,7 +165,7 @@ export default function FolderElement({
           if (file instanceof ConsultRicket) {
             return (
               <ConsultRicketElement
-                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
+                key={`consult_ricket.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -174,7 +174,7 @@ export default function FolderElement({
           if (file instanceof Picture) {
             return (
               <PictureElement
-                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
+                key={`consult_picture.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -183,7 +183,7 @@ export default function FolderElement({
           if (file instanceof Surgery) {
             return (
               <SurgeryElement
-                key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
+                key={`consult_surgery.${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
