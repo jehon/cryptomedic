@@ -8,16 +8,7 @@ import Restricted from "../../widget/restricted";
 import TwoColumns from "../../widget/two-columns";
 import "./menu-item.css";
 
-export function MenuItem({
-  title,
-  requires: restrictedBy,
-  versalIcon,
-  children,
-  buttonText,
-  buttons,
-  toRoute,
-  toLocation
-}: {
+export function MenuItem(props: {
   title: string;
   requires?: string;
   versalIcon?: string;
@@ -28,22 +19,28 @@ export function MenuItem({
   buttons?: ReactElement<typeof ActionButton>[];
 }) {
   return (
-    <Restricted requires={restrictedBy}>
+    <Restricted requires={props.requires}>
       <div className="menu-item">
-        <Panel header={title} fixed={true} testid={toAttributeCase(title)}>
+        <Panel
+          header={props.title}
+          fixed={true}
+          testid={toAttributeCase(props.title)}
+        >
           <TwoColumns>
-            {versalIcon && <img className="versal-icon" src={versalIcon} />}
-            <div className="description">{children}</div>
+            {props.versalIcon && (
+              <img className="versal-icon" src={props.versalIcon} />
+            )}
+            <div className="description">{props.children}</div>
           </TwoColumns>
           <ButtonGroup>
-            {buttons || (
+            {props.buttons || (
               <ActionButton
-                action={buttonText}
+                action={props.buttonText}
                 discrete={true}
                 onOk={() =>
-                  toLocation
-                    ? (document.location = toLocation)
-                    : routeTo(toRoute)
+                  props.toLocation
+                    ? (document.location = props.toLocation)
+                    : routeTo(props.toRoute)
                 }
               />
             )}
