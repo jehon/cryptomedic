@@ -56,6 +56,7 @@ export default function FolderElement({
       location.hash = `/folder/${folder.id}/file/Bill`;
       return;
     }
+    // Test if the added item is already present
     if (
       folder.list.filter(
         (f) =>
@@ -96,22 +97,24 @@ export default function FolderElement({
           className="dropdown-menu dropdown-menu-right text-right"
           aria-labelledby="btnGroupDrop1"
         >
-          {[
-            Appointment,
-            Bill,
-            ConsultClubfoot,
-            ConsultOther,
-            ConsultRicket,
-            Picture,
-            Surgery
-          ].map((type) => (
+          {(
+            [
+              "appointment",
+              "bill",
+              "consult_clubfoot",
+              "consult_other",
+              "consult_ricket",
+              "picture",
+              "surgery"
+            ] as config.BusinessType[]
+          ).map((type) => (
             <Link
               className="dropdown-item"
-              key={type.getTechnicalName()}
-              data-testid={"add-" + type.getTechnicalName()}
-              to={`/patient/${folder.id!}/${type.getTechnicalName()}.add`}
+              key={type}
+              data-testid={`add-${type}`}
+              to={`/patient/${folder.id!}/${type}.add`}
             >
-              {config.type2Title(type.getTechnicalName())}
+              {config.type2Title(type)}
             </Link>
           ))}
         </div>
