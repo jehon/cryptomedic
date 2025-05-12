@@ -38,7 +38,7 @@ export default function ConsultRicketElement({
       <>
         <ConsultAbstractIntroduction
           file={file}
-          props={props}
+          folder={props.folder}
         ></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel label="Ricket Data">

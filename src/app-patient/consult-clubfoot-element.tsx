@@ -70,7 +70,7 @@ export default function ConsultClubfootElement({
       <>
         <ConsultAbstractIntroduction
           file={file}
-          props={props}
+          folder={props.folder}
         ></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel
