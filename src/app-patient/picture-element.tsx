@@ -19,39 +19,38 @@ export default function PictureElement({
   file: Picture;
   props: PatientRelatedElementGeneratorProps;
 }): React.ReactNode {
-  return patientRelatedElementGenerator<Picture>(
+  return patientRelatedElementGenerator<Picture>({
+    ...props,
+    type: "picture",
     file,
-    { ...props, type: "picture" },
-    {
-      header: <>{file.type}</>,
-      body: (
-        <TwoColumns>
-          <Panel fixed label="Information">
-            <input
-              type="hidden"
-              name="patient_id"
-              defaultValue={props.folder.id}
-            />
-            <IOList
-              name="type"
-              value={file.type as string}
-              list={getList("PictureType")}
-            />
-            <IODate name="date" value={file.date} />
-            <IOString label="File" value={file.file as string} e2eExcluded />
-            <IOText name="comments" value={file.comments as string} />
-          </Panel>
-          <Panel fixed label="Image">
-            <IOImage
-              name="fileBlob"
-              label="Picture"
-              value={`/api/picture/${file.id ?? ""}`}
-              required
-              create={!file.id}
-            />
-          </Panel>
-        </TwoColumns>
-      )
-    }
-  );
+    elementHeader: <>{file.type}</>,
+    elementBody: (
+      <TwoColumns>
+        <Panel fixed label="Information">
+          <input
+            type="hidden"
+            name="patient_id"
+            defaultValue={props.folder.id}
+          />
+          <IOList
+            name="type"
+            value={file.type as string}
+            list={getList("PictureType")}
+          />
+          <IODate name="date" value={file.date} />
+          <IOString label="File" value={file.file as string} e2eExcluded />
+          <IOText name="comments" value={file.comments as string} />
+        </Panel>
+        <Panel fixed label="Image">
+          <IOImage
+            name="fileBlob"
+            label="Picture"
+            value={`/api/picture/${file.id ?? ""}`}
+            required
+            create={!file.id}
+          />
+        </Panel>
+      </TwoColumns>
+    )
+  });
 }

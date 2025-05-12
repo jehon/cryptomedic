@@ -17,62 +17,61 @@ export default function SurgeryElement({
   file: Surgery;
   props: PatientRelatedElementGeneratorProps;
 }): React.ReactNode {
-  return patientRelatedElementGenerator<Surgery>(
+  return patientRelatedElementGenerator<Surgery>({
+    ...props,
+    type: "surgery",
     file,
-    { ...props, type: "surgery" },
-    {
-      header: (
-        <>
-          <span>{file.report_diagnostic}</span>
-          <span>{file.report_surgeon}</span>
-        </>
-      ),
-      body: (
-        <>
-          <TwoColumns>
-            <Panel fixed label="Report">
-              <input
-                type="hidden"
-                name="patient_id"
-                defaultValue={props.folder.id}
-              />
-              <IODate name="date" value={file.date} required />
-              <IOString
-                name="report_diagnostic"
-                label="Diagnostic"
-                value={file.report_diagnostic as string}
-              />
-              <IOString
-                name="report_surgeon"
-                label="Surgeon"
-                value={file.report_surgeon as string}
-              />
-              <IOBoolean
-                name="report_side_right"
-                label="Side Right"
-                value={file.report_side_right as string}
-              />
-              <IOBoolean
-                name="report_side_left"
-                label="Side Left"
-                value={file.report_side_left as string}
-              />
-              <IOString
-                name="report_procedure"
-                label="Procedure"
-                value={file.report_procedure as string}
-              />
-            </Panel>
-            <Panel fixed label="Hospitalization Follow-up">
-              <IOText
-                name="follow_up_complication"
-                label="Follow-Up Complications"
-                value={file.follow_up_complication as string}
-              />
-            </Panel>
-          </TwoColumns>
-        </>
-      )
-    }
-  );
+    elementHeader: (
+      <>
+        <span>{file.report_diagnostic}</span>
+        <span>{file.report_surgeon}</span>
+      </>
+    ),
+    elementBody: (
+      <>
+        <TwoColumns>
+          <Panel fixed label="Report">
+            <input
+              type="hidden"
+              name="patient_id"
+              defaultValue={props.folder.id}
+            />
+            <IODate name="date" value={file.date} required />
+            <IOString
+              name="report_diagnostic"
+              label="Diagnostic"
+              value={file.report_diagnostic as string}
+            />
+            <IOString
+              name="report_surgeon"
+              label="Surgeon"
+              value={file.report_surgeon as string}
+            />
+            <IOBoolean
+              name="report_side_right"
+              label="Side Right"
+              value={file.report_side_right as string}
+            />
+            <IOBoolean
+              name="report_side_left"
+              label="Side Left"
+              value={file.report_side_left as string}
+            />
+            <IOString
+              name="report_procedure"
+              label="Procedure"
+              value={file.report_procedure as string}
+            />
+          </Panel>
+          <Panel fixed label="Hospitalization Follow-up">
+            <IOText
+              name="follow_up_complication"
+              label="Follow-Up Complications"
+              value={file.follow_up_complication as string}
+            />
+          </Panel>
+        </TwoColumns>
+      </>
+    )
+  });
 }

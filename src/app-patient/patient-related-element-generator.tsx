@@ -15,39 +15,35 @@ export type PatientRelatedElementGeneratorProps = {
 
 export default function patientRelatedElementGenerator<
   T extends PatientRelated
->(
-  file: T,
-  {
-    type,
-    folder,
-    selectedUid,
-    onUpdate,
-    mode
-  }: PatientRelatedElementGeneratorProps & { type: BusinessType },
-  elements: {
-    header: React.ReactNode;
-    body: React.ReactNode;
-    footer?: React.ReactNode;
-  }
-): React.ReactNode {
+>(props: {
+  file: T;
+  type: BusinessType;
+  folder: Folder;
+  selectedUid?: string;
+  onUpdate: FolderUpdateCallback;
+  mode: ModesList;
+  elementHeader: React.ReactNode;
+  elementBody: React.ReactNode;
+  elementFooter?: React.ReactNode;
+}): React.ReactNode {
   return (
     <FilePanel
-      selfUrl={`/patient/${folder.id}`}
-      type={type}
-      folder={folder}
-      key={`${type}.${file.id ?? "add"}`}
-      closed={`${type}.${file.id ?? "add"}` !== selectedUid}
-      file={file}
-      onUpdate={onUpdate}
-      header={elements.header}
-      footer={elements.footer}
+      selfUrl={`/patient/${props.folder.id}`}
+      type={props.type}
+      folder={props.folder}
+      key={`${props.type}.${props.file.id ?? "add"}`}
+      closed={`${props.type}.${props.file.id ?? "add"}` !== props.selectedUid}
+      file={props.file}
+      onUpdate={props.onUpdate}
+      header={props.elementHeader}
+      footer={props.elementFooter}
       edit={
-        `${type}.${file.id ?? "add"}` == selectedUid
-          ? mode === Modes.input
+        `${props.type}.${props.file.id ?? "add"}` == props.selectedUid
+          ? props.mode === Modes.input
           : false
       }
     >
-      {elements.body}
+      {props.elementBody}
     </FilePanel>
   );
 }

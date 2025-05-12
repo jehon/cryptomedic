@@ -17,31 +17,30 @@ export default function AppointmentElement({
   file: Appointment;
   props: PatientRelatedElementGeneratorProps;
 }): React.ReactNode {
-  return patientRelatedElementGenerator<Appointment>(
+  return patientRelatedElementGenerator<Appointment>({
+    ...props,
+    type: "appointment",
     file,
-    { ...props, type: "appointment" },
-    {
-      header: <span>{file.center}</span>,
-      body: (
-        <TwoColumns>
-          <Panel fixed label="Information">
-            <input
-              type="hidden"
-              name="patient_id"
-              defaultValue={props.folder.id}
-            />
-            <IODate name="date" value={file.date} required />
-            <IOList
-              name="center"
-              value={file.center as string}
-              list={getList("Centers")}
-            />
-          </Panel>
-          <Panel fixed label="Objective">
-            <IOText name="purpose" value={file.purpose as string} />
-          </Panel>
-        </TwoColumns>
-      )
-    }
-  );
+    elementHeader: <span>{file.center}</span>,
+    elementBody: (
+      <TwoColumns>
+        <Panel fixed label="Information">
+          <input
+            type="hidden"
+            name="patient_id"
+            defaultValue={props.folder.id}
+          />
+          <IODate name="date" value={file.date} required />
+          <IOList
+            name="center"
+            value={file.center as string}
+            list={getList("Centers")}
+          />
+        </Panel>
+        <Panel fixed label="Objective">
+          <IOText name="purpose" value={file.purpose as string} />
+        </Panel>
+      </TwoColumns>
+    )
+  });
 }
