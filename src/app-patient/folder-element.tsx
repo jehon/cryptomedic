@@ -62,9 +62,7 @@ export default function FolderElement({
           `${f.getStatic().getTechnicalName()}.${f.id ?? "add"}` == selectedUid
       ).length == 0
     ) {
-      const nf = typeClass.factory() as PatientRelated;
-      nf.registerParent(folder);
-      folderUpdated(folder.withFileOLD(nf));
+      folderUpdated(folder.withFileOLD(typeClass.factory() as PatientRelated));
     }
   }
 
