@@ -3,7 +3,12 @@ import { fullTest, TimedFieldsConfigType } from "../helpers/e2e-file-panel";
 const ctx = fullTest({
   fileType: "bill",
   fieldsConfig: {
-    ...TimedFieldsConfigType
+    ...TimedFieldsConfigType,
+    "Family Salary": { json: "sl_family_salary", type: "string" },
+    "Number of Household Members": {
+      json: "sl_number_of_household_members",
+      type: "string"
+    }
   }
 });
 
