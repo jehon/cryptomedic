@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "../../widget/action-button";
+import { Modes } from "../../widget/io-abstract";
 import IONumber from "../../widget/io-number";
 import { patientCreate } from "../loaders";
 import { MenuItem } from "./menu-item";
@@ -35,7 +36,7 @@ export function MenuPatientGenerateReference() {
         ]}
       >
         <IONumber
-          mode="input"
+          mode={Modes.input}
           name="entry_year"
           value={currentYear}
           htmlProps={{ min: 2000, max: currentYear }}
