@@ -18,9 +18,12 @@ ctx.testRead({
   fileId: 1,
   data: {
     Date: "2011-06-09",
+    "Family Salary": 3000,
+    "Number of Household Members": 7,
+    Percentage: 10,
+    "Price asked": 2240,
     "Consult CDC Consultation Physio": 1,
-    "Consult Other": undefined,
-    "Price asked": 2240
+    "Consult Other": undefined
   }
 });
 
