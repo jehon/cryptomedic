@@ -3,10 +3,7 @@ import { useNavigation } from "react-router-dom";
 
 import "./route-loading.css";
 
-export default function RouteLoading({
-  element,
-  message
-}: {
+export default function RouteLoading(props: {
   element: React.ReactNode;
   message?: string;
 }) {
@@ -19,14 +16,14 @@ export default function RouteLoading({
   }, []);
 
   // See https://reactrouter.com/en/main/hooks/use-navigation
-  let ctxMessage = message;
+  let ctxMessage = props.message;
   switch (navigation.state) {
     case "idle":
       //   idle       = ok -> show the element
-      return element;
+      return props.element;
     case "submitting":
       //   submitting = submit current page
-      ctxMessage = message;
+      ctxMessage = props.message;
       break;
     case "loading":
       //   loading    = load next page
