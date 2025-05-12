@@ -13,7 +13,7 @@ export default function Panel(props: {
   testid?: string;
   onToggle?: (state: boolean) => void;
 }): React.ReactNode {
-  const [statusOpened, toggleOpened] = React.useState(!closed);
+  const [statusOpened, toggleOpened] = React.useState(!props.closed);
 
   // TODO: no display if no children? does not seem to work perfectly...
   //

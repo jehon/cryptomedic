@@ -30,16 +30,7 @@ export function isTodoMigration(type: typeof Pojo) {
 
 // TODO: make routing more abstract
 
-export default function FilePanel({
-  folder,
-  file,
-  header,
-  children,
-  footer,
-  closed,
-  onUpdate,
-  edit
-}: {
+export default function FilePanel(props: {
   folder: Folder;
   file: PatientRelated;
   header?: React.ReactNode;
@@ -52,48 +43,49 @@ export default function FilePanel({
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
 
-  const addMode = !file.id;
-  const editMode = addMode || (edit ?? false);
+  const addMode = !props.file.id;
+  const editMode = addMode || (props.edit ?? false);
 
   // FIXME: We need this for getChildren on Folder
   if (addMode) {
-    file = produce(file, (draft) => {
-      draft.patient_id = folder.id;
+    props.file = produce(props.file, (draft) => {
+      draft.patient_id = props.folder.id;
     });
   }
 
   const buttonContext: ButtonContext = {
-    folder,
-    staticType: file.getStatic() as typeof PatientRelated,
-    title: type2Title(file.getStatic().getTechnicalName()),
+    folder: props.folder,
+    staticType: props.file.getStatic() as typeof PatientRelated,
+    title: type2Title(props.file.getStatic().getTechnicalName()),
     editMode,
     isLocked:
-      file instanceof PatientRelated &&
-      !(file instanceof Patient) &&
-      !(file instanceof Appointment) &&
-      isLocked(file),
+      props.file instanceof PatientRelated &&
+      !(props.file instanceof Patient) &&
+      !(props.file instanceof Appointment) &&
+      isLocked(props.file),
     canDelete:
-      file instanceof PatientRelated &&
+      props.file instanceof PatientRelated &&
       !addMode &&
-      (!(file instanceof Patient) || folder.getChildren().length == 0)
+      (!(props.file instanceof Patient) ||
+        props.folder.getChildren().length == 0)
   };
 
   const fileIsUpdated = (nFile: PatientRelated) =>
-    onUpdate(folder.withFileOLD(nFile));
+    props.onUpdate(props.folder.withFileOLD(nFile));
 
   const fileIsDeleted = () => {
-    onUpdate(folder.withoutFileOLD(file));
-    if (file instanceof Patient) {
+    props.onUpdate(props.folder.withoutFileOLD(props.file));
+    if (props.file instanceof Patient) {
       routeTo("/home");
     } else {
-      navigate(`/patient/${folder.id}`);
+      navigate(`/patient/${props.folder.id}`);
     }
   };
 
   return (
     <Panel
-      testid={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
-      closed={closed}
+      testid={`${props.file.getStatic().getTechnicalName()}.${props.file.id ?? "add"}`}
+      closed={props.closed}
       fullscreen={editMode}
       onToggle={(_opened) => {
         // if (opened) {
@@ -108,35 +100,35 @@ export default function FilePanel({
             <img
               src={
                 icons.models[
-                  (file
+                  (props.file
                     .getStatic()
                     .getTechnicalName() as keyof typeof icons.models) ?? ""
                 ]
               }
-              alt={type2Title(file.getStatic().getTechnicalName())}
+              alt={type2Title(props.file.getStatic().getTechnicalName())}
               className="inline"
             />
-            {file instanceof Timed ? (
+            {props.file instanceof Timed ? (
               <span className="no-mobile">
-                {date2HumanString(normalizeDate(file["date"]))}
+                {date2HumanString(normalizeDate(props.file["date"]))}
               </span>
             ) : null}
             <span data-role="type" className="no-mobile">
-              {type2Title(file.getStatic().getTechnicalName())}
+              {type2Title(props.file.getStatic().getTechnicalName())}
             </span>
           </span>
-          {header}
+          {props.header}
         </>
       }
       actions={
         <>
           <ViewButtons
-            file={file}
+            file={props.file}
             onUpdate={fileIsUpdated}
             context={buttonContext}
           />
           <EditButtons
-            file={file}
+            file={props.file}
             onDelete={fileIsDeleted}
             onUpdate={fileIsUpdated}
             context={buttonContext}
@@ -150,29 +142,37 @@ export default function FilePanel({
         data-e2e="excluded"
         onClick={() =>
           navigate(
-            `/patient/${folder.id}/${file.getStatic().getTechnicalName()}.${file.id!}`
+            `/patient/${props.folder.id}/${props.file.getStatic().getTechnicalName()}.${props.file.id!}`
           )
         }
       >
-        <div>{`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}</div>
-        <div>created at {date2HumanString(normalizeDate(file.created_at))}</div>
-        <div>updated at {date2HumanString(normalizeDate(file.updated_at))}</div>
-        <div>by {file.last_user}</div>
+        <div>{`${props.file.getStatic().getTechnicalName()}.${props.file.id ?? "add"}`}</div>
+        <div>
+          created at {date2HumanString(normalizeDate(props.file.created_at))}
+        </div>
+        <div>
+          updated at {date2HumanString(normalizeDate(props.file.updated_at))}
+        </div>
+        <div>by {props.file.last_user}</div>
       </div>
       <EditContext.Provider value={editMode}>
         <form
           id="file"
-          data-testid={`file-${file.getStatic().getTechnicalName()}.${file.id ?? "add"}-form`}
+          data-testid={`file-${props.file.getStatic().getTechnicalName()}.${props.file.id ?? "add"}-form`}
           ref={formRef}
         >
-          {file.updated_at && (
-            <input type="hidden" name="updated_at" value={file.updated_at} />
+          {props.file.updated_at && (
+            <input
+              type="hidden"
+              name="updated_at"
+              value={props.file.updated_at}
+            />
           )}
-          {children}
+          {props.children}
           {editMode && (
             <ButtonGroup>
               <EditButtons
-                file={file}
+                file={props.file}
                 onDelete={fileIsDeleted}
                 onUpdate={fileIsUpdated}
                 context={{ ...buttonContext, canDelete: false }}
@@ -182,7 +182,7 @@ export default function FilePanel({
           )}
         </form>
       </EditContext.Provider>
-      {footer}
+      {props.footer}
     </Panel>
   );
 }
