@@ -1,7 +1,6 @@
 import ActionButton from "../../widget/action-button";
 import notification from "../../widget/notification";
 import { folderFileUnlock } from "../loaders";
-import { isTodoMigration } from "./file-panel";
 
 import { useNavigate } from "react-router-dom";
 import type Pojo from "../../business/abstracts/pojo";
@@ -15,17 +14,8 @@ export default function ViewButtons<T extends Pojo>(
   }
 ) {
   const navigate = useNavigate();
-  const goEdit = () => {
-    if (
-      // TODO: migrate all this progressively
-      isTodoMigration(props.type)
-    ) {
-      location.hash = `${props.parentUrl.replace("patient", "folder")}/file/Bill/${props.file.id!}/edit`;
-      return;
-    }
-
+  const goEdit = () =>
     navigate(`${props.parentUrl}/${props.type}.${props.file.id!}/edit`);
-  };
 
   const doUnlock = () => {
     folderFileUnlock(props.file)
