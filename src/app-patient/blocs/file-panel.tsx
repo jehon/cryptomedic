@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PatientRelated from "../../business/abstracts/patient-related";
-import Pojo from "../../business/abstracts/pojo";
 import Timed from "../../business/abstracts/timed";
 import Appointment from "../../business/appointment";
 import Folder from "../../business/folder";
@@ -20,11 +19,11 @@ import ViewButtons from "./view-buttons";
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
 // TODO: migrate all this progressively
-export function isTodoMigration(type: typeof Pojo) {
+export function isTodoMigration(type: string) {
   if (isFeatureSwitchEnabled()) {
     return false;
   }
-  return "bill" == type.getTechnicalName();
+  return "bill" == type;
 }
 
 // TODO: make routing more abstract
@@ -46,8 +45,8 @@ export default function FilePanel(props: {
   const editMode = addMode || (props.edit ?? false);
 
   const buttonContext: ButtonContext = {
-    folder: props.folder,
-    staticType: props.file.getStatic() as typeof PatientRelated,
+    parentUrl: `/patient/${props.folder.id}`,
+    type: props.file.getStatic().getTechnicalName(),
     title: type2Title(props.file.getStatic().getTechnicalName()),
     editMode,
     isLocked:

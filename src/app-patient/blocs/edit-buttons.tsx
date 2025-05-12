@@ -42,11 +42,9 @@ export default function EditButtons({
       // // This is not necessary because the top folder will reload anyway
       // // Remove the newly added file, that we don't want to keep
       // onUpdate(folder.withoutFile(file));
-      navigate(`/patient/${context.folder.id!}`);
+      navigate(context.parentUrl);
     } else {
-      navigate(
-        `/patient/${context.folder.id!}/${context.staticType.getTechnicalName()}.${file.id!}`
-      );
+      navigate(`${context.parentUrl}/${context.type}.${file.id!}`);
     }
   };
 
@@ -63,9 +61,7 @@ export default function EditButtons({
         .then(
           passThrough((newFile) => {
             // Route to the newly created file
-            navigate(
-              `/patient/${context.folder.id!}/${context.staticType.getTechnicalName()}.${newFile.id!}`
-            );
+            navigate(`${context.parentUrl}/${context.type}.${newFile.id!}`);
           })
         )
         .then(onUpdate);
@@ -74,9 +70,7 @@ export default function EditButtons({
         .then(notification("File saved"))
         .then(
           passThrough(() =>
-            navigate(
-              `/patient/${context.folder.id!}/${context.staticType.getTechnicalName()}.${file.id!}`
-            )
+            navigate(`${context.parentUrl}/${context.type}.${file.id!}`)
           )
         )
         .then(onUpdate);

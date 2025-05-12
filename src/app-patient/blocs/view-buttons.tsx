@@ -21,15 +21,13 @@ export default function ViewButtons({
   const goEdit = () => {
     if (
       // TODO: migrate all this progressively
-      isTodoMigration(context.staticType)
+      isTodoMigration(context.type)
     ) {
-      location.hash = `folder/${context.folder.id}/file/Bill/${file.id!}/edit`;
+      location.hash = `${context.parentUrl.replace("patient", "folder")}/file/Bill/${file.id!}/edit`;
       return;
     }
 
-    navigate(
-      `/patient/${context.folder.id!}/${context.staticType.getTechnicalName()}.${file.id!}/edit`
-    );
+    navigate(`${context.parentUrl}/${context.type}.${file.id!}/edit`);
   };
 
   const doUnlock = () => {

@@ -51,7 +51,7 @@ export default function FolderElement({
   if (selectedUid?.endsWith(".add")) {
     const typeName = selectedUid.replace(".add", "");
     const typeClass = type2Class(typeName) as typeof PatientRelated;
-    if (isTodoMigration(typeClass)) {
+    if (isTodoMigration(typeClass.getTechnicalName())) {
       // Only bill remain!
       location.hash = `/folder/${folder.id}/file/Bill`;
       return;
