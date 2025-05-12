@@ -27,3 +27,27 @@ ctx.testRead({
     "Consult Other": undefined
   }
 });
+
+// ctx.testCreateDelete({
+//   patientId: 108,
+//   data: {
+//     Date: "2008-02-10",
+//     Examiner: "Ershad",
+//     Center: "Ramu",
+//     "Family Salary": "2000",
+//     "Number of Household Members": "5"
+//   }
+// });
+
+// ctx.testUpdate({
+//   patientId: 108,
+//   fileId: 102,
+//   dataInitial: {
+//     Date: "2008-02-20",
+//     Center: "Ramu"
+//   },
+//   dataUpdated: {
+//     Date: "2008-02-21",
+//     Center: "Chakaria Disability Center"
+//   }
+// });
