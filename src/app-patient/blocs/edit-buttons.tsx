@@ -12,81 +12,77 @@ import {
 
 import type { ButtonContext } from "./button-context";
 
-export default function EditButtons({
-  file,
-  onDelete,
-  onUpdate,
-  // baseNavigate,
-  context,
-  formRef
-}: {
-  file: PatientRelated;
-  onDelete: () => void;
-  onUpdate: (file: PatientRelated) => void;
-  // baseNavigate: string;
-  context: ButtonContext;
-  formRef: React.RefObject<HTMLFormElement | null>;
-}) {
+export default function EditButtons(
+  props: ButtonContext & {
+    file: PatientRelated;
+    onDelete: () => void;
+    onUpdate: (file: PatientRelated) => void;
+    // baseNavigate: string;
+    formRef: React.RefObject<HTMLFormElement | null>;
+  }
+) {
   const navigate = useNavigate();
-  if (!context.editMode) {
+  if (!props.editMode) {
     return <></>;
   }
 
-  const addMode = !file.id;
+  const addMode = !props.file.id;
 
   const doDelete = () =>
-    folderFileDelete(file).then(notification("File deleted")).then(onDelete);
+    folderFileDelete(props.file)
+      .then(notification("File deleted"))
+      .then(props.onDelete);
 
   const doCancel = () => {
     if (addMode) {
       // // This is not necessary because the top folder will reload anyway
       // // Remove the newly added file, that we don't want to keep
       // onUpdate(folder.withoutFile(file));
-      navigate(context.parentUrl);
+      navigate(props.parentUrl);
     } else {
-      navigate(`${context.parentUrl}/${context.type}.${file.id!}`);
+      navigate(`${props.parentUrl}/${props.type}.${props.file.id!}`);
     }
   };
 
   const doSave = () => {
-    if (!formRef.current!.checkValidity()) {
-      formRef.current!.requestSubmit();
+    if (!props.formRef.current!.checkValidity()) {
+      props.formRef.current!.requestSubmit();
       return;
     }
 
-    const data = new FormData(formRef.current!);
+    const data = new FormData(props.formRef.current!);
     if (addMode) {
-      return folderFileCreate(file, data)
+      return folderFileCreate(props.file, data)
         .then(notification("File created"))
         .then(
           passThrough((newFile) => {
             // Route to the newly created file
-            navigate(`${context.parentUrl}/${context.type}.${newFile.id!}`);
+            navigate(`${props.parentUrl}/${props.type}.${newFile.id!}`);
           })
         )
-        .then(onUpdate);
+        .then(props.onUpdate);
     } else {
-      return folderFileUpdate(file, data)
+      return folderFileUpdate(props.file, data)
         .then(notification("File saved"))
         .then(
           passThrough(() =>
-            navigate(`${context.parentUrl}/${context.type}.${file.id!}`)
+            navigate(`${props.parentUrl}/${props.type}.${props.file.id!}`)
           )
         )
-        .then(onUpdate);
+        .then(props.onUpdate);
     }
   };
 
   return (
     <>
-      {context.canDelete && (
+      {props.canDelete && (
         <ActionConfirm
           style="Delete"
           discrete={true}
           onOk={doDelete}
           requires="folder.delete"
         >
-          <div>Are you sure you want to DELETE the File {context.title}?</div>
+          <div>Are you sure you want to DELETE the File {props.title}?</div>
         </ActionConfirm>
       )}
       <ActionButton style="Cancel" onOk={() => doCancel()} />

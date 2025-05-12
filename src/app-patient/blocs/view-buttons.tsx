@@ -1,43 +1,40 @@
-import PatientRelated from "../../business/abstracts/patient-related";
 import ActionButton from "../../widget/action-button";
 import notification from "../../widget/notification";
 import { folderFileUnlock } from "../loaders";
 import { isTodoMigration } from "./file-panel";
 
 import { useNavigate } from "react-router-dom";
+import type Pojo from "../../business/abstracts/pojo";
 import ActionConfirm from "../../widget/action-confirm";
 import type { ButtonContext } from "./button-context";
 
-export default function ViewButtons({
-  file,
-  onUpdate,
-  context
-}: {
-  file: PatientRelated;
-  onUpdate: (file: PatientRelated) => void;
-  context: ButtonContext;
-}) {
+export default function ViewButtons<T extends Pojo>(
+  props: ButtonContext & {
+    file: T;
+    onUpdate: (file: T) => void;
+  }
+) {
   const navigate = useNavigate();
   const goEdit = () => {
     if (
       // TODO: migrate all this progressively
-      isTodoMigration(context.type)
+      isTodoMigration(props.type)
     ) {
-      location.hash = `${context.parentUrl.replace("patient", "folder")}/file/Bill/${file.id!}/edit`;
+      location.hash = `${props.parentUrl.replace("patient", "folder")}/file/Bill/${props.file.id!}/edit`;
       return;
     }
 
-    navigate(`${context.parentUrl}/${context.type}.${file.id!}/edit`);
+    navigate(`${props.parentUrl}/${props.type}.${props.file.id!}/edit`);
   };
 
   const doUnlock = () => {
-    folderFileUnlock(file)
+    folderFileUnlock(props.file)
       .then(notification("File unlocked"))
-      .then(onUpdate)
+      .then(props.onUpdate)
       .then(() => goEdit());
   };
 
-  if (context.isLocked) {
+  if (props.isLocked) {
     return (
       <ActionConfirm
         style="Alternate"
@@ -47,7 +44,7 @@ export default function ViewButtons({
         requires="folder.unlock"
       >
         <div>
-          Are you sure you want to unlock the File {context.title}?
+          Are you sure you want to unlock the File {props.title}?
           <br />
           Anybody will then be able to edit it.
         </div>
@@ -55,7 +52,7 @@ export default function ViewButtons({
     );
   }
 
-  if (context.editMode) {
+  if (props.editMode) {
     return <></>;
   }
 

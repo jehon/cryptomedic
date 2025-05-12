@@ -117,15 +117,15 @@ export default function FilePanel(props: {
       actions={
         <>
           <ViewButtons
+            {...buttonContext}
             file={props.file}
             onUpdate={fileIsUpdated}
-            context={buttonContext}
           />
           <EditButtons
+            {...buttonContext}
             file={props.file}
             onDelete={fileIsDeleted}
             onUpdate={fileIsUpdated}
-            context={buttonContext}
             formRef={formRef}
           />
         </>
@@ -164,10 +164,11 @@ export default function FilePanel(props: {
           {editMode && (
             <ButtonGroup>
               <EditButtons
+                {...buttonContext}
                 file={props.file}
                 onDelete={fileIsDeleted}
                 onUpdate={fileIsUpdated}
-                context={{ ...buttonContext, canDelete: false }}
+                canDelete={false}
                 formRef={formRef}
               />
             </ButtonGroup>
