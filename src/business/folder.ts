@@ -73,6 +73,7 @@ export default class Folder extends Pojo {
         )
       );
     }
+    this.list.sort(patientRelatedOrdering);
   }
 
   withFileOLD(file: PatientRelated): Folder {
@@ -154,8 +155,7 @@ export default class Folder extends Pojo {
       return [];
     }
     return (
-      this._getByFieldValue("patient_id", this.getPatient().id)
-        .sort(patientRelatedOrdering)
+      this.list
         .filter((v) => !(v instanceof Patient))
         // TODO: this is not in the correct place
         .filter((v) => !(v instanceof Payment))

@@ -1,4 +1,3 @@
-import { produce } from "immer";
 import { useRef } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -45,13 +44,6 @@ export default function FilePanel(props: {
 
   const addMode = !props.file.id;
   const editMode = addMode || (props.edit ?? false);
-
-  // FIXME: We need this for getChildren on Folder
-  if (addMode) {
-    props.file = produce(props.file, (draft) => {
-      draft.patient_id = props.folder.id;
-    });
-  }
 
   const buttonContext: ButtonContext = {
     folder: props.folder,
