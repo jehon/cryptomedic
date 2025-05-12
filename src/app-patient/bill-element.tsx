@@ -9,6 +9,7 @@ import { getList, getSession } from "../utils/session";
 import { roundTo, string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
 import ButtonsGroup from "../widget/buttons-group";
+import { Modes } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
 import IOFunction from "../widget/io-function";
 import IOHidden from "../widget/io-hidden";
@@ -253,7 +254,7 @@ export default function BillElement({
         )}
       </>
     ),
-    footer: props.mode != "edit" && file.id && price && (
+    footer: props.mode == Modes.output && file.id && price && (
       <Panel fixed label="Payments" testid={`bill.${file.id}.payments`}>
         <ButtonsGroup>
           <ActionButton

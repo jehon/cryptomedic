@@ -1,16 +1,12 @@
 import { string2Boolean } from "../utils/strings";
 import IOAbstract, { type IOProps } from "./io-abstract";
 
-//
-// Always required
-//
-
 export default function IOBoolean(props: IOProps<boolean>) {
   return IOAbstract(
     {
       ...props,
       type: "boolean",
-      required: true,
+      required: true, // Always required
       value: string2Boolean(props.value)
     },
     {

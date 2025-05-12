@@ -12,6 +12,7 @@ import Surgery from "../business/surgery";
 import * as config from "../config";
 import { getLastSeen, getNextAppointment } from "../utils/calculations";
 import ButtonsGroup from "../widget/buttons-group";
+import type { ModesList } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
 import AppointmentElement from "./appointment-element";
@@ -31,7 +32,7 @@ export default function FolderElement({
 }: {
   folder: Folder;
   selectedUid?: string;
-  mode?: string;
+  mode: ModesList;
 }): React.ReactNode {
   const [folder, folderUpdated] = useState<Folder>(initialFolder);
 

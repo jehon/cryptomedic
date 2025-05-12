@@ -1,5 +1,6 @@
 import { type Params, useLoaderData, useParams } from "react-router-dom";
 import Folder from "../business/folder";
+import { Modes } from "../widget/io-abstract";
 import RouteLoading from "../widget/route-loading";
 import FolderElement from "./folder-element";
 import { getFolder } from "./loaders";
@@ -20,6 +21,10 @@ function PatientRouter(): React.ReactNode {
   const { selectedUid, mode } = useParams();
 
   return (
-    <FolderElement folder={folder} selectedUid={selectedUid} mode={mode} />
+    <FolderElement
+      folder={folder}
+      selectedUid={selectedUid}
+      mode={mode == "edit" ? Modes.input : Modes.output}
+    />
   );
 }

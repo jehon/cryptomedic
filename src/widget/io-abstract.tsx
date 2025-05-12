@@ -11,7 +11,7 @@ export const Modes = Object.freeze({
   input: "input",
   output: "output"
 });
-type ModesList = keyof typeof Modes;
+export type ModesList = keyof typeof Modes;
 
 export type IOPropsInput<T> = T | string | undefined;
 
@@ -79,7 +79,11 @@ export default function IOAbstract<T>(
   const editContext = useContext(EditContext) && writable;
 
   const editMode =
-    props.mode == "output" ? false : props.mode == "input" ? true : editContext;
+    props.mode == Modes.output
+      ? false
+      : props.mode == Modes.input
+        ? true
+        : editContext;
   // Hide if not value and output mode
   if (!editMode && isEmptyValue(props.value)) {
     return null;

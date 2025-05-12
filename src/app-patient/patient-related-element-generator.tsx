@@ -2,13 +2,14 @@ import React from "react";
 import PatientRelated from "../business/abstracts/patient-related";
 
 import Folder from "../business/folder";
+import { Modes, type ModesList } from "../widget/io-abstract";
 import FilePanel, { type FolderUpdateCallback } from "./blocs/file-panel";
 
 export type PatientRelatedElementGeneratorProps = {
   folder: Folder;
   selectedUid?: string;
   onUpdate: FolderUpdateCallback;
-  mode?: string;
+  mode: ModesList;
 };
 
 export default function patientRelatedElementGenerator<
@@ -37,7 +38,7 @@ export default function patientRelatedElementGenerator<
       edit={
         `${file.getStatic().getTechnicalName()}.${file.id ?? "add"}` ==
         selectedUid
-          ? mode === "edit"
+          ? mode === Modes.input
           : false
       }
     >
