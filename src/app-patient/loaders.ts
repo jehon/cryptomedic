@@ -78,5 +78,3 @@ export function folderFileUpdate<T extends PatientRelated>(
       )
     );
 }
-
-// See legacy/app-old/v1/elements/cryptomedic-data-service.js
