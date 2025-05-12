@@ -1,3 +1,4 @@
+import type { BusinessType } from "../config";
 import {
   type StringBoolean,
   type StringList,
@@ -6,7 +7,7 @@ import {
 import Consult from "./abstracts/consult";
 
 export default class ConsultClubfoot extends Consult {
-  static override getTechnicalName() {
+  static override getTechnicalName(): BusinessType {
     return "consult_clubfoot";
   }
 

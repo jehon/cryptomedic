@@ -2,6 +2,7 @@ import React from "react";
 import PatientRelated from "../business/abstracts/patient-related";
 
 import Folder from "../business/folder";
+import type { BusinessType } from "../config";
 import { Modes, type ModesList } from "../widget/io-abstract";
 import FilePanel, { type FolderUpdateCallback } from "./blocs/file-panel";
 
@@ -16,7 +17,13 @@ export default function patientRelatedElementGenerator<
   T extends PatientRelated
 >(
   file: T,
-  { folder, selectedUid, onUpdate, mode }: PatientRelatedElementGeneratorProps,
+  {
+    type,
+    folder,
+    selectedUid,
+    onUpdate,
+    mode
+  }: PatientRelatedElementGeneratorProps & { type: BusinessType },
   elements: {
     header: React.ReactNode;
     body: React.ReactNode;
@@ -26,20 +33,16 @@ export default function patientRelatedElementGenerator<
   return (
     <FilePanel
       selfUrl={`/patient/${folder.id}`}
-      type={file.getStatic().getTechnicalName()}
+      type={type}
       folder={folder}
-      key={`${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`}
-      closed={
-        `${file.getStatic().getTechnicalName()}.${file.id ?? "add"}` !==
-        selectedUid
-      }
+      key={`${type}.${file.id ?? "add"}`}
+      closed={`${type}.${file.id ?? "add"}` !== selectedUid}
       file={file}
       onUpdate={onUpdate}
       header={elements.header}
       footer={elements.footer}
       edit={
-        `${file.getStatic().getTechnicalName()}.${file.id ?? "add"}` ==
-        selectedUid
+        `${type}.${file.id ?? "add"}` == selectedUid
           ? mode === Modes.input
           : false
       }

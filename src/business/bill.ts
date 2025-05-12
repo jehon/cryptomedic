@@ -1,10 +1,11 @@
 import { Type } from "class-transformer";
 import "reflect-metadata"; // Required by class-transformer
+import type { BusinessType } from "../config";
 import Timed from "./abstracts/timed";
 import Payment from "./payment";
 
 export default class Bill extends Timed {
-  static override getTechnicalName() {
+  static override getTechnicalName(): BusinessType {
     return "bill";
   }
 

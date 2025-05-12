@@ -27,6 +27,22 @@ export const messages = {
   error: "error"
 };
 
+export type BusinessType =
+  | "appointment"
+  | "bill"
+  | "consult_clubfoot"
+  | "consult_other"
+  | "consult_ricket"
+  | "patient"
+  | "payment"
+  | "price"
+  | "picture"
+  | "surgery"
+  //
+  // Legacy
+  //
+  | "pojo";
+
 export const icons = {
   error: "/static/img/error.svg",
   logout: "/static/img/logout.gif",
@@ -67,7 +83,7 @@ export function getPriceCategories() {
   return ["consult", "medecine", "other", "workshop", "surgical"];
 }
 
-export function type2Title(type: string) {
+export function type2Title(type: BusinessType) {
   switch (type) {
     case "appointment":
       return "Appointment";

@@ -167,121 +167,125 @@ export default function BillElement({
    * Render
    *
    */
-  return patientRelatedElementGenerator<Bill>(file, props, {
-    header: (
-      <>
-        <span>total: {file.total_real}</span>
-        <span>paid: {totalPaid}</span>
-      </>
-    ),
-    body: (
-      <>
-        <TwoColumns>
-          <Panel fixed label="Information">
-            <input
-              type="hidden"
-              name="patient_id"
-              defaultValue={props.folder.id}
-            />
-            <IODate
-              name="date"
-              value={file.date}
-              onChange={(value) => selectPrice(value)}
-            />
-            <IOList
-              name="examiner"
-              value={file.examiner as string}
-              list={getList("Examiners")}
-            />
-            <IOList
-              name="center"
-              value={file.center as string}
-              list={getList("Centers")}
-            />{" "}
-          </Panel>
-          <Panel fixed label="Totals">
-            <IONumber
-              name="sl_family_salary"
-              label="Family Salary"
-              value={socialLevelParams.family_salary}
-              onChange={(value) =>
-                setSocialLevelParams({
-                  ...socialLevelParams,
-                  family_salary: value
-                })
-              }
-            />
-            <IONumber
-              name="sl_number_of_household_members"
-              label="Number of Household Members"
-              value={socialLevelParams.number_of_household_members}
-              htmlProps={{ max: 10 }}
-              onChange={(value) =>
-                setSocialLevelParams({
-                  ...socialLevelParams,
-                  number_of_household_members: value
-                })
-              }
-            />
-            <IOHidden name="social_level" value={socialLevel} />
-            <IOHidden label="Percentage" value={percentageAsked * 100} />
-            <IOHidden
-              name="total_real"
-              label="Raw Calculated Total"
-              value={getTotal()}
-            />
-            <IOHidden
-              name="total_asked"
-              label="Price asked"
-              value={priceAsked}
-            />
-            <IOFunction
-              label="Payments Received (see below)"
-              value={() => totalPaid}
-            />
-          </Panel>
-        </TwoColumns>
-        {price && (
-          <Panel fixed label="Bill Lines">
-            {items.map((line) => (
-              <IOBillLine
-                value={line}
-                key={line.key}
-                onChange={(bl) => updateTotal(bl)}
+  return patientRelatedElementGenerator<Bill>(
+    file,
+    { ...props, type: "bill" },
+    {
+      header: (
+        <>
+          <span>total: {file.total_real}</span>
+          <span>paid: {totalPaid}</span>
+        </>
+      ),
+      body: (
+        <>
+          <TwoColumns>
+            <Panel fixed label="Information">
+              <input
+                type="hidden"
+                name="patient_id"
+                defaultValue={props.folder.id}
               />
-            ))}
-          </Panel>
-        )}
-      </>
-    ),
-    footer: props.mode == Modes.output && file.id && price && (
-      <Panel fixed label="Payments" testid={`bill.${file.id}.payments`}>
-        <ButtonsGroup>
-          <ActionButton
-            style="Add"
-            linkTo={`#/folder/${props.folder.id}/file/Bill/${file.id}`}
-          />
-          <ActionButton
-            style="Edit"
-            linkTo={`#/folder/${props.folder.id}/file/Bill/${file.id}`}
-          />
-        </ButtonsGroup>
-        {getPayments(file, props.folder).length == 0 ? (
-          <div>No payment received</div>
-        ) : (
-          getPayments(file, props.folder).map((payment: Payment) => (
-            <div
-              key={`payment.${payment.id}`}
-              className="payment-line"
-              data-testid={`payment.${payment.id}`}
-            >
-              <IODate value={payment.date} noLabel />
-              <IONumber value={payment.amount} noLabel />
-              <IOString value={payment.comments} noLabel />
-            </div>
-          ))
-        )}
-      </Panel>
-    )
-  });
+              <IODate
+                name="date"
+                value={file.date}
+                onChange={(value) => selectPrice(value)}
+              />
+              <IOList
+                name="examiner"
+                value={file.examiner as string}
+                list={getList("Examiners")}
+              />
+              <IOList
+                name="center"
+                value={file.center as string}
+                list={getList("Centers")}
+              />{" "}
+            </Panel>
+            <Panel fixed label="Totals">
+              <IONumber
+                name="sl_family_salary"
+                label="Family Salary"
+                value={socialLevelParams.family_salary}
+                onChange={(value) =>
+                  setSocialLevelParams({
+                    ...socialLevelParams,
+                    family_salary: value
+                  })
+                }
+              />
+              <IONumber
+                name="sl_number_of_household_members"
+                label="Number of Household Members"
+                value={socialLevelParams.number_of_household_members}
+                htmlProps={{ max: 10 }}
+                onChange={(value) =>
+                  setSocialLevelParams({
+                    ...socialLevelParams,
+                    number_of_household_members: value
+                  })
+                }
+              />
+              <IOHidden name="social_level" value={socialLevel} />
+              <IOHidden label="Percentage" value={percentageAsked * 100} />
+              <IOHidden
+                name="total_real"
+                label="Raw Calculated Total"
+                value={getTotal()}
+              />
+              <IOHidden
+                name="total_asked"
+                label="Price asked"
+                value={priceAsked}
+              />
+              <IOFunction
+                label="Payments Received (see below)"
+                value={() => totalPaid}
+              />
+            </Panel>
+          </TwoColumns>
+          {price && (
+            <Panel fixed label="Bill Lines">
+              {items.map((line) => (
+                <IOBillLine
+                  value={line}
+                  key={line.key}
+                  onChange={(bl) => updateTotal(bl)}
+                />
+              ))}
+            </Panel>
+          )}
+        </>
+      ),
+      footer: props.mode == Modes.output && file.id && price && (
+        <Panel fixed label="Payments" testid={`bill.${file.id}.payments`}>
+          <ButtonsGroup>
+            <ActionButton
+              style="Add"
+              linkTo={`#/folder/${props.folder.id}/file/Bill/${file.id}`}
+            />
+            <ActionButton
+              style="Edit"
+              linkTo={`#/folder/${props.folder.id}/file/Bill/${file.id}`}
+            />
+          </ButtonsGroup>
+          {getPayments(file, props.folder).length == 0 ? (
+            <div>No payment received</div>
+          ) : (
+            getPayments(file, props.folder).map((payment: Payment) => (
+              <div
+                key={`payment.${payment.id}`}
+                className="payment-line"
+                data-testid={`payment.${payment.id}`}
+              >
+                <IODate value={payment.date} noLabel />
+                <IONumber value={payment.amount} noLabel />
+                <IOString value={payment.comments} noLabel />
+              </div>
+            ))
+          )}
+        </Panel>
+      )
+    }
+  );
 }

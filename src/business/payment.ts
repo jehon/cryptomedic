@@ -1,9 +1,10 @@
+import type { BusinessType } from "../config";
 import { type StringDate } from "../utils/types";
 import PatientRelated from "./abstracts/patient-related";
 
 // Todo: Payment is not a patient related
 export default class Payment extends PatientRelated {
-  static override getTechnicalName() {
+  static override getTechnicalName(): BusinessType {
     return "payment";
   }
 

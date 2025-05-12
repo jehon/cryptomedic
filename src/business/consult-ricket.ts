@@ -1,8 +1,9 @@
+import type { BusinessType } from "../config";
 import { type StringList, type StringNumber } from "../utils/types";
 import Consult from "./abstracts/consult";
 
 export default class ConsultRicket extends Consult {
-  static override getTechnicalName() {
+  static override getTechnicalName(): BusinessType {
     return "consult_ricket";
   }
 

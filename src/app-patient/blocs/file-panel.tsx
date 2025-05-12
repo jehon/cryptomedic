@@ -6,7 +6,12 @@ import Timed from "../../business/abstracts/timed";
 import Appointment from "../../business/appointment";
 import Folder from "../../business/folder";
 import Patient from "../../business/patient";
-import { icons, isFeatureSwitchEnabled, type2Title } from "../../config";
+import {
+  icons,
+  isFeatureSwitchEnabled,
+  type2Title,
+  type BusinessType
+} from "../../config";
 import { routeTo } from "../../main";
 import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
@@ -19,7 +24,7 @@ import ViewButtons from "./view-buttons";
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
 // TODO: migrate all this progressively
-export function isTodoMigration(type: string) {
+export function isTodoMigration(type: BusinessType) {
   if (isFeatureSwitchEnabled()) {
     return false;
   }
@@ -30,7 +35,7 @@ export function isTodoMigration(type: string) {
 
 export default function FilePanel(props: {
   selfUrl: string;
-  type: string;
+  type: BusinessType;
   folder: Folder;
   file: PatientRelated;
   header?: React.ReactNode;
@@ -83,7 +88,7 @@ export default function FilePanel(props: {
       onToggle={(_opened) => {
         // if (opened) {
         // TODO: when angular router is out (adapt e2e file panel goEdit too)
-        // navigate(`/patient/${patientId}/${fileType.getTechnicalName()}.${fileId}${mode ? `/${mode}` : ""}`);
+        // navigate(`/patient/${patientId}/${props.type}.${fileId}${mode ? `/${mode}` : ""}`);
         //   location.hash = routeToFolderFile(folder, file);
         // }
       }}

@@ -1,5 +1,6 @@
 import { plainToInstance } from "class-transformer";
 import { immerable } from "immer";
+import type { BusinessType } from "../../config";
 import { type StringDate } from "../../utils/types";
 
 export default class Pojo {
@@ -9,7 +10,7 @@ export default class Pojo {
     return plainToInstance(this, json) as T;
   }
 
-  static getTechnicalName() {
+  static getTechnicalName(): BusinessType {
     // Patient map this name to the list field (getChildren)
     return "pojo";
   }

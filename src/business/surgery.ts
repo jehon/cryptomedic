@@ -1,8 +1,9 @@
+import type { BusinessType } from "../config";
 import { type StringBoolean } from "../utils/types";
 import Timed from "./abstracts/timed";
 
 export default class Surgery extends Timed {
-  static override getTechnicalName() {
+  static override getTechnicalName(): BusinessType {
     return "surgery";
   }
 

@@ -1,5 +1,6 @@
 import { Type } from "class-transformer";
 import "reflect-metadata"; // Required by class-transformer
+import type { BusinessType } from "../config";
 import { type StringNumber } from "../utils/types";
 import PatientRelated from "./abstracts/patient-related";
 import Appointment from "./appointment";
@@ -12,7 +13,7 @@ import Surgery from "./surgery";
 
 // TODO: this is not a PatientRelated
 export default class Patient extends PatientRelated {
-  static override getTechnicalName() {
+  static override getTechnicalName(): BusinessType {
     return "patient";
   }
 
