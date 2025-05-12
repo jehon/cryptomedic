@@ -3,7 +3,7 @@ import Consult from "../../business/abstracts/consult";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
 
-import type Folder from "../../business/folder";
+import type Patient from "../../business/patient";
 import {
   bmi,
   getAgeAtThatTime,
@@ -23,12 +23,16 @@ import IONumber from "../../widget/io-number";
 
 export default function ConsultAbstractIntroduction(props: {
   file: Consult;
-  folder: Folder;
+  patient: Patient;
 }): React.ReactNode {
   return (
     <TwoColumns>
       <Panel fixed label="Information">
-        <input type="hidden" name="patient_id" defaultValue={props.folder.id} />
+        <input
+          type="hidden"
+          name="patient_id"
+          defaultValue={props.patient.id}
+        />
         <IODate name="date" value={props.file.date} />
         <IOList
           name="examiner"
@@ -44,9 +48,7 @@ export default function ConsultAbstractIntroduction(props: {
         />
         <IOFunction
           label="Age at consultation time"
-          value={() =>
-            yearsToYM(getAgeAtThatTime(props.file, props.folder.getPatient()))
-          }
+          value={() => yearsToYM(getAgeAtThatTime(props.file, props.patient))}
         />
       </Panel>
       <Panel fixed label="Nutritional data">
@@ -62,9 +64,7 @@ export default function ConsultAbstractIntroduction(props: {
         {props.file.weight_kg && (
           <IOFunction
             label="Weight sd"
-            value={() =>
-              roundTo(getWeightSd(props.file, props.folder.getPatient()))
-            }
+            value={() => roundTo(getWeightSd(props.file, props.patient))}
           />
         )}
         <IONumber
@@ -79,9 +79,7 @@ export default function ConsultAbstractIntroduction(props: {
         {props.file.height_cm && (
           <IOFunction
             label="Height sd"
-            value={() =>
-              roundTo(getHeightSd(props.file, props.folder.getPatient()))
-            }
+            value={() => roundTo(getHeightSd(props.file, props.patient))}
           />
         )}
         <IONumber
@@ -101,16 +99,12 @@ export default function ConsultAbstractIntroduction(props: {
             />
             <IOFunction
               label="Weight/Height sd"
-              value={() =>
-                roundTo(getWHSd(props.file, props.folder.getPatient()))
-              }
+              value={() => roundTo(getWHSd(props.file, props.patient))}
             />
             <IOFunction label="BMI" value={() => roundTo(bmi(props.file))} />
             <IOFunction
               label="BMI sd"
-              value={() =>
-                roundTo(getBMISd(props.file, props.folder.getPatient()))
-              }
+              value={() => roundTo(getBMISd(props.file, props.patient))}
             />
           </>
         )}
