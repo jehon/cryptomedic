@@ -244,7 +244,7 @@ export default function BillElement({
             />
           </Panel>
         </TwoColumns>
-        {price && (
+        {price ? (
           <Panel fixed label="Bill Lines">
             {items.map((line) => (
               <IOBillLine
@@ -254,6 +254,8 @@ export default function BillElement({
               />
             ))}
           </Panel>
+        ) : (
+          <div className="alert alert-warning">Please select a date first</div>
         )}
       </>
     ),
