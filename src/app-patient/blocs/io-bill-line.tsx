@@ -39,6 +39,7 @@ export default function IOBillLine(
     type: "bill-line",
     name: props.value.key,
     value: props.value.value,
+    required: true,
     precision: 0,
     appendix: `${props.value.price}৳`,
     htmlProps: { style: { width: "5em" } },

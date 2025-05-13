@@ -76,7 +76,7 @@ export default function BillElement({
       (key) =>
         ({
           key,
-          value: string2number((file as Record<string, any>)[key]),
+          value: string2number((file as Record<string, any>)[key], 0),
           price: price?.[key] ?? 0
         }) as BillLine
     )
@@ -191,58 +191,64 @@ export default function BillElement({
               value={file.date}
               onChange={(value) => selectPrice(value)}
             />
-            <IOList
-              name="examiner"
-              value={file.examiner as string}
-              list={getList("Examiners")}
-            />
-            <IOList
-              name="center"
-              value={file.center as string}
-              list={getList("Centers")}
-            />{" "}
+            {price && (
+              <>
+                <IOList
+                  name="examiner"
+                  value={file.examiner as string}
+                  list={getList("Examiners")}
+                />
+                <IOList
+                  name="center"
+                  value={file.center as string}
+                  list={getList("Centers")}
+                />{" "}
+              </>
+            )}
           </Panel>
-          <Panel fixed label="Totals">
-            <IONumber
-              name="sl_family_salary"
-              label="Family Salary"
-              value={socialLevelParams.family_salary}
-              onChange={(value) =>
-                setSocialLevelParams({
-                  ...socialLevelParams,
-                  family_salary: value
-                })
-              }
-            />
-            <IONumber
-              name="sl_number_of_household_members"
-              label="Number of Household Members"
-              value={socialLevelParams.number_of_household_members}
-              htmlProps={{ max: 10 }}
-              onChange={(value) =>
-                setSocialLevelParams({
-                  ...socialLevelParams,
-                  number_of_household_members: value
-                })
-              }
-            />
-            <IOHidden name="social_level" value={socialLevel} />
-            <IOHidden label="Percentage" value={percentageAsked * 100} />
-            <IOHidden
-              name="total_real"
-              label="Raw Calculated Total"
-              value={getTotal()}
-            />
-            <IOHidden
-              name="total_asked"
-              label="Price asked"
-              value={priceAsked}
-            />
-            <IOFunction
-              label="Payments Received (see below)"
-              value={() => totalPaid}
-            />
-          </Panel>
+          {price && (
+            <Panel fixed label="Totals">
+              <IONumber
+                name="sl_family_salary"
+                label="Family Salary"
+                value={socialLevelParams.family_salary}
+                onChange={(value) =>
+                  setSocialLevelParams({
+                    ...socialLevelParams,
+                    family_salary: value
+                  })
+                }
+              />
+              <IONumber
+                name="sl_number_of_household_members"
+                label="Number of Household Members"
+                value={socialLevelParams.number_of_household_members}
+                htmlProps={{ max: 10 }}
+                onChange={(value) =>
+                  setSocialLevelParams({
+                    ...socialLevelParams,
+                    number_of_household_members: value
+                  })
+                }
+              />
+              <IOHidden name="social_level" value={socialLevel} />
+              <IOHidden label="Percentage" value={percentageAsked * 100} />
+              <IOHidden
+                name="total_real"
+                label="Raw Calculated Total"
+                value={getTotal()}
+              />
+              <IOHidden
+                name="total_asked"
+                label="Price asked"
+                value={priceAsked}
+              />
+              <IOFunction
+                label="Payments Received (see below)"
+                value={() => totalPaid}
+              />
+            </Panel>
+          )}
         </TwoColumns>
         {price ? (
           <Panel fixed label="Bill Lines">
