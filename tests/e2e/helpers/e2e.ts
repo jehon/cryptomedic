@@ -17,7 +17,7 @@ const LOGINS = {
 const PASSWORD = "p";
 
 export function crUrl(segment: string = ""): string {
-  return `${WebBaseUrl}/built/frontend/ng1x.html#${segment}`;
+  return `${WebBaseUrl}/built/frontend/ng1x.html?dev#${segment}`;
 }
 
 function crUrlAPI(segment: string = ""): string {
