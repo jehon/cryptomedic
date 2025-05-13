@@ -137,6 +137,12 @@ export class E2EFilePanel extends E2EForm {
     return matches?.groups?.["id"] ?? "";
   }
 
+  private getButtonGroup() {
+    const bt = this.page.getByTestId(`panel-actions-${this.type}.${this.id}`);
+    expect(bt).toBeVisible();
+    return bt;
+  }
+
   /* ***********************************
    *
    * Routes
@@ -152,7 +158,7 @@ export class E2EFilePanel extends E2EForm {
   async doDelete(): Promise<this> {
     await this.expectToBeVisible();
 
-    await this.page.getByText("Delete").click();
+    await this.getButtonGroup().getByText("Delete").click();
     const popup = this.page.getByTestId("popup");
     await expect(popup).toBeVisible();
     const popupActions = popup.getByRole("group");
@@ -206,22 +212,20 @@ export class E2EFilePanel extends E2EForm {
     );
     await this.e2ePatient.expectToBeVisible();
     await this.expectToBeVisible();
-    await expect(this.page.getByText("Edit")).toBeVisible();
+    await expect(this.getButtonGroup().getByText("Edit")).toBeVisible();
 
     return this;
   }
 
   async goEdit(): Promise<this> {
     await this.expectToBeVisible();
-
-    await expect(this.page.getByText("Edit")).toBeVisible();
-    await this.page.getByText("Edit").click();
+    await this.getButtonGroup().getByText("Edit").click();
 
     await crExpectUrl(
       this.page,
       new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
     );
-    await expect(this.page.getByText("Save").first()).toBeVisible();
+    await expect(this.getButtonGroup().getByText("Save").first()).toBeVisible();
     await this.expectToBeVisible();
     return this;
   }
