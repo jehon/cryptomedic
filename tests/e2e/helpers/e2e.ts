@@ -115,7 +115,7 @@ export async function crInit(
 }
 
 export async function crExpectUrl(page: Page, r: string | RegExp) {
-  await page.waitForURL(r);
+  await page.waitForURL(r, { timeout: 5000 });
   await expect(page).toHaveURL(r);
 }
 
