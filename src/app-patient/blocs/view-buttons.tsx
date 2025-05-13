@@ -24,7 +24,7 @@ export default function ViewButtons<T extends Pojo>(
       return;
     }
 
-    navigate(`${props.parentUrl}/${props.type}.${props.file.id!}/edit`);
+    navigate(`${props.parentUrl}/${props.type}/${props.file.id!}/edit`);
   };
 
   const doUnlock = () => {

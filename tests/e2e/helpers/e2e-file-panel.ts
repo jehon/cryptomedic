@@ -99,7 +99,7 @@ export class E2EFilePanel extends E2EForm {
     } else {
       this.id = "" + id;
     }
-    this.fileBaseUrl = `/patient/${this.patient_id}/${type}.`;
+    this.fileBaseUrl = `/patient/${this.patient_id}/${type}/`;
   }
 
   /* ***********************************
@@ -121,7 +121,7 @@ export class E2EFilePanel extends E2EForm {
    *
    */
 
-  // fragment: /appointment.102
+  // fragment: /appointment/102
   async expectUrlFragmentForType(fragment: string) {
     await crExpectUrl(
       this.page,
@@ -133,8 +133,10 @@ export class E2EFilePanel extends E2EForm {
 
   detectFileId() {
     const url = this.page.url();
-    const matches = /\.(?<id>[0-9]+)$/.exec(url);
-    return matches?.groups?.["id"] ?? "";
+    const matches = /\/(?<id>[0-9]+)$/.exec(url);
+    const id = matches?.groups?.["id"] ?? "";
+    console.info("Detected file id: ", id);
+    return id;
   }
 
   private getButtonGroup() {
@@ -183,9 +185,9 @@ export class E2EFilePanel extends E2EForm {
     // TODO: when URL will be self-updated on load, this should be fixed
     this.page.goto(crUrl(`${this.fileBaseUrl}${this.id}`));
     if (this.id) {
-      await this.expectUrlFragmentForType(`\\/${this.type}\\.${this.id}`);
+      await this.expectUrlFragmentForType(`\\/${this.type}\\/${this.id}`);
     } else {
-      await this.expectUrlFragmentForType(`\\/${this.type}\\.[0-9]+`);
+      await this.expectUrlFragmentForType(`\\/${this.type}\\/[0-9]+`);
     }
     await this.e2ePatient.expectToBeVisible();
     await this.expectToBeVisible();

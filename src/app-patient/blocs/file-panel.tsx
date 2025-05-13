@@ -88,7 +88,7 @@ export default function FilePanel(props: {
       onToggle={(_opened) => {
         // if (opened) {
         // TODO: when angular router is out (adapt e2e file panel goEdit too)
-        // navigate(`/patient/${patientId}/${props.type}.${fileId}${mode ? `/${mode}` : ""}`);
+        // navigate(`/patient/${patientId}/${props.type}/${fileId}${mode ? `/${mode}` : ""}`);
         //   location.hash = routeToFolderFile(folder, file);
         // }
       }}
@@ -135,7 +135,7 @@ export default function FilePanel(props: {
         className="technical"
         data-e2e="excluded"
         onClick={() =>
-          navigate(`${props.selfUrl}/${props.type}.${props.file.id!}`)
+          navigate(`${props.selfUrl}/${props.type}/${props.file.id!}`)
         }
       >
         <div>{`${props.type}.${props.file.id ?? "add"}`}</div>

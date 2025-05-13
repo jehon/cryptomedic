@@ -8,7 +8,7 @@ import { getFolder } from "./loaders";
 export function patientRouterConfig() {
   return [
     {
-      path: "/patient/:folderId/:selectedUid?/:mode?",
+      path: "/patient/:folderId/:selectedType?/:selectedId?/:mode?",
       loader: ({ params }: { params: Params<string> }) =>
         getFolder(params["folderId"] ?? ""),
       element: <RouteLoading element={<PatientRouter />} />
@@ -18,12 +18,13 @@ export function patientRouterConfig() {
 
 function PatientRouter(): React.ReactNode {
   const folder = useLoaderData() as Folder;
-  const { selectedUid, mode } = useParams();
+  const { selectedType, selectedId, mode } = useParams();
 
   return (
     <FolderElement
       folder={folder}
-      selectedUid={selectedUid}
+      selectedType={selectedType}
+      selectedId={selectedId}
       mode={mode == "edit" ? Modes.input : Modes.output}
     />
   );

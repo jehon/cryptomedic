@@ -40,7 +40,7 @@ export default function EditButtons(
       // onUpdate(folder.withoutFile(file));
       navigate(props.parentUrl);
     } else {
-      navigate(`${props.parentUrl}/${props.type}.${props.file.id!}`);
+      navigate(`${props.parentUrl}/${props.type}/${props.file.id!}`);
     }
   };
 
@@ -57,7 +57,7 @@ export default function EditButtons(
         .then(
           passThrough((newFile) => {
             // Route to the newly created file
-            navigate(`${props.parentUrl}/${props.type}.${newFile.id!}`);
+            navigate(`${props.parentUrl}/${props.type}/${newFile.id!}`);
           })
         )
         .then(props.onUpdate);
@@ -66,7 +66,7 @@ export default function EditButtons(
         .then(notification("File saved"))
         .then(
           passThrough(() =>
-            navigate(`${props.parentUrl}/${props.type}.${props.file.id!}`)
+            navigate(`${props.parentUrl}/${props.type}/${props.file.id!}`)
           )
         )
         .then(props.onUpdate);

@@ -65,7 +65,7 @@ export function getRouteToFolderFileByParams(
   fileId,
   edit = false
 ) {
-  return `/patient/${folderId}/${fileName}.${fileId}${edit ? "/edit" : ""}`;
+  return `/patient/${folderId}/${fileName}/${fileId}${edit ? "/edit" : ""}`;
 }
 
 /**

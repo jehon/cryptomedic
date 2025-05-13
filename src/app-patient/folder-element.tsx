@@ -27,11 +27,13 @@ import SurgeryElement from "./surgery-element";
 
 export default function FolderElement({
   folder: initialFolder,
-  selectedUid,
+  selectedType,
+  selectedId,
   mode
 }: {
   folder: Folder;
-  selectedUid?: string;
+  selectedType?: string;
+  selectedId?: string;
   mode: ModesList;
 }): React.ReactNode {
   const [folder, folderUpdated] = useState<Folder>(initialFolder);
@@ -48,8 +50,8 @@ export default function FolderElement({
     return <div key="no-folder-selected">No folder selected</div>;
   }
 
-  if (selectedUid?.endsWith(".add")) {
-    const typeName = selectedUid.replace(".add", "") as config.BusinessType;
+  if (selectedId == "add") {
+    const typeName = selectedType as config.BusinessType;
     const typeClass = type2Class(typeName) as typeof PatientRelated;
     if (isTodoMigration(typeName)) {
       // Only bill remain!
@@ -60,7 +62,8 @@ export default function FolderElement({
     if (
       folder.list.filter(
         (f) =>
-          `${f.getStatic().getTechnicalName()}.${f.id ?? "add"}` == selectedUid
+          `${f.getStatic().getTechnicalName()}.${f.id ?? "add"}` ==
+          `${selectedType}.${selectedId}`
       ).length == 0
     ) {
       folderUpdated(folder.withFileOLD(typeClass.factory() as PatientRelated));
@@ -69,7 +72,9 @@ export default function FolderElement({
 
   const commonProps = {
     folder,
-    selectedUid: selectedUid ?? `patient.${folder.id!}`,
+    selectedUid: selectedId
+      ? `${selectedType}.${selectedId}`
+      : `patient.${folder.id!}`,
     mode,
     onUpdate: folderUpdatedCallback
   };
@@ -112,7 +117,7 @@ export default function FolderElement({
               className="dropdown-item"
               key={type}
               data-testid={`add-${type}`}
-              to={`/patient/${folder.id!}/${type}.add`}
+              to={`/patient/${folder.id!}/${type}/add`}
             >
               {config.type2Title(type)}
             </Link>
@@ -132,7 +137,7 @@ export default function FolderElement({
           if (file instanceof Appointment) {
             return (
               <AppointmentElement
-                key={`appointment.${file.id ?? "add"}`}
+                key={`appointment/${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -141,7 +146,7 @@ export default function FolderElement({
           if (file instanceof Bill) {
             return (
               <BillElement
-                key={`bill.${file.id ?? "add"}`}
+                key={`bill/${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -150,7 +155,7 @@ export default function FolderElement({
           if (file instanceof ConsultClubfoot) {
             return (
               <ConsultClubfootElement
-                key={`consult_clubfoot.${file.id ?? "add"}`}
+                key={`consult_clubfoot/${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -159,7 +164,7 @@ export default function FolderElement({
           if (file instanceof ConsultOther) {
             return (
               <ConsultOtherElement
-                key={`consult_other.${file.id ?? "add"}`}
+                key={`consult_other/${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -168,7 +173,7 @@ export default function FolderElement({
           if (file instanceof ConsultRicket) {
             return (
               <ConsultRicketElement
-                key={`consult_ricket.${file.id ?? "add"}`}
+                key={`consult_ricket/${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -177,7 +182,7 @@ export default function FolderElement({
           if (file instanceof Picture) {
             return (
               <PictureElement
-                key={`consult_picture.${file.id ?? "add"}`}
+                key={`consult_picture/${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
@@ -186,7 +191,7 @@ export default function FolderElement({
           if (file instanceof Surgery) {
             return (
               <SurgeryElement
-                key={`consult_surgery.${file.id ?? "add"}`}
+                key={`consult_surgery/${file.id ?? "add"}`}
                 file={file}
                 props={commonProps}
               />
