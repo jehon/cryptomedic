@@ -1,9 +1,13 @@
-export function string2number(str: string): number {
+export function string2number(str: string, def: number = NaN): number {
   try {
-    return parseFloat(str);
+    const n = parseFloat(str);
+    if (Number.isFinite(n)) {
+      return n;
+    }
   } catch (_e) {
-    return NaN;
+    // true
   }
+  return def;
 }
 
 export function string2Boolean(v: any) {

@@ -4,12 +4,20 @@ import {
   escapeRegExp,
   padLeftTrim,
   roundTo,
+  string2number,
   toAttributeCase,
   toTitleCase,
   yearOfBirthPattern
 } from "./strings";
 
-// https://jestjs.io/fr/docs/expect
+test("string2number", () => {
+  assert.equal(string2number("123"), 123);
+  assert.equal(string2number("x"), NaN);
+  assert.equal(string2number("x", 123), 123);
+  assert.equal(string2number(""), NaN);
+  assert.equal(string2number("", 123), 123);
+});
+
 test("padLeftTrim", () => {
   assert.equal(padLeftTrim(15, 4), "0015");
   assert.equal(padLeftTrim(15, 2), "15");
