@@ -32,7 +32,7 @@ export class E2EPatient {
 
   detectPatientId(): string {
     const url: string = this.page.url();
-    const matches = /#\/patient\/(?<id>[0-9]+)\/.*$/.exec(url);
+    const matches = /#\/patient\/(?<id>[0-9]+)$/.exec(url);
     console.info("Guessing patient: ", matches?.groups?.["id"]);
     return matches?.groups?.["id"] ?? "";
   }
@@ -52,7 +52,7 @@ export class E2EPatient {
 
   async go(): Promise<this> {
     await crInit(this.page, {
-      page: `/patient/${this.id}/patient.${this.id}/`
+      page: `/patient/${this.id}`
     });
     const panel = await this.page.getByTestId(`folder-${this.id}`);
     await expect(panel).toBeVisible();
