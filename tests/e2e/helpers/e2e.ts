@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from "@playwright/test";
-import { type IndexSignature } from "../../../src/definitions";
+import { type IndexSignature } from "../../../src/types";
 import type { CRUDType } from "../../../src/utils/network";
 import { CRUD } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";

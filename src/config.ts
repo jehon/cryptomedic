@@ -16,10 +16,6 @@ export const spacing = {
   text: "5px"
 };
 
-const nbrOr = (1 + Math.sqrt(5)) / 2;
-export const orSmall = (1 / (1 + nbrOr)) * 100;
-export const orBig = 100 - orSmall;
-
 export const messages = {
   success: "success",
   info: "info",

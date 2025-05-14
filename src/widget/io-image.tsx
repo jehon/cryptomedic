@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type Optional } from "../utils/typescript";
+import { type Optional } from "../types";
 import IOAbstract, { type IOProps, type IOPropsInput } from "./io-abstract";
 import "./io-image.css";
 

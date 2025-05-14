@@ -2,7 +2,6 @@ import assert from "node:assert";
 import test from "node:test";
 import {
   escapeRegExp,
-  padLeftTrim,
   roundTo,
   string2number,
   toAttributeCase,
@@ -16,12 +15,6 @@ test("string2number", () => {
   assert.equal(string2number("x", 123), 123);
   assert.equal(string2number(""), NaN);
   assert.equal(string2number("", 123), 123);
-});
-
-test("padLeftTrim", () => {
-  assert.equal(padLeftTrim(15, 4), "0015");
-  assert.equal(padLeftTrim(15, 2), "15");
-  assert.equal(padLeftTrim(15, 1), "5");
 });
 
 test("toAttributeCase (kebab case)", function () {

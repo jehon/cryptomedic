@@ -5,7 +5,7 @@ import PatientRelated from "../business/abstracts/patient-related";
 import Appointment from "../business/appointment";
 import Folder from "../business/folder";
 import Patient from "../business/patient";
-import { assertToBeClose, loadReference, RefFolder1 } from "../test-helper";
+import { loadReference, RefFolder1 } from "../helpers.test";
 import {
   bmi,
   getBMISd,
@@ -18,6 +18,21 @@ import {
   wh
 } from "./calculations";
 import { DataMissingException } from "./exceptions";
+import { string2number } from "./strings";
+import type { StringNumber } from "./types";
+
+function assertToBeClose(
+  val: number | StringNumber,
+  ref: number,
+  precision: number = 0.01
+) {
+  if (typeof val == "string") {
+    val = string2number(val);
+  }
+
+  assert.equal(Math.sign(val), Math.sign(ref));
+  assert(Math.abs(val - ref) < precision);
+}
 
 const consultRicket13: Consult = Consult.factory({
   id: "13",

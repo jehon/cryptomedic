@@ -30,15 +30,6 @@ export function string2Boolean(v: any) {
   return !!v;
 }
 
-export function padLeftTrim(
-  what: string | number,
-  l: number,
-  char: string = "0"
-): string {
-  const int = char.repeat(l) + what;
-  return int.substring(int.length - l, int.length);
-}
-
 export function roundTo(val: number, decimals: number = 1): string {
   return val.toFixed(decimals);
 }
