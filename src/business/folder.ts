@@ -77,6 +77,11 @@ export default class Folder extends Pojo {
       );
     }
     this.list.sort(patientRelatedOrdering);
+    try {
+      this.getPatient();
+    } catch (_e) {
+      this.list.push(Patient.factory({}, "patient"));
+    }
   }
 
   withFileOLD(file: PatientRelated): Folder {
@@ -130,7 +135,7 @@ export default class Folder extends Pojo {
     throw new Error(`Could not find ${type}#${id}} in getByTypeAndId`);
   }
 
-  _getByFieldValue(field: string, value?: string): PatientRelated[] {
+  private getByFieldValue(field: string, value?: string): PatientRelated[] {
     const res = [];
     for (const i in this.list) {
       // Not exactly exact, but close enough
@@ -142,31 +147,25 @@ export default class Folder extends Pojo {
   }
 
   getPatient(): Patient {
-    const list = this.getListByType(Patient);
-    if (list.length === 0) {
-      // Always have a patient
-      const p = new Patient();
-      this.list.push(p);
-      return p;
+    const list = this.list.filter((v) => v._type == "patient");
+    if (list.length != 1) {
+      throw new Error(`Can not get Patient ${JSON.stringify(list)}`);
     }
-    return list[0] as Patient;
+    return list.pop() as Patient;
   }
 
   getChildren(): PatientRelated[] {
     if (!this.getPatient().id) {
       return [];
     }
-    return (
-      this.list
-        .filter((v) => !(v instanceof Patient))
-        // TODO: this is not in the correct place
-        .filter((v) => !(v instanceof Payment))
-    );
+    return this.list
+      .filter((v) => v._type != "patient")
+      .filter((v) => v._type != "payment");
   }
 
   // TODO: move this to bill
   getFilesRelatedToBill(id?: string): Payment[] {
-    return this._getByFieldValue("bill_id", id).sort(
+    return this.getByFieldValue("bill_id", id).sort(
       patientRelatedOrdering
     ) as unknown as Payment[];
   }
