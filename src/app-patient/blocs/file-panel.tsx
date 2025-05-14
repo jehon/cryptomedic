@@ -7,7 +7,6 @@ import Appointment from "../../business/appointment";
 import Folder from "../../business/folder";
 import Patient from "../../business/patient";
 import { icons, type2Title, type BusinessType } from "../../config";
-import { routeTo } from "../../main";
 import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { EditContext } from "../../widget/io-abstract";
@@ -60,7 +59,7 @@ export default function FilePanel(props: {
   const fileIsDeleted = () => {
     props.onUpdate(props.folder.withoutFileOLD(props.file));
     if (props.file instanceof Patient) {
-      routeTo("/home");
+      navigate("/");
     } else {
       navigate(props.selfUrl);
     }

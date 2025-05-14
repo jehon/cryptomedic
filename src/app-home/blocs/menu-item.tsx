@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { ButtonGroup } from "react-bootstrap";
-import { routeTo } from "../../main";
+import { useNavigate } from "react-router-dom";
 import { toAttributeCase } from "../../utils/strings";
 import ActionButton from "../../widget/action-button";
 import Panel from "../../widget/panel";
@@ -18,6 +18,8 @@ export function MenuItem(props: {
   toLocation?: string;
   buttons?: ReactElement<typeof ActionButton>[];
 }) {
+  const navigate = useNavigate();
+
   return (
     <Restricted requires={props.requires}>
       <div className="menu-item">
@@ -40,7 +42,7 @@ export function MenuItem(props: {
                 onOk={() =>
                   props.toLocation
                     ? (document.location = props.toLocation)
-                    : routeTo(props.toRoute)
+                    : navigate(props.toRoute ?? "")
                 }
               />
             )}

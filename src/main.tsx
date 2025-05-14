@@ -38,8 +38,4 @@ const router = createHashRouter([
   }
 ]);
 
-export function routeTo(target: string = "") {
-  document.location.hash = "#" + target;
-}
-
 bridgeTo("x-react-router", <RouterProvider router={router}></RouterProvider>);
