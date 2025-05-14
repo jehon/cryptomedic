@@ -68,7 +68,10 @@ export default class Folder extends Pojo {
       this.list.push(
         plainToInstance(
           type2Class(v.type) as unknown as new () => PatientRelated,
-          { ...removeNull(v.record), _type: v.type },
+          {
+            ...removeNull(v.record),
+            _type: type2Class(v.type).getTechnicalName()
+          },
           { enableImplicitConversion: true }
         )
       );
