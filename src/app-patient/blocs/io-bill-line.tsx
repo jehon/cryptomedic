@@ -23,9 +23,6 @@ export default function IOBillLine(
     return;
   }
 
-  const getTotal = (value: number = props.value.value) =>
-    Math.max(props.value.price * value, 0);
-
   const onChange = (value: number = props.value.value) => {
     if (props.onChange) {
       props.onChange({
