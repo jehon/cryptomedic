@@ -6,12 +6,7 @@ import Timed from "../../business/abstracts/timed";
 import Appointment from "../../business/appointment";
 import Folder from "../../business/folder";
 import Patient from "../../business/patient";
-import {
-  icons,
-  isFeatureSwitchEnabled,
-  type2Title,
-  type BusinessType
-} from "../../config";
+import { icons, type2Title, type BusinessType } from "../../config";
 import { routeTo } from "../../main";
 import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
@@ -22,14 +17,6 @@ import EditButtons from "./edit-buttons";
 import ViewButtons from "./view-buttons";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
-
-// TODO: migrate all this progressively
-export function isTodoMigration(type: BusinessType) {
-  if (isFeatureSwitchEnabled()) {
-    return false;
-  }
-  return "bill" == type;
-}
 
 // TODO: make routing more abstract
 

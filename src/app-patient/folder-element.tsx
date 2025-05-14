@@ -17,7 +17,6 @@ import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
 import AppointmentElement from "./appointment-element";
 import BillElement from "./bill-element";
-import { isTodoMigration } from "./blocs/file-panel";
 import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOtherElement from "./consult-other-element";
 import ConsultRicketElement from "./consult-ricket-element";
@@ -53,11 +52,7 @@ export default function FolderElement({
   if (selectedId == "add") {
     const typeName = selectedType as config.BusinessType;
     const typeClass = type2Class(typeName) as typeof PatientRelated;
-    if (isTodoMigration(typeName)) {
-      // Only bill remain!
-      location.hash = `/folder/${folder.id}/file/Bill`;
-      return;
-    }
+
     // Test if the added item is already present
     if (
       folder.list.filter(

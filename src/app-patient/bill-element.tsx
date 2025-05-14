@@ -28,6 +28,20 @@ function getPayments(file: Bill, folder: Folder): Payment[] {
   return folder.getFilesRelatedToBill(file.id);
 }
 
+/*
+  TODO:
+
+  <div ng-if='errors.consultPhisioAndDoctor'>
+    <div class='alert alert-danger'>Error: you could not bill "physio" and "doctor" together!</div>
+  </div>
+  <div ng-if='errors.homeVisitAndGiveAppointment'>
+    <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
+  </div>
+  <div ng-if='errors.dateInTheFuture'>
+    <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
+  </div>
+*/
+
 export default function BillElement({
   file,
   props
