@@ -27,21 +27,15 @@ export class CrudLoader<T extends Pojo> {
       .then((json) => json.file)
       .then((json) => type2Class(this.type).factory<T>(json, this.type));
   }
-}
 
-export function folderFileDelete<T extends Pojo>(
-  file: T
-): Promise<Folder | undefined> {
-  // See www/api/app/Http/Controllers/FicheController.php
-  return (
-    request({
-      url: ["fiche", file.getStatic().getTechnicalName(), file.id || ""],
+  delete(id: string): Promise<Folder | undefined> {
+    return request({
+      url: [this.apiUrl, id],
       method: CRUD.delete
     })
-      .then((json) => json.folder)
-      // TODO: Should have a better return from server when nothing remain!
-      .then((json) => (json && json.length > 0 ? new Folder(json) : undefined))
-  );
+      .then((json) => json.file)
+      .then((json) => (json && json.length > 0 ? new Folder(json) : undefined));
+  }
 }
 
 export function folderFileCreate<T extends PatientRelated>(

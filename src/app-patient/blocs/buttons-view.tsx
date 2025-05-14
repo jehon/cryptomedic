@@ -24,6 +24,7 @@ export default function ButtonsView<T extends Pojo>(
 ) {
   const navigate = useNavigate();
   const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
+
   const doUnlock = () => {
     crudLoader
       .unlock(props.file.id!)

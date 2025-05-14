@@ -1,18 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import PatientRelated from "../../business/abstracts/patient-related";
+import type Pojo from "../../business/abstracts/pojo";
 import { passThrough } from "../../utils/promises";
 import { routeParent } from "../../utils/routing";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
-import {
-  folderFileCreate,
-  folderFileDelete,
-  folderFileUpdate
-} from "../loaders";
+import { CrudLoader, folderFileCreate, folderFileUpdate } from "../loaders";
 import type { ButtonContext } from "./buttons-view";
 
-export default function ButtonsEdit(
+export default function ButtonsEdit<T extends Pojo>(
   props: ButtonContext & {
     file: PatientRelated;
     onDelete: () => void;
@@ -22,6 +19,8 @@ export default function ButtonsEdit(
   }
 ) {
   const navigate = useNavigate();
+  const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
+
   if (!props.editMode) {
     return <></>;
   }
@@ -29,7 +28,8 @@ export default function ButtonsEdit(
   const addMode = !props.file.id;
 
   const doDelete = () =>
-    folderFileDelete(props.file)
+    crudLoader
+      .delete(props.file.id!)
       .then(notification("File deleted"))
       .then(props.onDelete);
 
