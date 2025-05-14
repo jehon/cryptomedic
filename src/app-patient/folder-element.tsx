@@ -57,12 +57,12 @@ export default function FolderElement({
     // Test if the added item is already present
     if (
       folder.list.filter(
-        (f) =>
-          `${f.getStatic().getTechnicalName()}.${f.id ?? "add"}` ==
-          `${selectedType}.${selectedId}`
+        (f) => `${f._type}.${f.id ?? "add"}` == `${selectedType}.${selectedId}`
       ).length == 0
     ) {
-      folderUpdated(folder.withFileOLD(typeClass.factory() as PatientRelated));
+      folderUpdated(
+        folder.withFileOLD(typeClass.factory({}, typeName) as PatientRelated)
+      );
     }
   }
 

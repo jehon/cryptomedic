@@ -21,7 +21,10 @@ export function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
     method: CRUD.update
   })
     .then((json) => json.file)
-    .then((json) => file.getStatic().factory(json) as T);
+    .then(
+      (json) =>
+        file.getStatic().factory(json, file.getStatic().getTechnicalName()) as T
+    );
 }
 
 export function folderFileDelete<T extends Pojo>(

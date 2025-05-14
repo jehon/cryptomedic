@@ -68,7 +68,7 @@ export default class Folder extends Pojo {
       this.list.push(
         plainToInstance(
           type2Class(v.type) as unknown as new () => PatientRelated,
-          removeNull(v.record),
+          { ...removeNull(v.record), _type: v.type },
           { enableImplicitConversion: true }
         )
       );
@@ -87,10 +87,9 @@ export default class Folder extends Pojo {
   }
 
   withoutFileOLD(file: PatientRelated): Folder {
-    const fileUid = `${file.getStatic().getTechnicalName()}.${file.id ?? "add"}`;
+    const fileUid = `${file._type}.${file.id ?? "add"}`;
     const i = this.list.findIndex(
-      (val) =>
-        `${val.getStatic().getTechnicalName()}.${val.id ?? "add"}` === fileUid
+      (val) => `${val._type}.${val.id ?? "add"}` === fileUid
     );
     if (i < 0) {
       return this;

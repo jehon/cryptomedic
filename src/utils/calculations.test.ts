@@ -34,42 +34,48 @@ function assertToBeClose(
   assert(Math.abs(val - ref) < precision);
 }
 
-const consultRicket13: Consult = Consult.factory({
-  id: "13",
-  // created_at: "<timestamp>",
-  // updated_at: "<timestamp>",
-  // last_user: "Thierry",
-  // patient_id: "1",
-  date: "2014-01-04",
-  // examiner: "AMD doctor",
-  // center: "Chakaria Disability Center",
-  weight_kg: "37",
-  height_cm: "110",
-  brachial_circumference_cm: "0"
-  // suggested_for_surgery: "1",
-  // treatment_evaluation: "",
-  // treatment_finished: "",
-  // comments: ""
-});
+const consultRicket13: Consult = Consult.factory(
+  {
+    id: "13",
+    // created_at: "<timestamp>",
+    // updated_at: "<timestamp>",
+    // last_user: "Thierry",
+    // patient_id: "1",
+    date: "2014-01-04",
+    // examiner: "AMD doctor",
+    // center: "Chakaria Disability Center",
+    weight_kg: "37",
+    height_cm: "110",
+    brachial_circumference_cm: "0"
+    // suggested_for_surgery: "1",
+    // treatment_evaluation: "",
+    // treatment_finished: "",
+    // comments: ""
+  },
+  "consult_other"
+);
 
-const patient1: Patient = Patient.factory({
-  id: "1",
-  // created_at: "<timestamp>",
-  // updated_at: "<timestamp>",
-  // last_user: "Thierry",
-  // entry_year: 2000,
-  // entry_order: 1,
-  // name: "rezaul islam",
-  sex: "Male",
-  year_of_birth: "1998"
-  // phone: "",
-  // address_comments: "",
-  // address_district: "Chittagong",
-  // address_upazilla: null,
-  // address_union: null,
-  // pathology: "ClubFoot",
-  // comments: ""
-});
+const patient1: Patient = Patient.factory(
+  {
+    id: "1",
+    // created_at: "<timestamp>",
+    // updated_at: "<timestamp>",
+    // last_user: "Thierry",
+    // entry_year: 2000,
+    // entry_order: 1,
+    // name: "rezaul islam",
+    sex: "Male",
+    year_of_birth: "1998"
+    // phone: "",
+    // address_comments: "",
+    // address_district: "Chittagong",
+    // address_upazilla: null,
+    // address_union: null,
+    // pathology: "ClubFoot",
+    // comments: ""
+  },
+  "patient"
+);
 
 test("with ricketConsult_13", function () {
   // Male
@@ -85,7 +91,7 @@ test("with ricketConsult_13", function () {
 });
 
 test("with patient with sex", function () {
-  const emptyConsult = Consult.factory({}) as Consult;
+  const emptyConsult = Consult.factory({}, "appointment") as Consult;
 
   assert.throws(function () {
     bmi(emptyConsult);
@@ -105,23 +111,38 @@ test("order", async function (t) {
   };
 
   await t.test("order by id", function () {
-    const o1 = PatientRelated.factory({}) as PatientRelated;
-    const o2 = PatientRelated.factory({ id: 2 }) as PatientRelated;
-    const o3 = PatientRelated.factory({ id: 1 }) as PatientRelated;
+    const o1 = PatientRelated.factory({}, "appointment") as PatientRelated;
+    const o2 = PatientRelated.factory(
+      { id: 2 },
+      "appointment"
+    ) as PatientRelated;
+    const o3 = PatientRelated.factory(
+      { id: 1 },
+      "appointment"
+    ) as PatientRelated;
 
     resFirst(o1, o2);
     resFirst(o1, o3);
     resFirst(o2, o3);
 
     // Test string completely...
-    const o25 = PatientRelated.factory({ id: "25" }) as PatientRelated;
+    const o25 = PatientRelated.factory(
+      { id: "25" },
+      "appointment"
+    ) as PatientRelated;
     resFirst(o25, o2);
   });
 
   await t.test("order by Date", function () {
-    const o1 = PatientRelated.factory({}) as PatientRelated;
-    const o2 = PatientRelated.factory({ date: "2010-01-01" }) as PatientRelated;
-    const o3 = PatientRelated.factory({ date: "2000-01-01" }) as PatientRelated;
+    const o1 = PatientRelated.factory({}, "appointment") as PatientRelated;
+    const o2 = PatientRelated.factory(
+      { date: "2010-01-01" },
+      "appointment"
+    ) as PatientRelated;
+    const o3 = PatientRelated.factory(
+      { date: "2000-01-01" },
+      "appointment"
+    ) as PatientRelated;
 
     resFirst(o1, o2);
     resFirst(o1, o3);
@@ -129,28 +150,43 @@ test("order", async function (t) {
   });
 
   await t.test("order by created_at", function () {
-    const o1 = PatientRelated.factory({}) as PatientRelated; // New element
-    const o2 = PatientRelated.factory({
-      id: 1,
-      created_at: "2010-01-01"
-    }) as PatientRelated;
-    const o3 = PatientRelated.factory({
-      id: 1,
-      created_at: "2000-01-01"
-    }) as PatientRelated;
+    const o1 = PatientRelated.factory({}, "appointment") as PatientRelated; // New element
+    const o2 = PatientRelated.factory(
+      {
+        id: 1,
+        created_at: "2010-01-01"
+      },
+      "appointment"
+    ) as PatientRelated;
+    const o3 = PatientRelated.factory(
+      {
+        id: 1,
+        created_at: "2000-01-01"
+      },
+      "appointment"
+    ) as PatientRelated;
     resFirst(o1, o2);
     resFirst(o1, o3);
     resFirst(o2, o3);
   });
 
   await t.test("order by new > date > model > id", function () {
-    const o1 = PatientRelated.factory({}) as PatientRelated;
-    const o2 = PatientRelated.factory({ date: "2000-01-01" }) as PatientRelated;
-    const o3 = PatientRelated.factory({ id: "25" }) as PatientRelated;
-    const o4 = PatientRelated.factory({
-      id: "25",
-      date: "2000-01-01"
-    }) as PatientRelated;
+    const o1 = PatientRelated.factory({}, "appointment") as PatientRelated;
+    const o2 = PatientRelated.factory(
+      { date: "2000-01-01" },
+      "appointment"
+    ) as PatientRelated;
+    const o3 = PatientRelated.factory(
+      { id: "25" },
+      "appointment"
+    ) as PatientRelated;
+    const o4 = PatientRelated.factory(
+      {
+        id: "25",
+        date: "2000-01-01"
+      },
+      "appointment"
+    ) as PatientRelated;
 
     resFirst(o1, o2);
     resFirst(o1, o3);
@@ -174,7 +210,9 @@ test("patient related", async function (t) {
   await t.test("getNextAppointment", function () {
     assert.equal(getNextAppointment(new Folder()), undefined);
 
-    f.list.push(Appointment.factory({ date: "2100-01-01" }) as Appointment);
+    f.list.push(
+      Appointment.factory({ date: "2100-01-01" }, "appointment") as Appointment
+    );
     assert.deepStrictEqual(getNextAppointment(f), new Date("2100-01-01"));
   });
 });

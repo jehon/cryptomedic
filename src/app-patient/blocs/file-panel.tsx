@@ -43,12 +43,10 @@ export default function FilePanel(props: {
     title: type2Title(props.type),
     editMode,
     isLocked:
-      props.file instanceof PatientRelated &&
       !(props.file instanceof Patient) &&
       !(props.file instanceof Appointment) &&
       isLocked(props.file),
     canDelete:
-      props.file instanceof PatientRelated &&
       !addMode &&
       (!(props.file instanceof Patient) ||
         props.folder.getChildren().length == 0)

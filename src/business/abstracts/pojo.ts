@@ -6,8 +6,8 @@ import { type StringDate } from "../../utils/types";
 export default class Pojo {
   [immerable] = true;
 
-  static factory<T extends Pojo>(json = {}) {
-    return plainToInstance(this, json) as T;
+  static factory<T extends Pojo>(json = {}, type: BusinessType) {
+    return plainToInstance(this, { ...json, _type: type }) as T;
   }
 
   static getTechnicalName(): BusinessType {
@@ -25,4 +25,7 @@ export default class Pojo {
   created_at: StringDate = "";
   updated_at: StringDate = "";
   last_user: string = "";
+
+  // TODO: Temporary
+  _type: string = "pojo";
 }
