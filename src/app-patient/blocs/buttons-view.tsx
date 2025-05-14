@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import type Pojo from "../../business/abstracts/pojo";
+import type PatientRelated from "../../business/abstracts/patient-related";
 import type { BusinessType } from "../../config";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
@@ -16,7 +16,7 @@ export type ButtonContext = {
   isLocked: boolean;
 };
 
-export default function ButtonsView<T extends Pojo>(
+export default function ButtonsView<T extends PatientRelated>(
   props: ButtonContext & {
     file: T;
     onUpdate: (file: T) => void;

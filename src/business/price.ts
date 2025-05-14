@@ -1,12 +1,7 @@
-import type { BusinessType } from "../config";
 import { type StringDate } from "../utils/types";
 import Pojo from "./abstracts/pojo";
 
 export default class Price extends Pojo {
-  static override getTechnicalName(): BusinessType {
-    return "price";
-  }
-
   date_from?: StringDate;
   date_to?: StringDate;
   social_level_threshold_1: number = 0;

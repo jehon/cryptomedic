@@ -1,6 +1,7 @@
 import { plainToInstance } from "class-transformer";
 import { produce } from "immer";
 import "reflect-metadata"; // plainToInstance
+import type { BusinessType } from "../config";
 import { patientRelatedOrdering } from "../utils/calculations";
 import { removeNull } from "../utils/objects";
 import type PatientRelated from "./abstracts/patient-related";
@@ -47,6 +48,38 @@ export function type2Class(type: string): typeof Pojo {
   }
 }
 
+function serverType2BusinessType(type: string): BusinessType {
+  switch (type) {
+    case "appointment":
+    case "Appointment":
+      return "appointment";
+    case "bill":
+    case "Bill":
+      return "bill";
+    case "consult_clubfoot":
+    case "ClubFoot":
+      return "consult_clubfoot";
+    case "consult_other":
+    case "OtherConsult":
+      return "consult_other";
+    case "consult_ricket":
+    case "RicketConsult":
+      return "consult_ricket";
+    case "Patient":
+      return "patient";
+    case "Payment":
+      return "payment";
+    case "picture":
+    case "Picture":
+      return "picture";
+    case "surgery":
+    case "Surgery":
+      return "surgery";
+    default:
+      throw new Error(`Unknown type: ${type} in type2Class in patient-element`);
+  }
+}
+
 export default class Folder extends Pojo {
   list: PatientRelated[];
 
@@ -70,7 +103,7 @@ export default class Folder extends Pojo {
           type2Class(v.type) as unknown as new () => PatientRelated,
           {
             ...removeNull(v.record),
-            _type: type2Class(v.type).getTechnicalName()
+            _type: serverType2BusinessType(v.type)
           },
           { enableImplicitConversion: true }
         )
@@ -108,31 +141,15 @@ export default class Folder extends Pojo {
     });
   }
 
-  getListByType<T extends PatientRelated>(type: typeof PatientRelated): T[] {
-    console.assert(
-      type instanceof Function,
-      "getListByType[type/1] expect a class"
-    );
-    const res = [];
-    for (const i in this.list) {
-      if (this.list[i] instanceof type) {
-        res.push(this.list[i] as T);
-      }
-    }
-    return res;
+  getListByType<T extends PatientRelated>(type: BusinessType): T[] {
+    return this.list.filter((v) => v._type == type) as T[];
   }
 
-  getByTypeAndId<T extends PatientRelated>(
-    type: typeof PatientRelated,
-    id: string
-  ): T {
-    const list = this.getListByType(type);
-    for (const i in list) {
-      if (list[i].id + "" === id + "") {
-        return list[i] as T;
-      }
-    }
-    throw new Error(`Could not find ${type}#${id}} in getByTypeAndId`);
+  getByTypeAndId<T extends PatientRelated>(type: BusinessType, id: string): T {
+    const list = this.getListByType(type).filter((v) => `${v.id}` == `${id}`);
+    if (list.length != 1)
+      throw new Error(`Could not find ${type}#${id}} in getByTypeAndId`);
+    return list.pop() as T;
   }
 
   private getByFieldValue(field: string, value?: string): PatientRelated[] {

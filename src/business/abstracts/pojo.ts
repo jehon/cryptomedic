@@ -10,16 +10,7 @@ export default class Pojo {
     return plainToInstance(this, { ...json, _type: type }) as T;
   }
 
-  static getTechnicalName(): BusinessType {
-    // Patient map this name to the list field (getChildren)
-    return "pojo";
-  }
-
   declare ["constructor"]: typeof Pojo;
-
-  getStatic(): typeof Pojo {
-    return this.constructor;
-  }
 
   id?: string;
   created_at: StringDate = "";

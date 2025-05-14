@@ -17,24 +17,23 @@ export function request({
   formData,
   allowed
 }: {
-  url: string[];
+  url: string;
   method?: string;
   queryData?: Record<string, any>;
   formData?: FormData;
   allowed?: number[];
 }) {
-  url = url || ["/"];
   method = method || CRUD.read;
 
   if (url[0] !== "/") {
-    url = ["/", "api", ...url];
+    url = `/api/${url}`;
   }
 
   const controller = new AbortController();
   const signal = controller.signal;
 
   const strUrl =
-    url.join("/").replaceAll("//", "/") +
+    url +
     (method === "GET" ? "?" + new URLSearchParams(queryData).toString() : "");
 
   //

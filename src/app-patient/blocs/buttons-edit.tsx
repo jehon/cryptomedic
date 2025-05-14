@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import PatientRelated from "../../business/abstracts/patient-related";
-import type Pojo from "../../business/abstracts/pojo";
 import { passThrough } from "../../utils/promises";
 import { routeParent } from "../../utils/routing";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
-import { CrudLoader, folderFileCreate, folderFileUpdate } from "../loaders";
+import { CrudLoader } from "../loaders";
 import type { ButtonContext } from "./buttons-view";
 
-export default function ButtonsEdit<T extends Pojo>(
+export default function ButtonsEdit<T extends PatientRelated>(
   props: ButtonContext & {
     file: PatientRelated;
     onDelete: () => void;
@@ -53,17 +52,19 @@ export default function ButtonsEdit<T extends Pojo>(
 
     const data = new FormData(props.formRef.current!);
     if (addMode) {
-      return folderFileCreate(props.file, data)
+      return crudLoader
+        .create(data)
         .then(notification("File created"))
         .then(
-          passThrough((newFile) => {
+          passThrough((newFile: T) => {
             // Route to the newly created file
             navigate(`${routeParent(props.selfUrl)}/${newFile.id}`);
           })
         )
         .then(props.onUpdate);
     } else {
-      return folderFileUpdate(props.file, data)
+      return crudLoader
+        .update(props.file.id!, data)
         .then(notification("File saved"))
         .then(passThrough(() => navigate(props.selfUrl)))
         .then(props.onUpdate);

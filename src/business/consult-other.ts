@@ -1,12 +1,7 @@
-import type { BusinessType } from "../config";
 import { type StringList } from "../utils/types";
 import Consult from "./abstracts/consult";
 
 export default class ConsultOther extends Consult {
-  static override getTechnicalName(): BusinessType {
-    return "consult_other";
-  }
-
   side: StringList = "";
   joints_or_bones_affected: string = "";
   deformity: string = "";

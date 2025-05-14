@@ -3,7 +3,7 @@ import { CRUD, request } from "../utils/network";
 
 export function patientCreate(formData: FormData): Promise<Patient> {
   return request({
-    url: ["fiche/patient"],
+    url: "fiche/patient",
     method: CRUD.create,
     formData
   }).then((json) => json.folder[0].record);
@@ -11,7 +11,7 @@ export function patientCreate(formData: FormData): Promise<Patient> {
 
 export function patientSearch(formData: FormData): Promise<Patient[]> {
   return request({
-    url: ["folder"],
+    url: "folder",
     method: CRUD.search,
     formData
   });

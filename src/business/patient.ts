@@ -1,6 +1,5 @@
 import { Type } from "class-transformer";
 import "reflect-metadata"; // Required by class-transformer
-import type { BusinessType } from "../config";
 import { type StringNumber } from "../utils/types";
 import PatientRelated from "./abstracts/patient-related";
 import Appointment from "./appointment";
@@ -13,10 +12,6 @@ import Surgery from "./surgery";
 
 // TODO: this is not a PatientRelated
 export default class Patient extends PatientRelated {
-  static override getTechnicalName(): BusinessType {
-    return "patient";
-  }
-
   entry_year: StringNumber = "" + new Date().getFullYear();
   entry_order: StringNumber = "";
   name: string = "";
@@ -30,8 +25,6 @@ export default class Patient extends PatientRelated {
   address_union: string = "";
   address_comments: string = "";
   comments: string = "";
-
-  // !! This map to getTechnicalName() !!
 
   @Type(() => Appointment)
   appointment: Appointment[] = [];
