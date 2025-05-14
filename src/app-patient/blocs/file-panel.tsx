@@ -9,6 +9,7 @@ import Patient from "../../business/patient";
 import { icons, type2Title, type BusinessType } from "../../config";
 import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
+import { routeParent } from "../../utils/routing";
 import { EditContext } from "../../widget/io-abstract";
 import Panel from "../../widget/panel";
 import ButtonsEdit from "./buttons-edit";
@@ -37,7 +38,7 @@ export default function FilePanel(props: {
   const editMode = addMode || (props.edit ?? false);
 
   const buttonContext: ButtonContext = {
-    parentUrl: props.selfUrl,
+    selfUrl: props.selfUrl,
     type: props.type,
     title: type2Title(props.type),
     editMode,
@@ -59,9 +60,10 @@ export default function FilePanel(props: {
   const fileIsDeleted = () => {
     props.onUpdate(props.folder.withoutFileOLD(props.file));
     if (props.file instanceof Patient) {
+      // TODO: handle this
       navigate("/");
     } else {
-      navigate(props.selfUrl);
+      navigate(routeParent(props.selfUrl, 2));
     }
   };
 
@@ -119,9 +121,7 @@ export default function FilePanel(props: {
       <div
         className="technical"
         data-e2e="excluded"
-        onClick={() =>
-          navigate(`${props.selfUrl}/${props.type}/${props.file.id!}`)
-        }
+        onClick={() => navigate(props.selfUrl)}
       >
         <div>{`${props.type}.${props.file.id ?? "add"}`}</div>
         <div>

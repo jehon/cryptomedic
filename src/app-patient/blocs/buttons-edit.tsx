@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PatientRelated from "../../business/abstracts/patient-related";
 import { passThrough } from "../../utils/promises";
+import { routeParent } from "../../utils/routing";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
@@ -38,9 +39,9 @@ export default function ButtonsEdit(
       // TODO: when migrated, remove added file
       // // Remove the newly added file, that we don't want to keep
       // onUpdate(folder.withoutFile(file));
-      navigate(props.parentUrl);
+      navigate(routeParent(props.selfUrl, 2));
     } else {
-      navigate(`${props.parentUrl}/${props.type}/${props.file.id!}`);
+      navigate(props.selfUrl);
     }
   };
 
@@ -57,18 +58,14 @@ export default function ButtonsEdit(
         .then(
           passThrough((newFile) => {
             // Route to the newly created file
-            navigate(`${props.parentUrl}/${props.type}/${newFile.id!}`);
+            navigate(`${routeParent(props.selfUrl)}/${newFile.id}`);
           })
         )
         .then(props.onUpdate);
     } else {
       return folderFileUpdate(props.file, data)
         .then(notification("File saved"))
-        .then(
-          passThrough(() =>
-            navigate(`${props.parentUrl}/${props.type}/${props.file.id!}`)
-          )
-        )
+        .then(passThrough(() => navigate(props.selfUrl)))
         .then(props.onUpdate);
     }
   };

@@ -7,7 +7,7 @@ import notification from "../../widget/notification";
 import { folderFileUnlock } from "../loaders";
 
 export type ButtonContext = {
-  parentUrl: string;
+  selfUrl: string;
   type: BusinessType;
   title: string;
   editMode: boolean;
@@ -26,9 +26,7 @@ export default function ButtonsView<T extends Pojo>(
     folderFileUnlock(props.file)
       .then(notification("File unlocked"))
       .then(props.onUpdate)
-      .then(() =>
-        navigate(`${props.parentUrl}/${props.type}/${props.file.id!}/edit`)
-      );
+      .then(() => navigate(`${props.selfUrl}/edit`));
   };
 
   if (props.isLocked) {
@@ -56,9 +54,7 @@ export default function ButtonsView<T extends Pojo>(
   return (
     <ActionButton
       style="Edit"
-      onOk={() =>
-        navigate(`${props.parentUrl}/${props.type}/${props.file.id!}/edit`)
-      }
+      onOk={() => navigate(`${props.selfUrl}/edit`)}
       requires="folder.edit"
     />
   );

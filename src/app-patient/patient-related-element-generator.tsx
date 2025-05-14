@@ -28,7 +28,7 @@ export default function patientRelatedElementGenerator<
 }): React.ReactNode {
   return (
     <FilePanel
-      selfUrl={`/patient/${props.folder.id}`}
+      selfUrl={`/patient/${props.folder.id}/${props.type}/${props.file.id ?? "add"}`}
       type={props.type}
       folder={props.folder}
       key={`${props.type}.${props.file.id ?? "add"}`}
