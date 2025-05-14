@@ -18,6 +18,7 @@ export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
 export default function FilePanel(props: {
   selfUrl: string;
+  apiRootUrl: string;
   type: BusinessType;
   folder: Folder;
   file: PatientRelated;
@@ -36,6 +37,7 @@ export default function FilePanel(props: {
 
   const buttonContext: ButtonContext = {
     selfUrl: props.selfUrl,
+    apiRootUrl: props.apiRootUrl,
     type: props.type,
     title: type2Title(props.type),
     editMode,

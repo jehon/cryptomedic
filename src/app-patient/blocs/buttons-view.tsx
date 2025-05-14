@@ -4,10 +4,11 @@ import type { BusinessType } from "../../config";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
-import { folderFileUnlock } from "../loaders";
+import { CrudLoader } from "../loaders";
 
 export type ButtonContext = {
   selfUrl: string;
+  apiRootUrl: string;
   type: BusinessType;
   title: string;
   editMode: boolean;
@@ -22,8 +23,10 @@ export default function ButtonsView<T extends Pojo>(
   }
 ) {
   const navigate = useNavigate();
+  const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
   const doUnlock = () => {
-    folderFileUnlock(props.file)
+    crudLoader
+      .unlock(props.file.id!)
       .then(notification("File unlocked"))
       .then(props.onUpdate)
       .then(() => navigate(`${props.selfUrl}/edit`));

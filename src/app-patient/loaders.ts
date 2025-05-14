@@ -1,6 +1,7 @@
 import type PatientRelated from "../business/abstracts/patient-related";
 import Pojo from "../business/abstracts/pojo";
-import Folder from "../business/folder";
+import Folder, { type2Class } from "../business/folder";
+import type { BusinessType } from "../config";
 import { CRUD, request } from "../utils/network";
 
 export function getFolder(id: string): Promise<Folder> {
@@ -9,22 +10,23 @@ export function getFolder(id: string): Promise<Folder> {
     .then((json) => new Folder(json));
 }
 
-export function folderFileUnlock<T extends Pojo>(file: T): Promise<T> {
-  // See www/api/app/Http/Controllers/FicheController.php
-  return request({
-    url: [
-      "fiche",
-      file.getStatic().getTechnicalName(),
-      "unlock",
-      file.id || ""
-    ],
-    method: CRUD.update
-  })
-    .then((json) => json.file)
-    .then(
-      (json) =>
-        file.getStatic().factory(json, file.getStatic().getTechnicalName()) as T
-    );
+export class CrudLoader<T extends Pojo> {
+  private apiUrl: string;
+  private type: BusinessType;
+
+  constructor(apiURl: string, type: BusinessType) {
+    this.apiUrl = apiURl;
+    this.type = type;
+  }
+
+  unlock(id: string): Promise<T> {
+    return request({
+      url: [this.apiUrl, "unlock", id],
+      method: CRUD.update
+    })
+      .then((json) => json.file)
+      .then((json) => type2Class(this.type).factory<T>(json, this.type));
+  }
 }
 
 export function folderFileDelete<T extends Pojo>(
