@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PatientRelated from "../business/abstracts/patient-related";
-import Appointment from "../business/appointment";
-import Bill from "../business/bill";
-import ConsultClubfoot from "../business/consult-clubfoot";
-import ConsultOther from "../business/consult-other";
-import ConsultRicket from "../business/consult-ricket";
+import type Appointment from "../business/appointment";
+import type Bill from "../business/bill";
+import type ConsultClubfoot from "../business/consult-clubfoot";
+import type ConsultOther from "../business/consult-other";
+import type ConsultRicket from "../business/consult-ricket";
 import Folder, { type2Class } from "../business/folder";
-import Picture from "../business/picture";
-import Surgery from "../business/surgery";
+import type Picture from "../business/picture";
+import type Surgery from "../business/surgery";
 import * as config from "../config";
 import { getLastSeen, getNextAppointment } from "../utils/calculations";
 import ButtonsGroup from "../widget/buttons-group";
@@ -130,70 +130,70 @@ export default function FolderElement({
 
       {(folder.getChildren() as PatientRelated[]).map(
         (file: PatientRelated) => {
-          if (file instanceof Appointment) {
+          if (file._type == "appointment") {
             return (
               <AppointmentElement
                 key={`appointment/${file.id ?? "add"}`}
-                file={file}
+                file={file as Appointment}
                 props={commonProps}
               />
             );
           }
-          if (file instanceof Bill) {
+          if (file._type == "bill") {
             return (
               <BillElement
                 key={`bill/${file.id ?? "add"}`}
-                file={file}
+                file={file as Bill}
                 props={commonProps}
               />
             );
           }
-          if (file instanceof ConsultClubfoot) {
+          if (file._type == "consult_clubfoot") {
             return (
               <ConsultClubfootElement
                 key={`consult_clubfoot/${file.id ?? "add"}`}
-                file={file}
+                file={file as ConsultClubfoot}
                 props={commonProps}
               />
             );
           }
-          if (file instanceof ConsultOther) {
+          if (file._type == "consult_other") {
             return (
               <ConsultOtherElement
                 key={`consult_other/${file.id ?? "add"}`}
-                file={file}
+                file={file as ConsultOther}
                 props={commonProps}
               />
             );
           }
-          if (file instanceof ConsultRicket) {
+          if (file._type == "consult_ricket") {
             return (
               <ConsultRicketElement
                 key={`consult_ricket/${file.id ?? "add"}`}
-                file={file}
+                file={file as ConsultRicket}
                 props={commonProps}
               />
             );
           }
-          if (file instanceof Picture) {
+          if (file._type == "picture") {
             return (
               <PictureElement
                 key={`consult_picture/${file.id ?? "add"}`}
-                file={file}
+                file={file as Picture}
                 props={commonProps}
               />
             );
           }
-          if (file instanceof Surgery) {
+          if (file._type == "surgery") {
             return (
               <SurgeryElement
                 key={`consult_surgery/${file.id ?? "add"}`}
-                file={file}
+                file={file as Surgery}
                 props={commonProps}
               />
             );
           }
-          return null;
+          throw new Error(`Type is unknown: ${file._type}`);
         }
       )}
     </div>
