@@ -76,7 +76,9 @@ function serverType2BusinessType(type: string): BusinessType {
     case "Surgery":
       return "surgery";
     default:
-      throw new Error(`Unknown type: ${type} in type2Class in patient-element`);
+      throw new Error(
+        `Unknown type: ${type} in serverType2BusinessType in patient-element`
+      );
   }
 }
 
