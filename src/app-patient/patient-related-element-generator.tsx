@@ -29,7 +29,7 @@ export default function patientRelatedElementGenerator<
   return (
     <FilePanel
       selfUrl={`/patient/${props.folder.id}/${props.type}/${props.file.id ?? "add"}`}
-      apiRootUrl={`/fiche/${props.type}`} // No leading slash!
+      apiRootUrl={`fiche/${props.type}`} // No leading slash!
       type={props.type}
       folder={props.folder}
       key={`${props.type}.${props.file.id ?? "add"}`}
