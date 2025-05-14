@@ -2,10 +2,7 @@ import { useRef } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PatientRelated from "../../business/abstracts/patient-related";
-import Timed from "../../business/abstracts/timed";
-import Appointment from "../../business/appointment";
 import Folder from "../../business/folder";
-import Patient from "../../business/patient";
 import { icons, type2Title, type BusinessType } from "../../config";
 import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
@@ -43,13 +40,12 @@ export default function FilePanel(props: {
     title: type2Title(props.type),
     editMode,
     isLocked:
-      !(props.file instanceof Patient) &&
-      !(props.file instanceof Appointment) &&
+      props.file._type != "patient" &&
+      props.file._type != "appointment" &&
       isLocked(props.file),
     canDelete:
       !addMode &&
-      (!(props.file instanceof Patient) ||
-        props.folder.getChildren().length == 0)
+      (props.file._type != "patient" || props.folder.getChildren().length == 0)
   };
 
   const fileIsUpdated = (nFile: PatientRelated) =>
@@ -57,7 +53,7 @@ export default function FilePanel(props: {
 
   const fileIsDeleted = () => {
     props.onUpdate(props.folder.withoutFileOLD(props.file));
-    if (props.file instanceof Patient) {
+    if (props.file._type == "patient") {
       // TODO: handle this
       navigate("/");
     } else {
@@ -87,9 +83,9 @@ export default function FilePanel(props: {
               alt={type2Title(props.type)}
               className="inline"
             />
-            {props.file instanceof Timed ? (
+            {"date" in props.file ? (
               <span className="no-mobile">
-                {date2HumanString(normalizeDate(props.file["date"]))}
+                {date2HumanString(normalizeDate(props.file["date"] as string))}
               </span>
             ) : null}
             <span data-role="type" className="no-mobile">
