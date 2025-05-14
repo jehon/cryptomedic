@@ -27,5 +27,5 @@ export default class Pojo {
   last_user: string = "";
 
   // TODO: Temporary
-  _type: string = "pojo";
+  _type: BusinessType = "pojo";
 }
