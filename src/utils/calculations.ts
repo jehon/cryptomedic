@@ -1,7 +1,7 @@
 import type Consult from "../business/abstracts/consult";
 import type PatientRelated from "../business/abstracts/patient-related";
 import type Timed from "../business/abstracts/timed";
-import Appointment from "../business/appointment";
+import type Appointment from "../business/appointment";
 import type Folder from "../business/folder";
 import type Patient from "../business/patient";
 import { fromBirthDateTo, normalizeDate } from "./date";
@@ -150,9 +150,9 @@ export function actualAge(
 
 export function getNextAppointment(folder: Folder): Date | undefined {
   const today = new Date();
-  return folder
-    .getListByType<Appointment>(Appointment)
-    .map((v) => v.date)
+  return folder.list
+    .filter((v) => v._type == "appointment")
+    .map((v) => (v as Appointment).date)
     .map((d) => new Date(d))
     .filter((d) => d > today)
     .sort((a, b) => b.getTime() - a.getTime()) // Bigger at top
@@ -163,7 +163,7 @@ export function getLastSeen(folder: Folder): Date | undefined {
   const today = new Date();
   return folder
     .getChildren()
-    .filter((v) => !(v instanceof Appointment)) // We take everything except Appointment
+    .filter((v) => v._type != "appointment") // We take everything except Appointment
     .map((v) => "date" in v && v.date)
     .filter((d) => d)
     .map((d) => new Date(d as string))
