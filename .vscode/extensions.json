@@ -1,5 +1,14 @@
 {
   "recommendations": [
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "lizebang.bash-extension-pack",
+    "rubymaniac.vscode-direnv",
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint",
+    "raywiis.png-image-diff",
+    "davidanson.vscode-markdownlint",
+    "devsense.phptools-vscode",
+    "vitaliymaz.vscode-svg-previewer",
+    "meganrogge.template-string-converter"
   ]
 }
