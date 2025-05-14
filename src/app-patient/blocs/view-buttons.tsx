@@ -1,11 +1,19 @@
+import { useNavigate } from "react-router-dom";
+import type Pojo from "../../business/abstracts/pojo";
+import type { BusinessType } from "../../config";
 import ActionButton from "../../widget/action-button";
+import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
 import { folderFileUnlock } from "../loaders";
 
-import { useNavigate } from "react-router-dom";
-import type Pojo from "../../business/abstracts/pojo";
-import ActionConfirm from "../../widget/action-confirm";
-import type { ButtonContext } from "./button-context";
+export type ButtonContext = {
+  parentUrl: string;
+  type: BusinessType;
+  title: string;
+  editMode: boolean;
+  canDelete: boolean;
+  isLocked: boolean;
+};
 
 export default function ViewButtons<T extends Pojo>(
   props: ButtonContext & {

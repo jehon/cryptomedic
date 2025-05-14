@@ -12,9 +12,8 @@ import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { EditContext } from "../../widget/io-abstract";
 import Panel from "../../widget/panel";
-import type { ButtonContext } from "./button-context";
 import EditButtons from "./edit-buttons";
-import ViewButtons from "./view-buttons";
+import ViewButtons, { type ButtonContext } from "./view-buttons";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 

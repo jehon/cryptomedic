@@ -9,8 +9,7 @@ import {
   folderFileDelete,
   folderFileUpdate
 } from "../loaders";
-
-import type { ButtonContext } from "./button-context";
+import type { ButtonContext } from "./view-buttons";
 
 export default function EditButtons(
   props: ButtonContext & {
