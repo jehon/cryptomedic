@@ -1,4 +1,3 @@
-import assert from "assert";
 import Folder from "./business/folder";
 
 export const RefFolder1 = {
@@ -21,7 +20,5 @@ export async function loadReference({
     throw new Error("The reference " + name + " is empty or not found");
   }
 
-  const model = new Folder(valid_respond.default.folder);
-  assert.ok(model instanceof Folder);
-  return model;
+  return new Folder(valid_respond.default.folder);
 }
