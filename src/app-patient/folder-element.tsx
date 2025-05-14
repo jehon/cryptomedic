@@ -35,13 +35,14 @@ export default function FolderElement({
   selectedId?: string;
   mode: ModesList;
 }): React.ReactNode {
+  const navigate = useNavigate();
   const [folder, folderUpdated] = useState<Folder>(initialFolder);
 
   const folderUpdatedCallback = (folder: Folder | undefined) => {
     if (folder) {
       folderUpdated(folder);
     } else {
-      document.location.href = config.urls.home;
+      navigate("/home");
     }
   };
 
