@@ -28,7 +28,7 @@ check: cls dependencies lint build reset-lite test ok
 
 # Test with clean environment
 .PHONY: full
-full: cls stop clean dc-build start dependencies lint build test ok
+full: cls stop clean dc-build start dependencies lint build test integration-test-desktop ok
 
 .PHONY: ok
 ok:

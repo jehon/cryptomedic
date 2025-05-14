@@ -53,7 +53,7 @@ $(INTEGRATION_BUILT_MARK): \
 
 .PHONY: integration-test
 test: integration-test
-integration-test: integration-test-desktop integration-test-playwright
+integration-test: integration-test-playwright
 
 integration-test-open: $(INTEGRATION_BUILT_MARK)
 	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/desktop/runtime"
