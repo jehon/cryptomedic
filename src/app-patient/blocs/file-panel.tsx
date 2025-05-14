@@ -12,8 +12,8 @@ import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { EditContext } from "../../widget/io-abstract";
 import Panel from "../../widget/panel";
-import EditButtons from "./edit-buttons";
-import ViewButtons, { type ButtonContext } from "./view-buttons";
+import ButtonsEdit from "./buttons-edit";
+import ButtonsView, { type ButtonContext } from "./buttons-view";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
@@ -102,12 +102,12 @@ export default function FilePanel(props: {
       }
       actions={
         <>
-          <ViewButtons
+          <ButtonsView
             {...buttonContext}
             file={props.file}
             onUpdate={fileIsUpdated}
           />
-          <EditButtons
+          <ButtonsEdit
             {...buttonContext}
             file={props.file}
             onDelete={fileIsDeleted}
@@ -149,7 +149,7 @@ export default function FilePanel(props: {
           {props.children}
           {editMode && (
             <ButtonGroup>
-              <EditButtons
+              <ButtonsEdit
                 {...buttonContext}
                 file={props.file}
                 onDelete={fileIsDeleted}

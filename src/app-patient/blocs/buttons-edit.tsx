@@ -9,9 +9,9 @@ import {
   folderFileDelete,
   folderFileUpdate
 } from "../loaders";
-import type { ButtonContext } from "./view-buttons";
+import type { ButtonContext } from "./buttons-view";
 
-export default function EditButtons(
+export default function ButtonsEdit(
   props: ButtonContext & {
     file: PatientRelated;
     onDelete: () => void;
@@ -35,6 +35,7 @@ export default function EditButtons(
   const doCancel = () => {
     if (addMode) {
       // // This is not necessary because the top folder will reload anyway
+      // TODO: when migrated, remove added file
       // // Remove the newly added file, that we don't want to keep
       // onUpdate(folder.withoutFile(file));
       navigate(props.parentUrl);

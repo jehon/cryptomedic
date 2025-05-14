@@ -15,7 +15,7 @@ export type ButtonContext = {
   isLocked: boolean;
 };
 
-export default function ViewButtons<T extends Pojo>(
+export default function ButtonsView<T extends Pojo>(
   props: ButtonContext & {
     file: T;
     onUpdate: (file: T) => void;
