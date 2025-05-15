@@ -27,14 +27,16 @@ export default function patientRelatedElementGenerator<
   elementBody: React.ReactNode;
   elementFooter?: React.ReactNode;
 }): React.ReactNode {
+  const uid = `${props.type}.${props.file.id ?? "add"}`;
+
   return (
     <FilePanel
       selfUrl={`/patient/${props.folder.id}/${props.type}/${props.file.id ?? "add"}`}
       apiRootUrl={`fiche/${props.type}`} // No leading slash!
       type={props.type}
       folder={props.folder}
-      key={`${props.type}.${props.file.id ?? "add"}`}
-      closed={`${props.type}.${props.file.id ?? "add"}` !== props.selectedUid}
+      key={uid}
+      closed={uid !== props.selectedUid}
       file={props.file}
       onCreated={(file: T) => {
         props.onUpdate(
@@ -49,11 +51,7 @@ export default function patientRelatedElementGenerator<
       onUpdated={props.onUpdate}
       header={props.elementHeader}
       footer={props.elementFooter}
-      edit={
-        `${props.type}.${props.file.id ?? "add"}` == props.selectedUid
-          ? props.mode === Modes.input
-          : false
-      }
+      edit={uid == props.selectedUid ? props.mode === Modes.input : false}
       canBeDeleted={props.canBeDeleted}
       canBeLocked={props.canBeLocked}
     >
