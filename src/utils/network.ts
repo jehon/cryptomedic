@@ -10,7 +10,7 @@ export const CRUD = {
   delete: "DELETE" as CRUDType
 };
 
-export function request({
+export function request<T = any>({
   url,
   method,
   queryData,
@@ -22,7 +22,7 @@ export function request({
   queryData?: Record<string, any>;
   formData?: FormData;
   allowed?: number[];
-}) {
+}): Promise<T> {
   method = method || CRUD.read;
 
   if (url[0] !== "/") {
@@ -61,7 +61,7 @@ export function request({
         (response.status >= 200 && response.status < 300) ||
         (allowed && allowed.indexOf(response.status) >= 0)
       ) {
-        return response.json();
+        return response.json() as T;
       }
       throw new ServerRequestError(`Error code is ${response.status}`);
     },
