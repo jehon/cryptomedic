@@ -57,7 +57,6 @@ export default function FilePanel<T extends Pojo>(props: {
         // if (opened) {
         // TODO: when angular router is out (adapt e2e file panel goEdit too)
         // navigate(`/patient/${patientId}/${props.type}/${fileId}${mode ? `/${mode}` : ""}`);
-        //   location.hash = routeToFolderFile(folder, file);
         // }
       }}
       header={
