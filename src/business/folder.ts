@@ -8,29 +8,22 @@ import PojoClass from "./pojo-class";
 
 export function serverType2BusinessType(type: string): BusinessType {
   switch (type) {
-    case "appointment":
     case "Appointment":
       return "appointment";
-    case "bill":
     case "Bill":
       return "bill";
-    case "consult_clubfoot":
     case "ClubFoot":
       return "consult_clubfoot";
-    case "consult_other":
     case "OtherConsult":
       return "consult_other";
-    case "consult_ricket":
     case "RicketConsult":
       return "consult_ricket";
     case "Patient":
       return "patient";
     case "Payment":
       return "payment";
-    case "picture":
     case "Picture":
       return "picture";
-    case "surgery":
     case "Surgery":
       return "surgery";
     default:
