@@ -56,7 +56,12 @@ export const icons = {
 };
 
 export function isFeatureSwitchEnabled(): boolean {
-  return location.search == "?dev";
+  if (location == undefined) {
+    // Unit testing
+    return true;
+  } else {
+    return location.search == "?dev";
+  }
 }
 
 if (isFeatureSwitchEnabled()) {
