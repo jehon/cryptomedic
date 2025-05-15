@@ -17,6 +17,7 @@ import type {
   ConsultClubfoot,
   ConsultOther,
   ConsultRicket,
+  Patient,
   PatientRelated,
   Picture,
   Surgery
@@ -73,9 +74,10 @@ export default function FolderElement({
       navigate("/home");
     }
   };
+  const patient = folder.getPatient();
 
-  if (!folder) {
-    return <div key="no-folder-selected">No folder selected</div>;
+  if (!patient) {
+    return <div key="no-patient-selected">No Patient selected</div>;
   }
 
   if (selectedId == "add") {
@@ -97,10 +99,11 @@ export default function FolderElement({
   }
 
   const commonProps = {
-    folder,
+    folder, // TODO: folder2patient
+    patient,
     selectedUid: selectedId
       ? `${selectedType}.${selectedId}`
-      : `patient.${folder.id!}`,
+      : `patient.${patient.id!}`,
     mode,
     onUpdate: folderUpdatedCallback
   };
@@ -108,7 +111,7 @@ export default function FolderElement({
   return (
     <div
       key="top-folder"
-      data-testid={"folder-" + folder.id}
+      data-testid={"folder-" + patient.id}
       className="reduce-width"
     >
       {/* ------------ Header  --------------------*/}
@@ -143,7 +146,7 @@ export default function FolderElement({
               className="dropdown-item"
               key={type}
               data-testid={`add-${type}`}
-              to={`/patient/${folder.id!}/${type}/add`}
+              to={`/patient/${patient.id!}/${type}/add`}
             >
               {config.type2Title(type)}
             </Link>
@@ -157,8 +160,8 @@ export default function FolderElement({
       </Panel>
 
       <PatientElement
-        key={`patient/${folder.getPatient().id ?? "add"}`}
-        file={folder.getPatient()}
+        key={`patient/${patient.id ?? "add"}`}
+        file={patient}
         {...commonProps}
       />
 

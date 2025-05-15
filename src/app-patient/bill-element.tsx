@@ -22,6 +22,7 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
+// TODO: folder2patient
 function getPayments(file: Bill, folder: Folder): Payment[] {
   return folder.list.filter(
     (f) => f._type == "payment" && (f as Payment).bill_id == file.id
@@ -197,7 +198,7 @@ export default function BillElement(
             <input
               type="hidden"
               name="patient_id"
-              defaultValue={props.folder.id}
+              defaultValue={props.patient.id}
             />
             <IODate
               name="date"
@@ -283,11 +284,11 @@ export default function BillElement(
         <ButtonsGroup>
           <ActionButton
             style="Add"
-            linkTo={`#/folder/${props.folder.id}/file/Bill/${props.file.id}`}
+            linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
           />
           <ActionButton
             style="Edit"
-            linkTo={`#/folder/${props.folder.id}/file/Bill/${props.file.id}`}
+            linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
           />
         </ButtonsGroup>
         {getPayments(props.file, props.folder).length == 0 ? (

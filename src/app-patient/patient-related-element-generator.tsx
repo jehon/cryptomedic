@@ -11,7 +11,8 @@ export type PatientRelatedElementGeneratorProps<
   T extends PatientRelated | Patient
 > = {
   file: T;
-  folder: Folder;
+  patient: Patient;
+  folder: Folder; // TODO: folder2patient
   selectedUid?: string;
   onUpdate: (folder: Folder | undefined) => void;
   mode: ModesList;
@@ -22,7 +23,8 @@ export default function patientRelatedElementGenerator<
 >(props: {
   file: T;
   type: BusinessType;
-  folder: Folder;
+  patient: Patient;
+  folder: Folder; // TODO: folder2patient
   selectedUid?: string;
   onUpdate: (folder: Folder | undefined) => void;
   mode: ModesList;
@@ -36,7 +38,7 @@ export default function patientRelatedElementGenerator<
 
   return (
     <FilePanel
-      selfUrl={`/patient/${props.folder.id}/${props.type}/${props.file.id ?? "add"}`}
+      selfUrl={`/patient/${props.patient.id}/${props.type}/${props.file.id ?? "add"}`}
       apiRootUrl={`fiche/${props.type}`} // No leading slash!
       type={props.type}
       key={uid}

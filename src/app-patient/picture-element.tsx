@@ -26,7 +26,7 @@ export default function PictureElement(
           <input
             type="hidden"
             name="patient_id"
-            defaultValue={props.folder.id}
+            defaultValue={props.patient.id}
           />
           <IOList
             name="type"

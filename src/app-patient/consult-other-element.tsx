@@ -24,7 +24,7 @@ export default function ConsultOtherElement(
       <>
         <ConsultAbstractIntroduction
           file={props.file}
-          patient={props.folder.getPatient()}
+          patient={props.patient}
         ></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel label="Orthopedic data">

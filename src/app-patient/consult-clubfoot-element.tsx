@@ -68,7 +68,7 @@ export default function ConsultClubfootElement(
       <>
         <ConsultAbstractIntroduction
           file={props.file}
-          patient={props.folder.getPatient()}
+          patient={props.patient}
         ></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel

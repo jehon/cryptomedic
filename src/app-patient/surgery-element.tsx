@@ -30,7 +30,7 @@ export default function SurgeryElement(
             <input
               type="hidden"
               name="patient_id"
-              defaultValue={props.folder.id}
+              defaultValue={props.patient.id}
             />
             <IODate name="date" value={props.file.date} required />
             <IOString
