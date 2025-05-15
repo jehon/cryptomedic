@@ -10,10 +10,11 @@ import type { ButtonContext } from "./buttons-view";
 
 export default function ButtonsEdit<T extends Pojo>(
   props: ButtonContext & {
-    file: Pojo;
+    file: T;
     canDelete: boolean;
-    onDelete: () => void;
-    onUpdate: (file: T) => void;
+    onDeleted: (file: T) => void;
+    onUpdated: (file: T) => void;
+    onCreated: (file: T) => void;
     formRef: React.RefObject<HTMLFormElement | null>;
   }
 ) {
@@ -26,18 +27,16 @@ export default function ButtonsEdit<T extends Pojo>(
 
   const addMode = !props.file.id;
 
-  const doDelete = () =>
+  const doDelete = () => {
     crudLoader
       .delete(props.file.id!)
       .then(notification("File deleted"))
-      .then(props.onDelete);
+      .then(() => props.onDeleted(props.file))
+      .then(() => navigate(routeParent(props.selfUrl, 2)));
+  };
 
   const doCancel = () => {
     if (addMode) {
-      // // This is not necessary because the top folder will reload anyway
-      // TODO: when migrated, remove added file
-      // // Remove the newly added file, that we don't want to keep
-      // onUpdate(folder.withoutFile(file));
       navigate(routeParent(props.selfUrl, 2));
     } else {
       navigate(props.selfUrl);
@@ -61,13 +60,13 @@ export default function ButtonsEdit<T extends Pojo>(
             navigate(`${routeParent(props.selfUrl)}/${newFile.id}`);
           })
         )
-        .then(props.onUpdate);
+        .then(props.onCreated);
     } else {
       return crudLoader
         .update(props.file.id!, data)
         .then(notification("File saved"))
         .then(passThrough(() => navigate(props.selfUrl)))
-        .then(props.onUpdate);
+        .then(props.onUpdated);
     }
   };
 

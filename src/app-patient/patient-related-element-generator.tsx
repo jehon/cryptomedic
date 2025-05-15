@@ -36,7 +36,13 @@ export default function patientRelatedElementGenerator<
       key={`${props.type}.${props.file.id ?? "add"}`}
       closed={`${props.type}.${props.file.id ?? "add"}` !== props.selectedUid}
       file={props.file}
-      onUpdate={props.onUpdate}
+      onCreated={(file: T) => {}}
+      onDeleted={(file: T) =>
+        props.onUpdate(
+          props.folder.withoutFileOLD(file as unknown as PatientRelated)
+        )
+      }
+      onUpdated={props.onUpdate}
       header={props.elementHeader}
       footer={props.elementFooter}
       edit={

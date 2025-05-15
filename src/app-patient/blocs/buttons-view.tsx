@@ -17,7 +17,7 @@ export type ButtonContext = {
 export default function ButtonsView<T extends Pojo>(
   props: ButtonContext & {
     file: T;
-    onUpdate: (file: T) => void;
+    onUpdated: (file: T) => void;
     canBeLocked: boolean;
   }
 ) {
@@ -37,7 +37,7 @@ export default function ButtonsView<T extends Pojo>(
     crudLoader
       .unlock(props.file.id!)
       .then(notification("File unlocked"))
-      .then(props.onUpdate)
+      .then(props.onUpdated)
       .then(() => navigate(`${props.selfUrl}/edit`));
   };
 

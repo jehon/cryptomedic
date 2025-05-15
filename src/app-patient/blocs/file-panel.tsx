@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Folder from "../../business/folder";
 import { icons, type2Title, type BusinessType } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
-import { routeParent } from "../../utils/routing";
 import { EditContext } from "../../widget/io-abstract";
 import Panel from "../../widget/panel";
 import type { PatientRelated, Pojo } from "../objects";
@@ -26,7 +25,9 @@ export default function FilePanel<T extends Pojo>(props: {
   edit?: boolean;
   canBeLocked: boolean;
   canBeDeleted: boolean;
-  onUpdate: FolderUpdateCallback;
+  onCreated: (file: T) => void;
+  onDeleted: (file: T) => void;
+  onUpdated: FolderUpdateCallback;
 }): React.ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
@@ -43,21 +44,9 @@ export default function FilePanel<T extends Pojo>(props: {
   };
 
   const fileIsUpdated = (nFile: T) =>
-    props.onUpdate(
+    props.onUpdated(
       props.folder.withFileOLD(nFile as unknown as PatientRelated)
     );
-
-  const fileIsDeleted = () => {
-    props.onUpdate(
-      props.folder.withoutFileOLD(props.file as unknown as PatientRelated)
-    );
-    if (props.file._type == "patient") {
-      // TODO: handle this
-      navigate("/");
-    } else {
-      navigate(routeParent(props.selfUrl, 2));
-    }
-  };
 
   return (
     <Panel
@@ -99,15 +88,16 @@ export default function FilePanel<T extends Pojo>(props: {
             {...buttonContext}
             file={props.file}
             canBeLocked={props.canBeLocked}
-            onUpdate={fileIsUpdated}
+            onUpdated={fileIsUpdated}
           />
           <ButtonsEdit<T>
             {...buttonContext}
             file={props.file}
-            canDelete={!addMode && props.canBeDeleted}
-            onDelete={fileIsDeleted}
-            onUpdate={fileIsUpdated}
             formRef={formRef}
+            canDelete={!addMode && props.canBeDeleted}
+            onCreated={() => props.onCreated(props.file)}
+            onDeleted={() => props.onDeleted(props.file)}
+            onUpdated={fileIsUpdated}
           />
         </>
       }
@@ -142,13 +132,14 @@ export default function FilePanel<T extends Pojo>(props: {
           {props.children}
           {editMode && (
             <ButtonGroup>
-              <ButtonsEdit
+              <ButtonsEdit<T>
                 {...buttonContext}
                 file={props.file}
-                onDelete={fileIsDeleted}
-                onUpdate={fileIsUpdated}
-                canDelete={false}
                 formRef={formRef}
+                canDelete={false}
+                onCreated={() => props.onCreated(props.file)}
+                onDeleted={() => props.onDeleted(props.file)}
+                onUpdated={fileIsUpdated}
               />
             </ButtonGroup>
           )}

@@ -71,17 +71,10 @@ export class CrudLoader<T extends Pojo> {
     );
   }
 
-  delete(id: string): Promise<Folder | undefined> {
-    return (
-      request({
-        url: `${this.apiUrl}/${id}`,
-        method: CRUD.delete
-      })
-        // TODO: Because we receive bad data from server
-        .then((json) => json.file)
-        .then((json) =>
-          json && json.length > 0 ? new Folder(json) : undefined
-        )
-    );
+  delete(id: string): Promise<void> {
+    return request<void>({
+      url: `${this.apiUrl}/${id}`,
+      method: CRUD.delete
+    });
   }
 }
