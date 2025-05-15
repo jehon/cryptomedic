@@ -1,11 +1,9 @@
 import type {
-  Appointment,
   Consult,
   Patient,
   PatientRelated,
   Timed
 } from "../app-patient/objects";
-import type Folder from "../business/folder";
 import { fromBirthDateTo, normalizeDate } from "./date";
 import { DataMissingException } from "./exceptions";
 import { stdDeviationFor } from "./standard-deviation";
@@ -139,31 +137,6 @@ export function actualAge(
     return res.years + res.months / 12;
   }
   return res.years + "y" + res.months + "m";
-}
-
-export function getNextAppointment(folder: Folder): Date | undefined {
-  const today = new Date();
-  return folder.list
-    .filter((v) => v._type == "appointment")
-    .map((v) => (v as Appointment).date)
-    .filter((d) => d != undefined)
-    .map((d) => new Date(d))
-    .filter((d) => d > today)
-    .sort((a, b) => b.getTime() - a.getTime()) // Bigger at top
-    .shift();
-}
-
-export function getLastSeen(folder: Folder): Date | undefined {
-  const today = new Date();
-  return folder
-    .getChildren()
-    .filter((v) => v._type != "appointment") // We take everything except Appointment
-    .map((v) => "date" in v && v.date)
-    .filter((d) => d)
-    .map((d) => new Date(d as string))
-    .filter((d) => d < today)
-    .sort((a, b) => a.getTime() - b.getTime())
-    .pop();
 }
 
 export function patientRelatedOrdering(o1: PatientRelated, o2: PatientRelated) {

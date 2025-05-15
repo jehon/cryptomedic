@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Folder from "../business/folder";
 import * as config from "../config";
-import { getLastSeen, getNextAppointment } from "../utils/calculations";
 import ButtonsGroup from "../widget/buttons-group";
 import type { ModesList } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
@@ -25,6 +24,33 @@ import type {
 import patientElementGenerator from "./patient-element";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
+
+// ts-unused-exports:disable-next-line
+export function getNextAppointment(folder: Folder): Date | undefined {
+  const today = new Date();
+  return folder.list
+    .filter((v) => v._type == "appointment")
+    .map((v) => (v as Appointment).date)
+    .filter((d) => d != undefined)
+    .map((d) => new Date(d))
+    .filter((d) => d > today)
+    .sort((a, b) => b.getTime() - a.getTime()) // Bigger at top
+    .shift();
+}
+
+// ts-unused-exports:disable-next-line
+export function getLastSeen(folder: Folder): Date | undefined {
+  const today = new Date();
+  return folder
+    .getChildren()
+    .filter((v) => v._type != "appointment") // We take everything except Appointment
+    .map((v) => "date" in v && v.date)
+    .filter((d) => d)
+    .map((d) => new Date(d as string))
+    .filter((d) => d < today)
+    .sort((a, b) => a.getTime() - b.getTime())
+    .pop();
+}
 
 export default function FolderElement({
   folder: initialFolder,
