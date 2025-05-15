@@ -1,10 +1,9 @@
 import React from "react";
-import PatientRelated from "../business/abstracts/patient-related";
-
 import Folder from "../business/folder";
 import type { BusinessType } from "../config";
 import { Modes, type ModesList } from "../widget/io-abstract";
 import FilePanel, { type FolderUpdateCallback } from "./blocs/file-panel";
+import type { Patient, PatientRelated } from "./objects";
 
 export type PatientRelatedElementGeneratorProps = {
   folder: Folder;
@@ -14,7 +13,7 @@ export type PatientRelatedElementGeneratorProps = {
 };
 
 export default function patientRelatedElementGenerator<
-  T extends PatientRelated
+  T extends PatientRelated | Patient
 >(props: {
   file: T;
   type: BusinessType;
@@ -22,6 +21,7 @@ export default function patientRelatedElementGenerator<
   selectedUid?: string;
   onUpdate: FolderUpdateCallback;
   mode: ModesList;
+  canBeLocked: boolean;
   elementHeader: React.ReactNode;
   elementBody: React.ReactNode;
   elementFooter?: React.ReactNode;
@@ -43,6 +43,7 @@ export default function patientRelatedElementGenerator<
           ? props.mode === Modes.input
           : false
       }
+      canBeLocked={false}
     >
       {props.elementBody}
     </FilePanel>

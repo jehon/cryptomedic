@@ -1,13 +1,12 @@
-import Picture from "../business/picture";
 import { getList } from "../utils/session";
 import IODate from "../widget/io-date";
 import IOImage from "../widget/io-image";
 import IOList from "../widget/io-list";
 import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";
-
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import type { Picture } from "./objects";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
@@ -23,6 +22,7 @@ export default function PictureElement({
     ...props,
     type: "picture",
     file,
+    canBeLocked: true,
     elementHeader: <>{file.type}</>,
     elementBody: (
       <TwoColumns>

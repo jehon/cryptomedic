@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import type PatientRelated from "../../business/abstracts/patient-related";
 import type { BusinessType } from "../../config";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
 import { CrudLoader } from "../loaders";
+import type { Pojo } from "../objects";
 
 export type ButtonContext = {
   selfUrl: string;
@@ -13,10 +13,10 @@ export type ButtonContext = {
   title: string;
   editMode: boolean;
   canDelete: boolean;
-  isLocked: boolean;
+  canBeLocked: boolean;
 };
 
-export default function ButtonsView<T extends PatientRelated>(
+export default function ButtonsView<T extends Pojo>(
   props: ButtonContext & {
     file: T;
     onUpdate: (file: T) => void;
@@ -24,6 +24,15 @@ export default function ButtonsView<T extends PatientRelated>(
 ) {
   const navigate = useNavigate();
   const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
+
+  let isLocked = false;
+  if (props.canBeLocked) {
+    if (props.file.updated_at) {
+      const dlock = new Date(props.file.updated_at);
+      dlock.setDate(dlock.getDate() + 35);
+      isLocked = dlock < new Date();
+    }
+  }
 
   const doUnlock = () => {
     crudLoader
@@ -33,7 +42,7 @@ export default function ButtonsView<T extends PatientRelated>(
       .then(() => navigate(`${props.selfUrl}/edit`));
   };
 
-  if (props.isLocked) {
+  if (isLocked) {
     return (
       <ActionConfirm
         style="Alternate"

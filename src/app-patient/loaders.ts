@@ -1,7 +1,7 @@
-import type PatientRelated from "../business/abstracts/patient-related";
-import Folder, { type2Class } from "../business/folder";
+import Folder, { serverType2BusinessType } from "../business/folder";
 import type { BusinessType } from "../config";
 import { CRUD, request } from "../utils/network";
+import type { Pojo } from "./objects";
 
 export function getFolder(id: string): Promise<Folder> {
   // TODO: use new route!
@@ -10,7 +10,7 @@ export function getFolder(id: string): Promise<Folder> {
     .then((json) => new Folder(json));
 }
 
-export class CrudLoader<T extends PatientRelated> {
+export class CrudLoader<T extends Pojo> {
   private apiUrl: string;
   private type: BusinessType;
 
@@ -27,12 +27,15 @@ export class CrudLoader<T extends PatientRelated> {
         formData
       })
         // TODO: Because we receive bad data from server
-        .then((json) => ({
-          newKey: "" + json.newKey,
-          folder: new Folder(json.folder)
-        }))
-        .then(({ folder, newKey }) =>
-          folder.getByTypeAndId<T>(this.type, newKey)
+        .then(
+          (json) =>
+            json.folder
+              .filter(
+                (f: any) =>
+                  serverType2BusinessType(f.type) == this.type &&
+                  f.id == json.newKey
+              )
+              .map((f: any) => ({ ...f.record, _type: this.type }))[0] as T
         )
     );
   }
@@ -44,15 +47,11 @@ export class CrudLoader<T extends PatientRelated> {
         method: CRUD.update
       })
         // TODO: Because we receive bad data from server
-        .then((json) => json.file)
-        .then((json) => type2Class(this.type).factory<T>(json, this.type))
+        .then((json) => ({ ...(json.file as T), _type: this.type }))
     );
   }
 
-  update<T extends PatientRelated>(
-    id: string,
-    formData: FormData
-  ): Promise<PatientRelated> {
+  update(id: string, formData: FormData): Promise<T> {
     return (
       request({
         url: `${this.apiUrl}/${id}`,
@@ -60,9 +59,15 @@ export class CrudLoader<T extends PatientRelated> {
         formData
       })
         // TODO: Because we receive bad data from server
-        .then((json) => json.folder)
-        .then((json) => new Folder(json))
-        .then((folder) => folder.getByTypeAndId<T>(this.type, id!))
+        .then(
+          (json) =>
+            json.folder
+              .filter(
+                (f: any) =>
+                  serverType2BusinessType(f.type) == this.type && f.id == id
+              )
+              .map((f: any) => ({ ...f.record, _type: this.type }))[0] as T
+        )
     );
   }
 

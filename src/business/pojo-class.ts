@@ -1,16 +1,16 @@
 import { plainToInstance } from "class-transformer";
 import { immerable } from "immer";
-import { type StringDate } from "../../app-patient/objects";
-import type { BusinessType } from "../../config";
+import { type StringDate } from "../app-patient/objects";
+import type { BusinessType } from "../config";
 
-export default class Pojo {
+export default class PojoClass {
   [immerable] = true;
 
-  static factory<T extends Pojo>(json = {}, type: BusinessType) {
+  static factory<T extends PojoClass>(json = {}, type: BusinessType) {
     return plainToInstance(this, { ...json, _type: type }) as T;
   }
 
-  declare ["constructor"]: typeof Pojo;
+  declare ["constructor"]: typeof PojoClass;
 
   id?: string;
   created_at: StringDate = "";

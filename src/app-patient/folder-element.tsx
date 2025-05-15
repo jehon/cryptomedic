@@ -1,14 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import PatientRelated from "../business/abstracts/patient-related";
-import type Appointment from "../business/appointment";
-import type Bill from "../business/bill";
-import type ConsultClubfoot from "../business/consult-clubfoot";
-import type ConsultOther from "../business/consult-other";
-import type ConsultRicket from "../business/consult-ricket";
-import Folder, { type2Class } from "../business/folder";
-import type Picture from "../business/picture";
-import type Surgery from "../business/surgery";
+import Folder from "../business/folder";
 import * as config from "../config";
 import { getLastSeen, getNextAppointment } from "../utils/calculations";
 import ButtonsGroup from "../widget/buttons-group";
@@ -20,6 +12,16 @@ import BillElement from "./bill-element";
 import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOtherElement from "./consult-other-element";
 import ConsultRicketElement from "./consult-ricket-element";
+import type {
+  Appointment,
+  Bill,
+  ConsultClubfoot,
+  ConsultOther,
+  ConsultRicket,
+  PatientRelated,
+  Picture,
+  Surgery
+} from "./objects";
 import patientElementGenerator from "./patient-element";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
@@ -52,7 +54,6 @@ export default function FolderElement({
 
   if (selectedId == "add") {
     const typeName = selectedType as config.BusinessType;
-    const typeClass = type2Class(typeName) as typeof PatientRelated;
 
     // Test if the added item is already present
     if (
@@ -61,7 +62,10 @@ export default function FolderElement({
       ).length == 0
     ) {
       folderUpdated(
-        folder.withFileOLD(typeClass.factory({}, typeName) as PatientRelated)
+        folder.withFileOLD({
+          _type: typeName,
+          patient_id: folder.id
+        } as PatientRelated)
       );
     }
   }

@@ -1,18 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import PatientRelated from "../../business/abstracts/patient-related";
 import { passThrough } from "../../utils/promises";
 import { routeParent } from "../../utils/routing";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
 import { CrudLoader } from "../loaders";
+import type { Pojo } from "../objects";
 import type { ButtonContext } from "./buttons-view";
 
-export default function ButtonsEdit<T extends PatientRelated>(
+export default function ButtonsEdit<T extends Pojo>(
   props: ButtonContext & {
-    file: PatientRelated;
+    file: Pojo;
     onDelete: () => void;
-    onUpdate: (file: PatientRelated) => void;
+    onUpdate: (file: T) => void;
     // baseNavigate: string;
     formRef: React.RefObject<HTMLFormElement | null>;
   }

@@ -1,11 +1,10 @@
-import Surgery from "../business/surgery";
 import IOBoolean from "../widget/io-boolean";
 import IODate from "../widget/io-date";
 import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";
-
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import type { Surgery } from "./objects";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
@@ -21,6 +20,7 @@ export default function SurgeryElement({
     ...props,
     type: "surgery",
     file,
+    canBeLocked: true,
     elementHeader: (
       <>
         <span>{file.report_diagnostic}</span>

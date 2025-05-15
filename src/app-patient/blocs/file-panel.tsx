@@ -1,33 +1,31 @@
 import { useRef } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import PatientRelated from "../../business/abstracts/patient-related";
 import Folder from "../../business/folder";
 import { icons, type2Title, type BusinessType } from "../../config";
-import { isLocked } from "../../utils/calculations";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { routeParent } from "../../utils/routing";
 import { EditContext } from "../../widget/io-abstract";
 import Panel from "../../widget/panel";
+import type { PatientRelated, Pojo } from "../objects";
 import ButtonsEdit from "./buttons-edit";
 import ButtonsView, { type ButtonContext } from "./buttons-view";
 
 export type FolderUpdateCallback = (folder: Folder | undefined) => void;
 
-// TODO: make routing more abstract
-
-export default function FilePanel(props: {
+export default function FilePanel<T extends Pojo>(props: {
   selfUrl: string;
   apiRootUrl: string;
   type: BusinessType;
   folder: Folder;
-  file: PatientRelated;
+  file: T;
   header?: React.ReactNode;
   children: React.ReactNode;
   footer?: React.ReactNode;
   closed?: boolean;
   onUpdate: FolderUpdateCallback;
   edit?: boolean;
+  canBeLocked: boolean;
 }): React.ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
@@ -41,20 +39,21 @@ export default function FilePanel(props: {
     type: props.type,
     title: type2Title(props.type),
     editMode,
-    isLocked:
-      props.file._type != "patient" &&
-      props.file._type != "appointment" &&
-      isLocked(props.file),
     canDelete:
       !addMode &&
-      (props.file._type != "patient" || props.folder.getChildren().length == 0)
+      (props.file._type != "patient" || props.folder.getChildren().length == 0),
+    canBeLocked: props.canBeLocked
   };
 
-  const fileIsUpdated = (nFile: PatientRelated) =>
-    props.onUpdate(props.folder.withFileOLD(nFile));
+  const fileIsUpdated = (nFile: T) =>
+    props.onUpdate(
+      props.folder.withFileOLD(nFile as unknown as PatientRelated)
+    );
 
   const fileIsDeleted = () => {
-    props.onUpdate(props.folder.withoutFileOLD(props.file));
+    props.onUpdate(
+      props.folder.withoutFileOLD(props.file as unknown as PatientRelated)
+    );
     if (props.file._type == "patient") {
       // TODO: handle this
       navigate("/");

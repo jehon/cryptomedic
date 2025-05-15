@@ -1,8 +1,3 @@
-import ConsultRicket from "../business/consult-ricket";
-
-import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
-import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
-
 import { getList } from "../utils/session";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import IOList from "../widget/io-list";
@@ -10,6 +5,9 @@ import IONumber from "../widget/io-number";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
+import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
+import type { ConsultRicket } from "./objects";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
@@ -25,6 +23,7 @@ export default function ConsultRicketElement({
     ...props,
     type: "consult_ricket",
     file,
+    canBeLocked: true,
     elementHeader: (
       <>
         <span className="with-image">

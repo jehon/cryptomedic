@@ -1,9 +1,11 @@
-import type Consult from "../business/abstracts/consult";
-import type PatientRelated from "../business/abstracts/patient-related";
-import type Timed from "../business/abstracts/timed";
-import type Appointment from "../business/appointment";
+import type {
+  Appointment,
+  Consult,
+  Patient,
+  PatientRelated,
+  Timed
+} from "../app-patient/objects";
 import type Folder from "../business/folder";
-import type Patient from "../business/patient";
 import { fromBirthDateTo, normalizeDate } from "./date";
 import { DataMissingException } from "./exceptions";
 import { stdDeviationFor } from "./standard-deviation";
@@ -75,15 +77,6 @@ export function getBMISd(consult: Consult, patient: Patient) {
   );
 }
 
-export function isLocked(patientRelated: PatientRelated): boolean {
-  if (!patientRelated.updated_at) {
-    return false;
-  }
-  const dlock = new Date(patientRelated.updated_at);
-  dlock.setDate(dlock.getDate() + 35);
-  return dlock < new Date();
-}
-
 export function actualAge(
   patient: Patient,
   reference: Date | string | number = new Date()
@@ -153,6 +146,7 @@ export function getNextAppointment(folder: Folder): Date | undefined {
   return folder.list
     .filter((v) => v._type == "appointment")
     .map((v) => (v as Appointment).date)
+    .filter((d) => d != undefined)
     .map((d) => new Date(d))
     .filter((d) => d > today)
     .sort((a, b) => b.getTime() - a.getTime()) // Bigger at top

@@ -1,6 +1,9 @@
-export function string2number(str: string, def: number = NaN): number {
+export function string2number(
+  str: string | undefined,
+  def: number = NaN
+): number {
   try {
-    const n = parseFloat(str);
+    const n = parseFloat(str ?? "");
     if (Number.isFinite(n)) {
       return n;
     }

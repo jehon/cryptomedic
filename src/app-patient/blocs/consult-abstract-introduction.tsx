@@ -1,9 +1,3 @@
-import Consult from "../../business/abstracts/consult";
-
-import Panel from "../../widget/panel";
-import TwoColumns from "../../widget/two-columns";
-
-import type Patient from "../../business/patient";
 import {
   bmi,
   getAgeAtThatTime,
@@ -20,6 +14,9 @@ import IODate from "../../widget/io-date";
 import IOFunction from "../../widget/io-function";
 import IOList from "../../widget/io-list";
 import IONumber from "../../widget/io-number";
+import Panel from "../../widget/panel";
+import TwoColumns from "../../widget/two-columns";
+import type { Consult, Patient } from "../objects";
 
 export default function ConsultAbstractIntroduction(props: {
   file: Consult;

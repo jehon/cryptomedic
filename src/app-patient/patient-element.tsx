@@ -1,8 +1,6 @@
 import { useState } from "react";
-import Patient from "../business/patient";
-import { getList } from "../utils/session";
-
 import { actualAge } from "../utils/calculations";
+import { getList } from "../utils/session";
 import { yearOfBirthPattern } from "../utils/strings";
 import IOFunction from "../widget/io-function";
 import IOList, { type IOListType } from "../widget/io-list";
@@ -11,6 +9,7 @@ import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import type { Patient } from "./objects";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
@@ -33,16 +32,17 @@ export default function patientElementGenerator(
   const patient = file;
 
   const [districtValue, districtValueUpdate] = useState<string>(
-    patient.address_district
+    patient.address_district ?? ""
   );
   const [upazilaValue, upazilaValueUpdate] = useState<string>(
-    patient.address_upazilla
+    patient.address_upazilla ?? ""
   );
 
   return patientRelatedElementGenerator<Patient>({
     ...props,
     type: "patient",
     file,
+    canBeLocked: false,
     elementHeader: (
       <>
         <span>
@@ -58,7 +58,7 @@ export default function patientElementGenerator(
           <Panel fixed label="Identification">
             <IONumber
               label="Entry Year"
-              value={parseInt(patient.entry_year)}
+              value={parseInt(patient.entry_year ?? "")}
               htmlProps={{
                 min: 1980,
                 max: 2030
@@ -66,7 +66,7 @@ export default function patientElementGenerator(
             />
             <IONumber
               label="Entry Order"
-              value={parseInt(patient.entry_order)}
+              value={parseInt(patient.entry_order ?? "")}
             />
             <IOString name="name" value={patient.name} />
             <IOList name="sex" value={patient.sex} list={getList("sex")} />

@@ -1,7 +1,7 @@
 import { type StringDate } from "../app-patient/objects";
-import Pojo from "./abstracts/pojo";
+import PojoClass from "./pojo-class";
 
-export default class Price extends Pojo {
+export default class Price extends PojoClass {
   date_from?: StringDate;
   date_to?: StringDate;
   social_level_threshold_1: number = 0;

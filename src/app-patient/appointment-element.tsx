@@ -1,11 +1,10 @@
-import Appointment from "../business/appointment";
-
 import { getList } from "../utils/session";
 import IODate from "../widget/io-date";
 import IOList from "../widget/io-list";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import type { Appointment } from "./objects";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
@@ -21,6 +20,7 @@ export default function AppointmentElement({
     ...props,
     type: "appointment",
     file,
+    canBeLocked: true,
     elementHeader: <span>{file.center}</span>,
     elementBody: (
       <TwoColumns>

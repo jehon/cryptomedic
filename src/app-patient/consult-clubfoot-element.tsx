@@ -1,7 +1,3 @@
-import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
-import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
-
-import ConsultClubfoot from "../business/consult-clubfoot";
 import { getList } from "../utils/session";
 import { string2number, tryOrMessage } from "../utils/strings";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
@@ -11,6 +7,9 @@ import IOList from "../widget/io-list";
 import IONumber from "../widget/io-number";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
+import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
+import type { ConsultClubfoot } from "./objects";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
@@ -56,6 +55,7 @@ export default function ConsultClubfootElement({
     ...props,
     type: "consult_clubfoot",
     file,
+    canBeLocked: true,
     elementHeader: (
       <>
         <span className="with-image">

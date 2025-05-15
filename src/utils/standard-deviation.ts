@@ -73,7 +73,7 @@ export function _stdDeviation(
 }
 
 export function stdDeviationFor(
-  sex: string,
+  sex: string | undefined,
   graphName: keyof FullStats,
   x: number,
   y: number

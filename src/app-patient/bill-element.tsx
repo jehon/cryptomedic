@@ -1,8 +1,5 @@
 import { useState } from "react";
-import Bill from "../business/bill";
-
 import type Folder from "../business/folder";
-import Payment from "../business/payment";
 import Price from "../business/price";
 import { getPriceCategories } from "../config";
 import { getList, getSession } from "../utils/session";
@@ -20,12 +17,15 @@ import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
+import type { Bill, Payment } from "./objects";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
 function getPayments(file: Bill, folder: Folder): Payment[] {
-  return folder.getFilesRelatedToBill(file.id);
+  return folder.list.filter(
+    (f) => f._type == "payment" && (f as Payment).bill_id == file.id
+  ) as Payment[];
 }
 
 /*
@@ -185,6 +185,7 @@ export default function BillElement({
     ...props,
     type: "bill",
     file,
+    canBeLocked: true,
     elementHeader: (
       <>
         <span>total: {file.total_real}</span>
