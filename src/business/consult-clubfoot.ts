@@ -2,7 +2,7 @@ import {
   type StringBoolean,
   type StringList,
   type StringNumber
-} from "../utils/types";
+} from "../app-patient/objects";
 import Consult from "./abstracts/consult";
 
 export default class ConsultClubfoot extends Consult {

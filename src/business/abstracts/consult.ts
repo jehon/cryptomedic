@@ -4,7 +4,7 @@ import {
   type StringBoolean,
   type StringList,
   type StringNumber
-} from "../../utils/types";
+} from "../../app-patient/objects";
 
 export default class Consult extends Timed {
   // Begin

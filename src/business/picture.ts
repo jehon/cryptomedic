@@ -1,4 +1,4 @@
-import { type StringList } from "../utils/types";
+import { type StringList } from "../app-patient/objects";
 import Timed from "./abstracts/timed";
 
 // Timed is too wide, we don't use Examiner and Center

@@ -1,6 +1,6 @@
 import { Type } from "class-transformer";
 import "reflect-metadata"; // Required by class-transformer
-import { type StringNumber } from "../utils/types";
+import { type StringNumber } from "../app-patient/objects";
 import PatientRelated from "./abstracts/patient-related";
 import Appointment from "./appointment";
 import Bill from "./bill";

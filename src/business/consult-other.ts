@@ -1,4 +1,4 @@
-import { type StringList } from "../utils/types";
+import { type StringList } from "../app-patient/objects";
 import Consult from "./abstracts/consult";
 
 export default class ConsultOther extends Consult {

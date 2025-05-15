@@ -1,4 +1,4 @@
-import { type StringList } from "../utils/types";
+import { type StringList } from "../app-patient/objects";
 import IOAbstract, { type IOProps } from "./io-abstract";
 
 export type IOListType = string[] | Record<string, string>;

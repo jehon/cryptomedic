@@ -1,7 +1,7 @@
 import { plainToInstance } from "class-transformer";
 import { immerable } from "immer";
+import { type StringDate } from "../../app-patient/objects";
 import type { BusinessType } from "../../config";
-import { type StringDate } from "../../utils/types";
 
 export default class Pojo {
   [immerable] = true;

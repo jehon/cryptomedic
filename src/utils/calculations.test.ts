@@ -1,5 +1,6 @@
 import assert from "node:assert";
 import test from "node:test";
+import type { StringNumber } from "../app-patient/objects";
 import Consult from "../business/abstracts/consult";
 import PatientRelated from "../business/abstracts/patient-related";
 import Appointment from "../business/appointment";
@@ -19,7 +20,6 @@ import {
 } from "./calculations";
 import { DataMissingException } from "./exceptions";
 import { string2number } from "./strings";
-import type { StringNumber } from "./types";
 
 function assertToBeClose(
   val: number | StringNumber,

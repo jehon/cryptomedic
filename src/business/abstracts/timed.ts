@@ -1,4 +1,4 @@
-import { type StringDate } from "../../utils/types";
+import { type StringDate } from "../../app-patient/objects";
 import PatientRelated from "./patient-related";
 
 export default class Timed extends PatientRelated {
