@@ -6,7 +6,7 @@ import { icons, type2Title, type BusinessType } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { EditContext } from "../../widget/io-abstract";
 import Panel from "../../widget/panel";
-import type { PatientRelated, Pojo } from "../objects";
+import type { Pojo } from "../objects";
 import ButtonsEdit from "./buttons-edit";
 import ButtonsView, { type ButtonContext } from "./buttons-view";
 
@@ -27,7 +27,7 @@ export default function FilePanel<T extends Pojo>(props: {
   canBeDeleted: boolean;
   onCreated: (file: T) => void;
   onDeleted: (file: T) => void;
-  onUpdated: FolderUpdateCallback;
+  onUpdated: (file: T) => void;
 }): React.ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
@@ -42,11 +42,6 @@ export default function FilePanel<T extends Pojo>(props: {
     title: type2Title(props.type),
     editMode
   };
-
-  const fileIsUpdated = (nFile: T) =>
-    props.onUpdated(
-      props.folder.withFileOLD(nFile as unknown as PatientRelated)
-    );
 
   return (
     <Panel
@@ -87,16 +82,16 @@ export default function FilePanel<T extends Pojo>(props: {
             {...buttonContext}
             file={props.file}
             canBeLocked={props.canBeLocked}
-            onUpdated={fileIsUpdated}
+            onUpdated={props.onUpdated}
           />
           <ButtonsEdit<T>
             {...buttonContext}
             file={props.file}
             formRef={formRef}
             canDelete={!addMode && props.canBeDeleted}
-            onCreated={() => props.onCreated(props.file)}
-            onDeleted={() => props.onDeleted(props.file)}
-            onUpdated={fileIsUpdated}
+            onCreated={props.onCreated}
+            onDeleted={props.onDeleted}
+            onUpdated={props.onUpdated}
           />
         </>
       }
@@ -136,9 +131,9 @@ export default function FilePanel<T extends Pojo>(props: {
                 file={props.file}
                 formRef={formRef}
                 canDelete={false}
-                onCreated={() => props.onCreated(props.file)}
-                onDeleted={() => props.onDeleted(props.file)}
-                onUpdated={fileIsUpdated}
+                onCreated={props.onCreated}
+                onDeleted={props.onDeleted}
+                onUpdated={props.onUpdated}
               />
             </ButtonGroup>
           )}

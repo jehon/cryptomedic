@@ -48,7 +48,11 @@ export default function patientRelatedElementGenerator<
           props.folder.withoutFileOLD(file as unknown as PatientRelated)
         )
       }
-      onUpdated={props.onUpdate}
+      onUpdated={(file: T) =>
+        props.onUpdate(
+          props.folder.withFileOLD(file as unknown as PatientRelated)
+        )
+      }
       header={props.elementHeader}
       footer={props.elementFooter}
       edit={uid == props.selectedUid ? props.mode === Modes.input : false}
