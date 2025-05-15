@@ -2,8 +2,10 @@ import React from "react";
 import Folder from "../business/folder";
 import type { BusinessType } from "../config";
 import { Modes, type ModesList } from "../widget/io-abstract";
-import FilePanel, { type FolderUpdateCallback } from "./blocs/file-panel";
+import FilePanel from "./blocs/file-panel";
 import type { Patient, PatientRelated } from "./objects";
+
+// TODO: remove this and replace by a function to calculate something
 
 export type PatientRelatedElementGeneratorProps<
   T extends PatientRelated | Patient
@@ -11,7 +13,7 @@ export type PatientRelatedElementGeneratorProps<
   file: T;
   folder: Folder;
   selectedUid?: string;
-  onUpdate: FolderUpdateCallback;
+  onUpdate: (folder: Folder | undefined) => void;
   mode: ModesList;
 };
 
@@ -22,7 +24,7 @@ export default function patientRelatedElementGenerator<
   type: BusinessType;
   folder: Folder;
   selectedUid?: string;
-  onUpdate: FolderUpdateCallback;
+  onUpdate: (folder: Folder | undefined) => void;
   mode: ModesList;
   canBeDeleted: boolean;
   canBeLocked: boolean;
@@ -37,7 +39,6 @@ export default function patientRelatedElementGenerator<
       selfUrl={`/patient/${props.folder.id}/${props.type}/${props.file.id ?? "add"}`}
       apiRootUrl={`fiche/${props.type}`} // No leading slash!
       type={props.type}
-      folder={props.folder}
       key={uid}
       closed={uid !== props.selectedUid}
       file={props.file}

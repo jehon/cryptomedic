@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Folder from "../../business/folder";
 import { icons, type2Title, type BusinessType } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { EditContext } from "../../widget/io-abstract";
@@ -10,13 +9,10 @@ import type { Pojo } from "../objects";
 import ButtonsEdit from "./buttons-edit";
 import ButtonsView, { type ButtonContext } from "./buttons-view";
 
-export type FolderUpdateCallback = (folder: Folder | undefined) => void;
-
 export default function FilePanel<T extends Pojo>(props: {
   selfUrl: string;
   apiRootUrl: string;
   type: BusinessType;
-  folder: Folder;
   file: T;
   header?: React.ReactNode;
   children: React.ReactNode;
