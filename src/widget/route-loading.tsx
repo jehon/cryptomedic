@@ -11,7 +11,7 @@ export default function RouteLoading(props: {
   const navigation = useNavigation();
 
   useEffect(() => {
-    // We need some time otherwise the browser render it transitionned
+    // We need some time otherwise the browser render it transitioned
     setTimeout(() => start(true), 100);
   }, []);
 
@@ -19,14 +19,11 @@ export default function RouteLoading(props: {
   let ctxMessage = props.message;
   switch (navigation.state) {
     case "idle":
-      //   idle       = ok -> show the element
       return props.element;
     case "submitting":
-      //   submitting = submit current page
       ctxMessage = props.message;
       break;
     case "loading":
-      //   loading    = load next page
       ctxMessage = "Loading next page";
       break;
   }
