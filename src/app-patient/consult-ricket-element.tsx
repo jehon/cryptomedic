@@ -12,64 +12,59 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
-export default function ConsultRicketElement({
-  file,
-  props
-}: {
-  file: ConsultRicket;
-  props: PatientRelatedElementGeneratorProps;
-}): React.ReactNode {
+export default function ConsultRicketElement(
+  props: PatientRelatedElementGeneratorProps<ConsultRicket>
+): React.ReactNode {
   return patientRelatedElementGenerator<ConsultRicket>({
     ...props,
     type: "consult_ricket",
-    file,
     canBeDeleted: true,
     canBeLocked: true,
     elementHeader: (
       <>
         <span className="with-image">
           <ImgSideRight></ImgSideRight>
-          {file.right_leg}/{file.right_leg_angle}
+          {props.file.right_leg}/{props.file.right_leg_angle}
         </span>
         <span className="with-image">
           <ImgSideLeft></ImgSideLeft>
-          {file.left_leg}/{file.left_leg_angle}
+          {props.file.left_leg}/{props.file.left_leg_angle}
         </span>
       </>
     ),
     elementBody: (
       <>
         <ConsultAbstractIntroduction
-          file={file}
+          file={props.file}
           patient={props.folder.getPatient()}
         ></ConsultAbstractIntroduction>
         <TwoColumns>
           <Panel label="Ricket Data">
             <IOList
               name="walking_difficulties"
-              value={file.walking_difficulties}
+              value={props.file.walking_difficulties}
               list={getList("WalkingCapacities")}
             ></IOList>
             <IOList
               name="pain"
-              value={file.pain}
+              value={props.file.pain}
               list={getList("Pain")}
             ></IOList>
             <IOList
               name="wrist_enlargement"
-              value={file.wrist_enlargement}
+              value={props.file.wrist_enlargement}
               list={getList("Eval03")}
             ></IOList>
             <IOList
               name="rib_heading"
-              value={file.rib_heading}
+              value={props.file.rib_heading}
               list={getList("Eval03")}
             ></IOList>
-            <IOText name="xray" label="XRay" value={file.xray}></IOText>
+            <IOText name="xray" label="XRay" value={props.file.xray}></IOText>
             <IONumber
               name="IMIC_distance"
               label="IMIC Distance"
-              value={file.IMIC_distance}
+              value={props.file.IMIC_distance}
             ></IONumber>
           </Panel>
         </TwoColumns>
@@ -84,22 +79,22 @@ export default function ConsultRicketElement({
           >
             <IOList
               name="right_leg"
-              value={file.right_leg}
+              value={props.file.right_leg}
               list={getList("LegAnalysis")}
             ></IOList>
             <IONumber
               name="right_leg_angle"
-              value={file.right_leg_angle}
+              value={props.file.right_leg_angle}
             ></IONumber>
             <IONumber
               label="Right Cross T"
               name="cross_right_T"
-              value={file.cross_right_T}
+              value={props.file.cross_right_T}
             ></IONumber>
             <IONumber
               label="Right Cross F"
               name="cross_right_F"
-              value={file.cross_right_F}
+              value={props.file.cross_right_F}
             ></IONumber>
           </Panel>
           <Panel
@@ -112,26 +107,28 @@ export default function ConsultRicketElement({
           >
             <IOList
               name="left_leg"
-              value={file.left_leg}
+              value={props.file.left_leg}
               list={getList("LegAnalysis")}
             ></IOList>
             <IONumber
               name="left_leg_angle"
-              value={file.left_leg_angle}
+              value={props.file.left_leg_angle}
             ></IONumber>
             <IONumber
               name="cross_left_T"
               label="Left Cross T"
-              value={file.cross_left_T}
+              value={props.file.cross_left_T}
             ></IONumber>
             <IONumber
               name="cross_left_F"
               label="Left Cross F"
-              value={file.cross_left_F}
+              value={props.file.cross_left_F}
             ></IONumber>
           </Panel>
         </TwoColumns>
-        <ConsultAbstractConclusion file={file}></ConsultAbstractConclusion>
+        <ConsultAbstractConclusion
+          file={props.file}
+        ></ConsultAbstractConclusion>
       </>
     )
   });

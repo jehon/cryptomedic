@@ -25,11 +25,10 @@ function getListFor(category: string, value: string): IOListType {
   return [];
 }
 
-export default function patientElementGenerator(
-  file: Patient,
-  props: PatientRelatedElementGeneratorProps
+export default function PatientElement(
+  props: PatientRelatedElementGeneratorProps<Patient>
 ) {
-  const patient = file;
+  const patient = props.file;
 
   const [districtValue, districtValueUpdate] = useState<string>(
     patient.address_district ?? ""
@@ -41,7 +40,6 @@ export default function patientElementGenerator(
   return patientRelatedElementGenerator<Patient>({
     ...props,
     type: "patient",
-    file,
     canBeDeleted: props.folder.getChildren().length == 0,
     canBeLocked: false,
     elementHeader: (

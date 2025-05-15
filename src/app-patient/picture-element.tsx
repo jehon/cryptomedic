@@ -11,20 +11,15 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
-export default function PictureElement({
-  file,
-  props
-}: {
-  file: Picture;
-  props: PatientRelatedElementGeneratorProps;
-}): React.ReactNode {
+export default function PictureElement(
+  props: PatientRelatedElementGeneratorProps<Picture>
+): React.ReactNode {
   return patientRelatedElementGenerator<Picture>({
     ...props,
     type: "picture",
-    file,
     canBeDeleted: true,
     canBeLocked: true,
-    elementHeader: <>{file.type}</>,
+    elementHeader: <>{props.file.type}</>,
     elementBody: (
       <TwoColumns>
         <Panel fixed label="Information">
@@ -35,20 +30,24 @@ export default function PictureElement({
           />
           <IOList
             name="type"
-            value={file.type as string}
+            value={props.file.type as string}
             list={getList("PictureType")}
           />
-          <IODate name="date" value={file.date} />
-          <IOString label="File" value={file.file as string} e2eExcluded />
-          <IOText name="comments" value={file.comments as string} />
+          <IODate name="date" value={props.file.date} />
+          <IOString
+            label="File"
+            value={props.file.file as string}
+            e2eExcluded
+          />
+          <IOText name="comments" value={props.file.comments as string} />
         </Panel>
         <Panel fixed label="Image">
           <IOImage
             name="fileBlob"
             label="Picture"
-            value={`/api/picture/${file.id ?? ""}`}
+            value={`/api/picture/${props.file.id ?? ""}`}
             required
-            create={!file.id}
+            create={!props.file.id}
           />
         </Panel>
       </TwoColumns>

@@ -9,23 +9,18 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
-export default function SurgeryElement({
-  file,
-  props
-}: {
-  file: Surgery;
-  props: PatientRelatedElementGeneratorProps;
-}): React.ReactNode {
+export default function SurgeryElement(
+  props: PatientRelatedElementGeneratorProps<Surgery>
+): React.ReactNode {
   return patientRelatedElementGenerator<Surgery>({
     ...props,
     type: "surgery",
-    file,
     canBeDeleted: true,
     canBeLocked: true,
     elementHeader: (
       <>
-        <span>{file.report_diagnostic}</span>
-        <span>{file.report_surgeon}</span>
+        <span>{props.file.report_diagnostic}</span>
+        <span>{props.file.report_surgeon}</span>
       </>
     ),
     elementBody: (
@@ -37,38 +32,38 @@ export default function SurgeryElement({
               name="patient_id"
               defaultValue={props.folder.id}
             />
-            <IODate name="date" value={file.date} required />
+            <IODate name="date" value={props.file.date} required />
             <IOString
               name="report_diagnostic"
               label="Diagnostic"
-              value={file.report_diagnostic as string}
+              value={props.file.report_diagnostic as string}
             />
             <IOString
               name="report_surgeon"
               label="Surgeon"
-              value={file.report_surgeon as string}
+              value={props.file.report_surgeon as string}
             />
             <IOBoolean
               name="report_side_right"
               label="Side Right"
-              value={file.report_side_right as string}
+              value={props.file.report_side_right as string}
             />
             <IOBoolean
               name="report_side_left"
               label="Side Left"
-              value={file.report_side_left as string}
+              value={props.file.report_side_left as string}
             />
             <IOString
               name="report_procedure"
               label="Procedure"
-              value={file.report_procedure as string}
+              value={props.file.report_procedure as string}
             />
           </Panel>
           <Panel fixed label="Hospitalization Follow-up">
             <IOText
               name="follow_up_complication"
               label="Follow-Up Complications"
-              value={file.follow_up_complication as string}
+              value={props.file.follow_up_complication as string}
             />
           </Panel>
         </TwoColumns>

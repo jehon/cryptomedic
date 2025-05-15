@@ -9,20 +9,15 @@ import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
-export default function AppointmentElement({
-  file,
-  props
-}: {
-  file: Appointment;
-  props: PatientRelatedElementGeneratorProps;
-}): React.ReactNode {
+export default function AppointmentElement(
+  props: PatientRelatedElementGeneratorProps<Appointment>
+): React.ReactNode {
   return patientRelatedElementGenerator<Appointment>({
     ...props,
     type: "appointment",
-    file,
     canBeDeleted: true,
     canBeLocked: true,
-    elementHeader: <span>{file.center}</span>,
+    elementHeader: <span>{props.file.center}</span>,
     elementBody: (
       <TwoColumns>
         <Panel fixed label="Information">
@@ -31,15 +26,15 @@ export default function AppointmentElement({
             name="patient_id"
             defaultValue={props.folder.id}
           />
-          <IODate name="date" value={file.date} required />
+          <IODate name="date" value={props.file.date} required />
           <IOList
             name="center"
-            value={file.center as string}
+            value={props.file.center as string}
             list={getList("Centers")}
           />
         </Panel>
         <Panel fixed label="Objective">
-          <IOText name="purpose" value={file.purpose as string} />
+          <IOText name="purpose" value={props.file.purpose as string} />
         </Panel>
       </TwoColumns>
     )

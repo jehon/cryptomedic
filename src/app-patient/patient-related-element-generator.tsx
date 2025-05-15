@@ -5,7 +5,10 @@ import { Modes, type ModesList } from "../widget/io-abstract";
 import FilePanel, { type FolderUpdateCallback } from "./blocs/file-panel";
 import type { Patient, PatientRelated } from "./objects";
 
-export type PatientRelatedElementGeneratorProps = {
+export type PatientRelatedElementGeneratorProps<
+  T extends PatientRelated | Patient
+> = {
+  file: T;
   folder: Folder;
   selectedUid?: string;
   onUpdate: FolderUpdateCallback;

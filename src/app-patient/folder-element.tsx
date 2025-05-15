@@ -21,7 +21,7 @@ import type {
   Picture,
   Surgery
 } from "./objects";
-import patientElementGenerator from "./patient-element";
+import PatientElement from "./patient-element";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
 
@@ -156,7 +156,11 @@ export default function FolderElement({
         <IODate label="Next appointment" value={getNextAppointment(folder)} />
       </Panel>
 
-      {patientElementGenerator(folder.getPatient(), commonProps)}
+      <PatientElement
+        key={`patient/${folder.getPatient().id ?? "add"}`}
+        file={folder.getPatient()}
+        {...commonProps}
+      />
 
       {(folder.getChildren() as PatientRelated[]).map(
         (file: PatientRelated) => {
@@ -165,7 +169,7 @@ export default function FolderElement({
               <AppointmentElement
                 key={`appointment/${file.id ?? "add"}`}
                 file={file as Appointment}
-                props={commonProps}
+                {...commonProps}
               />
             );
           }
@@ -174,7 +178,7 @@ export default function FolderElement({
               <BillElement
                 key={`bill/${file.id ?? "add"}`}
                 file={file as Bill}
-                props={commonProps}
+                {...commonProps}
               />
             );
           }
@@ -183,7 +187,7 @@ export default function FolderElement({
               <ConsultClubfootElement
                 key={`consult_clubfoot/${file.id ?? "add"}`}
                 file={file as ConsultClubfoot}
-                props={commonProps}
+                {...commonProps}
               />
             );
           }
@@ -192,7 +196,7 @@ export default function FolderElement({
               <ConsultOtherElement
                 key={`consult_other/${file.id ?? "add"}`}
                 file={file as ConsultOther}
-                props={commonProps}
+                {...commonProps}
               />
             );
           }
@@ -201,7 +205,7 @@ export default function FolderElement({
               <ConsultRicketElement
                 key={`consult_ricket/${file.id ?? "add"}`}
                 file={file as ConsultRicket}
-                props={commonProps}
+                {...commonProps}
               />
             );
           }
@@ -210,7 +214,7 @@ export default function FolderElement({
               <PictureElement
                 key={`consult_picture/${file.id ?? "add"}`}
                 file={file as Picture}
-                props={commonProps}
+                {...commonProps}
               />
             );
           }
@@ -219,7 +223,7 @@ export default function FolderElement({
               <SurgeryElement
                 key={`consult_surgery/${file.id ?? "add"}`}
                 file={file as Surgery}
-                props={commonProps}
+                {...commonProps}
               />
             );
           }

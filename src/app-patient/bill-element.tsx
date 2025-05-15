@@ -42,13 +42,9 @@ function getPayments(file: Bill, folder: Folder): Payment[] {
   </div>
 */
 
-export default function BillElement({
-  file,
-  props
-}: {
-  file: Bill;
-  props: PatientRelatedElementGeneratorProps;
-}): React.ReactNode {
+export default function BillElement(
+  props: PatientRelatedElementGeneratorProps<Bill>
+): React.ReactNode {
   /** *************************
    *
    * Calculate the price_id
@@ -56,7 +52,9 @@ export default function BillElement({
    */
   const prices = getSession()?.prices;
 
-  const [price, setPrice] = useState<Price | undefined>(prices[file.price_id]);
+  const [price, setPrice] = useState<Price | undefined>(
+    prices[props.file.price_id]
+  );
   const selectPrice = (date: string | Date) => {
     if (!date || !prices) {
       setPrice(undefined);
@@ -90,7 +88,7 @@ export default function BillElement({
       (key) =>
         ({
           key,
-          value: string2number((file as Record<string, any>)[key], 0),
+          value: string2number((props.file as Record<string, any>)[key], 0),
           price: price?.[key] ?? 0
         }) as BillLine
     )
@@ -102,8 +100,8 @@ export default function BillElement({
    *
    */
   const [socialLevelParams, setSocialLevelParams] = useState({
-    family_salary: file.sl_family_salary,
-    number_of_household_members: file.sl_number_of_household_members
+    family_salary: props.file.sl_family_salary,
+    number_of_household_members: props.file.sl_number_of_household_members
   });
 
   const rationSalary: number = Math.ceil(
@@ -170,7 +168,7 @@ export default function BillElement({
 
   const priceAsked = Math.round(getTotal() * percentageAsked);
   const totalPaid = roundTo(
-    getPayments(file, props.folder)
+    getPayments(props.file, props.folder)
       .map((p) => p.amount)
       .reduce((acc, v) => acc + v, 0),
     0
@@ -184,12 +182,11 @@ export default function BillElement({
   return patientRelatedElementGenerator<Bill>({
     ...props,
     type: "bill",
-    file,
     canBeDeleted: true,
     canBeLocked: true,
     elementHeader: (
       <>
-        <span>total: {file.total_real}</span>
+        <span>total: {props.file.total_real}</span>
         <span>paid: {totalPaid}</span>
       </>
     ),
@@ -204,19 +201,19 @@ export default function BillElement({
             />
             <IODate
               name="date"
-              value={file.date}
+              value={props.file.date}
               onChange={(value) => selectPrice(value)}
             />
             {price && (
               <>
                 <IOList
                   name="examiner"
-                  value={file.examiner as string}
+                  value={props.file.examiner as string}
                   list={getList("Examiners")}
                 />
                 <IOList
                   name="center"
-                  value={file.center as string}
+                  value={props.file.center as string}
                   list={getList("Centers")}
                 />{" "}
               </>
@@ -281,22 +278,22 @@ export default function BillElement({
         )}
       </>
     ),
-    elementFooter: props.mode == Modes.output && file.id && price && (
-      <Panel fixed label="Payments" testid={`bill.${file.id}.payments`}>
+    elementFooter: props.mode == Modes.output && props.file.id && price && (
+      <Panel fixed label="Payments" testid={`bill.${props.file.id}.payments`}>
         <ButtonsGroup>
           <ActionButton
             style="Add"
-            linkTo={`#/folder/${props.folder.id}/file/Bill/${file.id}`}
+            linkTo={`#/folder/${props.folder.id}/file/Bill/${props.file.id}`}
           />
           <ActionButton
             style="Edit"
-            linkTo={`#/folder/${props.folder.id}/file/Bill/${file.id}`}
+            linkTo={`#/folder/${props.folder.id}/file/Bill/${props.file.id}`}
           />
         </ButtonsGroup>
-        {getPayments(file, props.folder).length == 0 ? (
+        {getPayments(props.file, props.folder).length == 0 ? (
           <div>No payment received</div>
         ) : (
-          getPayments(file, props.folder).map((payment: Payment) => (
+          getPayments(props.file, props.folder).map((payment: Payment) => (
             <div
               key={`payment.${payment.id}`}
               className="payment-line"
