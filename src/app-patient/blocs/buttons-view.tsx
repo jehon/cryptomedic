@@ -12,14 +12,13 @@ export type ButtonContext = {
   type: BusinessType;
   title: string;
   editMode: boolean;
-  canDelete: boolean;
-  canBeLocked: boolean;
 };
 
 export default function ButtonsView<T extends Pojo>(
   props: ButtonContext & {
     file: T;
     onUpdate: (file: T) => void;
+    canBeLocked: boolean;
   }
 ) {
   const navigate = useNavigate();

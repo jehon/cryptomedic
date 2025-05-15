@@ -21,6 +21,7 @@ export default function patientRelatedElementGenerator<
   selectedUid?: string;
   onUpdate: FolderUpdateCallback;
   mode: ModesList;
+  canBeDeleted: boolean;
   canBeLocked: boolean;
   elementHeader: React.ReactNode;
   elementBody: React.ReactNode;
@@ -43,7 +44,8 @@ export default function patientRelatedElementGenerator<
           ? props.mode === Modes.input
           : false
       }
-      canBeLocked={false}
+      canBeDeleted={props.canBeDeleted}
+      canBeLocked={props.canBeLocked}
     >
       {props.elementBody}
     </FilePanel>

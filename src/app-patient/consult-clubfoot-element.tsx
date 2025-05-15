@@ -55,6 +55,7 @@ export default function ConsultClubfootElement({
     ...props,
     type: "consult_clubfoot",
     file,
+    canBeDeleted: true,
     canBeLocked: true,
     elementHeader: (
       <>

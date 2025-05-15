@@ -22,6 +22,7 @@ export default function PictureElement({
     ...props,
     type: "picture",
     file,
+    canBeDeleted: true,
     canBeLocked: true,
     elementHeader: <>{file.type}</>,
     elementBody: (

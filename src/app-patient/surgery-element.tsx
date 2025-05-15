@@ -20,6 +20,7 @@ export default function SurgeryElement({
     ...props,
     type: "surgery",
     file,
+    canBeDeleted: true,
     canBeLocked: true,
     elementHeader: (
       <>

@@ -23,6 +23,7 @@ export default function ConsultRicketElement({
     ...props,
     type: "consult_ricket",
     file,
+    canBeDeleted: true,
     canBeLocked: true,
     elementHeader: (
       <>

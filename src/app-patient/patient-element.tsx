@@ -42,6 +42,7 @@ export default function patientElementGenerator(
     ...props,
     type: "patient",
     file,
+    canBeDeleted: props.folder.getChildren().length == 0,
     canBeLocked: false,
     elementHeader: (
       <>

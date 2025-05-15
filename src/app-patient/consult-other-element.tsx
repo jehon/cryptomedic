@@ -22,6 +22,7 @@ export default function ConsultOtherElement({
     ...props,
     type: "consult_other",
     file,
+    canBeDeleted: true,
     canBeLocked: true,
     elementHeader: <>{file.side}</>,
     elementBody: (

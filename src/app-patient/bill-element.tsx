@@ -185,6 +185,7 @@ export default function BillElement({
     ...props,
     type: "bill",
     file,
+    canBeDeleted: true,
     canBeLocked: true,
     elementHeader: (
       <>

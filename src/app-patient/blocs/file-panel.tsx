@@ -23,9 +23,10 @@ export default function FilePanel<T extends Pojo>(props: {
   children: React.ReactNode;
   footer?: React.ReactNode;
   closed?: boolean;
-  onUpdate: FolderUpdateCallback;
   edit?: boolean;
   canBeLocked: boolean;
+  canBeDeleted: boolean;
+  onUpdate: FolderUpdateCallback;
 }): React.ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
@@ -38,11 +39,7 @@ export default function FilePanel<T extends Pojo>(props: {
     apiRootUrl: props.apiRootUrl,
     type: props.type,
     title: type2Title(props.type),
-    editMode,
-    canDelete:
-      !addMode &&
-      (props.file._type != "patient" || props.folder.getChildren().length == 0),
-    canBeLocked: props.canBeLocked
+    editMode
   };
 
   const fileIsUpdated = (nFile: T) =>
@@ -98,14 +95,16 @@ export default function FilePanel<T extends Pojo>(props: {
       }
       actions={
         <>
-          <ButtonsView
+          <ButtonsView<T>
             {...buttonContext}
             file={props.file}
+            canBeLocked={props.canBeLocked}
             onUpdate={fileIsUpdated}
           />
-          <ButtonsEdit
+          <ButtonsEdit<T>
             {...buttonContext}
             file={props.file}
+            canDelete={!addMode && props.canBeDeleted}
             onDelete={fileIsDeleted}
             onUpdate={fileIsUpdated}
             formRef={formRef}

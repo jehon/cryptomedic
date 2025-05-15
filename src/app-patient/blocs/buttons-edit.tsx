@@ -11,9 +11,9 @@ import type { ButtonContext } from "./buttons-view";
 export default function ButtonsEdit<T extends Pojo>(
   props: ButtonContext & {
     file: Pojo;
+    canDelete: boolean;
     onDelete: () => void;
     onUpdate: (file: T) => void;
-    // baseNavigate: string;
     formRef: React.RefObject<HTMLFormElement | null>;
   }
 ) {

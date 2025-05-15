@@ -20,6 +20,7 @@ export default function AppointmentElement({
     ...props,
     type: "appointment",
     file,
+    canBeDeleted: true,
     canBeLocked: true,
     elementHeader: <span>{file.center}</span>,
     elementBody: (
