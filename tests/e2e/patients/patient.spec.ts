@@ -153,7 +153,6 @@ test("create-reference-2002", async ({ page }) => {
   });
 
   // Clean up
-  await e2eFile.goEdit();
   await e2eFile.doDelete();
 });
 
@@ -193,6 +192,5 @@ test("generate-reference", async ({ page }) => {
   });
 
   // Clean up
-  await e2eFile.goEdit();
   await e2eFile.doDelete();
 });
