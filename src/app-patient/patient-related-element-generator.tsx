@@ -46,18 +46,16 @@ export default function patientRelatedElementGenerator<
       file={props.file}
       onCreated={(file: T) => {
         props.onUpdate(
-          props.folder.withFileOLD(file as unknown as PatientRelated)
+          props.folder.withFile(file as unknown as PatientRelated)
         );
       }}
       onDeleted={(file: T) =>
         props.onUpdate(
-          props.folder.withoutFileOLD(file as unknown as PatientRelated)
+          props.folder.withoutFile(file as unknown as PatientRelated)
         )
       }
       onUpdated={(file: T) =>
-        props.onUpdate(
-          props.folder.withFileOLD(file as unknown as PatientRelated)
-        )
+        props.onUpdate(props.folder.withFile(file as unknown as PatientRelated))
       }
       header={props.elementHeader}
       footer={props.elementFooter}

@@ -17,7 +17,6 @@ import type {
   ConsultClubfoot,
   ConsultOther,
   ConsultRicket,
-  Patient,
   PatientRelated,
   Picture,
   Surgery
@@ -90,7 +89,7 @@ export default function FolderElement({
       ).length == 0
     ) {
       folderUpdated(
-        folder.withFileOLD({
+        folder.withFile({
           _type: typeName,
           patient_id: folder.id
         } as PatientRelated)
