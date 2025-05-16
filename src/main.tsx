@@ -1,16 +1,13 @@
-/* Packages */
 import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
+import { HomeRouter } from "./app-home/home-router";
+import { patientRouterConfig } from "./app-patient/patient-router";
+import { bridgeTo } from "./utils/legacy";
+import ErrorPage from "./widget/error-page";
 
 /* Styles */
 import "bootstrap4/dist/css/bootstrap.min.css";
 import "bootstrap4/dist/js/bootstrap";
 import "./main.css";
-
-/* Application */
-import { HomeRouter } from "./app-home/home-router";
-import { patientRouterConfig } from "./app-patient/patient-router";
-import { bridgeTo } from "./utils/react";
-import ErrorPage from "./widget/error-page";
 
 function MainPage() {
   return (

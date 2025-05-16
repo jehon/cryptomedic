@@ -1,7 +1,6 @@
 import { type Params, useLoaderData, useParams } from "react-router-dom";
 import Folder from "../business/folder";
 import { Modes } from "../widget/io-abstract";
-import RouteLoading from "../widget/route-loading";
 import FolderElement from "./folder-element";
 import { getFolder } from "./loaders";
 
@@ -11,7 +10,7 @@ export function patientRouterConfig() {
       path: "/patient/:id/:selectedType?/:selectedId?/:mode?",
       loader: ({ params }: { params: Params<string> }) =>
         getFolder(params["id"] ?? ""),
-      element: <RouteLoading element={<PatientRouter />} />
+      element: <PatientRouter />
     }
   ];
 }
