@@ -32,14 +32,14 @@ export default function ButtonsEdit<T extends Pojo>(
       .delete(props.file.id!)
       .then(notification("File deleted"))
       .then(() => props.onDeleted(props.file))
-      .then(() => navigate(routeParent(props.selfUrl, 2)));
+      .then(() => navigate(routeParent(props.selfPath, 2)));
   };
 
   const doCancel = () => {
     if (addMode) {
-      navigate(routeParent(props.selfUrl, 2));
+      navigate(routeParent(props.selfPath, 2));
     } else {
-      navigate(props.selfUrl);
+      navigate(props.selfPath);
     }
   };
 
@@ -57,7 +57,7 @@ export default function ButtonsEdit<T extends Pojo>(
         .then(
           passThrough((newFile: T) => {
             // Route to the newly created file
-            navigate(`${routeParent(props.selfUrl)}/${newFile.id}`);
+            navigate(`${routeParent(props.selfPath)}/${newFile.id}`);
           })
         )
         .then(props.onCreated);
@@ -65,7 +65,7 @@ export default function ButtonsEdit<T extends Pojo>(
       return crudLoader
         .update(props.file.id!, data)
         .then(notification("File saved"))
-        .then(passThrough(() => navigate(props.selfUrl)))
+        .then(passThrough(() => navigate(props.selfPath)))
         .then(props.onUpdated);
     }
   };

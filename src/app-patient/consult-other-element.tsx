@@ -25,6 +25,8 @@ export default function ConsultOtherElement(
         ...props,
         type: "consult_other"
       })}
+      selfPath={`/patient/${props.patient.id}/consult_other/${props.file.id ?? "add"}`}
+      apiRootUrl={`fiche/consult_other`} // No leading slash!
       canBeDeleted={true}
       canBeLocked={true}
       header={<>{props.file.side}</>}

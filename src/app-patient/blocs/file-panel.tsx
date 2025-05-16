@@ -10,7 +10,7 @@ import ButtonsEdit from "./buttons-edit";
 import ButtonsView, { type ButtonContext } from "./buttons-view";
 
 export default function FilePanel<T extends Pojo>(props: {
-  selfUrl: string;
+  selfPath: string;
   apiRootUrl: string;
   type: BusinessType;
   file: T;
@@ -32,7 +32,7 @@ export default function FilePanel<T extends Pojo>(props: {
   const editMode = addMode || (props.edit ?? false);
 
   const buttonContext: ButtonContext = {
-    selfUrl: props.selfUrl,
+    selfPath: props.selfPath,
     apiRootUrl: props.apiRootUrl,
     type: props.type,
     title: type2Title(props.type),
@@ -95,7 +95,7 @@ export default function FilePanel<T extends Pojo>(props: {
       <div
         className="technical"
         data-e2e="excluded"
-        onClick={() => navigate(props.selfUrl)}
+        onClick={() => navigate(props.selfPath)}
       >
         <div>{`${props.type}.${props.file.id ?? "add"}`}</div>
         <div>

@@ -43,9 +43,10 @@ export default function PatientElement(
       key={`patient.${props.file.id}`}
       type="patient"
       file={props.file}
-      selfUrl={`/patient/${props.patient.id}/patient/${props.file.id ?? "add"}`}
-      apiRootUrl={`fiche/patient`} // No leading slash!
+      edit={uid == props.selectedUid ? props.mode === Modes.input : false}
       closed={uid !== props.selectedUid}
+      selfPath={`/patient/${props.patient.id}/patient/${props.file.id ?? "add"}`}
+      apiRootUrl={`fiche/patient`} // No leading slash!
       canBeDeleted={props.folder.getChildren().length == 0}
       canBeLocked={false}
       onCreated={(file: Patient) => {
@@ -61,7 +62,6 @@ export default function PatientElement(
       onUpdated={(file: Patient) =>
         props.onUpdate(props.folder.withFile(file as unknown as PatientRelated))
       }
-      edit={uid == props.selectedUid ? props.mode === Modes.input : false}
       header={
         <>
           <span>

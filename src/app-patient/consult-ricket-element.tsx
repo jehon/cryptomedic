@@ -26,6 +26,8 @@ export default function ConsultRicketElement(
         ...props,
         type: "consult_ricket"
       })}
+      selfPath={`/patient/${props.patient.id}/consult_ricket/${props.file.id ?? "add"}`}
+      apiRootUrl={`fiche/consult_ricket`} // No leading slash!
       canBeDeleted={true}
       canBeLocked={true}
       header={

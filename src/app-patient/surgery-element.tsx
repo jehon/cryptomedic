@@ -23,6 +23,8 @@ export default function SurgeryElement(
         ...props,
         type: "surgery"
       })}
+      selfPath={`/patient/${props.patient.id}/surgery/${props.file.id ?? "add"}`}
+      apiRootUrl={`fiche/surgery`} // No leading slash!
       canBeDeleted={true}
       canBeLocked={true}
       header={

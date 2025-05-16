@@ -58,6 +58,8 @@ export default function ConsultClubfootElement(
         ...props,
         type: "consult_clubfoot"
       })}
+      selfPath={`/patient/${props.patient.id}/consult_clubfoot/${props.file.id ?? "add"}`}
+      apiRootUrl={`fiche/consult_clubfoot`} // No leading slash!
       canBeDeleted={true}
       canBeLocked={true}
       header={

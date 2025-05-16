@@ -17,8 +17,6 @@ export type PatientRelatedElementGeneratorProps<
 };
 
 type PatientRelatedElementCommonProps<T extends PatientRelated> = {
-  selfUrl: string;
-  apiRootUrl: string;
   closed: boolean;
   edit: boolean;
   onCreated: (file: T) => void;
@@ -35,9 +33,8 @@ export function patientRelatedPropsGenerator<T extends PatientRelated>(
   const uid = `${props.type}.${props.file.id ?? "add"}`;
 
   return {
-    selfUrl: `/patient/${props.patient.id}/${props.type}/${props.file.id ?? "add"}`,
-    apiRootUrl: `fiche/${props.type}`, // No leading slash!
     closed: uid !== props.selectedUid,
+    edit: uid == props.selectedUid ? props.mode === Modes.input : false,
     onCreated: (file: T) => {
       props.onUpdate(props.folder.withFile(file as unknown as PatientRelated));
     },
@@ -46,7 +43,6 @@ export function patientRelatedPropsGenerator<T extends PatientRelated>(
         props.folder.withoutFile(file as unknown as PatientRelated)
       ),
     onUpdated: (file: T) =>
-      props.onUpdate(props.folder.withFile(file as unknown as PatientRelated)),
-    edit: uid == props.selectedUid ? props.mode === Modes.input : false
+      props.onUpdate(props.folder.withFile(file as unknown as PatientRelated))
   };
 }

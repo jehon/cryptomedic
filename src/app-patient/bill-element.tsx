@@ -183,6 +183,8 @@ export default function BillElement(
         ...props,
         type: "bill"
       })}
+      selfPath={`/patient/${props.patient.id}/bill/${props.file.id ?? "add"}`}
+      apiRootUrl={`fiche/bill`} // No leading slash!
       canBeDeleted={
         Array.isArray(props.file.payment)
           ? props.file.payment.length == 0

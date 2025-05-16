@@ -25,6 +25,8 @@ export default function PictureElement(
         ...props,
         type: "picture"
       })}
+      selfPath={`/patient/${props.patient.id}/picture/${props.file.id ?? "add"}`}
+      apiRootUrl={`fiche/picture`} // No leading slash!
       canBeDeleted={true}
       canBeLocked={true}
       header={<>{props.file.type}</>}

@@ -25,6 +25,8 @@ export default function AppointmentElement(
       })}
       canBeDeleted={true}
       canBeLocked={false}
+      selfPath={`/patient/${props.patient.id}/appointment/${props.file.id ?? "add"}`}
+      apiRootUrl={`fiche/appointment`} // No leading slash!
       header={<span>{props.file.center}</span>}
     >
       <TwoColumns>
