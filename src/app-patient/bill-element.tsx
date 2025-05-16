@@ -212,17 +212,15 @@ export default function BillElement(
               <div>No payment received</div>
             ) : (
               props.file.payment.map((payment) => (
-                <>
-                  <div
-                    key={`payment.${payment.id}`}
-                    className="payment-line"
-                    data-testid={`payment.${payment.id}`}
-                  >
-                    <IODate value={payment.date} noLabel />
-                    <IONumber value={payment.amount} noLabel />
-                    <IOString value={payment.comments} noLabel />
-                  </div>
-                </>
+                <div
+                  key={`payment.${payment.id}`}
+                  className="payment-line"
+                  data-testid={`payment.${payment.id}`}
+                >
+                  <IODate value={payment.date} noLabel />
+                  <IONumber value={payment.amount} noLabel />
+                  <IOString value={payment.comments} noLabel />
+                </div>
               ))
             )}
           </Panel>
