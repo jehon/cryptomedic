@@ -18,11 +18,6 @@ export default function IOBillLine(
 ): React.ReactNode {
   const edit = useContext(EditContext);
 
-  // Hide if not value and output mode
-  if (!edit && !props.value.value) {
-    return;
-  }
-
   const onChange = (value: number = props.value.value) => {
     if (props.onChange) {
       props.onChange({
@@ -32,14 +27,21 @@ export default function IOBillLine(
     }
   };
 
-  return IONumber({
-    type: "bill-line",
-    name: props.value.key,
-    value: props.value.value,
-    required: true,
-    precision: 0,
-    appendix: `${props.value.price}৳`,
-    htmlProps: { style: { width: "5em" } },
-    onChange
-  });
+  // Hide if not value and output mode
+  if (!edit && !props.value.value) {
+    return <></>;
+  }
+
+  return (
+    <IONumber
+      type="bill-line"
+      name={props.value.key}
+      value={props.value.value}
+      required={true}
+      precision={0}
+      appendix={`${props.value.price}৳`}
+      htmlProps={{ style: { width: "5em" } }}
+      onChange={onChange}
+    />
+  );
 }
