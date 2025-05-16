@@ -111,6 +111,10 @@ integration-test-playwright: integration-test-playwright-deps
 
 	node_modules/.bin/playwright test --update-snapshots
 
+integration-test-playwright-reset-snapshots:
+	rm -fr tests/e2e/__local__
+	make integration-test-playwright
+
 .PHONY: integration-test-playwright-strict
 integration-test-playwright-strict: integration-test-playwright-deps
 
@@ -121,8 +125,6 @@ integration-test-playwright-headed: \
 		integration-test-playwright-deps \
 		reset-lite
 
-# Because if the snapshot change, the test failed...
-	rm -fr tests/e2e/__local__
 	node_modules/.bin/playwright test --ui
 
 .PHONY: integration-test-playwright-deps
