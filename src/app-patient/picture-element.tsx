@@ -8,10 +8,7 @@ import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import FilePanel from "./blocs/file-panel";
 import type { Picture } from "./objects";
-import {
-  patientRelatedPropsGenerator,
-  type PatientRelatedElementGeneratorProps
-} from "./patient-related-element-generator";
+import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function PictureElement(
   props: PatientRelatedElementGeneratorProps<Picture>
@@ -21,14 +18,15 @@ export default function PictureElement(
       key={`picture.${props.file.id}`}
       type="picture"
       file={props.file}
-      {...patientRelatedPropsGenerator({
-        ...props,
-        type: "picture"
-      })}
-      selfPath={`/patient/${props.patient.id}/picture/${props.file.id ?? "add"}`}
       apiRootUrl={`fiche/picture`} // No leading slash!
+      edit={props.edit}
+      closed={props.closed}
       canBeDeleted={true}
       canBeLocked={true}
+      onCreated={props.onCreated}
+      onUpdated={props.onUpdated}
+      onDeleted={props.onDeleted}
+      selfPath={`/patient/${props.patient.id}/picture/${props.file.id ?? "add"}`}
       header={<>{props.file.type}</>}
     >
       <TwoColumns>

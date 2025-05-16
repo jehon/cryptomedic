@@ -5,7 +5,6 @@ import { getList, getSession } from "../utils/session";
 import { roundTo, string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
 import ButtonsGroup from "../widget/buttons-group";
-import { Modes } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
 import IOFunction from "../widget/io-function";
 import IOHidden from "../widget/io-hidden";
@@ -18,10 +17,7 @@ import "./bill-element.css";
 import FilePanel from "./blocs/file-panel";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
 import type { Bill } from "./objects";
-import {
-  patientRelatedPropsGenerator,
-  type PatientRelatedElementGeneratorProps
-} from "./patient-related-element-generator";
+import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 /*
   TODO:
@@ -179,20 +175,21 @@ export default function BillElement(
       key={`bill.${props.file.id}`}
       type="bill"
       file={props.file}
-      {...patientRelatedPropsGenerator({
-        ...props,
-        type: "bill"
-      })}
-      selfPath={`/patient/${props.patient.id}/bill/${props.file.id ?? "add"}`}
       apiRootUrl={`fiche/bill`} // No leading slash!
+      edit={props.edit}
+      closed={props.closed}
       canBeDeleted={
         Array.isArray(props.file.payment)
           ? props.file.payment.length == 0
           : true
       }
       canBeLocked={true}
+      onCreated={props.onCreated}
+      onUpdated={props.onUpdated}
+      onDeleted={props.onDeleted}
+      selfPath={`/patient/${props.patient.id}/bill/${props.file.id ?? "add"}`}
       footer={
-        props.mode == Modes.output &&
+        !props.edit &&
         props.file.id &&
         price && (
           <Panel

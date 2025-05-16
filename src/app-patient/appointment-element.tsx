@@ -6,10 +6,7 @@ import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import FilePanel from "./blocs/file-panel";
 import type { Appointment } from "./objects";
-import {
-  patientRelatedPropsGenerator,
-  type PatientRelatedElementGeneratorProps
-} from "./patient-related-element-generator";
+import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function AppointmentElement(
   props: PatientRelatedElementGeneratorProps<Appointment>
@@ -19,14 +16,15 @@ export default function AppointmentElement(
       key={`appointment.${props.file.id}`}
       type="appointment"
       file={props.file}
-      {...patientRelatedPropsGenerator({
-        ...props,
-        type: "appointment"
-      })}
+      apiRootUrl={`fiche/appointment`} // No leading slash!
+      edit={props.edit}
+      closed={props.closed}
       canBeDeleted={true}
       canBeLocked={false}
+      onCreated={props.onCreated}
+      onUpdated={props.onUpdated}
+      onDeleted={props.onDeleted}
       selfPath={`/patient/${props.patient.id}/appointment/${props.file.id ?? "add"}`}
-      apiRootUrl={`fiche/appointment`} // No leading slash!
       header={<span>{props.file.center}</span>}
     >
       <TwoColumns>

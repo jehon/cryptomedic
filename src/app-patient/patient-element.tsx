@@ -2,7 +2,6 @@ import { useState } from "react";
 import { actualAge } from "../utils/calculations";
 import { getList } from "../utils/session";
 import { yearOfBirthPattern } from "../utils/strings";
-import { Modes } from "../widget/io-abstract";
 import IOFunction from "../widget/io-function";
 import IOList, { type IOListType } from "../widget/io-list";
 import IONumber from "../widget/io-number";
@@ -11,8 +10,7 @@ import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import FilePanel from "./blocs/file-panel";
-import type { Patient, PatientRelated } from "./objects";
-import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
+import type { Patient } from "./objects";
 
 function getListFor(category: string, value: string): IOListType {
   // "district.other"
@@ -25,10 +23,16 @@ function getListFor(category: string, value: string): IOListType {
   return [];
 }
 
-export default function PatientElement(
-  props: PatientRelatedElementGeneratorProps<Patient>
-) {
-  const patient = props.file;
+export default function PatientElement(props: {
+  patient: Patient;
+  edit: boolean;
+  closed: boolean;
+  canBeDeleted: boolean;
+  onCreated: (patient: Patient) => void;
+  onUpdated: (patient: Patient) => void;
+  onDeleted: (patient: Patient) => void;
+}) {
+  const patient = props.patient;
 
   const [districtValue, districtValueUpdate] = useState<string>(
     patient.address_district ?? ""
@@ -40,28 +44,18 @@ export default function PatientElement(
   const uid = `patient.${patient.id}`;
   return (
     <FilePanel<Patient>
-      key={`patient.${props.file.id}`}
+      key={`patient.${props.patient.id}`}
       type="patient"
-      file={props.file}
-      edit={uid == props.selectedUid ? props.mode === Modes.input : false}
-      closed={uid !== props.selectedUid}
-      selfPath={`/patient/${props.patient.id}/patient/${props.file.id ?? "add"}`}
+      file={props.patient}
       apiRootUrl={`fiche/patient`} // No leading slash!
-      canBeDeleted={props.folder.getChildren().length == 0}
+      edit={props.edit}
+      closed={props.closed}
+      canBeDeleted={props.canBeDeleted}
       canBeLocked={false}
-      onCreated={(file: Patient) => {
-        props.onUpdate(
-          props.folder.withFile(file as unknown as PatientRelated)
-        );
-      }}
-      onDeleted={(file: Patient) =>
-        props.onUpdate(
-          props.folder.withoutFile(file as unknown as PatientRelated)
-        )
-      }
-      onUpdated={(file: Patient) =>
-        props.onUpdate(props.folder.withFile(file as unknown as PatientRelated))
-      }
+      onCreated={props.onCreated}
+      onUpdated={props.onUpdated}
+      onDeleted={props.onDeleted}
+      selfPath={`/patient/${props.patient.id}/patient/${props.patient.id ?? "add"}`}
       header={
         <>
           <span>

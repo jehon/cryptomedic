@@ -9,10 +9,7 @@ import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import FilePanel from "./blocs/file-panel";
 import type { ConsultRicket } from "./objects";
-import {
-  patientRelatedPropsGenerator,
-  type PatientRelatedElementGeneratorProps
-} from "./patient-related-element-generator";
+import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function ConsultRicketElement(
   props: PatientRelatedElementGeneratorProps<ConsultRicket>
@@ -22,14 +19,15 @@ export default function ConsultRicketElement(
       key={`consult_ricket.${props.file.id}`}
       type="consult_ricket"
       file={props.file}
-      {...patientRelatedPropsGenerator({
-        ...props,
-        type: "consult_ricket"
-      })}
-      selfPath={`/patient/${props.patient.id}/consult_ricket/${props.file.id ?? "add"}`}
       apiRootUrl={`fiche/consult_ricket`} // No leading slash!
+      edit={props.edit}
+      closed={props.closed}
       canBeDeleted={true}
       canBeLocked={true}
+      onCreated={props.onCreated}
+      onUpdated={props.onUpdated}
+      onDeleted={props.onDeleted}
+      selfPath={`/patient/${props.patient.id}/consult_ricket/${props.file.id ?? "add"}`}
       header={
         <>
           <span className="with-image">

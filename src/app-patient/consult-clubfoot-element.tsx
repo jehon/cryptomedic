@@ -11,10 +11,7 @@ import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import FilePanel from "./blocs/file-panel";
 import type { ConsultClubfoot } from "./objects";
-import {
-  patientRelatedPropsGenerator,
-  type PatientRelatedElementGeneratorProps
-} from "./patient-related-element-generator";
+import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 function getPiraniLeft(file: ConsultClubfoot) {
   try {
@@ -54,14 +51,15 @@ export default function ConsultClubfootElement(
       key={`consult_clubfoot.${props.file.id}`}
       type="consult_clubfoot"
       file={props.file}
-      {...patientRelatedPropsGenerator({
-        ...props,
-        type: "consult_clubfoot"
-      })}
-      selfPath={`/patient/${props.patient.id}/consult_clubfoot/${props.file.id ?? "add"}`}
       apiRootUrl={`fiche/consult_clubfoot`} // No leading slash!
+      edit={props.edit}
+      closed={props.closed}
       canBeDeleted={true}
       canBeLocked={true}
+      onCreated={props.onCreated}
+      onUpdated={props.onUpdated}
+      onDeleted={props.onDeleted}
+      selfPath={`/patient/${props.patient.id}/consult_clubfoot/${props.file.id ?? "add"}`}
       header={
         <>
           <span className="with-image">

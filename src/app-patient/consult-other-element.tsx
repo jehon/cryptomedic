@@ -8,10 +8,7 @@ import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import FilePanel from "./blocs/file-panel";
 import type { ConsultOther } from "./objects";
-import {
-  patientRelatedPropsGenerator,
-  type PatientRelatedElementGeneratorProps
-} from "./patient-related-element-generator";
+import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function ConsultOtherElement(
   props: PatientRelatedElementGeneratorProps<ConsultOther>
@@ -21,14 +18,15 @@ export default function ConsultOtherElement(
       key={`consult_other.${props.file.id}`}
       type="consult_other"
       file={props.file}
-      {...patientRelatedPropsGenerator({
-        ...props,
-        type: "consult_other"
-      })}
-      selfPath={`/patient/${props.patient.id}/consult_other/${props.file.id ?? "add"}`}
       apiRootUrl={`fiche/consult_other`} // No leading slash!
+      edit={props.edit}
+      closed={props.closed}
       canBeDeleted={true}
       canBeLocked={true}
+      onCreated={props.onCreated}
+      onUpdated={props.onUpdated}
+      onDeleted={props.onDeleted}
+      selfPath={`/patient/${props.patient.id}/consult_other/${props.file.id ?? "add"}`}
       header={<>{props.file.side}</>}
     >
       <ConsultAbstractIntroduction

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Folder from "../business/folder";
 import * as config from "../config";
 import ButtonsGroup from "../widget/buttons-group";
-import type { ModesList } from "../widget/io-abstract";
+import { Modes, type ModesList } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
 import AppointmentElement from "./appointment-element";
@@ -17,6 +17,7 @@ import type {
   ConsultClubfoot,
   ConsultOther,
   ConsultRicket,
+  Patient,
   PatientRelated,
   Picture,
   Surgery
@@ -74,6 +75,9 @@ export default function FolderElement({
     }
   };
   const patient = folder.getPatient();
+  const selectedUid = selectedType
+    ? `${selectedType}.${selectedId ?? "add"}`
+    : `patient.${selectedId}`;
 
   if (!patient) {
     return <div key="no-patient-selected">No Patient selected</div>;
@@ -96,16 +100,6 @@ export default function FolderElement({
       );
     }
   }
-
-  const commonProps = {
-    folder, // TODO: folder2patient
-    patient,
-    selectedUid: selectedId
-      ? `${selectedType}.${selectedId}`
-      : `patient.${patient.id!}`,
-    mode,
-    onUpdate: folderUpdatedCallback
-  };
 
   return (
     <div
@@ -160,12 +154,51 @@ export default function FolderElement({
 
       <PatientElement
         key={`patient/${patient.id ?? "add"}`}
-        file={patient}
-        {...commonProps}
+        patient={patient}
+        closed={`patient.${patient.id}` !== selectedUid}
+        canBeDeleted={folder.getChildren().length == 0}
+        edit={
+          `patient.${patient.id}` == selectedUid ? mode === Modes.input : false
+        }
+        onCreated={(file: Patient) => {
+          folderUpdatedCallback(
+            folder.withFile(file as unknown as PatientRelated)
+          );
+        }}
+        onDeleted={(file: Patient) =>
+          folderUpdatedCallback(
+            folder.withoutFile(file as unknown as PatientRelated)
+          )
+        }
+        onUpdated={(file: Patient) =>
+          folderUpdatedCallback(
+            folder.withFile(file as unknown as PatientRelated)
+          )
+        }
       />
 
       {(folder.getChildren() as PatientRelated[]).map(
         (file: PatientRelated) => {
+          const uid = `${file._type}.${file.id ?? "add"}`;
+          const commonProps = {
+            patient,
+            closed: uid !== selectedUid,
+            edit: uid == selectedUid ? mode === Modes.input : false,
+            onCreated: (file: PatientRelated) => {
+              folderUpdatedCallback(
+                folder.withFile(file as unknown as PatientRelated)
+              );
+            },
+            onDeleted: (file: PatientRelated) =>
+              folderUpdatedCallback(
+                folder.withoutFile(file as unknown as PatientRelated)
+              ),
+            onUpdated: (file: PatientRelated) =>
+              folderUpdatedCallback(
+                folder.withFile(file as unknown as PatientRelated)
+              )
+          };
+
           if (file._type == "appointment") {
             return (
               <AppointmentElement
