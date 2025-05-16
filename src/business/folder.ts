@@ -68,10 +68,12 @@ export default class Folder extends PojoClass {
       this.list.push({ _type: "patient", patient_id: this.id });
     }
 
-    for (const f of this.list) {
-      if (f._type == "bill") {
-        (f as Bill).payment = this.list.filter(
-          (f) => f._type == "payment" && (f as Payment).bill_id == f.id
+    for (const bill of this.list) {
+      if (bill._type == "bill") {
+        (bill as Bill).payment = this.list.filter(
+          (payment) =>
+            payment._type == "payment" &&
+            (payment as Payment).bill_id == bill.id
         ) as Payment[];
       }
     }

@@ -49,10 +49,10 @@ export const icons = {
     consult_other: "/static/img/model_consult_other.svg",
     consult_ricket: "/static/img/model_consult_ricket.svg",
     patient: "/static/img/model_patient.gif",
-    payment: "/static/img/payment.gif",
+    payment: "/static/img/model_payment.svg",
     picture: "/static/img/model_picture.svg",
     surgery: "/static/img/model_surgery.png"
-  }
+  } as Record<BusinessType, string>
 };
 
 export function isFeatureSwitchEnabled(): boolean {
