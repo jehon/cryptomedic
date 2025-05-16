@@ -68,10 +68,12 @@ export default class Folder extends PojoClass {
       this.list.push({ _type: "patient", patient_id: this.id });
     }
 
-    for (const b of this.getListByType<Bill>("bill")) {
-      b.payment = this.list.filter(
-        (f) => f._type == "payment" && (f as Payment).bill_id == b.id
-      ) as Payment[];
+    for (const f of this.list) {
+      if (f._type == "bill") {
+        (f as Bill).payment = this.list.filter(
+          (f) => f._type == "payment" && (f as Payment).bill_id == f.id
+        ) as Payment[];
+      }
     }
   }
 
@@ -97,17 +99,6 @@ export default class Folder extends PojoClass {
     return produce(this, (draft) => {
       draft.list.splice(i, 1);
     });
-  }
-
-  getListByType<T extends PatientRelated>(type: BusinessType): T[] {
-    return this.list.filter((v) => v._type == type) as T[];
-  }
-
-  getByTypeAndId<T extends PatientRelated>(type: BusinessType, id: string): T {
-    const list = this.getListByType(type).filter((v) => `${v.id}` == `${id}`);
-    if (list.length != 1)
-      throw new Error(`Could not find ${type}#${id}} in getByTypeAndId`);
-    return list.pop() as T;
   }
 
   getPatient(): Patient {
