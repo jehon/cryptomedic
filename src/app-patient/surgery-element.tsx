@@ -5,11 +5,11 @@ import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import FilePanel from "./blocs/file-panel";
-import type { Surgery } from "./objects";
-import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
+import type { Patient, Surgery } from "./objects";
+import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function SurgeryElement(
-  props: PatientRelatedElementGeneratorProps<Surgery>
+  props: { patient: Patient } & RelatedElementGeneratorProps<Surgery>
 ): React.ReactNode {
   return (
     <FilePanel<Surgery>

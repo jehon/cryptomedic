@@ -7,11 +7,11 @@ import TwoColumns from "../widget/two-columns";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import FilePanel from "./blocs/file-panel";
-import type { ConsultOther } from "./objects";
-import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
+import type { ConsultOther, Patient } from "./objects";
+import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function ConsultOtherElement(
-  props: PatientRelatedElementGeneratorProps<ConsultOther>
+  props: { patient: Patient } & RelatedElementGeneratorProps<ConsultOther>
 ): React.ReactNode {
   return (
     <FilePanel<ConsultOther>

@@ -16,8 +16,8 @@ import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
 import FilePanel from "./blocs/file-panel";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
-import type { Bill } from "./objects";
-import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
+import type { Bill, Patient } from "./objects";
+import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 /*
   TODO:
@@ -34,7 +34,7 @@ import { type PatientRelatedElementGeneratorProps } from "./patient-related-elem
 */
 
 export default function BillElement(
-  props: PatientRelatedElementGeneratorProps<Bill>
+  props: { patient: Patient } & RelatedElementGeneratorProps<Bill>
 ): React.ReactNode {
   /** *************************
    *

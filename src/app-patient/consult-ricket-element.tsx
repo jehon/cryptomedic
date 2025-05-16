@@ -8,11 +8,11 @@ import TwoColumns from "../widget/two-columns";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import FilePanel from "./blocs/file-panel";
-import type { ConsultRicket } from "./objects";
-import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
+import type { ConsultRicket, Patient } from "./objects";
+import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function ConsultRicketElement(
-  props: PatientRelatedElementGeneratorProps<ConsultRicket>
+  props: { patient: Patient } & RelatedElementGeneratorProps<ConsultRicket>
 ): React.ReactNode {
   return (
     <FilePanel<ConsultRicket>

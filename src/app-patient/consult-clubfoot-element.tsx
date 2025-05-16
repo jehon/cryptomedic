@@ -10,8 +10,8 @@ import TwoColumns from "../widget/two-columns";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
 import FilePanel from "./blocs/file-panel";
-import type { ConsultClubfoot } from "./objects";
-import { type PatientRelatedElementGeneratorProps } from "./patient-related-element-generator";
+import type { ConsultClubfoot, Patient } from "./objects";
+import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 function getPiraniLeft(file: ConsultClubfoot) {
   try {
@@ -44,7 +44,7 @@ function getPiraniRight(file: ConsultClubfoot) {
 }
 
 export default function ConsultClubfootElement(
-  props: PatientRelatedElementGeneratorProps<ConsultClubfoot>
+  props: { patient: Patient } & RelatedElementGeneratorProps<ConsultClubfoot>
 ): React.ReactNode {
   return (
     <FilePanel<ConsultClubfoot>
