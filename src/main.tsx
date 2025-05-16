@@ -9,7 +9,7 @@ import "bootstrap4/dist/css/bootstrap.min.css";
 import "bootstrap4/dist/js/bootstrap";
 import "./main.css";
 
-function MainPage() {
+function PageMain() {
   return (
     <div>
       <Outlet />
@@ -22,7 +22,7 @@ function MainPage() {
 const router = createHashRouter([
   {
     path: "/",
-    element: <MainPage />,
+    element: <PageMain />,
     errorElement: <ErrorPage />,
     children: [
       // All sub routes
