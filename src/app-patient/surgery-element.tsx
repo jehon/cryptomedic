@@ -24,7 +24,7 @@ export default function SurgeryElement(
       onCreated={props.onCreated}
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
-      selfPath={`/patient/${props.patient.id}/surgery/${props.file.id ?? "add"}`}
+      selfPath={`${props.parentPath}/surgery/${props.file.id ?? "add"}`}
       header={
         <>
           <span>{props.file.report_diagnostic}</span>

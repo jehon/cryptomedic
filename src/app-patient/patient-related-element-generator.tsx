@@ -6,6 +6,7 @@ export type RelatedElementGeneratorProps<T extends PatientRelated | Patient> = {
   file: T;
   closed: boolean;
   edit: boolean;
+  parentPath: string;
   onCreated: (file: PatientRelated) => void;
   onDeleted: (file: PatientRelated) => void;
   onUpdated: (file: PatientRelated) => void;

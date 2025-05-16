@@ -24,7 +24,7 @@ export default function AppointmentElement(
       onCreated={props.onCreated}
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
-      selfPath={`/patient/${props.patient.id}/appointment/${props.file.id ?? "add"}`}
+      selfPath={`${props.parentPath}/appointment/${props.file.id ?? "add"}`}
       header={<span>{props.file.center}</span>}
     >
       <TwoColumns>

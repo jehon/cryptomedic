@@ -187,7 +187,7 @@ export default function BillElement(
       onCreated={props.onCreated}
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
-      selfPath={`/patient/${props.patient.id}/bill/${props.file.id ?? "add"}`}
+      selfPath={`${props.parentPath}/bill/${props.file.id ?? "add"}`}
       footer={
         !props.edit &&
         props.file.id &&

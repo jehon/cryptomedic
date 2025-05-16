@@ -26,7 +26,7 @@ export default function PictureElement(
       onCreated={props.onCreated}
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
-      selfPath={`/patient/${props.patient.id}/picture/${props.file.id ?? "add"}`}
+      selfPath={`${props.parentPath}/picture/${props.file.id ?? "add"}`}
       header={<>{props.file.type}</>}
     >
       <TwoColumns>
