@@ -8,9 +8,9 @@ import { getFolder } from "./loaders";
 export function patientRouterConfig() {
   return [
     {
-      path: "/patient/:folderId/:selectedType?/:selectedId?/:mode?",
+      path: "/patient/:id/:selectedType?/:selectedId?/:mode?",
       loader: ({ params }: { params: Params<string> }) =>
-        getFolder(params["folderId"] ?? ""),
+        getFolder(params["id"] ?? ""),
       element: <RouteLoading element={<PatientRouter />} />
     }
   ];
