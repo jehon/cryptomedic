@@ -73,7 +73,9 @@ export function MenuPatientSearchByReference() {
                     fd.append("entry_year", "" + data["entry_year"]);
                     fd.append("entry_order", "" + data["entry_order"]);
                     patientCreate(fd).then((patient) =>
-                      navigate(`/patient/${patient.id}`)
+                      navigate(
+                        `/patient/${patient.id}/patient/${patient.id}/edit`
+                      )
                     );
                   }}
                 />

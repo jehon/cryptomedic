@@ -19,7 +19,7 @@ export function MenuPatientGenerateReference() {
       onSubmit={async (event: React.SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
         const patient = await patientCreate(new FormData(event.currentTarget));
-        navigate(`/patient/${patient.id}`);
+        navigate(`/patient/${patient.id}/patient/${patient.id}/edit`);
       }}
     >
       <MenuItem
