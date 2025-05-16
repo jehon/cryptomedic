@@ -3,8 +3,8 @@ import type { BusinessType } from "../../config";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
-import { CrudLoader } from "../loaders";
-import type { Pojo } from "../objects";
+import { CrudLoader } from "../loaders-patient";
+import type { Pojo } from "../objects-patient";
 
 export type ButtonContext = {
   selfPath: string;

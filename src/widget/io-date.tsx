@@ -1,4 +1,4 @@
-import { type StringDate } from "../app-patient/objects";
+import { type StringDate } from "../app-patient/objects-patient";
 import { outputDate, periodAsHumanReadable } from "../utils/date";
 import IOAbstract, { type IOProps } from "./io-abstract";
 

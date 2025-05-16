@@ -1,4 +1,4 @@
-import { type StringDate } from "../app-patient/objects";
+import { type StringDate } from "../app-patient/objects-patient";
 import PojoClass from "./pojo-class";
 
 export default class Price extends PojoClass {

@@ -4,8 +4,8 @@ import { routeParent } from "../../utils/routing";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
-import { CrudLoader } from "../loaders";
-import type { Pojo } from "../objects";
+import { CrudLoader } from "../loaders-patient";
+import type { Pojo } from "../objects-patient";
 import type { ButtonContext } from "./buttons-view";
 
 export default function ButtonsEdit<T extends Pojo>(

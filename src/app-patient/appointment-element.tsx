@@ -5,7 +5,7 @@ import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import FilePanel from "./blocs/file-panel";
-import type { Appointment, Patient } from "./objects";
+import type { Appointment, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function AppointmentElement(

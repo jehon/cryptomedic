@@ -1,4 +1,4 @@
-import type { Patient, PatientRelated } from "./objects";
+import type { Patient, PatientRelated } from "./objects-patient";
 
 // TODO: remove this and replace by a function to calculate something
 

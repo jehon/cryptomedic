@@ -1,7 +1,7 @@
 import Folder, { serverType2BusinessType } from "../business/folder";
 import type { BusinessType } from "../config";
 import { CRUD, request } from "../utils/network";
-import type { Pojo } from "./objects";
+import type { Pojo } from "./objects-patient";
 
 export function getFolder(id: string): Promise<Folder> {
   // TODO: use new route!

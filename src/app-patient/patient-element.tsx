@@ -10,7 +10,7 @@ import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import FilePanel from "./blocs/file-panel";
-import type { Patient } from "./objects";
+import type { Patient } from "./objects-patient";
 
 function getListFor(category: string, value: string): IOListType {
   // "district.other"

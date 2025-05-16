@@ -1,4 +1,4 @@
-import type { Patient } from "../app-patient/objects";
+import type { Patient } from "../app-patient/objects-patient";
 import { CRUD, request } from "../utils/network";
 
 export function patientCreate(formData: FormData): Promise<Patient> {

@@ -3,7 +3,7 @@ import type {
   Patient,
   PatientRelated,
   Timed
-} from "../app-patient/objects";
+} from "../app-patient/objects-patient";
 import { fromBirthDateTo, normalizeDate } from "./date";
 import { DataMissingException } from "./exceptions";
 import { stdDeviationFor } from "./standard-deviation";

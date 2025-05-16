@@ -5,7 +5,7 @@ import { icons, type2Title, type BusinessType } from "../../config";
 import { date2HumanString, normalizeDate } from "../../utils/date";
 import { EditContext } from "../../widget/io-abstract";
 import Panel from "../../widget/panel";
-import type { Pojo } from "../objects";
+import type { Pojo } from "../objects-patient";
 import ButtonsEdit from "./buttons-edit";
 import ButtonsView, { type ButtonContext } from "./buttons-view";
 

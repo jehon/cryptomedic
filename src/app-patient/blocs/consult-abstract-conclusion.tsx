@@ -5,7 +5,7 @@ import IOList from "../../widget/io-list";
 import IOText from "../../widget/io-text";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
-import type { Consult } from "../objects";
+import type { Consult } from "../objects-patient";
 
 export default function ConsultAbstractConclusion(props: {
   file: Consult;

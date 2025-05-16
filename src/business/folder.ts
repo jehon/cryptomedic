@@ -5,7 +5,7 @@ import type {
   Patient,
   PatientRelated,
   Payment
-} from "../app-patient/objects";
+} from "../app-patient/objects-patient";
 import type { BusinessType } from "../config";
 import { patientRelatedOrdering } from "../utils/calculations";
 import { removeNull } from "../utils/objects";

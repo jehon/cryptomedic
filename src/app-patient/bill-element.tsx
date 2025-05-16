@@ -17,7 +17,7 @@ import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
 import FilePanel from "./blocs/file-panel";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
-import type { Bill, Patient } from "./objects";
+import type { Bill, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 /*

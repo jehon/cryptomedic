@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ActionButton from "../../widget/action-button";
 import { Modes } from "../../widget/io-abstract";
 import IONumber from "../../widget/io-number";
-import { patientCreate } from "../loaders";
+import { patientCreate } from "../loaders-home";
 import { MenuItem } from "./menu-item";
 
 export function MenuPatientGenerateReference() {

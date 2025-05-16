@@ -12,7 +12,7 @@ import BillElement from "./bill-element";
 import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOtherElement from "./consult-other-element";
 import ConsultRicketElement from "./consult-ricket-element";
-import { getFolder } from "./loaders";
+import { getFolder } from "./loaders-patient";
 import type {
   Appointment,
   Bill,
@@ -23,7 +23,7 @@ import type {
   PatientRelated,
   Picture,
   Surgery
-} from "./objects";
+} from "./objects-patient";
 import PatientElement from "./patient-element";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
