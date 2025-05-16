@@ -4,21 +4,29 @@ import IOList from "../widget/io-list";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import FilePanel from "./blocs/file-panel";
 import type { Appointment } from "./objects";
-import patientRelatedElementGenerator, {
+import {
+  patientRelatedPropsGenerator,
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
 export default function AppointmentElement(
   props: PatientRelatedElementGeneratorProps<Appointment>
 ): React.ReactNode {
-  return patientRelatedElementGenerator<Appointment>({
-    ...props,
-    type: "appointment",
-    canBeDeleted: true,
-    canBeLocked: true,
-    elementHeader: <span>{props.file.center}</span>,
-    elementBody: (
+  return (
+    <FilePanel<Appointment>
+      key={`appointment.${props.file.id}`}
+      type="appointment"
+      file={props.file}
+      {...patientRelatedPropsGenerator({
+        ...props,
+        type: "appointment"
+      })}
+      canBeDeleted={true}
+      canBeLocked={false}
+      header={<span>{props.file.center}</span>}
+    >
       <TwoColumns>
         <Panel fixed label="Information">
           <input
@@ -37,6 +45,6 @@ export default function AppointmentElement(
           <IOText name="purpose" value={props.file.purpose as string} />
         </Panel>
       </TwoColumns>
-    )
-  });
+    </FilePanel>
+  );
 }

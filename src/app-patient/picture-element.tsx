@@ -6,21 +6,29 @@ import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import FilePanel from "./blocs/file-panel";
 import type { Picture } from "./objects";
-import patientRelatedElementGenerator, {
+import {
+  patientRelatedPropsGenerator,
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
 export default function PictureElement(
   props: PatientRelatedElementGeneratorProps<Picture>
 ): React.ReactNode {
-  return patientRelatedElementGenerator<Picture>({
-    ...props,
-    type: "picture",
-    canBeDeleted: true,
-    canBeLocked: true,
-    elementHeader: <>{props.file.type}</>,
-    elementBody: (
+  return (
+    <FilePanel<Picture>
+      key={`picture.${props.file.id}`}
+      type="picture"
+      file={props.file}
+      {...patientRelatedPropsGenerator({
+        ...props,
+        type: "picture"
+      })}
+      canBeDeleted={true}
+      canBeLocked={true}
+      header={<>{props.file.type}</>}
+    >
       <TwoColumns>
         <Panel fixed label="Information">
           <input
@@ -51,6 +59,6 @@ export default function PictureElement(
           />
         </Panel>
       </TwoColumns>
-    )
-  });
+    </FilePanel>
+  );
 }

@@ -15,9 +15,11 @@ import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
+import FilePanel from "./blocs/file-panel";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
 import type { Bill } from "./objects";
-import patientRelatedElementGenerator, {
+import {
+  patientRelatedPropsGenerator,
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
 
@@ -172,133 +174,150 @@ export default function BillElement(
    * Render
    *
    */
-  return patientRelatedElementGenerator<Bill>({
-    ...props,
-    type: "bill",
-    canBeDeleted: true,
-    canBeLocked: true,
-    elementHeader: (
-      <>
-        <span>total: {props.file.total_real}</span>
-        <span>paid: {totalPaid}</span>
-      </>
-    ),
-    elementBody: (
-      <>
-        <TwoColumns>
-          <Panel fixed label="Information">
-            <input
-              type="hidden"
-              name="patient_id"
-              defaultValue={props.patient.id}
-            />
-            <IODate
-              name="date"
-              value={props.file.date}
-              onChange={(value) => selectPrice(value)}
-            />
-            {price && (
-              <>
-                <IOList
-                  name="examiner"
-                  value={props.file.examiner as string}
-                  list={getList("Examiners")}
-                />
-                <IOList
-                  name="center"
-                  value={props.file.center as string}
-                  list={getList("Centers")}
-                />{" "}
-              </>
+  return (
+    <FilePanel<Bill>
+      key={`bill.${props.file.id}`}
+      type="bill"
+      file={props.file}
+      {...patientRelatedPropsGenerator({
+        ...props,
+        type: "bill"
+      })}
+      canBeDeleted={
+        Array.isArray(props.file.payment)
+          ? props.file.payment.length == 0
+          : true
+      }
+      canBeLocked={true}
+      footer={
+        props.mode == Modes.output &&
+        props.file.id &&
+        price && (
+          <Panel
+            fixed
+            label="Payments"
+            testid={`bill.${props.file.id}.payments`}
+          >
+            <ButtonsGroup>
+              <ActionButton
+                style="Add"
+                linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
+              />
+              <ActionButton
+                style="Edit"
+                linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
+              />
+            </ButtonsGroup>
+            {Array.isArray(props.file.payment) &&
+            props.file.payment.length == 0 ? (
+              <div>No payment received</div>
+            ) : (
+              props.file.payment.map((payment) => (
+                <div
+                  key={`payment.${payment.id}`}
+                  className="payment-line"
+                  data-testid={`payment.${payment.id}`}
+                >
+                  <IODate value={payment.date} noLabel />
+                  <IONumber value={payment.amount} noLabel />
+                  <IOString value={payment.comments} noLabel />
+                </div>
+              ))
             )}
           </Panel>
+        )
+      }
+      header={
+        <>
+          <span>total: {props.file.total_real}</span>
+          <span>paid: {totalPaid}</span>
+        </>
+      }
+    >
+      <TwoColumns>
+        <Panel fixed label="Information">
+          <input
+            type="hidden"
+            name="patient_id"
+            defaultValue={props.patient.id}
+          />
+          <IODate
+            name="date"
+            value={props.file.date}
+            onChange={(value) => selectPrice(value)}
+          />
           {price && (
-            <Panel fixed label="Totals">
-              <IONumber
-                name="sl_family_salary"
-                label="Family Salary"
-                value={socialLevelParams.family_salary}
-                onChange={(value) =>
-                  setSocialLevelParams({
-                    ...socialLevelParams,
-                    family_salary: value
-                  })
-                }
+            <>
+              <IOList
+                name="examiner"
+                value={props.file.examiner as string}
+                list={getList("Examiners")}
               />
-              <IONumber
-                name="sl_number_of_household_members"
-                label="Number of Household Members"
-                value={socialLevelParams.number_of_household_members}
-                htmlProps={{ max: 10 }}
-                onChange={(value) =>
-                  setSocialLevelParams({
-                    ...socialLevelParams,
-                    number_of_household_members: value
-                  })
-                }
-              />
-              <IOHidden name="social_level" value={socialLevel} />
-              <IOHidden label="Percentage" value={percentageAsked * 100} />
-              <IOHidden
-                name="total_real"
-                label="Raw Calculated Total"
-                value={getTotal()}
-              />
-              <IOHidden
-                name="total_asked"
-                label="Price asked"
-                value={priceAsked}
-              />
-              <IOFunction
-                label="Payments Received (see below)"
-                value={() => totalPaid}
-              />
-            </Panel>
+              <IOList
+                name="center"
+                value={props.file.center as string}
+                list={getList("Centers")}
+              />{" "}
+            </>
           )}
-        </TwoColumns>
-        {price ? (
-          <Panel fixed label="Bill Lines">
-            {items.map((line) => (
-              <IOBillLine
-                value={line}
-                key={line.key}
-                onChange={(bl) => updateTotal(bl)}
-              />
-            ))}
+        </Panel>
+        {price && (
+          <Panel fixed label="Totals">
+            <IONumber
+              name="sl_family_salary"
+              label="Family Salary"
+              value={socialLevelParams.family_salary}
+              onChange={(value) =>
+                setSocialLevelParams({
+                  ...socialLevelParams,
+                  family_salary: value
+                })
+              }
+            />
+            <IONumber
+              name="sl_number_of_household_members"
+              label="Number of Household Members"
+              value={socialLevelParams.number_of_household_members}
+              htmlProps={{ max: 10 }}
+              onChange={(value) =>
+                setSocialLevelParams({
+                  ...socialLevelParams,
+                  number_of_household_members: value
+                })
+              }
+            />
+            <IOHidden name="social_level" value={socialLevel} />
+            <IOHidden label="Percentage" value={percentageAsked * 100} />
+            <IOHidden
+              name="total_real"
+              label="Raw Calculated Total"
+              value={getTotal()}
+            />
+            <IOHidden
+              name="total_asked"
+              label="Price asked"
+              value={priceAsked}
+            />
+            <IOFunction
+              label="Payments Received (see below)"
+              value={() => totalPaid}
+            />
           </Panel>
-        ) : (
-          <div className="alert alert-warning">Please select a date first</div>
         )}
-      </>
-    ),
-    elementFooter: props.mode == Modes.output && props.file.id && price && (
-      <Panel fixed label="Payments" testid={`bill.${props.file.id}.payments`}>
-        <ButtonsGroup>
-          <ActionButton
-            style="Add"
-            linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
-          />
-          <ActionButton
-            style="Edit"
-            linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
-          />
-        </ButtonsGroup>
-        {Array.isArray(props.file.payment) && props.file.payment.length == 0 ? (
-          <div>No payment received</div>
-        ) : (
-          props.file.payment.map((payment) => (
-            <div
-              key={`payment.${payment.id}`}
-              className="payment-line"
-              data-testid={`payment.${payment.id}`}
-            >
-              <IODate value={payment.date} noLabel />
-              <IONumber value={payment.amount} noLabel />
-              <IOString value={payment.comments} noLabel />
-            </div>
-          ))
-        )}
-      </Panel>
-    )
-  });
+      </TwoColumns>
+      {price ? (
+        <Panel fixed label="Bill Lines">
+          {items.map((line) => (
+            <IOBillLine
+              value={line}
+              key={line.key}
+              onChange={(bl) => updateTotal(bl)}
+            />
+          ))}
+        </Panel>
+      ) : (
+        <div className="alert alert-warning">Please select a date first</div>
+      )}
+    </FilePanel>
+  );
 }
