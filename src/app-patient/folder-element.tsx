@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Folder from "../business/folder";
 import * as config from "../config";
@@ -6,11 +6,13 @@ import ButtonsGroup from "../widget/buttons-group";
 import { Modes, type ModesList } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
+import Waiting from "../widget/waiting";
 import AppointmentElement from "./appointment-element";
 import BillElement from "./bill-element";
 import ConsultClubfootElement from "./consult-clubfoot-element";
 import ConsultOtherElement from "./consult-other-element";
 import ConsultRicketElement from "./consult-ricket-element";
+import { getFolder } from "./loaders";
 import type {
   Appointment,
   Bill,
@@ -53,19 +55,22 @@ export function getLastSeen(folder: Folder): Date | undefined {
     .pop();
 }
 
-export default function FolderElement({
-  folder: initialFolder,
-  selectedType,
-  selectedId,
-  mode
-}: {
-  folder: Folder;
+export default function FolderElement(props: {
+  id: string;
   selectedType?: string;
   selectedId?: string;
   mode: ModesList;
 }): React.ReactNode {
   const navigate = useNavigate();
-  const [folder, folderUpdated] = useState<Folder>(initialFolder);
+
+  const [folder, folderUpdated] = useState<Folder | undefined>(undefined);
+  useEffect(() => {
+    getFolder(props.id).then((folder) => folderUpdated(folder));
+  }, [props.id]);
+
+  if (!folder) {
+    return <Waiting message={`folder ${props.id}`} />;
+  }
 
   const folderUpdatedCallback = (folder: Folder | undefined) => {
     if (folder) {
@@ -75,21 +80,23 @@ export default function FolderElement({
     }
   };
   const patient = folder.getPatient();
-  const selectedUid = selectedType
-    ? `${selectedType}.${selectedId ?? "add"}`
-    : `patient.${selectedId}`;
+  const selectedUid = props.selectedType
+    ? `${props.selectedType}.${props.selectedId ?? "add"}`
+    : `patient.${props.selectedId}`;
 
   if (!patient) {
     return <div key="no-patient-selected">No Patient selected</div>;
   }
 
-  if (selectedId == "add") {
-    const typeName = selectedType as config.BusinessType;
+  if (props.selectedId == "add") {
+    const typeName = props.selectedType as config.BusinessType;
 
     // Test if the added item is already present
     if (
       folder.list.filter(
-        (f) => `${f._type}.${f.id ?? "add"}` == `${selectedType}.${selectedId}`
+        (f) =>
+          `${f._type}.${f.id ?? "add"}` ==
+          `${props.selectedType}.${props.selectedId}`
       ).length == 0
     ) {
       folderUpdated(
@@ -158,7 +165,9 @@ export default function FolderElement({
         closed={`patient.${patient.id}` !== selectedUid}
         canBeDeleted={folder.getChildren().length == 0}
         edit={
-          `patient.${patient.id}` == selectedUid ? mode === Modes.input : false
+          `patient.${patient.id}` == selectedUid
+            ? props.mode === Modes.input
+            : false
         }
         onCreated={(file: Patient) => {
           folderUpdatedCallback(
@@ -184,7 +193,7 @@ export default function FolderElement({
             patient,
             closed: uid !== selectedUid,
             parentPath: `/patient/${patient.id}`,
-            edit: uid == selectedUid ? mode === Modes.input : false,
+            edit: uid == selectedUid ? props.mode === Modes.input : false,
             onCreated: (file: PatientRelated) => {
               folderUpdatedCallback(
                 folder.withFile(file as unknown as PatientRelated)
