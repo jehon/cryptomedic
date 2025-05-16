@@ -10,9 +10,9 @@ import {
 import { MenuItem } from "./blocs/menu-item";
 import { MenuPatientGenerateReference } from "./blocs/menu-patient-generate-reference";
 import { MenuPatientSearchByReference } from "./blocs/menu-patient-search-by-reference";
-import "./home-element.css";
+import "./page-home.css";
 
-export default function HomeElement() {
+export default function PageHome() {
   return (
     <div id="home" className="reduce-width">
       <h1 id="page_home" className="text-center">

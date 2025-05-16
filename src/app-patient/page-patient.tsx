@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Folder from "../business/folder";
 import * as config from "../config";
 import ButtonsGroup from "../widget/buttons-group";
-import { Modes, type ModesList } from "../widget/io-abstract";
+import { Modes } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
 import Waiting from "../widget/waiting";
@@ -55,12 +55,15 @@ export function getLastSeen(folder: Folder): Date | undefined {
     .pop();
 }
 
-export default function FolderElement(props: {
-  id: string;
-  selectedType?: string;
-  selectedId?: string;
-  mode: ModesList;
-}): React.ReactNode {
+export default function PagePatient(): React.ReactNode {
+  const params = useParams();
+  const props = {
+    id: params["id"]!,
+    selectedType: params["selectedType"],
+    selectedId: params["selectedId"],
+    mode: params["pmode"] == "edit" ? Modes.input : Modes.output
+  };
+
   const navigate = useNavigate();
 
   const [folder, folderUpdated] = useState<Folder | undefined>(undefined);

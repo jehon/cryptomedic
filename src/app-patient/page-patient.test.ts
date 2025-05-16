@@ -2,8 +2,8 @@ import assert from "node:assert";
 import test from "node:test";
 import Folder from "../business/folder";
 import { loadReference, RefFolder1 } from "../helpers.test";
-import { getLastSeen, getNextAppointment } from "./folder-element";
 import type { Appointment } from "./objects";
+import { getLastSeen, getNextAppointment } from "./page-patient";
 
 test("patient related", async function (t) {
   let f: Folder = new Folder();

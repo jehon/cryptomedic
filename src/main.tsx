@@ -1,6 +1,6 @@
 import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
-import { HomeRouter } from "./app-home/home-router";
-import { patientRouterConfig } from "./app-patient/patient-router";
+import { RouterHome } from "./app-home/router-home";
+import { RouterPatient } from "./app-patient/router-patient";
 import { bridgeTo } from "./utils/legacy";
 import ErrorPage from "./widget/error-page";
 
@@ -26,8 +26,8 @@ const router = createHashRouter([
     errorElement: <ErrorPage />,
     children: [
       // All sub routes
-      ...HomeRouter(),
-      ...patientRouterConfig(),
+      ...RouterHome(),
+      ...RouterPatient(),
 
       // Legacy code to be migrated into react
       { path: "/login/:redirect", element: <div>to legacy code</div> },
