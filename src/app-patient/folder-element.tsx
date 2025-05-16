@@ -183,7 +183,7 @@ export default function FolderElement({
           const commonProps = {
             patient,
             closed: uid !== selectedUid,
-            parentPath: `patient/${patient.id}`,
+            parentPath: `/patient/${patient.id}`,
             edit: uid == selectedUid ? mode === Modes.input : false,
             onCreated: (file: PatientRelated) => {
               folderUpdatedCallback(
