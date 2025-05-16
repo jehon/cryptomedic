@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type Folder from "../business/folder";
 import Price from "../business/price";
 import { getPriceCategories } from "../config";
 import { getList, getSession } from "../utils/session";
@@ -17,17 +16,10 @@ import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
-import type { Bill, Payment } from "./objects";
+import type { Bill } from "./objects";
 import patientRelatedElementGenerator, {
   type PatientRelatedElementGeneratorProps
 } from "./patient-related-element-generator";
-
-// TODO: folder2patient
-function getPayments(file: Bill, folder: Folder): Payment[] {
-  return folder.list.filter(
-    (f) => f._type == "payment" && (f as Payment).bill_id == file.id
-  ) as Payment[];
-}
 
 /*
   TODO:
@@ -169,9 +161,9 @@ export default function BillElement(
 
   const priceAsked = Math.round(getTotal() * percentageAsked);
   const totalPaid = roundTo(
-    getPayments(props.file, props.folder)
-      .map((p) => p.amount)
-      .reduce((acc, v) => acc + v, 0),
+    Array.isArray(props.file.payment)
+      ? props.file.payment.map((p) => p.amount).reduce((acc, v) => acc + v, 0)
+      : 0,
     0
   );
 
@@ -291,10 +283,10 @@ export default function BillElement(
             linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
           />
         </ButtonsGroup>
-        {getPayments(props.file, props.folder).length == 0 ? (
+        {Array.isArray(props.file.payment) && props.file.payment.length == 0 ? (
           <div>No payment received</div>
         ) : (
-          getPayments(props.file, props.folder).map((payment: Payment) => (
+          props.file.payment.map((payment) => (
             <div
               key={`payment.${payment.id}`}
               className="payment-line"

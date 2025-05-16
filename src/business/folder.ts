@@ -1,6 +1,11 @@
 import { produce } from "immer";
 import "reflect-metadata"; // plainToInstance
-import type { Patient, PatientRelated } from "../app-patient/objects";
+import type {
+  Bill,
+  Patient,
+  PatientRelated,
+  Payment
+} from "../app-patient/objects";
 import type { BusinessType } from "../config";
 import { patientRelatedOrdering } from "../utils/calculations";
 import { removeNull } from "../utils/objects";
@@ -62,6 +67,12 @@ export default class Folder extends PojoClass {
     } catch (_e) {
       this.list.push({ _type: "patient", patient_id: this.id });
     }
+
+    for (const b of this.getListByType<Bill>("bill")) {
+      b.payment = this.list.filter(
+        (f) => f._type == "payment" && (f as Payment).bill_id == b.id
+      ) as Payment[];
+    }
   }
 
   withFileOLD(file: PatientRelated): Folder {
@@ -97,17 +108,6 @@ export default class Folder extends PojoClass {
     if (list.length != 1)
       throw new Error(`Could not find ${type}#${id}} in getByTypeAndId`);
     return list.pop() as T;
-  }
-
-  private getByFieldValue(field: string, value?: string): PatientRelated[] {
-    const res = [];
-    for (const i in this.list) {
-      // Not exactly exact, but close enough
-      if ((this.list[i][field as keyof PatientRelated] as string) == value) {
-        res.push(this.list[i] as PatientRelated);
-      }
-    }
-    return res;
   }
 
   getPatient(): Patient {
