@@ -1,5 +1,5 @@
 /* Packages */
-import { createHashRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
 
 /* Styles */
 import "bootstrap4/dist/css/bootstrap.min.css";
@@ -12,11 +12,20 @@ import { patientRouterConfig } from "./app-patient/patient-router";
 import { bridgeTo } from "./utils/react";
 import ErrorPage from "./widget/error-page";
 
+function MainPage() {
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
+}
+
 // Thanks to: https:/rm /reactrouter.com/en/main/start/tutorial#setup
 // https://reactrouter.com/en/main/routers/create-browser-router
 const router = createHashRouter([
   {
     path: "/",
+    element: <MainPage />,
     errorElement: <ErrorPage />,
     children: [
       // All sub routes
