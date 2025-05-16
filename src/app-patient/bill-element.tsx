@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Price from "../business/price";
 import { getPriceCategories } from "../config";
+import { nArray } from "../utils/array";
 import { getList, getSession } from "../utils/session";
 import { roundTo, string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
@@ -159,10 +160,9 @@ export default function BillElement(
 
   const priceAsked = Math.round(getTotal() * percentageAsked);
   const totalPaid = roundTo(
-    Array.isArray(props.file.payment)
-      ? props.file.payment.map((p) => p.amount).reduce((acc, v) => acc + v, 0)
-      : 0,
-    0
+    nArray(props.file.payment)
+      .map((p) => p.amount)
+      .reduce((acc, v) => acc + v, 0)
   );
 
   /** *************************
@@ -178,11 +178,7 @@ export default function BillElement(
       apiRootUrl={`fiche/bill`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
-      canBeDeleted={
-        Array.isArray(props.file.payment)
-          ? props.file.payment.length == 0
-          : true
-      }
+      canBeDeleted={nArray(props.file.payment).length == 0}
       canBeLocked={true}
       onCreated={props.onCreated}
       onUpdated={props.onUpdated}
@@ -207,11 +203,10 @@ export default function BillElement(
                 linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
               />
             </ButtonsGroup>
-            {Array.isArray(props.file.payment) &&
-            props.file.payment.length == 0 ? (
+            {nArray(props.file.payment).length == 0 ? (
               <div>No payment received</div>
             ) : (
-              props.file.payment.map((payment) => (
+              nArray(props.file.payment).map((payment) => (
                 <div
                   key={`payment.${payment.id}`}
                   className="payment-line"
