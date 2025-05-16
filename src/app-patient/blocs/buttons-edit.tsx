@@ -51,22 +51,24 @@ export default function ButtonsEdit<T extends Pojo>(
 
     const data = new FormData(props.formRef.current!);
     if (addMode) {
-      return crudLoader
-        .create(data)
-        .then(notification("File created"))
-        .then(
-          passThrough((newFile: T) => {
-            // Route to the newly created file
-            navigate(`${routeParent(props.selfPath)}/${newFile.id}`);
-          })
-        )
-        .then(props.onCreated);
+      return (
+        crudLoader
+          .create(data)
+          .then(notification("File created"))
+          .then(passThrough(props.onCreated))
+          // Route to the newly created file
+          .then(
+            passThrough((newFile: T) =>
+              navigate(`${routeParent(props.selfPath)}/${newFile.id}`)
+            )
+          )
+      );
     } else {
       return crudLoader
         .update(props.file.id!, data)
         .then(notification("File saved"))
-        .then(passThrough(() => navigate(props.selfPath)))
-        .then(props.onUpdated);
+        .then(passThrough(props.onUpdated))
+        .then(passThrough(() => navigate(props.selfPath)));
     }
   };
 
