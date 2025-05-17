@@ -99,7 +99,13 @@ export default class Folder extends PojoClass {
     }
 
     return produce(this, (draft) => {
-      draft.list.splice(i, 1);
+      draft.list = draft.list.splice(i, 1);
+    });
+  }
+
+  withoutAdded(): Folder {
+    return produce(this, (draft) => {
+      draft.list = draft.list.filter((f) => f.id);
     });
   }
 
