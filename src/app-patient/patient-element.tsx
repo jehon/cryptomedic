@@ -28,7 +28,6 @@ export default function PatientElement(props: {
   edit: boolean;
   closed: boolean;
   canBeDeleted: boolean;
-  onCreated: (patient: Patient) => void;
   onUpdated: (patient: Patient) => void;
   onDeleted: (patient: Patient) => void;
 }) {
@@ -52,7 +51,7 @@ export default function PatientElement(props: {
       closed={props.closed}
       canBeDeleted={props.canBeDeleted}
       canBeLocked={false}
-      onCreated={props.onCreated}
+      onCreated={() => {}} // No create possible
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
       selfPath={`/patient/${props.patient.id}/patient/${props.patient.id ?? "add"}`}
