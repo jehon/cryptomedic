@@ -82,12 +82,12 @@ export default function PagePatient(): React.ReactNode {
   const params = useParams();
   const props: {
     id: string;
-    selectedType?: string;
+    selectedType?: config.BusinessType;
     selectedId?: string;
     mode: ModesList;
   } = {
     id: params["id"]!,
-    selectedType: params["selectedType"],
+    selectedType: params["selectedType"] as config.BusinessType,
     selectedId: params["selectedId"],
     mode: params["mode"] == "edit" ? Modes.input : Modes.output
   };
@@ -117,19 +117,15 @@ export default function PagePatient(): React.ReactNode {
   // Handle the add mode
   //
   if (props.selectedId == "add") {
-    const typeName = props.selectedType as config.BusinessType;
-
-    // Test if the added item is already present
+    // Test if the added item is not already present
     if (
-      folder.list.filter(
-        (f) =>
-          `${f._type}.${f.id ?? "add"}` ==
-          `${props.selectedType}.${props.selectedId}`
-      ).length == 0
+      folder.list.filter((f) => f._type == props.selectedType! && !f.id)
+        .length == 0
     ) {
+      // Add the correct add file (and only this one)
       folderUpdated(
-        withFile(folder, {
-          _type: typeName,
+        withFile(withoutAdded(folder), {
+          _type: props.selectedType,
           patient_id: folder.id
         } as PatientRelated)
       );
