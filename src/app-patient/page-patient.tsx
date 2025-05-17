@@ -132,7 +132,7 @@ export default function PagePatient(): React.ReactNode {
       ).length == 0
     ) {
       folderUpdated(
-        folder.withFile({
+        withFile(folder, {
           _type: typeName,
           patient_id: folder.id
         } as PatientRelated)
