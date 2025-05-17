@@ -1,4 +1,3 @@
-import { produce } from "immer";
 import "reflect-metadata"; // plainToInstance
 import type {
   Bill,
@@ -77,36 +76,6 @@ export default class Folder extends PojoClass {
         ) as Payment[];
       }
     }
-  }
-
-  withFile(file: PatientRelated): Folder {
-    //
-    // We remove and add in one run
-    // to avoid building twice the folder
-    //
-    return produce(this.withoutFile(file), (draft) => {
-      draft.list.push(file as unknown as PatientRelated); // TODO: Fix cast
-    });
-  }
-
-  withoutFile(file: PatientRelated): Folder {
-    const fileUid = `${file._type}.${file.id ?? "add"}`;
-    const i = this.list.findIndex(
-      (val) => `${val._type}.${val.id ?? "add"}` === fileUid
-    );
-    if (i < 0) {
-      return this;
-    }
-
-    return produce(this, (draft) => {
-      draft.list = draft.list.splice(i, 1);
-    });
-  }
-
-  withoutAdded(): Folder {
-    return produce(this, (draft) => {
-      draft.list = draft.list.filter((f) => f.id);
-    });
   }
 
   getPatient(): Patient {

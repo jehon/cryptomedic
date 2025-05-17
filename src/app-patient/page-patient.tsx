@@ -55,6 +55,26 @@ export function getLastSeen(folder: Folder): Date | undefined {
     .pop();
 }
 
+function withFile(folder: Folder, file: PatientRelated): Folder {
+  return produce(withoutFile(folder, file), (draft) => {
+    draft.list.push(file);
+  });
+}
+
+function withoutFile(folder: Folder, file: PatientRelated): Folder {
+  return produce(folder, (draft) => {
+    draft.list = draft.list.filter(
+      (item) => !(item.id == file.id && item._type == file._type)
+    );
+  });
+}
+
+function withoutAdded(folder: Folder): Folder {
+  return produce(folder, (draft) => {
+    draft.list = draft.list.filter((f) => f.id);
+  });
+}
+
 export default function PagePatient(): React.ReactNode {
   const params = useParams();
   const props: {
@@ -179,8 +199,9 @@ export default function PagePatient(): React.ReactNode {
             : false
         }
         onUpdated={(file: Patient) =>
+          // TODO: Fix this horrible hack
           folderUpdatedCallback(
-            folder.withFile(file as unknown as PatientRelated)
+            withFile(folder, file as unknown as PatientRelated)
           )
         }
         onDeleted={(file: Patient) => navigate("/")}
@@ -195,20 +216,12 @@ export default function PagePatient(): React.ReactNode {
             parentPath: `/patient/${patient.id}`,
             edit: uid == selectedUid ? props.mode === Modes.input : false,
             onCreated: (file: PatientRelated) => {
-              folderUpdatedCallback(
-                folder
-                  .withoutAdded()
-                  .withFile(file as unknown as PatientRelated)
-              );
+              folderUpdatedCallback(withFile(withoutAdded(folder), file));
             },
             onUpdated: (file: PatientRelated) =>
-              folderUpdatedCallback(
-                folder.withFile(file as unknown as PatientRelated)
-              ),
+              folderUpdatedCallback(withFile(folder, file)),
             onDeleted: (file: PatientRelated) =>
-              folderUpdatedCallback(
-                folder.withoutFile(file as unknown as PatientRelated)
-              )
+              folderUpdatedCallback(withoutFile(folder, file))
           };
 
           if (file._type == "appointment") {
