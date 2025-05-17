@@ -1,4 +1,9 @@
-import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
+import {
+  createHashRouter,
+  Navigate,
+  Outlet,
+  RouterProvider
+} from "react-router-dom";
 import { RouterHome } from "./app-home/router-home";
 import { RouterPatient } from "./app-patient/router-patient";
 import { bridgeTo } from "./utils/legacy";
@@ -17,6 +22,12 @@ function PageMain() {
   );
 }
 
+function ReloadToOldApp() {
+  // setTimeout(() => location.reload(), 100);
+  location.reload();
+  return <div>Going to old application</div>;
+}
+
 // Thanks to: https:/rm /reactrouter.com/en/main/start/tutorial#setup
 // https://reactrouter.com/en/main/routers/create-browser-router
 const router = createHashRouter([
@@ -30,16 +41,16 @@ const router = createHashRouter([
       ...RouterPatient(),
 
       // Legacy code to be migrated into react
-      { path: "/login/:redirect", element: <div>to legacy code</div> },
-      { path: "/search", element: <div>to legacy code</div> },
-      { path: "/reports/:report", element: <div>to legacy code</div> },
-      { path: "/users/:uid/password", element: <div>to legacy code</div> },
-      { path: "/users/:uid", element: <div>to legacy code</div> },
-      { path: "/users", element: <div>to legacy code</div> },
-      { path: "/prices", element: <div>to legacy code</div> },
+      { path: "/home", element: <ReloadToOldApp /> },
+      { path: "/login/:redirect", element: <ReloadToOldApp /> },
+      { path: "/search", element: <ReloadToOldApp /> },
+      { path: "/reports/:report", element: <ReloadToOldApp /> },
+      { path: "/users/:uid/password", element: <ReloadToOldApp /> },
+      { path: "/users/:uid", element: <ReloadToOldApp /> },
+      { path: "/users", element: <ReloadToOldApp /> },
+      { path: "/prices", element: <ReloadToOldApp /> },
 
-      // To be removed
-      { path: "/folder/*", element: <div></div> }
+      { path: "/*", element: <Navigate to="/home" /> }
     ]
   }
 ]);

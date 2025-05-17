@@ -129,16 +129,8 @@ mainApp.config([
         template: () => goToElement(XPagePrices)
       })
 
-      .when("/home.new", {
+      .otherwise({
         template: "<x-react-router></x-react-router>"
-      })
-      .when("/patient/:folderId?/:uid?/:mode?", {
-        template: "<x-react-router></x-react-router>"
-      })
-
-      .otherwise({ redirectTo: "/home" });
-    // .otherwise({
-    //   template: "<x-react-router></x-react-router>"
-    // })
+      });
   }
 ]);
