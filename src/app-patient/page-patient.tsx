@@ -178,21 +178,12 @@ export default function PagePatient(): React.ReactNode {
             ? props.mode === Modes.input
             : false
         }
-        onCreated={(file: Patient) => {
-          folderUpdatedCallback(
-            folder.withFile(file as unknown as PatientRelated)
-          );
-        }}
-        onDeleted={(file: Patient) =>
-          folderUpdatedCallback(
-            folder.withoutFile(file as unknown as PatientRelated)
-          )
-        }
         onUpdated={(file: Patient) =>
           folderUpdatedCallback(
             folder.withFile(file as unknown as PatientRelated)
           )
         }
+        onDeleted={(file: Patient) => navigate("/")}
       />
 
       {(folder.getChildren() as PatientRelated[]).map(
@@ -210,13 +201,13 @@ export default function PagePatient(): React.ReactNode {
                   .withFile(file as unknown as PatientRelated)
               );
             },
-            onDeleted: (file: PatientRelated) =>
-              folderUpdatedCallback(
-                folder.withoutFile(file as unknown as PatientRelated)
-              ),
             onUpdated: (file: PatientRelated) =>
               folderUpdatedCallback(
                 folder.withFile(file as unknown as PatientRelated)
+              ),
+            onDeleted: (file: PatientRelated) =>
+              folderUpdatedCallback(
+                folder.withoutFile(file as unknown as PatientRelated)
               )
           };
 
