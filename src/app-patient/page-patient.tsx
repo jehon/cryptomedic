@@ -94,7 +94,12 @@ export default function PagePatient(): React.ReactNode {
 
   const navigate = useNavigate();
   const [folder, folderUpdated] = useState<Folder | undefined>(undefined);
+
+  //
+  // Effect: get the folder from server
+  //
   useEffect(() => {
+    // This effect will fire only if props.id change
     getFolder(props.id).then((folder) => folderUpdated(folder));
   }, [props.id]);
 
