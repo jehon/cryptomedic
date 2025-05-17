@@ -80,6 +80,11 @@ export default function PagePatient(): React.ReactNode {
     return <Waiting message={`folder ${props.id}`} />;
   }
 
+  const patient = folder?.list.filter((f) => f._type == "patient")?.[0];
+  if (!patient) {
+    return <div key="no-patient-selected">No Patient selected</div>;
+  }
+
   const folderUpdatedCallback = (folder: Folder | undefined) => {
     if (folder) {
       folderUpdated(folder);
@@ -87,14 +92,10 @@ export default function PagePatient(): React.ReactNode {
       navigate("/home");
     }
   };
-  const patient = folder.getPatient();
+
   const selectedUid = props.selectedType
     ? `${props.selectedType}.${props.selectedId ?? "add"}`
     : `patient.${props.selectedId}`;
-
-  if (!patient) {
-    return <div key="no-patient-selected">No Patient selected</div>;
-  }
 
   if (props.selectedId == "add") {
     const typeName = props.selectedType as config.BusinessType;
