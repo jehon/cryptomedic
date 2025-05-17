@@ -1,4 +1,4 @@
-import { type StringList } from "../utils/types";
+import { type StringList } from "../app-patient/objects-patient";
 import IOAbstract, { type IOProps } from "./io-abstract";
 
 export type IOListType = string[] | Record<string, string>;
@@ -94,7 +94,7 @@ function buildRadios(
         name={name}
         defaultChecked={value + "" === stored}
         value={stored}
-        onBlur={() => onChange(stored)}
+        onChange={() => onChange(stored)}
         type="radio"
         required
       />

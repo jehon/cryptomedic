@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { getSession, onSession } from "../../../../src/utils/session.js";
+import { getSession, onSession } from "../../../../src/utils/session.ts";
 import JHElement from "./jh-element.js";
 
 // We sync over "document" as our EventListener object:

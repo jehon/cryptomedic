@@ -103,18 +103,15 @@ mainApp.config([
       .when("/login/:redirect*?", {
         template: (params) => goToElement(XPageLogin, params)
       })
+      .when("/folder/:patient_id/:page?/:subtype?/:subid?/:mode?", {
+        templateUrl: template("folder"),
+        controller: "ctrl_folder"
+      })
       .when("/home", {
         template: () => goToElement(XPageHome)
       })
       .when("/search", {
         template: () => goToElement(XPageSearch)
-      })
-      .when("/folder/:patient_id/:page?/:subtype?/:subid?/:mode?", {
-        templateUrl: template("folder"),
-        controller: "ctrl_folder"
-      })
-      .when("/patient/:folderId?/:uid?/:mode?", {
-        template: "<x-react-router></x-react-router>"
       })
       .when("/reports/:report", {
         template: (params) => goToElement(XPageReports, params)
@@ -131,6 +128,17 @@ mainApp.config([
       .when("/prices", {
         template: () => goToElement(XPagePrices)
       })
+
+      .when("/home.new", {
+        template: "<x-react-router></x-react-router>"
+      })
+      .when("/patient/:folderId?/:uid?/:mode?", {
+        template: "<x-react-router></x-react-router>"
+      })
+
       .otherwise({ redirectTo: "/home" });
+    // .otherwise({
+    //   template: "<x-react-router></x-react-router>"
+    // })
   }
 ]);

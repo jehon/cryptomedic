@@ -1,19 +1,7 @@
-import { type StringDate } from "../utils/types";
-import Pojo from "./abstracts/pojo";
+import { type StringDate } from "../app-patient/objects-patient";
+import PojoClass from "./pojo-class";
 
-export default class Price extends Pojo {
-  static override getModel() {
-    return "Price";
-  }
-
-  static override getTechnicalName() {
-    return "price";
-  }
-
-  static getCategories() {
-    return ["consult", "medecine", "other", "workshop", "surgical"];
-  }
-
+export default class Price extends PojoClass {
   date_from?: StringDate;
   date_to?: StringDate;
   social_level_threshold_1: number = 0;

@@ -21,10 +21,6 @@ const config: any = {
   ],
   projects: [
     {
-      name: "Firefox",
-      use: { ...devices["Desktop Firefox"] }
-    },
-    {
       name: "Google Chrome",
       use: { ...devices["Desktop Chrome"], channel: "chrome" }
     },
@@ -55,7 +51,7 @@ if (process.env["CI"]) {
 
   // Traces: See https://playwright.dev/docs/trace-viewer#opening-the-trace
   // https://trace.playwright.dev/
-  config.retries = 3;
+  // config.retries = 3;
   config.use!.trace = "retain-on-failure";
   config.ignoreSnapshots = false;
 
@@ -63,7 +59,6 @@ if (process.env["CI"]) {
     (config.reporter as Array<any>).push(["github"]);
     config.snapshotDir = path.join(config.testDir!, "/__github__");
   } else if (process.env["GITLAB_CI"]) {
-    // config.retries = 1;
     // (config.reporter as Array<any>).push(["gitlab"]);
     config.snapshotDir = path.join(config.testDir!, "/__gitlab__");
   } else {

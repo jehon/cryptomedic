@@ -1,46 +1,13 @@
-import React from "react";
-import PatientRelated from "../business/abstracts/patient-related";
+import type { Patient, PatientRelated } from "./objects-patient";
 
-import Folder from "../business/folder";
-import FilePanel, { type FolderUpdateCallback } from "./blocs/file-panel";
+// TODO: remove this and replace by a function to calculate something
 
-export type PatientRelatedElementGeneratorProps = {
-  folder: Folder;
-  selectedUid?: string;
-  onUpdate: FolderUpdateCallback;
-  mode?: string;
+export type RelatedElementGeneratorProps<T extends PatientRelated | Patient> = {
+  file: T;
+  closed: boolean;
+  edit: boolean;
+  parentPath: string;
+  onCreated: (file: PatientRelated) => void;
+  onDeleted: (file: PatientRelated) => void;
+  onUpdated: (file: PatientRelated) => void;
 };
-
-export default function patientRelatedElementGenerator<
-  T extends PatientRelated
->(
-  file: T,
-  { folder, selectedUid, onUpdate, mode }: PatientRelatedElementGeneratorProps,
-  elements: {
-    header: React.ReactNode;
-    body: React.ReactNode;
-    footer?: React.ReactNode;
-  }
-): React.ReactNode {
-  console.log("PatientRelatedElementGenerator - Debug:", {
-    fileUid: file.uid(),
-    selectedUid,
-    mode,
-    isEdit: file.uid() == selectedUid ? mode === "edit" : false
-  });
-
-  return (
-    <FilePanel
-      folder={folder}
-      key={file.uid()}
-      closed={file.uid() !== selectedUid}
-      file={file}
-      onUpdate={onUpdate}
-      header={elements.header}
-      footer={elements.footer}
-      edit={file.uid() == selectedUid ? mode === "edit" : false}
-    >
-      {elements.body}
-    </FilePanel>
-  );
-}

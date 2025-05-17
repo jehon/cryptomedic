@@ -5,10 +5,9 @@ import { passThrough } from "../utils/promises";
 // https://github.com/CodeSeven/toastr
 // https://codeseven.github.io/toastr/demo.html
 
-// https://github.com/CodeSeven/toastr
-toastr.options.timeOut = 3 * 1000;
-// toastr.options.progressBar = true;
-
+//
+// We can not use global options because they do not work in UT
+//
 export default function notification<T>(message: string): (a: T) => T {
-  return passThrough(() => toastr.success(message));
+  return passThrough(() => toastr.success(message, "", { timeOut: 3 * 1000 }));
 }

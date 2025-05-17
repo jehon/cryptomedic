@@ -2,17 +2,19 @@ import assert from "node:assert";
 import test from "node:test";
 import {
   escapeRegExp,
-  padLeftTrim,
   roundTo,
+  string2number,
   toAttributeCase,
-  toTitleCase
+  toTitleCase,
+  yearOfBirthPattern
 } from "./strings";
 
-// https://jestjs.io/fr/docs/expect
-test("padLeftTrim", () => {
-  assert.equal(padLeftTrim(15, 4), "0015");
-  assert.equal(padLeftTrim(15, 2), "15");
-  assert.equal(padLeftTrim(15, 1), "5");
+test("string2number", () => {
+  assert.equal(string2number("123"), 123);
+  assert.equal(string2number("x"), NaN);
+  assert.equal(string2number("x", 123), 123);
+  assert.equal(string2number(""), NaN);
+  assert.equal(string2number("", 123), 123);
 });
 
 test("toAttributeCase (kebab case)", function () {
@@ -41,4 +43,24 @@ test("escapeRegExp", function () {
     new RegExp(escapeRegExp("/blabla/something")).test("_blabla_something"),
     false
   );
+});
+
+test("year of birth pattern", () => {
+  const yofRegex = new RegExp("^" + yearOfBirthPattern + "$", "mv");
+  // Normal cases
+  assert.ok(yofRegex.test("1999"));
+  assert.ok(yofRegex.test("1999-1"));
+  assert.ok(yofRegex.test("1999-01"));
+  assert.ok(yofRegex.test("2010"));
+  assert.ok(yofRegex.test("2024-01"));
+
+  // KO
+  assert.ok(!yofRegex.test("1969"));
+  assert.ok(!yofRegex.test("2030"));
+
+  assert.ok(!yofRegex.test("2000-13"));
+  assert.ok(!yofRegex.test("2000-25"));
+
+  assert.ok(!yofRegex.test("19999"));
+  assert.ok(!yofRegex.test("19999-01"));
 });

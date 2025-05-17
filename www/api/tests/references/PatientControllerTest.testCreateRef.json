@@ -1,0 +1,27 @@
+{
+    "newKey": "<dynamic>",
+    "folder": [
+        {
+            "type": "Patient",
+            "id": "<dynamic>",
+            "record": {
+                "id": "<dynamic>",
+                "created_at": "<timestamp>",
+                "updated_at": "<timestamp>",
+                "last_user": "",
+                "entry_year": 2025,
+                "entry_order": "<dynamic>",
+                "name": "",
+                "sex": null,
+                "year_of_birth": null,
+                "phone": null,
+                "address_comments": null,
+                "address_district": null,
+                "address_upazilla": null,
+                "address_union": null,
+                "pathology": null,
+                "comments": null
+            }
+        }
+    ]
+}

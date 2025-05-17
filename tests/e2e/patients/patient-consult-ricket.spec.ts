@@ -36,7 +36,8 @@ ctx.testRead({
 ctx.testCreateDelete({
   patientId: 105,
   data: {
-    ...consultBasicData
+    ...consultBasicData,
+    Date: "2008-06-10"
   }
 });
 
@@ -44,9 +45,11 @@ ctx.testUpdate({
   patientId: 105,
   fileId: 105,
   dataInitial: {
-    ...consultBasicData
+    ...consultBasicData,
+    Date: "2008-06-20"
   },
   dataUpdated: {
-    ...consultBasicData
+    ...consultBasicData,
+    Date: "2008-06-21"
   }
 });

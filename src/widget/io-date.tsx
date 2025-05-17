@@ -1,5 +1,5 @@
+import { type StringDate } from "../app-patient/objects-patient";
 import { outputDate, periodAsHumanReadable } from "../utils/date";
-import { type StringDate } from "../utils/types";
 import IOAbstract, { type IOProps } from "./io-abstract";
 
 //
@@ -27,7 +27,7 @@ export default function IODate(
           className="form-control"
           name={props.name}
           defaultValue={(value ?? 0) + ""}
-          onBlur={(evt) => props.onChange && props.onChange(evt.target.value)}
+          onChange={(evt) => props.onChange && props.onChange(evt.target.value)}
           type="date"
           min={props.min}
           max={props.max}

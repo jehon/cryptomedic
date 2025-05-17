@@ -1,6 +1,7 @@
 import { test } from "@playwright/test";
-import { crApiLogin } from "../helpers/e2e";
+import { crApiLogin, crInit } from "../helpers/e2e";
 import { fullTest } from "../helpers/e2e-file-panel";
+import { E2EForm } from "../helpers/e2e-form";
 import { E2EPatient } from "../helpers/e2e-patients";
 
 const ctx = fullTest({
@@ -90,4 +91,106 @@ test("update patient 101", async ({ page }) => {
   await e2eFile.expectOutputValue("District", "Cox's Bazar");
   await e2eFile.expectOutputValue("Upazila", "Ramu");
   await e2eFile.expectOutputValue("Union", "Eidgar");
+});
+
+/********************************************
+ *  Manage references
+ */
+
+test("search-reference-2001-1", async ({ page }) => {
+  await crApiLogin(page);
+
+  const GenerateYear = 2001;
+  const GenerateOrder = 1;
+
+  await crInit(page, { page: "/home.new" });
+
+  const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
+
+  await e2eForm.expectToBeVisible();
+  await e2eForm.setAllInputValues({
+    "Entry Year": GenerateYear,
+    "Entry Order": GenerateOrder
+  });
+
+  await e2eForm.locator.getByText("Search", { exact: true }).click();
+
+  await page.waitForURL(/.+#\/patient\/6/);
+});
+
+test("create-reference-2002", async ({ page }) => {
+  await crApiLogin(page);
+
+  const GenerateYear = 2022;
+  const GenerateOrder = 123;
+
+  await E2EPatient.apiDelete(page, GenerateYear, GenerateOrder);
+
+  await crInit(page, { page: "/home.new" }); // TODO: move to /home
+
+  const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
+
+  await e2eForm.expectToBeVisible();
+  await e2eForm.setAllInputValues({
+    "Entry Year": GenerateYear,
+    "Entry Order": GenerateOrder
+  });
+
+  await e2eForm.locator.getByText("Search", { exact: true }).click();
+  await e2eForm.locator.getByText("Create", { exact: true }).click();
+
+  await page.waitForURL(/.+#\/patient\/.+/);
+
+  const e2ePatient = new E2EPatient(page);
+  const e2eFile = e2ePatient.getFile({
+    fileType: "patient",
+    fileId: e2ePatient.id
+  });
+
+  await e2eFile.expectAllOutputValues({
+    "Entry Year": GenerateYear,
+    "Entry Order": GenerateOrder
+  });
+
+  // Clean up
+  await e2eFile.doDelete();
+});
+
+test("generate-reference", async ({ page }) => {
+  await crApiLogin(page);
+
+  const GenerateYear = 2003;
+
+  await crInit(page, { page: "/home.new" }); // TODO: move to /home
+
+  // entry_order will be set automatically to 10.000
+  await E2EPatient.apiDelete(page, GenerateYear, 10000);
+
+  const e2eForm = new E2EForm(
+    () => page.getByTestId("generate-a-reference"),
+    {}
+  );
+
+  await e2eForm.expectToBeVisible();
+  await e2eForm.setAllInputValues({
+    "Entry Year": GenerateYear
+  });
+
+  await e2eForm.locator.getByText("Generate", { exact: true }).click();
+
+  await page.waitForURL(/.+#\/patient\/.+/);
+
+  const e2ePatient = new E2EPatient(page);
+  const e2eFile = e2ePatient.getFile({
+    fileType: "patient",
+    fileId: e2ePatient.id
+  });
+
+  await e2eFile.expectAllOutputValues({
+    "Entry Year": GenerateYear,
+    "Entry Order": 10000
+  });
+
+  // Clean up
+  await e2eFile.doDelete();
 });

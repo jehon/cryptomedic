@@ -1,4 +1,4 @@
-import { getAuthorized, onSession } from "../../../../../src/utils/session.js";
+import { getAuthorized, onSession } from "../../../../../src/utils/session.ts";
 import { createElementWithTag } from "../../js/custom-element.js";
 import { getPanelStyles } from "../style/x-panel.js";
 

@@ -146,19 +146,23 @@
         <li>
           readPatient2000
           <ul>
-            <li><a href="/built/ng1x.html#/folder/1">patient 2000-1</a></li>
             <li>
-              <a href="/built/ng1x.html#/folder/1/file/RicketConsult/13"
+              <a href="/built/frontend/ng1x.html#/patient/1">patient 2000-1</a>
+            </li>
+            <li>
+              <a href="/built/frontend/ng1x.html#/patient/1/consult_ricket.13"
                 >ricket consult 13</a
               >
             </li>
             <li>
-              <a href="/built/ng1x.html#/folder/1/file/Appointment/2"
+              <a href="/built/frontend/ng1x.html#/patient/1/appointment.2"
                 >appointment 2</a
               >
             </li>
             <li>
-              <a href="/built/ng1x.html#/folder/1/file/Surgery/5">surgery 5</a>
+              <a href="/built/frontend/ng1x.html#/patient/1/surgery.5"
+                >surgery 5</a
+              >
             </li>
           </ul>
         </li>
@@ -166,9 +170,13 @@
         <li>
           readPatient5
           <ul>
-            <li><a href="/built/ng1x.html#/folder/5">patient 2014-105</a></li>
             <li>
-              <a href="/built/ng1x.html#/folder/5/file/ClubFoot/1"
+              <a href="/built/frontend/ng1x.html#/patient/5"
+                >patient 2014-105</a
+              >
+            </li>
+            <li>
+              <a href="/built/frontend/ng1x.html#/patient/5/consult_clubfoot.1"
                 >club foot 1</a
               >
             </li>
@@ -178,14 +186,20 @@
         <li>
           readPatient6
           <ul>
-            <li><a href="/built/ng1x.html#/folder/6">patient 2001-1</a></li>
+            <li>
+              <a href="/built/frontend/ng1x.html#/patient/6">patient 2001-1</a>
+            </li>
           </ul>
         </li>
 
         <li>
           readPatient3
           <ul>
-            <li><a href="/built/ng1x.html#/folder/3">patient 2014-103</a></li>
+            <li>
+              <a href="/built/frontend/ng1x.html#/patient/3"
+                >patient 2014-103</a
+              >
+            </li>
           </ul>
         </li>
       </ul>
@@ -193,32 +207,36 @@
 
     <div>
       <h2>E2E: tests/e2e/tests/modifyPatientTest.js</h2>
-      <div><a href="/built/ng1x.html#/folder/7">patient 2001-4</a></div>
+      <div>
+        <a href="/built/frontend/ng1x.html#/patient/7">patient 2001-4</a>
+      </div>
     </div>
 
     <div>
       <h2>E2E: reports</h2>
       <div>
-        <a href="/built/ng1x.html#/reports/activity">activity</a>
+        <a href="/built/frontend/ng1x.html#/reports/activity">activity</a>
         <ul>
           <li>month: 2014-05</li>
           <li>daily: 2014-05-20</li>
         </ul>
       </div>
       <div>
-        <a href="/built/ng1x.html#/reports/surgical">surgical</a>
+        <a href="/built/frontend/ng1x.html#/reports/surgical">surgical</a>
         <ul>
           <li>month: 2014-01</li>
         </ul>
       </div>
       <div>
-        <a href="/built/ng1x.html#/reports/consultations">consultations</a>
+        <a href="/built/frontend/ng1x.html#/reports/consultations"
+          >consultations</a
+        >
         <ul>
           <li>day: 2015-04-28</li>
         </ul>
       </div>
       <div>
-        <a href="/built/ng1x.html#/reports/statistical">statistical</a>
+        <a href="/built/frontend/ng1x.html#/reports/statistical">statistical</a>
         <ul>
           <li>month: 2014-05</li>
         </ul>
@@ -231,7 +249,7 @@
           const url = this.getAttribute("url") ?? "";
           let remoteUrl = this.getAttribute("remote-url") ?? url;
           if (remoteUrl[0] == "/") {
-            remoteUrl = "http://www.cryptomedic.org" + remoteUrl;
+            remoteUrl = "http://cryptomedic.amd-france.org" + remoteUrl;
           }
 
           this.attachShadow({ mode: "open" });

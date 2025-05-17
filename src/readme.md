@@ -4,7 +4,6 @@
 | -------- | ---------- | ----- | ---- | ---------------- | ------------------------------ |
 |          |            |       |      |                  |                                |
 | utils    | -          | -     |      | -                | pure javascript helpers        |
-| styles   | -          | y     | y    | utils            | pure css widgets               |
 | widget   | -          | y     | -    | utils            | pure gui widgets               |
 |          |
 | business | y          | -     |      | utils            | pojo representing the business |

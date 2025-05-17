@@ -1,13 +1,13 @@
-export function passThrough<T>(cb: (t: T) => any): (t: T) => T {
+export function passThrough<T>(cb: (t: T) => void): (t: T) => T {
   return (t) => {
     cb(t);
     return t;
   };
 }
 
-// ts-unused-exports:disable-next-line
-export function promiseLog<T>(data: T): T {
-  // eslint-disable-next-line no-console
-  console.trace(data);
-  return data;
-}
+// export function delayed<T>(secs: number): (t: T) => Promise<T> {
+//   return (t) =>
+//     new Promise<T>((resolve) => {
+//       setTimeout(() => resolve(t), 1000 * secs);
+//     });
+// }

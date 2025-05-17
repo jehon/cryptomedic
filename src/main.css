@@ -19,6 +19,11 @@
   }
 }
 
+.reduce-width {
+  width: min(100%, 800px);
+  margin: 0 auto;
+}
+
 /**
  * text with image
  *
@@ -63,7 +68,6 @@
     max-height: 100%;
     margin: auto;
 
-    scrollbar-width: 5px;
     overflow: auto;
   }
 }

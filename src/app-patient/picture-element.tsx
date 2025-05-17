@@ -1,44 +1,64 @@
-import Picture from "../business/picture";
-import { getList } from "../utils/config";
-
-import IO from "../widget/io";
+import { getList } from "../utils/session";
+import IODate from "../widget/io-date";
+import IOImage from "../widget/io-image";
+import IOList from "../widget/io-list";
+import IOString from "../widget/io-string";
+import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import patientRelatedElementGenerator, {
-  type PatientRelatedElementGeneratorProps
-} from "./patient-related-element-generator";
+import FilePanel from "./blocs/file-panel";
+import type { Patient, Picture } from "./objects-patient";
+import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
-export default function PictureElement({
-  file,
-  props
-}: {
-  file: Picture;
-  props: PatientRelatedElementGeneratorProps;
-}): React.ReactNode {
-  return patientRelatedElementGenerator<Picture>(file, props, {
-    header: <>{file.type}</>,
-    body: (
+export default function PictureElement(
+  props: { patient: Patient } & RelatedElementGeneratorProps<Picture>
+): React.ReactNode {
+  return (
+    <FilePanel<Picture>
+      key={`picture.${props.file.id}`}
+      type="picture"
+      file={props.file}
+      apiRootUrl={`fiche/picture`} // No leading slash!
+      edit={props.edit}
+      closed={props.closed}
+      canBeDeleted={true}
+      canBeLocked={true}
+      onCreated={props.onCreated}
+      onUpdated={props.onUpdated}
+      onDeleted={props.onDeleted}
+      selfPath={`${props.parentPath}/picture/${props.file.id ?? "add"}`}
+      header={<>{props.file.type}</>}
+    >
       <TwoColumns>
         <Panel fixed label="Information">
-          <IO.List
+          <input
+            type="hidden"
+            name="patient_id"
+            defaultValue={props.patient.id}
+          />
+          <IOList
             name="type"
-            value={file.type as string}
+            value={props.file.type as string}
             list={getList("PictureType")}
           />
-          <IO.Date name="date" value={file.date} />
-          <IO.String label="File" value={file.file as string} e2eExcluded />
-          <IO.Text name="comments" value={file.comments as string} />
+          <IODate name="date" value={props.file.date} />
+          <IOString
+            label="File"
+            value={props.file.file as string}
+            e2eExcluded
+          />
+          <IOText name="comments" value={props.file.comments as string} />
         </Panel>
         <Panel fixed label="Image">
-          <IO.Image
+          <IOImage
             name="fileBlob"
             label="Picture"
-            value={file.getPictureUrl() as string}
+            value={`/api/picture/${props.file.id ?? ""}`}
             required
-            create={!file.id}
+            create={!props.file.id}
           />
         </Panel>
       </TwoColumns>
-    )
-  });
+    </FilePanel>
+  );
 }

@@ -25,7 +25,7 @@ ctx.testCreateDelete({
   patientId: 107,
   data: {
     Type: "picture",
-    Date: "2023-01-06",
+    Date: "2008-07-10",
     // File: new RegExp("2010/007/2010-7.2023-01-06.[0-9]+.jpg"),
     Picture: "107-upload.jpeg",
     Comments: "Beautiful picture"
@@ -37,12 +37,12 @@ ctx.testUpdate({
   fileId: 107,
   dataInitial: {
     Type: "picture",
-    Date: "2023-01-06",
+    Date: "2008-07-20",
     Comments: "Beautiful picture"
   },
   dataUpdated: {
     Type: "x-ray",
-    Date: "2020-02-07",
+    Date: "2008-07-21",
     Comments: "Beautiful xray"
   }
 });

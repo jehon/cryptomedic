@@ -1,7 +1,7 @@
 import axios from "axios";
 axios.defaults.timeout = 30 * 1000;
 
-import { setSession } from "../../../../../src/utils/session.js";
+import { setSession } from "../../../../../src/utils/session.ts";
 import { routeToLogin } from "../../js/router.js";
 
 import "../../../../../node_modules/css-inherit/jehon-css-inherit.js";

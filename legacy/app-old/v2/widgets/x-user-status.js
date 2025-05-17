@@ -2,7 +2,7 @@ import {
   getUsername,
   onSession,
   setSession
-} from "../../../../src/utils/session.js";
+} from "../../../../src/utils/session.ts";
 import {
   createElementWithObject,
   createElementWithTag

@@ -30,6 +30,7 @@ ctx.testCreateDelete({
   patientId: 106,
   data: {
     ...consultBasicData,
+    Date: "2008-04-10",
     "Plantar Flexion Max Right": 15,
     "Jumping One Leg Right": 1,
     "Jumping One Leg Left": 2,
@@ -42,12 +43,14 @@ ctx.testUpdate({
   fileId: 106,
   dataInitial: {
     ...consultBasicData,
+    Date: "2008-04-20",
     "Jumping One Leg Right": 1,
     "Jumping One Leg Left": 2,
     "Run Left": 0
   },
   dataUpdated: {
     ...consultBasicData,
+    Date: "2008-04-21",
     "Jumping One Leg Right": 0,
     "Jumping One Leg Left": 1,
     "Run Left": 2

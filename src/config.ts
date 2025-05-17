@@ -16,16 +16,28 @@ export const spacing = {
   text: "5px"
 };
 
-const nbrOr = (1 + Math.sqrt(5)) / 2;
-export const orSmall = (1 / (1 + nbrOr)) * 100;
-export const orBig = 100 - orSmall;
-
 export const messages = {
   success: "success",
   info: "info",
   warning: "warning",
   error: "error"
 };
+
+export type BusinessType =
+  | "appointment"
+  | "bill"
+  | "consult_clubfoot"
+  | "consult_other"
+  | "consult_ricket"
+  | "patient"
+  | "payment"
+  | "price"
+  | "picture"
+  | "surgery"
+  //
+  // Legacy
+  //
+  | "pojo";
 
 export const icons = {
   error: "/static/img/error.svg",
@@ -37,20 +49,60 @@ export const icons = {
     consult_other: "/static/img/model_consult_other.svg",
     consult_ricket: "/static/img/model_consult_ricket.svg",
     patient: "/static/img/model_patient.gif",
-    payment: "/static/img/payment.gif",
+    payment: "/static/img/model_payment.svg",
     picture: "/static/img/model_picture.svg",
     surgery: "/static/img/model_surgery.png"
-  }
-};
-
-export const urls = {
-  home: "/built/frontend/ng1x.html"
+  } as Record<BusinessType, string>
 };
 
 export function isFeatureSwitchEnabled(): boolean {
-  return location.search == "?dev";
+  try {
+    return location.search == "?dev";
+  } catch (_e) {
+    // Unit Testing
+    return true;
+  }
 }
 
 if (isFeatureSwitchEnabled()) {
   console.warn("In dev mode (inTodoDev in config.ts)");
+}
+
+export const REPORT_ACTIVITY = "activity";
+export const REPORT_CASH_REGISTER = "cash-register";
+export const REPORT_CONSULTATIONS = "consultations";
+export const REPORT_FINANCIAL = "financial";
+export const REPORT_SURGICAL = "surgical";
+export const REPORT_SURGICAL_SUGGESTED = "surgical-suggested";
+export const REPORT_STATISTICAL = "statistical";
+
+export function getPriceCategories() {
+  return ["consult", "medecine", "other", "workshop", "surgical"];
+}
+
+export function type2Title(type: BusinessType) {
+  switch (type) {
+    case "appointment":
+      return "Appointment";
+    case "bill":
+      return "Bill";
+    case "consult_clubfoot":
+      return "Consult. Clubfoot";
+    case "consult_other":
+      return "Consult. Other";
+    case "consult_ricket":
+      return "Consult. Ricket";
+    case "patient":
+      return "Patient";
+    case "payment":
+      return "Payment";
+    case "picture":
+      return "Picture";
+    case "price":
+      return "Price";
+    case "surgery":
+      return "Surgery";
+    default:
+      throw new Error(`Unknown type ${type} in type2Title`);
+  }
 }

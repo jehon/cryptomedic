@@ -11,7 +11,7 @@ export default function IOString(props: IOProps<string>) {
           className="form-control"
           name={props.name}
           defaultValue={value ?? ""}
-          onBlur={(evt) => props.onChange && props.onChange(evt.target.value)}
+          onChange={(evt) => props.onChange && props.onChange(evt.target.value)}
           {...props.htmlProps}
         />
       )

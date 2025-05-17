@@ -91,47 +91,29 @@ class Picture extends CryptomedicModel {
 			return $model;
 		}
 
-		if (Request::has("fileBlob")) {
-			$mimetype = Request::file("fileBlob")->getMimeType();
-			$model->file = $model->calculateTargetName($mimetype);
-
-			if (file_exists($model->getPhysicalPath($model->file))) {
-				abort(500, "Moving uploaded file to " . $model->getPhysicalPath($model->file) . ": already exists");
-			}
-
-			mkdirIf($model->getPhysicalPath($model->file));
-
-			if (!Request::file("fileBlob")->move(dirname($model->getPhysicalPath($model->file)), basename($model->getPhysicalPath($model->file)))) {
-				abort(500, "Storing uploaded file to " . $model->getPhysicalPath($model->file));
-  			}
-		} else if (Request::has('fileContent')) {
-			// TODO: legacy field
-			$dataURI = Request::input('fileContent');
-
-			// example = data:image/jpeg;base64
-			$v = substr($dataURI, strlen("data:"));
-			$mimetype = substr($v, 0, strpos($v, ";"));
-			$content64 = substr($v, strpos($v, ",") + 1);
-			$contentRaw = base64_decode($content64);
-
-			if (!$contentRaw) {
-				abort(500, "Received data is empty");
-			}
-
-			$model->file = $model->calculateTargetName($mimetype);
-
-			if (file_exists($model->getPhysicalPath($model->file))) {
-				abort(500, "Moving uploaded file to " . $model->getPhysicalPath($model->file) . ": already exists");
-			}
-
-			mkdirIf($model->getPhysicalPath($model->file));
-
-			if (!file_put_contents($model->getPhysicalPath($model->file), $contentRaw)) {
-				abort(500, "Storing uploaded file to " . $model->getPhysicalPath($model->file));
-  			}
-		} else {
+		if (!Request::has("fileBlob")) {
 			abort(500, "We need the file while creating a picture");
 		}
+
+		$file= Request::file('fileBlob');
+
+		if (!$file->isValid()) {
+			var_dump($file->getError());
+			abort(500, "The file is invalid");
+		}
+
+		$mimetype = $file->getMimeType();
+		$model->file = $model->calculateTargetName($mimetype);
+
+		if (file_exists($model->getPhysicalPath($model->file))) {
+			abort(500, "Moving uploaded file to " . $model->getPhysicalPath($model->file) . ": already exists");
+		}
+
+		mkdirIf($model->getPhysicalPath($model->file));
+
+		if (!$file->move(dirname($model->getPhysicalPath($model->file)), basename($model->getPhysicalPath($model->file)))) {
+			abort(500, "Storing uploaded file to " . $model->getPhysicalPath($model->file));
+ 		}
 
 		$model->save();
 

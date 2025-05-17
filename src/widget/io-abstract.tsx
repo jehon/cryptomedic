@@ -2,20 +2,28 @@ import { createContext, useContext } from "react";
 import generateUUID from "../utils/generate-uuid";
 import { isEmptyValue } from "../utils/objects";
 import { toTitleCase } from "../utils/strings";
-import "./io.css";
+import "./io-abstract.css";
 
 // Will be initiated at higher level
 export const EditContext = createContext(false);
+
+export const Modes = Object.freeze({
+  input: "input",
+  output: "output"
+});
+export type ModesList = keyof typeof Modes;
 
 export type IOPropsInput<T> = T | string | undefined;
 
 export type IOPropsReadonly<T> = {
   label?: string;
   value: IOPropsInput<T>;
+  mode?: ModesList;
   noLabel?: boolean;
-  e2eExcluded?: boolean;
+  e2eExcluded?: boolean; // Wether the data should be excluded from e2e
   inputHelp?: React.ReactNode;
   appendix?: React.ReactNode;
+  note?: boolean;
 };
 
 export type IOProps<T> = IOPropsReadonly<T> & {
@@ -40,7 +48,6 @@ function getLabel(props: IOProps<any>) {
 export default function IOAbstract<T>(
   props: IOProps<T> & {
     // Not published properties
-    note?: boolean;
     type: string;
   },
   {
@@ -53,28 +60,17 @@ export default function IOAbstract<T>(
     };
   }
 ): React.ReactNode {
-  const calculatedProps = {
-    required: false,
-    noLabel: false,
-    note: false,
-    e2eExcluded: false, // Wether the data should be excluded from e2e
-    ...props
-  };
-
-  const writable = !!calculatedProps.name;
+  const writable = !!props.name;
   if (writable) {
-    if (
-      calculatedProps.label &&
-      calculatedProps.label == toTitleCase(calculatedProps.name ?? "")
-    ) {
+    if (props.label && props.label == toTitleCase(props.name ?? "")) {
       throw new Error(
-        `IOAbstract: do not specify label equivalent to name (${JSON.stringify(calculatedProps)})`
+        `IOAbstract: do not specify label equivalent to name (${JSON.stringify(props)})`
       );
     }
 
     if (!renderInput) {
       throw new Error(
-        `IOAbstract: Need the Input for non-readonly inputs (${JSON.stringify(calculatedProps)}}`
+        `IOAbstract: Need the Input for non-readonly inputs (${JSON.stringify(props)}}`
       );
     }
   }
@@ -82,8 +78,14 @@ export default function IOAbstract<T>(
   // ReadOnly always prevent edit mode
   const editContext = useContext(EditContext) && writable;
 
+  const editMode =
+    props.mode == Modes.output
+      ? false
+      : props.mode == Modes.input
+        ? true
+        : editContext;
   // Hide if not value and output mode
-  if (!editContext && isEmptyValue(calculatedProps.value)) {
+  if (!editMode && isEmptyValue(props.value)) {
     return null;
   }
 
@@ -92,29 +94,26 @@ export default function IOAbstract<T>(
     <div
       className={
         "io " +
-        (calculatedProps.note ? "io-note " : "") +
-        (editContext ? "io-input " : "io-output ") +
+        (props.note ? "io-note " : "") +
+        (editMode ? "io-input " : "io-output ") +
         `io-${props.type}`
       }
-      data-role={getLabel(calculatedProps)}
+      data-role={getLabel(props)}
     >
-      {calculatedProps.noLabel || (
+      {props.noLabel || (
         <label htmlFor={uuid}>
-          {getLabel(calculatedProps)}
-          {calculatedProps.required ? "*" : ""}
+          {getLabel(props)}
+          {props.required ? "*" : ""}
         </label>
       )}
-      <div
-        className="content"
-        data-e2e={calculatedProps.e2eExcluded ? "excluded" : ""}
-      >
-        {editContext ? (
+      <div className="content" data-e2e={props.e2eExcluded ? "excluded" : ""}>
+        {editMode ? (
           <>
-            {renderInput!(calculatedProps.value, uuid)}
+            {renderInput!(props.value, uuid)}
             {props.inputHelp}
           </>
         ) : (
-          <>{renderOutput(calculatedProps.value)}</>
+          <>{renderOutput(props.value)}</>
         )}
       </div>
       {props.appendix && <div className="appendix">{props.appendix}</div>}

@@ -6,6 +6,7 @@
 /legacy/built/
 /www/built/
 /www/index.html
+/tests/e2e/__local__/
 
 #
 # Temporary files

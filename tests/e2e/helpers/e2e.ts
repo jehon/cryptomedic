@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from "@playwright/test";
-import { type IndexSignature } from "../../../src/constants";
+import { type IndexSignature } from "../../../src/types";
 import type { CRUDType } from "../../../src/utils/network";
 import { CRUD } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
@@ -17,7 +17,6 @@ const LOGINS = {
 const PASSWORD = "p";
 
 export function crUrl(segment: string = ""): string {
-  // TODO: remove the "?dev" when migration is finished
   return `${WebBaseUrl}/built/frontend/ng1x.html?dev#${segment}`;
 }
 
@@ -116,6 +115,7 @@ export async function crInit(
 }
 
 export async function crExpectUrl(page: Page, r: string | RegExp) {
+  await page.waitForURL(r, { timeout: 5000 });
   await expect(page).toHaveURL(r);
 }
 
@@ -126,20 +126,6 @@ export async function crReady(page: Page): Promise<void> {
 
   // No global spinning wheel anymore
   await expect(page.getByTestId("global-wait"), "crReady").toHaveCount(0);
-}
-
-export async function crLegacyInput(
-  page: Page | Locator,
-  selector: string,
-  value: string | number
-): Promise<void> {
-  const el = page.locator(selector);
-  const msg = "with '${selector}' = '${value}' (e2e.crLegacyInput)`";
-  await expect(el, msg).toBeVisible();
-  const input = el.locator("input");
-  await expect(input, msg).toBeVisible();
-  await input.fill("" + value);
-  await expect(input, msg).toHaveValue("" + value);
 }
 
 export async function crAcceptPopup(page: Page | Locator, button: string) {

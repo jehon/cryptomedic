@@ -1,4 +1,5 @@
 export function deepFreeze<T extends Record<any, any>>(object: T): T {
+  // From MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze#deep_freezing
   const propNames = Object.getOwnPropertyNames(object);
   for (const name of propNames) {
     const value = object[name];

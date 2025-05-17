@@ -2,6 +2,7 @@ import { ServerRequestError, TransportRequestError } from "./exceptions";
 
 export type CRUDType = "POST" | "GET" | "PUT" | "DELETE";
 export const CRUD = {
+  search: "GET" as CRUDType,
   create: "POST" as CRUDType,
   submit: "POST" as CRUDType,
   read: "GET" as CRUDType,
@@ -9,31 +10,30 @@ export const CRUD = {
   delete: "DELETE" as CRUDType
 };
 
-export function request({
+export function request<T = any>({
   url,
   method,
   queryData,
   formData,
   allowed
 }: {
-  url: string[];
+  url: string;
   method?: string;
   queryData?: Record<string, any>;
   formData?: FormData;
   allowed?: number[];
-}) {
-  url = url || ["/"];
+}): Promise<T> {
   method = method || CRUD.read;
 
   if (url[0] !== "/") {
-    url = ["/", "api", ...url];
+    url = `/api/${url}`;
   }
 
   const controller = new AbortController();
   const signal = controller.signal;
 
   const strUrl =
-    url.join("/").replaceAll("//", "/") +
+    url +
     (method === "GET" ? "?" + new URLSearchParams(queryData).toString() : "");
 
   //
@@ -61,7 +61,7 @@ export function request({
         (response.status >= 200 && response.status < 300) ||
         (allowed && allowed.indexOf(response.status) >= 0)
       ) {
-        return response.json();
+        return response.json() as T;
       }
       throw new ServerRequestError(`Error code is ${response.status}`);
     },

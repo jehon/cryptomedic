@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { setCurrentFolder } from "../../../../src/utils/session.js";
+import { setCurrentFolder } from "../../../../src/utils/session.ts";
 import Folder from "../../../business/folder.js";
 import TimedMap from "../../v2/js/timedMap.js";
 import nullify from "../nullify.js";

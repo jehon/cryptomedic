@@ -8,7 +8,7 @@ export type ButtonActionProps = {
   default?: boolean;
   discrete?: boolean;
   action?: string;
-  onOk?: () => void;
+  onOk?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   linkTo?: string | string[];
   requires?: string;
 };
@@ -41,6 +41,10 @@ export const ActionStyles = {
   View: {
     css: "action-view",
     text: "View"
+  } as const,
+  Reset: {
+    css: "action-alternate",
+    text: "Reset"
   } as const
 };
 
@@ -57,16 +61,22 @@ export default function ActionButton(
     : linkToRaw;
   const onOk =
     props.onOk ??
-    (() => {
-      document.location.href = linkTo;
-    });
+    (props.linkTo
+      ? () => {
+          document.location.href = linkTo;
+        }
+      : undefined);
 
   return (
     <Restricted requires={props.requires}>
       <button
         className={"btn " + as.css + (props.discrete ? " discrete " : "")}
         onClick={onOk}
-        {...(props.default ? { type: "submit" } : {})}
+        {
+          //https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#type
+          // by default, it is a submit button
+          ...(props.default ? { type: "submit" } : { type: "button" })
+        }
       >
         {action}
       </button>

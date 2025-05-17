@@ -53,7 +53,7 @@ $(INTEGRATION_BUILT_MARK): \
 
 .PHONY: integration-test
 test: integration-test
-integration-test: integration-test-desktop integration-test-playwright
+integration-test: integration-test-playwright
 
 integration-test-open: $(INTEGRATION_BUILT_MARK)
 	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/desktop/runtime"
@@ -111,13 +111,19 @@ integration-test-playwright: integration-test-playwright-deps
 
 	node_modules/.bin/playwright test --update-snapshots
 
+integration-test-playwright-reset-snapshots:
+	rm -fr tests/e2e/__local__
+	make integration-test-playwright
+
 .PHONY: integration-test-playwright-strict
 integration-test-playwright-strict: integration-test-playwright-deps
 
 	node_modules/.bin/playwright test
 
 .PHONY: integration-test-playwright-headed
-integration-test-playwright-headed: integration-test-playwright-deps
+integration-test-playwright-headed: \
+		integration-test-playwright-deps \
+		reset-lite
 
 	node_modules/.bin/playwright test --ui
 

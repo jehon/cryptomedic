@@ -1,9 +1,16 @@
-export function string2number(str: string): number {
+export function string2number(
+  str: string | undefined,
+  def: number = NaN
+): number {
   try {
-    return parseFloat(str);
+    const n = parseFloat(str ?? "");
+    if (Number.isFinite(n)) {
+      return n;
+    }
   } catch (_e) {
-    return NaN;
+    // true
   }
+  return def;
 }
 
 export function string2Boolean(v: any) {
@@ -24,15 +31,6 @@ export function string2Boolean(v: any) {
   }
 
   return !!v;
-}
-
-export function padLeftTrim(
-  what: string | number,
-  l: number,
-  char: string = "0"
-): string {
-  const int = char.repeat(l) + what;
-  return int.substring(int.length - l, int.length);
 }
 
 export function roundTo(val: number, decimals: number = 1): string {
@@ -109,3 +107,7 @@ export function escapeRegExp(string: string): string {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions#escaping
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
+
+// From 1970 to 2029 (see help text on patient-element)
+export const yearOfBirthPattern =
+  "(19[7-9][0-9]|20[0-2][0-9])(-(0?[1-9]|1[0-2]))?";

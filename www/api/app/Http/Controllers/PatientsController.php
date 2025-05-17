@@ -24,14 +24,30 @@ class PatientsController extends FicheController {
 		// We do this only when we need to generate a reference
 		// otherwise, we go to FolderController@reference (other route)
 
-		// Generate a reference:
-		$res = DB::insert("INSERT INTO patients(entry_year, entry_order, name)
-		   VALUE(?, coalesce(
-		      greatest(10000,
-		        (select i from (select (max(entry_order) + 1) as i from patients where entry_year = ? and entry_order BETWEEN 10000 AND 19999) as j )
-		      ),
-		  10000), ?)", [ Request::input("entry_year"), Request::input("entry_year"), Request::input("name") ])
-		|| abort(500, "Problem inserting and creating reference");
+		if (Request::has("entry_number")) {
+			// Created a reference:
+			$res = DB::insert("
+				INSERT INTO patients(entry_year, entry_order)
+				VALUE(?,?)
+			", [ Request::input("entry_year"), Request::input("entry_order")])
+			|| abort(500, "Problem creating reference");
+
+		} else {
+			// Generate a reference:
+			// TODO: Remove "name" as it is not expected here
+			$res = DB::insert("
+				INSERT INTO patients(entry_year, entry_order, name)
+				VALUE(
+					?,
+					coalesce(
+						greatest(10000,
+							(select i from (select (max(entry_order) + 1) as i from patients where entry_year = ?) as j )
+						),
+						10000
+					),
+				?)", [ Request::input("entry_year"), Request::input("entry_year"), Request::input("name", "") ])
+			|| abort(500, "Problem creating reference");
+		}
 
 		// TODO: how does Laravel get last_insert_id cleanly???
 		$id = DB::select("SELECT last_insert_id() as id");

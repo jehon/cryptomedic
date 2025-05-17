@@ -5,7 +5,7 @@ import "./x-o-overlay.js";
 import "./x-waiting.js";
 
 import axios from "axios";
-import { setSession } from "../../../../src/utils/session.js";
+import { setSession } from "../../../../src/utils/session.ts";
 import { routeToLogin } from "../../v2/js/router.js";
 
 const error = Symbol("error");

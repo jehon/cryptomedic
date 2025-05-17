@@ -48,7 +48,6 @@ export const ConsultFieldsConfigType: FieldsConfigTypeSimplified = {
 };
 
 export const consultBasicData = {
-  Date: "2007-01-10",
   Examiner: "Ershad",
   Center: "Ukhia",
   "Weight (kg)": "29",
@@ -100,7 +99,7 @@ export class E2EFilePanel extends E2EForm {
     } else {
       this.id = "" + id;
     }
-    this.fileBaseUrl = `/patient/${this.patient_id}/${type}.`;
+    this.fileBaseUrl = `/patient/${this.patient_id}/${type}/`;
   }
 
   /* ***********************************
@@ -122,7 +121,7 @@ export class E2EFilePanel extends E2EForm {
    *
    */
 
-  // fragment: /appointment.102
+  // fragment: /appointment/102
   async expectUrlFragmentForType(fragment: string) {
     await crExpectUrl(
       this.page,
@@ -134,8 +133,16 @@ export class E2EFilePanel extends E2EForm {
 
   detectFileId() {
     const url = this.page.url();
-    const matches = /\.(?<id>[0-9]+)$/.exec(url);
-    return matches?.groups?.["id"] ?? "";
+    const matches = /\/(?<id>[0-9]+)$/.exec(url);
+    const id = matches?.groups?.["id"] ?? "";
+    console.info("Detected file id: ", id);
+    return id;
+  }
+
+  private getButtonGroup() {
+    const bt = this.page.getByTestId(`panel-actions-${this.type}.${this.id}`);
+    expect(bt).toBeVisible();
+    return bt;
   }
 
   /* ***********************************
@@ -153,7 +160,7 @@ export class E2EFilePanel extends E2EForm {
   async doDelete(): Promise<this> {
     await this.expectToBeVisible();
 
-    await this.page.getByText("Delete").click();
+    await this.getButtonGroup().getByText("Delete").click();
     const popup = this.page.getByTestId("popup");
     await expect(popup).toBeVisible();
     const popupActions = popup.getByRole("group");
@@ -178,9 +185,9 @@ export class E2EFilePanel extends E2EForm {
     // TODO: when URL will be self-updated on load, this should be fixed
     this.page.goto(crUrl(`${this.fileBaseUrl}${this.id}`));
     if (this.id) {
-      await this.expectUrlFragmentForType(`\\/${this.type}\\.${this.id}`);
+      await this.expectUrlFragmentForType(`\\/${this.type}\\/${this.id}`);
     } else {
-      await this.expectUrlFragmentForType(`\\/${this.type}\\.[0-9]+`);
+      await this.expectUrlFragmentForType(`\\/${this.type}\\/[0-9]+`);
     }
     await this.e2ePatient.expectToBeVisible();
     await this.expectToBeVisible();
@@ -207,22 +214,20 @@ export class E2EFilePanel extends E2EForm {
     );
     await this.e2ePatient.expectToBeVisible();
     await this.expectToBeVisible();
-    await expect(this.page.getByText("Edit")).toBeVisible();
+    await expect(this.getButtonGroup().getByText("Edit")).toBeVisible();
 
     return this;
   }
 
   async goEdit(): Promise<this> {
     await this.expectToBeVisible();
-
-    await expect(this.page.getByText("Edit")).toBeVisible();
-    await this.page.getByText("Edit").click();
+    await this.getButtonGroup().getByText("Edit").click();
 
     await crExpectUrl(
       this.page,
       new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
     );
-    await expect(this.page.getByText("Save").first()).toBeVisible();
+    await expect(this.getButtonGroup().getByText("Save").first()).toBeVisible();
     await this.expectToBeVisible();
     return this;
   }

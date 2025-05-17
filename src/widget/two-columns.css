@@ -3,10 +3,14 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
 
-.two-columns > * {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: var(--panel-min-width);
+  & > * {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 1px;
+  }
+
+  & > img {
+    object-fit: contain;
+  }
 }

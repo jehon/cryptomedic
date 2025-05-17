@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+#
+# Env variables
+#   COMMIT=1
+#
+
+set -o errexit
+set -o pipefail
+
+# shellcheck source-path=SCRIPTDIR
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
+
+#
+# !! All path are inside the docker !!
+#
+#
+
+header_begin "PHPUnit: $T $V starting"
+
+args=()
+for a in "$@"; do
+  # Relativize paths to image
+  args+=("${a#"www/api/"}")
+done
+
+docker compose run "${CR_DOCKER_ARGS_RUN[@]}" \
+  -e "COMMIT=$COMMIT" \
+  -e "XDEBUG_MODE=coverage" \
+  --volume "$CR_PRJ_DIR:/workdir" \
+  --workdir "/workdir/www/api" \
+  web \
+  vendor/bin/phpunit "${args[@]}"
+
+header_end

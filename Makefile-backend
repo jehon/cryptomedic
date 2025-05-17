@@ -60,14 +60,14 @@ backend-update-dependencies:
 .PHONY: backend-test
 test: backend-test
 backend-test: $(BACKEND_DEPENDENCIES_MARK)
-	cd "$(BACKEND_ROOT)" && $(ROOT)/bin/cr-phpunit
+	$(ROOT)/bin/cr-backend-phpunit
 
 .PHONY: backend-update-references
 update: backend-update-references
 backend-update-references: $(BACKEND_DEPENDENCIES_MARK)
-	cd "$(BACKEND_ROOT)" && COMMIT=1 $(ROOT)/bin/cr-phpunit
+	COMMIT=1 $(ROOT)/bin/cr-backend-phpunit
 
 .PHONY: backend-github
 github: backend-github
-backend-github: 
+backend-github:
 	chmod --changes a+x www/api/vendor/bin/*

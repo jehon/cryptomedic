@@ -1,0 +1,15 @@
+.menu-item {
+  max-width: min(250px, 100%);
+
+  .versal-icon {
+    max-width: 25%;
+    align-self: flex-start;
+    padding: 5px;
+  }
+
+  .description {
+    height: 150px;
+    text-align: left;
+    font-size: smaller;
+  }
+}
