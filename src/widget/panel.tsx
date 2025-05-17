@@ -11,7 +11,6 @@ export default function Panel(props: {
   fixed?: boolean;
   children: React.ReactNode;
   testid?: string;
-  onToggle?: (state: boolean) => void;
 }): React.ReactNode {
   const [statusOpened, toggleOpened] = React.useState(!props.closed);
 
@@ -31,7 +30,6 @@ export default function Panel(props: {
     if (!props.fixed) {
       const newState = !statusOpened;
       toggleOpened(newState);
-      if (props.onToggle) props.onToggle(newState);
     }
   }
 

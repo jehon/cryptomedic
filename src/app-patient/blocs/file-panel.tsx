@@ -44,12 +44,6 @@ export default function FilePanel<T extends Pojo>(props: {
       testid={`${props.type}.${props.file.id ?? "add"}`}
       closed={props.closed}
       fullscreen={editMode}
-      onToggle={(_opened) => {
-        // if (opened) {
-        // TODO: when angular router is out (adapt e2e file panel goEdit too)
-        // navigate(`/patient/${patientId}/${props.type}/${fileId}${mode ? `/${mode}` : ""}`);
-        // }
-      }}
       header={
         <>
           <span className="first">
