@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ButtonsGroup from "./buttons-group";
 import "./panel.css";
 
@@ -12,10 +12,14 @@ export default function Panel(props: {
   children: React.ReactNode;
   testid?: string;
 }): React.ReactNode {
-  const [statusOpened, toggleOpened] = React.useState(!props.closed);
-
   // Fullscreen is always fixed
-  const fixed = props.fixed || props.fullscreen;
+  const fixed = props.fixed || props.fullscreen || false;
+
+  const [opened, setOpened] = React.useState(!props.closed);
+
+  useEffect(() => {
+    setOpened(!(props.closed ?? false) || fixed);
+  }, [props.closed, fixed]);
 
   // TODO: no display if no children? does not seem to work perfectly...
   //
@@ -31,8 +35,7 @@ export default function Panel(props: {
 
   function onOpenClose() {
     if (!fixed) {
-      const newState = !statusOpened;
-      toggleOpened(newState);
+      setOpened(!opened);
     }
   }
 
@@ -44,11 +47,11 @@ export default function Panel(props: {
       <div
         className="panel"
         data-role="panel"
-        data-testid={props.testid + (statusOpened ? "/opened" : "/closed")}
+        data-testid={props.testid + (opened ? "/opened" : "/closed")}
       >
         <div data-role="header" className="header" onClick={onOpenClose}>
           {fixed || (
-            <div id="triangle" className={statusOpened ? "opened" : "closed"}>
+            <div id="triangle" className={opened ? "opened" : "closed"}>
               &#9205;
             </div>
           )}
@@ -57,7 +60,7 @@ export default function Panel(props: {
             {props.header}
           </div>
         </div>
-        {statusOpened ? (
+        {opened ? (
           <>
             {props.actions ? (
               <div data-testid={`panel-actions-${props.testid}`}>
