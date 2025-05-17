@@ -1,7 +1,9 @@
+import { produce } from "immer";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Folder from "../business/folder";
 import * as config from "../config";
+import { patientRelatedOrdering } from "../utils/calculations";
 import ButtonsGroup from "../widget/buttons-group";
 import { Modes, type ModesList } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
@@ -58,6 +60,7 @@ export function getLastSeen(folder: Folder): Date | undefined {
 function withFile(folder: Folder, file: PatientRelated): Folder {
   return produce(withoutFile(folder, file), (draft) => {
     draft.list.push(file);
+    draft.list.sort(patientRelatedOrdering);
   });
 }
 
