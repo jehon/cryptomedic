@@ -130,6 +130,11 @@ export default function PagePatient(): React.ReactNode {
         } as PatientRelated)
       );
     }
+  } else {
+    if (folder.list.filter((f) => !f.id).length > 0) {
+      // Removing add file
+      folderUpdated(withoutAdded(folder));
+    }
   }
 
   //
