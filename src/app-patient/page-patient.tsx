@@ -204,7 +204,9 @@ export default function PagePatient(): React.ReactNode {
             edit: uid == selectedUid ? props.mode === Modes.input : false,
             onCreated: (file: PatientRelated) => {
               folderUpdatedCallback(
-                folder.withFile(file as unknown as PatientRelated)
+                folder
+                  .withoutAdded()
+                  .withFile(file as unknown as PatientRelated)
               );
             },
             onDeleted: (file: PatientRelated) =>
