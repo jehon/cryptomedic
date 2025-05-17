@@ -14,6 +14,9 @@ export default function Panel(props: {
 }): React.ReactNode {
   const [statusOpened, toggleOpened] = React.useState(!props.closed);
 
+  // Fullscreen is always fixed
+  const fixed = props.fixed || props.fullscreen;
+
   // TODO: no display if no children? does not seem to work perfectly...
   //
   // https://react.dev/reference/react/useLayoutEffect
@@ -27,7 +30,7 @@ export default function Panel(props: {
   }
 
   function onOpenClose() {
-    if (!props.fixed) {
+    if (!fixed) {
       const newState = !statusOpened;
       toggleOpened(newState);
     }
@@ -44,7 +47,7 @@ export default function Panel(props: {
         data-testid={props.testid + (statusOpened ? "/opened" : "/closed")}
       >
         <div data-role="header" className="header" onClick={onOpenClose}>
-          {props.fixed || (
+          {fixed || (
             <div id="triangle" className={statusOpened ? "opened" : "closed"}>
               &#9205;
             </div>
