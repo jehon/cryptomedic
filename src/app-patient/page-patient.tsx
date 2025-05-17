@@ -93,33 +93,29 @@ export default function PagePatient(): React.ReactNode {
   };
 
   const navigate = useNavigate();
-
   const [folder, folderUpdated] = useState<Folder | undefined>(undefined);
   useEffect(() => {
     getFolder(props.id).then((folder) => folderUpdated(folder));
   }, [props.id]);
 
+  //
+  // If no folder
+  //
   if (!folder) {
     return <Waiting message={`folder ${props.id}`} />;
   }
 
+  //
+  // If no patient
+  //
   const patient = folder?.list.filter((f) => f._type == "patient")?.[0];
   if (!patient) {
     return <div key="no-patient-selected">No Patient selected</div>;
   }
 
-  const folderUpdatedCallback = (folder: Folder | undefined) => {
-    if (folder) {
-      folderUpdated(folder);
-    } else {
-      navigate("/home");
-    }
-  };
-
-  const selectedUid = props.selectedType
-    ? `${props.selectedType}.${props.selectedId ?? "add"}`
-    : `patient.${props.selectedId}`;
-
+  //
+  // Handle the add mode
+  //
   if (props.selectedId == "add") {
     const typeName = props.selectedType as config.BusinessType;
 
@@ -139,6 +135,22 @@ export default function PagePatient(): React.ReactNode {
       );
     }
   }
+
+  //
+  // ...
+  //
+
+  const folderUpdatedCallback = (folder: Folder | undefined) => {
+    if (folder) {
+      folderUpdated(folder);
+    } else {
+      navigate("/home");
+    }
+  };
+
+  const selectedUid = props.selectedType
+    ? `${props.selectedType}.${props.selectedId ?? "add"}`
+    : `patient.${props.selectedId}`;
 
   return (
     <div
