@@ -132,8 +132,8 @@ jobs:
       - run: make dc-build
       - run: make start
       - run: make dependencies
-      - run: make integration-test-desktop-run
-      - run: make integration-test-desktop-styles
+      - run: make integration-test-cypress-run
+      - run: make integration-test-cypress-styles
 
       - name: Upload styles
         if: always()
