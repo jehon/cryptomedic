@@ -1,9 +1,4 @@
-import {
-  createHashRouter,
-  Navigate,
-  Outlet,
-  RouterProvider
-} from "react-router-dom";
+import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
 import { RouterHome } from "./app-home/router-home";
 import { RouterPatient } from "./app-patient/router-patient";
 import { bridgeTo } from "./utils/legacy";
@@ -24,7 +19,7 @@ function PageMain() {
 
 function ReloadToOldApp() {
   // setTimeout(() => location.reload(), 100);
-  location.reload();
+  // location.reload();
   return <div>Going to old application</div>;
 }
 
@@ -49,8 +44,7 @@ const router = createHashRouter([
       { path: "/users/:uid", element: <ReloadToOldApp /> },
       { path: "/users", element: <ReloadToOldApp /> },
       { path: "/prices", element: <ReloadToOldApp /> },
-
-      { path: "/*", element: <Navigate to="/home" /> }
+      { path: "/folder/*", element: <ReloadToOldApp /> }
     ]
   }
 ]);
