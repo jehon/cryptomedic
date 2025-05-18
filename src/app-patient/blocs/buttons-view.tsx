@@ -7,7 +7,7 @@ import { CrudLoader } from "../loaders-patient";
 import type { Pojo } from "../objects-patient";
 
 export type ButtonContext = {
-  selfPath: string;
+  selfPath?: string;
   apiRootUrl: string;
   type: BusinessType;
   title: string;
@@ -21,9 +21,10 @@ export default function ButtonsView<T extends Pojo>(
     canBeLocked: boolean;
   }
 ) {
-  const navigate = useNavigate();
   const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
-
+  const navigate = useNavigate();
+  const navigateIfRouting = (route?: string) =>
+    props.selfPath ? navigate(route!) : () => {};
   let isLocked = false;
   if (props.canBeLocked) {
     if (props.file.updated_at) {
@@ -38,7 +39,7 @@ export default function ButtonsView<T extends Pojo>(
       .unlock(props.file.id!)
       .then(notification("File unlocked"))
       .then(props.onUpdated)
-      .then(() => navigate(`${props.selfPath}/edit`));
+      .then(() => navigateIfRouting(`${props.selfPath}/edit`));
   };
 
   if (isLocked) {
@@ -66,7 +67,7 @@ export default function ButtonsView<T extends Pojo>(
   return (
     <ActionButton
       style="Edit"
-      onOk={() => navigate(`${props.selfPath}/edit`)}
+      onOk={() => navigateIfRouting(`${props.selfPath}/edit`)}
       requires="folder.edit"
     />
   );

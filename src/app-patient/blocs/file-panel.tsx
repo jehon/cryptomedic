@@ -10,7 +10,7 @@ import ButtonsEdit from "./buttons-edit";
 import ButtonsView, { type ButtonContext } from "./buttons-view";
 
 export default function FilePanel<T extends Pojo>(props: {
-  selfPath: string;
+  selfPath?: string; // Optional: for Payments, we don't want to update the URL
   apiRootUrl: string;
   type: BusinessType;
   file: T;
@@ -27,6 +27,8 @@ export default function FilePanel<T extends Pojo>(props: {
 }): React.ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
+  const navigateIfRouting = (route?: string) =>
+    props.selfPath ? navigate(route!) : () => {};
 
   const addMode = !props.file.id;
   const editMode = addMode || (props.edit ?? false);
@@ -89,7 +91,7 @@ export default function FilePanel<T extends Pojo>(props: {
       <div
         className="technical"
         data-e2e="excluded"
-        onClick={() => navigate(props.selfPath)}
+        onClick={() => navigateIfRouting(props.selfPath)}
       >
         <div>{`${props.type}.${props.file.id ?? "add"}`}</div>
         <div>

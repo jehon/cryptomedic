@@ -18,8 +18,10 @@ export default function ButtonsEdit<T extends Pojo>(
     formRef: React.RefObject<HTMLFormElement | null>;
   }
 ) {
-  const navigate = useNavigate();
   const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
+  const navigate = useNavigate();
+  const navigateIfRouting = (route?: string) =>
+    props.selfPath ? navigate(route!) : () => {};
 
   if (!props.editMode) {
     return <></>;
@@ -31,15 +33,15 @@ export default function ButtonsEdit<T extends Pojo>(
     crudLoader
       .delete(props.file.id!)
       .then(notification("File deleted"))
-      .then(() => navigate(routeParent(props.selfPath, 2)))
+      .then(() => navigateIfRouting(routeParent(props.selfPath ?? "", 2)))
       .then(() => props.onDeleted(props.file));
   };
 
   const doCancel = () => {
     if (addMode) {
-      navigate(routeParent(props.selfPath, 2));
+      navigateIfRouting(routeParent(props.selfPath ?? "", 2));
     } else {
-      navigate(props.selfPath);
+      navigateIfRouting(props.selfPath);
     }
   };
 
@@ -58,7 +60,9 @@ export default function ButtonsEdit<T extends Pojo>(
           // Route to the newly created file
           .then(
             passThrough((newFile: T) =>
-              navigate(`${routeParent(props.selfPath)}/${newFile.id}`)
+              navigateIfRouting(
+                `${routeParent(props.selfPath ?? "")}/${newFile.id}`
+              )
             )
           )
           .then(passThrough(props.onCreated))
@@ -67,7 +71,7 @@ export default function ButtonsEdit<T extends Pojo>(
       return crudLoader
         .update(props.file.id!, data)
         .then(notification("File saved"))
-        .then(passThrough(() => navigate(props.selfPath)))
+        .then(passThrough(() => navigateIfRouting(props.selfPath ?? "")))
         .then(passThrough(props.onUpdated));
     }
   };
