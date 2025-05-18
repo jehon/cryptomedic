@@ -68,11 +68,11 @@ integration-update-references-styles: \
 # Cypress - Destop
 #
 
-.PHONY: integration-test-desktop
-integration-test-desktop: integration-test-desktop-run integration-test-desktop-styles
+.PHONY: integration-test-cypress
+integration-test-cypress: integration-test-cypress-run integration-test-cypress-styles
 
-.PHONY: integration-test-desktop-test
-integration-test-desktop-run: $(INTEGRATION_TEST_TMP)/desktop/.tested
+.PHONY: integration-test-cypress-test
+integration-test-cypress-run: $(INTEGRATION_TEST_TMP)/desktop/.tested
 $(INTEGRATION_TEST_TMP)/desktop/.tested: \
 		$(INTEGRATION_BUILT_MARK) \
 		$(shell find tests/cypress/ -name "*.js")
@@ -81,8 +81,8 @@ $(INTEGRATION_TEST_TMP)/desktop/.tested: \
 	bin/cr-cypress
 	@touch "$@"
 
-.PHONY: integration-test-desktop-styles
-integration-test-desktop-styles: $(INTEGRATION_TEST_TMP)/desktop/styles.json
+.PHONY: integration-test-cypress-styles
+integration-test-cypress-styles: $(INTEGRATION_TEST_TMP)/desktop/styles.json
 $(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/desktop/.tested \
 		tests/styles/check-styles.ts
 
