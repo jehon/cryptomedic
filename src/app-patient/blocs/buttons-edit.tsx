@@ -9,7 +9,7 @@ import type { Pojo } from "../objects-patient";
 import type { ButtonContext } from "./buttons-view";
 
 export default function ButtonsEdit<T extends Pojo>(
-  props: ButtonContext & {
+  props: ButtonContext<T> & {
     file: T;
     canDelete: boolean;
     onDeleted: (file: T) => void;

@@ -33,12 +33,16 @@ export default function FilePanel<T extends Pojo>(props: {
   const addMode = !props.file.id;
   const editMode = addMode || (props.edit ?? false);
 
-  const buttonContext: ButtonContext = {
+  const buttonContext: ButtonContext<T> = {
     selfPath: props.selfPath,
     apiRootUrl: props.apiRootUrl,
     type: props.type,
     title: type2Title(props.type),
-    editMode
+    file: props.file,
+    editMode,
+    onCreated: props.onCreated,
+    onDeleted: props.onDeleted,
+    onUpdated: props.onUpdated
   };
 
   return (
@@ -70,20 +74,11 @@ export default function FilePanel<T extends Pojo>(props: {
       }
       actions={
         <>
-          <ButtonsView<T>
-            {...buttonContext}
-            file={props.file}
-            canBeLocked={props.canBeLocked}
-            onUpdated={props.onUpdated}
-          />
+          <ButtonsView<T> {...buttonContext} canBeLocked={props.canBeLocked} />
           <ButtonsEdit<T>
             {...buttonContext}
-            file={props.file}
             formRef={formRef}
             canDelete={!addMode && props.canBeDeleted}
-            onCreated={props.onCreated}
-            onDeleted={props.onDeleted}
-            onUpdated={props.onUpdated}
           />
         </>
       }
@@ -120,12 +115,8 @@ export default function FilePanel<T extends Pojo>(props: {
             <ButtonGroup>
               <ButtonsEdit<T>
                 {...buttonContext}
-                file={props.file}
                 formRef={formRef}
                 canDelete={false}
-                onCreated={props.onCreated}
-                onDeleted={props.onDeleted}
-                onUpdated={props.onUpdated}
               />
             </ButtonGroup>
           )}

@@ -6,16 +6,20 @@ import notification from "../../widget/notification";
 import { CrudLoader } from "../loaders-patient";
 import type { Pojo } from "../objects-patient";
 
-export type ButtonContext = {
+export type ButtonContext<T> = {
   selfPath?: string;
   apiRootUrl: string;
   type: BusinessType;
+  file: T;
   title: string;
   editMode: boolean;
+  onCreated: (file: T) => void;
+  onDeleted: (file: T) => void;
+  onUpdated: (file: T) => void;
 };
 
 export default function ButtonsView<T extends Pojo>(
-  props: ButtonContext & {
+  props: ButtonContext<T> & {
     file: T;
     onUpdated: (file: T) => void;
     canBeLocked: boolean;
