@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { icons, type2Title, type BusinessType } from "../../config";
@@ -30,8 +30,15 @@ export default function FilePanel<T extends Pojo>(props: {
   const navigateIfRouting = (route?: string) =>
     props.selfPath ? navigate(route!) : () => {};
 
+  // Mainly used when no url is updated to handle the edit mode
+  const [edit, setEdit] = useState(props.edit);
+  useEffect(() => setEdit(props.edit), [props.edit]);
+
+  const [file, setFile] = useState<T>(props.file);
+  useEffect(() => setFile(props.file), [props.file]);
+
   const addMode = !props.file.id;
-  const editMode = addMode || (props.edit ?? false);
+  const editMode = addMode || (edit ?? false);
 
   const buttonContext: ButtonContext<T> = {
     selfPath: props.selfPath,
@@ -42,7 +49,11 @@ export default function FilePanel<T extends Pojo>(props: {
     editMode,
     onCreated: props.onCreated,
     onDeleted: props.onDeleted,
-    onUpdated: props.onUpdated
+    onUpdated: (file: T) => {
+      setFile(file);
+      props.onUpdated(file);
+    },
+    setEdit: setEdit
   };
 
   return (

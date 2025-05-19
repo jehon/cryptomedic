@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { BusinessType } from "../../config";
+import { passThrough } from "../../utils/promises";
 import ActionButton from "../../widget/action-button";
 import ActionConfirm from "../../widget/action-confirm";
 import notification from "../../widget/notification";
@@ -16,6 +17,7 @@ export type ButtonContext<T> = {
   onCreated: (file: T) => void;
   onDeleted: (file: T) => void;
   onUpdated: (file: T) => void;
+  setEdit: (edit: boolean) => void;
 };
 
 export default function ButtonsView<T extends Pojo>(
@@ -42,6 +44,7 @@ export default function ButtonsView<T extends Pojo>(
     crudLoader
       .unlock(props.file.id!)
       .then(notification("File unlocked"))
+      .then(passThrough(() => props.setEdit(true)))
       .then(props.onUpdated)
       .then(() => navigateIfRouting(`${props.selfPath}/edit`));
   };
@@ -71,7 +74,10 @@ export default function ButtonsView<T extends Pojo>(
   return (
     <ActionButton
       style="Edit"
-      onOk={() => navigateIfRouting(`${props.selfPath}/edit`)}
+      onOk={() => {
+        props.setEdit(true);
+        navigateIfRouting(`${props.selfPath}/edit`);
+      }}
       requires="folder.edit"
     />
   );
