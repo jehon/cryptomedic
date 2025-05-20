@@ -22,6 +22,7 @@ export default function ConsultRicketElement(
       apiRootUrl={`fiche/consult_ricket`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
+      requireBase="folder"
       canBeDeleted={true}
       canBeLocked={true}
       onCreated={props.onCreated}

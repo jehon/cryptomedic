@@ -22,6 +22,7 @@ export default function IOPanel<T extends Pojo>(props: {
   edit?: boolean;
   canBeLocked: boolean;
   canBeDeleted: boolean;
+  requireBase: string;
   onCreated: (file: T) => void;
   onDeleted: (file: T) => void;
   onUpdated: (file: T) => void;
@@ -137,7 +138,7 @@ export default function IOPanel<T extends Pojo>(props: {
                   style="Delete"
                   discrete={true}
                   onOk={doDelete}
-                  requires="folder.delete"
+                  requires={`${props.requireBase}.delete`}
                 >
                   <div>Are you sure you want to DELETE the File {title}?</div>
                 </ActionConfirm>
@@ -151,7 +152,7 @@ export default function IOPanel<T extends Pojo>(props: {
               action="Unlock"
               discrete={true}
               onOk={() => doUnlock()}
-              requires="folder.unlock"
+              requires={`${props.requireBase}.unlock`}
             >
               <div>
                 Are you sure you want to unlock the File {title}?
@@ -163,7 +164,7 @@ export default function IOPanel<T extends Pojo>(props: {
             <ActionButton
               style="Edit"
               onOk={() => setEdit(true)}
-              requires="folder.edit"
+              requires={`${props.requireBase}.edit`}
             />
           )}
         </>

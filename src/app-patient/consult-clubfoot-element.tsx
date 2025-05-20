@@ -54,6 +54,7 @@ export default function ConsultClubfootElement(
       apiRootUrl={`fiche/consult_clubfoot`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
+      requireBase="folder"
       canBeDeleted={true}
       canBeLocked={true}
       onCreated={props.onCreated}

@@ -14,6 +14,7 @@ export default function IOPanelWithNavigation<T extends Pojo>(props: {
   footer?: React.ReactNode;
   closed?: boolean;
   edit?: boolean;
+  requireBase: string;
   canBeLocked: boolean;
   canBeDeleted: boolean;
   onCreated: (file: T) => void;

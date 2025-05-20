@@ -21,6 +21,7 @@ export default function PictureElement(
       apiRootUrl={`fiche/picture`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
+      requireBase="folder"
       canBeDeleted={true}
       canBeLocked={true}
       onCreated={props.onCreated}
