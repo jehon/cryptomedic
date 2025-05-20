@@ -11,84 +11,19 @@ import { EditContext } from "./io-abstract";
 import notification from "./notification";
 import Panel from "./panel";
 
-type ButtonContext<T> = {
-  apiRootUrl: string;
-  type: BusinessType;
+function ButtonsEdit<T extends Pojo>(props: {
   file: T;
-  title: string;
-  edit: boolean;
-  onCreated: (file: T) => void;
+  canDelete: boolean;
   onDeleted: (file: T) => void;
   onUpdated: (file: T) => void;
+  onCreated: (file: T) => void;
+  formRef: React.RefObject<HTMLFormElement | null>;
+  apiRootUrl: string;
+  type: BusinessType;
+  title: string;
+  edit: boolean;
   setEdit: (edit: boolean) => void;
-};
-
-function ButtonsView<T extends Pojo>(
-  props: ButtonContext<T> & {
-    file: T;
-    onUpdated: (file: T) => void;
-    canBeLocked: boolean;
-  }
-) {
-  const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
-  let isLocked = false;
-  if (props.canBeLocked) {
-    if (props.file.updated_at) {
-      const dlock = new Date(props.file.updated_at);
-      dlock.setDate(dlock.getDate() + 35);
-      isLocked = dlock < new Date();
-    }
-  }
-
-  const doUnlock = () => {
-    crudLoader
-      .unlock(props.file.id!)
-      .then(notification("File unlocked"))
-      .then(passThrough(() => props.setEdit(true)))
-      .then(passThrough(props.onUpdated));
-  };
-
-  if (isLocked) {
-    return (
-      <ActionConfirm
-        style="Alternate"
-        action="Unlock"
-        discrete={true}
-        onOk={() => doUnlock()}
-        requires="folder.unlock"
-      >
-        <div>
-          Are you sure you want to unlock the File {props.title}?
-          <br />
-          Anybody will then be able to edit it.
-        </div>
-      </ActionConfirm>
-    );
-  }
-
-  if (props.edit) {
-    return <></>;
-  }
-
-  return (
-    <ActionButton
-      style="Edit"
-      onOk={() => props.setEdit(true)}
-      requires="folder.edit"
-    />
-  );
-}
-
-function ButtonsEdit<T extends Pojo>(
-  props: ButtonContext<T> & {
-    file: T;
-    canDelete: boolean;
-    onDeleted: (file: T) => void;
-    onUpdated: (file: T) => void;
-    onCreated: (file: T) => void;
-    formRef: React.RefObject<HTMLFormElement | null>;
-  }
-) {
+}) {
   const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
   if (!props.edit) {
     return <></>;
@@ -185,7 +120,9 @@ export default function IOPanel<T extends Pojo>(props: {
   const [file, setFile] = useState<T>(props.file);
   useEffect(() => setFile(props.file), [props.file]);
 
-  const buttonContext: ButtonContext<T> = {
+  const title = type2Title(props.type);
+
+  const buttonContext = {
     apiRootUrl: props.apiRootUrl,
     type: props.type,
     title: type2Title(props.type),
@@ -197,7 +134,25 @@ export default function IOPanel<T extends Pojo>(props: {
       setFile(file);
       props.onUpdated(file);
     },
-    setEdit: setEdit
+    setEdit
+  };
+
+  const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
+  let isLocked = false;
+  if (props.canBeLocked) {
+    if (props.file.updated_at) {
+      const deadline = new Date(props.file.updated_at);
+      deadline.setDate(deadline.getDate() + 35);
+      isLocked = deadline < new Date();
+    }
+  }
+
+  const doUnlock = () => {
+    crudLoader
+      .unlock(props.file.id!)
+      .then(notification("File unlocked"))
+      .then(passThrough(() => setEdit(true)))
+      .then(passThrough(props.onUpdated));
   };
 
   return (
@@ -229,7 +184,28 @@ export default function IOPanel<T extends Pojo>(props: {
       }
       actions={
         <>
-          <ButtonsView<T> {...buttonContext} canBeLocked={props.canBeLocked} />
+          {!edit &&
+            (isLocked ? (
+              <ActionConfirm
+                style="Alternate"
+                action="Unlock"
+                discrete={true}
+                onOk={() => doUnlock()}
+                requires="folder.unlock"
+              >
+                <div>
+                  Are you sure you want to unlock the File {title}?
+                  <br />
+                  Anybody will then be able to edit it.
+                </div>
+              </ActionConfirm>
+            ) : (
+              <ActionButton
+                style="Edit"
+                onOk={() => setEdit(true)}
+                requires="folder.edit"
+              />
+            ))}
           <ButtonsEdit<T>
             {...buttonContext}
             formRef={formRef}
