@@ -24,6 +24,7 @@ export default function IOPanel<T extends Pojo>(props: {
   onCreated: (file: T) => void;
   onDeleted: (file: T) => void;
   onUpdated: (file: T) => void;
+  onEdit?: (edit: boolean) => void;
 }): React.ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
@@ -31,8 +32,14 @@ export default function IOPanel<T extends Pojo>(props: {
     props.selfPath ? navigate(route!) : () => {};
 
   // Mainly used when no url is updated to handle the edit mode
-  const [edit, setEdit] = useState(props.edit);
-  useEffect(() => setEdit(props.edit), [props.edit]);
+  const [edit, setEditState] = useState<boolean>(props.edit ?? false);
+  const setEdit = (newEdit: boolean) => {
+    if (newEdit != edit) {
+      if (props.onEdit) props.onEdit(newEdit);
+      setEditState(newEdit);
+    }
+  };
+  useEffect(() => setEdit(props.edit ?? false), [props.edit]);
 
   const [file, setFile] = useState<T>(props.file);
   useEffect(() => setFile(props.file), [props.file]);

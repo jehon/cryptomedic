@@ -15,8 +15,24 @@ export default function IOPanelWithNavigation<T extends Pojo>(props: {
   canBeLocked: boolean;
   canBeDeleted: boolean;
   onCreated: (file: T) => void;
-  onDeleted: (file: T) => void;
   onUpdated: (file: T) => void;
+  onDeleted: (file: T) => void;
 }): React.ReactNode {
-  return <IOPanel<T> {...props} />;
+  return (
+    <IOPanel<T>
+      {...props}
+      onEdit={() => {}}
+      onCreated={(file: T) => {
+        props.onCreated(file);
+      }}
+      onUpdated={(file: T) => {
+        props.onUpdated(file);
+      }}
+      onDeleted={(file: T) => {
+        props.onDeleted(file);
+      }}
+    >
+      {props.children}
+    </IOPanel>
+  );
 }
