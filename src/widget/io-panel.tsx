@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { ButtonGroup } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import type { Pojo } from "../app-patient/objects-patient";
 import { icons, type2Title, type BusinessType } from "../config";
 import { date2HumanString, normalizeDate } from "../utils/date";
@@ -10,7 +9,6 @@ import { EditContext } from "./io-abstract";
 import Panel from "./panel";
 
 export default function IOPanel<T extends Pojo>(props: {
-  selfPath?: string; // Optional: for Payments, we don't want to update the URL
   apiRootUrl: string;
   type: BusinessType;
   file: T;
@@ -27,33 +25,29 @@ export default function IOPanel<T extends Pojo>(props: {
   onEdit?: (edit: boolean) => void;
 }): React.ReactNode {
   const formRef = useRef<HTMLFormElement>(null);
-  const navigate = useNavigate();
-  const navigateIfRouting = (route?: string) =>
-    props.selfPath ? navigate(route!) : () => {};
-
-  // Mainly used when no url is updated to handle the edit mode
-  const [edit, setEditState] = useState<boolean>(props.edit ?? false);
+  const [edit, setEditState] = useState<boolean>(
+    !props.file.id || (props.edit ?? false)
+  );
   const setEdit = (newEdit: boolean) => {
     if (newEdit != edit) {
       if (props.onEdit) props.onEdit(newEdit);
       setEditState(newEdit);
     }
   };
-  useEffect(() => setEdit(props.edit ?? false), [props.edit]);
+  useEffect(
+    () => setEdit(!props.file.id || (props.edit ?? false)),
+    [props.edit, props.file.id]
+  );
 
   const [file, setFile] = useState<T>(props.file);
   useEffect(() => setFile(props.file), [props.file]);
 
-  const addMode = !props.file.id;
-  const editMode = addMode || (edit ?? false);
-
   const buttonContext: ButtonContext<T> = {
-    selfPath: props.selfPath,
     apiRootUrl: props.apiRootUrl,
     type: props.type,
     title: type2Title(props.type),
     file: props.file,
-    editMode,
+    edit,
     onCreated: props.onCreated,
     onDeleted: props.onDeleted,
     onUpdated: (file: T) => {
@@ -67,7 +61,7 @@ export default function IOPanel<T extends Pojo>(props: {
     <Panel
       testid={`${props.type}.${props.file.id ?? "add"}`}
       closed={props.closed}
-      fullscreen={editMode}
+      fullscreen={edit}
       header={
         <>
           <span className="first">
@@ -96,7 +90,7 @@ export default function IOPanel<T extends Pojo>(props: {
           <ButtonsEdit<T>
             {...buttonContext}
             formRef={formRef}
-            canDelete={!addMode && props.canBeDeleted}
+            canDelete={props.canBeDeleted && !!props.file.id}
           />
         </>
       }
@@ -104,7 +98,7 @@ export default function IOPanel<T extends Pojo>(props: {
       <div
         className="technical"
         data-e2e="excluded"
-        onClick={() => navigateIfRouting(props.selfPath)}
+        onClick={() => props.onEdit && props.onEdit(false)}
       >
         <div>{`${props.type}.${props.file.id ?? "add"}`}</div>
         <div>
@@ -115,7 +109,7 @@ export default function IOPanel<T extends Pojo>(props: {
         </div>
         <div>by {props.file.last_user}</div>
       </div>
-      <EditContext.Provider value={editMode}>
+      <EditContext.Provider value={edit}>
         <form
           id="file"
           data-testid={`file-${props.type}.${props.file.id ?? "add"}-form`}
@@ -129,7 +123,7 @@ export default function IOPanel<T extends Pojo>(props: {
             />
           )}
           {props.children}
-          {editMode && (
+          {edit && (
             <ButtonGroup>
               <ButtonsEdit<T>
                 {...buttonContext}

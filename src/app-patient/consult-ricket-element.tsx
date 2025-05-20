@@ -27,7 +27,7 @@ export default function ConsultRicketElement(
       onCreated={props.onCreated}
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
-      selfPath={`${props.parentPath}/consult_ricket/${props.file.id ?? "add"}`}
+      basePath={`${props.parentPath}/consult_ricket/${props.file.id ?? "add"}`}
       header={
         <>
           <span className="with-image">

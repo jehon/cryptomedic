@@ -54,7 +54,7 @@ export default function PatientElement(props: {
       onCreated={() => {}} // No create possible
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
-      selfPath={`/patient/${props.patient.id}/patient/${props.patient.id ?? "add"}`}
+      basePath={`/patient/${props.patient.id}/patient/${props.patient.id ?? "add"}`}
       header={
         <>
           <span>

@@ -26,7 +26,7 @@ export default function ConsultOtherElement(
       onCreated={props.onCreated}
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
-      selfPath={`${props.parentPath}/consult_other/${props.file.id ?? "add"}`}
+      basePath={`${props.parentPath}/consult_other/${props.file.id ?? "add"}`}
       header={<>{props.file.side}</>}
     >
       <ConsultAbstractIntroduction

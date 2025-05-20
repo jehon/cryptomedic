@@ -1,8 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { CrudLoader } from "../app-patient/loaders-patient";
 import type { Pojo } from "../app-patient/objects-patient";
 import { passThrough } from "../utils/promises";
-import { routeParent } from "../utils/routing";
 import ActionButton from "./action-button";
 import ActionConfirm from "./action-confirm";
 import type { ButtonContext } from "./buttons-view";
@@ -19,11 +17,7 @@ export default function ButtonsEdit<T extends Pojo>(
   }
 ) {
   const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
-  const navigate = useNavigate();
-  const navigateIfRouting = (route?: string) =>
-    props.selfPath ? navigate(route!) : () => {};
-
-  if (!props.editMode) {
+  if (!props.edit) {
     return <></>;
   }
 
@@ -34,17 +28,11 @@ export default function ButtonsEdit<T extends Pojo>(
       .delete(props.file.id!)
       .then(notification("File deleted"))
       .then(passThrough(() => props.setEdit(false)))
-      .then(() => navigateIfRouting(routeParent(props.selfPath ?? "", 2)))
-      .then(() => props.onDeleted(props.file));
+      .then(passThrough(() => props.onDeleted(props.file)));
   };
 
   const doCancel = () => {
     props.setEdit(false);
-    if (addMode) {
-      navigateIfRouting(routeParent(props.selfPath ?? "", 2));
-    } else {
-      navigateIfRouting(props.selfPath);
-    }
   };
 
   const doSave = () => {
@@ -61,13 +49,6 @@ export default function ButtonsEdit<T extends Pojo>(
           .then(notification("File created"))
           // Route to the newly created file
           .then(passThrough(() => props.setEdit(false)))
-          .then(
-            passThrough((newFile: T) =>
-              navigateIfRouting(
-                `${routeParent(props.selfPath ?? "")}/${newFile.id}`
-              )
-            )
-          )
           .then(passThrough(props.onCreated))
       );
     } else {
@@ -75,7 +56,6 @@ export default function ButtonsEdit<T extends Pojo>(
         .update(props.file.id!, data)
         .then(notification("File saved"))
         .then(passThrough(() => props.setEdit(false)))
-        .then(passThrough(() => navigateIfRouting(props.selfPath ?? "")))
         .then(passThrough(props.onUpdated));
     }
   };

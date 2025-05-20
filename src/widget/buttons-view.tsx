@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { CrudLoader } from "../app-patient/loaders-patient";
 import type { Pojo } from "../app-patient/objects-patient";
 import type { BusinessType } from "../config";
@@ -8,12 +7,11 @@ import ActionConfirm from "./action-confirm";
 import notification from "./notification";
 
 export type ButtonContext<T> = {
-  selfPath?: string;
   apiRootUrl: string;
   type: BusinessType;
   file: T;
   title: string;
-  editMode: boolean;
+  edit: boolean;
   onCreated: (file: T) => void;
   onDeleted: (file: T) => void;
   onUpdated: (file: T) => void;
@@ -28,9 +26,6 @@ export default function ButtonsView<T extends Pojo>(
   }
 ) {
   const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
-  const navigate = useNavigate();
-  const navigateIfRouting = (route?: string) =>
-    props.selfPath ? navigate(route!) : () => {};
   let isLocked = false;
   if (props.canBeLocked) {
     if (props.file.updated_at) {
@@ -45,8 +40,7 @@ export default function ButtonsView<T extends Pojo>(
       .unlock(props.file.id!)
       .then(notification("File unlocked"))
       .then(passThrough(() => props.setEdit(true)))
-      .then(props.onUpdated)
-      .then(() => navigateIfRouting(`${props.selfPath}/edit`));
+      .then(passThrough(props.onUpdated));
   };
 
   if (isLocked) {
@@ -67,17 +61,14 @@ export default function ButtonsView<T extends Pojo>(
     );
   }
 
-  if (props.editMode) {
+  if (props.edit) {
     return <></>;
   }
 
   return (
     <ActionButton
       style="Edit"
-      onOk={() => {
-        props.setEdit(true);
-        navigateIfRouting(`${props.selfPath}/edit`);
-      }}
+      onOk={() => props.setEdit(true)}
       requires="folder.edit"
     />
   );
