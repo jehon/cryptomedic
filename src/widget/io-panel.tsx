@@ -11,81 +11,6 @@ import { EditContext } from "./io-abstract";
 import notification from "./notification";
 import Panel from "./panel";
 
-function ButtonsEdit<T extends Pojo>(props: {
-  file: T;
-  canDelete: boolean;
-  onDeleted: (file: T) => void;
-  onUpdated: (file: T) => void;
-  onCreated: (file: T) => void;
-  formRef: React.RefObject<HTMLFormElement | null>;
-  apiRootUrl: string;
-  type: BusinessType;
-  title: string;
-  edit: boolean;
-  setEdit: (edit: boolean) => void;
-}) {
-  const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
-  if (!props.edit) {
-    return <></>;
-  }
-
-  const addMode = !props.file.id;
-
-  const doDelete = () => {
-    crudLoader
-      .delete(props.file.id!)
-      .then(notification("File deleted"))
-      .then(passThrough(() => props.setEdit(false)))
-      .then(passThrough(() => props.onDeleted(props.file)));
-  };
-
-  const doCancel = () => {
-    props.setEdit(false);
-  };
-
-  const doSave = () => {
-    if (!props.formRef.current!.checkValidity()) {
-      props.formRef.current!.requestSubmit();
-      return;
-    }
-
-    const data = new FormData(props.formRef.current!);
-    if (addMode) {
-      return (
-        crudLoader
-          .create(data)
-          .then(notification("File created"))
-          // Route to the newly created file
-          .then(passThrough(() => props.setEdit(false)))
-          .then(passThrough(props.onCreated))
-      );
-    } else {
-      return crudLoader
-        .update(props.file.id!, data)
-        .then(notification("File saved"))
-        .then(passThrough(() => props.setEdit(false)))
-        .then(passThrough(props.onUpdated));
-    }
-  };
-
-  return (
-    <>
-      {props.canDelete && (
-        <ActionConfirm
-          style="Delete"
-          discrete={true}
-          onOk={doDelete}
-          requires="folder.delete"
-        >
-          <div>Are you sure you want to DELETE the File {props.title}?</div>
-        </ActionConfirm>
-      )}
-      <ActionButton style="Cancel" onOk={() => doCancel()} />
-      <ActionButton style="Confirm" action="Save" onOk={doSave} />
-    </>
-  );
-}
-
 export default function IOPanel<T extends Pojo>(props: {
   apiRootUrl: string;
   type: BusinessType;
@@ -122,21 +47,6 @@ export default function IOPanel<T extends Pojo>(props: {
 
   const title = type2Title(props.type);
 
-  const buttonContext = {
-    apiRootUrl: props.apiRootUrl,
-    type: props.type,
-    title: type2Title(props.type),
-    file: props.file,
-    edit,
-    onCreated: props.onCreated,
-    onDeleted: props.onDeleted,
-    onUpdated: (file: T) => {
-      setFile(file);
-      props.onUpdated(file);
-    },
-    setEdit
-  };
-
   const crudLoader = new CrudLoader<T>(props.apiRootUrl, props.type);
   let isLocked = false;
   if (props.canBeLocked) {
@@ -147,12 +57,48 @@ export default function IOPanel<T extends Pojo>(props: {
     }
   }
 
+  const canDelete = props.canBeDeleted && !!props.file.id;
+
+  const doCancel = () => setEdit(false);
+
+  const doSave = () => {
+    if (!formRef.current!.checkValidity()) {
+      formRef.current!.requestSubmit();
+      return;
+    }
+
+    const data = new FormData(formRef.current!);
+    if (!props.file.id) {
+      return (
+        crudLoader
+          .create(data)
+          .then(notification("File created"))
+          // Route to the newly created file
+          .then(passThrough(() => setEdit(false)))
+          .then(passThrough(props.onCreated))
+      );
+    } else {
+      return crudLoader
+        .update(props.file.id!, data)
+        .then(notification("File saved"))
+        .then(passThrough(() => setEdit(false)))
+        .then(passThrough(props.onUpdated));
+    }
+  };
   const doUnlock = () => {
     crudLoader
       .unlock(props.file.id!)
       .then(notification("File unlocked"))
       .then(passThrough(() => setEdit(true)))
       .then(passThrough(props.onUpdated));
+  };
+
+  const doDelete = () => {
+    crudLoader
+      .delete(props.file.id!)
+      .then(notification("File deleted"))
+      .then(passThrough(() => setEdit(false)))
+      .then(passThrough(() => props.onDeleted(props.file)));
   };
 
   return (
@@ -184,33 +130,42 @@ export default function IOPanel<T extends Pojo>(props: {
       }
       actions={
         <>
-          {!edit &&
-            (isLocked ? (
-              <ActionConfirm
-                style="Alternate"
-                action="Unlock"
-                discrete={true}
-                onOk={() => doUnlock()}
-                requires="folder.unlock"
-              >
-                <div>
-                  Are you sure you want to unlock the File {title}?
-                  <br />
-                  Anybody will then be able to edit it.
-                </div>
-              </ActionConfirm>
-            ) : (
-              <ActionButton
-                style="Edit"
-                onOk={() => setEdit(true)}
-                requires="folder.edit"
-              />
-            ))}
-          <ButtonsEdit<T>
-            {...buttonContext}
-            formRef={formRef}
-            canDelete={props.canBeDeleted && !!props.file.id}
-          />
+          {edit ? (
+            canDelete && (
+              <>
+                <ActionConfirm
+                  style="Delete"
+                  discrete={true}
+                  onOk={doDelete}
+                  requires="folder.delete"
+                >
+                  <div>Are you sure you want to DELETE the File {title}?</div>
+                </ActionConfirm>
+                <ActionButton style="Cancel" onOk={() => doCancel()} />
+                <ActionButton style="Confirm" action="Save" onOk={doSave} />
+              </>
+            )
+          ) : isLocked ? (
+            <ActionConfirm
+              style="Alternate"
+              action="Unlock"
+              discrete={true}
+              onOk={() => doUnlock()}
+              requires="folder.unlock"
+            >
+              <div>
+                Are you sure you want to unlock the File {title}?
+                <br />
+                Anybody will then be able to edit it.
+              </div>
+            </ActionConfirm>
+          ) : (
+            <ActionButton
+              style="Edit"
+              onOk={() => setEdit(true)}
+              requires="folder.edit"
+            />
+          )}
         </>
       }
     >
@@ -244,11 +199,8 @@ export default function IOPanel<T extends Pojo>(props: {
           {props.children}
           {edit && (
             <ButtonGroup>
-              <ButtonsEdit<T>
-                {...buttonContext}
-                formRef={formRef}
-                canDelete={false}
-              />
+              <ActionButton style="Cancel" onOk={() => doCancel()} />
+              <ActionButton style="Confirm" action="Save" onOk={doSave} />
             </ButtonGroup>
           )}
         </form>
