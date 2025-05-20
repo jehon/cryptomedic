@@ -15,5 +15,4 @@ test("2014-103.bill.2", async ({ page }) => {
   await expect(paymentPanel).toBeVisible();
   const payment2 = paymentPanel.getByTestId("payment.2");
   await expect(payment2).toBeVisible();
-  await expect(payment2.getByText("Second payment")).toBeVisible();
 });

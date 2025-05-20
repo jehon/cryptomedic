@@ -12,13 +12,12 @@ import IOHidden from "../widget/io-hidden";
 import IOList from "../widget/io-list";
 import IONumber from "../widget/io-number";
 import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
-import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import "./bill-element.css";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
 import type { Bill, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
+import PaymentElement from "./payment-element";
 
 /*
   TODO:
@@ -208,15 +207,15 @@ export default function BillElement(
               <div>No payment received</div>
             ) : (
               nArray(props.file.payment).map((payment) => (
-                <div
+                <PaymentElement
                   key={`payment.${payment.id}`}
-                  className="payment-line"
-                  data-testid={`payment.${payment.id}`}
-                >
-                  <IODate value={payment.date} noLabel />
-                  <IONumber value={payment.amount} noLabel />
-                  <IOString value={payment.comments} noLabel />
-                </div>
+                  file={payment}
+                  edit={false}
+                  closed={true}
+                  onCreated={() => {}}
+                  onUpdated={() => {}}
+                  onDeleted={() => {}}
+                />
               ))
             )}
           </Panel>
