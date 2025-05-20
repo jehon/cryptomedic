@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { passThrough } from "../../utils/promises";
-import { routeParent } from "../../utils/routing";
-import ActionButton from "../../widget/action-button";
-import ActionConfirm from "../../widget/action-confirm";
-import notification from "../../widget/notification";
-import { CrudLoader } from "../loaders-patient";
-import type { Pojo } from "../objects-patient";
+import { CrudLoader } from "../app-patient/loaders-patient";
+import type { Pojo } from "../app-patient/objects-patient";
+import { passThrough } from "../utils/promises";
+import { routeParent } from "../utils/routing";
+import ActionButton from "./action-button";
+import ActionConfirm from "./action-confirm";
 import type { ButtonContext } from "./buttons-view";
+import notification from "./notification";
 
 export default function ButtonsEdit<T extends Pojo>(
   props: ButtonContext<T> & {

@@ -1,10 +1,10 @@
 import IOBoolean from "../widget/io-boolean";
 import IODate from "../widget/io-date";
+import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel from "./blocs/file-panel";
 import type { Patient, Surgery } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
@@ -12,7 +12,7 @@ export default function SurgeryElement(
   props: { patient: Patient } & RelatedElementGeneratorProps<Surgery>
 ): React.ReactNode {
   return (
-    <FilePanel<Surgery>
+    <IOPanelWithNavigation<Surgery>
       key={`surgery.${props.file.id}`}
       type="surgery"
       file={props.file}
@@ -74,6 +74,6 @@ export default function SurgeryElement(
           />
         </Panel>
       </TwoColumns>
-    </FilePanel>
+    </IOPanelWithNavigation>
   );
 }

@@ -1,10 +1,10 @@
 import { getList } from "../utils/session";
 import IODate from "../widget/io-date";
 import IOList from "../widget/io-list";
+import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel from "./blocs/file-panel";
 import type { Appointment, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
@@ -12,7 +12,7 @@ export default function AppointmentElement(
   props: { patient: Patient } & RelatedElementGeneratorProps<Appointment>
 ): React.ReactNode {
   return (
-    <FilePanel<Appointment>
+    <IOPanelWithNavigation<Appointment>
       key={`appointment.${props.file.id}`}
       type="appointment"
       file={props.file}
@@ -45,6 +45,6 @@ export default function AppointmentElement(
           <IOText name="purpose" value={props.file.purpose as string} />
         </Panel>
       </TwoColumns>
-    </FilePanel>
+    </IOPanelWithNavigation>
   );
 }

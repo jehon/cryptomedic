@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import type { BusinessType } from "../../config";
-import { passThrough } from "../../utils/promises";
-import ActionButton from "../../widget/action-button";
-import ActionConfirm from "../../widget/action-confirm";
-import notification from "../../widget/notification";
-import { CrudLoader } from "../loaders-patient";
-import type { Pojo } from "../objects-patient";
+import { CrudLoader } from "../app-patient/loaders-patient";
+import type { Pojo } from "../app-patient/objects-patient";
+import type { BusinessType } from "../config";
+import { passThrough } from "../utils/promises";
+import ActionButton from "./action-button";
+import ActionConfirm from "./action-confirm";
+import notification from "./notification";
 
 export type ButtonContext<T> = {
   selfPath?: string;

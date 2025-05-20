@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { icons, type2Title, type BusinessType } from "../../config";
-import { date2HumanString, normalizeDate } from "../../utils/date";
-import { EditContext } from "../../widget/io-abstract";
-import Panel from "../../widget/panel";
-import type { Pojo } from "../objects-patient";
+import type { Pojo } from "../app-patient/objects-patient";
+import { icons, type2Title, type BusinessType } from "../config";
+import { date2HumanString, normalizeDate } from "../utils/date";
 import ButtonsEdit from "./buttons-edit";
 import ButtonsView, { type ButtonContext } from "./buttons-view";
+import { EditContext } from "./io-abstract";
+import Panel from "./panel";
 
-export default function FilePanel<T extends Pojo>(props: {
+export default function IOPanel<T extends Pojo>(props: {
   selfPath?: string; // Optional: for Payments, we don't want to update the URL
   apiRootUrl: string;
   type: BusinessType;
@@ -137,5 +137,3 @@ export default function FilePanel<T extends Pojo>(props: {
     </Panel>
   );
 }
-
-// TODO: use new Form "action"

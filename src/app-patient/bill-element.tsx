@@ -11,11 +11,11 @@ import IOFunction from "../widget/io-function";
 import IOHidden from "../widget/io-hidden";
 import IOList from "../widget/io-list";
 import IONumber from "../widget/io-number";
+import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import IOString from "../widget/io-string";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import "./bill-element.css";
-import FilePanel from "./blocs/file-panel";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
 import type { Bill, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
@@ -171,7 +171,7 @@ export default function BillElement(
    *
    */
   return (
-    <FilePanel<Bill>
+    <IOPanelWithNavigation<Bill>
       key={`bill.${props.file.id}`}
       type="bill"
       file={props.file}
@@ -312,6 +312,6 @@ export default function BillElement(
       ) : (
         <div className="alert alert-warning">Please select a date first</div>
       )}
-    </FilePanel>
+    </IOPanelWithNavigation>
   );
 }

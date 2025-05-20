@@ -5,11 +5,11 @@ import IOBoolean from "../widget/io-boolean";
 import IOFunction from "../widget/io-function";
 import IOList from "../widget/io-list";
 import IONumber from "../widget/io-number";
+import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
-import FilePanel from "./blocs/file-panel";
 import type { ConsultClubfoot, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
@@ -47,7 +47,7 @@ export default function ConsultClubfootElement(
   props: { patient: Patient } & RelatedElementGeneratorProps<ConsultClubfoot>
 ): React.ReactNode {
   return (
-    <FilePanel<ConsultClubfoot>
+    <IOPanelWithNavigation<ConsultClubfoot>
       key={`consult_clubfoot.${props.file.id}`}
       type="consult_clubfoot"
       file={props.file}
@@ -289,6 +289,6 @@ export default function ConsultClubfootElement(
         </Panel>
       </TwoColumns>
       <ConsultAbstractConclusion file={props.file}></ConsultAbstractConclusion>
-    </FilePanel>
+    </IOPanelWithNavigation>
   );
 }

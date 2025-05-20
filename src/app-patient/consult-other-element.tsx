@@ -1,12 +1,12 @@
 import { getList } from "../utils/session";
 import IOList from "../widget/io-list";
+import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
-import FilePanel from "./blocs/file-panel";
 import type { ConsultOther, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
@@ -14,7 +14,7 @@ export default function ConsultOtherElement(
   props: { patient: Patient } & RelatedElementGeneratorProps<ConsultOther>
 ): React.ReactNode {
   return (
-    <FilePanel<ConsultOther>
+    <IOPanelWithNavigation<ConsultOther>
       key={`consult_other.${props.file.id}`}
       type="consult_other"
       file={props.file}
@@ -75,6 +75,6 @@ export default function ConsultOtherElement(
         </Panel>
       </TwoColumns>
       <ConsultAbstractConclusion file={props.file}></ConsultAbstractConclusion>
-    </FilePanel>
+    </IOPanelWithNavigation>
   );
 }

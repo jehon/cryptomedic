@@ -2,12 +2,12 @@ import { getList } from "../utils/session";
 import { ImgSideLeft, ImgSideRight } from "../widget/images";
 import IOList from "../widget/io-list";
 import IONumber from "../widget/io-number";
+import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
-import FilePanel from "./blocs/file-panel";
 import type { ConsultRicket, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
@@ -15,7 +15,7 @@ export default function ConsultRicketElement(
   props: { patient: Patient } & RelatedElementGeneratorProps<ConsultRicket>
 ): React.ReactNode {
   return (
-    <FilePanel<ConsultRicket>
+    <IOPanelWithNavigation<ConsultRicket>
       key={`consult_ricket.${props.file.id}`}
       type="consult_ricket"
       file={props.file}
@@ -134,6 +134,6 @@ export default function ConsultRicketElement(
         </Panel>
       </TwoColumns>
       <ConsultAbstractConclusion file={props.file}></ConsultAbstractConclusion>
-    </FilePanel>
+    </IOPanelWithNavigation>
   );
 }
