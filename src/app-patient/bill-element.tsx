@@ -11,6 +11,7 @@ import IOFunction from "../widget/io-function";
 import IOHidden from "../widget/io-hidden";
 import IOList from "../widget/io-list";
 import IONumber from "../widget/io-number";
+import { propagateToList } from "../widget/io-panel";
 import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
@@ -212,9 +213,7 @@ export default function BillElement(
                   file={payment}
                   edit={false}
                   closed={true}
-                  onCreated={() => {}}
-                  onUpdated={() => {}}
-                  onDeleted={() => {}}
+                  {...propagateToList(props.file, "payment", props.onUpdated)}
                 />
               ))
             )}

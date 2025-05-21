@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { useEffect, useRef, useState } from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { CrudLoader } from "../app-patient/loaders-patient";
@@ -10,6 +11,43 @@ import ActionConfirm from "./action-confirm";
 import { EditContext } from "./io-abstract";
 import notification from "./notification";
 import Panel from "./panel";
+
+export function propagateToList<S extends Pojo, T extends Pojo>(
+  file: S,
+  listname: keyof S,
+  updatedCallback: (file: S) => void
+) {
+  const withoutAdded = (list: T[]) => list.filter((v) => v.id);
+  const list = file[listname] as T[];
+
+  return {
+    onCreated: (subFile: T) =>
+      updatedCallback(
+        produce<S>(file, (draft) => {
+          // Hack for typescript
+          (draft as any)[listname] = withoutAdded(list).concat([subFile]);
+        })
+      ),
+    onUpdated: (subFile: T) =>
+      updatedCallback(
+        produce<S>(file, (draft) => {
+          // Hack for typescript
+          (draft as any)[listname] = withoutAdded(list)
+            .filter((v) => v.id != subFile.id)
+            .concat([subFile]);
+        })
+      ),
+    onDeleted: (subFile: T) =>
+      updatedCallback(
+        produce<S>(file, (draft) => {
+          // Hack for typescript
+          (draft as any)[listname] = withoutAdded(list).filter(
+            (v) => v.id != subFile.id
+          );
+        })
+      )
+  };
+}
 
 export default function IOPanel<T extends Pojo>(props: {
   apiRootUrl: string;
