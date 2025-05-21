@@ -197,6 +197,11 @@ export default function BillElement(
             <ButtonsGroup>
               <ActionButton
                 style="Add"
+                restrictedTo="dev"
+                onOk={doAddPayment}
+              />
+              <ActionButton
+                style="Add"
                 linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
               />
               <ActionButton
