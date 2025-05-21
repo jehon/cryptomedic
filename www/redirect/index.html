@@ -1,16 +1,130 @@
-<html>
-  <div>Dear user,</div>
-  <div>Cryptomedic has moved away to a new location</div>
-  <div>It is not anymore at cryptomedic.org.</div>
-  <div style="background-color: yellowgreen">
-    Now, it is at
-    <b>
-      <a href="https://cryptomedic.amd-france.org"
-        >https://cryptomedic.amd-france.org</a
-      ></b
-    >
-  </div>
-  <div>Please update your bookmarks!</div>
-  <div></div>
-  <div>This will disappear on next August 9.</div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cryptomedic - New Address</title>
+    <style>
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        color: #333;
+        background: #f4f6f8;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 16px;
+        padding: 2.5rem 2rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        margin-top: 2rem;
+      }
+      .header {
+        color: #1a237e;
+        margin-bottom: 1.5rem;
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: -1px;
+      }
+      .new-url {
+        background-color: #e8f5e9;
+        border: 1.5px solid #43a047;
+        border-radius: 8px;
+        padding: 1.2rem;
+        margin: 2rem 0 1.5rem 0;
+        text-align: center;
+        font-size: 1.1rem;
+      }
+      .new-url a {
+        color: #1b5e20;
+        font-size: 1.3rem;
+        text-decoration: none;
+        font-weight: bold;
+        word-break: break-all;
+      }
+      .new-url a:hover {
+        text-decoration: underline;
+      }
+      .warning {
+        color: #d32f2f;
+        font-size: 1rem;
+        margin-top: 2.5rem;
+        text-align: center;
+        font-weight: 500;
+      }
+      .lang-switch {
+        position: absolute;
+        top: 24px;
+        right: 32px;
+        background: #e3e3e3;
+        border: none;
+        border-radius: 6px;
+        padding: 0.4rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .lang-switch:hover {
+        background: #cfd8dc;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="lang-switch" onclick="switchLang()">Français</button>
+    <div class="container" id="content">
+      <!-- Content will be injected by JS -->
+    </div>
+    <script>
+      const content = {
+        en: {
+          header: "Cryptomedic has moved!",
+          greet: "Dear user,",
+          info: "Cryptomedic has changed address and is no longer available at cryptomedic.org.",
+          urlLabel: "Our new address is:",
+          url: "https://cryptomedic.amd-france.org",
+          update: "Don't forget to update your bookmarks!",
+          warning: "This redirect page will be removed on August 9th.",
+          switch: "Français"
+        },
+        fr: {
+          header: "Cryptomedic a déménagé !",
+          greet: "Cher utilisateur,",
+          info: "Cryptomedic a changé d'adresse et n'est plus disponible sur cryptomedic.org.",
+          urlLabel: "Notre nouvelle adresse est :",
+          url: "https://cryptomedic.amd-france.org",
+          update: "N'oubliez pas de mettre à jour vos favoris !",
+          warning:
+            "Cette page de redirection sera supprimée le 9 août prochain.",
+          switch: "English"
+        }
+      };
+      let lang = "en";
+      function render() {
+        const t = content[lang];
+        document.getElementById("content").innerHTML = `
+          <h1 class="header">${t.header}</h1>
+          <p>${t.greet}</p>
+          <p>${t.info}</p>
+          <div class="new-url">
+            ${t.urlLabel}<br />
+            <a href="${t.url}">${t.url}</a>
+          </div>
+          <p>${t.update}</p>
+          <p class="warning">${t.warning}</p>
+        `;
+        document.querySelector(".lang-switch").textContent = t.switch;
+      }
+      function switchLang() {
+        lang = lang === "en" ? "fr" : "en";
+        render();
+      }
+      render();
+    </script>
+  </body>
 </html>
