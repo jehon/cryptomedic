@@ -9,6 +9,8 @@
     "davidanson.vscode-markdownlint",
     "devsense.phptools-vscode",
     "vitaliymaz.vscode-svg-previewer",
-    "meganrogge.template-string-converter"
+    "meganrogge.template-string-converter",
+    "ms-playwright.playwright",
+    "ms-azuretools.vscode-docker"
   ]
 }

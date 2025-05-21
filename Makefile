@@ -119,13 +119,24 @@ dc-build:
 start: dc-up dependencies build reset
 	@echo "Open browser: http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/"
 	@echo "Test page: http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/dev/"
+	@echo "Test page: http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/dev/patient/1"
+	@echo "Frontend entry point: http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/built/frontend/ng1x.html"
 	@echo -n "Official port: "
 	@docker compose port proxy 80
+
+# .PHONY: check-env
+# check-env:
+# 	@if [ -z "$(CRYPTOMEDIC_DEV_HTTP_HOST)" ] || [ -z "$(CRYPTOMEDIC_DEV_HTTP_PORT)" ]; then \
+# 		echo "Error: Les variables d'environnement CRYPTOMEDIC_DEV_HTTP_HOST et CRYPTOMEDIC_DEV_HTTP_PORT doivent être définies"; \
+# 		echo "Veuillez configurer votre fichier .envrc ou .env"; \
+# 		exit 1; \
+# 	fi
 
 dev: clear start
 # No reset!
 # build: other stuff than frontend need to be build
 
+#? 
 dc-up:
 	docker compose up -d --wait --remove-orphans --build
 # bin/cr-refresh-structure "http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
@@ -171,7 +182,7 @@ acceptance: $(ACCEPTANCE)/.done dc-up
 $(ACCEPTANCE)/.done:
 	bin/cr-live-backup.sh "$(dir $@)"
 	touch "$@"
-
+	
 acceptance-refresh:
 	rm -f "$(ROOT)/$(ACCEPTANCE)/.done"
 # Do not depend but force running

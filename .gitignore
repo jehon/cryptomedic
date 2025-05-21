@@ -26,3 +26,7 @@ vendor
 
 commit.msg
 *.bak
+
+note-lucas/
+
+.envrc
