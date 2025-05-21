@@ -1,10 +1,11 @@
 import { expect, test } from "@playwright/test";
-import { crApiLogin } from "../helpers/e2e";
+import { startCryptomedic } from "../helpers/e2e";
 import { E2EPatient } from "../helpers/e2e-patients";
 
 // TODO: normalize fieldsConfig here
 test("2014-103.bill.2", async ({ page }) => {
-  await crApiLogin(page);
+  const cryptomedic = await startCryptomedic(page);
+  await cryptomedic.apiLogin();
 
   const e2eFile = await new E2EPatient(page, 3)
     .getFile({ fileType: "bill", fileId: 2, fieldsConfig: {} })
