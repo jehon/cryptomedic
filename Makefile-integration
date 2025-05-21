@@ -40,6 +40,11 @@ integration-clean-files:
 	rm -fr "$(ROOT)/live/"
 	jh-kill-by-port 9515 || true
 
+.PHONY: integration-lint
+clean: integration-lint
+integration-lint:
+	node_modules/.bin/tsc --noEmit
+
 .PHONY: integration-build
 build: integration-build
 integration-build: $(INTEGRATION_BUILT_MARK)
