@@ -6,7 +6,7 @@ import type {
   Payment
 } from "../app-patient/objects-patient";
 import type { BusinessType } from "../config";
-import { patientRelatedOrdering } from "../utils/calculations";
+import { pojoOrdering } from "../utils/calculations";
 import { removeNull } from "../utils/objects";
 import PojoClass from "./pojo-class";
 
@@ -60,7 +60,7 @@ export default class Folder extends PojoClass {
         _type: serverType2BusinessType(v.type)
       });
     }
-    this.list.sort(patientRelatedOrdering);
+    this.list.sort(pojoOrdering);
     try {
       this.getPatient();
     } catch (_e) {

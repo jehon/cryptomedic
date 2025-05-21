@@ -4,6 +4,7 @@ import { ButtonGroup } from "react-bootstrap";
 import { CrudLoader } from "../app-patient/loaders-patient";
 import type { Pojo } from "../app-patient/objects-patient";
 import { icons, type2Title, type BusinessType } from "../config";
+import { sortList } from "../utils/calculations";
 import { date2HumanString, normalizeDate } from "../utils/date";
 import { passThrough } from "../utils/promises";
 import ActionButton from "./action-button";
@@ -25,14 +26,16 @@ export function propagateToList<S extends Pojo, T extends Pojo>(
       updatedCallback(
         produce<S>(file, (draft) => {
           // Hack for typescript
-          (draft as any)[listname] = withoutAdded(list).concat([subFile]);
+          (draft as any)[listname] = sortList(
+            withoutAdded(list).concat([subFile])
+          );
         })
       ),
     onUpdated: (subFile: T) =>
       updatedCallback(
         produce<S>(file, (draft) => {
           // Hack for typescript
-          (draft as any)[listname] = withoutAdded(list)
+          (draft as any)[listname] = sortList(withoutAdded(list))
             .filter((v) => v.id != subFile.id)
             .concat([subFile]);
         })
@@ -41,8 +44,8 @@ export function propagateToList<S extends Pojo, T extends Pojo>(
       updatedCallback(
         produce<S>(file, (draft) => {
           // Hack for typescript
-          (draft as any)[listname] = withoutAdded(list).filter(
-            (v) => v.id != subFile.id
+          (draft as any)[listname] = sortList(
+            withoutAdded(list).filter((v) => v.id != subFile.id)
           );
         })
       )

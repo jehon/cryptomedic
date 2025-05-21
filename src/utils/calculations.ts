@@ -1,7 +1,7 @@
 import type {
   Consult,
   Patient,
-  PatientRelated,
+  Pojo,
   Timed
 } from "../app-patient/objects-patient";
 import { fromBirthDateTo, normalizeDate } from "./date";
@@ -139,7 +139,11 @@ export function actualAge(
   return res.years + "y" + res.months + "m";
 }
 
-export function patientRelatedOrdering(o1: PatientRelated, o2: PatientRelated) {
+export function sortList(list: Pojo[]) {
+  return list.sort(pojoOrdering);
+}
+
+export function pojoOrdering(o1: Pojo, o2: Pojo) {
   const o1First = -1;
   const o2First = 1;
 
