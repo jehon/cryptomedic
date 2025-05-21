@@ -5,13 +5,13 @@ export { outputDate } from "../../../src/utils/date";
 
 export const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
 
-export const LOGINS = {
+const LOGINS = {
   PHYSIO: "murshed",
   RO: "readonly",
   ADMIN: "jehon"
 };
 
-export const PASSWORD = "p";
+const PASSWORD = "p";
 
 export function crUrl(segment: string = ""): string {
   return `${WebBaseUrl}/built/frontend/ng1x.html?dev#${segment}`;
