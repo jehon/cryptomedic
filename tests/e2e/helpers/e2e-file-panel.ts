@@ -1,14 +1,8 @@
 import test, { expect, type Page } from "@playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
-import {
-  crApi,
-  crApiLogin,
-  crExpectUrl,
-  crReady,
-  crUrl,
-  outputDate
-} from "./e2e";
+import { crApiLogin, crExpectUrl, crReady, crUrl, outputDate } from "./e2e";
+import crApi from "./e2e-api";
 import { E2EForm, type IOType, type IOValue } from "./e2e-form";
 import { E2EPatient } from "./e2e-patients";
 

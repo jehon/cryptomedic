@@ -1,64 +1,23 @@
 import { expect, type Locator, type Page } from "@playwright/test";
-import { type IndexSignature } from "../../../src/types";
-import type { CRUDType } from "../../../src/utils/network";
 import { CRUD } from "../../../src/utils/network";
-import { passThrough } from "../../../src/utils/promises";
+import crApi from "./e2e-api";
 export { outputDate } from "../../../src/utils/date";
 
-const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
-type JsonData = any;
+export const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
 
-const LOGINS = {
+export const LOGINS = {
   PHYSIO: "murshed",
   RO: "readonly",
   ADMIN: "jehon"
 };
 
-const PASSWORD = "p";
+export const PASSWORD = "p";
 
 export function crUrl(segment: string = ""): string {
   return `${WebBaseUrl}/built/frontend/ng1x.html?dev#${segment}`;
 }
 
-function crUrlAPI(segment: string = ""): string {
-  return `${WebBaseUrl}/api${segment}`;
-}
-
-export function crApi(
-  page: Page,
-  url: string,
-  options: {
-    method?: CRUDType;
-    data?: any;
-  } = {}
-): Promise<JsonData> {
-  //
-  // https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-post
-  //
-  // Return the response object (json)
-  //
-
-  // TODO: more precise than any?
-  const requestor = page.request as IndexSignature<any>;
-  return requestor[(options.method ?? CRUD.read).toLowerCase()](crUrlAPI(url), {
-    data: options.data ?? {}
-  })
-    .then(
-      passThrough<any>((resp) => {
-        if (resp.status() != 200) {
-          throw new Error(
-            "Server responded with invalid status: " + resp.status()
-          );
-        }
-      })
-    )
-    .then((resp: any) => resp.json());
-}
-
-export function crApiLogin(
-  page: Page,
-  login: string = LOGINS.PHYSIO
-): Promise<JsonData> {
+export function crApiLogin(page: Page, login: string = LOGINS.PHYSIO) {
   return crApi(page, "/auth/mylogin", {
     method: CRUD.submit,
     data: {
