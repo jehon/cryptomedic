@@ -178,7 +178,7 @@ export default function BillElement(
       apiRootUrl={`fiche/bill`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
-      requireBase="folder"
+      restrictedTo="folder"
       canBeDeleted={nArray(props.file.payment).length == 0}
       canBeLocked={true}
       onCreated={props.onCreated}

@@ -19,7 +19,7 @@ export default function AppointmentElement(
       apiRootUrl={`fiche/appointment`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
-      requireBase="folder"
+      restrictedTo="folder"
       canBeDeleted={true}
       canBeLocked={false}
       onCreated={props.onCreated}

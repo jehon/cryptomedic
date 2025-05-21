@@ -21,7 +21,7 @@ export default function ActionConfirm(
         discrete={props.discrete}
         action={props.action}
         onOk={() => setOpened(true)}
-        requires={props.requires}
+        restrictedTo={props.restrictedTo}
       ></ActionButton>
       {opened ? (
         <Popup title={title} style={props.style}>

@@ -49,7 +49,7 @@ export default function PatientElement(props: {
       apiRootUrl={`fiche/patient`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
-      requireBase="folder"
+      restrictedTo="folder"
       canBeDeleted={props.canBeDeleted}
       canBeLocked={false}
       onCreated={() => {}} // No create possible

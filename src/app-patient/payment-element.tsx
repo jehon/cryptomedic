@@ -26,7 +26,7 @@ export default function PaymentElement(props: {
           <span className="payment_amount">{props.file.amount}&nbsp;৳</span>
         </>
       }
-      requireBase="forbidden"
+      restrictedTo="forbidden"
       canBeLocked={true}
       canBeDeleted={true}
     >

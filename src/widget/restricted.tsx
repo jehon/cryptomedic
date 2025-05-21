@@ -1,11 +1,11 @@
 import { useRequiresTransaction } from "../utils/security";
 
 export default function Restricted(props: {
-  requires?: string;
+  to?: string;
   // inverted?: boolean;
   children: React.ReactNode;
 }) {
-  const isAllowed = !props.requires || useRequiresTransaction(props.requires);
+  const isAllowed = !props.to || useRequiresTransaction(props.to);
 
   // Logical XOR with potentially non boolean
   // if (!isAllowed !== !inverted) {

@@ -21,7 +21,7 @@ export default function ConsultOtherElement(
       apiRootUrl={`fiche/consult_other`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
-      requireBase="folder"
+      restrictedTo="folder"
       canBeDeleted={true}
       canBeLocked={true}
       onCreated={props.onCreated}
