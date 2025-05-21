@@ -1,7 +1,9 @@
+import { produce } from "immer";
 import { useState } from "react";
 import Price from "../business/price";
-import { getPriceCategories } from "../config";
+import { getPriceCategories, isFeatureSwitchEnabled } from "../config";
 import { nArray } from "../utils/array";
+import { inputValueNow } from "../utils/date";
 import { getList, getSession } from "../utils/session";
 import { roundTo, string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
@@ -167,6 +169,26 @@ export default function BillElement(
 
   /** *************************
    *
+   * Payments
+   *
+   */
+  const doAddPayment = () => {
+    props.onUpdated(
+      produce<Bill>(props.file, (draft) => {
+        draft.payment = (draft.payment ?? []).concat([
+          {
+            _type: "payment",
+            bill_id: props.file.id!,
+            amount: 0,
+            date: inputValueNow()
+          }
+        ]);
+      })
+    );
+  };
+
+  /** *************************
+   *
    * Render
    *
    */
@@ -195,19 +217,24 @@ export default function BillElement(
             testid={`bill.${props.file.id}.payments`}
           >
             <ButtonsGroup>
-              <ActionButton
-                style="Add"
-                restrictedTo="dev"
-                onOk={doAddPayment}
-              />
-              <ActionButton
-                style="Add"
-                linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
-              />
-              <ActionButton
-                style="Edit"
-                linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
-              />
+              {isFeatureSwitchEnabled() ? (
+                <ActionButton
+                  style="Add"
+                  restrictedTo="folder.edit"
+                  onOk={doAddPayment}
+                />
+              ) : (
+                <>
+                  <ActionButton
+                    style="Add"
+                    linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
+                  />
+                  <ActionButton
+                    style="Edit"
+                    linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
+                  />
+                </>
+              )}
             </ButtonsGroup>
             {nArray(props.file.payment).length == 0 ? (
               <div>No payment received</div>

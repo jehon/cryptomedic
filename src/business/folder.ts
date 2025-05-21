@@ -69,7 +69,8 @@ export default class Folder extends PojoClass {
 
     for (const bill of this.list) {
       if (bill._type == "bill") {
-        (bill as Bill).payment = this.list.filter(
+        // Fix: horrible typescript hack
+        (bill as Bill).payment = (this.list as unknown as Payment[]).filter(
           (payment) =>
             payment._type == "payment" &&
             (payment as Payment).bill_id == bill.id

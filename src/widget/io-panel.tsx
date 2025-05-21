@@ -181,7 +181,12 @@ export default function IOPanel<T extends Pojo>(props: {
                   <div>Are you sure you want to DELETE the File {title}?</div>
                 </ActionConfirm>
                 <ActionButton style="Cancel" onOk={() => doCancel()} />
-                <ActionButton style="Confirm" action="Save" onOk={doSave} />
+                <ActionButton
+                  style="Confirm"
+                  restrictedTo={`${props.restrictedTo}.edit`}
+                  action="Save"
+                  onOk={doSave}
+                />
               </>
             )
           ) : isLocked ? (
@@ -239,7 +244,12 @@ export default function IOPanel<T extends Pojo>(props: {
           {edit && (
             <ButtonGroup>
               <ActionButton style="Cancel" onOk={() => doCancel()} />
-              <ActionButton style="Confirm" action="Save" onOk={doSave} />
+              <ActionButton
+                style="Confirm"
+                restrictedTo={`${props.restrictedTo}.edit`}
+                action="Save"
+                onOk={doSave}
+              />
             </ButtonGroup>
           )}
         </form>

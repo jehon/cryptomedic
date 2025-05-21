@@ -164,11 +164,11 @@ export interface Patient extends Pojo {
   surgery?: Surgery[];
 }
 
-export interface Payment extends PatientRelated {
+export interface Payment extends Pojo {
   bill_id: string;
   date: StringDate;
   amount: number;
-  comments: string;
+  comments?: string;
 
   // Note: We don't use the "center" from the Timed object
 }

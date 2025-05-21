@@ -1,3 +1,4 @@
+import { isFeatureSwitchEnabled } from "../config";
 import IODate from "../widget/io-date";
 import IONumber from "../widget/io-number";
 import IOPanel from "../widget/io-panel";
@@ -26,11 +27,12 @@ export default function PaymentElement(props: {
           <span className="payment_amount">{props.file.amount}&nbsp;৳</span>
         </>
       }
-      restrictedTo="dev"
+      restrictedTo={isFeatureSwitchEnabled() ? "folder" : "restricted"}
       canBeLocked={true}
       canBeDeleted={true}
     >
       <Panel fixed={true} header="Information">
+        <input type="hidden" name="bill_id" defaultValue={props.file.bill_id} />
         <IODate name="date" value={props.file.date} />
         <IONumber name="amount" value={props.file.amount} />
         <IOText name="comments" value={props.file.comments} />
