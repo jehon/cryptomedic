@@ -15,6 +15,7 @@ export default function PaymentElement(props: {
 }): React.ReactNode {
   return (
     <IOPanel<Payment>
+      {...props}
       key={`payment.${props.file.id}`}
       type="payment"
       file={props.file}
@@ -28,9 +29,6 @@ export default function PaymentElement(props: {
       requireBase="forbidden"
       canBeLocked={true}
       canBeDeleted={true}
-      onCreated={() => {}}
-      onUpdated={() => {}}
-      onDeleted={() => {}}
     >
       <Panel fixed={true} header="Information">
         <IODate name="date" value={props.file.date} />
