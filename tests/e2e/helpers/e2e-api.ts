@@ -6,7 +6,7 @@ import { WebBaseUrl } from "./e2e";
 
 type JsonData = any;
 
-function crUrlAPI(segment: string = ""): string {
+function absoluteUrl(segment: string = ""): string {
   return `${WebBaseUrl}/api${segment}`;
 }
 
@@ -25,9 +25,12 @@ export default function crApi(
   //
 
   const requestor = page.request as IndexSignature<any>;
-  return requestor[(options.method ?? CRUD.read).toLowerCase()](crUrlAPI(url), {
-    data: options.data ?? {}
-  })
+  return requestor[(options.method ?? CRUD.read).toLowerCase()](
+    absoluteUrl(url),
+    {
+      data: options.data ?? {}
+    }
+  )
     .then(
       passThrough<any>((resp) => {
         if (resp.status() != 200) {
