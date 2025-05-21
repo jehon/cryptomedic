@@ -128,7 +128,6 @@ mainApp.config([
       .when("/prices", {
         template: () => goToElement(XPagePrices)
       })
-
       .when("/home.new", {
         template: "<x-react-router></x-react-router>"
       })

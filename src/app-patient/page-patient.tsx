@@ -1,11 +1,14 @@
+import { produce } from "immer";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Folder from "../business/folder";
 import * as config from "../config";
+import { pojoOrdering } from "../utils/calculations";
 import ButtonsGroup from "../widget/buttons-group";
 import { Modes, type ModesList } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
+import Restricted from "../widget/restricted";
 import Waiting from "../widget/waiting";
 import AppointmentElement from "./appointment-element";
 import BillElement from "./bill-element";
@@ -55,30 +58,94 @@ export function getLastSeen(folder: Folder): Date | undefined {
     .pop();
 }
 
+function withFile(folder: Folder, file: PatientRelated): Folder {
+  return produce(withoutFile(folder, file), (draft) => {
+    draft.list.push(file);
+    draft.list.sort(pojoOrdering);
+  });
+}
+
+function withoutFile(folder: Folder, file: PatientRelated): Folder {
+  return produce(folder, (draft) => {
+    draft.list = draft.list.filter(
+      (item) => !(item.id == file.id && item._type == file._type)
+    );
+  });
+}
+
+function withoutAdded(folder: Folder): Folder {
+  return produce(folder, (draft) => {
+    draft.list = draft.list.filter((f) => f.id);
+  });
+}
+
 export default function PagePatient(): React.ReactNode {
   const params = useParams();
   const props: {
     id: string;
-    selectedType?: string;
+    selectedType?: config.BusinessType;
     selectedId?: string;
     mode: ModesList;
   } = {
     id: params["id"]!,
-    selectedType: params["selectedType"],
+    selectedType: params["selectedType"] as config.BusinessType,
     selectedId: params["selectedId"],
     mode: params["mode"] == "edit" ? Modes.input : Modes.output
   };
 
   const navigate = useNavigate();
-
   const [folder, folderUpdated] = useState<Folder | undefined>(undefined);
+
+  //
+  // Effect: get the folder from server
+  //
   useEffect(() => {
+    // This effect will fire only if props.id change
     getFolder(props.id).then((folder) => folderUpdated(folder));
   }, [props.id]);
 
+  //
+  // If no folder
+  //
   if (!folder) {
     return <Waiting message={`folder ${props.id}`} />;
   }
+
+  //
+  // If no patient
+  //
+  const patient = folder?.list.filter((f) => f._type == "patient")?.[0];
+  if (!patient) {
+    return <div key="no-patient-selected">No Patient selected</div>;
+  }
+
+  //
+  // Handle the add mode
+  //
+  if (props.selectedId == "add") {
+    // Test if the added item is not already present
+    if (
+      folder.list.filter((f) => f._type == props.selectedType! && !f.id)
+        .length == 0
+    ) {
+      // Add the correct add file (and only this one)
+      folderUpdated(
+        withFile(withoutAdded(folder), {
+          _type: props.selectedType,
+          patient_id: folder.id
+        } as PatientRelated)
+      );
+    }
+  } else {
+    if (folder.list.filter((f) => !f.id).length > 0) {
+      // Removing add file
+      folderUpdated(withoutAdded(folder));
+    }
+  }
+
+  //
+  // ...
+  //
 
   const folderUpdatedCallback = (folder: Folder | undefined) => {
     if (folder) {
@@ -87,34 +154,10 @@ export default function PagePatient(): React.ReactNode {
       navigate("/home");
     }
   };
-  const patient = folder.getPatient();
+
   const selectedUid = props.selectedType
     ? `${props.selectedType}.${props.selectedId ?? "add"}`
     : `patient.${props.selectedId}`;
-
-  if (!patient) {
-    return <div key="no-patient-selected">No Patient selected</div>;
-  }
-
-  if (props.selectedId == "add") {
-    const typeName = props.selectedType as config.BusinessType;
-
-    // Test if the added item is already present
-    if (
-      folder.list.filter(
-        (f) =>
-          `${f._type}.${f.id ?? "add"}` ==
-          `${props.selectedType}.${props.selectedId}`
-      ).length == 0
-    ) {
-      folderUpdated(
-        folder.withFile({
-          _type: typeName,
-          patient_id: folder.id
-        } as PatientRelated)
-      );
-    }
-  }
 
   return (
     <div
@@ -123,44 +166,46 @@ export default function PagePatient(): React.ReactNode {
       className="reduce-width"
     >
       {/* ------------ Header  --------------------*/}
-      <ButtonsGroup>
-        <button
-          id="btnAddSelector"
-          type="button"
-          className="action-alternate btn btn-secondary dropdown-toggle"
-          data-testid="add"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Add
-        </button>
-        <div
-          className="dropdown-menu dropdown-menu-right text-right"
-          aria-labelledby="btnGroupDrop1"
-        >
-          {(
-            [
-              "appointment",
-              "bill",
-              "consult_clubfoot",
-              "consult_other",
-              "consult_ricket",
-              "picture",
-              "surgery"
-            ] as config.BusinessType[]
-          ).map((type) => (
-            <Link
-              className="dropdown-item"
-              key={type}
-              data-testid={`add-${type}`}
-              to={`/patient/${patient.id!}/${type}/add`}
-            >
-              {config.type2Title(type)}
-            </Link>
-          ))}
-        </div>
-      </ButtonsGroup>
+      <Restricted to="folder.edit">
+        <ButtonsGroup>
+          <button
+            id="btnAddSelector"
+            type="button"
+            className="action-alternate btn btn-secondary dropdown-toggle"
+            data-testid="add"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Add
+          </button>
+          <div
+            className="dropdown-menu dropdown-menu-right text-right"
+            aria-labelledby="btnGroupDrop1"
+          >
+            {(
+              [
+                "appointment",
+                "bill",
+                "consult_clubfoot",
+                "consult_other",
+                "consult_ricket",
+                "picture",
+                "surgery"
+              ] as config.BusinessType[]
+            ).map((type) => (
+              <Link
+                className="dropdown-item"
+                key={type}
+                data-testid={`add-${type}`}
+                to={`/patient/${patient.id!}/${type}/add`}
+              >
+                {config.type2Title(type)}
+              </Link>
+            ))}
+          </div>
+        </ButtonsGroup>
+      </Restricted>
       {/* ------------ Key dates  --------------------*/}
       <Panel key="key-dates" label="Key dates">
         <IODate label="Last seen" value={getLastSeen(folder)} />
@@ -177,21 +222,13 @@ export default function PagePatient(): React.ReactNode {
             ? props.mode === Modes.input
             : false
         }
-        onCreated={(file: Patient) => {
-          folderUpdatedCallback(
-            folder.withFile(file as unknown as PatientRelated)
-          );
-        }}
-        onDeleted={(file: Patient) =>
-          folderUpdatedCallback(
-            folder.withoutFile(file as unknown as PatientRelated)
-          )
-        }
         onUpdated={(file: Patient) =>
+          // TODO: Fix this horrible hack
           folderUpdatedCallback(
-            folder.withFile(file as unknown as PatientRelated)
+            withFile(folder, file as unknown as PatientRelated)
           )
         }
+        onDeleted={(file: Patient) => navigate("/")}
       />
 
       {(folder.getChildren() as PatientRelated[]).map(
@@ -202,21 +239,12 @@ export default function PagePatient(): React.ReactNode {
             closed: uid !== selectedUid,
             parentPath: `/patient/${patient.id}`,
             edit: uid == selectedUid ? props.mode === Modes.input : false,
-            onCreated: (file: PatientRelated) => {
-              folderUpdatedCallback(
-                folder
-                  .withoutAdded()
-                  .withFile(file as unknown as PatientRelated)
-              );
-            },
-            onDeleted: (file: PatientRelated) =>
-              folderUpdatedCallback(
-                folder.withoutFile(file as unknown as PatientRelated)
-              ),
+            onCreated: (file: PatientRelated) =>
+              folderUpdatedCallback(withFile(withoutAdded(folder), file)),
             onUpdated: (file: PatientRelated) =>
-              folderUpdatedCallback(
-                folder.withFile(file as unknown as PatientRelated)
-              )
+              folderUpdatedCallback(withFile(folder, file)),
+            onDeleted: (file: PatientRelated) =>
+              folderUpdatedCallback(withoutFile(folder, file))
           };
 
           if (file._type == "appointment") {

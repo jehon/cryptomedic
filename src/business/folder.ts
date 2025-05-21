@@ -1,4 +1,3 @@
-import { produce } from "immer";
 import "reflect-metadata"; // plainToInstance
 import type {
   Bill,
@@ -7,7 +6,7 @@ import type {
   Payment
 } from "../app-patient/objects-patient";
 import type { BusinessType } from "../config";
-import { patientRelatedOrdering } from "../utils/calculations";
+import { pojoOrdering } from "../utils/calculations";
 import { removeNull } from "../utils/objects";
 import PojoClass from "./pojo-class";
 
@@ -61,7 +60,7 @@ export default class Folder extends PojoClass {
         _type: serverType2BusinessType(v.type)
       });
     }
-    this.list.sort(patientRelatedOrdering);
+    this.list.sort(pojoOrdering);
     try {
       this.getPatient();
     } catch (_e) {
@@ -70,43 +69,14 @@ export default class Folder extends PojoClass {
 
     for (const bill of this.list) {
       if (bill._type == "bill") {
-        (bill as Bill).payment = this.list.filter(
+        // Fix: horrible typescript hack
+        (bill as Bill).payment = (this.list as unknown as Payment[]).filter(
           (payment) =>
             payment._type == "payment" &&
             (payment as Payment).bill_id == bill.id
         ) as Payment[];
       }
     }
-  }
-
-  withFile(file: PatientRelated): Folder {
-    //
-    // We remove and add in one run
-    // to avoid building twice the folder
-    //
-    return produce(this.withoutFile(file), (draft) => {
-      draft.list.push(file as unknown as PatientRelated); // TODO: Fix cast
-    });
-  }
-
-  withoutFile(file: PatientRelated): Folder {
-    const fileUid = `${file._type}.${file.id ?? "add"}`;
-    const i = this.list.findIndex(
-      (val) => `${val._type}.${val.id ?? "add"}` === fileUid
-    );
-    if (i < 0) {
-      return this;
-    }
-
-    return produce(this, (draft) => {
-      draft.list = draft.list.splice(i, 1);
-    });
-  }
-
-  withoutAdded(): Folder {
-    return produce(this, (draft) => {
-      draft.list = draft.list.filter((f) => f.id);
-    });
   }
 
   getPatient(): Patient {

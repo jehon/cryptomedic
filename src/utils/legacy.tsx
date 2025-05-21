@@ -1,6 +1,8 @@
 // https://legacy.reactjs.org/docs/web-components.html
 
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { isFeatureSwitchEnabled } from "../config";
 
 export function bridgeTo(tag: string, reactComponent: React.ReactNode) {
   const el = class extends HTMLElement {
@@ -14,7 +16,11 @@ export function bridgeTo(tag: string, reactComponent: React.ReactNode) {
     }
 
     connectedCallback() {
-      createRoot(this.#mountPoint).render(reactComponent);
+      if (isFeatureSwitchEnabled())
+        createRoot(this.#mountPoint).render(
+          <StrictMode>{reactComponent}</StrictMode>
+        );
+      else createRoot(this.#mountPoint).render(reactComponent);
     }
   };
 

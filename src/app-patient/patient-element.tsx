@@ -5,11 +5,11 @@ import { yearOfBirthPattern } from "../utils/strings";
 import IOFunction from "../widget/io-function";
 import IOList, { type IOListType } from "../widget/io-list";
 import IONumber from "../widget/io-number";
+import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import FilePanel from "./blocs/file-panel";
 import type { Patient } from "./objects-patient";
 
 function getListFor(category: string, value: string): IOListType {
@@ -28,7 +28,6 @@ export default function PatientElement(props: {
   edit: boolean;
   closed: boolean;
   canBeDeleted: boolean;
-  onCreated: (patient: Patient) => void;
   onUpdated: (patient: Patient) => void;
   onDeleted: (patient: Patient) => void;
 }) {
@@ -43,19 +42,20 @@ export default function PatientElement(props: {
 
   const uid = `patient.${patient.id}`;
   return (
-    <FilePanel<Patient>
+    <IOPanelWithNavigation<Patient>
       key={`patient.${props.patient.id}`}
       type="patient"
       file={props.patient}
       apiRootUrl={`fiche/patient`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
+      restrictedTo="folder"
       canBeDeleted={props.canBeDeleted}
       canBeLocked={false}
-      onCreated={props.onCreated}
+      onCreated={() => {}} // No create possible
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
-      selfPath={`/patient/${props.patient.id}/patient/${props.patient.id ?? "add"}`}
+      basePath={`/patient/${props.patient.id}/patient/${props.patient.id ?? "add"}`}
       header={
         <>
           <span>
@@ -128,6 +128,6 @@ export default function PatientElement(props: {
           <IOText name="address_comments" value={patient.address_comments} />
         </Panel>
       </TwoColumns>
-    </FilePanel>
+    </IOPanelWithNavigation>
   );
 }

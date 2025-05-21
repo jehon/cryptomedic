@@ -10,7 +10,7 @@ export default function ActionConfirm(
     onOk: () => void;
   } & ButtonActionProps
 ): React.ReactNode {
-  const [isOpen, doOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
 
   const title = props.title ?? props.action;
 
@@ -20,10 +20,10 @@ export default function ActionConfirm(
         style={props.style}
         discrete={props.discrete}
         action={props.action}
-        onOk={() => doOpen(true)}
-        requires={props.requires}
+        onOk={() => setOpened(true)}
+        restrictedTo={props.restrictedTo}
       ></ActionButton>
-      {isOpen ? (
+      {opened ? (
         <Popup title={title} style={props.style}>
           {props.children}
           <ButtonsGroup>
@@ -31,14 +31,14 @@ export default function ActionConfirm(
               style="Cancel"
               discrete={true}
               action="Cancel"
-              onOk={() => doOpen(false)}
+              onOk={() => setOpened(false)}
             />
             <ActionButton
               style={props.style}
               discrete={props.discrete}
               action={props.action}
               onOk={() => {
-                doOpen(false);
+                setOpened(false);
                 props.onOk();
               }}
             />

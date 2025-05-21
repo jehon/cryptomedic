@@ -21,7 +21,7 @@ export function MenuItem(props: {
   const navigate = useNavigate();
 
   return (
-    <Restricted requires={props.requires}>
+    <Restricted to={props.requires}>
       <div className="menu-item">
         <Panel
           header={props.title}

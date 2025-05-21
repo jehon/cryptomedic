@@ -10,7 +10,7 @@ export type ButtonActionProps = {
   action?: string;
   onOk?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   linkTo?: string | string[];
-  requires?: string;
+  restrictedTo?: string;
 };
 
 export const ActionStyles = {
@@ -68,7 +68,7 @@ export default function ActionButton(
       : undefined);
 
   return (
-    <Restricted requires={props.requires}>
+    <Restricted to={props.restrictedTo}>
       <button
         className={"btn " + as.css + (props.discrete ? " discrete " : "")}
         onClick={onOk}

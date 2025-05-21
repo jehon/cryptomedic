@@ -1,7 +1,8 @@
 import { expect, type Locator, type Page } from "playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
-import { crAcceptPopup, crApi, crExpectUrl, crInit, crReady } from "./e2e";
+import { crAcceptPopup, crExpectUrl, crInit, crReady } from "./e2e";
+import crApi from "./e2e-api";
 import {
   E2EFilePanel,
   type FieldsConfigTypeSimplified

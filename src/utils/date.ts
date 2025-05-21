@@ -2,6 +2,10 @@ import { DataMissingException } from "./exceptions";
 
 const InvalidDate = "Invalid date";
 
+export function inputValueNow(): string {
+  return new Date().toISOString().substring(0, 10);
+}
+
 export function normalizeDate(
   d: string | Date | null | undefined
 ): Date | undefined {

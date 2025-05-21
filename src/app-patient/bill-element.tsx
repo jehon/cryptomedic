@@ -1,7 +1,9 @@
+import { produce } from "immer";
 import { useState } from "react";
 import Price from "../business/price";
-import { getPriceCategories } from "../config";
+import { getPriceCategories, isFeatureSwitchEnabled } from "../config";
 import { nArray } from "../utils/array";
+import { inputValueNow } from "../utils/date";
 import { getList, getSession } from "../utils/session";
 import { roundTo, string2number } from "../utils/strings";
 import ActionButton from "../widget/action-button";
@@ -11,14 +13,14 @@ import IOFunction from "../widget/io-function";
 import IOHidden from "../widget/io-hidden";
 import IOList from "../widget/io-list";
 import IONumber from "../widget/io-number";
-import IOString from "../widget/io-string";
+import { propagateToList } from "../widget/io-panel";
+import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import "./bill-element.css";
-import FilePanel from "./blocs/file-panel";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
 import type { Bill, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
+import PaymentElement from "./payment-element";
 
 /*
   TODO:
@@ -167,23 +169,44 @@ export default function BillElement(
 
   /** *************************
    *
+   * Payments
+   *
+   */
+  const doAddPayment = () => {
+    props.onUpdated(
+      produce<Bill>(props.file, (draft) => {
+        draft.payment = (draft.payment ?? []).concat([
+          {
+            _type: "payment",
+            bill_id: props.file.id!,
+            amount: 0,
+            date: inputValueNow()
+          }
+        ]);
+      })
+    );
+  };
+
+  /** *************************
+   *
    * Render
    *
    */
   return (
-    <FilePanel<Bill>
+    <IOPanelWithNavigation<Bill>
       key={`bill.${props.file.id}`}
       type="bill"
       file={props.file}
       apiRootUrl={`fiche/bill`} // No leading slash!
       edit={props.edit}
       closed={props.closed}
+      restrictedTo="folder"
       canBeDeleted={nArray(props.file.payment).length == 0}
       canBeLocked={true}
       onCreated={props.onCreated}
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
-      selfPath={`${props.parentPath}/bill/${props.file.id ?? "add"}`}
+      basePath={`${props.parentPath}/bill/${props.file.id ?? "add"}`}
       footer={
         !props.edit &&
         props.file.id &&
@@ -194,28 +217,36 @@ export default function BillElement(
             testid={`bill.${props.file.id}.payments`}
           >
             <ButtonsGroup>
-              <ActionButton
-                style="Add"
-                linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
-              />
-              <ActionButton
-                style="Edit"
-                linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
-              />
+              {isFeatureSwitchEnabled() ? (
+                <ActionButton
+                  style="Add"
+                  restrictedTo="folder.edit"
+                  onOk={doAddPayment}
+                />
+              ) : (
+                <>
+                  <ActionButton
+                    style="Add"
+                    linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
+                  />
+                  <ActionButton
+                    style="Edit"
+                    linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
+                  />
+                </>
+              )}
             </ButtonsGroup>
             {nArray(props.file.payment).length == 0 ? (
               <div>No payment received</div>
             ) : (
               nArray(props.file.payment).map((payment) => (
-                <div
+                <PaymentElement
                   key={`payment.${payment.id}`}
-                  className="payment-line"
-                  data-testid={`payment.${payment.id}`}
-                >
-                  <IODate value={payment.date} noLabel />
-                  <IONumber value={payment.amount} noLabel />
-                  <IOString value={payment.comments} noLabel />
-                </div>
+                  file={payment}
+                  edit={false}
+                  closed={true}
+                  {...propagateToList(props.file, "payment", props.onUpdated)}
+                />
               ))
             )}
           </Panel>
@@ -312,6 +343,6 @@ export default function BillElement(
       ) : (
         <div className="alert alert-warning">Please select a date first</div>
       )}
-    </FilePanel>
+    </IOPanelWithNavigation>
   );
 }
