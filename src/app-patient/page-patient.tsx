@@ -8,6 +8,7 @@ import ButtonsGroup from "../widget/buttons-group";
 import { Modes, type ModesList } from "../widget/io-abstract";
 import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
+import Restricted from "../widget/restricted";
 import Waiting from "../widget/waiting";
 import AppointmentElement from "./appointment-element";
 import BillElement from "./bill-element";
@@ -165,44 +166,46 @@ export default function PagePatient(): React.ReactNode {
       className="reduce-width"
     >
       {/* ------------ Header  --------------------*/}
-      <ButtonsGroup>
-        <button
-          id="btnAddSelector"
-          type="button"
-          className="action-alternate btn btn-secondary dropdown-toggle"
-          data-testid="add"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Add
-        </button>
-        <div
-          className="dropdown-menu dropdown-menu-right text-right"
-          aria-labelledby="btnGroupDrop1"
-        >
-          {(
-            [
-              "appointment",
-              "bill",
-              "consult_clubfoot",
-              "consult_other",
-              "consult_ricket",
-              "picture",
-              "surgery"
-            ] as config.BusinessType[]
-          ).map((type) => (
-            <Link
-              className="dropdown-item"
-              key={type}
-              data-testid={`add-${type}`}
-              to={`/patient/${patient.id!}/${type}/add`}
-            >
-              {config.type2Title(type)}
-            </Link>
-          ))}
-        </div>
-      </ButtonsGroup>
+      <Restricted to="folder.edit">
+        <ButtonsGroup>
+          <button
+            id="btnAddSelector"
+            type="button"
+            className="action-alternate btn btn-secondary dropdown-toggle"
+            data-testid="add"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Add
+          </button>
+          <div
+            className="dropdown-menu dropdown-menu-right text-right"
+            aria-labelledby="btnGroupDrop1"
+          >
+            {(
+              [
+                "appointment",
+                "bill",
+                "consult_clubfoot",
+                "consult_other",
+                "consult_ricket",
+                "picture",
+                "surgery"
+              ] as config.BusinessType[]
+            ).map((type) => (
+              <Link
+                className="dropdown-item"
+                key={type}
+                data-testid={`add-${type}`}
+                to={`/patient/${patient.id!}/${type}/add`}
+              >
+                {config.type2Title(type)}
+              </Link>
+            ))}
+          </div>
+        </ButtonsGroup>
+      </Restricted>
       {/* ------------ Key dates  --------------------*/}
       <Panel key="key-dates" label="Key dates">
         <IODate label="Last seen" value={getLastSeen(folder)} />
