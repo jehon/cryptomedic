@@ -51,7 +51,7 @@ export function crApiLogin(page: Page, login: string = LOGINS.PHYSIO) {
 //   });
 
 //   page.on("pageerror", (err) =>
-//     console.warn("Uncatched error from browser: ", err)
+//     console.warn("thrown error from browser: ", err)
 //   );
 // }
 
