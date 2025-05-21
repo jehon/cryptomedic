@@ -115,14 +115,6 @@ export class E2ECryptomedic {
     this.page = page;
   }
 
-  async reload(segment: string = ""): Promise<void> {
-    await this.page.reload();
-    await crReady(this.page);
-    if (segment) {
-      await this.goTo(segment);
-    }
-  }
-
   api(
     url: string,
     options: {
@@ -183,7 +175,7 @@ export async function startCryptomedic(
 ): Promise<E2ECryptomedic> {
   const cryptomedic = new E2ECryptomedic(page);
 
-  await cryptomedic.reload(opts.page);
+  await cryptomedic.goTo(opts.page ?? "");
 
   return cryptomedic;
 }
