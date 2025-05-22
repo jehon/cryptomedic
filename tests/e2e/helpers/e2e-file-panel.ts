@@ -1,7 +1,7 @@
 import test, { expect, type Page } from "@playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
-import { crExpectUrl, crUrl, outputDate, startCryptomedic } from "./e2e";
+import { crUrl, outputDate, startCryptomedic } from "./e2e";
 import { E2EForm, type IOType, type IOValue } from "./e2e-form";
 import { E2EPatient } from "./e2e-patients";
 
@@ -116,8 +116,7 @@ export class E2EFilePanel extends E2EForm {
 
   // fragment: /appointment/102
   async expectUrlFragmentForType(fragment: string) {
-    await crExpectUrl(
-      this.page,
+    await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(
         "^.*" + escapeRegExp(`#/patient/${this.patient_id}`) + fragment + "$"
       )
@@ -161,8 +160,7 @@ export class E2EFilePanel extends E2EForm {
     await expect(popupActions.getByText("Cancel")).toBeVisible();
     await expect(popupActions.getByText("Delete")).toBeVisible();
     await popupActions.getByText("Delete").click();
-    await crExpectUrl(
-      this.page,
+    await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(".*" + escapeRegExp(`#/patient/${this.patient_id}`))
     );
     await this.e2ePatient.expectToBeVisible();
@@ -194,15 +192,13 @@ export class E2EFilePanel extends E2EForm {
     await this.page.getByText("Save").first().click();
 
     if (interceptAddedId) {
-      await crExpectUrl(
-        this.page,
+      await this.e2ePatient.cryptomedic.waitForUrl(
         new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}[0-9]+$`)
       );
       this.id = this.detectFileId();
     }
 
-    await crExpectUrl(
-      this.page,
+    await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}${this.id}$`)
     );
     await this.e2ePatient.expectToBeVisible();
@@ -216,8 +212,7 @@ export class E2EFilePanel extends E2EForm {
     await this.expectToBeVisible();
     await this.getButtonGroup().getByText("Edit").click();
 
-    await crExpectUrl(
-      this.page,
+    await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
     );
     await expect(this.getButtonGroup().getByText("Save").first()).toBeVisible();

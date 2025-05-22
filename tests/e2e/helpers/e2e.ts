@@ -1,10 +1,10 @@
-import { expect, type Locator, type Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 import type { IndexSignature } from "../../../src/types";
 import { CRUD, type CRUDType } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
 export { outputDate } from "../../../src/utils/date";
 
-export const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
+const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
 
 const LOGINS = {
   PHYSIO: "murshed",
@@ -23,7 +23,7 @@ export function crUrl(segment: string = ""): string {
 //   // page.on("console", (msg) =>
 //   //   console.info("Error from browser: ", { type: msg.type(), text: msg.text() })
 //   // );
-
+//
 //   page.on("console", async (msg) => {
 //     const msgArgs = msg.args();
 //     const logValues = await Promise.all(
@@ -38,30 +38,11 @@ export function crUrl(segment: string = ""): string {
 //       )
 //     );
 //   });
-
+//
 //   page.on("pageerror", (err) =>
 //     console.warn("thrown error from browser: ", err)
 //   );
 // }
-
-export async function crExpectUrl(page: Page, r: string | RegExp) {
-  await page.waitForURL(r, { timeout: 5000 });
-  await expect(page).toHaveURL(r);
-}
-
-export async function crAcceptPopup(page: Page | Locator, button: string) {
-  const box = page.locator(".popup .box .buttons.btn-group");
-  await expect(page.locator(".popup .box .buttons.btn-group")).toBeVisible();
-  await box.getByText(button).click();
-
-  await expect(box).not.toBeVisible();
-}
-
-// ************************************
-//
-// Big object for the application
-//
-// ************************************
 
 export type E2ECryptomedicType = InstanceType<typeof E2ECryptomedic>;
 class E2ECryptomedic {
@@ -122,6 +103,16 @@ class E2ECryptomedic {
     await this.waitReady();
   }
 
+  async acceptPopup(button: string) {
+    const box = this.page.locator(".popup .box .buttons.btn-group");
+    await expect(
+      this.page.locator(".popup .box .buttons.btn-group")
+    ).toBeVisible();
+    await box.getByText(button).click();
+
+    await expect(box).not.toBeVisible();
+  }
+
   async waitReady() {
     await expect(this.page, `url: ${WebBaseUrl}`).toHaveTitle(/Cryptomedic/);
     await expect(this.page.getByTestId("top-level")).toBeVisible();
@@ -129,6 +120,11 @@ class E2ECryptomedic {
     await expect(this.page.getByTestId("global-wait"), "crReady").toHaveCount(
       0
     );
+  }
+
+  async waitForUrl(r: string | RegExp) {
+    await this.page.waitForURL(r, { timeout: 5000 });
+    await expect(this.page).toHaveURL(r);
   }
 }
 
