@@ -126,6 +126,9 @@ dev: clear start
 # No reset!
 # build: other stuff than frontend need to be build
 
+start-phpmyadmin:
+	docker compose up -d phpmyadmin
+
 dc-up:
 	docker compose up -d --wait --remove-orphans --build
 # bin/cr-refresh-structure "http://$(CRYPTOMEDIC_HTTP_DEPLOY_HOST):$(CRYPTOMEDIC_HTTP_DEPLOY_PORT)/" "secret"
