@@ -85,6 +85,14 @@ class E2ECryptomedic {
     );
   }
 
+  detectId(title: string) {
+    const url = this.page.url();
+    const matches = /\/(?<id>[0-9]+)$/.exec(url);
+    const id = matches?.groups?.["id"] ?? "";
+    console.info(`Detected ${title} id: ${id}`);
+    return id;
+  }
+
   // *********************************************
   //
   // API

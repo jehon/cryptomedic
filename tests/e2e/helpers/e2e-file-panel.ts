@@ -87,7 +87,7 @@ export class E2EFilePanel extends E2EForm {
     this.patient_id = "" + this.e2ePatient.id;
 
     if (id === undefined) {
-      this.id = this.detectFileId();
+      this.id = this.e2ePatient.cryptomedic.detectId(this.type);
     } else {
       this.id = "" + id;
     }
@@ -121,14 +121,6 @@ export class E2EFilePanel extends E2EForm {
         "^.*" + escapeRegExp(`#/patient/${this.patient_id}`) + fragment + "$"
       )
     );
-  }
-
-  detectFileId() {
-    const url = this.page.url();
-    const matches = /\/(?<id>[0-9]+)$/.exec(url);
-    const id = matches?.groups?.["id"] ?? "";
-    console.info("Detected file id: ", id);
-    return id;
   }
 
   private getButtonGroup() {
@@ -194,7 +186,7 @@ export class E2EFilePanel extends E2EForm {
       await this.e2ePatient.cryptomedic.waitForUrl(
         new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}[0-9]+$`)
       );
-      this.id = this.detectFileId();
+      this.id = this.e2ePatient.cryptomedic.detectId(this.type);
     }
 
     await this.e2ePatient.cryptomedic.waitForUrl(
