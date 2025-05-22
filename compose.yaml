@@ -62,6 +62,8 @@ services:
         target: /versions/
 
   phpmyadmin:
+    profiles:
+      - tools
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
     image: phpmyadmin/phpmyadmin:${PHPMYADMIN_VERSION}
     environment:
