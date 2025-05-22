@@ -1,18 +1,18 @@
 import { expect, type Locator } from "playwright/test";
-import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { type E2ECryptomedicType } from "./e2e";
 import {
   E2EFilePanel,
   type FieldsConfigTypeSimplified
 } from "./e2e-file-panel";
+import { E2EForm } from "./e2e-form";
 
-// TODO: this is a E2EForm too?
-export class E2EPatient {
+export class E2EPatient extends E2EForm {
   public id: string;
   readonly cryptomedic: E2ECryptomedicType;
 
   constructor(cryptomedic: E2ECryptomedicType, id?: string | number) {
+    super(() => this.panel, {});
     this.cryptomedic = cryptomedic;
     if (id === undefined) {
       this.id = this.detectPatientId();
@@ -25,9 +25,10 @@ export class E2EPatient {
     return this.cryptomedic.page.getByTestId(`folder-${this.id}`);
   }
 
-  async expectToBeVisible() {
-    await expect(this.panel).toBeVisible();
+  override async expectToBeVisible() {
+    await super.expectToBeVisible();
     await expect(this.cryptomedic.page.getByTestId("add")).toBeVisible();
+    return this;
   }
 
   detectPatientId(): string {
@@ -67,9 +68,7 @@ export class E2EPatient {
       .then(
         (folder) =>
           folder?.id > 0
-            ? cryptomedic.api(`/fiche/patients/${folder.id}`, {
-                method: CRUD.delete
-              })
+            ? cryptomedic.apiCrudDelete(`/fiche/patients/`, folder.id)
             : undefined,
         () => {
           // If the file is not found, it's ok
