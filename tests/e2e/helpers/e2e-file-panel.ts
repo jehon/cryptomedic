@@ -1,7 +1,7 @@
 import test, { expect, type Page } from "@playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
-import { crUrl, outputDate, startCryptomedic } from "./e2e";
+import { outputDate, startCryptomedic } from "./e2e";
 import { E2EForm, type IOType, type IOValue } from "./e2e-form";
 import { E2EPatient } from "./e2e-patients";
 
@@ -173,8 +173,7 @@ export class E2EFilePanel extends E2EForm {
 
     await this.locator.click(); // the panel is the closed item
 
-    // TODO: when URL will be self-updated on load, this should be fixed
-    this.page.goto(crUrl(`${this.fileBaseUrl}${this.id}`));
+    this.e2ePatient.cryptomedic.goTo(`${this.fileBaseUrl}${this.id}`);
     if (this.id) {
       await this.expectUrlFragmentForType(`\\/${this.type}\\/${this.id}`);
     } else {

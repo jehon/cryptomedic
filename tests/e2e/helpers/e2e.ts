@@ -14,10 +14,6 @@ const LOGINS = {
 
 const PASSWORD = "p";
 
-export function crUrl(segment: string = ""): string {
-  return `${WebBaseUrl}/built/frontend/ng1x.html?dev#${segment}`;
-}
-
 // export function crDebugHooks(page: Page): void {
 //   // Listen for all console logs
 //   // page.on("console", (msg) =>
@@ -52,6 +48,49 @@ class E2ECryptomedic {
     this.page = page;
   }
 
+  // *********************************************
+  //
+  // GUI
+  //
+  // *********************************************
+
+  async acceptPopup(button: string) {
+    const box = this.page.locator(".popup .box .buttons.btn-group");
+    await expect(
+      this.page.locator(".popup .box .buttons.btn-group")
+    ).toBeVisible();
+    await box.getByText(button).click();
+
+    await expect(box).not.toBeVisible();
+  }
+
+  async goTo(path: string): Promise<void> {
+    const absolutePath = `${WebBaseUrl}/built/frontend/ng1x.html?dev#${path}`;
+
+    await this.page.goto(absolutePath);
+    await this.waitReady();
+  }
+
+  async waitForUrl(r: string | RegExp) {
+    await this.page.waitForURL(r, { timeout: 5000 });
+    await expect(this.page).toHaveURL(r);
+  }
+
+  async waitReady() {
+    await expect(this.page, `url: ${WebBaseUrl}`).toHaveTitle(/Cryptomedic/);
+    await expect(this.page.getByTestId("top-level")).toBeVisible();
+    await this.page.evaluate(() => document.fonts.ready);
+    await expect(this.page.getByTestId("global-wait"), "crReady").toHaveCount(
+      0
+    );
+  }
+
+  // *********************************************
+  //
+  // API
+  //
+  // *********************************************
+
   api(
     url: string,
     options: {
@@ -59,12 +98,6 @@ class E2ECryptomedic {
       data?: any;
     } = {}
   ): Promise<any> {
-    //
-    // https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-post
-    //
-    // Return the response object (json)
-    //
-
     const requestor = this.page.request as IndexSignature<any>;
     const absoluteApiUrl = `${WebBaseUrl}/api${url}`;
 
@@ -94,37 +127,6 @@ class E2ECryptomedic {
         password: PASSWORD
       }
     });
-  }
-
-  async goTo(path: string): Promise<void> {
-    const absolutePath = `${WebBaseUrl}/built/frontend/ng1x.html?dev#${path}`;
-
-    await this.page.goto(absolutePath);
-    await this.waitReady();
-  }
-
-  async acceptPopup(button: string) {
-    const box = this.page.locator(".popup .box .buttons.btn-group");
-    await expect(
-      this.page.locator(".popup .box .buttons.btn-group")
-    ).toBeVisible();
-    await box.getByText(button).click();
-
-    await expect(box).not.toBeVisible();
-  }
-
-  async waitReady() {
-    await expect(this.page, `url: ${WebBaseUrl}`).toHaveTitle(/Cryptomedic/);
-    await expect(this.page.getByTestId("top-level")).toBeVisible();
-    await this.page.evaluate(() => document.fonts.ready);
-    await expect(this.page.getByTestId("global-wait"), "crReady").toHaveCount(
-      0
-    );
-  }
-
-  async waitForUrl(r: string | RegExp) {
-    await this.page.waitForURL(r, { timeout: 5000 });
-    await expect(this.page).toHaveURL(r);
   }
 }
 
