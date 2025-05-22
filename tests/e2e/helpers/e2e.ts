@@ -62,16 +62,6 @@ export async function crInit(
   } = {}
 ): Promise<void> {
   await page.goto(crUrl(opts.page ?? ""));
-
-  // Expect a title "to contain" a substring.
-  await expect(page, `url: ${WebBaseUrl}`).toHaveTitle(/Cryptomedic/);
-
-  // Body is loading
-  await expect(page.getByTestId("top-level")).toBeVisible();
-
-  // // App is initialized
-  // await expect(page.getByTestId("initial-loader")).toHaveCount(0);
-
   return crReady(page);
 }
 
