@@ -186,6 +186,12 @@ jobs:
       - build
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+          - 1
+          - 2
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
@@ -213,7 +219,7 @@ jobs:
 
       - run: make dependencies
 
-      - run: make integration-test-playwright
+      - run: SHARD="${{ matrix.shard }}/2" make integration-test-playwright
 
       - run: git status
 

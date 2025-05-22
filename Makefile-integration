@@ -113,8 +113,10 @@ integration-update-references-styles-desktop:
 
 .PHONY: integration-test-playwright
 integration-test-playwright: integration-test-playwright-deps
+# https://playwright.dev/docs/test-sharding
+	@echo "Sharding: $(SHARD)"
 
-	node_modules/.bin/playwright test --update-snapshots
+	node_modules/.bin/playwright test --update-snapshots --shard "$(SHARD)"
 
 integration-test-playwright-reset-snapshots:
 	rm -fr tests/e2e/__local__
