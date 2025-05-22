@@ -1,7 +1,7 @@
 import { expect, type Locator, type Page } from "playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
-import { crAcceptPopup, crExpectUrl, E2ECryptomedic } from "./e2e";
+import { crAcceptPopup, crExpectUrl, type E2ECryptomedicType } from "./e2e";
 import crApi from "./e2e-api";
 import {
   E2EFilePanel,
@@ -11,9 +11,9 @@ import {
 // TODO: this is a E2EForm too?
 export class E2EPatient {
   public id: string;
-  readonly cryptomedic: E2ECryptomedic;
+  readonly cryptomedic: E2ECryptomedicType;
 
-  constructor(cryptomedic: E2ECryptomedic, id?: string | number) {
+  constructor(cryptomedic: E2ECryptomedicType, id?: string | number) {
     this.cryptomedic = cryptomedic;
     if (id === undefined) {
       this.id = this.detectPatientId();

@@ -63,7 +63,8 @@ export async function crAcceptPopup(page: Page | Locator, button: string) {
 //
 // ************************************
 
-export class E2ECryptomedic {
+export type E2ECryptomedicType = InstanceType<typeof E2ECryptomedic>;
+class E2ECryptomedic {
   readonly page: Page;
 
   constructor(page: Page) {
