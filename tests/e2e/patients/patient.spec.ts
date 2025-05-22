@@ -44,7 +44,7 @@ test("update patient 101", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
 
-  const e2eFolder = new E2EPatient(cryptomedic.page, 101);
+  const e2eFolder = new E2EPatient(cryptomedic, 101);
   const e2eFile = await e2eFolder.getFile({
     fileType: "patient",
     fileId: 101,
@@ -143,7 +143,7 @@ test("create-reference-2002", async ({ page }) => {
 
   await page.waitForURL(/.+#\/patient\/.+/);
 
-  const e2ePatient = new E2EPatient(cryptomedic.page);
+  const e2ePatient = new E2EPatient(cryptomedic);
   const e2eFile = e2ePatient.getFile({
     fileType: "patient",
     fileId: e2ePatient.id
@@ -182,7 +182,7 @@ test("generate-reference", async ({ page }) => {
 
   await page.waitForURL(/.+#\/patient\/.+/);
 
-  const e2ePatient = new E2EPatient(cryptomedic.page);
+  const e2ePatient = new E2EPatient(cryptomedic);
   const e2eFile = e2ePatient.getFile({
     fileType: "patient",
     fileId: e2ePatient.id

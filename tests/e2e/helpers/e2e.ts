@@ -107,7 +107,6 @@ export async function crAcceptPopup(page: Page | Locator, button: string) {
 //
 // ************************************
 
-// ts-unused-exports:disable-next-line
 export class E2ECryptomedic {
   readonly page: Page;
 
@@ -167,9 +166,6 @@ export class E2ECryptomedic {
   }
 }
 
-// ts-unused-exports:disable-next-line
 export function startCryptomedic(page: Page): E2ECryptomedic {
-  const cryptomedic = new E2ECryptomedic(page);
-
-  return cryptomedic;
+  return new E2ECryptomedic(page);
 }

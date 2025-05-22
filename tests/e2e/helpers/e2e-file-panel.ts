@@ -85,14 +85,14 @@ export class E2EFilePanel extends E2EForm {
   ) {
     super(
       () =>
-        e2ePatient.page
+        e2ePatient.cryptomedic.page
           .getByTestId(`${this.type}.${this.id}`)
           .locator(">[data-role=panel]"),
       reduceFieldConfig2Form(fieldsConfig)
     );
     this.e2ePatient = e2ePatient;
     this.type = type;
-    this.page = e2ePatient.page;
+    this.page = e2ePatient.cryptomedic.page;
     this.patient_id = "" + this.e2ePatient.id;
 
     if (id === undefined) {
@@ -266,10 +266,10 @@ export function fullTest(context: {
       data: Record<string, IOValue | undefined>;
     }) {
       await test(`${context.fileType}.${options.fileId}`, async ({ page }) => {
-        startCryptomedic(page);
+        const cryptomedic = startCryptomedic(page);
         await crApiLogin(page);
 
-        const e2eFile = await new E2EPatient(page, options.patientId)
+        const e2eFile = await new E2EPatient(cryptomedic, options.patientId)
           .getFile({
             fileType: context.fileType,
             fileId: options.fileId,
@@ -300,9 +300,12 @@ export function fullTest(context: {
       await test(
         `${context.fileType} create and delete`.trim(),
         async ({ page }) => {
-          startCryptomedic(page);
+          const cryptomedic = startCryptomedic(page);
           await crApiLogin(page);
-          const e2ePatient = await new E2EPatient(page, options.patientId).go();
+          const e2ePatient = await new E2EPatient(
+            cryptomedic,
+            options.patientId
+          ).go();
           const e2eFile = await e2ePatient.doAdd({
             fileType: context.fileType,
             fieldsConfig
@@ -347,10 +350,13 @@ export function fullTest(context: {
         `${context.fileType}.${options.fileId} update`.trim(),
         async ({ page }) => {
           test.slow();
-          startCryptomedic(page);
+          const cryptomedic = startCryptomedic(page);
 
           await crApiLogin(page);
-          const e2eFile = new E2EPatient(page, options.patientId).getFile({
+          const e2eFile = new E2EPatient(
+            cryptomedic,
+            options.patientId
+          ).getFile({
             fileType: context.fileType,
             fileId: options.fileId,
             fieldsConfig
