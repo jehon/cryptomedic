@@ -2,7 +2,6 @@ import { expect, type Locator, type Page } from "@playwright/test";
 import type { IndexSignature } from "../../../src/types";
 import { CRUD, type CRUDType } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
-import crApi from "./e2e-api";
 export { outputDate } from "../../../src/utils/date";
 
 export const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
@@ -17,16 +16,6 @@ const PASSWORD = "p";
 
 export function crUrl(segment: string = ""): string {
   return `${WebBaseUrl}/built/frontend/ng1x.html?dev#${segment}`;
-}
-
-export function crApiLogin(page: Page, login: string = LOGINS.PHYSIO) {
-  return crApi(page, "/auth/mylogin", {
-    method: CRUD.submit,
-    data: {
-      username: login,
-      password: PASSWORD
-    }
-  });
 }
 
 // export function crDebugHooks(page: Page): void {
