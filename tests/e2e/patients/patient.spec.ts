@@ -128,7 +128,7 @@ test("create-reference-2002", async ({ page }) => {
   const GenerateYear = 2022;
   const GenerateOrder = 123;
 
-  await E2EPatient.apiDelete(page, GenerateYear, GenerateOrder);
+  await E2EPatient.apiDelete(cryptomedic, GenerateYear, GenerateOrder);
 
   const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
 
@@ -166,7 +166,7 @@ test("generate-reference", async ({ page }) => {
   const GenerateYear = 2003;
 
   // entry_order will be set automatically to 10.000
-  await E2EPatient.apiDelete(page, GenerateYear, 10000);
+  await E2EPatient.apiDelete(cryptomedic, GenerateYear, 10000);
 
   const e2eForm = new E2EForm(
     () => page.getByTestId("generate-a-reference"),

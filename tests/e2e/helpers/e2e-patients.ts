@@ -1,8 +1,7 @@
-import { expect, type Locator, type Page } from "playwright/test";
+import { expect, type Locator } from "playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { crAcceptPopup, crExpectUrl, type E2ECryptomedicType } from "./e2e";
-import crApi from "./e2e-api";
 import {
   E2EFilePanel,
   type FieldsConfigTypeSimplified
@@ -59,15 +58,16 @@ export class E2EPatient {
   }
 
   static apiDelete(
-    page: Page,
+    cryptomedic: E2ECryptomedicType,
     entry_year: number,
     entry_order: number
   ): Promise<void> {
-    return crApi(page, `/reference/${entry_year}/${entry_order}`)
+    return cryptomedic
+      .api(`/reference/${entry_year}/${entry_order}`)
       .then(
         (folder) =>
           folder?.id > 0
-            ? crApi(page, `/fiche/patients/${folder.id}`, {
+            ? cryptomedic.api(`/fiche/patients/${folder.id}`, {
                 method: CRUD.delete
               })
             : undefined,

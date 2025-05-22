@@ -2,7 +2,6 @@ import test, { expect, type Page } from "@playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { crExpectUrl, crUrl, outputDate, startCryptomedic } from "./e2e";
-import crApi from "./e2e-api";
 import { E2EForm, type IOType, type IOValue } from "./e2e-form";
 import { E2EPatient } from "./e2e-patients";
 
@@ -103,7 +102,7 @@ export class E2EFilePanel extends E2EForm {
    */
 
   apiFileUpdate(id: string | number, data: Record<string, string | number>) {
-    return crApi(this.page, `/fiche/${this.type}/${id}`, {
+    return this.e2ePatient.cryptomedic.api(`/fiche/${this.type}/${id}`, {
       method: CRUD.update,
       data
     });
