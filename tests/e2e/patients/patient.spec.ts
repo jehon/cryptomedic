@@ -41,7 +41,7 @@ ctx.testRead({
 // });
 
 test("update patient 101", async ({ page }) => {
-  const cryptomedic = await startCryptomedic(page);
+  const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
 
   const e2eFolder = new E2EPatient(cryptomedic.page, 101);
@@ -100,8 +100,9 @@ test("update patient 101", async ({ page }) => {
  */
 
 test("search-reference-2001-1", async ({ page }) => {
-  const cryptomedic = await startCryptomedic(page, { page: "/home.new " }); // TODO: move to /home
+  const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
+  await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
   const GenerateYear = 2001;
   const GenerateOrder = 1;
@@ -120,8 +121,9 @@ test("search-reference-2001-1", async ({ page }) => {
 });
 
 test("create-reference-2002", async ({ page }) => {
-  const cryptomedic = await startCryptomedic(page, { page: "/home.new " }); // TODO: move to /home
+  const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
+  await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
   const GenerateYear = 2022;
   const GenerateOrder = 123;
@@ -157,8 +159,9 @@ test("create-reference-2002", async ({ page }) => {
 });
 
 test("generate-reference", async ({ page }) => {
-  const cryptomedic = await startCryptomedic(page, { page: "/home.new " }); // TODO: move to /home
+  const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
+  await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
   const GenerateYear = 2003;
 

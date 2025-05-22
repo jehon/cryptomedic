@@ -157,7 +157,6 @@ export class E2ECryptomedic {
         password: PASSWORD
       }
     });
-    await this.page.reload();
   }
 
   async goTo(path: string): Promise<void> {
@@ -169,13 +168,8 @@ export class E2ECryptomedic {
 }
 
 // ts-unused-exports:disable-next-line
-export async function startCryptomedic(
-  page: Page,
-  opts: { page?: string } = {}
-): Promise<E2ECryptomedic> {
+export function startCryptomedic(page: Page): E2ECryptomedic {
   const cryptomedic = new E2ECryptomedic(page);
-
-  await cryptomedic.goTo(opts.page ?? "");
 
   return cryptomedic;
 }

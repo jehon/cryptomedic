@@ -1,7 +1,14 @@
 import test, { expect, type Page } from "@playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
-import { crApiLogin, crExpectUrl, crReady, crUrl, outputDate } from "./e2e";
+import {
+  crApiLogin,
+  crExpectUrl,
+  crReady,
+  crUrl,
+  outputDate,
+  startCryptomedic
+} from "./e2e";
 import crApi from "./e2e-api";
 import { E2EForm, type IOType, type IOValue } from "./e2e-form";
 import { E2EPatient } from "./e2e-patients";
@@ -259,7 +266,9 @@ export function fullTest(context: {
       data: Record<string, IOValue | undefined>;
     }) {
       await test(`${context.fileType}.${options.fileId}`, async ({ page }) => {
+        startCryptomedic(page);
         await crApiLogin(page);
+
         const e2eFile = await new E2EPatient(page, options.patientId)
           .getFile({
             fileType: context.fileType,
@@ -291,6 +300,7 @@ export function fullTest(context: {
       await test(
         `${context.fileType} create and delete`.trim(),
         async ({ page }) => {
+          startCryptomedic(page);
           await crApiLogin(page);
           const e2ePatient = await new E2EPatient(page, options.patientId).go();
           const e2eFile = await e2ePatient.doAdd({
@@ -337,6 +347,7 @@ export function fullTest(context: {
         `${context.fileType}.${options.fileId} update`.trim(),
         async ({ page }) => {
           test.slow();
+          startCryptomedic(page);
 
           await crApiLogin(page);
           const e2eFile = new E2EPatient(page, options.patientId).getFile({
