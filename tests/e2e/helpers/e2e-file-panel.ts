@@ -1,8 +1,7 @@
 import test, { expect, type Page } from "@playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
-import { crApiLogin, crExpectUrl, crReady, crUrl, outputDate } from "./e2e";
-import crApi from "./e2e-api";
+import { outputDate, startCryptomedic } from "./e2e";
 import { E2EForm, type IOType, type IOValue } from "./e2e-form";
 import { E2EPatient } from "./e2e-patients";
 
@@ -78,14 +77,14 @@ export class E2EFilePanel extends E2EForm {
   ) {
     super(
       () =>
-        e2ePatient.page
+        e2ePatient.cryptomedic.page
           .getByTestId(`${this.type}.${this.id}`)
           .locator(">[data-role=panel]"),
       reduceFieldConfig2Form(fieldsConfig)
     );
     this.e2ePatient = e2ePatient;
     this.type = type;
-    this.page = e2ePatient.page;
+    this.page = e2ePatient.cryptomedic.page;
     this.patient_id = "" + this.e2ePatient.id;
 
     if (id === undefined) {
@@ -103,7 +102,7 @@ export class E2EFilePanel extends E2EForm {
    */
 
   apiFileUpdate(id: string | number, data: Record<string, string | number>) {
-    return crApi(this.page, `/fiche/${this.type}/${id}`, {
+    return this.e2ePatient.cryptomedic.api(`/fiche/${this.type}/${id}`, {
       method: CRUD.update,
       data
     });
@@ -117,8 +116,7 @@ export class E2EFilePanel extends E2EForm {
 
   // fragment: /appointment/102
   async expectUrlFragmentForType(fragment: string) {
-    await crExpectUrl(
-      this.page,
+    await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(
         "^.*" + escapeRegExp(`#/patient/${this.patient_id}`) + fragment + "$"
       )
@@ -162,12 +160,11 @@ export class E2EFilePanel extends E2EForm {
     await expect(popupActions.getByText("Cancel")).toBeVisible();
     await expect(popupActions.getByText("Delete")).toBeVisible();
     await popupActions.getByText("Delete").click();
-    await crExpectUrl(
-      this.page,
+    await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(".*" + escapeRegExp(`#/patient/${this.patient_id}`))
     );
     await this.e2ePatient.expectToBeVisible();
-    await crReady(this.page);
+    await this.e2ePatient.cryptomedic.waitReady();
     return this;
   }
 
@@ -176,8 +173,7 @@ export class E2EFilePanel extends E2EForm {
 
     await this.locator.click(); // the panel is the closed item
 
-    // TODO: when URL will be self-updated on load, this should be fixed
-    this.page.goto(crUrl(`${this.fileBaseUrl}${this.id}`));
+    this.e2ePatient.cryptomedic.goTo(`${this.fileBaseUrl}${this.id}`);
     if (this.id) {
       await this.expectUrlFragmentForType(`\\/${this.type}\\/${this.id}`);
     } else {
@@ -195,15 +191,13 @@ export class E2EFilePanel extends E2EForm {
     await this.page.getByText("Save").first().click();
 
     if (interceptAddedId) {
-      await crExpectUrl(
-        this.page,
+      await this.e2ePatient.cryptomedic.waitForUrl(
         new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}[0-9]+$`)
       );
       this.id = this.detectFileId();
     }
 
-    await crExpectUrl(
-      this.page,
+    await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}${this.id}$`)
     );
     await this.e2ePatient.expectToBeVisible();
@@ -217,8 +211,7 @@ export class E2EFilePanel extends E2EForm {
     await this.expectToBeVisible();
     await this.getButtonGroup().getByText("Edit").click();
 
-    await crExpectUrl(
-      this.page,
+    await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
     );
     await expect(this.getButtonGroup().getByText("Save").first()).toBeVisible();
@@ -259,8 +252,10 @@ export function fullTest(context: {
       data: Record<string, IOValue | undefined>;
     }) {
       await test(`${context.fileType}.${options.fileId}`, async ({ page }) => {
-        await crApiLogin(page);
-        const e2eFile = await new E2EPatient(page, options.patientId)
+        const cryptomedic = startCryptomedic(page);
+        await cryptomedic.apiLogin();
+
+        const e2eFile = await new E2EPatient(cryptomedic, options.patientId)
           .getFile({
             fileType: context.fileType,
             fileId: options.fileId,
@@ -291,8 +286,13 @@ export function fullTest(context: {
       await test(
         `${context.fileType} create and delete`.trim(),
         async ({ page }) => {
-          await crApiLogin(page);
-          const e2ePatient = await new E2EPatient(page, options.patientId).go();
+          const cryptomedic = startCryptomedic(page);
+          await cryptomedic.apiLogin();
+
+          const e2ePatient = await new E2EPatient(
+            cryptomedic,
+            options.patientId
+          ).go();
           const e2eFile = await e2ePatient.doAdd({
             fileType: context.fileType,
             fieldsConfig
@@ -337,9 +337,13 @@ export function fullTest(context: {
         `${context.fileType}.${options.fileId} update`.trim(),
         async ({ page }) => {
           test.slow();
+          const cryptomedic = startCryptomedic(page);
+          await cryptomedic.apiLogin();
 
-          await crApiLogin(page);
-          const e2eFile = new E2EPatient(page, options.patientId).getFile({
+          const e2eFile = new E2EPatient(
+            cryptomedic,
+            options.patientId
+          ).getFile({
             fileType: context.fileType,
             fileId: options.fileId,
             fieldsConfig

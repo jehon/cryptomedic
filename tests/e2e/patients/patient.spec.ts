@@ -41,10 +41,10 @@ ctx.testRead({
 // });
 
 test("update patient 101", async ({ page }) => {
-  const cryptomedic = await startCryptomedic(page);
+  const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
 
-  const e2eFolder = new E2EPatient(cryptomedic.page, 101);
+  const e2eFolder = new E2EPatient(cryptomedic, 101);
   const e2eFile = await e2eFolder.getFile({
     fileType: "patient",
     fileId: 101,
@@ -100,8 +100,9 @@ test("update patient 101", async ({ page }) => {
  */
 
 test("search-reference-2001-1", async ({ page }) => {
-  const cryptomedic = await startCryptomedic(page, { page: "/home.new " }); // TODO: move to /home
+  const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
+  await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
   const GenerateYear = 2001;
   const GenerateOrder = 1;
@@ -120,13 +121,14 @@ test("search-reference-2001-1", async ({ page }) => {
 });
 
 test("create-reference-2002", async ({ page }) => {
-  const cryptomedic = await startCryptomedic(page, { page: "/home.new " }); // TODO: move to /home
+  const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
+  await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
   const GenerateYear = 2022;
   const GenerateOrder = 123;
 
-  await E2EPatient.apiDelete(page, GenerateYear, GenerateOrder);
+  await E2EPatient.apiDelete(cryptomedic, GenerateYear, GenerateOrder);
 
   const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
 
@@ -141,7 +143,7 @@ test("create-reference-2002", async ({ page }) => {
 
   await page.waitForURL(/.+#\/patient\/.+/);
 
-  const e2ePatient = new E2EPatient(cryptomedic.page);
+  const e2ePatient = new E2EPatient(cryptomedic);
   const e2eFile = e2ePatient.getFile({
     fileType: "patient",
     fileId: e2ePatient.id
@@ -157,13 +159,14 @@ test("create-reference-2002", async ({ page }) => {
 });
 
 test("generate-reference", async ({ page }) => {
-  const cryptomedic = await startCryptomedic(page, { page: "/home.new " }); // TODO: move to /home
+  const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
+  await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
   const GenerateYear = 2003;
 
   // entry_order will be set automatically to 10.000
-  await E2EPatient.apiDelete(page, GenerateYear, 10000);
+  await E2EPatient.apiDelete(cryptomedic, GenerateYear, 10000);
 
   const e2eForm = new E2EForm(
     () => page.getByTestId("generate-a-reference"),
@@ -179,7 +182,7 @@ test("generate-reference", async ({ page }) => {
 
   await page.waitForURL(/.+#\/patient\/.+/);
 
-  const e2ePatient = new E2EPatient(cryptomedic.page);
+  const e2ePatient = new E2EPatient(cryptomedic);
   const e2eFile = e2ePatient.getFile({
     fileType: "patient",
     fileId: e2ePatient.id

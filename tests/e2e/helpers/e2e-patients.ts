@@ -1,8 +1,7 @@
-import { expect, type Locator, type Page } from "playwright/test";
+import { expect, type Locator } from "playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
-import { crAcceptPopup, crExpectUrl, crInit, crReady } from "./e2e";
-import crApi from "./e2e-api";
+import { type E2ECryptomedicType } from "./e2e";
 import {
   E2EFilePanel,
   type FieldsConfigTypeSimplified
@@ -11,10 +10,10 @@ import {
 // TODO: this is a E2EForm too?
 export class E2EPatient {
   public id: string;
-  public page: Page;
+  readonly cryptomedic: E2ECryptomedicType;
 
-  constructor(page: Page, id?: string | number) {
-    this.page = page;
+  constructor(cryptomedic: E2ECryptomedicType, id?: string | number) {
+    this.cryptomedic = cryptomedic;
     if (id === undefined) {
       this.id = this.detectPatientId();
     } else {
@@ -23,16 +22,16 @@ export class E2EPatient {
   }
 
   get panel(): Locator {
-    return this.page.getByTestId(`folder-${this.id}`);
+    return this.cryptomedic.page.getByTestId(`folder-${this.id}`);
   }
 
   async expectToBeVisible() {
     await expect(this.panel).toBeVisible();
-    await expect(this.page.getByTestId("add")).toBeVisible();
+    await expect(this.cryptomedic.page.getByTestId("add")).toBeVisible();
   }
 
   detectPatientId(): string {
-    const url: string = this.page.url();
+    const url: string = this.cryptomedic.page.url();
     const matches = /#\/patient\/(?<id>[0-9]+)(\/.*)?$/.exec(url);
     console.info("Guessing patient: ", matches?.groups?.["id"]);
     return matches?.groups?.["id"] ?? "";
@@ -52,24 +51,23 @@ export class E2EPatient {
   }
 
   async go(): Promise<this> {
-    await crInit(this.page, {
-      page: `/patient/${this.id}`
-    });
-    const panel = await this.page.getByTestId(`folder-${this.id}`);
+    await this.cryptomedic.goTo(`/patient/${this.id}`);
+    const panel = await this.cryptomedic.page.getByTestId(`folder-${this.id}`);
     await expect(panel).toBeVisible();
     return this;
   }
 
   static apiDelete(
-    page: Page,
+    cryptomedic: E2ECryptomedicType,
     entry_year: number,
     entry_order: number
   ): Promise<void> {
-    return crApi(page, `/reference/${entry_year}/${entry_order}`)
+    return cryptomedic
+      .api(`/reference/${entry_year}/${entry_order}`)
       .then(
         (folder) =>
           folder?.id > 0
-            ? crApi(page, `/fiche/patients/${folder.id}`, {
+            ? cryptomedic.api(`/fiche/patients/${folder.id}`, {
                 method: CRUD.delete
               })
             : undefined,
@@ -84,10 +82,10 @@ export class E2EPatient {
     fileType: string;
     fieldsConfig: FieldsConfigTypeSimplified;
   }): Promise<E2EFilePanel> {
-    await this.page.getByTestId("add").click();
-    await this.page.getByTestId("add-" + options.fileType).click();
+    await this.cryptomedic.page.getByTestId("add").click();
+    await this.cryptomedic.page.getByTestId("add-" + options.fileType).click();
+    await this.cryptomedic.waitReady();
 
-    await crReady(this.page);
     return this.getFile({
       fileType: options.fileType,
       fileId: "add",
@@ -96,10 +94,12 @@ export class E2EPatient {
   }
 
   async doDelete() {
-    await this.page.getByText("Delete").click();
-    await crAcceptPopup(this.panel, "Delete");
+    await this.cryptomedic.page.getByText("Delete").click();
+    await this.cryptomedic.acceptPopup("Delete");
 
     // Patient is deleted, we should go back to home
-    await crExpectUrl(this.page, new RegExp("^.*" + escapeRegExp("#/home")));
+    await this.cryptomedic.waitForUrl(
+      new RegExp("^.*" + escapeRegExp("#/home"))
+    );
   }
 }

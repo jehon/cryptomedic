@@ -4,10 +4,10 @@ import { E2EPatient } from "../helpers/e2e-patients";
 
 // TODO: normalize fieldsConfig here
 test("2014-103.bill.2", async ({ page }) => {
-  const cryptomedic = await startCryptomedic(page);
+  const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
 
-  const e2eFile = await new E2EPatient(page, 3)
+  const e2eFile = await new E2EPatient(cryptomedic, 3)
     .getFile({ fileType: "bill", fileId: 2, fieldsConfig: {} })
     .go();
 
