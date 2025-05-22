@@ -50,7 +50,7 @@ test("update patient 101", async ({ page }) => {
     fileId: 101,
     fieldsConfig: ctx.fieldsConfig
   });
-  await e2eFile.apiFileUpdate(101, {
+  await e2eFile.apiFileUpdate("101", {
     entry_year: 2010,
     entry_order: 1,
     name: "patient test",

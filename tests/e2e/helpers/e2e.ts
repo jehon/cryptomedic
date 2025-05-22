@@ -128,6 +128,23 @@ class E2ECryptomedic {
       }
     });
   }
+
+  async apiCrudDelete(path: string, id: string) {
+    await this.api(`/api/${path}/${id}`, {
+      method: CRUD.delete
+    });
+  }
+
+  async apiCrudReset(
+    path: string,
+    id: string,
+    data: Record<string, string | number>
+  ): Promise<void> {
+    await this.api(`/${path}/${id}`, {
+      method: CRUD.update,
+      data
+    });
+  }
 }
 
 export function startCryptomedic(page: Page): E2ECryptomedic {

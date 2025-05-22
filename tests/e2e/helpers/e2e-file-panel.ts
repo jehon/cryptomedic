@@ -1,5 +1,4 @@
 import test, { expect, type Page } from "@playwright/test";
-import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { outputDate, startCryptomedic } from "./e2e";
 import { E2EForm, type IOType, type IOValue } from "./e2e-form";
@@ -101,11 +100,12 @@ export class E2EFilePanel extends E2EForm {
    *
    */
 
-  apiFileUpdate(id: string | number, data: Record<string, string | number>) {
-    return this.e2ePatient.cryptomedic.api(`/fiche/${this.type}/${id}`, {
-      method: CRUD.update,
+  async apiFileUpdate(id: string, data: Record<string, string | number>) {
+    await this.e2ePatient.cryptomedic.apiCrudReset(
+      `/fiche/${this.type}`,
+      id,
       data
-    });
+    );
   }
 
   /* ***********************************
@@ -350,7 +350,7 @@ export function fullTest(context: {
           });
 
           // Reset the data in the backend
-          await e2eFile.apiFileUpdate(options.patientId, {
+          await e2eFile.apiFileUpdate("" + options.patientId, {
             id: options.fileId,
             ...Object.fromEntries(
               Object.entries(options.dataInitial).map(([k, v]) => [
