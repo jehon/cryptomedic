@@ -55,32 +55,9 @@ export function crApiLogin(page: Page, login: string = LOGINS.PHYSIO) {
 //   );
 // }
 
-export async function crInit(
-  page: Page,
-  opts: {
-    page?: string;
-  } = {}
-): Promise<void> {
-  await page.goto(crUrl(opts.page ?? ""));
-  return crReady(page);
-}
-
 export async function crExpectUrl(page: Page, r: string | RegExp) {
   await page.waitForURL(r, { timeout: 5000 });
   await expect(page).toHaveURL(r);
-}
-
-export async function crReady(page: Page): Promise<void> {
-  await expect(page, `url: ${WebBaseUrl}`).toHaveTitle(/Cryptomedic/);
-  await expect(page.getByTestId("top-level")).toBeVisible();
-
-  // https://developer.mozilla.org/en-US/docs/Web/API/Document/fonts#doing_operation_after_fonts_are_loaded
-  // https://github.com/microsoft/playwright/issues/28204#issuecomment-1816895791
-
-  await page.evaluate(() => document.fonts.ready);
-
-  // No global spinning wheel anymore
-  await expect(page.getByTestId("global-wait"), "crReady").toHaveCount(0);
 }
 
 export async function crAcceptPopup(page: Page | Locator, button: string) {
@@ -152,7 +129,16 @@ export class E2ECryptomedic {
     const absolutePath = `${WebBaseUrl}/built/frontend/ng1x.html?dev#${path}`;
 
     await this.page.goto(absolutePath);
-    await crReady(this.page);
+    await this.waitReady();
+  }
+
+  async waitReady() {
+    await expect(this.page, `url: ${WebBaseUrl}`).toHaveTitle(/Cryptomedic/);
+    await expect(this.page.getByTestId("top-level")).toBeVisible();
+    await this.page.evaluate(() => document.fonts.ready);
+    await expect(this.page.getByTestId("global-wait"), "crReady").toHaveCount(
+      0
+    );
   }
 }
 

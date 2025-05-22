@@ -1,13 +1,7 @@
 import { expect, type Locator, type Page } from "playwright/test";
 import { CRUD } from "../../../src/utils/network";
 import { escapeRegExp } from "../../../src/utils/strings";
-import {
-  crAcceptPopup,
-  crExpectUrl,
-  crInit,
-  crReady,
-  E2ECryptomedic
-} from "./e2e";
+import { crAcceptPopup, crExpectUrl, E2ECryptomedic } from "./e2e";
 import crApi from "./e2e-api";
 import {
   E2EFilePanel,
@@ -58,9 +52,7 @@ export class E2EPatient {
   }
 
   async go(): Promise<this> {
-    await crInit(this.cryptomedic.page, {
-      page: `/patient/${this.id}`
-    });
+    await this.cryptomedic.goTo(`/patient/${this.id}`);
     const panel = await this.cryptomedic.page.getByTestId(`folder-${this.id}`);
     await expect(panel).toBeVisible();
     return this;
@@ -92,8 +84,8 @@ export class E2EPatient {
   }): Promise<E2EFilePanel> {
     await this.cryptomedic.page.getByTestId("add").click();
     await this.cryptomedic.page.getByTestId("add-" + options.fileType).click();
+    await this.cryptomedic.waitReady();
 
-    await crReady(this.cryptomedic.page);
     return this.getFile({
       fileType: options.fileType,
       fileId: "add",

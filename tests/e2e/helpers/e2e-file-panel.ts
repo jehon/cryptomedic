@@ -4,7 +4,6 @@ import { escapeRegExp } from "../../../src/utils/strings";
 import {
   crApiLogin,
   crExpectUrl,
-  crReady,
   crUrl,
   outputDate,
   startCryptomedic
@@ -174,7 +173,7 @@ export class E2EFilePanel extends E2EForm {
       new RegExp(".*" + escapeRegExp(`#/patient/${this.patient_id}`))
     );
     await this.e2ePatient.expectToBeVisible();
-    await crReady(this.page);
+    await this.e2ePatient.cryptomedic.waitReady();
     return this;
   }
 
