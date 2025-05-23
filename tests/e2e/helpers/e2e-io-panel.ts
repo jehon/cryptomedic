@@ -13,14 +13,14 @@ export class E2EIOPanel extends E2EForm {
     return bt;
   }
 
-  private async isModeInput() {
+  private async assertModeInput() {
     await expect(
       this.locator.locator("[data-mode='input']"),
       "to be in InputMode"
     ).toBeVisible();
   }
 
-  private async isModeOutput() {
+  private async assertModeOutput() {
     await expect(
       this.locator.locator("[data-mode='output']"),
       "to be in OutputMode"
@@ -30,15 +30,15 @@ export class E2EIOPanel extends E2EForm {
   async doOpen() {
     await this.expectToBeVisible();
     await this.locator.click(); // the panel is the closed item
-    await this.isModeOutput();
+    await this.assertModeOutput();
     await this.expectToBeVisible();
   }
 
   async doEdit() {
-    await this.isModeOutput();
+    await this.assertModeOutput();
     await this.expectToBeVisible();
     await this.getButtonGroup().getByText("Edit").click();
-    await this.isModeInput();
+    await this.assertModeInput();
     await this.expectToBeVisible();
   }
 }
