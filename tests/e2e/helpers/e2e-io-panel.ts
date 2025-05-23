@@ -13,10 +13,23 @@ export class E2EIOPanel extends E2EForm {
     return bt;
   }
 
-  async doOpen(): Promise<this> {
+  private async isModeInput() {
+    await expect(
+      this.locator.locator("[data-mode='input']"),
+      "to be in InputMode"
+    ).toBeVisible();
+  }
+
+  private async isModeOutput() {
+    await expect(
+      this.locator.locator("[data-mode='output']"),
+      "to be in OutputMode"
+    ).toBeVisible();
+  }
+
+  async doOpen() {
     await this.expectToBeVisible();
     await this.locator.click(); // the panel is the closed item
     await this.expectToBeVisible();
-    return this;
   }
 }

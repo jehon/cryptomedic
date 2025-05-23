@@ -233,7 +233,8 @@ export default function IOPanel<T extends Pojo>(props: {
       <EditContext.Provider value={edit}>
         <form
           id="file"
-          data-testid={`file-${props.type}.${props.file.id ?? "add"}-form`}
+          data-testid={`io-panel-form`}
+          data-mode={edit ? "input" : "output"}
           ref={formRef}
         >
           {props.file.updated_at && (
