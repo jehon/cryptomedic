@@ -39,4 +39,21 @@ export class E2EIOPanel extends E2EForm {
     await this.assertModeInput();
     await this.expectToBeVisible();
   }
+
+  async doSave() {
+    await this.assertModeInput();
+  }
+
+  async doDelete() {
+    await this.assertModeInput();
+    await this.getButton("Delete").click();
+    const popup = this.locator.getByTestId("popup");
+    await expect(popup).toBeVisible();
+    const popupActions = popup.getByRole("group");
+    await expect(popupActions).toBeVisible();
+    await expect(popupActions.getByText("Cancel")).toBeVisible();
+    await expect(popupActions.getByText("Delete")).toBeVisible();
+    await popupActions.getByText("Delete").click();
+    await popupActions.getByText("Delete").waitFor({ state: "detached" });
+  }
 }

@@ -149,16 +149,12 @@ export class E2EFile extends E2EForm {
   }
 
   async doDelete(): Promise<this> {
-    await this.expectToBeVisible();
+    const e2eIOPanel = new E2EIOPanel(
+      this.e2ePatient.cryptomedic.page.getByTestId(`${this.type}.${this.id}`),
+      this.tmpFieldsConfig
+    );
+    await e2eIOPanel.doDelete();
 
-    await this.getButtonGroup().getByText("Delete").click();
-    const popup = this.page.getByTestId("popup");
-    await expect(popup).toBeVisible();
-    const popupActions = popup.getByRole("group");
-    await expect(popupActions).toBeVisible();
-    await expect(popupActions.getByText("Cancel")).toBeVisible();
-    await expect(popupActions.getByText("Delete")).toBeVisible();
-    await popupActions.getByText("Delete").click();
     await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(".*" + escapeRegExp(`#/patient/${this.e2ePatient.id}`))
     );
