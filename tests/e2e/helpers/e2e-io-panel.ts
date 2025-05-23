@@ -30,6 +30,7 @@ export class E2EIOPanel extends E2EForm {
   async doOpen() {
     await this.expectToBeVisible();
     await this.locator.click(); // the panel is the closed item
+    await this.isModeOutput();
     await this.expectToBeVisible();
   }
 }
