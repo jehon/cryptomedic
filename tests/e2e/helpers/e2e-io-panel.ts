@@ -33,4 +33,12 @@ export class E2EIOPanel extends E2EForm {
     await this.isModeOutput();
     await this.expectToBeVisible();
   }
+
+  async doEdit() {
+    await this.isModeOutput();
+    await this.expectToBeVisible();
+    await this.getButtonGroup().getByText("Edit").click();
+    await this.isModeInput();
+    await this.expectToBeVisible();
+  }
 }

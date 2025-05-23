@@ -206,14 +206,16 @@ export class E2EFile extends E2EForm {
   }
 
   async goEdit(): Promise<this> {
-    await this.expectToBeVisible();
-    await this.getButtonGroup().getByText("Edit").click();
+    const e2eIOPanel = new E2EIOPanel(
+      this.e2ePatient.cryptomedic.page.getByTestId(`${this.type}.${this.id}`),
+      this.tmpFieldsConfig
+    );
+    e2eIOPanel.doEdit();
 
     await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
     );
-    await expect(this.getButtonGroup().getByText("Save").first()).toBeVisible();
-    await this.expectToBeVisible();
+
     return this;
   }
 }
