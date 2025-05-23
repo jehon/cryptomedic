@@ -7,10 +7,8 @@ export class E2EIOPanel extends E2EForm {
     super(() => locator, fieldsConfig);
   }
 
-  protected getButtonGroup() {
-    const bt = this.locator.getByTestId("panel-actions");
-    expect(bt).toBeVisible();
-    return bt;
+  protected getButton(text: string) {
+    return this.locator.getByTestId("panel-actions").getByText(text).first();
   }
 
   private async assertModeInput() {
@@ -37,7 +35,7 @@ export class E2EIOPanel extends E2EForm {
   async doEdit() {
     await this.assertModeOutput();
     await this.expectToBeVisible();
-    await this.getButtonGroup().getByText("Edit").click();
+    await this.getButton("Edit").click();
     await this.assertModeInput();
     await this.expectToBeVisible();
   }
