@@ -76,10 +76,7 @@ export class E2EFilePanel extends E2EIOPanel {
     fieldsConfig?: FieldsConfigTypeSimplified
   ) {
     super(
-      () =>
-        e2ePatient.cryptomedic.page
-          .getByTestId(`${this.type}.${this.id}`)
-          .locator(">[data-role=panel]"),
+      () => e2ePatient.cryptomedic.page.getByTestId(`${this.type}.${this.id}`),
       reduceFieldConfig2Form(fieldsConfig)
     );
     this.e2ePatient = e2ePatient;

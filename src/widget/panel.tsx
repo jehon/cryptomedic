@@ -42,12 +42,13 @@ export default function Panel(props: {
   return (
     <div
       className={props.fullscreen ? "fullscreen" : ""}
-      data-testid={props.testid}
+      data-testid={props.testid + "/backdrop"}
     >
       <div
         className="panel"
         data-role="panel"
-        data-testid={props.testid + (opened ? "/opened" : "/closed")}
+        data-testid={props.testid}
+        data-status={opened ? "opened" : "closed"}
       >
         <div data-role="header" className="header" onClick={onOpenClose}>
           {fixed || (
