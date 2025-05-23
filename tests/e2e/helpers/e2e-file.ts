@@ -7,6 +7,7 @@ import {
   type IOType,
   type IOValue
 } from "./e2e-form";
+import { E2EIOPanel } from "./e2e-io-panel";
 import { E2EPatient } from "./e2e-patients";
 
 type FieldConfigType = {
@@ -69,9 +70,10 @@ export class E2EFile extends E2EForm {
   protected fileBaseUrl = "";
   protected page: Page;
   protected patient_id: string;
+  protected type: string;
   protected id: string;
   protected e2ePatient: E2EPatient;
-  protected type: string;
+  tmpFieldsConfig: FieldsTypes;
 
   constructor(
     e2ePatient: E2EPatient,
@@ -87,6 +89,7 @@ export class E2EFile extends E2EForm {
     this.type = type;
     this.page = e2ePatient.cryptomedic.page;
     this.patient_id = "" + this.e2ePatient.id;
+    this.tmpFieldsConfig = reduceFieldConfig2Form(fieldsConfig);
 
     if (id === undefined) {
       this.id = this.e2ePatient.cryptomedic.detectId(this.type);
@@ -137,10 +140,14 @@ export class E2EFile extends E2EForm {
    *
    */
 
-  async go(): Promise<this> {
+  async go(): Promise<E2EIOPanel> {
     await this.e2ePatient.go();
-    await this.doOpen();
-    return this;
+    const e2eIOPanel = new E2EIOPanel(
+      this.e2ePatient.cryptomedic.page.getByTestId(`${this.type}.${this.id}`),
+      this.tmpFieldsConfig
+    );
+    e2eIOPanel.doOpen();
+    return e2eIOPanel;
   }
 
   async doDelete(): Promise<this> {
@@ -162,21 +169,20 @@ export class E2EFile extends E2EForm {
     return this;
   }
 
-  async doOpen(): Promise<this> {
-    await this.expectToBeVisible();
+  // async doOpen(): Promise<this> {
+  //   await this.expectToBeVisible();
+  //   await this.locator.click(); // the panel is the closed item
 
-    await this.locator.click(); // the panel is the closed item
-
-    this.e2ePatient.cryptomedic.goTo(`${this.fileBaseUrl}${this.id}`);
-    if (this.id) {
-      await this.expectUrlFragmentForType(`\\/${this.type}\\/${this.id}`);
-    } else {
-      await this.expectUrlFragmentForType(`\\/${this.type}\\/[0-9]+`);
-    }
-    await this.e2ePatient.expectToBeVisible();
-    await this.expectToBeVisible();
-    return this;
-  }
+  //   this.e2ePatient.cryptomedic.goTo(`${this.fileBaseUrl}${this.id}`);
+  //   if (this.id) {
+  //     await this.expectUrlFragmentForType(`\\/${this.type}\\/${this.id}`);
+  //   } else {
+  //     await this.expectUrlFragmentForType(`\\/${this.type}\\/[0-9]+`);
+  //   }
+  //   await this.e2ePatient.expectToBeVisible();
+  //   await this.expectToBeVisible();
+  //   return this;
+  // }
 
   async doSave(interceptAddedId: boolean = false): Promise<this> {
     await this.expectToBeVisible();
@@ -249,14 +255,16 @@ export function fullTest(context: {
         const cryptomedic = startCryptomedic(page);
         await cryptomedic.apiLogin();
 
-        const e2eFile = await new E2EPatient(cryptomedic, options.patientId)
-          .getFile({
-            fileType: context.fileType,
-            fileId: options.fileId,
-            fieldsConfig
-          })
-          .go();
+        const e2eFile = await new E2EPatient(
+          cryptomedic,
+          options.patientId
+        ).getFile({
+          fileType: context.fileType,
+          fileId: options.fileId,
+          fieldsConfig
+        });
 
+        await e2eFile.go();
         await e2eFile.expectAllOutputValues(options.data);
         await e2eFile.expectScreenshot();
       });
