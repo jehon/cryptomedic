@@ -64,7 +64,7 @@ export default function Panel(props: {
         {opened ? (
           <>
             {props.actions ? (
-              <div data-testid={`panel-actions-${props.testid}`}>
+              <div data-testid="panel-actions">
                 <ButtonsGroup>{props.actions}</ButtonsGroup>
               </div>
             ) : null}

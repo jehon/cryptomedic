@@ -1,8 +1,7 @@
 import test, { expect, type Page } from "@playwright/test";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { outputDate, startCryptomedic } from "./e2e";
-import { type IOType, type IOValue } from "./e2e-form";
-import { E2EIOPanel } from "./e2e-io-panel";
+import { E2EForm, type IOType, type IOValue } from "./e2e-form";
 import { E2EPatient } from "./e2e-patients";
 
 type FieldConfigType = {
@@ -61,7 +60,7 @@ function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified) {
   );
 }
 
-export class E2EFile extends E2EIOPanel {
+export class E2EFile extends E2EForm {
   protected fileBaseUrl = "";
   protected page: Page;
   protected patient_id: string;
@@ -122,7 +121,7 @@ export class E2EFile extends E2EIOPanel {
   }
 
   private getButtonGroup() {
-    const bt = this.page.getByTestId(`panel-actions-${this.type}.${this.id}`);
+    const bt = this.locator.getByTestId(`panel-actions`);
     expect(bt).toBeVisible();
     return bt;
   }
