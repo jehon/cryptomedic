@@ -2,7 +2,7 @@ import {
   consultBasicData,
   ConsultFieldsConfigType,
   fullTest
-} from "../helpers/e2e-file-panel";
+} from "../helpers/e2e-file";
 
 const ctx = fullTest({
   fileType: "consult_ricket",

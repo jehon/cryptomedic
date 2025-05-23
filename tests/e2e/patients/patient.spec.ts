@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 import { startCryptomedic } from "../helpers/e2e";
-import { fullTest } from "../helpers/e2e-file-panel";
+import { fullTest } from "../helpers/e2e-file";
 import { E2EForm } from "../helpers/e2e-form";
 import { E2EPatient } from "../helpers/e2e-patients";
 

@@ -61,7 +61,7 @@ function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified) {
   );
 }
 
-export class E2EFilePanel extends E2EIOPanel {
+export class E2EFile extends E2EIOPanel {
   protected fileBaseUrl = "";
   protected page: Page;
   protected patient_id: string;

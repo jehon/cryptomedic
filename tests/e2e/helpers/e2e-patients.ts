@@ -1,10 +1,7 @@
 import { expect, type Locator } from "playwright/test";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { type E2ECryptomedicType } from "./e2e";
-import {
-  E2EFilePanel,
-  type FieldsConfigTypeSimplified
-} from "./e2e-file-panel";
+import { E2EFile, type FieldsConfigTypeSimplified } from "./e2e-file";
 import { E2EForm } from "./e2e-form";
 
 export class E2EPatient extends E2EForm {
@@ -42,8 +39,8 @@ export class E2EPatient extends E2EForm {
     fileType: string;
     fileId?: string | number;
     fieldsConfig?: FieldsConfigTypeSimplified;
-  }): E2EFilePanel {
-    return new E2EFilePanel(
+  }): E2EFile {
+    return new E2EFile(
       this,
       options.fileType,
       "" + options.fileId,
@@ -80,7 +77,7 @@ export class E2EPatient extends E2EForm {
   async doAdd(options: {
     fileType: string;
     fieldsConfig: FieldsConfigTypeSimplified;
-  }): Promise<E2EFilePanel> {
+  }): Promise<E2EFile> {
     await this.cryptomedic.page.getByTestId("add").click();
     await this.cryptomedic.page.getByTestId("add-" + options.fileType).click();
     await this.cryptomedic.waitReady();

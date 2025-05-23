@@ -1,4 +1,4 @@
-import { fullTest, TimedFieldsConfigType } from "../helpers/e2e-file-panel";
+import { fullTest, TimedFieldsConfigType } from "../helpers/e2e-file";
 
 const ctx = fullTest({
   fileType: "surgery",
