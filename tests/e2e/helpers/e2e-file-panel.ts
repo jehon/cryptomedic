@@ -1,7 +1,8 @@
 import test, { expect, type Page } from "@playwright/test";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { outputDate, startCryptomedic } from "./e2e";
-import { E2EForm, type IOType, type IOValue } from "./e2e-form";
+import { type IOType, type IOValue } from "./e2e-form";
+import { E2EIOPanel } from "./e2e-io-panel";
 import { E2EPatient } from "./e2e-patients";
 
 type FieldConfigType = {
@@ -60,7 +61,7 @@ function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified) {
   );
 }
 
-export class E2EFilePanel extends E2EForm {
+export class E2EFilePanel extends E2EIOPanel {
   protected fileBaseUrl = "";
   protected page: Page;
   protected patient_id: string;

@@ -18,7 +18,7 @@ export type IOType =
   | "select"
   | "textarea";
 
-type FieldsTypes = {
+export type FieldsTypes = {
   [key: string]: IOType | undefined;
 };
 
