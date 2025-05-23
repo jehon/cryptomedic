@@ -160,7 +160,7 @@ export class E2EFile extends E2EForm {
     await expect(popupActions.getByText("Delete")).toBeVisible();
     await popupActions.getByText("Delete").click();
     await this.e2ePatient.cryptomedic.waitForUrl(
-      new RegExp(".*" + escapeRegExp(`#/patient/${this.patient_id}`))
+      new RegExp(".*" + escapeRegExp(`#/patient/${this.e2ePatient.id}`))
     );
     await this.e2ePatient.expectToBeVisible();
     await this.e2ePatient.cryptomedic.waitReady();
