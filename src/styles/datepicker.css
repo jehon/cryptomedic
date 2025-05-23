@@ -1,0 +1,74 @@
+/* Styles pour le datepicker */
+.datepicker-popper {
+  z-index: 1000;
+}
+
+.react-datepicker {
+  font-family: inherit;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.datepicker-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  padding-top: 0.5rem;
+}
+
+.datepicker-day-selected,
+.datepicker-day-keyboard-selected {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+.datepicker-day:hover {
+  background-color: #e9ecef;
+}
+
+.datepicker-day-today {
+  font-weight: bold;
+  color: #0d6efd;
+}
+
+.datepicker-buttons {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
+  border-top: none;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  z-index: 1001;
+}
+
+/* Style pour le bouton de fermeture */
+.datepicker-close-icon {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  outline: 0;
+}
+
+.datepicker-close-icon::after {
+  background-color: #0d6efd;
+  padding: 0;
+  font-size: 1.5rem;
+  color: white;
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+  line-height: 1;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  content: "×";
+}
