@@ -69,7 +69,6 @@ function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified): FieldsTypes {
 export class E2EFile extends E2EForm {
   protected fileBaseUrl = "";
   protected page: Page;
-  protected patient_id: string;
   protected type: string;
   protected id: string;
   protected e2ePatient: E2EPatient;
@@ -78,7 +77,7 @@ export class E2EFile extends E2EForm {
   constructor(
     e2ePatient: E2EPatient,
     type: string,
-    id: string | number,
+    id?: string,
     fieldsConfig?: FieldsConfigTypeSimplified
   ) {
     super(
@@ -88,7 +87,6 @@ export class E2EFile extends E2EForm {
     this.e2ePatient = e2ePatient;
     this.type = type;
     this.page = e2ePatient.cryptomedic.page;
-    this.patient_id = "" + this.e2ePatient.id;
     this.tmpFieldsConfig = reduceFieldConfig2Form(fieldsConfig);
 
     if (id === undefined) {
@@ -96,7 +94,7 @@ export class E2EFile extends E2EForm {
     } else {
       this.id = "" + id;
     }
-    this.fileBaseUrl = `/patient/${this.patient_id}/${type}/`;
+    this.fileBaseUrl = `/patient/${this.e2ePatient.id}/${type}/`;
   }
 
   /* ***********************************
@@ -123,7 +121,7 @@ export class E2EFile extends E2EForm {
   async expectUrlFragmentForType(fragment: string) {
     await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(
-        "^.*" + escapeRegExp(`#/patient/${this.patient_id}`) + fragment + "$"
+        "^.*" + escapeRegExp(`#/patient/${this.e2ePatient.id}`) + fragment + "$"
       )
     );
   }
