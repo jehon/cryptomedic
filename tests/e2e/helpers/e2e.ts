@@ -89,7 +89,7 @@ class E2ECryptomedic {
     const url = this.page.url();
     const matches = /\/(?<id>[0-9]+)$/.exec(url);
     const id = matches?.groups?.["id"] ?? "";
-    console.info(`Detected ${title} id: ${id}`);
+    console.info(`Detected id ${title}: ${id}`);
     return id;
   }
 
