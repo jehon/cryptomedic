@@ -15,8 +15,8 @@ const ctx = fullTest({
 
 // Data in DB are obsolete, but they are calculated live
 ctx.testRead({
-  patientId: 1,
-  fileId: 1,
+  patientId: "1",
+  fileId: "1",
   data: {
     Date: "2011-06-09",
     "Family Salary": 3000,
@@ -29,7 +29,7 @@ ctx.testRead({
 });
 
 ctx.testCreateDelete({
-  patientId: 108,
+  patientId: "108",
   data: {
     Date: "2008-02-10",
     Examiner: "Ershad",
@@ -41,8 +41,8 @@ ctx.testCreateDelete({
 });
 
 ctx.testUpdate({
-  patientId: 108,
-  fileId: 108,
+  patientId: "108",
+  fileId: "108",
   dataInitial: {
     Date: "2008-02-20",
     Center: "Ramu"

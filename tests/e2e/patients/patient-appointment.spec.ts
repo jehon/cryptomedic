@@ -9,23 +9,23 @@ const ctx = fullTest({
 });
 
 ctx.testRead({
-  patientId: 1,
-  fileId: 2,
+  patientId: "1",
+  fileId: "2",
   data: {
     Date: "2015-04-28"
   }
 });
 
 ctx.testCreateDelete({
-  patientId: 102,
+  patientId: "102",
   data: {
     Date: "2022-05-06"
   }
 });
 
 ctx.testUpdate({
-  patientId: 102,
-  fileId: 102,
+  patientId: "102",
+  fileId: "102",
   dataInitial: {
     Date: "2024-01-02",
     Center: undefined,

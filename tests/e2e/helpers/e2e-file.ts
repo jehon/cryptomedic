@@ -1,7 +1,12 @@
 import test, { expect, type Page } from "@playwright/test";
 import { escapeRegExp } from "../../../src/utils/strings";
 import { outputDate, startCryptomedic } from "./e2e";
-import { E2EForm, type IOType, type IOValue } from "./e2e-form";
+import {
+  E2EForm,
+  type FieldsTypes,
+  type IOType,
+  type IOValue
+} from "./e2e-form";
 import { E2EPatient } from "./e2e-patients";
 
 type FieldConfigType = {
@@ -51,7 +56,7 @@ export const consultBasicData = {
   "Treatment Finished": true
 };
 
-function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified) {
+function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified): FieldsTypes {
   if (!fc) {
     return {};
   }
@@ -236,8 +241,8 @@ export function fullTest(context: {
     fieldsConfig,
 
     async testRead(options: {
-      patientId: string | number;
-      fileId: string | number;
+      patientId: string;
+      fileId: string;
       data: Record<string, IOValue | undefined>;
     }) {
       await test(`${context.fileType}.${options.fileId}`, async ({ page }) => {
@@ -258,7 +263,7 @@ export function fullTest(context: {
     },
 
     async testCreateDelete(options: {
-      patientId: string | number;
+      patientId: string;
       deleteTest?: (page: Page, data: Record<string, IOValue>) => any;
       initialIsAlreadyGood?: boolean; // ==> Default false/undefined
       data: Record<string, IOValue>;
@@ -317,8 +322,8 @@ export function fullTest(context: {
     },
 
     async testUpdate(options: {
-      patientId: string | number;
-      fileId: string | number;
+      patientId: string;
+      fileId: string;
       dataInitial: Record<string, IOValue>;
       dataUpdated: Record<string, IOValue>;
     }) {

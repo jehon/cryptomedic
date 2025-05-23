@@ -12,8 +12,8 @@ const ctx = fullTest({
 });
 
 ctx.testRead({
-  patientId: 1,
-  fileId: 2,
+  patientId: "1",
+  fileId: "2",
   data: {
     Date: "2014-11-04",
     File: "10_2014-11-06_15-32-45.JPG",
@@ -22,7 +22,7 @@ ctx.testRead({
 });
 
 ctx.testCreateDelete({
-  patientId: 107,
+  patientId: "107",
   data: {
     Type: "picture",
     Date: "2008-07-10",
@@ -33,8 +33,8 @@ ctx.testCreateDelete({
 });
 
 ctx.testUpdate({
-  patientId: 107,
-  fileId: 107,
+  patientId: "107",
+  fileId: "107",
   dataInitial: {
     Type: "picture",
     Date: "2008-07-20",

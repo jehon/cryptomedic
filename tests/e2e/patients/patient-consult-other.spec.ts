@@ -16,8 +16,8 @@ const ctx = fullTest({
 });
 
 ctx.testRead({
-  patientId: 1,
-  fileId: 1,
+  patientId: "1",
+  fileId: "1",
   data: {
     Date: "2007-01-10",
     Examiner: "Ershad",
@@ -34,7 +34,7 @@ ctx.testRead({
 });
 
 ctx.testCreateDelete({
-  patientId: 104,
+  patientId: "104",
   data: {
     ...consultBasicData,
     Date: "2008-05-10",
@@ -48,8 +48,8 @@ ctx.testCreateDelete({
 });
 
 ctx.testUpdate({
-  patientId: 104,
-  fileId: 104,
+  patientId: "104",
+  fileId: "104",
   dataInitial: {
     ...consultBasicData,
     Date: "2008-05-20",

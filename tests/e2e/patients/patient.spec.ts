@@ -15,8 +15,8 @@ const ctx = fullTest({
 });
 
 ctx.testRead({
-  patientId: 1,
-  fileId: 1,
+  patientId: "1",
+  fileId: "1",
   data: {
     "Entry Year": 2000,
     "Entry Order": 1,
@@ -29,8 +29,8 @@ ctx.testRead({
 });
 
 ctx.testRead({
-  patientId: 3,
-  fileId: 3,
+  patientId: "3",
+  fileId: "3",
   data: {
     "Entry Year": 2014
   }
