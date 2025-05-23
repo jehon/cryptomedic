@@ -126,12 +126,6 @@ export class E2EFile extends E2EForm {
     );
   }
 
-  private getButtonGroup() {
-    const bt = this.locator.getByTestId(`panel-actions`);
-    expect(bt).toBeVisible();
-    return bt;
-  }
-
   /* ***********************************
    *
    * Routes
@@ -181,8 +175,15 @@ export class E2EFile extends E2EForm {
   async doSave(interceptAddedId: boolean = false): Promise<this> {
     await this.expectToBeVisible();
 
-    await expect(this.page.getByText("Save").first()).toBeVisible();
-    await this.page.getByText("Save").first().click();
+    const e2eIOPanel = new E2EIOPanel(
+      this.e2ePatient.cryptomedic.page.getByTestId(`${this.type}.${this.id}`),
+      this.tmpFieldsConfig
+    );
+    if (interceptAddedId) {
+      await e2eIOPanel.doCreate();
+    } else {
+      await e2eIOPanel.doSave();
+    }
 
     if (interceptAddedId) {
       await this.e2ePatient.cryptomedic.waitForUrl(
@@ -194,9 +195,6 @@ export class E2EFile extends E2EForm {
     await this.e2ePatient.cryptomedic.waitForUrl(
       new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}${this.id}$`)
     );
-    await this.e2ePatient.expectToBeVisible();
-    await this.expectToBeVisible();
-    await expect(this.getButtonGroup().getByText("Edit")).toBeVisible();
 
     return this;
   }

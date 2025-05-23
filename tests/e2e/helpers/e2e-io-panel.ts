@@ -8,7 +8,9 @@ export class E2EIOPanel extends E2EForm {
   }
 
   protected getButton(text: string) {
-    return this.locator.getByTestId("panel-actions").getByText(text).first();
+    return this.locator
+      .getByTestId("panel-actions")
+      .getByRole("button", { name: text, exact: true });
   }
 
   private async assertModeInput() {
@@ -32,6 +34,13 @@ export class E2EIOPanel extends E2EForm {
     await this.expectToBeVisible();
   }
 
+  async doCreate() {
+    await this.assertModeInput();
+    // Save button is outside of the ButtonGroup
+    await this.getButton("Save").click();
+    // Id is refreshed, so impossible to assert output
+  }
+
   async doEdit() {
     await this.assertModeOutput();
     await this.expectToBeVisible();
@@ -42,6 +51,9 @@ export class E2EIOPanel extends E2EForm {
 
   async doSave() {
     await this.assertModeInput();
+    // Save button is outside of the ButtonGroup
+    await this.getButton("Save").click();
+    await this.assertModeOutput();
   }
 
   async doDelete() {
