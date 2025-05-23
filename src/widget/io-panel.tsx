@@ -173,8 +173,8 @@ export default function IOPanel<T extends Pojo>(props: {
       actions={
         <>
           {edit ? (
-            canDelete && (
-              <>
+            <>
+              {canDelete && (
                 <ActionConfirm
                   style="Delete"
                   discrete={true}
@@ -183,15 +183,15 @@ export default function IOPanel<T extends Pojo>(props: {
                 >
                   <div>Are you sure you want to DELETE the File {title}?</div>
                 </ActionConfirm>
-                <ActionButton style="Cancel" onOk={() => doCancel()} />
-                <ActionButton
-                  style="Confirm"
-                  restrictedTo={`${props.restrictedTo}.edit`}
-                  action="Save"
-                  onOk={doSave}
-                />
-              </>
-            )
+              )}
+              <ActionButton style="Cancel" onOk={() => doCancel()} />
+              <ActionButton
+                style="Confirm"
+                restrictedTo={`${props.restrictedTo}.edit`}
+                action="Save"
+                onOk={doSave}
+              />
+            </>
           ) : isLocked ? (
             <ActionConfirm
               style="Alternate"
