@@ -227,7 +227,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: integration-playwright-updated-snapshots
+          name: integration-playwright-updated-snapshots-${{ matrix.shard }}
           path: tests/e2e/__github__/**/*.png
 
   valid:
