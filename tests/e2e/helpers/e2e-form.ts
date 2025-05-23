@@ -63,10 +63,7 @@ export class E2EForm {
   //
 
   async expectToBeVisible(): Promise<this> {
-    await expect(
-      this.locator,
-      "2e2-form.expectToBeVisible: global panel"
-    ).toBeVisible();
+    await expect(this.locator).toBeVisible();
     return this;
   }
 
