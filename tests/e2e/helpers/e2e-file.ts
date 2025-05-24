@@ -248,19 +248,18 @@ export function fullTest(context: {
       await test(`${context.fileType}.${options.fileId}`, async ({ page }) => {
         const cryptomedic = startCryptomedic(page);
         await cryptomedic.apiLogin();
+        await cryptomedic.goTo(
+          `/patient/${options.patientId}/${context.fileType}/${options.fileId}`
+        );
 
-        const e2eFile = await new E2EPatient(
-          cryptomedic,
-          options.patientId
-        ).getFile({
-          fileType: context.fileType,
-          fileId: options.fileId,
-          fieldsConfig
-        });
+        const e2eIOPanel = new E2EIOPanel(
+          cryptomedic.page.getByTestId(`${context.fileType}.${options.fileId}`),
+          reduceFieldConfig2Form(context.fieldsConfig)
+        );
 
-        await e2eFile.go();
-        await e2eFile.expectAllOutputValues(options.data);
-        await e2eFile.expectScreenshot();
+        await e2eIOPanel.doOpen();
+        await e2eIOPanel.expectAllOutputValues(options.data);
+        await e2eIOPanel.expectScreenshot();
       });
     },
 
