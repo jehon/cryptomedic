@@ -283,11 +283,12 @@ export function fullTest(context: {
         async ({ page }) => {
           const cryptomedic = startCryptomedic(page);
           await cryptomedic.apiLogin();
+          await cryptomedic.goTo(`/patient/${options.patientId}/`);
 
           const e2ePatient = await new E2EPatient(
             cryptomedic,
             options.patientId
-          ).go();
+          );
           const e2eFile = await e2ePatient.doAdd({
             fileType: context.fileType,
             fieldsConfig
