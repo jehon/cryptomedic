@@ -336,6 +336,13 @@ export function fullTest(context: {
           const cryptomedic = startCryptomedic(page);
           await cryptomedic.apiLogin();
 
+          const e2eIOPanel = new E2EIOPanel(
+            cryptomedic.page.getByTestId(
+              `${context.fileType}.${options.fileId}`
+            ),
+            reduceFieldConfig2Form(context.fieldsConfig)
+          );
+
           const e2eFile = new E2EPatient(
             cryptomedic,
             options.patientId
@@ -346,20 +353,25 @@ export function fullTest(context: {
           });
 
           // Reset the data in the backend
-          await e2eFile.apiFileUpdate("" + options.patientId, {
-            id: options.fileId,
-            ...Object.fromEntries(
+          await cryptomedic.apiCrudReset(
+            `/fiche/${context.fileType}`,
+            options.fileId,
+            Object.fromEntries(
               Object.entries(options.dataInitial).map(([k, v]) => [
                 getJson(k),
-                v ?? null
+                (v ?? "") + ""
               ])
             )
-          });
+          );
+
+          await cryptomedic.goTo(
+            `/patient/${options.patientId}/${context.fileType}/${options.fileId}`
+          );
+          await e2eIOPanel.doOpen();
 
           // Output mode: verify initial data
-          await e2eFile.go();
-          await e2eFile.expectAllOutputValues(options.dataInitial);
-          await e2eFile.expectScreenshot();
+          await e2eIOPanel.expectAllOutputValues(options.dataInitial);
+          await e2eIOPanel.expectScreenshot();
 
           // Input mode: verify initial data
           await e2eFile.goEdit();
