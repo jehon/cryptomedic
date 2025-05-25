@@ -4,7 +4,7 @@ import { CRUD, type CRUDType } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
 export { outputDate } from "../../../src/utils/date";
 
-const WebBaseUrl = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
+const backendHost = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
 
 const LOGINS = {
   PHYSIO: "murshed",
@@ -44,6 +44,8 @@ export type E2ECryptomedicType = InstanceType<typeof E2ECryptomedic>;
 class E2ECryptomedic {
   readonly page: Page;
 
+  static readonly webBase = `${backendHost}/built/frontend/ng1x.html?dev#`;
+
   constructor(page: Page) {
     this.page = page;
   }
@@ -65,7 +67,7 @@ class E2ECryptomedic {
   }
 
   async goTo(path: string): Promise<void> {
-    const absolutePath = `${WebBaseUrl}/built/frontend/ng1x.html?dev#${path}`;
+    const absolutePath = `${E2ECryptomedic.webBase}${path}`;
 
     await this.page.goto(absolutePath);
     await this.waitReady();
@@ -77,7 +79,9 @@ class E2ECryptomedic {
   }
 
   async waitReady() {
-    await expect(this.page, `url: ${WebBaseUrl}`).toHaveTitle(/Cryptomedic/);
+    await expect(this.page, `url: ${E2ECryptomedic.webBase}`).toHaveTitle(
+      /Cryptomedic/
+    );
     await expect(this.page.getByTestId("top-level")).toBeVisible();
     await this.page.evaluate(() => document.fonts.ready);
     await expect(this.page.getByTestId("global-wait"), "crReady").toHaveCount(
@@ -107,7 +111,7 @@ class E2ECryptomedic {
     } = {}
   ): Promise<any> {
     const requestor = this.page.request as IndexSignature<any>;
-    const absoluteApiUrl = `${WebBaseUrl}/api${url}`;
+    const absoluteApiUrl = `${backendHost}/api${url}`;
 
     return requestor[(options.method ?? CRUD.read).toLowerCase()](
       absoluteApiUrl,
