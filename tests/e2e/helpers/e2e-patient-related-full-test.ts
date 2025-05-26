@@ -63,6 +63,7 @@ function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified): FieldsTypes {
 }
 
 export function patientRelatedFullTest(context: {
+  testPrefix?: string;
   fileType: string;
   fieldsConfig: FieldsConfigTypeSimplified;
 }) {
@@ -93,7 +94,9 @@ export function patientRelatedFullTest(context: {
       fileId: string;
       data: Record<string, IOValue | undefined>;
     }) {
-      await test(`${context.fileType}.${options.fileId}`, async ({ page }) => {
+      await test(`${context.testPrefix ?? ""}${context.fileType}.${options.fileId}`, async ({
+        page
+      }) => {
         const cryptomedic = startCryptomedic(page);
         await cryptomedic.apiLogin();
         await cryptomedic.goTo(
@@ -127,7 +130,7 @@ export function patientRelatedFullTest(context: {
       };
 
       await test(
-        `${context.fileType} create and delete`.trim(),
+        `${context.testPrefix ?? ""}${context.fileType} create and delete`.trim(),
         async ({ page }) => {
           const cryptomedic = startCryptomedic(page);
           await cryptomedic.apiLogin();
@@ -198,7 +201,7 @@ export function patientRelatedFullTest(context: {
       dataUpdated: Record<string, IOValue>;
     }) {
       await test(
-        `${context.fileType}.${options.fileId} update`.trim(),
+        `${context.testPrefix ?? ""}${context.fileType}.${options.fileId} update`.trim(),
         async ({ page }) => {
           test.slow();
           const cryptomedic = startCryptomedic(page);
