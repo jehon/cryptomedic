@@ -16,7 +16,7 @@ export function bridgeTo(tag: string, reactComponent: React.ReactNode) {
     }
 
     connectedCallback() {
-      if (isFeatureSwitchEnabled())
+      if (isFeatureSwitchEnabled(/* Strict mode */))
         createRoot(this.#mountPoint).render(
           <StrictMode>{reactComponent}</StrictMode>
         );
