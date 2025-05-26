@@ -9,6 +9,7 @@ set -o pipefail
 # We replace the local integration (e2e test results) by those of github
 
 branch="$(git symbolic-ref --short -q HEAD)"
+target="tests/e2e/__github__/"
 
 # Configure gh:
 export PAGER=""
@@ -26,7 +27,7 @@ header_end
 
 get_artifact() {
   artifactName="$1"
-  destination="$2"
+  destination="$CR_TMP/integration/$1"
   echo "* getting ${artifactName}"
   echo "    -> ${destination}"
 
@@ -35,18 +36,16 @@ get_artifact() {
     mkdir -p "${destination}"
     gh run download "$runId" --name "${artifactName}" --dir "${destination}"
   )
+
+  echo "    => ${target}"
+  rsync --itemize-changes --recursive \
+    --omit-dir-times --checksum \
+    "$destination/" "${target}/"
 }
 
 header_begin "Playwright"
-get_artifact "integration-playwright-updated-snapshots" "$CR_TMP/integration/integration-playwright-updated-snapshots"
-rsync --itemize-changes --recursive \
-  --omit-dir-times --checksum \
-  "$CR_TMP/integration/integration-playwright-updated-snapshots/" "tests/e2e/__github__/"
-header_end
-
-header_begin "Cypress"
-get_artifact "integration-playwright" "$CR_TMP/integration/playwright"
-get_artifact "integration-desktop" "$CR_TMP/integration/desktop"
+get_artifact "integration-playwright-updated-snapshots-1"
+get_artifact "integration-playwright-updated-snapshots-2"
 header_end
 
 echo "Done with success"
