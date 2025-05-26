@@ -315,15 +315,6 @@ export function fullTest(context: {
             reduceFieldConfig2Form(context.fieldsConfig)
           );
 
-          const e2eFile = new E2EPatient(
-            cryptomedic,
-            options.patientId
-          ).getFile({
-            fileType: context.fileType,
-            fileId: options.fileId,
-            fieldsConfig
-          });
-
           // Reset the data in the backend
           await cryptomedic.apiCrudReset(
             `/fiche/${context.fileType}`,
@@ -346,18 +337,24 @@ export function fullTest(context: {
           await e2eIOPanel.expectScreenshot();
 
           // Input mode: verify initial data
-          await e2eFile.goEdit();
-          await e2eFile.expectAllInputValues(options.dataInitial);
-          await e2eFile.expectScreenshot();
+          e2eIOPanel.doEdit();
+          await cryptomedic.waitForPath(
+            `/patient/${options.patientId}/${context.fileType}/${options.fileId}/edit`
+          );
+          await e2eIOPanel.expectAllInputValues(options.dataInitial);
+          await e2eIOPanel.expectScreenshot();
 
           // Input mode: fill-in new data
-          await e2eFile.setAllInputValues(options.dataUpdated);
-          await e2eFile.expectScreenshot();
+          await e2eIOPanel.setAllInputValues(options.dataUpdated);
+          await e2eIOPanel.expectScreenshot();
 
-          await e2eFile.doSave();
+          await e2eIOPanel.doSave();
+          await cryptomedic.waitForPath(
+            `/patient/${options.patientId}/${context.fileType}/${options.fileId}`
+          );
           // Output mode: verify updated data
-          await e2eFile.expectAllOutputValues(options.dataUpdated);
-          await e2eFile.expectScreenshot();
+          await e2eIOPanel.expectAllOutputValues(options.dataUpdated);
+          await e2eIOPanel.expectScreenshot();
         }
       );
     }
