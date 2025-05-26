@@ -1,10 +1,34 @@
 import { test } from "@playwright/test";
-import { startCryptomedic } from "../helpers/e2e";
+import { startCryptomedic, type E2ECryptomedicType } from "../helpers/e2e";
 import { fullTest } from "../helpers/e2e-file";
 import { E2EForm } from "../helpers/e2e-form";
+import { E2EIOPanel } from "../helpers/e2e-io-panel";
 import { E2EPatient } from "../helpers/e2e-patients";
 
 const GenerateYear = 2003;
+
+function deletePatientByReference(
+  cryptomedic: E2ECryptomedicType,
+  entry_year: number,
+  entry_order: number
+): Promise<void> {
+  return (
+    cryptomedic
+      .api(`/reference/${entry_year}/${entry_order}`)
+      .then(
+        (folder) =>
+          folder?.id > 0
+            ? cryptomedic.apiCrudDelete(`/fiche/patients/`, folder.id)
+            : undefined,
+        () => {
+          // If the file is not found, it's ok
+        }
+      )
+      .then(() => undefined)
+      // Allow failure
+      .catch((_e) => {})
+  );
+}
 
 const ctx = fullTest({
   fileType: "patient",
@@ -126,7 +150,7 @@ test("create-reference-2002", async ({ page }) => {
 
   const GenerateOrder = 123;
 
-  await E2EPatient.apiDelete(cryptomedic, GenerateYear, GenerateOrder);
+  await deletePatientByReference(cryptomedic, GenerateYear, GenerateOrder);
 
   const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
 
@@ -141,19 +165,16 @@ test("create-reference-2002", async ({ page }) => {
 
   await cryptomedic.waitForPath("/patient/*/patient/*/edit");
 
-  const e2ePatient = new E2EPatient(cryptomedic);
-  const e2eFile = e2ePatient.getFile({
-    fileType: "patient",
-    fileId: e2ePatient.id
-  });
+  const newId = cryptomedic.detectId("patient", { ending: "/edit" });
+  const e2eIOPanel = new E2EIOPanel(page.getByTestId(`patient.${newId}`), {});
 
-  await e2eFile.expectAllOutputValues({
+  await e2eIOPanel.expectAllOutputValues({
     "Entry Year": GenerateYear,
     "Entry Order": GenerateOrder
   });
 
   // Clean up
-  await e2eFile.doDelete();
+  await e2eIOPanel.doDelete();
 });
 
 test("generate-reference", async ({ page }) => {
@@ -162,33 +183,29 @@ test("generate-reference", async ({ page }) => {
   await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
   // entry_order will be set automatically to 10.000
-  await E2EPatient.apiDelete(cryptomedic, GenerateYear, 10000);
+  await deletePatientByReference(cryptomedic, GenerateYear, 10000);
 
   const e2eForm = new E2EForm(
     () => page.getByTestId("generate-a-reference"),
     {}
   );
-
   await e2eForm.expectToBeVisible();
   await e2eForm.setAllInputValues({
     "Entry Year": GenerateYear
   });
-
   await e2eForm.locator.getByText("Generate", { exact: true }).click();
 
   await cryptomedic.waitForPath("/patient/*/patient/*/edit");
 
-  const e2ePatient = new E2EPatient(cryptomedic);
-  const e2eFile = e2ePatient.getFile({
-    fileType: "patient",
-    fileId: e2ePatient.id
-  });
+  const newId = cryptomedic.detectId("patient", { ending: "/edit" });
+  const e2eIOPanel = new E2EIOPanel(page.getByTestId(`patient.${newId}`), {});
 
-  await e2eFile.expectAllOutputValues({
+  await e2eIOPanel.expectAllOutputValues({
     "Entry Year": GenerateYear,
     "Entry Order": 10000
   });
 
   // Clean up
-  await e2eFile.doDelete();
+  await e2eIOPanel.doDelete();
+  await cryptomedic.waitForPath(`/`);
 });
