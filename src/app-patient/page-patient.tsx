@@ -31,7 +31,6 @@ import PatientElement from "./patient-element";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
 
-// ts-unused-exports:disable-next-line
 export function getNextAppointment(folder: Folder): Date | undefined {
   const today = new Date();
   return folder.list
@@ -44,7 +43,6 @@ export function getNextAppointment(folder: Folder): Date | undefined {
     .shift();
 }
 
-// ts-unused-exports:disable-next-line
 export function getLastSeen(folder: Folder): Date | undefined {
   const today = new Date();
   return folder

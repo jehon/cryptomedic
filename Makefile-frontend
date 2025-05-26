@@ -73,7 +73,8 @@ frontend-lint-html: $(FRONTEND_DEPENDENCIES_MARK)
 
 .PHONY: frontend-lint-unused-exports
 frontend-lint-unused-exports: $(FRONTEND_DEPENDENCIES_MARK)
-	node_modules/.bin/ts-unused-exports ./tsconfig.json --ignoreFiles=".*.test.ts"
+# https://www.npmjs.com/package/ts-unused-exports
+	node_modules/.bin/ts-unused-exports ./tsconfig.json --ignoreLocallyUsed --ignoreFiles=".*.test.ts" --ignoreFiles=".*.spec.ts"
 
 .PHONY: frontend-build
 build: frontend-build

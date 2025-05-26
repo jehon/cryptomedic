@@ -7,7 +7,6 @@ import {
 
 type Line = Array<[x: number, y: number]>;
 
-// ts-unused-exports:disable-next-line
 export type StatLines = {
   min: Line;
   medium: Line;
@@ -21,7 +20,6 @@ export type FullStats = {
   wh: StatLines;
 };
 
-// ts-unused-exports:disable-next-line
 export function _evaluatePoly(line: Line, x: number): number {
   let i = -1;
   if (x < line[0][0] || x > line[line.length - 1][0]) {
@@ -41,7 +39,6 @@ export function _evaluatePoly(line: Line, x: number): number {
   return ydw + (yup - ydw) * ((x - xdw) / (xup - xdw));
 }
 
-// ts-unused-exports:disable-next-line
 export function _stdDeviation(
   statLines: StatLines,
   x: number,
@@ -105,5 +102,4 @@ export function stdDeviationFor(
   return _stdDeviation(amd_stats[sexStr][graphName], x, y);
 }
 
-// ts-unused-exports:disable-next-line
 export const sigma = 1.64485; // 1.64485 = sigma at 90 for normal distribution

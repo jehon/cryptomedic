@@ -1,7 +1,6 @@
 import { expect, type Locator } from "@playwright/test";
 import { E2EForm, type FieldsTypes } from "./e2e-form";
 
-// ts-unused-exports:disable-next-line
 export class E2EIOPanel extends E2EForm {
   constructor(locator: Locator, fieldsConfig: FieldsTypes) {
     super(() => locator, fieldsConfig);

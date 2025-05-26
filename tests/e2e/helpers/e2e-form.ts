@@ -3,13 +3,11 @@ import path from "node:path/posix";
 import { isEmptyValue } from "../../../src/utils/objects";
 import { outputDate } from "./e2e";
 
-// ts-unused-exports:disable-next-line
 export type IOValue = string | number | boolean | undefined;
 type IOValues = {
   [key: string]: IOValue | undefined;
 };
 
-// ts-unused-exports:disable-next-line
 export type IOType =
   | "string"
   | "checkbox"

@@ -2,7 +2,6 @@ function key2string(key: string) {
   return `'${key}'`;
 }
 
-// ts-unused-exports:disable-next-line
 export class ApplicationException extends Error {}
 
 export class ConfigurationException extends ApplicationException {}
