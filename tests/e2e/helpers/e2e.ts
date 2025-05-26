@@ -113,6 +113,10 @@ class E2ECryptomedic {
     const url = this.page.url();
     const matches = /\/(?<id>[0-9]+)$/.exec(url);
     const id = matches?.groups?.["id"] ?? "";
+    if (!Number.isInteger(id)) {
+      console.error(`Detected id ${title}: `, { url, matches, id });
+      throw new Error(`Could not detect id from URL: ${url}.`);
+    }
     console.info(`Detected id ${title}: ${id}`);
     return id;
   }
