@@ -21,11 +21,11 @@ const config: any = {
   ],
   projects: [
     {
-      name: "Google Chrome",
+      name: "Chrome",
       use: { ...devices["Desktop Chrome"], channel: "chrome" }
     },
     {
-      name: "Mobile Chrome",
+      name: "Mobile",
       use: { ...devices["Pixel 5"] }
     }
   ],
