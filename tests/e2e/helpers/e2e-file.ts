@@ -62,7 +62,10 @@ function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified): FieldsTypes {
     return {};
   }
   return Object.fromEntries(
-    Object.entries(fc).map(([k, v]) => [k, typeof v == "string" ? v : v.type])
+    Object.entries(fc).map(([k, v]) => [
+      k,
+      typeof v == "string" ? v : (v.type ?? "string")
+    ])
   );
 }
 

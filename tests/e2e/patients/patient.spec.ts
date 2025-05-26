@@ -1,11 +1,18 @@
 import { test } from "@playwright/test";
 import { startCryptomedic, type E2ECryptomedicType } from "../helpers/e2e";
 import { fullTest } from "../helpers/e2e-file";
-import { E2EForm } from "../helpers/e2e-form";
+import { E2EForm, type FieldsTypes } from "../helpers/e2e-form";
 import { E2EIOPanel } from "../helpers/e2e-io-panel";
 import { E2EPatient } from "../helpers/e2e-patients";
 
 const GenerateYear = 2003;
+
+const fieldsConfig: FieldsTypes = {
+  Sex: "radio",
+  District: "select",
+  Upazila: "select",
+  Union: "select"
+};
 
 function deletePatientByReference(
   cryptomedic: E2ECryptomedicType,
@@ -32,12 +39,7 @@ function deletePatientByReference(
 
 const ctx = fullTest({
   fileType: "patient",
-  fieldsConfig: {
-    Sex: "radio",
-    District: "select",
-    Upazila: "select",
-    Union: "select"
-  }
+  fieldsConfig
 });
 
 ctx.testRead({

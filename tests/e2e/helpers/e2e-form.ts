@@ -19,7 +19,7 @@ export type IOType =
   | "textarea";
 
 export type FieldsTypes = {
-  [key: string]: IOType | undefined;
+  [key: string]: IOType;
 };
 
 function ioValue2String(val?: IOValue): string {
