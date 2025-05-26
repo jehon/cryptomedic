@@ -104,15 +104,12 @@ test("search-reference-2001-1", async ({ page }) => {
   await cryptomedic.apiLogin();
   await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
-  const GenerateYear = 2001;
-  const GenerateOrder = 1;
-
   const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
 
   await e2eForm.expectToBeVisible();
   await e2eForm.setAllInputValues({
-    "Entry Year": GenerateYear,
-    "Entry Order": GenerateOrder
+    "Entry Year": 2001,
+    "Entry Order": 1
   });
 
   await e2eForm.locator.getByText("Search", { exact: true }).click();
