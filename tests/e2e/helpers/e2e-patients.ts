@@ -59,18 +59,22 @@ export class E2EPatient extends E2EForm {
     entry_year: number,
     entry_order: number
   ): Promise<void> {
-    return cryptomedic
-      .api(`/reference/${entry_year}/${entry_order}`)
-      .then(
-        (folder) =>
-          folder?.id > 0
-            ? cryptomedic.apiCrudDelete(`/fiche/patients/`, folder.id)
-            : undefined,
-        () => {
-          // If the file is not found, it's ok
-        }
-      )
-      .then(() => undefined);
+    return (
+      cryptomedic
+        .api(`/reference/${entry_year}/${entry_order}`)
+        .then(
+          (folder) =>
+            folder?.id > 0
+              ? cryptomedic.apiCrudDelete(`/fiche/patients/`, folder.id)
+              : undefined,
+          () => {
+            // If the file is not found, it's ok
+          }
+        )
+        .then(() => undefined)
+        // Allow failure
+        .catch((_e) => {})
+    );
   }
 
   async doAdd(options: {
