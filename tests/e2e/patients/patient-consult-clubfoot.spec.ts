@@ -11,6 +11,10 @@ const ctx = patientRelatedFullTest({
     "Jumping One Leg Right": "radio",
     "Jumping One Leg Left": "radio",
     "Run Left": "radio"
+  },
+  doAddButton: async (page) => {
+    await page.getByTestId("add").click();
+    await page.getByTestId("add-consult_clubfoot").click();
   }
 });
 

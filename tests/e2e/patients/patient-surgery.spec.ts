@@ -28,6 +28,10 @@ const ctx = patientRelatedFullTest({
       type: "textarea",
       json: "follow_up_complication"
     }
+  },
+  doAddButton: async (page) => {
+    await page.getByTestId("add").click();
+    await page.getByTestId("add-surgery").click();
   }
 });
 

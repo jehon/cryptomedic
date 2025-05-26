@@ -12,6 +12,10 @@ const ctx = patientRelatedFullTest({
     Pain: "radio",
     Walk: "select",
     "Examination Data": "textarea"
+  },
+  doAddButton: async (page) => {
+    await page.getByTestId("add").click();
+    await page.getByTestId("add-consult_other").click();
   }
 });
 

@@ -8,6 +8,10 @@ const ctx = patientRelatedFullTest({
   fieldsConfig: {
     ...TimedFieldsConfigType,
     Purpose: "textarea"
+  },
+  doAddButton: async (page) => {
+    await page.getByTestId("add").click();
+    await page.getByTestId("add-appointment").click();
   }
 });
 

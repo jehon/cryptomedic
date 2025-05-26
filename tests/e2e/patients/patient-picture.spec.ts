@@ -11,6 +11,10 @@ const ctx = patientRelatedFullTest({
     Comments: "textarea",
     File: "readonly",
     Picture: "file"
+  },
+  doAddButton: async (page) => {
+    await page.getByTestId("add").click();
+    await page.getByTestId("add-picture").click();
   }
 });
 

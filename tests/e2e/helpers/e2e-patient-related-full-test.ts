@@ -66,6 +66,7 @@ export function patientRelatedFullTest(context: {
   testPrefix?: string;
   fileType: string;
   fieldsConfig: FieldsConfigTypeSimplified;
+  doAddButton?: (page: Page) => Promise<void>;
 }) {
   const fieldsConfig: { [key: string]: { type?: IOType; json: string } } =
     Object.fromEntries(
@@ -129,6 +130,12 @@ export function patientRelatedFullTest(context: {
         ...options
       };
 
+      if (!context.doAddButton) {
+        throw new Error(
+          "You must provide a doAddButton function to testCreateDelete"
+        );
+      }
+
       await test(
         `${context.testPrefix ?? ""}${context.fileType} create and delete`.trim(),
         async ({ page }) => {
@@ -136,7 +143,9 @@ export function patientRelatedFullTest(context: {
           await cryptomedic.apiLogin();
 
           // TODO: Use the add button
-          await cryptomedic.goTo(
+          await cryptomedic.goTo(`${options.parentUrl}`);
+          await context.doAddButton!(page);
+          cryptomedic.waitForPath(
             `${options.parentUrl}/${context.fileType}/add`
           );
 

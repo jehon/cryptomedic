@@ -13,6 +13,10 @@ const ctx = patientRelatedFullTest({
       json: "sl_number_of_household_members",
       type: "string"
     }
+  },
+  doAddButton: async (page) => {
+    await page.getByTestId("add").click();
+    await page.getByTestId("add-bill").click();
   }
 });
 

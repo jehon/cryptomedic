@@ -15,6 +15,10 @@ const ctx = patientRelatedFullTest({
 
     "Right Leg": "radio",
     "Left Leg": "radio"
+  },
+  doAddButton: async (page) => {
+    await page.getByTestId("add").click();
+    await page.getByTestId("add-consult_ricket").click();
   }
 });
 
