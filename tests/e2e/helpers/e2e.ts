@@ -150,7 +150,7 @@ class E2ECryptomedic {
   async apiCrudReset(
     path: string,
     id: string,
-    data: Record<string, string | number>
+    data: Record<string, string | number | boolean | null>
   ): Promise<void> {
     await this.api(`/${path}/${id}`, {
       method: CRUD.update,

@@ -359,7 +359,7 @@ export function fullTest(context: {
             Object.fromEntries(
               Object.entries(options.dataInitial).map(([k, v]) => [
                 getJson(k),
-                (v ?? "") + ""
+                v ?? null
               ])
             )
           );
