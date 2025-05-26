@@ -18,7 +18,7 @@ const ctx = patientRelatedFullTest({
 
 // Data in DB are obsolete, but they are calculated live
 ctx.testRead({
-  patientId: "1",
+  parentUrl: "/patient/1",
   fileId: "1",
   data: {
     Date: "2011-06-09",
@@ -32,7 +32,7 @@ ctx.testRead({
 });
 
 ctx.testCreateDelete({
-  patientId: "108",
+  parentUrl: "/patient/108",
   data: {
     Date: "2008-02-10",
     Examiner: "Ershad",
@@ -44,7 +44,7 @@ ctx.testCreateDelete({
 });
 
 ctx.testUpdate({
-  patientId: "108",
+  parentUrl: "/patient/108",
   fileId: "108",
   dataInitial: {
     Date: "2008-02-20",

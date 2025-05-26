@@ -89,7 +89,7 @@ export function patientRelatedFullTest(context: {
     fieldsConfig,
 
     async testRead(options: {
-      patientId: string;
+      parentUrl: string;
       fileId: string;
       data: Record<string, IOValue | undefined>;
     }) {
@@ -97,7 +97,7 @@ export function patientRelatedFullTest(context: {
         const cryptomedic = startCryptomedic(page);
         await cryptomedic.apiLogin();
         await cryptomedic.goTo(
-          `/patient/${options.patientId}/${context.fileType}/${options.fileId}`
+          `${options.parentUrl}/${context.fileType}/${options.fileId}`
         );
 
         const e2eIOPanel = new E2EIOPanel(
@@ -112,7 +112,7 @@ export function patientRelatedFullTest(context: {
     },
 
     async testCreateDelete(options: {
-      patientId: string;
+      parentUrl: string;
       deleteTest?: (page: Page, data: Record<string, IOValue>) => any;
       initialIsAlreadyGood?: boolean; // ==> Default false/undefined
       data: Record<string, IOValue>;
@@ -134,7 +134,7 @@ export function patientRelatedFullTest(context: {
 
           // TODO: Use the add button
           await cryptomedic.goTo(
-            `/patient/${options.patientId}/${context.fileType}/add`
+            `${options.parentUrl}/${context.fileType}/add`
           );
 
           let e2eIOPanel = new E2EIOPanel(
@@ -159,9 +159,7 @@ export function patientRelatedFullTest(context: {
 
           await e2eIOPanel.doCreate();
           await cryptomedic.waitForPathByRegex(
-            new RegExp(
-              `^.*/patient/${options.patientId}/${context.fileType}/[0-9]+$`
-            )
+            new RegExp(`^.*${options.parentUrl}/${context.fileType}/[0-9]+$`)
           );
 
           const newId = cryptomedic.detectId(context.fileType);
@@ -177,7 +175,7 @@ export function patientRelatedFullTest(context: {
           // Go back to Edit
           e2eIOPanel.doEdit();
           await cryptomedic.waitForPath(
-            `/patient/${options.patientId}/${context.fileType}/${newId}/edit`
+            `${options.parentUrl}/${context.fileType}/${newId}/edit`
           );
           // Check that the values has been correctly filled in form
           await e2eIOPanel.expectAllInputValues(options.data);
@@ -186,7 +184,7 @@ export function patientRelatedFullTest(context: {
           await e2eIOPanel.doDelete();
 
           await cryptomedic.waitForPath(
-            `/patient/${options.patientId}/${context.fileType}/${newId}`
+            `${options.parentUrl}/${context.fileType}/${newId}`
           );
           await options.deleteTest!(page, options.data);
         }
@@ -194,7 +192,7 @@ export function patientRelatedFullTest(context: {
     },
 
     async testUpdate(options: {
-      patientId: string;
+      parentUrl: string;
       fileId: string;
       dataInitial: Record<string, IOValue>;
       dataUpdated: Record<string, IOValue>;
@@ -226,7 +224,7 @@ export function patientRelatedFullTest(context: {
           );
 
           await cryptomedic.goTo(
-            `/patient/${options.patientId}/${context.fileType}/${options.fileId}`
+            `${options.parentUrl}/${context.fileType}/${options.fileId}`
           );
           await e2eIOPanel.doOpen();
 
@@ -237,7 +235,7 @@ export function patientRelatedFullTest(context: {
           // Input mode: verify initial data
           e2eIOPanel.doEdit();
           await cryptomedic.waitForPath(
-            `/patient/${options.patientId}/${context.fileType}/${options.fileId}/edit`
+            `${options.parentUrl}/${context.fileType}/${options.fileId}/edit`
           );
           await e2eIOPanel.expectAllInputValues(options.dataInitial);
           await e2eIOPanel.expectScreenshot();
@@ -248,7 +246,7 @@ export function patientRelatedFullTest(context: {
 
           await e2eIOPanel.doSave();
           await cryptomedic.waitForPath(
-            `/patient/${options.patientId}/${context.fileType}/${options.fileId}`
+            `${options.parentUrl}/${context.fileType}/${options.fileId}`
           );
           // Output mode: verify updated data
           await e2eIOPanel.expectAllOutputValues(options.dataUpdated);

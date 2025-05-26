@@ -15,7 +15,7 @@ const ctx = patientRelatedFullTest({
 });
 
 ctx.testRead({
-  patientId: "5",
+  parentUrl: "/patient/5",
   fileId: "1",
   data: {
     Date: "2015-01-10",
@@ -27,7 +27,7 @@ ctx.testRead({
 });
 
 ctx.testCreateDelete({
-  patientId: "106",
+  parentUrl: "/patient/106",
   data: {
     ...consultBasicData,
     Date: "2008-04-10",
@@ -39,7 +39,7 @@ ctx.testCreateDelete({
 });
 
 ctx.testUpdate({
-  patientId: "106",
+  parentUrl: "/patient/106",
   fileId: "106",
   dataInitial: {
     ...consultBasicData,

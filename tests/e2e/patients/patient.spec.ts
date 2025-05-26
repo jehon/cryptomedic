@@ -42,7 +42,7 @@ const ctx = patientRelatedFullTest({
 });
 
 ctx.testRead({
-  patientId: "1",
+  parentUrl: "/patient/1",
   fileId: "1",
   data: {
     "Entry Year": 2000,
@@ -56,7 +56,7 @@ ctx.testRead({
 });
 
 ctx.testRead({
-  patientId: "3",
+  parentUrl: "/patient/3",
   fileId: "3",
   data: {
     "Entry Year": 2014
