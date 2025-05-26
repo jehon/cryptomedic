@@ -4,6 +4,8 @@ import { fullTest } from "../helpers/e2e-file";
 import { E2EForm } from "../helpers/e2e-form";
 import { E2EPatient } from "../helpers/e2e-patients";
 
+const GenerateYear = 2003;
+
 const ctx = fullTest({
   fileType: "patient",
   fieldsConfig: {
@@ -122,7 +124,6 @@ test("create-reference-2002", async ({ page }) => {
   await cryptomedic.apiLogin();
   await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
-  const GenerateYear = 2022;
   const GenerateOrder = 123;
 
   await E2EPatient.apiDelete(cryptomedic, GenerateYear, GenerateOrder);
@@ -159,8 +160,6 @@ test("generate-reference", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
   await cryptomedic.goTo("/home.new "); // TODO: move to /home
-
-  const GenerateYear = 2003;
 
   // entry_order will be set automatically to 10.000
   await E2EPatient.apiDelete(cryptomedic, GenerateYear, 10000);
