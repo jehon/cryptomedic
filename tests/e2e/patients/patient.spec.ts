@@ -151,19 +151,19 @@ test("search-reference-2001-1", async ({ page }) => {
 });
 
 test("create-reference-2002", async ({ page }) => {
-  const cryptomedic = startCryptomedic(page);
-  await cryptomedic.apiLogin();
-  await cryptomedic.goTo("/home.new "); // TODO: move to /home
-
+  const testEntryYear = GenerateYear + 1;
   const GenerateOrder = 123;
 
-  await deletePatientByReference(cryptomedic, GenerateYear, GenerateOrder);
+  const cryptomedic = startCryptomedic(page);
+  await cryptomedic.apiLogin();
+  await deletePatientByReference(cryptomedic, testEntryYear, GenerateOrder);
+  await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
   const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
 
   await e2eForm.expectToBeVisible();
   await e2eForm.setAllInputValues({
-    "Entry Year": GenerateYear,
+    "Entry Year": testEntryYear,
     "Entry Order": GenerateOrder
   });
 
@@ -176,7 +176,7 @@ test("create-reference-2002", async ({ page }) => {
   const e2eIOPanel = new E2EIOPanel(page.getByTestId(`patient.${newId}`), {});
 
   await e2eIOPanel.expectAllOutputValues({
-    "Entry Year": GenerateYear,
+    "Entry Year": testEntryYear,
     "Entry Order": GenerateOrder
   });
 
@@ -185,12 +185,13 @@ test("create-reference-2002", async ({ page }) => {
 });
 
 test("generate-reference", async ({ page }) => {
+  const testEntryYear = GenerateYear + 2;
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
   await cryptomedic.goTo("/home.new "); // TODO: move to /home
 
   // entry_order will be set automatically to 10.000
-  await deletePatientByReference(cryptomedic, GenerateYear, 10000);
+  await deletePatientByReference(cryptomedic, testEntryYear, 10000);
 
   const e2eForm = new E2EForm(
     () => page.getByTestId("generate-a-reference"),
@@ -198,7 +199,7 @@ test("generate-reference", async ({ page }) => {
   );
   await e2eForm.expectToBeVisible();
   await e2eForm.setAllInputValues({
-    "Entry Year": GenerateYear
+    "Entry Year": testEntryYear
   });
   await e2eForm.locator.getByText("Generate", { exact: true }).click();
 
@@ -208,7 +209,7 @@ test("generate-reference", async ({ page }) => {
   const e2eIOPanel = new E2EIOPanel(page.getByTestId(`patient.${newId}`), {});
 
   await e2eIOPanel.expectAllOutputValues({
-    "Entry Year": GenerateYear,
+    "Entry Year": testEntryYear,
     "Entry Order": 10000
   });
 
