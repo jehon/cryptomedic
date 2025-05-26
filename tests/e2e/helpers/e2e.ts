@@ -81,6 +81,7 @@ class E2ECryptomedic {
         timeout: 5000
       });
     }
+    await this.waitReady();
   }
 
   async waitReady() {

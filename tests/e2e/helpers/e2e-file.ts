@@ -117,15 +117,6 @@ export class E2EFile extends E2EForm {
    *
    */
 
-  // fragment: /appointment/102
-  async expectUrlFragmentForType(fragment: string) {
-    await this.e2ePatient.cryptomedic.waitForPath(
-      new RegExp(
-        "^.*" + escapeRegExp(`#/patient/${this.e2ePatient.id}`) + fragment + "$"
-      )
-    );
-  }
-
   /* ***********************************
    *
    * Routes
@@ -150,27 +141,10 @@ export class E2EFile extends E2EForm {
     await e2eIOPanel.doDelete();
 
     await this.e2ePatient.cryptomedic.waitForPath(
-      new RegExp(".*" + escapeRegExp(`#/patient/${this.e2ePatient.id}`))
+      `/patient/${this.e2ePatient.id}/${this.type}/*`
     );
-    await this.e2ePatient.expectToBeVisible();
-    await this.e2ePatient.cryptomedic.waitReady();
     return this;
   }
-
-  // async doOpen(): Promise<this> {
-  //   await this.expectToBeVisible();
-  //   await this.locator.click(); // the panel is the closed item
-
-  //   this.e2ePatient.cryptomedic.goTo(`${this.fileBaseUrl}${this.id}`);
-  //   if (this.id) {
-  //     await this.expectUrlFragmentForType(`\\/${this.type}\\/${this.id}`);
-  //   } else {
-  //     await this.expectUrlFragmentForType(`\\/${this.type}\\/[0-9]+`);
-  //   }
-  //   await this.e2ePatient.expectToBeVisible();
-  //   await this.expectToBeVisible();
-  //   return this;
-  // }
 
   async doSave(interceptAddedId: boolean = false): Promise<this> {
     await this.expectToBeVisible();
