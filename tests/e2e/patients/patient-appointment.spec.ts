@@ -1,9 +1,9 @@
 import {
-  patientRelatedFulllTest,
+  patientRelatedFullTest,
   TimedFieldsConfigType
 } from "../helpers/e2e-patient-related-full-test";
 
-const ctx = patientRelatedFulllTest({
+const ctx = patientRelatedFullTest({
   fileType: "appointment",
   fieldsConfig: {
     ...TimedFieldsConfigType,

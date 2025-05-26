@@ -62,7 +62,7 @@ function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified): FieldsTypes {
   );
 }
 
-export function patientRelatedFulllTest(context: {
+export function patientRelatedFullTest(context: {
   fileType: string;
   fieldsConfig: FieldsConfigTypeSimplified;
 }) {

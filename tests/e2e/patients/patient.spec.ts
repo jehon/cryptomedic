@@ -2,7 +2,7 @@ import { test } from "@playwright/test";
 import { startCryptomedic, type E2ECryptomedicType } from "../helpers/e2e";
 import { E2EForm, type FieldsTypes } from "../helpers/e2e-form";
 import { E2EIOPanel } from "../helpers/e2e-io-panel";
-import { patientRelatedFulllTest } from "../helpers/e2e-patient-related-full-test";
+import { patientRelatedFullTest } from "../helpers/e2e-patient-related-full-test";
 
 const GenerateYear = 2003;
 
@@ -36,7 +36,7 @@ function deletePatientByReference(
   );
 }
 
-const ctx = patientRelatedFulllTest({
+const ctx = patientRelatedFullTest({
   fileType: "patient",
   fieldsConfig
 });
