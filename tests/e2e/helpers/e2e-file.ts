@@ -260,39 +260,57 @@ export function fullTest(context: {
           await cryptomedic.apiLogin();
           await cryptomedic.goTo(`/patient/${options.patientId}/`);
 
-          const e2ePatient = await new E2EPatient(
-            cryptomedic,
-            options.patientId
+          let e2eIOPanel = new E2EIOPanel(
+            cryptomedic.page.getByTestId(`${context.fileType}.add`),
+            reduceFieldConfig2Form(context.fieldsConfig)
           );
-          const e2eFile = await e2ePatient.doAdd({
-            fileType: context.fileType,
-            fieldsConfig
-          });
-          await e2eFile.expectScreenshot();
+
+          await e2eIOPanel.expectScreenshot();
 
           if (!options.initialIsAlreadyGood) {
             // Try to save: it does not work
-            await e2eFile.locator.getByText("Save").first().click();
-            await expect(e2eFile.locator.getByText("Edit")).not.toBeVisible();
+            await e2eIOPanel.locator.getByText("Save").first().click();
+            await expect(
+              e2eIOPanel.locator.getByText("Edit")
+            ).not.toBeVisible();
             // No screenshot because too touchy
           }
 
           // Set field values
-          await e2eFile.setAllInputValues(options.data);
-          await e2eFile.expectScreenshot();
+          await e2eIOPanel.setAllInputValues(options.data);
+          await e2eIOPanel.expectScreenshot();
 
-          await e2eFile.doSave(true);
+          await e2eIOPanel.doCreate();
+          await cryptomedic.waitForPathByRegex(
+            new RegExp(
+              `^.*/patient/${options.patientId}/${context.fileType}/[0-9]+$`
+            )
+          );
+
+          const newId = cryptomedic.detectId(context.fileType);
+          e2eIOPanel = new E2EIOPanel(
+            cryptomedic.page.getByTestId(`${context.fileType}.${newId}`),
+            reduceFieldConfig2Form(context.fieldsConfig)
+          );
+
           // Check that the values has been correctly saved
-          await e2eFile.expectAllOutputValues(options.data);
-          await e2eFile.expectScreenshot();
+          await e2eIOPanel.expectAllOutputValues(options.data);
+          await e2eIOPanel.expectScreenshot();
 
           // Go back to Edit
-          await e2eFile.goEdit();
+          e2eIOPanel.doEdit();
+          await cryptomedic.waitForPath(
+            `/patient/${options.patientId}/${context.fileType}/${newId}/edit`
+          );
           // Check that the values has been correctly filled in form
-          await e2eFile.expectAllInputValues(options.data);
-          await e2eFile.expectScreenshot();
+          await e2eIOPanel.expectAllInputValues(options.data);
+          await e2eIOPanel.expectScreenshot();
 
-          await e2eFile.doDelete();
+          await e2eIOPanel.doDelete();
+
+          await cryptomedic.waitForPath(
+            `/patient/${options.patientId}/${context.fileType}/${newId}`
+          );
           await options.deleteTest!(page, options.data);
         }
       );
