@@ -117,7 +117,7 @@ test("search-reference-2001-1", async ({ page }) => {
 
   await e2eForm.locator.getByText("Search", { exact: true }).click();
 
-  await page.waitForURL(/.+#\/patient\/6/);
+  await cryptomedic.waitForPath("/patient/6");
 });
 
 test("create-reference-2002", async ({ page }) => {
@@ -141,7 +141,7 @@ test("create-reference-2002", async ({ page }) => {
   await e2eForm.locator.getByText("Search", { exact: true }).click();
   await e2eForm.locator.getByText("Create", { exact: true }).click();
 
-  await page.waitForURL(/.+#\/patient\/.+/);
+  await cryptomedic.waitForPath("/patient/*/patient/*/edit");
 
   const e2ePatient = new E2EPatient(cryptomedic);
   const e2eFile = e2ePatient.getFile({
@@ -180,7 +180,7 @@ test("generate-reference", async ({ page }) => {
 
   await e2eForm.locator.getByText("Generate", { exact: true }).click();
 
-  await page.waitForURL(/.+#\/patient\/.+/);
+  await cryptomedic.waitForPath("/patient/*/patient/*/edit");
 
   const e2ePatient = new E2EPatient(cryptomedic);
   const e2eFile = e2ePatient.getFile({

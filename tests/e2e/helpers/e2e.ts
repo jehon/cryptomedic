@@ -74,8 +74,13 @@ class E2ECryptomedic {
   }
 
   async waitForPath(r: string | RegExp) {
-    await this.page.waitForURL(r, { timeout: 5000 });
-    await expect(this.page).toHaveURL(r);
+    if (r instanceof RegExp) {
+      await this.page.waitForURL(r, { timeout: 5000 });
+    } else {
+      await this.page.waitForURL(`${E2ECryptomedic.webBase}${r}`, {
+        timeout: 5000
+      });
+    }
   }
 
   async waitReady() {
