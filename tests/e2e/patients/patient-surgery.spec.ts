@@ -1,6 +1,9 @@
-import { fullTest, TimedFieldsConfigType } from "../helpers/e2e-file";
+import {
+  patientRelatedFulllTest,
+  TimedFieldsConfigType
+} from "../helpers/e2e-patient-related-full-test";
 
-const ctx = fullTest({
+const ctx = patientRelatedFulllTest({
   fileType: "surgery",
   fieldsConfig: {
     ...TimedFieldsConfigType,

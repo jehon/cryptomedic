@@ -1,10 +1,10 @@
 import {
   consultBasicData,
   ConsultFieldsConfigType,
-  fullTest
-} from "../helpers/e2e-file";
+  patientRelatedFulllTest
+} from "../helpers/e2e-patient-related-full-test";
 
-const ctx = fullTest({
+const ctx = patientRelatedFulllTest({
   fileType: "consult_clubfoot",
   fieldsConfig: {
     ...ConsultFieldsConfigType,
