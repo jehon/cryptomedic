@@ -2,7 +2,6 @@ import { expect, test } from "@playwright/test";
 import { startCryptomedic } from "../helpers/e2e";
 import { E2EIOPanel } from "../helpers/e2e-io-panel";
 
-// TODO: normalize fieldsConfig here
 test("2014-103.bill.2", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
