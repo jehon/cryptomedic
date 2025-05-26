@@ -3,7 +3,6 @@ import { startCryptomedic, type E2ECryptomedicType } from "../helpers/e2e";
 import { fullTest } from "../helpers/e2e-file";
 import { E2EForm, type FieldsTypes } from "../helpers/e2e-form";
 import { E2EIOPanel } from "../helpers/e2e-io-panel";
-import { E2EPatient } from "../helpers/e2e-patients";
 
 const GenerateYear = 2003;
 
@@ -72,13 +71,7 @@ test("update patient 101", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
 
-  const e2eFolder = new E2EPatient(cryptomedic, 101);
-  const e2eFile = await e2eFolder.getFile({
-    fileType: "patient",
-    fileId: 101,
-    fieldsConfig: ctx.fieldsConfig
-  });
-  await e2eFile.apiFileUpdate("101", {
+  await cryptomedic.apiCrudReset("/fiche/patient", "101", {
     entry_year: 2010,
     entry_order: 1,
     name: "patient test",
@@ -92,35 +85,47 @@ test("update patient 101", async ({ page }) => {
     pathology: "Ricket",
     comments: "I have something to add"
   });
-  await e2eFile.go();
-  await e2eFile.expectOutputValue("Entry Year", "2010");
-  await e2eFile.expectOutputValue("Entry Order", "1");
-  await e2eFile.expectOutputValue("Name", "patient test");
 
-  await e2eFile.goEdit();
-  await e2eFile.expectOutputValue("Entry Year", "2010");
-  await e2eFile.expectOutputValue("Entry Order", "1");
-  await e2eFile.expectInputValue("Name", "patient test");
-  await e2eFile.expectInputValue("Sex", "Male");
-  await e2eFile.expectInputValue("Year of Birth", "2013-01");
-  await e2eFile.expectInputValue("Pathology", "Ricket");
-  await e2eFile.expectInputValue("Phone", "+32123123");
-  await e2eFile.expectInputValue("District", "Chittagong");
-  await e2eFile.expectInputValue("Upazila", "Chandanish");
-  await e2eFile.expectInputValue("Address Comments", "at the end of the world");
+  await cryptomedic.goTo(`/patient/101/patient/101`);
 
-  await e2eFile.setInputValue("Name", "patient test done");
-  await e2eFile.setInputValue("Sex", "Female");
-  await e2eFile.setInputValue("District", "Cox's Bazar");
-  await e2eFile.setInputValue("Upazila", "Ramu");
-  await e2eFile.setInputValue("Union", "Eidgar");
+  const e2eIOPanel = new E2EIOPanel(
+    page.getByTestId(`patient.101`),
+    fieldsConfig
+  );
 
-  await e2eFile.doSave();
-  await e2eFile.expectOutputValue("Name", "patient test done");
-  await e2eFile.expectOutputValue("Sex", "Female");
-  await e2eFile.expectOutputValue("District", "Cox's Bazar");
-  await e2eFile.expectOutputValue("Upazila", "Ramu");
-  await e2eFile.expectOutputValue("Union", "Eidgar");
+  await e2eIOPanel.expectOutputValue("Entry Year", "2010");
+  await e2eIOPanel.expectOutputValue("Entry Order", "1");
+  await e2eIOPanel.expectOutputValue("Name", "patient test");
+
+  await e2eIOPanel.doEdit();
+  await cryptomedic.waitForPath(`/patient/101/patient/101/edit`);
+  await e2eIOPanel.expectOutputValue("Entry Year", "2010");
+  await e2eIOPanel.expectOutputValue("Entry Order", "1");
+  await e2eIOPanel.expectInputValue("Name", "patient test");
+  await e2eIOPanel.expectInputValue("Sex", "Male");
+  await e2eIOPanel.expectInputValue("Year of Birth", "2013-01");
+  await e2eIOPanel.expectInputValue("Pathology", "Ricket");
+  await e2eIOPanel.expectInputValue("Phone", "+32123123");
+  await e2eIOPanel.expectInputValue("District", "Chittagong");
+  await e2eIOPanel.expectInputValue("Upazila", "Chandanish");
+  await e2eIOPanel.expectInputValue(
+    "Address Comments",
+    "at the end of the world"
+  );
+
+  await e2eIOPanel.setInputValue("Name", "patient test done");
+  await e2eIOPanel.setInputValue("Sex", "Female");
+  await e2eIOPanel.setInputValue("District", "Cox's Bazar");
+  await e2eIOPanel.setInputValue("Upazila", "Ramu");
+  await e2eIOPanel.setInputValue("Union", "Eidgar");
+
+  await e2eIOPanel.doSave();
+  await cryptomedic.waitForPath(`/patient/101/patient/101`);
+  await e2eIOPanel.expectOutputValue("Name", "patient test done");
+  await e2eIOPanel.expectOutputValue("Sex", "Female");
+  await e2eIOPanel.expectOutputValue("District", "Cox's Bazar");
+  await e2eIOPanel.expectOutputValue("Upazila", "Ramu");
+  await e2eIOPanel.expectOutputValue("Union", "Eidgar");
 });
 
 /********************************************
