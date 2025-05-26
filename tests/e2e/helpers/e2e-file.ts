@@ -119,7 +119,7 @@ export class E2EFile extends E2EForm {
 
   // fragment: /appointment/102
   async expectUrlFragmentForType(fragment: string) {
-    await this.e2ePatient.cryptomedic.waitForUrl(
+    await this.e2ePatient.cryptomedic.waitForPath(
       new RegExp(
         "^.*" + escapeRegExp(`#/patient/${this.e2ePatient.id}`) + fragment + "$"
       )
@@ -149,7 +149,7 @@ export class E2EFile extends E2EForm {
     );
     await e2eIOPanel.doDelete();
 
-    await this.e2ePatient.cryptomedic.waitForUrl(
+    await this.e2ePatient.cryptomedic.waitForPath(
       new RegExp(".*" + escapeRegExp(`#/patient/${this.e2ePatient.id}`))
     );
     await this.e2ePatient.expectToBeVisible();
@@ -186,13 +186,13 @@ export class E2EFile extends E2EForm {
     }
 
     if (interceptAddedId) {
-      await this.e2ePatient.cryptomedic.waitForUrl(
+      await this.e2ePatient.cryptomedic.waitForPath(
         new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}[0-9]+$`)
       );
       this.id = this.e2ePatient.cryptomedic.detectId(this.type);
     }
 
-    await this.e2ePatient.cryptomedic.waitForUrl(
+    await this.e2ePatient.cryptomedic.waitForPath(
       new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}${this.id}$`)
     );
 
@@ -206,7 +206,7 @@ export class E2EFile extends E2EForm {
     );
     e2eIOPanel.doEdit();
 
-    await this.e2ePatient.cryptomedic.waitForUrl(
+    await this.e2ePatient.cryptomedic.waitForPath(
       new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
     );
 

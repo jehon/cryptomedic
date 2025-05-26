@@ -1,5 +1,4 @@
 import { expect, type Locator } from "playwright/test";
-import { escapeRegExp } from "../../../src/utils/strings";
 import { type E2ECryptomedicType } from "./e2e";
 import { E2EFile, type FieldsConfigTypeSimplified } from "./e2e-file";
 import { E2EForm } from "./e2e-form";
@@ -94,8 +93,6 @@ export class E2EPatient extends E2EForm {
     await this.cryptomedic.acceptPopup("Delete");
 
     // Patient is deleted, we should go back to home
-    await this.cryptomedic.waitForUrl(
-      new RegExp("^.*" + escapeRegExp("#/home"))
-    );
+    await this.cryptomedic.waitForPath("/home");
   }
 }

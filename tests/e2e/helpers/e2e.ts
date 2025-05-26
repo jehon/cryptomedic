@@ -73,7 +73,7 @@ class E2ECryptomedic {
     await this.waitReady();
   }
 
-  async waitForUrl(r: string | RegExp) {
+  async waitForPath(r: string | RegExp) {
     await this.page.waitForURL(r, { timeout: 5000 });
     await expect(this.page).toHaveURL(r);
   }
