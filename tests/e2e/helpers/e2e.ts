@@ -2,6 +2,7 @@ import { expect, type Page } from "@playwright/test";
 import type { IndexSignature } from "../../../src/types";
 import { CRUD, type CRUDType } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
+import { escapeRegExp } from "../../../src/utils/strings";
 export { outputDate } from "../../../src/utils/date";
 
 // https://playwright.dev/docs/test-fixtures#box-fixtures ??
@@ -109,9 +110,12 @@ class E2ECryptomedic {
     );
   }
 
-  detectId(title: string) {
+  detectId(title: string, options: { ending?: string } = {}) {
     const url = this.page.url();
-    const matches = /\/(?<id>[0-9]+)$/.exec(url);
+    const regex = new RegExp(
+      `\\/(?<id>[0-9]+)(?<edit>${escapeRegExp(options.ending ?? "")})$`
+    );
+    const matches = regex.exec(url);
     const id = matches?.groups?.["id"] ?? "";
     if (isNaN(parseInt(id))) {
       console.error(`Detected id ${title}: `, { url, matches, id });
