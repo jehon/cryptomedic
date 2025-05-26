@@ -67,7 +67,7 @@ function reduceFieldConfig2Form(fc?: FieldsConfigTypeSimplified): FieldsTypes {
 }
 
 export class E2EFile extends E2EForm {
-  protected fileBaseUrl = "";
+  private fileBaseUrl = "";
   protected page: Page;
   protected type: string;
   protected id: string;
@@ -94,7 +94,7 @@ export class E2EFile extends E2EForm {
     } else {
       this.id = "" + id;
     }
-    this.fileBaseUrl = `/patient/${this.e2ePatient.id}/${type}/`;
+    this.fileBaseUrl = `/patient/${this.e2ePatient.id}/${type}`;
   }
 
   /* ***********************************
@@ -155,21 +155,21 @@ export class E2EFile extends E2EForm {
     );
     if (interceptAddedId) {
       await e2eIOPanel.doCreate();
-    } else {
-      await e2eIOPanel.doSave();
-    }
-
-    if (interceptAddedId) {
-      await this.e2ePatient.cryptomedic.waitForPath(
-        new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}[0-9]+$`)
+      await this.e2ePatient.cryptomedic.waitForPathByRegex(
+        new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}/[0-9]+$`)
       );
       this.id = this.e2ePatient.cryptomedic.detectId(this.type);
+    } else {
+      await e2eIOPanel.doSave();
+      await this.e2ePatient.cryptomedic.waitForPath(
+        `${escapeRegExp(this.fileBaseUrl)}/${this.id}`
+      );
     }
 
+    // New id is detected, let's match it
     await this.e2ePatient.cryptomedic.waitForPath(
-      new RegExp(`^.*#${escapeRegExp(this.fileBaseUrl)}${this.id}$`)
+      `${escapeRegExp(this.fileBaseUrl)}/${this.id}`
     );
-
     return this;
   }
 
@@ -180,9 +180,7 @@ export class E2EFile extends E2EForm {
     );
     e2eIOPanel.doEdit();
 
-    await this.e2ePatient.cryptomedic.waitForPath(
-      new RegExp(`^.*${this.fileBaseUrl}[0-9]+[/]edit$`)
-    );
+    await this.e2ePatient.cryptomedic.waitForPath(`${this.fileBaseUrl}/*/edit`);
 
     return this;
   }

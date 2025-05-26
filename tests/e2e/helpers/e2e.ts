@@ -4,6 +4,19 @@ import { CRUD, type CRUDType } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
 export { outputDate } from "../../../src/utils/date";
 
+// https://playwright.dev/docs/test-fixtures#box-fixtures ??
+// let testIndex = 0;
+// // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// test.beforeEach("dump browser", ({ page }, workerInfo) => {
+//   const projectName = workerInfo.project.name;
+//   const projectIndex = {
+//     Chrome: 0,
+//     Mobile: 1
+//   }[workerInfo.project.name];
+//   console.log({ projectName, projectIndex });
+//   testIndex = projectIndex;
+// });
+
 const backendHost = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
 
 const LOGINS = {
@@ -73,14 +86,15 @@ class E2ECryptomedic {
     await this.waitReady();
   }
 
-  async waitForPath(r: string | RegExp) {
-    if (r instanceof RegExp) {
-      await this.page.waitForURL(r, { timeout: 5000 });
-    } else {
-      await this.page.waitForURL(`${E2ECryptomedic.webBase}${r}`, {
-        timeout: 5000
-      });
-    }
+  async waitForPath(path: string) {
+    await this.page.waitForURL(`${E2ECryptomedic.webBase}${path}`, {
+      timeout: 5000
+    });
+    await this.waitReady();
+  }
+
+  async waitForPathByRegex(url: RegExp) {
+    await this.page.waitForURL(url, { timeout: 5000 });
     await this.waitReady();
   }
 
