@@ -21,7 +21,7 @@ test("2014-103.bill.2", async ({ page }) => {
 });
 
 test("bill.payment", async ({ page }) => {
-  const cryptomedic = startCryptomedic(page);
+  const cryptomedic = await startCryptomedic(page);
   await cryptomedic.apiLogin();
   const patientId = await cryptomedic.apiCreatePatient({
     entry_year: entryYear
