@@ -3,6 +3,7 @@ import { startCryptomedic } from "../helpers/e2e";
 import { E2EIOPanel } from "../helpers/e2e-io-panel";
 
 const entryYear = "2024";
+const totalPaymentsLabel = "Payments Received (see below)";
 
 test("2014-103.bill.2", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
@@ -39,5 +40,19 @@ test("bill.payment", async ({ page }) => {
   const paymentPanel = await cryptomedic.page.getByTestId(
     `bill.${billId}.payments`
   );
+
   await expect(paymentPanel).toBeVisible();
+  await billPanel.expectOutputValue(totalPaymentsLabel, "0.0");
+
+  // API Add payment, check total
+  await cryptomedic.apiCrudCreate(`/fiche/payment`, {
+    bill_id: billId,
+    amount: 100
+  });
+
+  await cryptomedic.page.reload();
+  await expect(paymentPanel).toBeVisible();
+  await billPanel.expectOutputValue(totalPaymentsLabel, "100.0");
+
+  // GUI payment crud
 });
