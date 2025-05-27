@@ -131,13 +131,13 @@ class E2ECryptomedic {
   //
   // *********************************************
 
-  api(
+  api<T = any>(
     url: string,
     options: {
       method?: CRUDType;
       data?: any;
     } = {}
-  ): Promise<any> {
+  ): Promise<T> {
     const requestor = this.page.request as IndexSignature<any>;
     const absoluteApiUrl = `${backendHost}/api${url}`;
 
