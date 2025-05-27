@@ -185,6 +185,25 @@ class E2ECryptomedic {
       data
     });
   }
+
+  async apiCrudCreate(
+    path: string,
+    data: Record<string, string | number | boolean | null>
+  ): Promise<string> {
+    return await this.api(`/${path}`, {
+      method: CRUD.create,
+      data
+    }).then((resp) => resp.newKey);
+  }
+
+  async apiCreatePatient(
+    data: Record<string, string | number | boolean | null>
+  ): Promise<string> {
+    return await this.api(`/fiche/patients`, {
+      method: CRUD.create,
+      data
+    }).then((patient) => "" + patient.newKey);
+  }
 }
 
 export function startCryptomedic(page: Page): E2ECryptomedic {
