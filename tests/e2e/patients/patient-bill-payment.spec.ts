@@ -18,7 +18,7 @@ test("2014-103.bill.2", async ({ page }) => {
   await expect(payment2).toBeVisible();
 });
 
-test("2014-103.bill.2.payment", async ({ page }) => {
+test("bill.payment", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
   const patientId = await cryptomedic.apiCreatePatient({
