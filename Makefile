@@ -117,9 +117,10 @@ dc-build:
 
 .PHONY: start
 start: dc-up dependencies build reset
+	@echo "Dev page:     http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/dev/"
 	@echo "Open browser: http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/"
-	@echo "Test page: http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/dev/"
-	@echo -n "Official port: "
+	@echo "Patient test: http://$(CRYPTOMEDIC_DEV_HTTP_HOST):$(CRYPTOMEDIC_DEV_HTTP_PORT)/built/frontend/ng1x.html#/patient/100"
+	@echo -n "Real docker calculated port: "
 	@docker compose port proxy 80
 
 dev: clear start
