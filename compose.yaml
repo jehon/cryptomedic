@@ -16,10 +16,10 @@ services:
         mode: host
     volumes:
       - type: bind
-        source: conf/proxy/web
+        source: services/proxy/web
         target: /www/dev/
       - type: bind
-        source: conf/proxy/cryptomedic.conf
+        source: services/proxy/cryptomedic.conf
         target: /etc/nginx/conf.d/default.conf
       - type: tmpfs
         target: /var/cache/nginx
