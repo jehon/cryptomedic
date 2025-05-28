@@ -1,7 +1,7 @@
 import { expect, type Locator } from "@playwright/test";
 import path from "node:path/posix";
 import { isEmptyValue } from "../../../src/utils/objects";
-import { outputDate } from "./e2e";
+import { e2eDefaultYear, outputDate } from "./e2e";
 
 export type IOValue = string | number | boolean | undefined;
 type IOValues = {
@@ -21,6 +21,10 @@ export type IOType =
 export type FieldsTypes = {
   [key: string]: IOType;
 };
+
+export function e2eDefaultDate(month: number = 0, day: number = 1) {
+  return new Date(e2eDefaultYear, month, day).toISOString().substring(0, 10);
+}
 
 function ioValue2String(val?: IOValue): string {
   switch (val) {
@@ -61,6 +65,11 @@ export class E2EForm {
   //
   // Public
   //
+
+  async waitToBeVisible(): Promise<this> {
+    await this.locator.waitFor({ state: "visible", timeout: 5 * 1000 });
+    return this;
+  }
 
   async expectToBeVisible(): Promise<this> {
     await expect(this.locator).toBeVisible();

@@ -5,7 +5,7 @@ import { passThrough } from "../../../src/utils/promises";
 import { escapeRegExp } from "../../../src/utils/strings";
 export { outputDate } from "../../../src/utils/date";
 
-const defaultEntryYear = 2018;
+export const e2eDefaultYear = 2018;
 
 // https://playwright.dev/docs/test-fixtures#box-fixtures ??
 // let testIndex = 0;
@@ -204,7 +204,7 @@ class E2ECryptomedic {
     return await this.api(`/fiche/patients`, {
       method: CRUD.create,
       data: {
-        entry_year: defaultEntryYear,
+        entry_year: e2eDefaultYear,
         ...data
       }
     }).then((patient) => "" + patient.newKey);
