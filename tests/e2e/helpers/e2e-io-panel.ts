@@ -38,6 +38,7 @@ export class E2EIOPanel extends E2EForm {
     // Save button is outside of the ButtonGroup
     await this.getButton("Save").click();
     // Id is refreshed, so impossible to assert output
+    await this.locator.waitFor({ state: "detached" });
   }
 
   async doEdit() {
