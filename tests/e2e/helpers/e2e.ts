@@ -5,6 +5,8 @@ import { passThrough } from "../../../src/utils/promises";
 import { escapeRegExp } from "../../../src/utils/strings";
 export { outputDate } from "../../../src/utils/date";
 
+const defaultEntryYear = 2018;
+
 // https://playwright.dev/docs/test-fixtures#box-fixtures ??
 // let testIndex = 0;
 // // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -197,11 +199,14 @@ class E2ECryptomedic {
   }
 
   async apiCreatePatient(
-    data: Record<string, string | number | boolean | null>
+    data: Record<string, string | number | boolean | null> = {}
   ): Promise<string> {
     return await this.api(`/fiche/patients`, {
       method: CRUD.create,
-      data
+      data: {
+        entry_year: defaultEntryYear,
+        ...data
+      }
     }).then((patient) => "" + patient.newKey);
   }
 }

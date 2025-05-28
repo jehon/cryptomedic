@@ -2,7 +2,6 @@ import { expect, test } from "@playwright/test";
 import { startCryptomedic } from "../helpers/e2e";
 import { E2EIOPanel } from "../helpers/e2e-io-panel";
 
-const entryYear = "2024";
 const totalPaymentsLabel = "Payments Received (see below)";
 
 test("2014-103.bill.2", async ({ page }) => {
@@ -22,9 +21,7 @@ test("2014-103.bill.2", async ({ page }) => {
 test("bill.payment", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
-  const patientId = await cryptomedic.apiCreatePatient({
-    entry_year: entryYear
-  });
+  const patientId = await cryptomedic.apiCreatePatient();
   const billId = await cryptomedic.apiCrudCreate(`/fiche/bill`, {
     patient_id: patientId,
     price_id: 1,
