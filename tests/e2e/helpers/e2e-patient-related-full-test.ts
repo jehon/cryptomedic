@@ -158,7 +158,7 @@ export function patientRelatedFullTest(context: {
 
           if (!options.initialIsAlreadyGood) {
             // Try to save: it does not work
-            await e2eIOPanel.locator.getByText("Save").first().click();
+            await e2eIOPanel.locator.getByText("Create").first().click();
             await expect(
               e2eIOPanel.locator.getByText("Edit")
             ).not.toBeVisible();

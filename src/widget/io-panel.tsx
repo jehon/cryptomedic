@@ -188,7 +188,7 @@ export default function IOPanel<T extends Pojo>(props: {
               <ActionButton
                 style="Confirm"
                 restrictedTo={`${props.restrictedTo}.edit`}
-                action="Save"
+                action={props.file.id ? "Save" : "Create"}
                 onOk={doSave}
               />
             </>
@@ -251,7 +251,7 @@ export default function IOPanel<T extends Pojo>(props: {
               <ActionButton
                 style="Confirm"
                 restrictedTo={`${props.restrictedTo}.edit`}
-                action="Save"
+                action={props.file.id ? "Save" : "Create"}
                 onOk={doSave}
               />
             </ButtonGroup>

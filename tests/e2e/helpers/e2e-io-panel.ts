@@ -36,7 +36,7 @@ export class E2EIOPanel extends E2EForm {
   async doCreate() {
     await this.assertModeInput();
     // Save button is outside of the ButtonGroup
-    await this.getButton("Save").click();
+    await this.getButton("Create").click();
     // Id is refreshed, so impossible to assert output
     await this.locator.waitFor({ state: "detached" });
   }
