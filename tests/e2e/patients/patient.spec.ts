@@ -135,7 +135,7 @@ test("update patient 101", async ({ page }) => {
 test("search-reference-2001-1", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
-  await cryptomedic.goTo("/home.new "); // TODO: move to /home
+  await cryptomedic.goTo("/");
 
   const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
 
@@ -157,7 +157,7 @@ test("create-reference-2002", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
   await deletePatientByReference(cryptomedic, testEntryYear, GenerateOrder);
-  await cryptomedic.goTo("/home.new "); // TODO: move to /home
+  await cryptomedic.goTo("/");
 
   const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
 
@@ -188,7 +188,7 @@ test("generate-reference", async ({ page }) => {
   const testEntryYear = GenerateYear + 2;
   const cryptomedic = startCryptomedic(page);
   await cryptomedic.apiLogin();
-  await cryptomedic.goTo("/home.new "); // TODO: move to /home
+  await cryptomedic.goTo("/");
 
   // entry_order will be set automatically to 10.000
   await deletePatientByReference(cryptomedic, testEntryYear, 10000);
