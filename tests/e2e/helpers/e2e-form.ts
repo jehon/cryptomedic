@@ -68,7 +68,6 @@ export class E2EForm {
   //
 
   async waitToBeVisible(): Promise<this> {
-    await this.locator.scrollIntoViewIfNeeded();
     await this.locator.waitFor({ state: "visible", timeout: 5 * 1000 });
     await expect(this.locator).toBeVisible();
     return this;
