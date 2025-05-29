@@ -207,6 +207,12 @@ export default function BillElement(
       onUpdated={props.onUpdated}
       onDeleted={props.onDeleted}
       basePath={`${props.parentPath}/bill/${props.file.id ?? "add"}`}
+      header={
+        <>
+          <span>total: {props.file.total_real}</span>
+          <span>paid: {totalPaid}</span>
+        </>
+      }
       footer={
         !props.edit &&
         props.file.id &&
@@ -251,12 +257,6 @@ export default function BillElement(
             )}
           </Panel>
         )
-      }
-      header={
-        <>
-          <span>total: {props.file.total_real}</span>
-          <span>paid: {totalPaid}</span>
-        </>
       }
     >
       <TwoColumns>
