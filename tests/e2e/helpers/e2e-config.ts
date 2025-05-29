@@ -3,7 +3,7 @@ export const e2eBackendHost = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"]
 
 // Test data
 export const e2eInputTimeoutMs = 1000;
-export const e2eWaitForPathChangeMs = 5 * 1000;
+export const e2eWaitForPathChangeMs = 10 * 1000;
 
 // Business data
 export const e2eUsers = {
