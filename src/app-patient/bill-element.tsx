@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { useState } from "react";
 import Price from "../business/price";
-import { getPriceCategories, isFeatureSwitchEnabled } from "../config";
+import { getPriceCategories } from "../config";
 import { nArray } from "../utils/array";
 import { inputValueNow } from "../utils/date";
 import { getList, getSession } from "../utils/session";
@@ -223,24 +223,11 @@ export default function BillElement(
             testid={`bill.${props.file.id}.payments`}
           >
             <ButtonsGroup>
-              {isFeatureSwitchEnabled() ? (
-                <ActionButton
-                  style="Add"
-                  restrictedTo="folder.edit"
-                  onOk={doAddPayment}
-                />
-              ) : (
-                <>
-                  <ActionButton
-                    style="Add"
-                    linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
-                  />
-                  <ActionButton
-                    style="Edit"
-                    linkTo={`#/folder/${props.patient.id}/file/Bill/${props.file.id}`}
-                  />
-                </>
-              )}
+              <ActionButton
+                style="Add"
+                restrictedTo="folder.edit"
+                onOk={doAddPayment}
+              />
             </ButtonsGroup>
             {nArray(props.file.payment).length == 0 ? (
               <div>No payment received</div>
