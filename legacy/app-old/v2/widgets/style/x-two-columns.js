@@ -1,7 +1,7 @@
 import { createElementWithTag } from "../../js/custom-element.js";
 import { getPanelStyles } from "./x-panel.js";
 
-export default class XTwoColumns extends HTMLElement {
+class XTwoColumns extends HTMLElement {
   static get Tag() {
     return "x-two-columns";
   }

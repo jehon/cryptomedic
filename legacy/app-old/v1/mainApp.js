@@ -13,19 +13,13 @@ import template from "../v2/js/template.js";
 import "./elements/cryptomedic-data-service.js";
 import JHElement from "./elements/jh-element.js";
 import "./elements/jh-script.js";
-import "./elements/x-file-bill-summary.js";
-import "./elements/x-file-bill.js";
-import XFile from "./elements/x-file.js";
 import "./elements/x-input-date.js";
-import XInputPicture from "./elements/x-input-picture.js";
 import "./elements/x-o-overlay.js";
 import "./elements/x-read-boolean.js";
 import "./elements/x-read.js";
 import "./elements/x-write-list.js";
 import "./elements/x-write.js";
 window.JHElement = JHElement;
-window.XInputPicture = XInputPicture;
-window.XFile = XFile;
 
 let mainApp = angular.module("app_main", ["ngRoute"]).config([
   "$locationProvider",
@@ -62,9 +56,6 @@ mainApp.controller("ctrl", [
     });
   }
 ]);
-
-import ctrl_file_bill from "./ctrl_file_bill.js";
-mainApp.controller("ctrl_file_bill", ctrl_file_bill);
 
 import ctrl_folder from "./ctrl_folder.js";
 mainApp.controller("ctrl_folder", ctrl_folder);
