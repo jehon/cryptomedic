@@ -60,5 +60,6 @@ export class E2EIOPanel extends E2EForm {
     await expect(popupActions.getByText("Delete")).toBeVisible();
     await popupActions.getByText("Delete").click();
     await popupActions.getByText("Delete").waitFor({ state: "detached" });
+    await this.locator.waitFor({ state: "detached" });
   }
 }
