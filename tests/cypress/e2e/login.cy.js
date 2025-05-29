@@ -23,7 +23,7 @@ context("Actions", () => {
 
   it("login in background", () => {
     crLoginInBackground(crApiLogin.RO);
-    guiHashStartWith("/home");
+    guiHashStartWith("/");
     cy.get("x-user-status #user").should("have.text", crApiLogin.RO);
   });
 });
