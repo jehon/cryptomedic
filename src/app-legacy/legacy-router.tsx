@@ -19,7 +19,6 @@ function RenderLegacy(props: { tag: string }) {
 
   return (
     <>
-      <h2>{props.tag}</h2>
       <div
         dangerouslySetInnerHTML={{
           __html: `<${props.tag} ${pStr}></${props.tag}>`
