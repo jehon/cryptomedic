@@ -20,6 +20,9 @@ export class E2EIOPanel extends E2EForm {
   }
 
   private async assertModeOutput() {
+    await this.locator
+      .locator("[data-mode='output']")
+      .waitFor({ state: "visible", timeout: 5 * 1000 });
     await expect(
       this.locator.locator("[data-mode='output']"),
       "to be in OutputMode"

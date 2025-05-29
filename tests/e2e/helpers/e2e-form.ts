@@ -1,7 +1,8 @@
 import { expect, type Locator } from "@playwright/test";
 import path from "node:path/posix";
 import { isEmptyValue } from "../../../src/utils/objects";
-import { e2eDefaultYear, outputDate } from "./e2e";
+import { outputDate } from "./e2e";
+import { e2eDefaultYear, e2eInputTimeoutMs } from "./e2e-config";
 
 export type IOValue = string | number | boolean | undefined;
 type IOValues = {
@@ -22,7 +23,7 @@ export type FieldsTypes = {
   [key: string]: IOType;
 };
 
-export function e2eDefaultDate(month: number = 0, day: number = 1) {
+export function e2eDefaultDate(day: number = 1, month: number = 0) {
   return new Date(e2eDefaultYear, month, day).toISOString().substring(0, 10);
 }
 
@@ -179,7 +180,6 @@ export class E2EForm {
 
   async setInputValue(label: string, value?: IOValue): Promise<this> {
     const type = this.getType(label);
-    const inputTimeoutMs = 1000;
 
     if (type == "readonly") {
       // The io is not visible
@@ -205,9 +205,9 @@ export class E2EForm {
             "input[type=checkbox]"
           );
           if (value) {
-            await loc.check({ timeout: inputTimeoutMs });
+            await loc.check({ timeout: e2eInputTimeoutMs });
           } else {
-            await loc.uncheck({ timeout: inputTimeoutMs });
+            await loc.uncheck({ timeout: e2eInputTimeoutMs });
           }
         }
         break;
@@ -230,7 +230,7 @@ export class E2EForm {
             exact: true
           });
           await expect(radio).toBeVisible();
-          await radio.check({ timeout: inputTimeoutMs });
+          await radio.check({ timeout: e2eInputTimeoutMs });
         }
         break;
       case "select":
@@ -243,7 +243,7 @@ export class E2EForm {
               label: ioValue2String(value)
             },
             {
-              timeout: inputTimeoutMs
+              timeout: e2eInputTimeoutMs
             }
           );
         }
@@ -252,7 +252,7 @@ export class E2EForm {
         await expect(ioc.locator("textarea")).toBeVisible();
         await ioc
           .locator("textarea")
-          .fill(ioValue2String(value), { timeout: inputTimeoutMs });
+          .fill(ioValue2String(value), { timeout: e2eInputTimeoutMs });
         break;
     }
 

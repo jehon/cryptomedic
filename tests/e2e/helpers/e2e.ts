@@ -3,32 +3,14 @@ import type { IndexSignature } from "../../../src/types";
 import { CRUD, type CRUDType } from "../../../src/utils/network";
 import { passThrough } from "../../../src/utils/promises";
 import { escapeRegExp } from "../../../src/utils/strings";
+import {
+  e2eBackendHost,
+  e2eDefaultYear,
+  e2eUsers,
+  e2eUsersPassword,
+  e2eWaitForPathChangeMs
+} from "./e2e-config";
 export { outputDate } from "../../../src/utils/date";
-
-export const e2eDefaultYear = 2018;
-
-// https://playwright.dev/docs/test-fixtures#box-fixtures ??
-// let testIndex = 0;
-// // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// test.beforeEach("dump browser", ({ page }, workerInfo) => {
-//   const projectName = workerInfo.project.name;
-//   const projectIndex = {
-//     Chrome: 0,
-//     Mobile: 1
-//   }[workerInfo.project.name];
-//   console.log({ projectName, projectIndex });
-//   testIndex = projectIndex;
-// });
-
-const backendHost = `http://${process.env["CRYPTOMEDIC_DEV_HTTP_HOST"] ?? "localhost"}:${process.env["CRYPTOMEDIC_DEV_HTTP_PORT"] ?? 8085}`;
-
-const LOGINS = {
-  PHYSIO: "murshed",
-  RO: "readonly",
-  ADMIN: "jehon"
-};
-
-const PASSWORD = "p";
 
 // export function crDebugHooks(page: Page): void {
 //   // Listen for all console logs
@@ -60,7 +42,7 @@ export type E2ECryptomedicType = InstanceType<typeof E2ECryptomedic>;
 class E2ECryptomedic {
   readonly page: Page;
 
-  static readonly webBase = `${backendHost}/built/frontend/ng1x.html?dev#`;
+  static readonly webBase = `${e2eBackendHost}/built/frontend/ng1x.html?dev#`;
 
   constructor(page: Page) {
     this.page = page;
@@ -91,13 +73,13 @@ class E2ECryptomedic {
 
   async waitForPath(path: string) {
     await this.page.waitForURL(`${E2ECryptomedic.webBase}${path}`, {
-      timeout: 5000
+      timeout: e2eWaitForPathChangeMs
     });
     await this.waitReady();
   }
 
   async waitForPathByRegex(url: RegExp) {
-    await this.page.waitForURL(url, { timeout: 5000 });
+    await this.page.waitForURL(url, { timeout: e2eWaitForPathChangeMs });
     await this.waitReady();
   }
 
@@ -141,7 +123,7 @@ class E2ECryptomedic {
     } = {}
   ): Promise<T> {
     const requestor = this.page.request as IndexSignature<any>;
-    const absoluteApiUrl = `${backendHost}/api${url}`;
+    const absoluteApiUrl = `${e2eBackendHost}/api${url}`;
 
     return requestor[(options.method ?? CRUD.read).toLowerCase()](
       absoluteApiUrl,
@@ -161,12 +143,12 @@ class E2ECryptomedic {
       .then((resp: any) => resp.json());
   }
 
-  async apiLogin(login = LOGINS.PHYSIO): Promise<void> {
+  async apiLogin(login = e2eUsers.PHYSIO): Promise<void> {
     await this.api("/auth/mylogin", {
       method: CRUD.submit,
       data: {
         username: login,
-        password: PASSWORD
+        password: e2eUsersPassword
       }
     });
   }
