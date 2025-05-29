@@ -153,7 +153,7 @@ export default function IOPanel<T extends Pojo>(props: {
       fullscreen={edit}
       header={
         <>
-          <span className="first">
+          <span className="first" data-mode={edit ? "input" : "output"}>
             <img
               src={
                 icons.models[(props.type as keyof typeof icons.models) ?? ""]
@@ -234,12 +234,7 @@ export default function IOPanel<T extends Pojo>(props: {
         <div>by {props.file.last_user}</div>
       </div>
       <EditContext.Provider value={edit}>
-        <form
-          id="file"
-          data-testid={`io-panel-form`}
-          data-mode={edit ? "input" : "output"}
-          ref={formRef}
-        >
+        <form id="file" data-testid={`io-panel-form`} ref={formRef}>
           {props.file.updated_at && (
             <input
               type="hidden"
