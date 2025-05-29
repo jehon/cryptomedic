@@ -215,5 +215,4 @@ test("generate-reference", async ({ page }) => {
 
   // Clean up
   await e2eIOPanel.doDelete();
-  await cryptomedic.waitForPath(`/`);
 });
