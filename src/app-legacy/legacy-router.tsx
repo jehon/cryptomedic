@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
+import "../../legacy/app-old/v1/elements/cryptomedic-data-service.js"; // On index.html - unused?
 import "../../legacy/app-old/v2/pages/x-page-login.js";
-import "../../legacy/app-old/v2/widgets/x-user-status.js";
+import "../../legacy/app-old/v2/widgets/x-user-status.js"; // On index.html
 
 function RenderLegacy(props: { tag: string; attributes?: string[] }) {
   const params = useParams();
   const pStr = Object.entries(params)
     .filter(([key, _value]) => (props.attributes ?? []).includes(key))
-    .map(([key, value]) => `${key}='${value}'`)
+    .map(([key, value]) => `${key}='${value ?? ""}'`)
     .join(" ");
 
   return (
@@ -14,18 +15,25 @@ function RenderLegacy(props: { tag: string; attributes?: string[] }) {
       <h2>{props.tag}</h2>
       <div
         dangerouslySetInnerHTML={{
-          __html: `<${props.tag} { }></${props.tag}>`
+          __html: `<${props.tag} redirect='${params["*"]}'></${props.tag}>`
         }}
       />
     </>
   );
 }
 
+export function routeToLogin(redirect = location.hash.replace(/^#/, "")) {
+  if (redirect.startsWith("/login/")) {
+    return;
+  }
+  location.hash = `#/login/${redirect}`;
+}
+
 export function RouterLegacy() {
   return [
     {
-      path: "/login/:redirect?",
-      element: <RenderLegacy tag="x-page-login" attributes={["redirect"]} />
+      path: "/login*",
+      element: <RenderLegacy tag="x-page-login" attributes={["*"]} />
     }
     // { path: "/search", element: <ReloadToOldApp /> },
     // { path: "/reports/:report", element: <ReloadToOldApp /> },
@@ -36,3 +44,5 @@ export function RouterLegacy() {
     // { path: "/folder/*", element: <ReloadToOldApp /> }
   ];
 }
+
+routeToLogin();
