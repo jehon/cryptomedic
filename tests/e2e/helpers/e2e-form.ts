@@ -59,7 +59,7 @@ export class E2EForm {
   }
 
   private async expectField(label: string): Promise<Locator> {
-    await this.expectToBeVisible();
+    await this.waitToBeVisible();
     return this.locator.locator(`[data-role='${label}']`);
   }
 
@@ -68,17 +68,14 @@ export class E2EForm {
   //
 
   async waitToBeVisible(): Promise<this> {
+    await this.locator.scrollIntoViewIfNeeded();
     await this.locator.waitFor({ state: "visible", timeout: 5 * 1000 });
-    return this;
-  }
-
-  async expectToBeVisible(): Promise<this> {
     await expect(this.locator).toBeVisible();
     return this;
   }
 
   async expectScreenshot(): Promise<this> {
-    await this.expectToBeVisible();
+    await this.waitToBeVisible();
     await expect(this.locator.locator("form")).toHaveScreenshot();
     return this;
   }

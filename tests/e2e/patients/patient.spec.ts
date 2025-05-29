@@ -139,7 +139,7 @@ test("search-reference-2001-1", async ({ page }) => {
 
   const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
 
-  await e2eForm.expectToBeVisible();
+  await e2eForm.waitToBeVisible();
   await e2eForm.setAllInputValues({
     "Entry Year": 2001,
     "Entry Order": 1
@@ -161,7 +161,7 @@ test("create-reference-2002", async ({ page }) => {
 
   const e2eForm = new E2EForm(() => page.getByTestId("search-a-reference"), {});
 
-  await e2eForm.expectToBeVisible();
+  await e2eForm.waitToBeVisible();
   await e2eForm.setAllInputValues({
     "Entry Year": testEntryYear,
     "Entry Order": GenerateOrder
@@ -197,7 +197,7 @@ test("generate-reference", async ({ page }) => {
     () => page.getByTestId("generate-a-reference"),
     {}
   );
-  await e2eForm.expectToBeVisible();
+  await e2eForm.waitToBeVisible();
   await e2eForm.setAllInputValues({
     "Entry Year": testEntryYear
   });

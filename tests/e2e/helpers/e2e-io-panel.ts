@@ -20,16 +20,17 @@ export class E2EIOPanel extends E2EForm {
   }
 
   private async assertModeOutput() {
+    this.waitToBeVisible();
     const modeLocator = this.locator.locator("[data-mode='output']");
     await modeLocator.waitFor({ state: "visible", timeout: 5 * 1000 });
     await expect(modeLocator, "to be in OutputMode").toBeVisible();
   }
 
   async doOpen() {
-    await this.expectToBeVisible();
+    await this.waitToBeVisible();
     await this.locator.click(); // the panel is the closed item
     await this.assertModeOutput();
-    await this.expectToBeVisible();
+    await this.waitToBeVisible();
   }
 
   async doCreate() {
@@ -42,10 +43,10 @@ export class E2EIOPanel extends E2EForm {
 
   async doEdit() {
     await this.assertModeOutput();
-    await this.expectToBeVisible();
+    await this.waitToBeVisible();
     await this.getButton("Edit").click();
     await this.assertModeInput();
-    await this.expectToBeVisible();
+    await this.waitToBeVisible();
   }
 
   async doSave() {
