@@ -13,38 +13,41 @@ import { EditContext } from "./io-abstract";
 import notification from "./notification";
 import Panel from "./panel";
 
-export function propagateToList<S extends Pojo, T extends Pojo>(
-  file: S,
-  listname: keyof S,
-  updatedCallback: (file: S) => void
+export function propagateToList<
+  OwnerObject extends Pojo,
+  ListObject extends Pojo
+>(
+  file: OwnerObject,
+  listName: keyof OwnerObject,
+  updatedCallback: (file: OwnerObject) => void
 ) {
-  const withoutAdded = (list: T[]) => list.filter((v) => v.id);
-  const list = file[listname] as T[];
+  const withoutAdded = (list: ListObject[]) => list.filter((v) => v.id);
+  const list = file[listName] as ListObject[];
 
   return {
-    onCreated: (subFile: T) =>
+    onCreated: (subFile: ListObject) =>
       updatedCallback(
-        produce<S>(file, (draft) => {
+        produce<OwnerObject>(file, (draft) => {
           // Hack for typescript
-          (draft as any)[listname] = sortList(
+          (draft as any)[listName] = sortList(
             withoutAdded(list).concat([subFile])
           );
         })
       ),
-    onUpdated: (subFile: T) =>
+    onUpdated: (subFile: ListObject) =>
       updatedCallback(
-        produce<S>(file, (draft) => {
+        produce<OwnerObject>(file, (draft) => {
           // Hack for typescript
-          (draft as any)[listname] = sortList(withoutAdded(list))
+          (draft as any)[listName] = sortList(withoutAdded(list))
             .filter((v) => v.id != subFile.id)
             .concat([subFile]);
         })
       ),
-    onDeleted: (subFile: T) =>
+    onDeleted: (subFile: ListObject) =>
       updatedCallback(
-        produce<S>(file, (draft) => {
+        produce<OwnerObject>(file, (draft) => {
           // Hack for typescript
-          (draft as any)[listname] = sortList(
+          (draft as any)[listName] = sortList(
             withoutAdded(list).filter((v) => v.id != subFile.id)
           );
         })
