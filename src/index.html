@@ -19,8 +19,7 @@
     <script src="/static/js/global.js"></script>
   </head>
 
-  <body ng-app="app_main" ng-controller="ctrl">
-    <!--  Navigation bar -->
+  <body>
     <div id="menu">
       <img src="/favicon.svg" height="30px" />
       <span style="flex-grow: 1"></span>
@@ -39,7 +38,7 @@
       <!--  Pending screen -->
       <cryptomedic-data-service id="dataService">
         <div>
-          <div ng-view></div>
+          <div id="app">Loading...</div>
         </div>
       </cryptomedic-data-service>
     </div>

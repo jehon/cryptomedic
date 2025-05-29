@@ -53,7 +53,7 @@ export default {
   // https://webpack.js.org/guides/development/
   mode: isDebug ? "development" : "production",
   entry: {
-    ng1x: path.join(__dirname, "/legacy/app-old/main.js"),
+    ng1x: path.join(__dirname, "/src/main.tsx"),
     static: path.join(__dirname, "/src/app-static/main.js")
   },
   output: {
@@ -73,7 +73,7 @@ export default {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "legacy/app-old/index.html"),
+      template: path.join(__dirname, "src/index.html"),
       filename: path.join(builtRoot, "ng1x.html"),
       inject: "head",
       xhtml: true,
