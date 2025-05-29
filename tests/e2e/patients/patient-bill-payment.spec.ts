@@ -1,9 +1,13 @@
 import { expect, test } from "@playwright/test";
 import { startCryptomedic } from "../helpers/e2e";
-import { e2eDefaultDate } from "../helpers/e2e-form";
+import { e2eDefaultDate, type FieldsTypes } from "../helpers/e2e-form";
 import { E2EIOPanel } from "../helpers/e2e-io-panel";
 
 const totalPaymentsLabel = "Payments Received (see below)";
+const paymentFieldsConfig: FieldsTypes = {
+  Date: "date",
+  Comments: "textarea"
+};
 
 test("2014-103.bill.2", async ({ page }) => {
   const cryptomedic = startCryptomedic(page);
@@ -59,22 +63,21 @@ test("bill.payment", async ({ page }) => {
   await billPanel.expectOutputValue(totalPaymentsLabel, "250.0");
 
   // GUI payment crud
-  await paymentPanel.getByRole("button", { name: "Add" }).click();
+  {
+    await paymentPanel.getByRole("button", { name: "Add" }).click();
 
-  const paymentAddPanel = new E2EIOPanel(
-    paymentPanel.getByTestId("payment.add"),
-    {
-      Date: "date",
-      Comments: "textarea"
-    }
-  );
-  await paymentAddPanel.waitToBeVisible();
-  await paymentAddPanel.setAllInputValues({
-    Date: e2eDefaultDate(),
-    Amount: 500,
-    Comments: "test e2e"
-  });
-  await paymentAddPanel.doCreate();
-  await billPanel.waitToBeVisible();
-  await billPanel.expectOutputValue(totalPaymentsLabel, "750.0");
+    const paymentAddPanel = new E2EIOPanel(
+      paymentPanel.getByTestId("payment.add"),
+      paymentFieldsConfig
+    );
+    await paymentAddPanel.waitToBeVisible();
+    await paymentAddPanel.setAllInputValues({
+      Date: e2eDefaultDate(),
+      Amount: 500,
+      Comments: "test e2e"
+    });
+    await paymentAddPanel.doCreate();
+    await billPanel.waitToBeVisible();
+    await billPanel.expectOutputValue(totalPaymentsLabel, "750.0");
+  }
 });
