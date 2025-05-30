@@ -6,7 +6,7 @@ flavorFilter(flavorFilter.DESKTOP, () =>
   context("Actions", () => {
     it("should show report", () => {
       goReport(
-        "consultations",
+        "consultations-of-the-day",
         () => {
           // cy.get('@form').find('[label="Period"] > x-input-list').invoke('attr', 'value', 'day');
           cy.get('x-input-date[name="day"]').invoke(

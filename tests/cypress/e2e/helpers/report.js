@@ -3,11 +3,11 @@ import { crApiLogin } from "./cr-api.js";
 import { crLoginInBackground, crPage } from "./cr.js";
 import TableIterator from "./table-iterator.js";
 
-export function goReport(reportName, fillInFieldsCb, checkCb) {
+export function goReport(reportTestId, fillInFieldsCb, checkCb) {
   crLoginInBackground(crApiLogin.RO);
 
   crPage().within(() => {
-    cy.get(`#report_${reportName}_menu > x-buttons > x-button`).click();
+    cy.get(`[data-testid='${reportTestId}'] button`).click();
 
     cy.get("x-page-reports")
       .should("be.visible")
