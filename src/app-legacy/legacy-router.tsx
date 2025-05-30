@@ -10,6 +10,8 @@ import XPageUsersList from "../../legacy/app-old/v2/pages/x-page-users-list.js";
 import "../../legacy/app-old/v2/widgets/x-user-status.js"; // On index.html
 import { htmlEntities } from "../utils/strings";
 
+import "./legacy.css";
+
 function RenderLegacy(props: { tag: string }) {
   const params = useParams();
   const pStr = Object.entries(params)
