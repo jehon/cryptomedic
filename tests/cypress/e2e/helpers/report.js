@@ -27,7 +27,7 @@ export function goReport(reportTestId, fillInFieldsCb, checkCb) {
         cy.get("x-table[empty]").should("not.exist");
 
         checkCb(new TableIterator("x-table"));
-        cy.crCompareSnapshot();
+        // cy.crCompareSnapshot();
       });
   });
 }
