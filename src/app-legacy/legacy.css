@@ -3,39 +3,39 @@
  */
 table.reporting {
   width: 100%;
-}
 
-table.reporting > * {
-  border: 2px solid black;
-}
+  & > * {
+    border: 2px solid black;
+  }
 
-table.reporting > thead > tr > th,
-table.reporting > tbody > tr > td,
-table.reporting > tfoot > tr > th {
-  text-align: center;
-}
+  & > thead > tr > th,
+  & > tbody > tr > td,
+  & > tfoot > tr > th {
+    text-align: center;
+  }
 
-table.reporting > thead > tr > th,
-table.reporting > tfoot > tr > th {
-  background-color: gray;
-  border: 1px solid white;
+  & > thead > tr > th,
+  & > tfoot > tr > th {
+    background-color: gray;
+    border: 1px solid white;
 
-  color: white;
-}
+    color: white;
+  }
 
-table.reporting > tbody > tr > td {
-  border: 1px solid gray;
-}
+  & > tbody > tr > td {
+    border: 1px solid gray;
+  }
 
-table.reporting > tbody > tr:nth-child(odd) {
-  background-color: lightgray;
-}
+  & > tbody > tr:nth-child(odd) {
+    background-color: lightgray;
+  }
 
-table.reporting > tbody > tr > .subheader,
-table.reporting > tfoot > tr > .subheader {
-  background-color: gray;
-  padding: 5px;
-  padding-top: 10px;
-  text-align: center;
-  font-weight: bold;
+  & > tbody > tr > .subheader,
+  & > tfoot > tr > .subheader {
+    background-color: gray;
+    padding: 5px;
+    padding-top: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
 }
