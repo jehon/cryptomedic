@@ -53,11 +53,7 @@ header_end
 header_begin "Cypress"
 rm -fr "$CR_TMP/integration/desktop"
 get_artifact "integration-desktop" "$CR_TMP/integration/desktop"
-node --experimental-strip-types tests/styles/check-styles.ts \
-  --references="tests/styles/references/desktop" \
-  --results="$CR_TMP/integration/desktop" \
-  --screenshots="$CR_TMP/integration/desktop/runtime/screenshots" \
-  --update
+find "$CR_TMP/integration/desktop" -type f -exec mv -v "{}" tests/styles/references/desktop ";"
 header_end
 
 echo "Done with success"
