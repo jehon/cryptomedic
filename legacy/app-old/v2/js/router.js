@@ -18,7 +18,7 @@ function getCurrentRoute() {
  * @returns {string} the same hash
  */
 export function setRoute(hash) {
-  return (document.location.hash = hash);
+  document.location.hash = ("/" + hash).replaceAll(/[/]+/g, "/");
 }
 
 /**

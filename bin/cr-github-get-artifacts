@@ -9,7 +9,6 @@ set -o pipefail
 # We replace the local integration (e2e test results) by those of github
 
 branch="$(git symbolic-ref --short -q HEAD)"
-target="tests/e2e/__github__/"
 
 # Configure gh:
 export PAGER=""
@@ -22,12 +21,14 @@ header_begin "Getting latest run on $branch"
 # https://cli.github.com/manual/gh_run_list
 # gh run list --branch main --limit 1 --workflow .github/workflows/test.yml
 runId="$(gh run list --branch "$branch" --limit 1 --workflow .github/workflows/test.yml --json databaseId --jq ".[0].databaseId")"
-gh run view "$runId" | head -n 20
+(gh run view "$runId" |& head -n 20) || true
 header_end
 
 get_artifact() {
   artifactName="$1"
   destination="$CR_TMP/integration/$1"
+  target="$2"
+
   echo "* getting ${artifactName}"
   echo "    -> ${destination}"
 
@@ -44,8 +45,15 @@ get_artifact() {
 }
 
 header_begin "Playwright"
-get_artifact "integration-playwright-updated-snapshots-1"
-get_artifact "integration-playwright-updated-snapshots-2"
+rm -fr "tests/e2e/__github__/"
+get_artifact "integration-playwright-updated-snapshots-1" "tests/e2e/__github__/"
+get_artifact "integration-playwright-updated-snapshots-2" "tests/e2e/__github__/"
+header_end
+
+header_begin "Cypress"
+rm -fr "$CR_TMP/integration/desktop"
+get_artifact "integration-desktop" "$CR_TMP/integration/desktop"
+find "$CR_TMP/integration/desktop" -type f -exec mv -v "{}" tests/styles/references/desktop ";"
 header_end
 
 echo "Done with success"

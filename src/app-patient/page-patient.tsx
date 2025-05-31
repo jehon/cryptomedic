@@ -149,7 +149,7 @@ export default function PagePatient(): React.ReactNode {
     if (folder) {
       folderUpdated(folder);
     } else {
-      navigate("/home");
+      navigate("/");
     }
   };
 

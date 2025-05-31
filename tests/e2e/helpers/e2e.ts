@@ -105,7 +105,7 @@ class E2ECryptomedic {
       console.error(`Detected id ${title}: `, { url, matches, id });
       throw new Error(`Could not detect id from URL: ${url}.`);
     }
-    console.info(`Detected id ${title}: ${id}`);
+    // console.info(`Detected id ${title}: ${id}`);
     return id;
   }
 

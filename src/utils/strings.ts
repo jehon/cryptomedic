@@ -48,6 +48,14 @@ export function tryOrMessage(fn: () => any, msg?: string): string {
   }
 }
 
+export function htmlEntities(str?: string): string {
+  return (str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 function _canonize(text: string): string[] {
   return (
     text

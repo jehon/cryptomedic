@@ -107,7 +107,7 @@ export default class XPageSearch extends HTMLElement {
           ),
           (this._result = createElementWithObject(
             XTable,
-            { id: "search_results", full: true },
+            { id: "search_results", full: true, style: "width: 100%" },
             [],
             (/** @type {XTable} */ el) =>
               el

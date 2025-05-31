@@ -7,8 +7,9 @@
   --panel-min-width: 250px;
 }
 
-/**
- * On laptop
+/** ************************************************************
+ *
+ * On laptop / desktop
  *
  * From 990 to 1600
  */
@@ -24,7 +25,28 @@
   margin: 0 auto;
 }
 
-/**
+/** ************************************************************
+ *
+ * Main page
+ *
+ */
+
+body > #menu {
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border: 1px solid #e7e7e7;
+  border-radius: 0;
+}
+
+body > #menu > * {
+  display: block;
+  padding-left: 10px;
+}
+
+/** ************************************************************
+ *
  * text with image
  *
  */

@@ -16,15 +16,13 @@
         }
       })();
     </script>
-    <script src="/static/js/global.js"></script>
   </head>
 
-  <body ng-app="app_main" ng-controller="ctrl">
-    <!--  Navigation bar -->
+  <body>
     <div id="menu">
       <img src="/favicon.svg" height="30px" />
       <span style="flex-grow: 1"></span>
-      <a id="menu_home" href="#/home" class="navbar-link">
+      <a id="menu_home" href="#/" class="navbar-link">
         <x-restricted
           restricted-by="application.open"
           style="flex-direction: row"
@@ -39,7 +37,7 @@
       <!--  Pending screen -->
       <cryptomedic-data-service id="dataService">
         <div>
-          <div ng-view></div>
+          <div id="app">Loading...</div>
         </div>
       </cryptomedic-data-service>
     </div>
@@ -48,5 +46,12 @@
       size="1"
       style="position: absolute; left: -100px; top: 0px"
     />
+    <!-- For cypress testing - begin -->
+    <input
+      id="cypress-no-caret"
+      size="1"
+      style="position: absolute; left: -100px; top: 0px"
+    />
+    <!-- For cypress testing - end -->
   </body>
 </html>

@@ -38,7 +38,7 @@ export function crLoginInBackground(username = null, password = null) {
   const realUser = crApiLogin(username, password);
   crGo();
   cy.get("x-user-status #user").should("have.text", realUser);
-  guiHashStartWith("/home");
+  guiHashStartWith("/");
 
   crReady();
   cy.log(`Done crLoginInBackground: ${realUser}`);

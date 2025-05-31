@@ -9,7 +9,7 @@ import { crFormFillIn, crLoginInBackground } from "./helpers/cr.js";
  */
 function testSearch(title, search, resultList) {
   crLoginInBackground(crApiLogin.RO);
-  cy.get("#search_menu > x-buttons > x-button").click();
+  cy.get("[data-testid='search'] button").click();
 
   cy.get("x-page-search").within((page) => {
     cy.get("x-form").should("be.visible");

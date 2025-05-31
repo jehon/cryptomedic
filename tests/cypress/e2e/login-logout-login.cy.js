@@ -11,7 +11,7 @@ context("Actions", () => {
       cy.get('[name="username"]').invoke("attr", "value", "murshed");
       cy.get('[name="password"]').invoke("attr", "value", "p");
       cy.get("x-button#submit").click();
-      guiHashStartWith("/home");
+      guiHashStartWith("/");
     });
 
     cy.get("x-user-status #user").should("have.text", "murshed");
