@@ -1,5 +1,4 @@
 import PatientRelated from "./abstracts/patient-related.js";
-import { registrySet } from "./registry.js";
 
 const model = "Patient";
 
@@ -137,5 +136,3 @@ export default class Patient extends PatientRelated {
     return res.years + "y" + res.months + "m";
   }
 }
-
-registrySet(model, Patient);
