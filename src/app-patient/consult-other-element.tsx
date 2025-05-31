@@ -40,7 +40,6 @@ export default function ConsultOtherElement(
             name="side"
             value={props.file.side}
             list={getList("Side")}
-            required
           ></IOList>
           <IOString
             name="joints_or_bones_affected"
