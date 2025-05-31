@@ -106,7 +106,7 @@ export function fromBirthDateTo(date, reference = new Date()) {
   return years + months / 12;
 }
 
-export default class XFffAge extends XWithFile {
+class XFffAge extends XWithFile {
   constructor() {
     super();
     this.style.display = "inline";
