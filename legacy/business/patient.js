@@ -11,10 +11,6 @@ export default class Patient extends PatientRelated {
     return model;
   }
 
-  getTechnicalName() {
-    return "patient";
-  }
-
   isLocked() {
     return false;
   }

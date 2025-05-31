@@ -1,48 +1,7 @@
 import { immerable } from "immer";
-import nullify from "../../app-old/v1/nullify.js";
 
 export default class Pojo {
   [immerable] = true;
-
-  // Legacy
-  static getBaseUrl() {
-    throw new Error("getBaseUrl is not implemented");
-  }
-
-  // Legacy
-  static list(network) {
-    return network.start().requestWithGet().requestToUrl(this.getBaseUrl());
-  }
-
-  // Legacy
-  static create(network, data) {
-    return network
-      .start()
-      .requestWithPost()
-      .requestToUrl(this.getBaseUrl())
-      .requestWithData(nullify(data));
-  }
-
-  // Legacy
-  static remove(network, id) {
-    return network
-      .start()
-      .requestWithDelete()
-      .requestToUrl(this.getBaseUrl() + "/" + id);
-  }
-
-  // Legacy
-  static save(network, data) {
-    return network
-      .start()
-      .requestWithPut()
-      .requestToUrl(this.getBaseUrl() + "/" + data.id)
-      .requestWithData(data);
-  }
-
-  getTechnicalName() {
-    return "pojo";
-  }
 
   id;
   created_at;
@@ -72,11 +31,6 @@ export default class Pojo {
     return this.id;
   }
 
-  uid() {
-    return `${this.getTechnicalName()}.${this.id}`;
-  }
-
-  // TODO: abstract
   /**
    * @returns {string}
    */

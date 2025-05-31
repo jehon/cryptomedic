@@ -25,19 +25,3 @@ export function getPref(part, def = null) {
   }
   return def;
 }
-
-// TODO: use this
-// ts-unused-exports:disable-next-line
-export function extractPrefsFile(object) {
-  let prefs = getPref("file", {});
-  if (object.date) {
-    prefs.date = object.date;
-  }
-  if (object.examiner) {
-    prefs.examiner = object.examiner;
-  }
-  if (object.center) {
-    prefs.center = object.center;
-  }
-  setPref("file", prefs);
-}
