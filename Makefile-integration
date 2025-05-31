@@ -64,11 +64,6 @@ integration-test: integration-test-playwright
 integration-test-open: $(INTEGRATION_BUILT_MARK)
 	./bin/cr-cypress open "$(INTEGRATION_TEST_TMP)/desktop/runtime"
 
-.PHONY: integration-update-references-styles
-update: integration-update-references-styles
-integration-update-references-styles: \
-	integration-update-references-styles-desktop
-
 ##############################
 #
 # Cypress - Destop
@@ -98,9 +93,9 @@ $(INTEGRATION_TEST_TMP)/desktop/styles.json: $(INTEGRATION_TEST_TMP)/desktop/.te
 		--results="$(INTEGRATION_TEST_TMP)/desktop" \
 		--screenshots="$(INTEGRATION_TEST_TMP)/desktop/runtime/screenshots"
 
-.PHONY: integration-update-references-styles-desktop
-update: integration-update-references-styles-desktop
-integration-update-references-styles-desktop:
+.PHONY: integration-update-cypress
+update: integration-update-cypress
+integration-update-cypress:
 	find tmp/integration/desktop/runtime -type f -exec mv -v "{}" tests/styles/references/desktop ";"
 
 ##############################
