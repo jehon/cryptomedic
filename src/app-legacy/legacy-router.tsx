@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import "../../legacy/app-old/v1/elements/cryptomedic-data-service.js"; // On index.html - unused?
 import XPageLogin from "../../legacy/app-old/v2/pages/x-page-login.js";
 import XPagePrices from "../../legacy/app-old/v2/pages/x-page-prices.js";
 import XPageReports from "../../legacy/app-old/v2/pages/x-page-reports.js";
