@@ -40,7 +40,7 @@
     "@types/node": "22.15.29",
     "@types/pngjs": "6.0.5",
     "@types/react": "19.1.6",
-    "@types/react-dom": "19.1.5",
+    "@types/react-dom": "19.1.6",
     "@types/string": "0.0.34",
     "browserslist": "4.25.0",
     "chalk": "5.4.1",
