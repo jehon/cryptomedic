@@ -65,7 +65,7 @@ export function isFeatureSwitchEnabled(): boolean {
 }
 
 if (isFeatureSwitchEnabled()) {
-  console.warn("In dev mode (inTodoDev in config.ts)");
+  console.warn("In dev mode (config.ts)");
 }
 
 export const REPORT_ACTIVITY = "activity";
