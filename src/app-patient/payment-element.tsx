@@ -1,4 +1,3 @@
-import { isFeatureSwitchEnabled } from "../config";
 import IODate from "../widget/io-date";
 import IONumber from "../widget/io-number";
 import IOPanel from "../widget/io-panel";
@@ -27,7 +26,7 @@ export default function PaymentElement(props: {
           <span className="payment_amount">{props.file.amount}&nbsp;৳</span>
         </>
       }
-      restrictedTo={isFeatureSwitchEnabled() ? "folder" : "restricted"}
+      restrictedTo="folder"
       canBeLocked={true}
       canBeDeleted={true}
     >
