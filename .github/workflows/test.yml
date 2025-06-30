@@ -69,6 +69,7 @@ jobs:
           name: deploy
           path: .
 
+      - run: node --version
       - run: make github
       - run: make "${{ matrix.target }}"
 
