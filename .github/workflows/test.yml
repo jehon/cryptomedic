@@ -70,7 +70,6 @@ jobs:
           path: .
 
       - run: node --version
-      - run: node_modules/.bin/prettier --version
       - run: make github
       - run: make "${{ matrix.target }}"
 
