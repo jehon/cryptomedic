@@ -27,10 +27,6 @@ export function setSession(session = null) {
   }
 
   duix.set(SESSION, session, DuixDefaultOptions);
-
-  if (!session) {
-    setCurrentFolder();
-  }
 }
 
 export const getSession = () => duix.get(SESSION);
@@ -52,19 +48,6 @@ export const getAuthorized = (key: string, session = getSession()) =>
   session?.authorized?.includes(key) || false;
 
 const FOLDER = "FOLDER";
-
-// TODO: used in legacy
-// ts-unused-exports:disable-next-line
-export const setCurrentFolder = (value = null) =>
-  duix.set(FOLDER, value, DuixDefaultOptions);
-
-// TODO: used in legacy
-// ts-unused-exports:disable-next-line
-export const getCurrentFolder = () => duix.get(FOLDER);
-
-// TODO: used in legacy
-// ts-unused-exports:disable-next-line
-export const onCurrentFolder = (cb: DuixCallback) => duix.subscribe(FOLDER, cb);
 
 setSession();
 
