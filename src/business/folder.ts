@@ -4,7 +4,7 @@ import type {
   Patient,
   PatientRelated,
   Payment
-} from "../app-patient/objects-patient";
+} from "../app-patient/_objects";
 import type { BusinessType } from "../config";
 import { pojoOrdering } from "../utils/calculations";
 import { removeNull } from "../utils/objects";

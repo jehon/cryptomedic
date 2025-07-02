@@ -1,9 +1,4 @@
-import type {
-  Consult,
-  Patient,
-  Pojo,
-  Timed
-} from "../app-patient/objects-patient";
+import type { Consult, Patient, Pojo, Timed } from "../app-patient/_objects";
 import { fromBirthDateTo, normalizeDate } from "./date";
 import { DataMissingException } from "./exceptions";
 import { stdDeviationFor } from "./standard-deviation";

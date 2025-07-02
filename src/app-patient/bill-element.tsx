@@ -17,8 +17,8 @@ import { propagateToList } from "../widget/io-panel";
 import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import type { Bill, Patient } from "./_objects";
 import IOBillLine, { type BillLine } from "./blocs/io-bill-line";
-import type { Bill, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 import PaymentElement from "./payment-element";
 

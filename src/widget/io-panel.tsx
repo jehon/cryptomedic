@@ -1,8 +1,8 @@
 import { produce } from "immer";
 import { useEffect, useRef, useState } from "react";
 import { ButtonGroup } from "react-bootstrap";
-import { CrudLoader } from "../app-patient/loaders-patient";
-import type { Pojo } from "../app-patient/objects-patient";
+import { CrudLoader } from "../app-patient/_loaders";
+import type { Pojo } from "../app-patient/_objects";
 import { icons, type2Title, type BusinessType } from "../config";
 import { sortList } from "../utils/calculations";
 import { date2HumanString, normalizeDate } from "../utils/date";

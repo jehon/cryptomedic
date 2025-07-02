@@ -1,4 +1,4 @@
-import { type StringText } from "../app-patient/objects-patient";
+import { type StringText } from "../app-patient/_objects";
 import IOAbstract, { type IOProps } from "./io-abstract";
 
 export default function IOText(props: IOProps<StringText>) {

@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
 import { RouterHome } from "./app-home/router-home";
 import { RouterLegacy } from "./app-legacy/legacy-router";
-import { RouterPatient } from "./app-patient/router-patient";
+import { RouterPatient } from "./app-patient/_router";
 import ErrorPage from "./widget/error-page";
 
 /* Styles */

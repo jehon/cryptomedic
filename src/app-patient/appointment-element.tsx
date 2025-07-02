@@ -5,7 +5,7 @@ import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import type { Appointment, Patient } from "./objects-patient";
+import type { Appointment, Patient } from "./_objects";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function AppointmentElement(

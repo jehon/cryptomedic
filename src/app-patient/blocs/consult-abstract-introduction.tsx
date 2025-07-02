@@ -16,7 +16,7 @@ import IOList from "../../widget/io-list";
 import IONumber from "../../widget/io-number";
 import Panel from "../../widget/panel";
 import TwoColumns from "../../widget/two-columns";
-import type { Consult, Patient } from "../objects-patient";
+import type { Consult, Patient } from "../_objects";
 
 export default function ConsultAbstractIntroduction(props: {
   file: Consult;

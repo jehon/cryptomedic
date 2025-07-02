@@ -3,7 +3,7 @@ import IONumber from "../widget/io-number";
 import IOPanel from "../widget/io-panel";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
-import type { Payment } from "./objects-patient";
+import type { Payment } from "./_objects";
 
 export default function PaymentElement(props: {
   file: Payment;

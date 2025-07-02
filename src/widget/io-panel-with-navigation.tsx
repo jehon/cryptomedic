@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import type { Pojo } from "../app-patient/objects-patient";
+import type { Pojo } from "../app-patient/_objects";
 import { type BusinessType } from "../config";
 import { routeParent } from "../utils/routing";
 import IOPanel from "./io-panel";

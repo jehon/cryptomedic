@@ -1,10 +1,6 @@
 import assert from "node:assert";
 import test from "node:test";
-import type {
-  Consult,
-  ConsultRicket,
-  Patient
-} from "../app-patient/objects-patient";
+import type { Consult, ConsultRicket, Patient } from "../app-patient/_objects";
 import {
   bmi,
   getBMISd,

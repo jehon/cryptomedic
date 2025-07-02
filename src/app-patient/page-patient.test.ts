@@ -2,7 +2,7 @@ import assert from "node:assert";
 import test from "node:test";
 import Folder from "../business/folder";
 import { loadReference, RefFolder1 } from "../helpers.test";
-import type { Appointment } from "./objects-patient";
+import type { Appointment } from "./_objects";
 import { getLastSeen, getNextAppointment } from "./page-patient";
 
 test("patient related", async function (t) {

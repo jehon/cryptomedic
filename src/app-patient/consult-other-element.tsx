@@ -5,9 +5,9 @@ import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import type { ConsultOther, Patient } from "./_objects";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
-import type { ConsultOther, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function ConsultOtherElement(

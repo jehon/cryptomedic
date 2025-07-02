@@ -5,7 +5,7 @@ import IOString from "../widget/io-string";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
-import type { Patient, Surgery } from "./objects-patient";
+import type { Patient, Surgery } from "./_objects";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function SurgeryElement(

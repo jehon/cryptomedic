@@ -8,9 +8,9 @@ import IONumber from "../widget/io-number";
 import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import type { ConsultClubfoot, Patient } from "./_objects";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
-import type { ConsultClubfoot, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 function getPiraniLeft(file: ConsultClubfoot) {

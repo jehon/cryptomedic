@@ -6,9 +6,9 @@ import IOPanelWithNavigation from "../widget/io-panel-with-navigation";
 import IOText from "../widget/io-text";
 import Panel from "../widget/panel";
 import TwoColumns from "../widget/two-columns";
+import type { ConsultRicket, Patient } from "./_objects";
 import ConsultAbstractConclusion from "./blocs/consult-abstract-conclusion";
 import ConsultAbstractIntroduction from "./blocs/consult-abstract-introduction";
-import type { ConsultRicket, Patient } from "./objects-patient";
 import { type RelatedElementGeneratorProps } from "./patient-related-element-generator";
 
 export default function ConsultRicketElement(

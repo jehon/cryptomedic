@@ -10,12 +10,7 @@ import IODate from "../widget/io-date";
 import Panel from "../widget/panel";
 import Restricted from "../widget/restricted";
 import Waiting from "../widget/waiting";
-import AppointmentElement from "./appointment-element";
-import BillElement from "./bill-element";
-import ConsultClubfootElement from "./consult-clubfoot-element";
-import ConsultOtherElement from "./consult-other-element";
-import ConsultRicketElement from "./consult-ricket-element";
-import { getFolder } from "./loaders-patient";
+import { getFolder } from "./_loaders";
 import type {
   Appointment,
   Bill,
@@ -26,7 +21,12 @@ import type {
   PatientRelated,
   Picture,
   Surgery
-} from "./objects-patient";
+} from "./_objects";
+import AppointmentElement from "./appointment-element";
+import BillElement from "./bill-element";
+import ConsultClubfootElement from "./consult-clubfoot-element";
+import ConsultOtherElement from "./consult-other-element";
+import ConsultRicketElement from "./consult-ricket-element";
 import PatientElement from "./patient-element";
 import PictureElement from "./picture-element";
 import SurgeryElement from "./surgery-element";
