@@ -11,7 +11,7 @@
     "@types/toastr": "2.1.43",
     "axios": "1.9.0",
     "bootstrap4": "npm:bootstrap@4.6.2",
-    "bootstrap5": "npm:bootstrap@5.3.6",
+    "bootstrap5": "npm:bootstrap@5.3.7",
     "class-transformer": "0.5.1",
     "css-inherit": "github:jehon/css-inherit",
     "duix": "3.1.0",
