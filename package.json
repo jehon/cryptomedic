@@ -59,7 +59,7 @@
     "prettier": "3.5.3",
     "prettier-plugin-sql": "0.19.1",
     "style-loader": "4.0.0",
-    "stylelint": "16.20.0",
+    "stylelint": "16.21.1",
     "stylelint-config-standard": "38.0.0",
     "stylelint-no-unsupported-browser-features": "8.0.4",
     "ts-loader": "9.5.2",
