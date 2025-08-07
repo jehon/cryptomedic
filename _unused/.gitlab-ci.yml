@@ -96,7 +96,7 @@ tests-e2e-desktop:
   stage: test # TODO: in test
   extends: .with-services
   image:
-    name: cypress/included:13.17.0
+    name: cypress/included:14.5.4
     entrypoint: [""]
   variables:
     HOME: /tmp
