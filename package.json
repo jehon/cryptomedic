@@ -62,7 +62,7 @@
     "stylelint": "16.23.1",
     "stylelint-config-standard": "38.0.0",
     "stylelint-no-unsupported-browser-features": "8.0.4",
-    "ts-loader": "9.5.2",
+    "ts-loader": "9.5.4",
     "ts-unused-exports": "11.0.1",
     "tsx": "4.20.5",
     "typescript": "5.9.2",
