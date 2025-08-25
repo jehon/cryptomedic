@@ -37,7 +37,7 @@
     "@playwright/test": "1.55.0",
     "@prettier/plugin-php": "0.23.0",
     "@testing-library/react": "16.3.0",
-    "@types/node": "22.17.2",
+    "@types/node": "22.18.0",
     "@types/pngjs": "6.0.5",
     "@types/react": "19.1.11",
     "@types/react-dom": "19.1.7",
