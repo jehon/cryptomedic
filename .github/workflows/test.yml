@@ -64,7 +64,7 @@ jobs:
           node-version: current
           cache: npm
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: deploy
           path: .
@@ -94,7 +94,7 @@ jobs:
           node-version: current
           cache: npm
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: deploy
           path: .
@@ -123,7 +123,7 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: deploy
           path: .
@@ -162,7 +162,7 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: deploy
           path: .
@@ -205,7 +205,7 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: deploy
           path: .
@@ -261,7 +261,7 @@ jobs:
           node-version: current
           cache: npm
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: deploy
           path: .
