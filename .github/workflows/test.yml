@@ -33,7 +33,7 @@ jobs:
       - run: make build
 
       - name: Upload built
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         # Include all generated files
         with:
           name: deploy
@@ -64,7 +64,7 @@ jobs:
           node-version: current
           cache: npm
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           name: deploy
           path: .
@@ -94,7 +94,7 @@ jobs:
           node-version: current
           cache: npm
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           name: deploy
           path: .
@@ -123,7 +123,7 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           name: deploy
           path: .
@@ -138,7 +138,7 @@ jobs:
 
       - name: Upload styles
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: integration-desktop
           path: tmp/integration/desktop
@@ -162,7 +162,7 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           name: deploy
           path: .
@@ -177,7 +177,7 @@ jobs:
 
       - name: Upload styles
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: integration-playwright
           path: tmp/integration/playwright
@@ -205,7 +205,7 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           name: deploy
           path: .
@@ -226,7 +226,7 @@ jobs:
 
       - name: Upload reference images
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: integration-playwright-updated-snapshots-${{ matrix.shard }}
           path: tests/e2e/__github__/**/*.png
@@ -261,7 +261,7 @@ jobs:
           node-version: current
           cache: npm
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           name: deploy
           path: .
@@ -289,7 +289,7 @@ jobs:
 
       - name: Upload deploy.log
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: deploy.log
           path: tmp/deploy.log
