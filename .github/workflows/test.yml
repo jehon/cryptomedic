@@ -20,13 +20,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
 
       # https://github.com/actions/setup-node
       - uses: actions/setup-node@v4
         with:
-          node-version: current
-          cache: npm
+          node-version: lts/*
 
       - run: ./setup.sh
 
@@ -285,7 +284,6 @@ jobs:
           CRYPTOMEDIC_DEPLOY_FILES_HOST: ${{ vars.CRYPTOMEDIC_DEPLOY_FILES_HOST }}
           CRYPTOMEDIC_DEPLOY_FILES_USER: ${{ vars.CRYPTOMEDIC_DEPLOY_FILES_USER }}
           CRYPTOMEDIC_DEPLOY_FILES_PASSWORD: ${{ secrets.CRYPTOMEDIC_DEPLOY_FILES_PASSWORD }}
-
 
       - name: Upload deploy.log
         if: always()
