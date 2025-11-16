@@ -14,6 +14,7 @@ concurrency:
 
 env:
   NO_CLEAR: yes
+  NODE_VERSION: lts/*
 
 jobs:
   build:
@@ -25,7 +26,7 @@ jobs:
       # https://github.com/actions/setup-node
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
 
       - run: ./setup.sh
 
@@ -60,7 +61,7 @@ jobs:
       # https://github.com/actions/setup-node
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       - uses: actions/download-artifact@v6
@@ -90,7 +91,7 @@ jobs:
       # https://github.com/actions/setup-node
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       - uses: actions/download-artifact@v6
@@ -115,7 +116,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       # https://github.com/marketplace/actions/setup-chrome
@@ -154,7 +155,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       # https://github.com/marketplace/actions/setup-chrome
@@ -197,7 +198,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       # https://github.com/marketplace/actions/setup-chrome
@@ -257,7 +258,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       - uses: actions/download-artifact@v6
