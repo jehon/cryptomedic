@@ -120,7 +120,7 @@ jobs:
 
       # https://github.com/marketplace/actions/setup-chrome
       - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
 
       - uses: actions/download-artifact@v6
         with:
@@ -159,7 +159,7 @@ jobs:
 
       # https://github.com/marketplace/actions/setup-chrome
       - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
 
       - uses: actions/download-artifact@v6
         with:
@@ -202,7 +202,7 @@ jobs:
 
       # https://github.com/marketplace/actions/setup-chrome
       - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
 
       - uses: actions/download-artifact@v6
         with:
@@ -267,7 +267,7 @@ jobs:
 
       # https://github.com/marketplace/actions/setup-chrome
       - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
 
       - run: ./setup.sh
 
