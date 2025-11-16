@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - uses: actions/checkout@71cf2267d89c5cb81562390fa70a37fa40b1305e
 
       # https://github.com/actions/setup-node
       - uses: actions/setup-node@v6
