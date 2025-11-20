@@ -18,9 +18,6 @@ include:
       context: services/web
       dockerFile: services/web/Dockerfile
 
-default:
-  timeout: 15m
-
 ############################################################
 #
 # build
@@ -145,35 +142,3 @@ tests-e2e-playwright-strict:
 #     when: always
 #     paths:
 #       - tests/e2e/**/*.png
-
-deploy:
-  stage: release
-  image: alpine
-#   needs:
-#     - tests-unit
-#     - tests-unit-with-backend
-#     - test-e2e-playwright
-# #   environment:
-# #     name: production
-# #   rules:
-# #     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-# #       when: never
-# #     - when: on_success
-  script:
-    - echo 'Not implemented yet'
-    - /not-implemented-yet
-# #     - ./setup.sh
-# #     - make github
-# #     - make build
-# #     - make deploy
-# #   variables:
-# #     CRYPTOMEDIC_DEPLOY_WEB_HOST: $CRYPTOMEDIC_DEPLOY_WEB_HOST
-# #     CRYPTOMEDIC_DEPLOY_WEB_PORT: $CRYPTOMEDIC_DEPLOY_WEB_PORT
-# #     CRYPTOMEDIC_DEPLOY_WEB_TOKEN: $CRYPTOMEDIC_DEPLOY_WEB_TOKEN
-# #     CRYPTOMEDIC_DEPLOY_FILES_HOST: $CRYPTOMEDIC_DEPLOY_FILES_HOST
-# #     CRYPTOMEDIC_DEPLOY_FILES_USER: $CRYPTOMEDIC_DEPLOY_FILES_USER
-# #     CRYPTOMEDIC_DEPLOY_FILES_PASSWORD: $CRYPTOMEDIC_DEPLOY_FILES_PASSWORD
-# #   artifacts:
-# #     when: always
-# #     paths:
-# #       - tmp/deploy.log
