@@ -1,5 +1,5 @@
 include:
-  - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/default@main
+  - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/common@main
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/packages/lint@production
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
     inputs:
