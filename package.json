@@ -28,7 +28,7 @@
     "react-router-dom": "7.9.6",
     "reflect-metadata": "0.2.2",
     "toastr": "2.1.4",
-    "zone.js": "0.15.1"
+    "zone.js": "0.16.0"
   },
   "devDependencies": {
     "@commitlint/cli": "20.1.0",
