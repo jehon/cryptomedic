@@ -6,13 +6,13 @@ include:
       flavor: /builder
       context: services/builder
       dockerFile: services/builder/Dockerfile
-      publish: false
+      usage: builder
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
     inputs:
       flavor: /database
       context: services/database
       dockerFile: services/database/Dockerfile
-      publish: false
+      usage: builder
   - component: $CI_SERVER_FQDN/$CI_PROJECT_NAMESPACE/components/docker@production
     inputs:
       context: services/web
